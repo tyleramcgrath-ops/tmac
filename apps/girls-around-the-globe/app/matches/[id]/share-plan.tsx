@@ -30,7 +30,7 @@ export function SharePlan({ matchId, name, onClose }: { matchId: string; name: s
     const text = `I'm meeting ${name}. Here's where and when:`;
     if (navigator.share) {
       try {
-        await navigator.share({ title: "My plan tonight", text, url });
+        await navigator.share({ title: "My date plan", text, url });
         return;
       } catch {
         // Cancelled or unsupported; fall back to copying.

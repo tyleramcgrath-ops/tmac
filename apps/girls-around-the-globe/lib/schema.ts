@@ -13,13 +13,13 @@ export const SCHEMA = [
     country text not null default '',
     flag text not null default '',
     bio text not null default '',
-    vibe text not null default 'casual-ongoing',
+    vibe text not null default 'relationship',
     languages text not null default '',
     interests text not null default '',
     occupation text not null default '',
     traveling text,
     prompts jsonb not null default '[]',
-    palette text not null default '#e8436a,#1b1838',
+    palette text not null default '#b98a45,#2a2018',
     verified boolean not null default false,
     is_seed boolean not null default false,
     seed_likes_back boolean not null default false,
@@ -97,4 +97,9 @@ export const SCHEMA = [
     created_at timestamptz not null default now(),
     expires_at timestamptz not null
   )`,
+  // Members now say what they're looking for; older casual "vibes" become a relationship.
+  `alter table users alter column vibe set default 'relationship'`,
+  `update users set vibe = 'relationship' where vibe not in ('relationship', 'marriage', 'dating')`,
+  // New members' generated avatars use the champagne brand colours.
+  `alter table users alter column palette set default '#b98a45,#2a2018'`,
 ];

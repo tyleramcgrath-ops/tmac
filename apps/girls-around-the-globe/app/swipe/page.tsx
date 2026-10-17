@@ -13,14 +13,14 @@ export default async function SwipePage({ searchParams }: PageProps<"/swipe">) {
   const me = await getMember(id);
   if (!me) redirect("/login");
   await touch(id);
-  const tonightOnly = (await searchParams).tonight === "1";
-  const [deck, quota] = await Promise.all([deckFor(me, 20, { tonightOnly }), quotaFor(me)]);
+  const freeNowOnly = (await searchParams).free === "1";
+  const [deck, quota] = await Promise.all([deckFor(me, 20, { freeNowOnly }), quotaFor(me)]);
 
   return (
     <div className="px-4 py-6 sm:py-8">
       <SwipeDeck
         me={{ name: me.name, palette: me.palette, photos: me.photos, premium: me.premium, passport: me.passport, vibe: me.vibe, freeUntil: me.freeUntil, into: me.into }}
-        tonightOnly={tonightOnly}
+        freeNowOnly={freeNowOnly}
         initialDeck={deck}
         quota={quota}
       />

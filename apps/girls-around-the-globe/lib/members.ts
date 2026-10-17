@@ -1,7 +1,7 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { one, query } from "./db";
-import type { Vibe } from "./profiles";
+import { INTO_TAGS, VIBES, type Vibe } from "./profiles";
 export { FREE_NOW_HOURS } from "./profiles";
 
 export const FREE_DAILY_LIKES = 25;
@@ -34,7 +34,7 @@ export type Member = {
   premium: boolean;
   passport: string | null;
   lastActive: string;
-  // ISO time the member's "Free now" status runs out, or null when not free.
+  // ISO time the member's "Free to video chat" status runs out, or null.
   freeUntil: string | null;
   into: string[];
   discreet: boolean;
@@ -113,13 +113,13 @@ function toMember(r: UserRow): Member {
     country: r.country,
     flag: r.flag,
     bio: r.bio,
-    vibe: r.vibe,
+    vibe: VIBES.includes(r.vibe) ? r.vibe : "relationship",
     languages: split(r.languages),
     interests: split(r.interests),
     occupation: r.occupation,
     traveling: r.traveling,
     prompts: Array.isArray(prompts) ? prompts : [],
-    palette: [a ?? "#e8436a", b ?? "#1b1838"],
+    palette: [a ?? "#b98a45", b ?? "#2a2018"],
     verified: r.verified,
     isSeed: r.is_seed,
     photos: (r.photo_ids ?? []).map((id) => `/api/photos/${id}`),
@@ -130,7 +130,8 @@ function toMember(r: UserRow): Member {
       r.available_until && new Date(r.available_until).getTime() > Date.now()
         ? new Date(r.available_until).toISOString()
         : null,
-    into: split(r.into_tags ?? ""),
+    // Only tags from the current list; retired ones quietly drop off.
+    into: split(r.into_tags ?? "").filter((t) => (INTO_TAGS as readonly string[]).includes(t)),
     discreet: !!r.discreet,
     photosHidden: false,
   };
@@ -160,9 +161,9 @@ export async function touch(id: string) {
 const GENDER_FOR_SHOW_ME = { women: "woman", men: "man" } as const;
 
 // People the member hasn't swiped on yet, who are open to the member's gender.
-// Real members come first (anyone "Free now" at the top, then most recently
+// Real members come first (anyone free to video chat at the top, then most recently
 // active); sample members follow in their seeded order.
-export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: boolean } = {}): Promise<Member[]> {
+export async function deckFor(me: Member, limit = 20, opts: { freeNowOnly?: boolean } = {}): Promise<Member[]> {
   const params: unknown[] = [me.id, me.gender === "woman" ? "women" : me.gender === "man" ? "men" : "everyone"];
   let where = `u.id <> $1
     and not exists (select 1 from swipes s where s.swiper_id = $1 and s.target_id = u.id)
@@ -171,7 +172,7 @@ export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: bool
     params.push(GENDER_FOR_SHOW_ME[me.showMe]);
     where += ` and u.gender = $${params.length}`;
   }
-  if (opts.tonightOnly) where += ` and (u.vibe = 'tonight' or u.available_until > now())`;
+  if (opts.freeNowOnly) where += ` and u.available_until > now()`;
   if (me.premium && me.passport) {
     params.push(me.passport);
     where += ` and lower(u.city) = lower($${params.length})`;

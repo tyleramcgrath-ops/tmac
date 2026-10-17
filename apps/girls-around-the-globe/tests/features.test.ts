@@ -42,8 +42,8 @@ async function ageMatch(a: string, b: string, hours: number) {
   );
 }
 
-describe("free now", () => {
-  it("counts down, puts you first in the deck and in the tonight filter, then switches off", async () => {
+describe("free to video chat", () => {
+  it("counts down, puts you first in the deck and in the free-now filter, then switches off", async () => {
     const viewer = await makeUser("man", "women");
     const quiet = await makeUser("woman", "everyone");
     const free = await makeUser("woman", "everyone");
@@ -56,22 +56,30 @@ describe("free now", () => {
 
     const deck = (await deckFor(viewer, 200)).map((m) => m.id);
     expect(deck.indexOf(free.id)).toBeLessThan(deck.indexOf(quiet.id));
-    expect((await deckFor(viewer, 200, { tonightOnly: true })).some((m) => m.id === free.id)).toBe(true);
+    expect((await deckFor(viewer, 200, { freeNowOnly: true })).some((m) => m.id === free.id)).toBe(true);
 
     await setFreeNow(free.id, null);
     expect((await getMember(free.id))!.freeUntil).toBeNull();
-    expect((await deckFor(viewer, 200, { tonightOnly: true })).some((m) => m.id === free.id)).toBe(false);
+    expect((await deckFor(viewer, 200, { freeNowOnly: true })).some((m) => m.id === free.id)).toBe(false);
   });
 });
 
-describe("into tags", () => {
+describe("life & plans tags", () => {
   it("stores and returns a member's tags", async () => {
-    const m = await makeUser("woman", "men", { into: "Drinks first, Can host" });
-    expect(m.into).toEqual(["Drinks first", "Can host"]);
+    const m = await makeUser("woman", "men", { into: "Wants kids, Loves to travel" });
+    expect(m.into).toEqual(["Wants kids", "Loves to travel"]);
+  });
+
+  it("drops retired tags and maps old casual vibes to a relationship", async () => {
+    const m = await makeUser("woman", "men", { into: "Drinks first, Wants kids, Can host" });
+    await query("update users set vibe = 'tonight' where id = $1", [m.id]);
+    const again = (await getMember(m.id))!;
+    expect(again.into).toEqual(["Wants kids"]);
+    expect(again.vibe).toBe("relationship");
   });
 });
 
-describe("discreet mode", () => {
+describe("private photos", () => {
   it("hides photos in the deck, likes and profile until you match", async () => {
     const viewer = await makeUser("man", "women");
     const shy = await makeUser("woman", "men", { discreet: true });

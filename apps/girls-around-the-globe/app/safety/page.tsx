@@ -10,9 +10,9 @@ const MEETING = [
   "On video, you can mute, turn your camera off or hang up any time. Calls aren't recorded, so never let anyone pressure you into something on camera.",
   "Meet somewhere public first, like a bar, café or busy square, and get there on your own.",
   "Tap 🛡️ Share plan in the chat to send a friend a private link with your match's first name, age and city, plus where and when you're meeting. It expires 12 hours after the meetup.",
-  "Want to stay low-key? Turn on 🕶️ Discreet mode in your profile: your photos stay hidden from everyone but your matches.",
+  "Want privacy? Turn on Private photos in your profile: your photos stay hidden from everyone but your matches.",
   "Keep your drink in sight, and leave whenever you want. You never owe anyone anything.",
-  "Bring protection and talk about sexual health before things get physical.",
+  "Take your time. Video date a few times before you book a flight, and stay somewhere of your own when you visit.",
   "Abroad? Save the local emergency number and your embassy's contact details.",
 ];
 
@@ -26,7 +26,7 @@ const RED_FLAGS = [
 
 const GUIDELINES = [
   { title: "18+ only", body: "Anyone under 18 is removed immediately and reported where the law requires." },
-  { title: "Casual, and upfront about it", body: "This site is for casual encounters only. Say what you want plainly, and take no for an answer." },
+  { title: "Honest about what you want", body: "Relationship, marriage or dating to see: say it on your profile, mean it, and take no for an answer." },
   { title: "Consent, always", body: "Enthusiastic, ongoing and freely given. \"No\", silence or a change of mind ends things. Pressure gets you banned." },
   { title: "No paid arrangements", body: "No escorting, sugar arrangements, or selling or buying sex or content. Profiles and messages that suggest it are removed." },
   { title: "Be real", body: "Your own photos, your real age, your real location. No impersonation, no catfishing." },

@@ -5,12 +5,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
 // Self-hosted so the build never depends on reaching fonts.googleapis.com.
-// Montserrat echoes the geometric caps of the GAG logo; Manrope is body copy.
-const montserrat = localFont({
-  variable: "--font-montserrat",
+// Instrument Serif echoes the GAG logo's serif capitals; Manrope is body copy.
+const serif = localFont({
+  variable: "--font-serif",
   src: [
-    { path: "./fonts/montserrat.woff2", weight: "100 900", style: "normal" },
-    { path: "./fonts/montserrat-italic.woff2", weight: "100 900", style: "italic" },
+    { path: "./fonts/instrument-serif.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/instrument-serif-italic.woff2", weight: "400", style: "italic" },
   ],
 });
 
@@ -22,13 +22,13 @@ const manrope = localFont({
 export const metadata: Metadata = {
   // Absolute base for the social share image; set SITE_URL in production.
   metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
-  title: "Girls Around the Globe — Swipe the world, video chat tonight",
+  title: "Girls Around the Globe — Meet someone worth the flight",
   description:
-    "Casual encounters, worldwide. Swipe on adults who want no-strings fun, from Medellín to Tokyo, and line something up before you land.",
+    "Serious dating with women across Latin America and beyond. See what she's looking for, video date first, then go meet her.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070508",
+  themeColor: "#0b0908",
   colorScheme: "dark",
 };
 
@@ -38,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${montserrat.variable} ${manrope.variable} h-full`}>
+    <html lang="en" className={`${serif.variable} ${manrope.variable} h-full`}>
       <body className="min-h-full flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>

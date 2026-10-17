@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { setFreeNowAction, setPassport, swipe } from "@/app/actions";
 import { Avatar } from "@/components/avatar";
 import type { Member, SwipeQuota } from "@/lib/members";
-import { FREE_NOW_HOURS, PASSPORT_CITIES, VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
+import { FREE_NOW_HOURS, PASSPORT_CITIES, VIBE_LABEL } from "@/lib/profiles";
 import { timeLeft, useNow } from "@/lib/use-now";
 
 const THRESHOLD = 110;
@@ -19,12 +19,12 @@ export function SwipeDeck({
   me,
   initialDeck,
   quota: initialQuota,
-  tonightOnly,
+  freeNowOnly,
 }: {
   me: Me;
   initialDeck: Member[];
   quota: SwipeQuota;
-  tonightOnly: boolean;
+  freeNowOnly: boolean;
 }) {
   const router = useRouter();
   const [deck, setDeck] = useState(initialDeck);
@@ -149,13 +149,13 @@ export function SwipeDeck({
 
       <div className="mt-2 flex items-center gap-2">
         <Link
-          href={tonightOnly ? "/swipe" : "/swipe?tonight=1"}
-          aria-pressed={tonightOnly}
+          href={freeNowOnly ? "/swipe" : "/swipe?free=1"}
+          aria-pressed={freeNowOnly}
           className={`chip whitespace-nowrap border transition ${
-            tonightOnly ? "border-accent !bg-accent !text-white glow" : "border-transparent hover:!text-ink"
+            freeNowOnly ? "border-accent !bg-accent !text-on-accent glow" : "border-transparent hover:!text-ink"
           }`}
         >
-          🔥 Out tonight{tonightOnly ? " ✓" : ""}
+          Free to chat now{freeNowOnly ? " ✓" : ""}
         </Link>
         <FreeNowControl freeUntil={me.freeUntil} onChange={(h) => startTransition(() => setFreeNowAction(h))} />
       </div>
@@ -165,13 +165,13 @@ export function SwipeDeck({
           <div className="card absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
             <p className="text-5xl">🌍</p>
             <p className="font-display text-2xl font-bold">
-              {tonightOnly ? "No one else is out tonight here" : "You\u2019ve seen everyone for now"}
+              {freeNowOnly ? "No one else is free to chat right now" : "You\u2019ve seen everyone for now"}
             </p>
             <p className="text-ink-dim">
               New people join every day.{" "}
               {me.premium ? "Try Passport to swipe in another city." : "With Globe+ you can Passport to another city."}
             </p>
-            {tonightOnly && <Link href="/swipe" className="btn btn-ghost">Show everyone</Link>}
+            {freeNowOnly && <Link href="/swipe" className="btn btn-ghost">Show everyone</Link>}
             {!me.premium && <Link href="/premium" className="btn btn-primary">Get Globe+</Link>}
           </div>
         )}
@@ -198,20 +198,20 @@ export function SwipeDeck({
             onPointerCancel={onPointerUp}
           >
             <CardFace profile={top} mine={me.into} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
-            <span className="pointer-events-none absolute left-6 top-8 -rotate-12 rounded-lg border-4 border-emerald-400 px-3 py-1 text-3xl font-black tracking-wider text-emerald-400" style={{ opacity: likeOpacity }}>
+            <span className="pointer-events-none absolute left-6 top-8 -rotate-12 rounded-lg border-4 border-accent px-3 py-1 text-3xl font-black tracking-wider text-accent" style={{ opacity: likeOpacity }}>
               LIKE
             </span>
-            <span className="pointer-events-none absolute right-6 top-8 rotate-12 rounded-lg border-4 border-rose-500 px-3 py-1 text-3xl font-black tracking-wider text-rose-500" style={{ opacity: nopeOpacity }}>
-              NOPE
+            <span className="pointer-events-none absolute right-6 top-8 rotate-12 rounded-lg border-4 border-ink px-3 py-1 text-3xl font-black tracking-wider text-ink" style={{ opacity: nopeOpacity }}>
+              PASS
             </span>
           </div>
         )}
       </div>
 
       <div className="mt-5 flex items-center justify-center gap-5">
-        <RoundButton label="Pass" onClick={() => commit(-1)} disabled={!top} className="h-16 w-16 text-2xl text-rose-500">✕</RoundButton>
-        <RoundButton label="Super like" onClick={() => commit(1, true)} disabled={!top} className="h-12 w-12 text-lg text-sky-500">★</RoundButton>
-        <RoundButton label="Like" onClick={() => commit(1)} disabled={!top} className="h-16 w-16 text-2xl text-emerald-500">♥</RoundButton>
+        <RoundButton label="Pass" onClick={() => commit(-1)} disabled={!top} className="h-16 w-16 text-2xl text-ink">✕</RoundButton>
+        <RoundButton label="Super like" onClick={() => commit(1, true)} disabled={!top} className="h-12 w-12 text-lg text-accent-deep">★</RoundButton>
+        <RoundButton label="Like" onClick={() => commit(1)} disabled={!top} className="bg-sunset h-16 w-16 border-transparent text-2xl">♥</RoundButton>
       </div>
       <p className="mt-3 text-center text-xs text-ink-mute">Drag the card, tap the buttons, or use ← ↑ → keys</p>
 
@@ -221,7 +221,7 @@ export function SwipeDeck({
   );
 }
 
-// "I'm free now" for 2, 4 or 6 hours, with a live countdown once it's on.
+// "Free to video chat" for 2, 4 or 6 hours, with a live countdown once it's on.
 function FreeNowControl({ freeUntil, onChange }: { freeUntil: string | null; onChange: (hours: number) => void }) {
   const now = useNow();
   const left = freeUntil && now ? timeLeft(freeUntil, now) : null;
@@ -231,24 +231,24 @@ function FreeNowControl({ freeUntil, onChange }: { freeUntil: string | null; onC
         type="button"
         onClick={() => onChange(0)}
         className="chip ml-auto whitespace-nowrap border border-gold/60 !bg-transparent !text-gold"
-        title="Tap to stop showing as free"
+        title="Tap to stop showing as free to chat"
       >
-        🔥 You&rsquo;re free{left ? ` · ${left} left` : ""} ✕
+        You&rsquo;re free to chat{left ? ` · ${left} left` : ""} ✕
       </button>
     );
   }
   return (
     <label className="ml-auto flex items-center gap-2 text-xs text-ink-mute">
-      <span className="sr-only">Set yourself free now</span>
+      <span className="sr-only">Show that you are free to video chat</span>
       <select
         className="field !w-auto !rounded-full !py-1.5 text-xs font-semibold"
         value=""
         onChange={(e) => e.target.value && onChange(Number(e.target.value))}
-        aria-label="I'm free now"
+        aria-label="I'm free to video chat"
       >
-        <option value="">🔥 I&rsquo;m free now…</option>
+        <option value="">I&rsquo;m free to video chat…</option>
         {FREE_NOW_HOURS.map((h) => (
-          <option key={h} value={h}>Free for {h} hours</option>
+          <option key={h} value={h}>For the next {h} hours</option>
         ))}
       </select>
     </label>
@@ -276,15 +276,16 @@ function CardFace({
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent p-5 pt-24 text-white">
         <div className="flex flex-wrap gap-1.5">
           {freeLeft ? (
-            <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold shadow-[0_0_14px_rgb(255_31_143/0.7)]">
-              🔥 Free now · {freeLeft} left
+            <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-on-accent">
+              Free to chat · {freeLeft} left
             </span>
           ) : (
             <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold backdrop-blur">
-              {VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}
+              {VIBE_LABEL[p.vibe]}
             </span>
           )}
-          {p.verified && <span className="rounded-full bg-sky-500/80 px-2.5 py-0.5 text-xs font-semibold">✓ Verified</span>}
+          {p.isSeed && <span className="rounded-full border border-white/30 px-2.5 py-0.5 text-xs font-semibold text-white/80">Sample profile</span>}
+          {p.verified && <span className="rounded-full bg-accent/25 px-2.5 py-0.5 text-xs font-semibold text-accent-deep">✓ Verified</span>}
           {shared.length > 0 && (
             <span className="rounded-full bg-gold px-2.5 py-0.5 text-xs font-bold">{shared.length} in common</span>
           )}
@@ -356,16 +357,17 @@ function RoundButton({ label, className, children, ...rest }: React.ButtonHTMLAt
 
 function MatchModal({ me, profile, onClose }: { me: Me; profile: Member; onClose: () => void }) {
   return (
-    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#ff1f8f]/90 via-[#3b0a22]/95 to-night p-6 text-center text-white">
-      <div className="w-full max-w-sm">
-        <p className="font-display text-5xl font-extrabold uppercase"><span className="text-gold">It&rsquo;s a</span> <span className="text-white">match!</span></p>
-        <p className="mt-3 text-white/80">You and {profile.name} liked each other.</p>
-        <div className="mt-8 flex justify-center">
-          <Avatar profile={me} size="xl" className="!h-32 !w-32 border-4 border-white" />
-          <Avatar profile={profile} size="xl" className="-ml-6 !h-32 !w-32 border-4 border-white" />
+    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-night/95 p-6 text-center backdrop-blur-sm">
+      <div className="pop w-full max-w-sm">
+        <div className="flex items-center justify-center">
+          <Avatar profile={me} size="xl" className="!h-32 !w-32 border-2 border-accent" />
+          <span className="pulse z-10 -mx-4 flex h-14 w-14 items-center justify-center rounded-full bg-sunset text-2xl" aria-hidden="true">♥</span>
+          <Avatar profile={profile} size="xl" className="!h-32 !w-32 border-2 border-ink/40" />
         </div>
-        <Link href={`/matches/${profile.id}`} className="btn mt-10 w-full bg-white !text-[#c4105e] hover:bg-white/90">Send a message</Link>
-        <button type="button" onClick={onClose} className="btn mt-3 w-full border border-white/50 text-white hover:bg-white/10">Keep swiping</button>
+        <p className="mt-8 font-display text-6xl text-gold">It&rsquo;s mutual.</p>
+        <p className="mt-3 text-ink-dim">You and {profile.name} liked each other. Say hello, or ask for a video date.</p>
+        <Link href={`/matches/${profile.id}`} className="btn btn-primary mt-8 w-full">Send a message</Link>
+        <button type="button" onClick={onClose} className="btn mt-3 w-full text-ink-dim hover:text-ink">Keep swiping</button>
       </div>
     </div>
   );
@@ -376,7 +378,7 @@ function LimitModal({ limit, onClose }: { limit: Exclude<Limit, null>; onClose: 
   return (
     <div role="dialog" aria-modal="true" aria-label="Daily limit reached" className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-6 backdrop-blur-sm">
       <div className="card w-full max-w-sm p-8 text-center">
-        <p className="text-5xl">{likes ? "💘" : "⭐"}</p>
+        <p className="font-display text-6xl text-gold">{likes ? "♥" : "★"}</p>
         <h2 className="mt-4 font-display text-2xl font-bold">
           {likes ? "You're out of likes for today" : "You're out of super likes"}
         </h2>

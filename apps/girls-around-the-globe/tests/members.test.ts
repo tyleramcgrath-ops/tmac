@@ -40,10 +40,18 @@ describe("members", () => {
     expect(deck.some((m) => m.id === me.id)).toBe(false);
   });
 
-  it("filters the deck to people out tonight", async () => {
-    const deck = await deckFor(me, 100, { tonightOnly: true });
-    expect(deck.length).toBeGreaterThan(0);
-    expect(deck.every((m) => m.vibe === "tonight" || m.freeUntil)).toBe(true);
+  it("filters the deck to people free to video chat", async () => {
+    const free = await makeUser({ gender: "woman", showMe: "men" });
+    await query("update users set available_until = now() + interval '2 hours' where id = $1", [free.id]);
+    const deck = await deckFor(me, 100, { freeNowOnly: true });
+    expect(deck.map((m) => m.id)).toContain(free.id);
+    expect(deck.every((m) => m.freeUntil)).toBe(true);
+  });
+
+  it("shows what every sample member is looking for", async () => {
+    const deck = await deckFor(me, 100);
+    expect(deck.every((m) => ["relationship", "marriage", "dating"].includes(m.vibe))).toBe(true);
+    expect(deck.filter((m) => m.isSeed).length).toBeGreaterThan(5);
   });
 
   it("respects the other person's preferences too", async () => {
@@ -66,7 +74,7 @@ describe("members", () => {
   });
 
   it("does not match one-sided likes", async () => {
-    const res = await recordSwipe(me, "seed-sakura", true, false);
+    const res = await recordSwipe(me, "seed-camila", true, false);
     expect(res).toEqual({ ok: true, match: false });
   });
 

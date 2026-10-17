@@ -4,7 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Avatar } from "@/components/avatar";
 import { getMember, isMatch, viewMember } from "@/lib/members";
-import { VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
+import { VIBE_LABEL } from "@/lib/profiles";
 import { requireUserId } from "@/lib/session";
 import { one } from "@/lib/db";
 import { ProfileActions } from "./profile-actions";
@@ -62,11 +62,12 @@ export default async function ProfilePage({ params }: PageProps<"/profile/[id]">
                 <span className="chip !bg-warn/10 !text-warn">Not yet verified</span>
               )}
               {freeNow ? (
-                <span className="chip !bg-accent !text-white">🔥 Free now</span>
+                <span className="chip !bg-accent !text-on-accent">Free to video chat</span>
               ) : (
-                <span className="chip !bg-accent-soft !text-accent-deep">{VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}</span>
+                <span className="chip !bg-accent-soft !text-accent-deep">{VIBE_LABEL[p.vibe]}</span>
               )}
-              {p.discreet && <span className="chip">🕶️ Discreet</span>}
+              {p.discreet && <span className="chip">Private photos</span>}
+              {p.isSeed && <span className="chip border border-ink/20">Sample profile</span>}
               {p.traveling && <span className="chip">✈️ {p.traveling}</span>}
             </div>
           </div>
@@ -74,7 +75,7 @@ export default async function ProfilePage({ params }: PageProps<"/profile/[id]">
           {p.into.length > 0 && (
             <section className="card p-6">
               <h2 className="font-semibold">
-                Into{" "}
+                Life &amp; plans{" "}
                 {id !== me && common.size > 0 && <span className="text-gold text-sm font-bold">· {common.size} in common</span>}
               </h2>
               <div className="mt-2 flex flex-wrap gap-1.5">

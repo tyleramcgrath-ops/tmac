@@ -84,7 +84,7 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
             const res = await startCallAction(p.id);
             if (res && !res.ok) setError(res.error);
           }}
-          className="flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_-10px_rgb(255_31_143)]"
+          className="flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-on-accent shadow-[0_8px_20px_-10px_rgb(233_207_150)]"
           aria-label={`Video call ${p.name}`}
         >
           📹 <span className="hidden sm:inline">Video</span>
@@ -121,7 +121,7 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
           const flags = m.mine ? [] : scanMessage(m.body);
           return (
             <div key={m.id} className={`flex ${m.mine ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[75%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2 text-sm ${m.mine ? "rounded-br-sm bg-sunset text-white" : "rounded-bl-sm bg-surface-2"}`}>
+              <div className={`max-w-[75%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2 text-sm ${m.mine ? "rounded-br-sm bg-sunset text-on-accent" : "rounded-bl-sm bg-surface-2"}`}>
                 {m.body}
                 {flags.length > 0 && (
                   <span className="mt-1 block text-[11px] font-semibold text-warn">⚠ Be careful: this message {flags.join(", ")}.</span>

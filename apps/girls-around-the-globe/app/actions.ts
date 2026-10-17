@@ -21,14 +21,13 @@ import {
 import { answerCall, endCall, startCall } from "@/lib/calls";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import { createPlan } from "@/lib/plans";
-import { INTO_TAGS, PASSPORT_CITIES, VIBE_LABEL, type Vibe } from "@/lib/profiles";
+import { INTO_TAGS, PASSPORT_CITIES, VIBES } from "@/lib/profiles";
 import { createSession, destroySession, requireUserId, sessionUserId } from "@/lib/session";
 
 export type FormState = { error?: string; ok?: string } | undefined;
 
 const GENDERS = ["woman", "man", "nonbinary"] as const;
 const SHOW_ME = ["women", "men", "everyone"] as const;
-const VIBES = Object.keys(VIBE_LABEL) as Vibe[];
 
 function text(form: FormData, key: string, max: number): string {
   return String(form.get(key) ?? "").trim().slice(0, max);
@@ -56,6 +55,7 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
   const city = text(form, "city", 60);
   const country = countryByCode(text(form, "country", 2));
   const bio = text(form, "bio", 300);
+  const vibe = pick(text(form, "looking", 20), VIBES) ?? "relationship";
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Enter a valid email address." };
   if (password.length < 8) return { error: "Use a password with at least 8 characters." };
@@ -76,9 +76,9 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
 
   const id = newId();
   await query(
-    `insert into users (id, email, password_hash, name, birthdate, gender, show_me, city, country, flag, bio)
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-    [id, email, await hashPassword(password), name, birthdate, gender, showMe, city, country.name, country.flag, bio],
+    `insert into users (id, email, password_hash, name, birthdate, gender, show_me, city, country, flag, bio, vibe)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+    [id, email, await hashPassword(password), name, birthdate, gender, showMe, city, country.name, country.flag, bio, vibe],
   );
   await createSession(id);
   redirect("/me?welcome=1");
@@ -130,7 +130,7 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
   const vibe = pick(text(form, "vibe", 30), VIBES);
   const country = countryByCode(text(form, "country", 2));
   const city = text(form, "city", 60);
-  if (!showMe || !vibe || !country || !city) return { error: "Fill in your city, country, vibe and who you'd like to see." };
+  if (!showMe || !vibe || !country || !city) return { error: "Fill in your city, country, what you're looking for and who you'd like to see." };
 
   const prompts = [1, 2]
     .map((n) => ({ q: text(form, `q${n}`, 80), a: text(form, `a${n}`, 160) }))
@@ -195,14 +195,6 @@ export async function swipe(targetId: string, liked: boolean, isSuper = false): 
   const me = id ? await getMember(id) : null;
   if (!me) return { ok: false, reason: "not-found" };
   return recordSwipe(me, String(targetId), !!liked, !!isSuper);
-}
-
-export async function setVibe(vibe: string) {
-  const id = await requireUserId("/swipe");
-  const valid = pick(String(vibe), VIBES);
-  if (!valid) return;
-  await query("update users set vibe = $2 where id = $1", [id, valid]);
-  revalidatePath("/swipe");
 }
 
 export async function setPassport(city: string | null) {
