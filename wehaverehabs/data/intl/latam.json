@@ -1,0 +1,1895 @@
+[
+ {
+  "name": "Costa Rica Treatment Center - San José",
+  "country": "Costa Rica",
+  "region": "San José",
+  "city": "San José",
+  "website": "https://www.costaricatreatmentcenter.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehab with detox, physician and nursing oversight, dual-diagnosis care, family therapy and holistic activities.",
+  "source_url": "https://www.costaricatreatmentcenter.com/"
+ },
+ {
+  "name": "Costa Rica Treatment Center - Riverside",
+  "country": "Costa Rica",
+  "region": "Alajuela",
+  "city": "Atenas",
+  "website": "https://www.costaricatreatmentcenter.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Riverside residential campus of Costa Rica Treatment Center offering detox, inpatient addiction treatment and dual-diagnosis therapy in Atenas.",
+  "source_url": "https://www.costaricatreatmentcenter.com/"
+ },
+ {
+  "name": "Nexa Retreat",
+  "country": "Costa Rica",
+  "region": null,
+  "city": null,
+  "website": "https://www.nexaretreat.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Jungle",
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Private one-to-one retreat combining accelerated TMS, neurofeedback, psychedelic-assisted and somatic therapies with medical evaluation and coaching.",
+  "source_url": "https://www.nexaretreat.com/"
+ },
+ {
+  "name": "Costa Rica Recovery",
+  "country": "Costa Rica",
+  "region": "San José",
+  "city": "San José",
+  "website": "https://www.costaricarecovery.com/",
+  "phone": "+506 8348-6369",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Adult residential addiction treatment with 30-90 day programs, medically supervised withdrawal management, counseling, family program and holistic therapies.",
+  "source_url": "https://www.costaricarecovery.com/"
+ },
+ {
+  "name": "Pure Life Adventure",
+  "country": "Costa Rica",
+  "region": null,
+  "city": null,
+  "website": "https://www.purelifeadventure.com/",
+  "phone": "(801) 896-9490",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Therapeutic adventure and gap-semester program for young adults combining surfing, hiking and service with therapy from licensed clinicians.",
+  "source_url": "https://www.purelifeadventure.com/"
+ },
+ {
+  "name": "Alas de Libertad",
+  "country": "Costa Rica",
+  "region": "Alajuela",
+  "city": "La Garita",
+  "website": "https://alasdelibertadcr.com/",
+  "phone": "(506) 8385 5057",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Spanish",
+  "description": "Four-month residential addiction program with medical stabilization for withdrawal, group, individual and family therapy, and expressive and equine-assisted therapies.",
+  "source_url": "https://alasdelibertadcr.com/"
+ },
+ {
+  "name": "Casa ACERPA",
+  "country": "Costa Rica",
+  "region": "San José",
+  "city": "Desamparados",
+  "website": "https://casaacerpa.org/",
+  "phone": "+(506) 8658-8117",
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Nonprofit transition house supporting recovery from substance use with life-skills, employability training and community reintegration.",
+  "source_url": "https://casaacerpa.org/"
+ },
+ {
+  "name": "Rythmia Life Advancement Center",
+  "country": "Costa Rica",
+  "region": "Guanacaste",
+  "city": null,
+  "website": "https://www.rythmia.com/",
+  "phone": "+1 (844) 236-5674",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Seven-day plant-medicine retreat with ayahuasca ceremonies, yoga, breathwork, meditation and integration classes, with medical evaluation by staff physicians.",
+  "source_url": "https://www.rythmia.com/"
+ },
+ {
+  "name": "Soltara Healing Center",
+  "country": "Costa Rica",
+  "region": "Puntarenas",
+  "city": null,
+  "website": "https://www.soltara.co/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Trauma & PTSD",
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Ayahuasca retreats led by Shipibo healers at Nicoya Peninsula and Central Pacific sites, with medical screening, preparation and integration coaching.",
+  "source_url": "https://www.soltara.co/"
+ },
+ {
+  "name": "Pura Vida Retreat & Spa",
+  "country": "Costa Rica",
+  "region": "Alajuela",
+  "city": "Carrizal",
+  "website": "https://www.puravidaspa.com/",
+  "phone": "1-888-767-7375",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Mountainside yoga and wellness retreat offering twice-daily yoga, bodywork and massage, multi-night packages and hosted group retreats.",
+  "source_url": "https://www.puravidaspa.com/"
+ },
+ {
+  "name": "Samasati Retreat & Rainforest Sanctuary",
+  "country": "Costa Rica",
+  "region": "Limón",
+  "city": "Puerto Viejo de Talamanca",
+  "website": "https://www.samasati.com/",
+  "phone": "1 (888) 868-4104",
+  "care_level": "Retreat",
+  "focus": [
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Caribbean rainforest retreat offering all-inclusive stays with yoga, forest bathing, sound baths, meditation, massage and personalized wellness programs.",
+  "source_url": "https://www.samasati.com/"
+ },
+ {
+  "name": "Anamaya Resort & Retreat Center",
+  "country": "Costa Rica",
+  "region": "Puntarenas",
+  "city": "Montezuma",
+  "website": "https://anamaya.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Jungle",
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Jungle yoga resort above Montezuma hosting wellness and yoga retreats, teacher trainings and spa therapies including sauna and cold plunge.",
+  "source_url": "https://anamaya.com/"
+ },
+ {
+  "name": "Oceánica",
+  "country": "Mexico",
+  "region": "Sinaloa",
+  "city": "Mazatlán",
+  "website": "https://www.oceanica.com.mx/",
+  "phone": "55 8854 7141",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Anxiety & depression",
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "Spanish, English",
+  "description": "Beachside residential treatment for alcohol, drug and gambling addiction, codependency, eating disorders, depression and anxiety, with a halfway house and online therapy.",
+  "source_url": "https://www.oceanica.com.mx/"
+ },
+ {
+  "name": "Las Olas Recovery",
+  "country": "Mexico",
+  "region": "Baja California Sur",
+  "city": "El Pescadero",
+  "website": "https://www.lasolasrecovery.com/",
+  "phone": "(612) 153-5726",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, Spanish",
+  "description": "Bilingual rehab near Todos Santos offering monitored medical detox, psychotherapy, 12-step introduction, yoga, meditation, massage and nutrition.",
+  "source_url": "https://www.lasolasrecovery.com/"
+ },
+ {
+  "name": "Holistic Sanctuary",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Rosarito",
+  "website": "https://holisticsanctuary.com/",
+  "phone": "+1-323-612-9904",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Residential program with medically monitored detox and nursing, combining psychedelic-assisted therapies, IV nutrient therapy and holistic treatments; also lists a Tulum site.",
+  "source_url": "https://holisticsanctuary.com/"
+ },
+ {
+  "name": "Casa Santa Isabel Ibogaine Clinic",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Playas de Rosarito",
+  "website": "https://www.casasantaisabel.com/",
+  "phone": "+1 (619) 436-1200",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Villa-based ibogaine clinic with physicians, nurses and a psychologist providing 24-hour supervised treatment for opioid, stimulant and alcohol dependence.",
+  "source_url": "https://www.casasantaisabel.com/"
+ },
+ {
+  "name": "Sanáhra Addiction Treatment & Rehab Centre",
+  "country": "Mexico",
+  "region": "Jalisco",
+  "city": "Puerto Vallarta",
+  "website": "https://www.sanahra.com/",
+  "phone": "+52 322 193 6900",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, Spanish",
+  "description": "Bilingual private residential addiction program in Puerto Vallarta with medical detox, psychology and physical wellness components.",
+  "source_url": "https://www.sanahra.com/"
+ },
+ {
+  "name": "Beond Ibogaine",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Cancún",
+  "website": "https://beondibogaine.com/",
+  "phone": "+1 (310) 707-1453",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Ibogaine treatment center with physicians and ICU-certified nurses, offering programs for substance dependence, mood disorders, trauma and PTSD with preparation and aftercare coaching.",
+  "source_url": "https://beondibogaine.com/"
+ },
+ {
+  "name": "Experience Ibogaine Treatment Center",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Tijuana",
+  "website": "https://www.experienceibogaine.com/",
+  "phone": "1 (800) 644-8482",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Playas de Tijuana clinic providing ibogaine-based detox programs for opioids, stimulants and alcohol with medical exams, 24-hour nursing and counseling.",
+  "source_url": "https://www.experienceibogaine.com/"
+ },
+ {
+  "name": "MindScape Retreat",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Cozumel",
+  "website": "https://www.mindscaperetreat.com/",
+  "phone": "+1 786-435-0272",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Cozumel ibogaine clinic with on-site physicians and nurses offering 7-18 day protocols for substance dependence and mental health conditions plus integration support.",
+  "source_url": "https://www.mindscaperetreat.com/"
+ },
+ {
+  "name": "Twilight Recovery Center",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Tijuana",
+  "website": "https://www.twilightrecoverycenter.com/",
+  "phone": "(+1) 888-414-8183",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Addiction treatment center in San Antonio del Mar near Rosarito offering supervised detox, residential and outpatient programs, equine therapy and aftercare.",
+  "source_url": "https://www.twilightrecoverycenter.com/"
+ },
+ {
+  "name": "Baja Rehab",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Puerto Nuevo",
+  "website": "https://www.bajarehab.com/",
+  "phone": "(619) 363-7074",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, Spanish",
+  "description": "Oceanfront rehab offering medical detox, residential care, psychiatry, PHP and IOP, dual-diagnosis therapy and step-down housing.",
+  "source_url": "https://www.bajarehab.com/"
+ },
+ {
+  "name": "Sanctuary Tulum",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Tulum",
+  "website": "https://www.sanctuarytulum.com/",
+  "phone": "+1-323-612-2024",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean",
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Villa-based healing center on Tulum Beach with physician-supervised detox, one-on-one therapy, IV therapies, plant-medicine ceremonies, yoga and breathwork.",
+  "source_url": "https://www.sanctuarytulum.com/"
+ },
+ {
+  "name": "Transcend Ibogaine Treatment Center",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Cancún",
+  "website": "https://transcendibogaine.com/",
+  "phone": "(760) 621-6203",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Cancún ibogaine clinic with physician team, cardiac screening and monitoring, medication tapering and aftercare planning in a 10-day base program.",
+  "source_url": "https://transcendibogaine.com/"
+ },
+ {
+  "name": "Rancho La Puerta",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Tecate",
+  "website": "https://www.rancholapuerta.com/",
+  "phone": "800-443-7565",
+  "care_level": "Retreat",
+  "focus": [
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Wellness resort at the foot of Mount Kuchumaa offering fitness classes, mindfulness and yoga, spa services, hiking, farm-to-table dining and themed workshop weeks.",
+  "source_url": "https://www.rancholapuerta.com/"
+ },
+ {
+  "name": "Haramara Retreat",
+  "country": "Mexico",
+  "region": "Nayarit",
+  "city": "Sayulita",
+  "website": "https://haramararetreat.com/",
+  "phone": "+52 322 309 6040",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Jungle",
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Jungle retreat above the Pacific near Sayulita offering healing reset stays with daily spa or wellness sessions, yoga, breathwork and meditation retreats.",
+  "source_url": "https://haramararetreat.com/"
+ },
+ {
+  "name": "Hridaya Yoga Center Mexico",
+  "country": "Mexico",
+  "region": "Oaxaca",
+  "city": "Mazunte",
+  "website": "https://www.hridaya-yoga.com/",
+  "phone": "+52 958 688 58 89",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Meditation and yoga center in Mazunte running silent meditation retreats, Hatha yoga modules, rest-focused retreats and healing workshops.",
+  "source_url": "https://www.hridaya-yoga.com/"
+ },
+ {
+  "name": "Holistika Tulum",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Tulum",
+  "website": "https://www.holistikatulum.com/",
+  "phone": "+52 1 984 280 4128",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Jungle boutique hotel and wellness community in Tulum with daily yoga, therapeutic healing arts, retreats and transformational workshops.",
+  "source_url": "https://www.holistikatulum.com/"
+ },
+ {
+  "name": "Comenzar de Nuevo",
+  "country": "Mexico",
+  "region": "Nuevo León",
+  "city": "Monterrey",
+  "website": "https://www.comenzardenuevo.org/",
+  "phone": "+52 81 1340 0275",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Eating disorders",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Nonprofit eating-disorder and mental-health treatment center with residential, partial hospitalization, acute psychiatric stabilization, outpatient and halfway-house programs.",
+  "source_url": "https://www.comenzardenuevo.org/"
+ },
+ {
+  "name": "Instituto Nacional de Psiquiatría Ramón de la Fuente Muñiz",
+  "country": "Mexico",
+  "region": "Ciudad de México",
+  "city": "Tlalpan",
+  "website": "https://www.inprf.gob.mx/",
+  "phone": "55-4160-5000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Mexico's national psychiatry institute in Tlalpan providing clinical psychiatric patient care alongside research, training and self-help programs.",
+  "source_url": "https://www.inprf.gob.mx/"
+ },
+ {
+  "name": "Centro Takiwasi",
+  "country": "Peru",
+  "region": "San Martín",
+  "city": "Tarapoto",
+  "website": "https://www.takiwasi.com/",
+  "phone": "+51 942023915",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "Spanish, English, French, Italian, Portuguese",
+  "description": "Tarapoto rehabilitation center combining a therapeutic protocol for drug addiction with Amazonian traditional medicine, plus master-plant retreats and a veterans program.",
+  "source_url": "https://www.takiwasi.com/"
+ },
+ {
+  "name": "Crossroads Centre Antigua",
+  "country": "Antigua and Barbuda",
+  "region": null,
+  "city": "St. John's",
+  "website": "https://www.crossroadsantigua.org/",
+  "phone": "1-268-562-0035",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Residential addiction treatment center with medically managed detox, family counseling week, renewal retreats, yoga, massage and nutritional guidance.",
+  "source_url": "https://www.crossroadsantigua.org/"
+ },
+ {
+  "name": "Fundación Manantiales - Buenos Aires",
+  "country": "Argentina",
+  "region": "Buenos Aires",
+  "city": "Buenos Aires",
+  "website": "https://www.manantiales.org/",
+  "phone": "+54 11 5582 4000",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Addiction treatment foundation offering inpatient, day and night clinic, outpatient and online programs for substance and behavioral addictions with psychiatrists and physicians.",
+  "source_url": "https://www.manantiales.org/"
+ },
+ {
+  "name": "Fundación Manantiales - Montevideo",
+  "country": "Uruguay",
+  "region": "Montevideo",
+  "city": "Montevideo",
+  "website": "https://www.manantiales.org/",
+  "phone": "+598 97 443 400",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Headquarters of Fundación Manantiales, providing inpatient, day clinic, outpatient and online treatment for substance use and behavioral addictions.",
+  "source_url": "https://www.manantiales.org/"
+ },
+ {
+  "name": "Clínica Los Tiempos",
+  "country": "Chile",
+  "region": "Región Metropolitana",
+  "city": "Santiago",
+  "website": "https://www.clinicalostiempos.cl/",
+  "phone": "+56 2 2226 8697",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Eating disorders",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Psychiatric inpatient clinic for children and adolescents aged 9-18 with 24-hour nursing and programs for mood, trauma, eating and other disorders.",
+  "source_url": "https://www.clinicalostiempos.cl/"
+ },
+ {
+  "name": "Clínica Greenwood",
+  "country": "Brazil",
+  "region": "São Paulo",
+  "city": "Itapecerica da Serra",
+  "website": "https://www.greenwood.com.br/",
+  "phone": "(11) 9 8528-8100",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese",
+  "description": "Clinic treating alcohol and drug dependence and compulsive behaviors through inpatient hospitalization, day hospital and outpatient care.",
+  "source_url": "https://www.greenwood.com.br/"
+ },
+ {
+  "name": "Clínica Maia",
+  "country": "Brazil",
+  "region": "São Paulo",
+  "city": "Taboão da Serra",
+  "website": "https://www.clinicamaia.com.br/",
+  "phone": "(11) 4788-1900",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Portuguese",
+  "description": "Private psychiatric group with 24-hour inpatient units, day hospital, outpatient clinic, assisted housing and chemical dependency treatment in greater São Paulo.",
+  "source_url": "https://www.clinicamaia.com.br/"
+ },
+ {
+  "name": "Instituto Bairral",
+  "country": "Brazil",
+  "region": "São Paulo",
+  "city": "Itapira",
+  "website": "https://www.bairral.com.br/",
+  "phone": "(19) 3863-9400",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese",
+  "description": "Psychiatric institute offering inpatient hospitalization with detox, assisted residential care and outpatient services including TMS, ECT and psychotherapy.",
+  "source_url": "https://www.bairral.com.br/"
+ },
+ {
+  "name": "Vila Serena",
+  "country": "Brazil",
+  "region": "São Paulo",
+  "city": "São Paulo",
+  "website": "https://www.vilaserena.com.br/",
+  "phone": "+55 11 96087-1015",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Portuguese",
+  "description": "Network of chemical dependency treatment centers in São Paulo, Bahia and Fortaleza offering 60-90 day inpatient and outpatient programs with family support.",
+  "source_url": "https://www.vilaserena.com.br/"
+ },
+ {
+  "name": "Hospital Santa Mônica",
+  "country": "Brazil",
+  "region": "São Paulo",
+  "city": "Itapecerica da Serra",
+  "website": "https://www.hospitalsantamonica.com.br/",
+  "phone": "(11) 4668-7455",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese",
+  "description": "Psychiatric hospital with adult and youth inpatient care, psychiatric emergency service, detox and chemical dependency treatment.",
+  "source_url": "https://www.hospitalsantamonica.com.br/"
+ },
+ {
+  "name": "Clínica Montserrat",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.clinicamontserrat.com.co/",
+  "phone": "+6012596000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Psychiatric clinic of the Instituto Colombiano del Sistema Nervioso offering hospitalization, day hospital, outpatient care, a youth unit and the Campo Alegre addiction center.",
+  "source_url": "https://www.clinicamontserrat.com.co/"
+ },
+ {
+  "name": "Clínica Campo Abierto",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.clinicacampoabierto.com/",
+  "phone": "(601) 589 5396",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Mental-health clinic of the Colsanitas group with psychiatric hospitalization, 24-hour urgent psychiatric consultation, day clinic and teleconsultation programs.",
+  "source_url": "https://www.clinicacampoabierto.com/"
+ },
+ {
+  "name": "Hospital Mental de Antioquia María Upegui (HOMO)",
+  "country": "Colombia",
+  "region": "Antioquia",
+  "city": "Bello",
+  "website": "https://www.homo.gov.co/",
+  "phone": "+57 (604) 4448330",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Public psychiatric hospital with around 370 beds providing inpatient care, mental-health emergencies, day hospital, outpatient and child and adolescent services.",
+  "source_url": "https://www.homo.gov.co/"
+ },
+ {
+  "name": "The Temple of the Way of Light",
+  "country": "Peru",
+  "region": null,
+  "city": null,
+  "website": "https://www.templeofthewayoflight.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Amazon rainforest center running 8- and 12-day ayahuasca retreats led by Shipibo healers, with medical and psychological screening and integration support.",
+  "source_url": "https://www.templeofthewayoflight.org/"
+ },
+ {
+  "name": "Willka T'ika",
+  "country": "Peru",
+  "region": "Cusco",
+  "city": "Sacred Valley",
+  "website": "https://www.willkatika.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Sacred Valley retreat center offering wellness and leadership retreats with yoga, Andean ceremonies, nature-based spa therapies and vegetarian farm-to-table meals.",
+  "source_url": "https://www.willkatika.com/"
+ },
+ {
+  "name": "Villa Sumaya",
+  "country": "Guatemala",
+  "region": "Sololá",
+  "city": "Santa Cruz La Laguna",
+  "website": "https://www.villasumaya.com/",
+  "phone": "+502-4026-1390",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Lake Atitlán retreat and wellness center hosting group and personal retreats with spa treatments, ceremonies and holistic healing practices.",
+  "source_url": "https://www.villasumaya.com/"
+ },
+ {
+  "name": "Lapinha SPA",
+  "country": "Brazil",
+  "region": "Paraná",
+  "city": "Lapa",
+  "website": "https://www.lapinha.com.br/",
+  "phone": "+55 41 3995-1040",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese",
+  "description": "Health and wellness retreat with personalized programs for stress reduction, sleep, detox, smoking cessation, weight loss and integrative health.",
+  "source_url": "https://www.lapinha.com.br/"
+ },
+ {
+  "name": "Kurotel",
+  "country": "Brazil",
+  "region": "Rio Grande do Sul",
+  "city": "Gramado",
+  "website": "https://www.kurotel.com.br/",
+  "phone": "0800 970 9800",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "Portuguese",
+  "description": "Medical wellness resort offering the medically guided Método Kur program, integrative medicine, spa therapies and relaxation stays.",
+  "source_url": "https://www.kurotel.com.br/"
+ },
+ {
+  "name": "Hospital San Juan Capestrano",
+  "country": "Puerto Rico",
+  "region": null,
+  "city": "San Juan",
+  "website": "https://www.sanjuancapestrano.com/",
+  "phone": "(787) 625-2900",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Psychiatric hospital in Río Piedras with adult and adolescent inpatient care, dual-diagnosis addiction program, partial hospitalization and intensive outpatient services.",
+  "source_url": "https://www.sanjuancapestrano.com/"
+ },
+ {
+  "name": "Serenity Vista",
+  "country": "Panama",
+  "region": "Chiriquí",
+  "city": "Boquete",
+  "website": "https://www.serenityvista.com/",
+  "phone": "+507 6839 0569",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Private abstinence-based addiction treatment center in the Boquete highlands offering individual counseling, mindfulness, yoga, massage, creative therapies and outdoor activities.",
+  "source_url": "https://www.serenityvista.com/"
+ },
+ {
+  "name": "Caribbean Haven Residential Centre",
+  "country": "Cayman Islands",
+  "region": null,
+  "city": "Breakers",
+  "website": "https://www.chrc.gov.ky/",
+  "phone": "+1 (345) 947 9992",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Government residential substance-use treatment center offering non-medical withdrawal management and long-term residential treatment for adult Cayman residents.",
+  "source_url": "https://www.chrc.gov.ky/about-us"
+ },
+ {
+  "name": "Comunidad Terapéutica Fuente de Agua Viva",
+  "country": "Peru",
+  "region": "Lima",
+  "city": "Santiago de Surco",
+  "website": "https://fuentedeaguaviva.com.pe/",
+  "phone": "989114425",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Ministry of Health-authorized therapeutic community in Surco treating alcohol and drug dependence, gambling and internet addiction with individual and group therapy.",
+  "source_url": "https://fuentedeaguaviva.com.pe/"
+ },
+ {
+  "name": "Dianova Chile",
+  "country": "Chile",
+  "region": "Región Metropolitana",
+  "city": "Santiago",
+  "website": "https://www.dianova.cl/",
+  "phone": "(2) 2912 1200",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "NGO providing outpatient and residential addiction and mental-health treatment programs across Chile, plus the private Novasalud treatment center.",
+  "source_url": "https://www.dianova.cl/"
+ },
+ {
+  "name": "Fundación Criar",
+  "country": "Colombia",
+  "region": "Cundinamarca",
+  "city": "Mesitas del Colegio",
+  "website": "https://www.fundacioncriar.com/",
+  "phone": "+573104448088",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Spanish",
+  "description": "Countryside residential program of 120 days for up to 20 people with substance, alcohol or gambling problems, integrating psychological and psychiatric care and family support.",
+  "source_url": "https://www.fundacioncriar.com/"
+ },
+ {
+  "name": "Fundación Dianova Uruguay",
+  "country": "Uruguay",
+  "region": "Montevideo",
+  "city": "Montevideo",
+  "website": "https://www.dianovauruguay.org/",
+  "phone": "+59892600553",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Mental-health NGO focused on addictions, running treatment programs and devices across Uruguay and an integrative psychotherapy service with an addiction program.",
+  "source_url": "https://www.dianovauruguay.org/"
+ },
+ {
+  "name": "Fundación Convivir",
+  "country": "Argentina",
+  "region": "Ciudad Autónoma de Buenos Aires",
+  "city": "Buenos Aires",
+  "website": "https://convivir.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Foundation running a mental-health and addiction center treating substance use with psychiatric comorbidity, plus community-based treatment for socially excluded people.",
+  "source_url": "https://convivir.org/"
+ },
+ {
+  "name": "Proyecto Cambio",
+  "country": "Argentina",
+  "region": "Ciudad Autónoma de Buenos Aires",
+  "city": "Buenos Aires",
+  "website": "https://www.proyectocambio.com.ar/",
+  "phone": "4553-6777",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Interdisciplinary outpatient addiction treatment program for substance use, technology, gambling and compulsive shopping, with systemic, group and family therapy.",
+  "source_url": "https://www.proyectocambio.com.ar/"
+ },
+ {
+  "name": "Fundación Vida Nueva",
+  "country": "Argentina",
+  "region": "Buenos Aires",
+  "city": "Banfield",
+  "website": "http://fundacionvidanueva.com.ar/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Christian addiction care foundation with doctors, psychologists and peer companions running treatment houses across the Diocese of Lomas de Zamora.",
+  "source_url": "http://fundacionvidanueva.com.ar/"
+ },
+ {
+  "name": "Centro de Vida",
+  "country": "Argentina",
+  "region": "Ciudad Autónoma de Buenos Aires",
+  "city": "Buenos Aires",
+  "website": "http://www.centrodevida.org.ar/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Barrio Norte center providing fully outpatient multi-modal treatment for problematic substance use, alongside prevention and training work.",
+  "source_url": "http://www.centrodevida.org.ar/"
+ },
+ {
+  "name": "Fundación Libérate",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://fundacionliberate.org.co/",
+  "phone": "+57 (601) 9192800",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Nonprofit offering addiction treatment based on a biopsychosocial model at a therapeutic center in Suba, plus psychology, psychiatry and toxicology outpatient consultations.",
+  "source_url": "https://fundacionliberate.org.co/"
+ },
+ {
+  "name": "Programa Andrés",
+  "country": "Argentina",
+  "region": "Buenos Aires",
+  "city": "San Isidro",
+  "website": "https://www.programaandres.org.ar/",
+  "phone": "(011) 2571.6214",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Center for problematic consumption offering residential treatment, urban community and day house, halfway house and outpatient care in San Isidro and General Rodríguez.",
+  "source_url": "https://www.programaandres.org.ar/"
+ },
+ {
+  "name": "Corporación Centro CITA",
+  "country": "Colombia",
+  "region": "Antioquia",
+  "city": "Medellín",
+  "website": "https://centrocita.org/",
+  "phone": "(604) 594 6808",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Medellín IPS offering outpatient, virtual and home-based care for addictions, gambling, anxiety, depression, stress and grief, including psychiatry.",
+  "source_url": "https://centrocita.org/"
+ },
+ {
+  "name": "Función Futuro",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.funcionfuturo.org/",
+  "phone": "(601) 525 54 39",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish, English",
+  "description": "Bogotá addiction rehabilitation center with medical and psychological support, detox, dual-diagnosis care and treatment for depression, anxiety, bipolar disorder and psychosis.",
+  "source_url": "https://www.funcionfuturo.org/"
+ },
+ {
+  "name": "Centro Unidos Colombia",
+  "country": "Colombia",
+  "region": "Antioquia",
+  "city": "Envigado",
+  "website": "https://centrounidoscolombia.com/",
+  "phone": "(604) 3227206",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Minnesota-model addiction program near Medellín combining three months of residential care with day clinic, half-day and early-detection programs.",
+  "source_url": "https://centrounidoscolombia.com/"
+ },
+ {
+  "name": "Fundación Aprender a Vivir",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.fundacionaprenderavivir.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Bogotá foundation providing addiction evaluation and treatment through individual and group therapy, outpatient and day-clinic programs, and family and couples therapy.",
+  "source_url": "https://www.fundacionaprenderavivir.com/"
+ },
+ {
+  "name": "Fundación La Luz",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.fundacionlaluz.co/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Bogotá IPS offering personalized addiction and mental-health treatment with medical support, plus family therapy, support groups and educational workshops.",
+  "source_url": "https://www.fundacionlaluz.co/"
+ },
+ {
+  "name": "Hogares Crea El Salvador",
+  "country": "El Salvador",
+  "region": "San Salvador",
+  "city": "San Salvador",
+  "website": "https://hogarescreaelsalvador.com/",
+  "phone": null,
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Spanish",
+  "description": "Network of Hogares Crea residential recovery homes for people with addictions, with intake through the Clínica Corazón de María in San Salvador.",
+  "source_url": "https://hogarescreaelsalvador.com/"
+ },
+ {
+  "name": "Fundación ProSalud",
+  "country": "Argentina",
+  "region": "Córdoba",
+  "city": "Córdoba",
+  "website": "https://fundacionprosalud.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Córdoba foundation whose therapeutic area provides integrated treatment for substance and behavioral addictions, alongside community prevention and training.",
+  "source_url": "https://fundacionprosalud.org/"
+ },
+ {
+  "name": "Fundación Faro",
+  "country": "Colombia",
+  "region": "Quindío",
+  "city": "Calarcá",
+  "website": "https://fundacionfaro.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Spanish",
+  "description": "Supersalud-supervised foundation treating addiction-related problems under a therapeutic community model with an interdisciplinary professional team.",
+  "source_url": "https://fundacionfaro.org/"
+ },
+ {
+  "name": "Instituto Mundo Libre",
+  "country": "Peru",
+  "region": "Lima",
+  "city": "Pachacámac",
+  "website": "https://mundolibre.org.pe/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Spanish",
+  "description": "Government-recognized nonprofit therapeutic community treating at-risk and street-involved children and adolescents with drug use, with psychology, education and social work.",
+  "source_url": "https://mundolibre.org.pe/"
+ },
+ {
+  "name": "Fundación Camino de Vida",
+  "country": "Argentina",
+  "region": "Buenos Aires",
+  "city": "Villa Bosch",
+  "website": "https://caminodevida.org.ar/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Therapeutic center specializing in addictions and associated disorders, offering comprehensive treatment covered by health insurers alongside workshops and family support.",
+  "source_url": "https://caminodevida.org.ar/"
+ },
+ {
+  "name": "Asociación Civil El Almendro",
+  "country": "Argentina",
+  "region": "Ciudad Autónoma de Buenos Aires",
+  "city": "Buenos Aires",
+  "website": "https://elalmendro.org.ar/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Twelve-step-based addiction treatment association offering day and night hospital, individual therapy, addiction groups and family support in Buenos Aires.",
+  "source_url": "https://elalmendro.org.ar/"
+ },
+ {
+  "name": "PachaMama Eco Village",
+  "country": "Costa Rica",
+  "region": "Guanacaste",
+  "city": "Nosara",
+  "website": "https://www.pachamama.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Jungle eco-village community offering silent meditation retreats, yoga retreats, detox and cleanse programs, a healing-arts clinic and trainings.",
+  "source_url": "https://www.pachamama.com/"
+ },
+ {
+  "name": "Bodhi Tree Yoga Resort",
+  "country": "Costa Rica",
+  "region": "Guanacaste",
+  "city": "Nosara",
+  "website": "https://bodhitreeyogaresort.com/",
+  "phone": "+50626820256",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle",
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Nosara yoga resort offering signature and hosted yoga retreats, teacher trainings, daily classes, spa, fitness and surf near Playa Guiones.",
+  "source_url": "https://bodhitreeyogaresort.com/"
+ },
+ {
+  "name": "Husania",
+  "country": "Mexico",
+  "region": "Jalisco",
+  "city": "Puerto Vallarta",
+  "website": "https://husania.com/",
+  "phone": "322 206 4242",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Puerto Vallarta addiction treatment clinic for self-destructive behaviors with a multidisciplinary team of physician, psychologists and therapeutic coordinators, plus mutual-aid groups.",
+  "source_url": "https://husania.com/"
+ },
+ {
+  "name": "Moffitt Wellness Retreat",
+  "country": "Mexico",
+  "region": "Jalisco",
+  "city": "Puerto Vallarta",
+  "website": "https://www.moffittwellnessretreat.com/",
+  "phone": "+1.713.907.5632",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Puerto Vallarta addiction program offering drug and alcohol detox and rehab, couples rehab, interventions, evaluations and aftercare with an addiction physician on its team.",
+  "source_url": "https://www.moffittwellnessretreat.com/"
+ },
+ {
+  "name": "Monte Fénix",
+  "country": "Mexico",
+  "region": "Ciudad de México",
+  "city": "Álvaro Obregón",
+  "website": "https://montefenix.org.mx/",
+  "phone": "55 5681 3011",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "CARF-accredited addiction center in San Ángel Inn treating alcoholism, drug addiction, gambling and codependency with medical care, supervised alcohol detox and residential treatment.",
+  "source_url": "https://montefenix.org.mx/"
+ },
+ {
+  "name": "Ambio Life Sciences",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Tijuana",
+  "website": "https://ambio.life/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Ibogaine treatment clinics in the Tijuana area with 24/7 on-site medical and therapeutic teams, offering detoxification and neuroregenerative programs for addiction, trauma and TBI.",
+  "source_url": "https://ambio.life/"
+ },
+ {
+  "name": "The Retreat Costa Rica",
+  "country": "Costa Rica",
+  "region": "Alajuela",
+  "city": "Atenas",
+  "website": "https://www.theretreatcostarica.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains",
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Luxury wellness hotel with programs including Art of Resting for burnout, Emotional Healing & Recovery, Ayurveda, detox and spa healing.",
+  "source_url": "https://www.theretreatcostarica.com/"
+ },
+ {
+  "name": "The Goddess Garden",
+  "country": "Costa Rica",
+  "region": "Limón",
+  "city": "Cahuita",
+  "website": "https://thegoddessgarden.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle",
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Caribbean rainforest yoga and wellness resort on 14 acres offering spa, retreat packages, yoga teacher trainings and hosted group retreats.",
+  "source_url": "https://thegoddessgarden.com/"
+ },
+ {
+  "name": "Rancho Margot",
+  "country": "Costa Rica",
+  "region": "Alajuela",
+  "city": "El Castillo",
+  "website": "https://www.ranchomargot.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains",
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Off-grid eco-lodge and holistic education center near Arenal offering nature-based stays, yoga and regenerative farm experiences.",
+  "source_url": "https://www.ranchomargot.com/"
+ },
+ {
+  "name": "Harmony Nosara",
+  "country": "Costa Rica",
+  "region": "Guanacaste",
+  "city": "Nosara",
+  "website": "https://www.harmonynosara.com/",
+  "phone": "+506.2682.4114",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Boutique hotel on Playa Guiones in Nosara with an on-site Healing Centre, restaurant and guest accommodations.",
+  "source_url": "https://www.harmonynosara.com/"
+ },
+ {
+  "name": "Mar de Jade",
+  "country": "Mexico",
+  "region": "Nayarit",
+  "city": "Chacala",
+  "website": "https://mardejade.com/",
+  "phone": "1-800-257-0532",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean",
+   "Jungle"
+  ],
+  "languages": "English, Spanish",
+  "description": "Beachfront wellness resort and yoga retreat center in Chacala hosting group retreats and wellness packages focused on body, mind and spiritual life.",
+  "source_url": "https://mardejade.com/"
+ },
+ {
+  "name": "First Hospital Panamericano",
+  "country": "Puerto Rico",
+  "region": null,
+  "city": "Cidra",
+  "website": "https://www.hospitalpanamericano.com/",
+  "phone": "800-981-1218",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Psychiatric hospital system with inpatient units in Cidra, San Juan and Ponce plus outpatient clinics, treating addiction, depression, anxiety, eating disorders and youth conditions.",
+  "source_url": "https://www.hospitalpanamericano.com/"
+ },
+ {
+  "name": "Refugio Altiplano",
+  "country": "Peru",
+  "region": "Loreto",
+  "city": "Iquitos",
+  "website": "https://www.refugioaltiplano.org/",
+  "phone": "51931465194",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Amazon ayahuasca retreat center near Iquitos offering 7- to 12-day retreats and longer immersions with ceremonies led by a resident shaman.",
+  "source_url": "https://www.refugioaltiplano.org/"
+ },
+ {
+  "name": "Nihue Rao Centro Espiritual",
+  "country": "Peru",
+  "region": "Loreto",
+  "city": "Iquitos",
+  "website": "https://nihuerao.com/",
+  "phone": "+51 910 316 715",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Shipibo ayahuasca retreat center near Iquitos offering week-plus retreats, master plant diets, integration circles and a school of ancestral knowledge.",
+  "source_url": "https://nihuerao.com/"
+ },
+ {
+  "name": "Eagle's Nest Atitlán",
+  "country": "Guatemala",
+  "region": "Sololá",
+  "city": "San Marcos La Laguna",
+  "website": "https://eaglesnestatitlan.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Lake Atitlán yoga and wellness retreat with all-inclusive stays, daily yoga, sauna and plunge pool, massages and community workshops.",
+  "source_url": "https://eaglesnestatitlan.com/"
+ },
+ {
+  "name": "Clínica Renacer",
+  "country": "Chile",
+  "region": "Región Metropolitana",
+  "city": "Ñuñoa",
+  "website": "https://www.clinicarenacer.cl/",
+  "phone": "+569 3468 0402",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Psychiatric clinic with mixed and women's inpatient units, day hospital and medical center treating depression, bipolar disorder, schizophrenia, alcoholism and drug addiction.",
+  "source_url": "https://www.clinicarenacer.cl/"
+ },
+ {
+  "name": "Clínica Pinel",
+  "country": "Brazil",
+  "region": "Rio Grande do Sul",
+  "city": "Porto Alegre",
+  "website": "https://clinicapinel.com.br/",
+  "phone": "(51) 3223-7799",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Portuguese",
+  "description": "Psychiatric clinic offering inpatient hospitalization, outpatient care and emergency service, with psychotherapy, family therapy and chemical-dependency relapse-prevention groups.",
+  "source_url": "https://clinicapinel.com.br/"
+ },
+ {
+  "name": "Blue Spirit Costa Rica",
+  "country": "Costa Rica",
+  "region": "Guanacaste",
+  "city": "Nosara",
+  "website": "https://bluespiritcostarica.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Hilltop yoga and meditation retreat center above a turtle-refuge beach hosting retreats, workshops and trainings, with a longevity center, detox cleanse and spa services.",
+  "source_url": "https://bluespiritcostarica.com/"
+ },
+ {
+  "name": "Instituto Nacional de Salud Mental Honorio Delgado-Hideyo Noguchi",
+  "country": "Peru",
+  "region": "Lima",
+  "city": "Lima",
+  "website": "https://www.gob.pe/insm/",
+  "phone": "(01) 7485600",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Peru's national public mental health institute in Lima providing specialized psychiatric care, mental health certificates, research and teaching.",
+  "source_url": "https://www.gob.pe/insm/"
+ },
+ {
+  "name": "Eco-Resort Izhcayluma",
+  "country": "Ecuador",
+  "region": "Loja",
+  "city": "Vilcabamba",
+  "website": "https://izhcayluma.com/",
+  "phone": "0999153419",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "Spanish, English, German",
+  "description": "Eco-lodge in Vilcabamba's valley offering spa and wellness treatments, yoga and a yoga retreat alongside bungalow and backpacker accommodation.",
+  "source_url": "https://izhcayluma.com/"
+ },
+ {
+  "name": "Xinalani Retreat",
+  "country": "Mexico",
+  "region": "Jalisco",
+  "city": null,
+  "website": "https://xinalaniretreat.com/",
+  "phone": "6197302893",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean",
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Boat-access yoga and wellness resort south of Puerto Vallarta with six yoga studios, all-inclusive yoga retreats, spa and eco-tours.",
+  "source_url": "https://xinalaniretreat.com/"
+ },
+ {
+  "name": "Prana del Mar",
+  "country": "Mexico",
+  "region": "Baja California Sur",
+  "city": null,
+  "website": "https://www.pranadelmar.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Beachfront retreat center at the southern tip of Baja hosting yoga, adventure and relaxation retreats with spa services and group bookings.",
+  "source_url": "https://www.pranadelmar.com/"
+ },
+ {
+  "name": "Amansala",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Tulum",
+  "website": "https://www.amansala.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Tulum beach resort offering guided wellness retreats with yoga, fitness, spa treatments and healthy meals, plus independent stays and hosted retreats.",
+  "source_url": "https://www.amansala.com/"
+ },
+ {
+  "name": "Baja Ibogaine Center",
+  "country": "Mexico",
+  "region": "Baja California",
+  "city": "Rosarito",
+  "website": "https://bajaibogainecenter.com/",
+  "phone": "(844) 660-4600",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Rosarito Beach ibogaine clinic with a physician medical director and 24-hour nursing, offering detox and ibogaine programs, ketamine infusion and aftercare.",
+  "source_url": "https://bajaibogainecenter.com/"
+ },
+ {
+  "name": "Bassé Ibogaine",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Cancún",
+  "website": "https://www.basseibogaine.com/",
+  "phone": "+1 415-319-6319",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Women-led boutique ibogaine clinic near Cancún with a psychiatrist medical director and 24/7 emergency physician coverage for addiction, PTSD, depression and anxiety.",
+  "source_url": "https://www.basseibogaine.com/"
+ },
+ {
+  "name": "Fundación Evoluciona",
+  "country": "Colombia",
+  "region": "Bogotá D.C.",
+  "city": "Bogotá",
+  "website": "https://www.fundacionevoluciona.com/",
+  "phone": "314-325-2595",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Bogotá health-services institution offering residential, outpatient and consultation treatment for drug, alcohol, gambling and behavioral addictions, with psychiatry, psychology and family therapy.",
+  "source_url": "https://www.fundacionevoluciona.com/"
+ },
+ {
+  "name": "Holistic Mind Steps",
+  "country": "Panama",
+  "region": "Panamá",
+  "city": "Panama City",
+  "website": "https://holisticmindsteps.com/",
+  "phone": "+507 831-1446",
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Mental-health clinic offering psychiatry, adult and child psychology, individual, group, family and couples therapy, holistic therapies and neuropsychological evaluations.",
+  "source_url": "https://holisticmindsteps.com/"
+ },
+ {
+  "name": "Nekawa Ibogaine",
+  "country": "Brazil",
+  "region": "Rio de Janeiro",
+  "city": "Paraty",
+  "website": "https://nekawa.com/",
+  "phone": "(310) 254-2299",
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": null,
+  "description": "Jungle-campus 28-day ibogaine wellness and education program with spiritual guides, medical screening, integration work, yoga, breathwork and Ayurveda.",
+  "source_url": "https://nekawa.com/"
+ },
+ {
+  "name": "Rē Precision Health Mexico",
+  "country": "Mexico",
+  "region": "Nayarit",
+  "city": null,
+  "website": "https://www.reprecisionhealth.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Nervous-system regulation retreats of 5-21 days between Sayulita and Punta Mita combining neurofeedback, HRV training, trauma release exercises, breathwork, yoga and temazcal.",
+  "source_url": "https://www.reprecisionhealth.com/"
+ },
+ {
+  "name": "Sayulita Wellness Retreat",
+  "country": "Mexico",
+  "region": "Nayarit",
+  "city": "San Francisco (San Pancho)",
+  "website": "https://sayulitawellnessretreat.com/",
+  "phone": "+1 833-700-1002",
+  "care_level": "Retreat",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Riviera Nayarit retreat offering psilocybin and ibogaine retreats with medical screening by doctors and nurses, trauma-informed facilitators and couples programs.",
+  "source_url": "https://sayulitawellnessretreat.com/"
+ },
+ {
+  "name": "SHA Wellness Clinic Mexico",
+  "country": "Mexico",
+  "region": "Quintana Roo",
+  "city": "Cancún",
+  "website": "https://shawellness.com/en/",
+  "phone": "+52 998 609 0323",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, Spanish",
+  "description": "Integrative medical-wellness destination offering health programs including rebalance and energize, detox, sleep, cognitive health, quit smoking and longevity.",
+  "source_url": "https://shawellness.com/en/"
+ }
+]
