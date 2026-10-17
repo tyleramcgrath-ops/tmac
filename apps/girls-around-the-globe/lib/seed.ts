@@ -15,8 +15,8 @@ export async function seedMembers(run: Query) {
     birth.setMonth(birth.getMonth() - 2);
     await run(
       `insert into users (id, name, birthdate, gender, show_me, city, country, flag, bio, vibe,
-         languages, interests, occupation, traveling, prompts, palette, verified, is_seed, seed_likes_back)
-       values ($1,$2,$3,$4,'everyone',$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,true,$17)
+         languages, interests, occupation, traveling, prompts, palette, verified, is_seed, seed_likes_back, into_tags, discreet)
+       values ($1,$2,$3,$4,'everyone',$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,true,$17,$18,$19)
        on conflict (id) do nothing`,
       [
         `seed-${p.id}`,
@@ -36,6 +36,8 @@ export async function seedMembers(run: Query) {
         p.palette.join(","),
         p.verified,
         p.likesYou,
+        (p.into ?? []).join(", "),
+        (p.into ?? []).includes("Discreet"),
       ],
     );
   }

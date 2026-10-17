@@ -43,7 +43,7 @@ describe("members", () => {
   it("filters the deck to people out tonight", async () => {
     const deck = await deckFor(me, 100, { tonightOnly: true });
     expect(deck.length).toBeGreaterThan(0);
-    expect(deck.every((m) => m.vibe === "tonight")).toBe(true);
+    expect(deck.every((m) => m.vibe === "tonight" || m.freeUntil)).toBe(true);
   });
 
   it("respects the other person's preferences too", async () => {

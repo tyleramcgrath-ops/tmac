@@ -19,7 +19,7 @@ export default async function SwipePage({ searchParams }: PageProps<"/swipe">) {
   return (
     <div className="px-4 py-6 sm:py-8">
       <SwipeDeck
-        me={{ name: me.name, palette: me.palette, photos: me.photos, premium: me.premium, passport: me.passport, vibe: me.vibe }}
+        me={{ name: me.name, palette: me.palette, photos: me.photos, premium: me.premium, passport: me.passport, vibe: me.vibe, freeUntil: me.freeUntil, into: me.into }}
         tonightOnly={tonightOnly}
         initialDeck={deck}
         quota={quota}

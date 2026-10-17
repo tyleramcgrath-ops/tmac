@@ -28,6 +28,7 @@ export type Profile = {
   likesYou: boolean;
   // Two colors for the generated avatar, since the prototype ships no photos.
   palette: [string, string];
+  into?: string[];
 };
 
 export const VIBE_LABEL: Record<Vibe, string> = {
@@ -43,6 +44,26 @@ export const VIBE_EMOJI: Record<Vibe, string> = {
   "while-traveling": "✈️",
   "casual-ongoing": "😏",
 };
+
+// "Free now" lengths a member can pick, in hours.
+export const FREE_NOW_HOURS = [2, 4, 6] as const;
+
+// "What I'm into" tags: what someone's up for, so nobody has to guess.
+// Kept deliberately non-explicit; details belong in a consensual chat.
+export const INTO_TAGS = [
+  "Drinks first",
+  "Just tonight",
+  "Friends with benefits",
+  "Can host",
+  "Can travel",
+  "Discreet",
+  "Safe sex only",
+  "Dancing",
+  "Late nights",
+  "Daytime",
+  "No overnights",
+  "Open to more than once",
+] as const;
 
 // Cities available in Passport mode (swipe somewhere before you land), with
 // their time zone for the "where it's night right now" clock.
@@ -60,6 +81,7 @@ export const PASSPORT_CITIES = [
 export const PROFILES: Profile[] = [
   {
     id: "valentina",
+    into: ["Drinks first", "Dancing", "Just tonight", "Safe sex only"],
     name: "Valentina",
     age: 27,
     gender: "woman",
@@ -83,6 +105,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "elena",
+    into: ["Friends with benefits", "Can host", "Open to more than once"],
     name: "Elena",
     age: 29,
     gender: "woman",
@@ -103,6 +126,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "sakura",
+    into: ["Drinks first", "Late nights", "Discreet"],
     name: "Sakura",
     age: 26,
     gender: "woman",
@@ -123,6 +147,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "isabela",
+    into: ["Dancing", "Just tonight", "Can travel"],
     name: "Isabela",
     age: 25,
     gender: "woman",
@@ -143,6 +168,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "maja",
+    into: ["Late nights", "Can travel", "Just tonight"],
     name: "Maja",
     age: 30,
     gender: "woman",
@@ -164,6 +190,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "linh",
+    into: ["Drinks first", "Daytime", "Discreet"],
     name: "Linh",
     age: 28,
     gender: "woman",
@@ -185,6 +212,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "zanele",
+    into: ["Friends with benefits", "Can host", "Safe sex only"],
     name: "Zanele",
     age: 32,
     gender: "woman",
@@ -205,6 +233,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "camila",
+    into: ["Late nights", "Dancing", "No overnights"],
     name: "Camila",
     age: 24,
     gender: "woman",
@@ -225,6 +254,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "amara",
+    into: ["Drinks first", "Can travel", "Discreet"],
     name: "Amara",
     age: 29,
     gender: "woman",
@@ -246,6 +276,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "chloe",
+    into: ["Friends with benefits", "Daytime", "Open to more than once"],
     name: "Chloé",
     age: 27,
     gender: "woman",
@@ -267,6 +298,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "mateo",
+    into: ["Can host", "Drinks first", "Safe sex only"],
     name: "Mateo",
     age: 31,
     gender: "man",
@@ -288,6 +320,7 @@ export const PROFILES: Profile[] = [
   },
   {
     id: "liam",
+    into: ["Can travel", "Late nights", "Just tonight"],
     name: "Liam",
     age: 29,
     gender: "man",

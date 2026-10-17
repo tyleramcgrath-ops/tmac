@@ -82,4 +82,19 @@ export const SCHEMA = [
     created_at timestamptz not null default now()
   )`,
   `create index if not exists call_signals_idx on call_signals (call_id, id)`,
+  // Free now, Into tags and Discreet mode.
+  `alter table users add column if not exists available_until timestamptz`,
+  `alter table users add column if not exists into_tags text not null default ''`,
+  `alter table users add column if not exists discreet boolean not null default false`,
+  // "Share my plan": a private link a member sends a friend before meeting up.
+  `create table if not exists plans (
+    token text primary key,
+    owner_id text not null references users(id) on delete cascade,
+    match_id text not null references users(id) on delete cascade,
+    place text not null,
+    starts_at timestamptz not null,
+    note text not null default '',
+    created_at timestamptz not null default now(),
+    expires_at timestamptz not null
+  )`,
 ];

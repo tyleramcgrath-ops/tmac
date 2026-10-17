@@ -8,8 +8,12 @@ import emblem from "@/public/brand/emblem.webp";
 const FEATURES = [
   { icon: "🌍", title: "Swipe the world", body: "Right to like, left to pass, on people in every time zone. Match from Medellín to Tokyo." },
   { icon: "📹", title: "Face-to-face video", body: "Matched? Jump on a video call in one tap, right in the app. No numbers swapped, no other apps." },
-  { icon: "🔥", title: "Out tonight", body: "Flip one switch to see only who's free tonight, and let people know you are too." },
+  { icon: "🔥", title: "Free now", body: "Free for the next 2, 4 or 6 hours? Say so. You jump to the front of the deck until the timer runs out." },
   { icon: "✈️", title: "Passport", body: "Swipe in your next city before you land, and have plans waiting when you arrive." },
+  { icon: "💋", title: "What I'm into", body: "Pick what you're up for, from drinks first to can host. Every card shows how much you have in common." },
+  { icon: "🕶️", title: "Discreet mode", body: "Keep your photos hidden from everyone until you match. Locked on our servers, not just blurred." },
+  { icon: "⏳", title: "24-hour matches", body: "Matches close after a day if nobody says hi. No dead chats, just people who mean it." },
+  { icon: "🛡️", title: "Share my plan", body: "Send a friend a private link with who, where and when. It deletes itself 12 hours after." },
 ];
 
 const STEPS = [

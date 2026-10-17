@@ -3,14 +3,15 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { setPassport, setVibe, swipe } from "@/app/actions";
+import { setFreeNowAction, setPassport, swipe } from "@/app/actions";
 import { Avatar } from "@/components/avatar";
 import type { Member, SwipeQuota } from "@/lib/members";
-import { PASSPORT_CITIES, VIBE_EMOJI, VIBE_LABEL, type Vibe } from "@/lib/profiles";
+import { FREE_NOW_HOURS, PASSPORT_CITIES, VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
+import { timeLeft, useNow } from "@/lib/use-now";
 
 const THRESHOLD = 110;
 
-type Me = Pick<Member, "name" | "palette" | "photos" | "premium" | "passport" | "vibe">;
+type Me = Pick<Member, "name" | "palette" | "photos" | "premium" | "passport" | "vibe" | "freeUntil" | "into">;
 type Fly = { dir: 1 | -1 } | null;
 type Limit = "out-of-likes" | "out-of-super-likes" | null;
 
@@ -156,19 +157,7 @@ export function SwipeDeck({
         >
           🔥 Out tonight{tonightOnly ? " ✓" : ""}
         </Link>
-        <label className="ml-auto flex items-center gap-2 text-xs text-ink-mute">
-          You&rsquo;re
-          <select
-            className="field !w-auto !rounded-full !py-1.5 text-xs"
-            defaultValue={me.vibe}
-            onChange={(e) => startTransition(() => setVibe(e.target.value))}
-            aria-label="Your vibe"
-          >
-            {(Object.keys(VIBE_LABEL) as Vibe[]).map((v) => (
-              <option key={v} value={v}>{VIBE_EMOJI[v]} {VIBE_LABEL[v]}</option>
-            ))}
-          </select>
-        </label>
+        <FreeNowControl freeUntil={me.freeUntil} onChange={(h) => startTransition(() => setFreeNowAction(h))} />
       </div>
 
       <div className="relative mt-4 h-[min(60vh,600px)] w-full select-none">
@@ -189,7 +178,7 @@ export function SwipeDeck({
 
         {next && (
           <div className="card absolute inset-0 scale-[0.96] overflow-hidden opacity-90">
-            <CardFace profile={next} />
+            <CardFace profile={next} mine={me.into} />
           </div>
         )}
 
@@ -208,7 +197,7 @@ export function SwipeDeck({
             onPointerUp={onPointerUp}
             onPointerCancel={onPointerUp}
           >
-            <CardFace profile={top} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
+            <CardFace profile={top} mine={me.into} expanded={expanded} onToggle={() => setExpanded((v) => !v)} />
             <span className="pointer-events-none absolute left-6 top-8 -rotate-12 rounded-lg border-4 border-emerald-400 px-3 py-1 text-3xl font-black tracking-wider text-emerald-400" style={{ opacity: likeOpacity }}>
               LIKE
             </span>
@@ -232,16 +221,73 @@ export function SwipeDeck({
   );
 }
 
-function CardFace({ profile: p, expanded = false, onToggle }: { profile: Member; expanded?: boolean; onToggle?: () => void }) {
+// "I'm free now" for 2, 4 or 6 hours, with a live countdown once it's on.
+function FreeNowControl({ freeUntil, onChange }: { freeUntil: string | null; onChange: (hours: number) => void }) {
+  const now = useNow();
+  const left = freeUntil && now ? timeLeft(freeUntil, now) : null;
+  if (freeUntil && (left || !now)) {
+    return (
+      <button
+        type="button"
+        onClick={() => onChange(0)}
+        className="chip ml-auto whitespace-nowrap border border-gold/60 !bg-transparent !text-gold"
+        title="Tap to stop showing as free"
+      >
+        🔥 You&rsquo;re free{left ? ` · ${left} left` : ""} ✕
+      </button>
+    );
+  }
+  return (
+    <label className="ml-auto flex items-center gap-2 text-xs text-ink-mute">
+      <span className="sr-only">Set yourself free now</span>
+      <select
+        className="field !w-auto !rounded-full !py-1.5 text-xs font-semibold"
+        value=""
+        onChange={(e) => e.target.value && onChange(Number(e.target.value))}
+        aria-label="I'm free now"
+      >
+        <option value="">🔥 I&rsquo;m free now…</option>
+        {FREE_NOW_HOURS.map((h) => (
+          <option key={h} value={h}>Free for {h} hours</option>
+        ))}
+      </select>
+    </label>
+  );
+}
+
+function CardFace({
+  profile: p,
+  mine,
+  expanded = false,
+  onToggle,
+}: {
+  profile: Member;
+  mine: string[];
+  expanded?: boolean;
+  onToggle?: () => void;
+}) {
+  const now = useNow();
+  const freeLeft = p.freeUntil && now ? timeLeft(p.freeUntil, now) : null;
+  const shared = p.into.filter((t) => mine.includes(t));
+  const tags = [...shared, ...p.into.filter((t) => !shared.includes(t))].slice(0, 4);
   return (
     <div className="relative h-full w-full">
       <Avatar profile={p} size="lg" />
       <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent p-5 pt-24 text-white">
         <div className="flex flex-wrap gap-1.5">
-          <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold backdrop-blur">
-            {VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}
-          </span>
+          {freeLeft ? (
+            <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold shadow-[0_0_14px_rgb(255_31_143/0.7)]">
+              🔥 Free now · {freeLeft} left
+            </span>
+          ) : (
+            <span className="rounded-full bg-white/20 px-2.5 py-0.5 text-xs font-semibold backdrop-blur">
+              {VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}
+            </span>
+          )}
           {p.verified && <span className="rounded-full bg-sky-500/80 px-2.5 py-0.5 text-xs font-semibold">✓ Verified</span>}
+          {shared.length > 0 && (
+            <span className="rounded-full bg-gold px-2.5 py-0.5 text-xs font-bold">{shared.length} in common</span>
+          )}
         </div>
         <div className="mt-2 flex items-end justify-between gap-3">
           <div>
@@ -264,6 +310,18 @@ function CardFace({ profile: p, expanded = false, onToggle }: { profile: Member;
             </button>
           )}
         </div>
+        {tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-1.5" aria-label="Into">
+            {tags.map((t) => (
+              <span
+                key={t}
+                className={`rounded-full border px-2 py-0.5 text-[11px] ${shared.includes(t) ? "border-accent bg-accent/25 text-white" : "border-white/25 text-white/80"}`}
+              >
+                {t}
+              </span>
+            ))}
+          </div>
+        )}
         {expanded ? (
           <div className="mt-3 max-h-48 space-y-2 overflow-y-auto text-sm">
             {p.bio && <p>{p.bio}</p>}

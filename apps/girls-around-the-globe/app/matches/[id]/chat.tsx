@@ -6,6 +6,7 @@ import { reportAction, send, startCallAction, unmatchAction } from "@/app/action
 import { Avatar } from "@/components/avatar";
 import type { ChatMessage, Member } from "@/lib/members";
 import { scanMessage } from "@/lib/scam-guard";
+import { SharePlan } from "./share-plan";
 
 const POLL_MS = 3000;
 
@@ -15,6 +16,7 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [menu, setMenu] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const lastId = useRef(initialMessages.at(-1)?.id ?? 0);
   const warnings = scanMessage(draft);
@@ -68,12 +70,21 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
         </Link>
         <button
           type="button"
+          onClick={() => setPlanOpen((v) => !v)}
+          aria-expanded={planOpen}
+          className="ml-auto rounded-full border px-3 py-2 text-sm font-semibold hover:bg-surface-2"
+          aria-label="Share my plan with a friend"
+        >
+          🛡️ <span className="hidden sm:inline">Share plan</span>
+        </button>
+        <button
+          type="button"
           onClick={async () => {
             setError("");
             const res = await startCallAction(p.id);
             if (res && !res.ok) setError(res.error);
           }}
-          className="ml-auto flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_-10px_rgb(255_31_143)]"
+          className="flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_-10px_rgb(255_31_143)]"
           aria-label={`Video call ${p.name}`}
         >
           📹 <span className="hidden sm:inline">Video</span>
@@ -99,10 +110,11 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
           )}
         </div>
       </header>
+      {planOpen && <SharePlan matchId={p.id} name={p.name} onClose={() => setPlanOpen(false)} />}
 
       <div className="flex-1 space-y-2 overflow-y-auto px-4 py-4">
         <p className="mx-auto max-w-sm rounded-xl bg-surface-2 px-3 py-2 text-center text-xs text-ink-dim">
-          You matched with {p.name}. Meeting up? Pick a public place first and tell a friend where you&rsquo;re going.
+          You matched with {p.name}. Meeting up? Pick a public place first and use 🛡️ Share plan to tell a friend where you&rsquo;re going.
           We&rsquo;ll never ask you to send money, and neither should a match.
         </p>
         {messages.map((m) => {

@@ -6,6 +6,7 @@ import { one, query } from "@/lib/db";
 import { PREMIUM_NAME, PREMIUM_PRICE_CENTS, siteUrl, stripe } from "@/lib/billing";
 import { countryByCode } from "@/lib/countries";
 import {
+  FREE_NOW_HOURS,
   ageFrom,
   getMember,
   isMatch,
@@ -13,12 +14,14 @@ import {
   recordSwipe,
   report,
   sendMessage,
+  setFreeNow,
   unmatch,
   type SwipeResult,
 } from "@/lib/members";
 import { answerCall, endCall, startCall } from "@/lib/calls";
 import { hashPassword, verifyPassword } from "@/lib/password";
-import { PASSPORT_CITIES, VIBE_LABEL, type Vibe } from "@/lib/profiles";
+import { createPlan } from "@/lib/plans";
+import { INTO_TAGS, PASSPORT_CITIES, VIBE_LABEL, type Vibe } from "@/lib/profiles";
 import { createSession, destroySession, requireUserId, sessionUserId } from "@/lib/session";
 
 export type FormState = { error?: string; ok?: string } | undefined;
@@ -132,10 +135,16 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
   const prompts = [1, 2]
     .map((n) => ({ q: text(form, `q${n}`, 80), a: text(form, `a${n}`, 160) }))
     .filter((p) => p.q && p.a);
+  // Only tags from the fixed list are kept.
+  const into = form
+    .getAll("into")
+    .map(String)
+    .filter((t): t is (typeof INTO_TAGS)[number] => (INTO_TAGS as readonly string[]).includes(t));
 
   await query(
     `update users set bio = $2, show_me = $3, vibe = $4, city = $5, country = $6, flag = $7,
-       languages = $8, interests = $9, occupation = $10, traveling = $11, prompts = $12
+       languages = $8, interests = $9, occupation = $10, traveling = $11, prompts = $12,
+       into_tags = $13, discreet = $14
      where id = $1`,
     [
       id,
@@ -150,10 +159,33 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
       text(form, "occupation", 60),
       text(form, "traveling", 80) || null,
       JSON.stringify(prompts),
+      [...new Set(into)].join(", "),
+      form.get("discreet") === "on",
     ],
   );
   revalidatePath("/me");
   return { ok: "Profile saved." };
+}
+
+export async function setFreeNowAction(hours: number) {
+  const id = await requireUserId("/swipe");
+  const valid = (FREE_NOW_HOURS as readonly number[]).includes(Number(hours)) ? Number(hours) : null;
+  await setFreeNow(id, valid);
+  revalidatePath("/swipe");
+}
+
+export async function sharePlanAction(
+  matchId: string,
+  input: { place: string; startsAt: string; note?: string },
+): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
+  const me = await sessionUserId();
+  if (!me) return { ok: false, error: "Not signed in." };
+  const res = await createPlan(me, String(matchId), {
+    place: String(input?.place ?? ""),
+    startsAt: String(input?.startsAt ?? ""),
+    note: String(input?.note ?? ""),
+  });
+  return res.ok ? { ok: true, url: `${siteUrl()}/plan/${res.token}` } : res;
 }
 
 // ---------- Swiping ----------

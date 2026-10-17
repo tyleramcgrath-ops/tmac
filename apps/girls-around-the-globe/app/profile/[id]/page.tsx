@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Avatar } from "@/components/avatar";
-import { getMember } from "@/lib/members";
+import { getMember, isMatch, viewMember } from "@/lib/members";
 import { VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
 import { requireUserId } from "@/lib/session";
 import { one } from "@/lib/db";
@@ -16,12 +16,15 @@ export const metadata: Metadata = {
 export default async function ProfilePage({ params }: PageProps<"/profile/[id]">) {
   const { id } = await params;
   const me = await requireUserId(`/profile/${id}`);
-  const p = await getMember(id);
+  // Discreet members' photos stay hidden until you match.
+  const p = await viewMember(me, id);
   if (!p) notFound();
+  const mine = id === me ? p.into : ((await getMember(me))?.into ?? []);
+  const common = new Set(p.into.filter((t) => mine.includes(t)));
 
   const swiped = await one<{ liked: boolean }>("select liked from swipes where swiper_id = $1 and target_id = $2", [me, id]);
-  const theyLiked = await one("select 1 from swipes where swiper_id = $1 and target_id = $2 and liked", [id, me]);
-  const status = id === me ? "self" : swiped?.liked && theyLiked ? "matched" : swiped ? "swiped" : "open";
+  const status = id === me ? "self" : (await isMatch(me, id)) ? "matched" : swiped ? "swiped" : "open";
+  const freeNow = !!p.freeUntil; // only set while it hasn't run out
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
@@ -58,10 +61,29 @@ export default async function ProfilePage({ params }: PageProps<"/profile/[id]">
               ) : (
                 <span className="chip !bg-warn/10 !text-warn">Not yet verified</span>
               )}
-              <span className="chip !bg-accent-soft !text-accent-deep">{VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}</span>
+              {freeNow ? (
+                <span className="chip !bg-accent !text-white">🔥 Free now</span>
+              ) : (
+                <span className="chip !bg-accent-soft !text-accent-deep">{VIBE_EMOJI[p.vibe]} {VIBE_LABEL[p.vibe]}</span>
+              )}
+              {p.discreet && <span className="chip">🕶️ Discreet</span>}
               {p.traveling && <span className="chip">✈️ {p.traveling}</span>}
             </div>
           </div>
+
+          {p.into.length > 0 && (
+            <section className="card p-6">
+              <h2 className="font-semibold">
+                Into{" "}
+                {id !== me && common.size > 0 && <span className="text-gold text-sm font-bold">· {common.size} in common</span>}
+              </h2>
+              <div className="mt-2 flex flex-wrap gap-1.5">
+                {p.into.map((t) => (
+                  <span key={t} className={`chip ${common.has(t) && id !== me ? "!bg-accent-soft !text-accent-deep" : ""}`}>{t}</span>
+                ))}
+              </div>
+            </section>
+          )}
 
           {p.bio && (
             <section className="card p-6">

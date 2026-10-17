@@ -30,6 +30,25 @@ Twelve fictional **sample members** are loaded on first start so a new site
 has people to swipe on. Some of them "like back" and send a canned reply, so
 you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
 
+## Hookup features
+
+Things Tinder and Bumble don't do, built for casual meetups:
+
+- **Free now** (🔥 on the swipe screen): say you're free for 2, 4 or 6 hours.
+  Your card shows a countdown, jumps ahead of everyone else in other people's
+  decks, and counts for the "Out tonight" filter. It switches itself off.
+- **What I'm into**: pick from a fixed list of tags (drinks first, can host,
+  discreet, safe sex only, …). Cards show the tags and how many you share.
+- **Discreet mode**: hides your photos from everyone except your matches. It's
+  enforced by the server: the deck, likes page and profile never send the
+  photo URLs, and `/api/photos/[id]` returns 404 to anyone you haven't matched.
+- **24-hour matches**: a match closes if nobody sends a message within 24
+  hours. Once someone says hi, it stays.
+- **Share my plan** (🛡️ in a chat): creates a private, unguessable link
+  (`/plan/[token]`, `lib/plans.ts`) for a friend with the match's first name,
+  age and city, the place and time, and an optional note. No photos, no
+  surname, not indexed, and it stops working 12 hours after the meetup.
+
 ## Video chat
 
 Matches can video call each other from the chat screen (📹 Video). An incoming
