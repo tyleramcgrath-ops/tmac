@@ -28,6 +28,7 @@ while ( have_posts() ) :
 
 <section class="hero hero--md">
 	<?php echo whr_post_image( null, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+	<?php echo whr_google_photo_slot(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>
 	<div class="hero__shade"></div>
 	<div class="hero__body">
 		<?php if ( $dest ) : ?>

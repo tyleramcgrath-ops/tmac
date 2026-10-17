@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WHR_VERSION', '1.2.1' );
+define( 'WHR_VERSION', '1.2.2' );
 define( 'WHR_DIR', get_template_directory() );
 define( 'WHR_URI', get_template_directory_uri() );
 
@@ -21,3 +21,4 @@ require WHR_DIR . '/inc/customizer.php';
 require WHR_DIR . '/inc/demo-content.php';
 require WHR_DIR . '/inc/importer.php';
 require WHR_DIR . '/inc/plans.php';
+require WHR_DIR . '/inc/google-photos.php';

@@ -64,6 +64,7 @@ function whr_sanctuary_fields() {
 		'whr_source'            => array( __( 'Data source', 'wehaverehabs' ), 'text', __( 'samhsa, cqc, web or manual.', 'wehaverehabs' ), 'listing' ),
 		'whr_source_id'         => array( __( 'Source ID', 'wehaverehabs' ), 'text', '', 'listing' ),
 		'whr_source_url'        => array( __( 'Source page', 'wehaverehabs' ), 'url', '', 'listing' ),
+		'whr_gplace'            => array( __( 'Google Place ID (photo)', 'wehaverehabs' ), 'text', __( 'Found automatically when the page is first viewed. Type none to hide the Google photo, or paste the correct Place ID if it shows the wrong place.', 'wehaverehabs' ), 'listing' ),
 		'whr_source_date'       => array( __( 'Source retrieved', 'wehaverehabs' ), 'date', '', 'listing' ),
 	);
 }

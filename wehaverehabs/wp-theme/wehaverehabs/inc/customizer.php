@@ -28,6 +28,8 @@ function whr_customizer_settings() {
 		'price_featured'  => array( __( 'Plans: Featured price (e.g. $399 / month)', 'wehaverehabs' ), '', 'text' ),
 		'stripe_signature' => array( __( 'Plans: Stripe Payment Link for Signature', 'wehaverehabs' ), '', 'url' ),
 		'stripe_featured'  => array( __( 'Plans: Stripe Payment Link for Featured', 'wehaverehabs' ), '', 'url' ),
+		'google_places_key'       => array( __( 'Photos: Google Places API key', 'wehaverehabs' ), '', 'secret' ),
+		'google_places_daily_cap' => array( __( 'Photos: most Google photo lookups per day', 'wehaverehabs' ), '1000', 'secret' ),
 		'stripe_webhook_secret' => array( __( 'Plans: Stripe webhook signing secret (whsec_…)', 'wehaverehabs' ), '', 'secret' ),
 	);
 }
@@ -46,6 +48,9 @@ add_action(
 			);
 			$wp_customize->add_setting( 'whr_' . $key, array( 'default' => $s[1], 'sanitize_callback' => $sanitize[ $s[2] ] ) );
 			$control = array( 'label' => $s[0], 'section' => 'whr', 'type' => 'secret' === $s[2] ? 'text' : $s[2] );
+			if ( 'google_places_key' === $key ) {
+				$control['description'] = __( 'Shows each facility’s Google Maps photo (with its photographer credit) on listings without photos of their own. Create a key in Google Cloud with “Places API (New)” enabled; Google bills per lookup after its monthly free allowance. Restrict the key to Places API (New).', 'wehaverehabs' );
+			}
 			if ( 'stripe_webhook_secret' === $key ) {
 				/* translators: %s: webhook URL */
 				$control['description'] = sprintf( __( 'In Stripe → Developers → Webhooks, add the endpoint %s with the events checkout.session.completed, invoice.paid and customer.subscription.deleted, then paste its signing secret here.', 'wehaverehabs' ), rest_url( 'whr/v1/stripe' ) );

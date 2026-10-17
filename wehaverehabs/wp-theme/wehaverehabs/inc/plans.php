@@ -119,7 +119,7 @@ function whr_plan_fields() {
  * @return string[]
  */
 function whr_staff_only_fields() {
-	return array( 'whr_sponsored', 'whr_featured', 'whr_license_checked', 'whr_claimed', 'whr_source', 'whr_source_id', 'whr_source_url', 'whr_source_date', 'whr_lat', 'whr_lng', 'whr_plan', 'whr_plan_until' );
+	return array( 'whr_sponsored', 'whr_featured', 'whr_license_checked', 'whr_claimed', 'whr_source', 'whr_source_id', 'whr_source_url', 'whr_source_date', 'whr_lat', 'whr_lng', 'whr_plan', 'whr_plan_until', 'whr_gplace' );
 }
 
 /**

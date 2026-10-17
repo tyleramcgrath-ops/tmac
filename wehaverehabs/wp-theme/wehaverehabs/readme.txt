@@ -47,6 +47,12 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   on, renewals extend it, cancelling returns the listing to Essential. You can also set a plan and
   "paid until" date by hand on any listing (Plan & billing box). Sanctuaries → Plans & upgrades
   lists paying listings.
+* Facility photos from Google Maps: add a Google Places API key (Places API (New)) in Appearance →
+  Customize → We Have Rehabs. Listings without photos of their own then show the facility's Google
+  Maps photo with its photographer credit, fetched live when the page is viewed (Google does not
+  allow copying or storing these photos; only the Place ID is saved). Google bills per lookup after
+  its monthly free allowance; "most lookups per day" (default 1000) caps it. If a listing shows the
+  wrong place, edit its "Google Place ID" field (type none to hide the photo).
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,
   book-a-call link, contact email, crisis-line text, helplines link, plan prices.

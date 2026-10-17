@@ -19,6 +19,12 @@ $details = whr_listing_facts();
 ?>
 
 <section class="hero hero--sm hero--plain">
+	<?php
+	$gphoto = whr_google_photo_slot();
+	if ( $gphoto ) {
+		echo $gphoto . '<div class="hero__shade whr-gphoto-shade"></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
+	}
+	?>
 	<div class="hero__body">
 		<?php if ( $dest ) : ?>
 			<nav class="breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wehaverehabs' ); ?>">

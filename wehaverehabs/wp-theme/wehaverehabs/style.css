@@ -3,7 +3,7 @@ Theme Name: We Have Rehabs
 Theme URI: https://wehaverehabs.com
 Author: We Have Rehabs
 Description: Boutique directory theme for holistic mental-health and recovery sanctuaries worldwide. Includes the Sanctuary post type, destination guides, filtered search, inquiry handling and demo content.
-Version: 1.2.1
+Version: 1.2.2
 Requires at least: 6.3
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -494,3 +494,14 @@ h1 em, h2 em, h3 em, p em { font-style: italic; }
 .card__meta .verified::before { content: "✓ "; }
 .plan-steps { max-width: 760px; margin: 40px auto 0; padding-left: 22px; color: var(--on-dark-softer); font-size: 15px; }
 .plan-steps li { margin-bottom: 8px; }
+/* Google Maps photo, filled in after load */
+.whr-gphoto { animation: whr-fade .8s ease; }
+@keyframes whr-fade { from { opacity: 0; } to { opacity: 1; } }
+.whr-gphoto-shade { display: none; }
+.hero.has-photo .whr-gphoto-shade { display: block; }
+.hero--plain.has-photo { background: var(--forest-deep); }
+.hero--plain.has-photo::before { display: none; }
+.hero--sm.hero--plain.has-photo { min-height: 520px; }
+.hero.has-photo .whr-placeholder { display: none; }
+.whr-gphoto-credit { position: absolute; z-index: 2; right: 16px; bottom: 10px; margin: 0; font-size: 11px; color: rgba(255,255,255,.75); text-shadow: 0 1px 2px rgba(0,0,0,.5); }
+.whr-gphoto-credit a { color: inherit; }
