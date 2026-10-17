@@ -8,7 +8,7 @@ const STEPS = [
   {
     n: "01",
     title: "Make your profile",
-    body: "A few photos, where you're from, the languages you speak, and what you're in the mood for.",
+    body: "A few photos, where you are, and what you're in the mood for: tonight, this weekend, or while you're travelling.",
   },
   {
     n: "02",
@@ -18,13 +18,13 @@ const STEPS = [
   {
     n: "03",
     title: "Match and chat",
-    body: "When you both swipe right, it's a match. Chat with built-in translation and meet up when you're ready.",
+    body: "When you both swipe right, it's a match. Chat, set the vibe, and meet up when you're both ready.",
   },
 ];
 
 const PILLARS = [
-  { title: "Verified profiles", body: "Selfie and ID checks mean the person you match with is who they say they are." },
-  { title: "Built-in translation", body: "Chat in your language. We translate both sides so nothing gets lost across borders." },
+  { title: "Casual, upfront", body: "Everyone here is after the same thing: no-strings fun. Nobody has to guess what you're looking for." },
+  { title: "Report & block in one tap", body: "Anyone who makes you uncomfortable is one tap from gone, and a person reviews every report." },
   { title: "Scam shield", body: "Messages asking for money, gift cards, crypto or payment get flagged before you reply." },
   { title: "Adults only, always", body: "Strictly 18+, consent first, and no paid arrangements. Breaking that means a permanent ban." },
 ];
@@ -40,20 +40,20 @@ export default async function Home() {
       <section className="overflow-hidden">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-16 pt-12 sm:px-6 lg:grid-cols-[1.15fr_1fr] lg:pt-20">
           <div>
-            <p className="chip !bg-accent-soft !text-accent-deep">🌍 Singles in 60+ countries</p>
+            <p className="chip !bg-accent-soft !text-accent-deep">🌍 Casual encounters, worldwide</p>
             <h1 className="mt-5 font-display text-5xl font-semibold leading-[1.05] tracking-tight sm:text-6xl">
               Swipe right on <em className="text-sunset">the whole world.</em>
             </h1>
             <p className="mt-5 max-w-xl text-lg text-ink-dim">
-              Girls Around the Globe is international dating with a swipe. Match with people from
-              Medellín to Tokyo, chat with built-in translation, and line up a date before your
-              flight even lands.
+              Girls Around the Globe is for casual encounters, nothing more. Swipe on people from
+              Medellín to Tokyo who want the same no-strings fun you do, and line something up before
+              your flight even lands.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/join" className="btn btn-primary">Create your free profile</Link>
               <Link href="/swipe" className="btn btn-ghost">Start swiping</Link>
             </div>
-            <p className="mt-4 text-xs text-ink-mute">Free to join · 18+ only · Verified members</p>
+            <p className="mt-4 text-xs text-ink-mute">Free to join · 18+ only · No strings attached</p>
           </div>
 
           {/* Phone mockup */}
@@ -94,8 +94,8 @@ export default async function Home() {
               <p className="text-xs text-ink-dim">Elena 🇵🇹 liked you back</p>
             </div>
             <div className="card absolute -right-14 bottom-28 hidden px-4 py-3 text-sm sm:block">
-              <p className="text-xs text-ink-dim">🌐 Translated from Spanish</p>
-              <p className="font-semibold">&ldquo;When do you land? 😊&rdquo;</p>
+              <p className="text-xs text-ink-dim">Valentina 🇨🇴</p>
+              <p className="font-semibold">&ldquo;Drinks when you land? 😏&rdquo;</p>
             </div>
           </div>
         </div>

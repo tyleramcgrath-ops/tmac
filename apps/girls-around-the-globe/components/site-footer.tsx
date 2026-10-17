@@ -10,7 +10,7 @@ export function SiteFooter() {
             <Logo size={26} /> Girls Around the Globe
           </p>
           <p className="mt-2 max-w-xs">
-            International dating for adults 18+. Consent first, verified members, and no paid
+            Casual encounters for adults 18+, around the world. Consent first, and no paid
             arrangements, ever.
           </p>
         </div>

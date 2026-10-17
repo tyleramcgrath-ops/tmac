@@ -19,9 +19,9 @@ const manrope = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Girls Around the Globe — Swipe right on the whole world",
+  title: "Girls Around the Globe — Casual encounters, worldwide",
   description:
-    "International dating with a swipe. Match with verified singles from every corner of the world, chat with built-in translation, and line up a date before you land.",
+    "Casual encounters, worldwide. Swipe on adults who want no-strings fun, from Medellín to Tokyo, and line something up before you land.",
 };
 
 export default function RootLayout({

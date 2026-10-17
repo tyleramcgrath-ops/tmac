@@ -102,6 +102,7 @@ export function JoinForm() {
         <h2 className="font-display text-2xl font-semibold">The ground rules</h2>
         <ul className="space-y-2 text-sm text-ink-dim">
           <li>✓ I&rsquo;m 18 or older and my photos are really me.</li>
+          <li>✓ I&rsquo;m here for casual encounters, and I&rsquo;ll be upfront about what I want.</li>
           <li>✓ Consent comes first, every time, and it can be withdrawn at any time.</li>
           <li>✓ No paid or transactional arrangements of any kind.</li>
           <li>✓ I won&rsquo;t ask anyone for money, and I&rsquo;ll report anyone who asks me.</li>

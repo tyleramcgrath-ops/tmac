@@ -1,8 +1,10 @@
 # Girls Around the Globe
 
-International dating with a swipe. Match with people from every country, use
+Casual encounters, worldwide. Swipe on adults who want no-strings fun, use
 Passport to swipe in a city before you travel there, chat with your matches,
-and upgrade to **Globe+** for premium features.
+and upgrade to **Globe+** for premium features. The site is strictly for casual
+meetups between consenting adults: no relationship or marriage modes, and no
+paid arrangements.
 
 ## What works
 

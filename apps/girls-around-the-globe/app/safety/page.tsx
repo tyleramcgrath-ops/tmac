@@ -24,6 +24,7 @@ const RED_FLAGS = [
 
 const GUIDELINES = [
   { title: "18+ only", body: "Anyone under 18 is removed immediately and reported where the law requires." },
+  { title: "Casual, and upfront about it", body: "This site is for casual encounters only. Say what you want plainly, and take no for an answer." },
   { title: "Consent, always", body: "Enthusiastic, ongoing and freely given. \"No\", silence or a change of mind ends things. Pressure gets you banned." },
   { title: "No paid arrangements", body: "No escorting, sugar arrangements, or selling or buying sex or content. Profiles and messages that suggest it are removed." },
   { title: "Be real", body: "Your own photos, your real age, your real location. No impersonation, no catfishing." },
