@@ -203,8 +203,14 @@ function whr_fetch_destination_photo( $term ) {
 	require_once ABSPATH . 'wp-admin/includes/media.php';
 	require_once ABSPATH . 'wp-admin/includes/file.php';
 	require_once ABSPATH . 'wp-admin/includes/image.php';
+	// Keep only the sizes tiles and heroes use (about 300 destinations; keeps the uploads folder small).
+	$sizes = function ( $all ) {
+		return array_intersect_key( $all, array_flip( array( 'whr-card', 'whr-wide' ) ) );
+	};
+	add_filter( 'intermediate_image_sizes_advanced', $sizes );
 	/* translators: %s: place */
 	$id = media_sideload_image( $pick['url'], 0, sprintf( __( 'Landscape of %s', 'wehaverehabs' ), $term->name ), 'id' );
+	remove_filter( 'intermediate_image_sizes_advanced', $sizes );
 	if ( is_wp_error( $id ) ) {
 		update_term_meta( $term->term_id, 'whr_image_none', 1 );
 		return false;

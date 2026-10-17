@@ -54,6 +54,11 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   allow copying or storing these photos; only the Place ID is saved). Google bills per lookup after
   its monthly free allowance; "most lookups per day" (default 2000) caps it. If a listing shows the
   wrong place, edit its "Google Place ID" field (type none to hide the photo).
+* Destination photos: after the listings import, the site adds a landscape photo to each country
+  and region in the background, from Wikimedia Commons ("Landscapes of <place>", freely licensed
+  CC BY / BY-SA / CC0 / public domain), with the photographer credit shown on the photo. Regions
+  without one use their country's. Listings without photos show their region's landscape, credited
+  "Photo of <place>". Replace any photo on the destination's edit screen.
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,
   book-a-call link, contact email, crisis-line text, helplines link, plan prices.
