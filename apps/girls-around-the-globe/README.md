@@ -35,7 +35,9 @@ you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
 "It's always night somewhere": a dark after-hours look (violet-black, hot
 magenta and amber neon, soft glow and film grain), Fraunces italic for display
 type, and a live world clock on the homepage that lights up the Passport cities
-where it's currently night out (8pm–4am local). On the swipe screen, **Out
+where it's currently night out (8pm–4am local). The logo, "Night Globe", is a crescent
+moon whose lit side is a globe, with a spark of a star (`components/logo.tsx`,
+`app/icon.svg`, `app/apple-icon.png`, and the share image `app/opengraph-image.png`). On the swipe screen, **Out
 tonight** filters the deck to people who are free tonight, and members can
 change their own vibe in one tap.
 

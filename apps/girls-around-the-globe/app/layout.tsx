@@ -19,6 +19,8 @@ const manrope = localFont({
 });
 
 export const metadata: Metadata = {
+  // Absolute base for the social share image; set SITE_URL in production.
+  metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
   title: "Girls Around the Globe — Casual encounters, worldwide",
   description:
     "Casual encounters, worldwide. Swipe on adults who want no-strings fun, from Medellín to Tokyo, and line something up before you land.",
