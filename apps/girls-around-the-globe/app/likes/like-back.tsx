@@ -12,7 +12,7 @@ export function LikeBackButtons({ id, name }: { id: string; name: string }) {
 
   if (matched) {
     return (
-      <Link href={`/matches/${id}`} className="block bg-sunset py-2 text-center text-sm font-semibold text-white">
+      <Link href={`/matches/${id}`} className="block bg-sunset py-2 text-center text-sm font-semibold text-on-accent">
         Matched! Message {name}
       </Link>
     );

@@ -4,7 +4,7 @@ import { startTransition, useActionState } from "react";
 import { updateProfile } from "@/app/actions";
 import { COUNTRIES } from "@/lib/countries";
 import type { Member } from "@/lib/members";
-import { VIBE_EMOJI, VIBE_LABEL, type Vibe } from "@/lib/profiles";
+import { INTO_TAGS, VIBES, VIBE_LABEL } from "@/lib/profiles";
 
 export function ProfileForm({ me, countryCode }: { me: Member; countryCode: string }) {
   const [state, action, pending] = useActionState(updateProfile, undefined);
@@ -47,10 +47,10 @@ export function ProfileForm({ me, countryCode }: { me: Member; countryCode: stri
           </select>
         </label>
         <label className="block">
-          <span className="mb-1 block text-sm font-semibold">I&rsquo;m in the mood for</span>
+          <span className="mb-1 block text-sm font-semibold">I&rsquo;m looking for</span>
           <select name="vibe" defaultValue={me.vibe} className="field">
-            {(Object.keys(VIBE_LABEL) as Vibe[]).map((v) => (
-              <option key={v} value={v}>{VIBE_EMOJI[v]} {VIBE_LABEL[v]}</option>
+            {VIBES.map((v) => (
+              <option key={v} value={v}>{VIBE_LABEL[v]}</option>
             ))}
           </select>
         </label>
@@ -82,6 +82,29 @@ export function ProfileForm({ me, countryCode }: { me: Member; countryCode: stri
           </div>
         ))}
       </fieldset>
+
+      <fieldset>
+        <legend className="text-sm font-semibold">Life &amp; plans</legend>
+        <p className="text-xs text-ink-mute">Shown on your card. People see how many you have in common.</p>
+        <div className="mt-2 flex flex-wrap gap-2">
+          {INTO_TAGS.map((tag) => (
+            <label key={tag} className="cursor-pointer">
+              <input type="checkbox" name="into" value={tag} defaultChecked={me.into.includes(tag)} className="peer sr-only" />
+              <span className="chip peer-checked:!bg-accent peer-checked:!text-on-accent peer-focus-visible:ring-2 peer-focus-visible:ring-accent">{tag}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+
+      <label className="card flex cursor-pointer items-start gap-3 p-4">
+        <input type="checkbox" name="discreet" defaultChecked={me.discreet} className="mt-1 h-4 w-4 accent-[var(--color-accent)]" />
+        <span>
+          <span className="block text-sm font-semibold">Private photos</span>
+          <span className="block text-sm text-ink-dim">
+            Hide your photos from everyone until you match. Your card still shows your name, age, city and tags.
+          </span>
+        </span>
+      </label>
 
       {state?.error && <p className="rounded-lg bg-accent-soft px-3 py-2 text-sm text-accent-deep" role="alert">{state.error}</p>}
       {state?.ok && <p className="rounded-lg bg-ok/10 px-3 py-2 text-sm text-ok" role="status">{state.ok}</p>}

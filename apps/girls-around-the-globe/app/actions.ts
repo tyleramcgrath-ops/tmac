@@ -6,6 +6,7 @@ import { one, query } from "@/lib/db";
 import { PREMIUM_NAME, PREMIUM_PRICE_CENTS, siteUrl, stripe } from "@/lib/billing";
 import { countryByCode } from "@/lib/countries";
 import {
+  FREE_NOW_HOURS,
   ageFrom,
   getMember,
   isMatch,
@@ -13,18 +14,20 @@ import {
   recordSwipe,
   report,
   sendMessage,
+  setFreeNow,
   unmatch,
   type SwipeResult,
 } from "@/lib/members";
+import { answerCall, endCall, startCall } from "@/lib/calls";
 import { hashPassword, verifyPassword } from "@/lib/password";
-import { PASSPORT_CITIES, VIBE_LABEL, type Vibe } from "@/lib/profiles";
+import { createPlan } from "@/lib/plans";
+import { INTO_TAGS, PASSPORT_CITIES, VIBES } from "@/lib/profiles";
 import { createSession, destroySession, requireUserId, sessionUserId } from "@/lib/session";
 
 export type FormState = { error?: string; ok?: string } | undefined;
 
 const GENDERS = ["woman", "man", "nonbinary"] as const;
 const SHOW_ME = ["women", "men", "everyone"] as const;
-const VIBES = Object.keys(VIBE_LABEL) as Vibe[];
 
 function text(form: FormData, key: string, max: number): string {
   return String(form.get(key) ?? "").trim().slice(0, max);
@@ -52,6 +55,7 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
   const city = text(form, "city", 60);
   const country = countryByCode(text(form, "country", 2));
   const bio = text(form, "bio", 300);
+  const vibe = pick(text(form, "looking", 20), VIBES) ?? "relationship";
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { error: "Enter a valid email address." };
   if (password.length < 8) return { error: "Use a password with at least 8 characters." };
@@ -72,9 +76,9 @@ export async function signup(_prev: FormState, form: FormData): Promise<FormStat
 
   const id = newId();
   await query(
-    `insert into users (id, email, password_hash, name, birthdate, gender, show_me, city, country, flag, bio)
-     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)`,
-    [id, email, await hashPassword(password), name, birthdate, gender, showMe, city, country.name, country.flag, bio],
+    `insert into users (id, email, password_hash, name, birthdate, gender, show_me, city, country, flag, bio, vibe)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)`,
+    [id, email, await hashPassword(password), name, birthdate, gender, showMe, city, country.name, country.flag, bio, vibe],
   );
   await createSession(id);
   redirect("/me?welcome=1");
@@ -126,15 +130,21 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
   const vibe = pick(text(form, "vibe", 30), VIBES);
   const country = countryByCode(text(form, "country", 2));
   const city = text(form, "city", 60);
-  if (!showMe || !vibe || !country || !city) return { error: "Fill in your city, country, vibe and who you'd like to see." };
+  if (!showMe || !vibe || !country || !city) return { error: "Fill in your city, country, what you're looking for and who you'd like to see." };
 
   const prompts = [1, 2]
     .map((n) => ({ q: text(form, `q${n}`, 80), a: text(form, `a${n}`, 160) }))
     .filter((p) => p.q && p.a);
+  // Only tags from the fixed list are kept.
+  const into = form
+    .getAll("into")
+    .map(String)
+    .filter((t): t is (typeof INTO_TAGS)[number] => (INTO_TAGS as readonly string[]).includes(t));
 
   await query(
     `update users set bio = $2, show_me = $3, vibe = $4, city = $5, country = $6, flag = $7,
-       languages = $8, interests = $9, occupation = $10, traveling = $11, prompts = $12
+       languages = $8, interests = $9, occupation = $10, traveling = $11, prompts = $12,
+       into_tags = $13, discreet = $14
      where id = $1`,
     [
       id,
@@ -149,10 +159,33 @@ export async function updateProfile(_prev: FormState, form: FormData): Promise<F
       text(form, "occupation", 60),
       text(form, "traveling", 80) || null,
       JSON.stringify(prompts),
+      [...new Set(into)].join(", "),
+      form.get("discreet") === "on",
     ],
   );
   revalidatePath("/me");
   return { ok: "Profile saved." };
+}
+
+export async function setFreeNowAction(hours: number) {
+  const id = await requireUserId("/swipe");
+  const valid = (FREE_NOW_HOURS as readonly number[]).includes(Number(hours)) ? Number(hours) : null;
+  await setFreeNow(id, valid);
+  revalidatePath("/swipe");
+}
+
+export async function sharePlanAction(
+  matchId: string,
+  input: { place: string; startsAt: string; note?: string },
+): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
+  const me = await sessionUserId();
+  if (!me) return { ok: false, error: "Not signed in." };
+  const res = await createPlan(me, String(matchId), {
+    place: String(input?.place ?? ""),
+    startsAt: String(input?.startsAt ?? ""),
+    note: String(input?.note ?? ""),
+  });
+  return res.ok ? { ok: true, url: `${siteUrl()}/plan/${res.token}` } : res;
 }
 
 // ---------- Swiping ----------
@@ -162,14 +195,6 @@ export async function swipe(targetId: string, liked: boolean, isSuper = false): 
   const me = id ? await getMember(id) : null;
   if (!me) return { ok: false, reason: "not-found" };
   return recordSwipe(me, String(targetId), !!liked, !!isSuper);
-}
-
-export async function setVibe(vibe: string) {
-  const id = await requireUserId("/swipe");
-  const valid = pick(String(vibe), VIBES);
-  if (!valid) return;
-  await query("update users set vibe = $2 where id = $1", [id, valid]);
-  revalidatePath("/swipe");
 }
 
 export async function setPassport(city: string | null) {
@@ -255,4 +280,25 @@ export async function demoUpgrade() {
   const id = await requireUserId("/premium");
   await query("update users set premium_until = now() + interval '30 days' where id = $1", [id]);
   redirect("/premium?success=1");
+}
+
+// ---------- Video calls ----------
+
+export async function startCallAction(otherId: string): Promise<{ ok: false; error: string } | never> {
+  const me = await requireUserId("/matches");
+  const res = await startCall(me, String(otherId));
+  if (!res.ok) return { ok: false, error: res.reason };
+  redirect(`/call/${res.callId}`);
+}
+
+export async function answerCallAction(callId: string): Promise<{ ok: boolean; error?: string }> {
+  const me = await sessionUserId();
+  if (!me) return { ok: false, error: "Not signed in." };
+  const res = await answerCall(me, String(callId));
+  return res.ok ? { ok: true } : { ok: false, error: res.reason };
+}
+
+export async function endCallAction(callId: string) {
+  const me = await sessionUserId();
+  if (me) await endCall(me, String(callId));
 }

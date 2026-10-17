@@ -1,12 +1,15 @@
 import "server-only";
 import { randomBytes } from "node:crypto";
 import { one, query } from "./db";
-import type { Vibe } from "./profiles";
+import { INTO_TAGS, VIBES, type Vibe } from "./profiles";
+export { FREE_NOW_HOURS } from "./profiles";
 
 export const FREE_DAILY_LIKES = 25;
 export const FREE_DAILY_SUPER_LIKES = 1;
 export const PREMIUM_DAILY_SUPER_LIKES = 5;
 export const MAX_PHOTOS = 6;
+// A match closes if nobody says hi within this window.
+export const MATCH_TTL_HOURS = 24;
 
 export type Member = {
   id: string;
@@ -31,6 +34,12 @@ export type Member = {
   premium: boolean;
   passport: string | null;
   lastActive: string;
+  // ISO time the member's "Free to video chat" status runs out, or null.
+  freeUntil: string | null;
+  into: string[];
+  discreet: boolean;
+  // True when this viewer can't see the photos yet (Discreet, not matched).
+  photosHidden: boolean;
 };
 
 type UserRow = {
@@ -56,6 +65,9 @@ type UserRow = {
   premium_until: string | Date | null;
   last_active: string | Date;
   photo_ids: string[] | null;
+  available_until: string | Date | null;
+  into_tags: string;
+  discreet: boolean;
 };
 
 const SELECT = `
@@ -101,25 +113,45 @@ function toMember(r: UserRow): Member {
     country: r.country,
     flag: r.flag,
     bio: r.bio,
-    vibe: r.vibe,
+    vibe: VIBES.includes(r.vibe) ? r.vibe : "relationship",
     languages: split(r.languages),
     interests: split(r.interests),
     occupation: r.occupation,
     traveling: r.traveling,
     prompts: Array.isArray(prompts) ? prompts : [],
-    palette: [a ?? "#e8436a", b ?? "#1b1838"],
+    palette: [a ?? "#b98a45", b ?? "#2a2018"],
     verified: r.verified,
     isSeed: r.is_seed,
     photos: (r.photo_ids ?? []).map((id) => `/api/photos/${id}`),
     premium: !!r.premium_until && new Date(r.premium_until) > new Date(),
     passport: r.passport,
     lastActive: r.is_seed ? "Active today" : activeLabel(r.last_active),
+    freeUntil:
+      r.available_until && new Date(r.available_until).getTime() > Date.now()
+        ? new Date(r.available_until).toISOString()
+        : null,
+    // Only tags from the current list; retired ones quietly drop off.
+    into: split(r.into_tags ?? "").filter((t) => (INTO_TAGS as readonly string[]).includes(t)),
+    discreet: !!r.discreet,
+    photosHidden: false,
   };
+}
+
+// Discreet members' photos stay hidden from anyone they haven't matched with.
+function hidePhotos(m: Member): Member {
+  return m.discreet ? { ...m, photos: [], photosHidden: true } : m;
 }
 
 export async function getMember(id: string): Promise<Member | null> {
   const row = await one<UserRow>(`${SELECT} where u.id = $1`, [id]);
   return row ? toMember(row) : null;
+}
+
+// A member as seen by someone else: Discreet photos only after a match.
+export async function viewMember(viewerId: string, id: string): Promise<Member | null> {
+  const m = await getMember(id);
+  if (!m || viewerId === id || !m.discreet) return m;
+  return (await isMatch(viewerId, id)) ? m : hidePhotos(m);
 }
 
 export async function touch(id: string) {
@@ -129,9 +161,9 @@ export async function touch(id: string) {
 const GENDER_FOR_SHOW_ME = { women: "woman", men: "man" } as const;
 
 // People the member hasn't swiped on yet, who are open to the member's gender.
-// Real members come first, most recently active first; sample members follow
-// in their seeded order.
-export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: boolean } = {}): Promise<Member[]> {
+// Real members come first (anyone free to video chat at the top, then most recently
+// active); sample members follow in their seeded order.
+export async function deckFor(me: Member, limit = 20, opts: { freeNowOnly?: boolean } = {}): Promise<Member[]> {
   const params: unknown[] = [me.id, me.gender === "woman" ? "women" : me.gender === "man" ? "men" : "everyone"];
   let where = `u.id <> $1
     and not exists (select 1 from swipes s where s.swiper_id = $1 and s.target_id = u.id)
@@ -140,7 +172,7 @@ export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: bool
     params.push(GENDER_FOR_SHOW_ME[me.showMe]);
     where += ` and u.gender = $${params.length}`;
   }
-  if (opts.tonightOnly) where += ` and u.vibe = 'tonight'`;
+  if (opts.freeNowOnly) where += ` and u.available_until > now()`;
   if (me.premium && me.passport) {
     params.push(me.passport);
     where += ` and lower(u.city) = lower($${params.length})`;
@@ -148,11 +180,20 @@ export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: bool
   params.push(limit);
   const rows = await query<UserRow>(
     `${SELECT} where ${where}
-     order by u.is_seed, case when u.is_seed then u.created_at end, u.last_active desc
+     order by u.is_seed, case when u.is_seed then u.created_at end,
+       coalesce(u.available_until > now(), false) desc, u.last_active desc
      limit $${params.length}`,
     params,
   );
-  return rows.map(toMember);
+  // Nobody in the deck has matched the viewer yet.
+  return rows.map(toMember).map(hidePhotos);
+}
+
+export async function setFreeNow(id: string, hours: number | null) {
+  await query("update users set available_until = $2 where id = $1", [
+    id,
+    hours ? new Date(Date.now() + hours * 3600_000).toISOString() : null,
+  ]);
 }
 
 export type SwipeQuota = { likesLeft: number | null; superLeft: number };
@@ -204,18 +245,26 @@ export async function recordSwipe(me: Member, targetId: string, liked: boolean, 
   return { ok: true, match: liked && (await isMatch(me.id, targetId)) };
 }
 
+// Mutual likes make a match. A match with no messages closes MATCH_TTL_HOURS
+// after it was made.
 export async function isMatch(a: string, b: string): Promise<boolean> {
-  const row = await one<{ n: number }>(
-    `select count(*)::int as n from swipes
+  const row = await one<{ n: number; matched_at: string | null; talked: boolean }>(
+    `select count(*)::int as n, max(created_at) as matched_at,
+       exists (select 1 from messages m
+               where (m.sender_id = $1 and m.recipient_id = $2) or (m.sender_id = $2 and m.recipient_id = $1)) as talked
+     from swipes
      where liked and ((swiper_id = $1 and target_id = $2) or (swiper_id = $2 and target_id = $1))`,
     [a, b],
   );
-  return row?.n === 2;
+  if (row?.n !== 2) return false;
+  return row.talked || new Date(row.matched_at!).getTime() > Date.now() - MATCH_TTL_HOURS * 3600_000;
 }
 
 export type MatchSummary = {
   member: Member;
   lastMessage: { body: string; mine: boolean; at: string } | null;
+  // When a match nobody has messaged yet closes.
+  expiresAt: string | null;
 };
 
 export async function matchesFor(meId: string): Promise<MatchSummary[]> {
@@ -233,14 +282,19 @@ export async function matchesFor(meId: string): Promise<MatchSummary[]> {
        order by m.id desc limit 1
      ) lm on true
      where mine.swiper_id = $1 and mine.liked
+       and (lm.created_at is not null
+            or greatest(mine.created_at, theirs.created_at) > now() - make_interval(hours => $2))
      order by coalesce(lm.created_at, greatest(mine.created_at, theirs.created_at)) desc`,
-    [meId],
+    [meId, MATCH_TTL_HOURS],
   );
   return rows.map((r) => ({
     member: toMember(r),
     lastMessage: r.last_body
       ? { body: r.last_body, mine: r.last_sender === meId, at: new Date(r.last_at!).toISOString() }
       : null,
+    expiresAt: r.last_body
+      ? null
+      : new Date(new Date(r.matched_at).getTime() + MATCH_TTL_HOURS * 3600_000).toISOString(),
   }));
 }
 
@@ -255,7 +309,7 @@ export async function likedMe(meId: string): Promise<(Member & { superLiked: boo
      order by s.super desc, s.created_at desc`,
     [meId],
   );
-  return rows.map((r) => ({ ...toMember(r), superLiked: r.super }));
+  return rows.map((r) => ({ ...hidePhotos(toMember(r)), superLiked: r.super }));
 }
 
 export type ChatMessage = { id: number; body: string; mine: boolean; at: string };

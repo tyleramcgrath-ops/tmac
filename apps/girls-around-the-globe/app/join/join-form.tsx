@@ -4,12 +4,14 @@ import Link from "next/link";
 import { startTransition, useActionState, useState } from "react";
 import { signup } from "@/app/actions";
 import { COUNTRIES } from "@/lib/countries";
+import { VIBES, VIBE_SHORT, type Vibe } from "@/lib/profiles";
 
-export function JoinForm() {
+export function JoinForm({ initialLooking = "relationship" }: { initialLooking?: Vibe }) {
   const [state, action, pending] = useActionState(signup, undefined);
   const [step, setStep] = useState(1);
-  const [gender, setGender] = useState("woman");
-  const [showMe, setShowMe] = useState("men");
+  const [gender, setGender] = useState("man");
+  const [showMe, setShowMe] = useState("women");
+  const [looking, setLooking] = useState<Vibe>(initialLooking);
 
   // Every field stays mounted (just hidden) so one submit sends them all.
   const show = (n: number) => (step === n ? "space-y-5" : "hidden");
@@ -32,7 +34,7 @@ export function JoinForm() {
       </div>
 
       <div data-step="1" className={show(1)}>
-        <h2 className="font-display text-2xl font-semibold">Your account</h2>
+        <h2 className="font-display text-2xl font-bold">Your account</h2>
         <label className="block">
           <span className="mb-1 block text-sm font-semibold">Email</span>
           <input name="email" type="email" required className="field" autoComplete="email" />
@@ -54,7 +56,7 @@ export function JoinForm() {
       </div>
 
       <div data-step="2" className={show(2)}>
-        <h2 className="font-display text-2xl font-semibold">Where in the world?</h2>
+        <h2 className="font-display text-2xl font-bold">Where in the world?</h2>
         <fieldset>
           <legend className="mb-1 text-sm font-semibold">I am a</legend>
           <input type="hidden" name="gender" value={gender} />
@@ -77,6 +79,17 @@ export function JoinForm() {
             ))}
           </div>
         </fieldset>
+        <fieldset>
+          <legend className="mb-1 text-sm font-semibold">I&rsquo;m looking for</legend>
+          <input type="hidden" name="looking" value={looking} />
+          <div className="flex flex-wrap gap-2">
+            {VIBES.map((v) => (
+              <button key={v} type="button" onClick={() => setLooking(v)} aria-pressed={looking === v} className={`btn !py-2 ${looking === v ? "btn-primary" : "btn-ghost"}`}>
+                {VIBE_SHORT[v]}
+              </button>
+            ))}
+          </div>
+        </fieldset>
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block">
             <span className="mb-1 block text-sm font-semibold">City</span>
@@ -94,15 +107,15 @@ export function JoinForm() {
         </div>
         <label className="block">
           <span className="mb-1 block text-sm font-semibold">Short bio <span className="font-normal text-ink-mute">(optional)</span></span>
-          <textarea name="bio" className="field min-h-24" maxLength={300} placeholder="Where you're from, where you're headed, what you're into." />
+          <textarea name="bio" className="field min-h-24" maxLength={300} placeholder="Where you're from, what you love, and the life you want." />
         </label>
       </div>
 
       <div data-step="3" className={show(3)}>
-        <h2 className="font-display text-2xl font-semibold">The ground rules</h2>
+        <h2 className="font-display text-2xl font-bold">The ground rules</h2>
         <ul className="space-y-2 text-sm text-ink-dim">
           <li>✓ I&rsquo;m 18 or older and my photos are really me.</li>
-          <li>✓ I&rsquo;m here for casual encounters, and I&rsquo;ll be upfront about what I want.</li>
+          <li>✓ I&rsquo;m here to meet someone, and I&rsquo;ll be honest about what I want.</li>
           <li>✓ Consent comes first, every time, and it can be withdrawn at any time.</li>
           <li>✓ No paid or transactional arrangements of any kind.</li>
           <li>✓ I won&rsquo;t ask anyone for money, and I&rsquo;ll report anyone who asks me.</li>

@@ -2,10 +2,11 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { reportAction, send, unmatchAction } from "@/app/actions";
+import { reportAction, send, startCallAction, unmatchAction } from "@/app/actions";
 import { Avatar } from "@/components/avatar";
 import type { ChatMessage, Member } from "@/lib/members";
 import { scanMessage } from "@/lib/scam-guard";
+import { SharePlan } from "./share-plan";
 
 const POLL_MS = 3000;
 
@@ -15,6 +16,7 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
   const [sending, setSending] = useState(false);
   const [error, setError] = useState("");
   const [menu, setMenu] = useState(false);
+  const [planOpen, setPlanOpen] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
   const lastId = useRef(initialMessages.at(-1)?.id ?? 0);
   const warnings = scanMessage(draft);
@@ -66,7 +68,28 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
             <span className="block text-xs text-ink-dim">{p.flag} {p.city}{p.country ? `, ${p.country}` : ""} · {p.lastActive}</span>
           </span>
         </Link>
-        <div className="relative ml-auto">
+        <button
+          type="button"
+          onClick={() => setPlanOpen((v) => !v)}
+          aria-expanded={planOpen}
+          className="ml-auto rounded-full border px-3 py-2 text-sm font-semibold hover:bg-surface-2"
+          aria-label="Share my plan with a friend"
+        >
+          🛡️ <span className="hidden sm:inline">Share plan</span>
+        </button>
+        <button
+          type="button"
+          onClick={async () => {
+            setError("");
+            const res = await startCallAction(p.id);
+            if (res && !res.ok) setError(res.error);
+          }}
+          className="flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-on-accent shadow-[0_8px_20px_-10px_rgb(233_207_150)]"
+          aria-label={`Video call ${p.name}`}
+        >
+          📹 <span className="hidden sm:inline">Video</span>
+        </button>
+        <div className="relative">
           <button type="button" onClick={() => setMenu((v) => !v)} aria-expanded={menu} aria-label="Chat options" className="rounded-full px-3 py-1 text-lg text-ink-mute hover:bg-surface-2 hover:text-ink">
             ⋯
           </button>
@@ -87,17 +110,18 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
           )}
         </div>
       </header>
+      {planOpen && <SharePlan matchId={p.id} name={p.name} onClose={() => setPlanOpen(false)} />}
 
       <div className="flex-1 space-y-2 overflow-y-auto px-4 py-4">
         <p className="mx-auto max-w-sm rounded-xl bg-surface-2 px-3 py-2 text-center text-xs text-ink-dim">
-          You matched with {p.name}. Meeting up? Pick a public place first and tell a friend where you&rsquo;re going.
+          You matched with {p.name}. Meeting up? Pick a public place first and use 🛡️ Share plan to tell a friend where you&rsquo;re going.
           We&rsquo;ll never ask you to send money, and neither should a match.
         </p>
         {messages.map((m) => {
           const flags = m.mine ? [] : scanMessage(m.body);
           return (
             <div key={m.id} className={`flex ${m.mine ? "justify-end" : "justify-start"}`}>
-              <div className={`max-w-[75%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2 text-sm ${m.mine ? "rounded-br-sm bg-sunset text-white" : "rounded-bl-sm bg-surface-2"}`}>
+              <div className={`max-w-[75%] whitespace-pre-wrap break-words rounded-2xl px-4 py-2 text-sm ${m.mine ? "rounded-br-sm bg-sunset text-on-accent" : "rounded-bl-sm bg-surface-2"}`}>
                 {m.body}
                 {flags.length > 0 && (
                   <span className="mt-1 block text-[11px] font-semibold text-warn">⚠ Be careful: this message {flags.join(", ")}.</span>

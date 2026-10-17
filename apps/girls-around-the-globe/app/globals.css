@@ -2,22 +2,24 @@
 
 :root {
   color-scheme: dark;
-  /* After hours: violet-black night, hot magenta and amber neon. */
-  --night: #07050c;
-  --bg: #0d0914;
-  --surface: #161020;
-  --surface-2: #211830;
-  --border: #31264a;
-  --ink: #f7eef6;
-  --ink-dim: #bcaecb;
-  --ink-mute: #85779a;
-  --accent: #ff3d8b;
-  --accent-deep: #ff7cb0;
-  --accent-soft: rgb(255 61 139 / 0.14);
-  --gold: #ffb547;
+  /* Brand: warm black, off-white and champagne gold, from the GAG logo. */
+  --night: #050403;
+  --bg: #0b0908;
+  --surface: #141110;
+  --surface-2: #1d1916;
+  --border: #2c2622;
+  --ink: #f3ede8;
+  --ink-dim: #cfc6bf;
+  --ink-mute: #8a817b;
+  --accent: #e2c487;
+  --accent-deep: #f1dcaa;
+  --accent-soft: rgb(226 196 135 / 0.12);
+  --on-accent: #1a1209;
+  --gold: #e2c487;
   --ok: #4ade80;
   --warn: #fbbf24;
-  --sunset: linear-gradient(115deg, #ff2e88 0%, #ff5f5f 50%, #ffb547 100%);
+  --sunset: linear-gradient(120deg, #b98a45 0%, #e9cf96 45%, #c49a55 100%);
+  --gold-metal: linear-gradient(110deg, #b98a45 0%, #f1dcaa 45%, #c49a55 75%, #e9cf96 100%);
 }
 
 @theme inline {
@@ -31,16 +33,20 @@
   --color-accent: var(--accent);
   --color-accent-deep: var(--accent-deep);
   --color-accent-soft: var(--accent-soft);
+  --color-on-accent: var(--on-accent);
   --color-gold: var(--gold);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-night: var(--night);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-serif);
   --font-body: var(--font-manrope);
 }
 
-* {
-  border-color: var(--border);
+/* In the base layer, so border-color utilities (border-accent etc.) still win. */
+@layer base {
+  * {
+    border-color: var(--border);
+  }
 }
 
 html {
@@ -49,9 +55,7 @@ html {
 
 body {
   background:
-    radial-gradient(60rem 40rem at 10% -10%, rgb(255 46 136 / 0.16), transparent 60%),
-    radial-gradient(50rem 40rem at 110% 10%, rgb(124 58 237 / 0.18), transparent 60%),
-    radial-gradient(40rem 30rem at 50% 120%, rgb(255 181 71 / 0.08), transparent 60%),
+    radial-gradient(60rem 40rem at 105% -10%, rgb(226 196 135 / 0.08), transparent 60%),
     var(--bg);
   background-attachment: fixed;
   color: var(--ink);
@@ -72,16 +76,24 @@ body::after {
 
 ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-accent);
+}
+
+/* The serif only comes in one weight, and reads best in sentence case. Unlayered,
+   so it wins over font-bold / uppercase utilities on the same element. */
+.font-display {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: -0.01em;
 }
 
 .glow {
-  box-shadow: 0 0 0 1px rgb(255 61 139 / 0.35), 0 10px 40px -10px rgb(255 61 139 / 0.55);
+  box-shadow: 0 0 0 1px rgb(226 196 135 / 0.45), 0 10px 40px -12px rgb(226 196 135 / 0.5);
 }
 
 .neon {
   /* drop-shadow, not text-shadow: it stays clean on gradient-clipped text */
-  filter: drop-shadow(0 0 18px rgb(255 61 139 / 0.45));
+  filter: drop-shadow(0 0 18px rgb(226 196 135 / 0.35));
 }
 
 @keyframes rise {
@@ -93,8 +105,8 @@ body::after {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(255 61 139 / 0.7); }
-  50% { box-shadow: 0 0 0 6px rgb(255 61 139 / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgb(226 196 135 / 0.7); }
+  50% { box-shadow: 0 0 0 6px rgb(226 196 135 / 0); }
 }
 .live-dot {
   display: inline-block;
@@ -105,8 +117,32 @@ body::after {
   animation: pulse-dot 1.8s ease-in-out infinite;
 }
 
+@keyframes pop {
+  from { opacity: 0; transform: scale(0.88); }
+  to { opacity: 1; transform: none; }
+}
+.pop {
+  animation: pop 450ms cubic-bezier(0.2, 0.9, 0.3, 1.25) both;
+}
+
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 0 rgb(233 207 150 / 0.5); }
+  50% { box-shadow: 0 0 0 12px rgb(233 207 150 / 0); }
+}
+.pulse {
+  animation: pulse-ring 2.4s ease-in-out infinite;
+}
+
+@keyframes slow-zoom {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+.slow-zoom {
+  animation: slow-zoom 14s ease-out both;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .rise, .live-dot { animation: none; }
+  .rise, .live-dot, .pop, .pulse, .slow-zoom { animation: none; }
 }
 
 .btn {
@@ -125,11 +161,12 @@ body::after {
 }
 .btn-primary {
   background: var(--sunset);
-  color: #fff;
-  box-shadow: 0 10px 30px -10px rgb(255 46 136 / 0.9);
+  color: var(--on-accent);
+  font-weight: 700;
+  box-shadow: 0 12px 30px -14px rgb(233 207 150 / 0.7);
 }
 .btn-primary:hover {
-  filter: brightness(0.95) saturate(1.1);
+  filter: brightness(1.06);
 }
 .btn-primary:disabled {
   opacity: 0.55;
@@ -185,4 +222,37 @@ body::after {
 }
 .bg-sunset {
   background: var(--sunset);
+  color: var(--on-accent);
+}
+.text-gold {
+  background: var(--gold-metal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-gold {
+  background: var(--gold-metal);
+  color: var(--on-accent);
+}
+.btn-gold {
+  background: var(--gold-metal);
+  color: var(--on-accent);
+  box-shadow: 0 12px 30px -14px rgb(233 207 150 / 0.7);
+}
+.btn-gold:hover {
+  filter: brightness(1.05);
+}
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Fades the emblem's black square into the page on all four edges. */
+.edge-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  mask-composite: intersect;
 }

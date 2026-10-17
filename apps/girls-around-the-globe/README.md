@@ -1,10 +1,10 @@
 # Girls Around the Globe
 
-Casual encounters, worldwide. Swipe on adults who want no-strings fun, use
-Passport to swipe in a city before you travel there, chat with your matches,
-and upgrade to **Globe+** for premium features. The site is strictly for casual
-meetups between consenting adults: no relationship or marriage modes, and no
-paid arrangements.
+Serious dating, worldwide, aimed at men meeting women across Latin America and
+beyond. Every member says what they're looking for (a relationship, marriage &
+family, or dating to see where it goes), matches video date in the app before
+anyone books a flight, and Passport lets you match in a city before you
+travel. Adults only, and no paid arrangements.
 
 ## What works
 
@@ -26,18 +26,63 @@ paid arrangements.
   | Likes | 25/day | unlimited |
   | Super likes | 1/day | 5/day |
 
-Twelve fictional **sample members** are loaded on first start so a new site
-has people to swipe on. Some of them "like back" and send a canned reply, so
-you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
+Twelve fictional **sample members** (`lib/profiles.ts`) are loaded on start so
+a new site has people to swipe on. They're labelled "Sample profile" in the
+app, some "like back" and send a canned reply so you can test matching and
+chat alone, and edits to the list reach existing databases on the next start.
+Launch with `SEED_MEMBERS=off`, which also removes any already loaded.
+
+## Features for long-distance dating
+
+Things Tinder and Bumble don't do:
+
+- **Looking for**: chosen at sign-up (the homepage picker carries over as
+  `/join?looking=`), shown on every card and profile. Older casual values are
+  migrated to "relationship" on start.
+- **Free to video chat**: say you're free for 2, 4 or 6 hours from the swipe
+  screen. Your card shows a countdown, you move ahead of other real members in
+  people's decks, and you show up under the "Free to chat now" filter. It
+  switches itself off.
+- **Life & plans tags**: wants kids, open to relocating, faith matters and so
+  on, from a fixed list. Cards show the tags and how many you share; retired
+  tags quietly drop off.
+- **Private photos**: hides your photos from everyone except your matches.
+  It's enforced by the server: the deck, likes page and profile never send the
+  photo URLs, and `/api/photos/[id]` returns 404 to anyone you haven't matched.
+- **24-hour matches**: a match closes if nobody sends a message within 24
+  hours. Once someone says hi, it stays.
+- **Share my plan** (🛡️ in a chat): creates a private, unguessable link
+  (`/plan/[token]`, `lib/plans.ts`) for a friend with the match's first name,
+  age and city, the place and time, and an optional note. No photos, no
+  surname, not indexed, and it stops working 12 hours after the meetup.
+
+## Video chat
+
+Matches can video call each other from the chat screen (📹 Video). An incoming
+call rings on any page with Accept and Decline. Audio and video go peer to
+peer over WebRTC; the server only relays the connection setup through the
+`calls` and `call_signals` tables (`lib/calls.ts`). Calls ring for 45 seconds,
+then count as missed. Sample members can't take calls.
+
+For production, add a TURN relay (`TURN_URL`, `TURN_USERNAME`,
+`TURN_PASSWORD`, e.g. from Twilio, Cloudflare Calls or a self-hosted coturn).
+Without one, calls between people on strict mobile or corporate networks can
+fail to connect.
 
 ## Design
 
-"It's always night somewhere": a dark after-hours look (violet-black, hot
-magenta and amber neon, soft glow and film grain), Fraunces italic for display
-type, and a live world clock on the homepage that lights up the Passport cities
-where it's currently night out (8pm–4am local). On the swipe screen, **Out
-tonight** filters the deck to people who are free tonight, and members can
-change their own vibe in one tap.
+Built around the GAG logo (serif GAG with a gold A framing a woman's profile): warm black,
+off-white and champagne gold, with Instrument Serif for headings and Manrope
+for body text, both self-hosted. Colours are tokens in `app/globals.css`; the
+gold accent always carries dark text (`text-on-accent`). Logo files live in
+`public/brand/` (`gag-logo.png` with the tagline, `gag-mark.png` without),
+cut out of their black background.
+
+The homepage is interactive: the "I'm looking for" picker, a draggable swipe
+demo with an "It's mutual" moment (`components/home/swipe-demo.tsx`), a city
+explorer with live local times, and an FAQ. Its photos (`public/home/`) are
+free-licence Unsplash photos of models, labelled on the page as illustrative;
+replace them with your own shoot before launch.
 
 ## Running it
 
