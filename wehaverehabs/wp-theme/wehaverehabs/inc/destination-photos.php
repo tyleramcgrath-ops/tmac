@@ -140,7 +140,7 @@ function whr_commons_categories( $term ) {
  * @param string $search CirrusSearch query.
  * @return array|null
  */
-function whr_commons_pick( $search ) {
+function whr_commons_pick( $search, $must = '' ) {
 	$url = add_query_arg(
 		array(
 			'action'       => 'query',
@@ -179,6 +179,9 @@ function whr_commons_pick( $search ) {
 		if ( ! preg_match( '/^(CC BY(-SA)? [0-9.]+|CC0|Public domain)/i', $lic ) ) {
 			continue;
 		}
+		if ( '' !== $must && false === stripos( remove_accents( $text ), remove_accents( $must ) ) ) {
+			continue; // Keyword search: the photo must actually be of this place.
+		}
 		// Not maps, flags, old prints, paintings or night shots — a calm, modern landscape.
 		if ( preg_match( '/\b(map|flag|logo|coat of arms|seal|diagram|stamp|night|stereo\w*|postcard|engraving|lithograph|painting|drawing|illustration|sketch|aerial view of the|panorama of the city|1[0-9]{3}s?|19[0-6][0-9])\b/i', $text ) ) {
 			continue;
@@ -202,21 +205,22 @@ function whr_commons_pick( $search ) {
  * @return bool Found one.
  */
 function whr_fetch_destination_photo( $term ) {
-	// Best first: Quality images anywhere under the place's landscape category, then photos in it
-	// ranked by search relevance, then under its subcategories, then Quality images naming the place.
+	// Only photos filed directly under the place's landscape category (Quality images first, then by
+	// search relevance); last, Quality images that name the place in their title or description.
 	$pick  = null;
 	$cats  = whr_commons_categories( $term );
 	$tries = array();
 	foreach ( $cats as $cat ) {
-		$tries[] = 'deepcat:"' . $cat . '" incategory:"Quality images"';
+		$tries[] = array( 'incategory:"' . $cat . '" incategory:"Quality images"', '' );
 	}
 	foreach ( $cats as $cat ) {
-		$tries[] = 'incategory:"' . $cat . '"';
-		$tries[] = 'deepcat:"' . $cat . '"';
+		$tries[] = array( 'incategory:"' . $cat . '"', '' );
 	}
-	$tries[] = '"' . html_entity_decode( $term->name, ENT_QUOTES ) . '" landscape incategory:"Quality images"';
-	foreach ( $tries as $query ) {
-		$pick = whr_commons_pick( $query );
+	$place   = html_entity_decode( preg_replace( '/^Co\.\s+/', '', $term->name ), ENT_QUOTES );
+	$tries[] = array( '"' . $place . '" landscape incategory:"Quality images"', $place );
+	foreach ( $tries as $try ) {
+		list( $query, $must ) = $try;
+		$pick = whr_commons_pick( $query, $must );
 		if ( $pick ) {
 			break;
 		}
@@ -238,7 +242,12 @@ function whr_fetch_destination_photo( $term ) {
 	remove_filter( 'intermediate_image_sizes_advanced', $sizes );
 	if ( is_wp_error( $id ) ) {
 		update_option( 'whr_destphotos_error', 'Download: ' . $id->get_error_message(), false );
-		return false; // Try again on the next run.
+		$tries = (int) get_term_meta( $term->term_id, 'whr_image_tries', true ) + 1;
+		update_term_meta( $term->term_id, 'whr_image_tries', $tries );
+		if ( $tries >= 3 ) {
+			update_term_meta( $term->term_id, 'whr_image_none', 1 ); // Give up: use the country's photo.
+		}
+		return false; // Otherwise try again on a later run.
 	}
 	update_post_meta( $id, '_wp_attachment_image_alt', '' );
 	update_post_meta( $id, '_whr_commons', $pick['page'] );
@@ -289,11 +298,15 @@ function whr_destphotos_batch( $count = 6 ) {
 		set_time_limit( 120 ); // phpcs:ignore Squiz.PHP.DiscouragedFunctions.Discouraged
 	}
 	$terms = whr_destinations_missing_photo( $count );
+	$start = microtime( true );
 	foreach ( is_wp_error( $terms ) ? array() : $terms as $term ) {
 		whr_fetch_destination_photo( $term );
+		if ( microtime( true ) - $start > 18 ) {
+			break; // Stay well inside the host's time limit; the next run carries on.
+		}
 	}
 	delete_transient( 'whr_destphotos_lock' );
-	if ( is_wp_error( $terms ) || count( $terms ) < $count ) {
+	if ( is_wp_error( $terms ) || ! $terms ) {
 		update_option( 'whr_destphotos', 'done', false );
 		return;
 	}
@@ -308,11 +321,11 @@ add_action(
 );
 
 /**
- * Version 2 of the picker (search, Quality images first, no old prints): clear the photos the
- * first version chose automatically, so they are picked again. Photos set by hand are kept.
+ * Picker version 3 (direct landscape categories only, Quality images first, no old prints): clear
+ * the photos earlier versions chose automatically, so they are picked again. Photos set by hand are kept.
  */
 function whr_destphotos_upgrade() {
-	if ( (int) get_option( 'whr_destphotos_picker' ) >= 2 ) {
+	if ( (int) get_option( 'whr_destphotos_picker' ) >= 3 ) {
 		return;
 	}
 	$terms = get_terms( array( 'taxonomy' => 'destination', 'hide_empty' => false, 'fields' => 'ids' ) );
@@ -328,7 +341,8 @@ function whr_destphotos_upgrade() {
 		}
 		delete_term_meta( $tid, 'whr_image_none' );
 	}
-	update_option( 'whr_destphotos_picker', 2, false );
+	update_option( 'whr_destphotos_picker', 3, false );
+	delete_option( 'whr_destphotos_recent' );
 	delete_option( 'whr_destphotos' );
 }
 
