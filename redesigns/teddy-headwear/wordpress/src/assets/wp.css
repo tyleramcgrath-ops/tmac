@@ -1,0 +1,36 @@
+/* WordPress-only additions to site.css. */
+
+/* Keep the sticky header below the admin bar for logged-in users. */
+.admin-bar .hdr { top: 32px; }
+@media (max-width: 782px) { .admin-bar .hdr { top: 46px; } }
+@media (max-width: 600px) { .admin-bar .hdr { top: 0; } }
+
+/* Regular pages, Cart, Checkout and My Account sit on a bone panel. */
+.page-panel {
+  background: var(--bone); color: var(--plate-ink); border-radius: 10px;
+  padding: clamp(20px, 4vw, 56px); box-shadow: 0 40px 80px -40px rgba(0,0,0,.8);
+  --line: rgba(17, 36, 26, .16);
+}
+.page-panel a { color: var(--oxblood-2); }
+.page-panel h1, .page-panel h2, .page-panel h3 { font-family: var(--f-display); font-variation-settings: "wdth" 115; color: var(--plate-ink); }
+.page-panel input, .page-panel select, .page-panel textarea { color: var(--plate-ink); }
+.page-panel .wc-block-components-button:not(.is-link),
+.page-panel .wp-element-button, .page-panel .button, .page-panel button[type="submit"] {
+  background: var(--gold) !important; color: var(--gold-ink) !important; border-radius: 999px !important; border: 0 !important;
+  font-family: var(--f-display); font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+}
+.page-panel .wc-block-components-product-metadata,
+.page-panel .wc-item-meta { font-family: var(--f-mono); font-size: 12px; }
+
+/* WordPress core alignment helpers inside content. */
+.page-panel .alignwide { max-width: none; }
+.page-panel img { height: auto; }
+.screen-reader-text { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+/* Server-rendered product fallback (replaced by site.js). */
+#pdp > .pdp .gallery__main img { object-fit: contain; }
+
+/* WooCommerce reuses a few class names the storefront also uses (.total, .qty); keep them plain inside pages. */
+.page-panel .total { display: list-item; border: 0; padding: 0; }
+.page-panel .total strong, .page-panel .total span { font-family: inherit; font-size: inherit; font-weight: 700; color: inherit; }
+.page-panel .qty { display: initial; border: 1px solid rgba(17,36,26,.3); border-radius: 6px; margin: 0; }

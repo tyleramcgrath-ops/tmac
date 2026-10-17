@@ -8,6 +8,12 @@
   const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
   const calm = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  /* ================= CONFIG: the static site uses these defaults; the WordPress theme passes window.TEDDY ================= */
+  const T = window.TEDDY || {};
+  const A = T.assets || "";
+  const URLS = Object.assign({ home: "./", shop: "shop.html", studio: "studio.html", campaign: "campaign.html", checkout: "", faq: "https://teddyheadwear.com/pages/faq", instagram: "https://www.instagram.com/teddyheadwear/" }, T.urls || {});
+  const SERVER = !!T.ajax;
+
   /* ================= THE BEAR (Teddy's mascot, redrawn from the favicon) ================= */
   const BEAR = `<svg viewBox="0 0 220 220" aria-hidden="true" class="bear-svg">
     <g stroke="#0B1912" stroke-linejoin="round" stroke-linecap="round">
@@ -38,7 +44,7 @@
     la: { mono: "LA", place: "Los Angeles", line: "West Coast light.", story: "LA is palm shadows at noon and the long drive out of town. A wide brim for hard light, with the city in script on the crown." }
   };
   const HAT_PRICE = { cowboy: 150, fedora: 140 };
-  const CUSTOM_FEE = 25;
+  let CUSTOM_FEE = 25;
   const LOOKS = {
     "cowboy-t": ["noir-life-1", "scene-texas-motel", "scene-studio-duo"],
     "cowboy-f": ["hero-noir", "noir-cowboy-model", "scene-jupiter-horse"],
@@ -71,12 +77,22 @@
     { id: "bear-pin", name: "Bear Hat Pin", price: 20, color: "Gold + enamel", img: ["acc-bear-pin"], sizes: ["One size"], desc: "The Teddy bear in hard enamel and polished gold, made to ride on the band or brim of your hat." },
     { id: "bear-patch", name: "Bear Patch", price: 15, color: "Embroidered", img: ["acc-bear-patch"], sizes: ["One size"], desc: "The Teddy bear, densely embroidered with a raised gold border. Iron it on a jacket, a tote or a cap." }
   ].map(a => ({ ...a, kind: "apparel" }));
+  // WordPress replaces the built-in catalog with the store's WooCommerce products (same shape, plus url/images/gallery/looks).
+  if (Array.isArray(T.products) && T.products.length) {
+    HATS.length = 0; APPAREL.length = 0;
+    T.products.forEach(p => (p.kind === "hat" ? HATS : APPAREL).push(p));
+  }
+  if (T.fee !== undefined) CUSTOM_FEE = +T.fee;
+  if (T.hatPrice) Object.assign(HAT_PRICE, T.hatPrice);
   const ALL = [...HATS, ...APPAREL];
   const byId = id => ALL.find(p => p.id === id);
-  const hatImg = (id, color) => `img/${id}-${color}.webp`;
-  const blankImg = (type, color) => `img/blank-${type}-${color}.webp`;
-  const productUrl = id => `product-${id}.html`;
-  const thumbOf = (p, variant) => p.kind === "hat" ? hatImg(p.id, variant || "cream") : `img/${p.img[0]}.webp`;
+  const hatImg = (id, color) => byId(id)?.images?.[color] || `${A}img/${id}-${color}.webp`;
+  const blankImg = (type, color) => `${A}img/blank-${type}-${color}.webp`;
+  const productUrl = id => byId(id)?.url || `product-${id}.html`;
+  const appImgs = p => p.gallery || p.img.map(k => `${A}img/${k}.webp`);
+  const looksOf = p => p.looks || (LOOKS[p.id] || []).map(k => `${A}img/${k}.webp`);
+  const cityOf = p => CITY[p.mono] || { mono: p.monoLabel || "", place: p.place || "", line: "Made to wear.", story: p.desc };
+  const thumbOf = (p, variant) => p.kind === "hat" ? hatImg(p.id, variant || "cream") : appImgs(p)[0];
 
   /* ================= MONOGRAM ENGINE ================= */
   const STYLES = {
@@ -155,12 +171,31 @@
   let cart = [];
   try { cart = JSON.parse(localStorage.getItem("teddy-cart-v2") || "[]"); } catch (_) { cart = []; }
   const save = () => { try { localStorage.setItem("teddy-cart-v2", JSON.stringify(cart)); } catch (_) {} };
-  const linePrice = l => byId(l.id).price + (l.custom ? CUSTOM_FEE : 0);
+  let totals = null; // set by the server cart (WordPress + WooCommerce)
+  const linePrice = l => l.unit !== undefined ? +l.unit : byId(l.id).price + (l.custom ? CUSTOM_FEE : 0);
+  async function post(action, data = {}) {
+    const fd = new FormData(); fd.append("action", action); fd.append("nonce", T.nonce || "");
+    Object.entries(data).forEach(([k, v]) => fd.append(k, v !== null && typeof v === "object" ? JSON.stringify(v) : v ?? ""));
+    const r = await fetch(T.ajax, { method: "POST", body: fd, credentials: "same-origin" });
+    const j = await r.json().catch(() => ({ success: false, data: { message: "The store didn't answer. Try again." } }));
+    if (!j.success) throw new Error(j.data?.message || "Something went wrong. Try again.");
+    return j.data;
+  }
+  const sync = d => { cart = d.items || []; totals = d; renderCart(); };
   function add(id, variant, qty = 1, custom = null) {
+    const p = byId(id);
+    if (SERVER) {
+      post("teddy_cart_add", { product: p.wc, variant: variant || "", qty, custom })
+        .then(d => { sync(d); added(id, variant, custom); })
+        .catch(err => toast(thumbOf(p, variant), err.message));
+      return;
+    }
     const key = JSON.stringify([id, variant, custom]);
     const hit = cart.find(l => l.key === key);
     hit ? hit.qty += qty : cart.push({ key, id, variant, qty, custom });
-    save(); renderCart();
+    save(); renderCart(); added(id, variant, custom);
+  }
+  function added(id, variant, custom) {
     const p = byId(id), cnt = $("#cartCount");
     if (cnt) { cnt.classList.remove("bump"); void cnt.offsetWidth; cnt.classList.add("bump"); }
     const label = custom ? `Custom "${custom.text}" ${p.type}` : `${p.name}${p.kind === "hat" ? ", " + variant : variant && variant !== "One size" ? ", " + variant : ""}`;
@@ -175,8 +210,9 @@
     el.classList.remove("on"); void el.offsetWidth; el.classList.add("on");
     clearTimeout(pt); pt = setTimeout(() => el.classList.remove("on"), 2600);
   }
+  const lineProduct = l => byId(l.id) || { id: l.id, name: l.name || "Item", kind: "apparel", color: "", gallery: [l.img || A + "img/logo.webp"], price: +l.unit || 0 };
   function lineThumb(l) {
-    const p = byId(l.id);
+    const p = lineProduct(l);
     if (l.custom) {
       const th = THREADS[l.custom.thread].hex, st = STYLES[l.custom.style];
       return `<div class="line__img custom"><img src="${blankImg(p.type, l.variant)}" alt=""><b style="color:${th};font-family:'${st.family}';${st.italic ? "font-style:italic;" : ""}">${esc(l.custom.text)}</b></div>`;
@@ -184,21 +220,21 @@
     return `<div class="line__img"><img src="${thumbOf(p, l.variant)}" alt=""></div>`;
   }
   function renderCart() {
-    const n = cart.reduce((s, l) => s + l.qty, 0);
+    const n = cart.reduce((s, l) => s + +l.qty, 0);
     if ($("#cartCount")) $("#cartCount").textContent = n;
     const box = $("#items"); if (!box) return;
-    $("#subtotal").textContent = money(cart.reduce((s, l) => s + l.qty * linePrice(l), 0));
+    $("#subtotal").textContent = totals?.subtotal_text || money(cart.reduce((s, l) => s + l.qty * linePrice(l), 0));
     $("#cartFoot").hidden = !n;
     if (!n) {
-      box.innerHTML = `<div class="empty">${bearMark()}<b>Nothing here yet.</b><span>Every hat starts with a monogram.</span><a class="btn btn--felt" href="studio.html">Design yours</a></div>`;
+      box.innerHTML = `<div class="empty">${bearMark()}<b>Nothing here yet.</b><span>Every hat starts with a monogram.</span><a class="btn btn--felt" href="${URLS.studio}">Design yours</a></div>`;
       return;
     }
-    const hasHat = cart.some(l => byId(l.id).kind === "hat"), hasApp = cart.some(l => byId(l.id).kind === "apparel");
-    const up = hasHat && !hasApp ? APPAREL[2] : (!hasHat ? HATS[1] : null);
+    const hasHat = cart.some(l => lineProduct(l).kind === "hat"), hasApp = cart.some(l => lineProduct(l).kind === "apparel");
+    const up = hasHat && !hasApp ? (byId("hoodie") || APPAREL[0]) : (!hasHat ? (byId("cowboy-f") || HATS[0]) : null);
     box.innerHTML = cart.map((l, i) => {
-      const p = byId(l.id);
+      const p = lineProduct(l);
       const sub = l.custom ? `${tc(l.variant)} / "${esc(l.custom.text)}" ${STYLES[l.custom.style].label}, ${THREADS[l.custom.thread].label} thread`
-        : p.kind === "hat" ? `${p.place} / ${l.variant}` : `${p.color}${l.variant ? " / " + l.variant : ""}`;
+        : p.kind === "hat" ? `${p.place ? p.place + " / " : ""}${l.variant}` : `${p.color || ""}${l.variant ? (p.color ? " / " : "") + l.variant : ""}`;
       return `<div class="line">${lineThumb(l)}
         <div><b class="nm">${l.custom ? "Custom " + (p.type === "cowboy" ? "Cowboy" : "Fedora") : p.name}</b><small>${sub}</small>
           <span class="qty"><button data-q="${i}" data-d="-1" aria-label="Decrease">−</button><span>${l.qty}</span><button data-q="${i}" data-d="1" aria-label="Increase">+</button></span></div>
@@ -213,18 +249,18 @@
 
   /* ================= CHROME ================= */
   const page = document.body.dataset.page;
-  const NAV = [["shop.html", "Shop", "shop"], ["studio.html", "Monogram Studio", "studio", "nav-hot"], ["shop.html#apparel", "Apparel", "apparel"], ["campaign.html", "Campaign", "campaign"], ["./#details", "Details", "details"]];
+  const NAV = [[URLS.shop, "Shop", "shop"], [URLS.studio, "Monogram Studio", "studio", "nav-hot"], [URLS.shop + "#apparel", "Apparel", "apparel"], [URLS.campaign, "Campaign", "campaign"], [URLS.home + "#details", "Details", "details"]];
   function chrome() {
     const top = $("#chrome-top"), bottom = $("#chrome-bottom");
     if (top) top.outerHTML = `
       <div class="ticker" aria-label="Announcements"><div class="ticker__track">${[0, 1].map(i => `
-        <span>New: the Monogram Studio. <a href="studio.html"${i ? ' tabindex="-1"' : ""}>Put your own letters on the crown</a></span>
-        <span>The apparel drop is here. <a href="shop.html#apparel"${i ? ' tabindex="-1"' : ""}>Shop tees, hoodies and truckers</a></span>
+        <span>New: the Monogram Studio. <a href="${URLS.studio}"${i ? ' tabindex="-1"' : ""}>Put your own letters on the crown</a></span>
+        <span>The apparel drop is here. <a href="${URLS.shop}#apparel"${i ? ' tabindex="-1"' : ""}>Shop tees, hoodies and truckers</a></span>
         <span>100% wool. Silk lined. Original embroidered artwork</span><span>Born in Jupiter, Florida</span>`).join("")}
       </div></div>
       <header class="hdr${document.body.classList.contains("has-hero") ? "" : " hdr--solid"}" id="hdr">
         <div class="wrap hdr__in">
-          <a class="hdr__logo" href="./" aria-label="Teddy Headwear home">${bearMark()}<img src="img/logo.webp" alt="Teddy Headwear" width="450" height="84"></a>
+          <a class="hdr__logo" href="${URLS.home}" aria-label="Teddy Headwear home">${bearMark()}<img src="${A}img/logo.webp" alt="Teddy Headwear" width="450" height="84"></a>
           <nav id="nav" aria-label="Main">${NAV.map(([h, t, k, c]) => `<a href="${h}" class="${c || ""}"${k === page ? ' aria-current="page"' : ""}>${t}</a>`).join("")}</nav>
           <div class="hdr__actions">
             <button class="cart-btn" id="cartOpen" aria-label="Open cart">Cart <span class="cart-count" id="cartCount">0</span></button>
@@ -237,16 +273,16 @@
         <div class="wrap wordmark__cta">
           <div style="display:grid;gap:14px"><span class="eyebrow">@TeddyHeadwear</span>
             <p style="margin:0;font-size:clamp(20px,2.4vw,30px);font-weight:600;line-height:1.25;max-width:30ch">Follow along for drops, shoots and where the hats end up next.</p></div>
-          <a class="btn btn--felt" href="https://www.instagram.com/teddyheadwear/" target="_blank" rel="noopener">Follow on Instagram <span class="arrow">↗</span></a>
+          <a class="btn btn--felt" href="${URLS.instagram}" target="_blank" rel="noopener">Follow on Instagram <span class="arrow">↗</span></a>
         </div>
         <p class="wordmark__big" aria-hidden="true">Teddy<span class="wordmark__bear">${BEAR}</span></p>
       </section>
       <footer class="ft"><div class="wrap">
         <div class="foot">
-          <div><img src="img/logo.webp" alt="Teddy Headwear" width="200" height="37" style="height:32px;width:auto"><p>Western silhouettes and contemporary designs, blended into something original. Born in Jupiter, Florida.</p></div>
-          <div><h4>Shop</h4><ul><li><a href="shop.html#cowboy">Cowboy hats</a></li><li><a href="shop.html#fedora">Fedoras</a></li><li><a href="studio.html">Monogram Studio</a></li><li><a href="shop.html#apparel">Apparel</a></li></ul></div>
-          <div><h4>Brand</h4><ul><li><a href="campaign.html">Campaign 01</a></li><li><a href="./#details">Hat details</a></li><li><a href="https://teddyheadwear.com/pages/faq" target="_blank" rel="noopener">FAQ</a></li></ul></div>
-          <div><h4>Follow</h4><ul><li><a href="https://www.instagram.com/teddyheadwear/" target="_blank" rel="noopener">Instagram</a></li><li><a href="./#list">Newsletter</a></li></ul></div>
+          <div><img src="${A}img/logo.webp" alt="Teddy Headwear" width="200" height="37" style="height:32px;width:auto"><p>Western silhouettes and contemporary designs, blended into something original. Born in Jupiter, Florida.</p></div>
+          <div><h4>Shop</h4><ul><li><a href="${URLS.shop}#cowboy">Cowboy hats</a></li><li><a href="${URLS.shop}#fedora">Fedoras</a></li><li><a href="${URLS.studio}">Monogram Studio</a></li><li><a href="${URLS.shop}#apparel">Apparel</a></li></ul></div>
+          <div><h4>Brand</h4><ul><li><a href="${URLS.campaign}">Campaign 01</a></li><li><a href="${URLS.home}#details">Hat details</a></li><li><a href="${URLS.faq}" target="_blank" rel="noopener">FAQ</a></li></ul></div>
+          <div><h4>Follow</h4><ul><li><a href="${URLS.instagram}" target="_blank" rel="noopener">Instagram</a></li><li><a href="${URLS.home}#list">Newsletter</a></li></ul></div>
         </div>
         <div class="foot__base"><span>© Teddy Headwear</span><span>Jupiter, Florida</span></div>
       </div></footer>
@@ -260,7 +296,7 @@
           <p class="drawer__note" id="checkoutNote">Shipping and taxes calculated at checkout.</p>
         </div>
       </aside>
-      <div class="toast" id="toast" role="status" aria-live="polite"><img id="toastImg" src="img/cowboy-t-cream.webp" alt=""><span id="toastTxt">Added</span><button id="toastView">View cart</button></div>
+      <div class="toast" id="toast" role="status" aria-live="polite"><img id="toastImg" src="${A}img/cowboy-t-cream.webp" alt=""><span id="toastTxt">Added</span><button id="toastView">View cart</button></div>
       <div class="peek" id="peek" aria-hidden="true">${BEAR}<span class="peek__say">Good pick.</span></div>
       ${fine && !calm ? '<div class="cursor" id="cursor"><b>VIEW</b></div>' : ""}`;
 
@@ -279,12 +315,21 @@
     $("#items").addEventListener("click", e => {
       const q = e.target.closest("[data-q]"), rm = e.target.closest("[data-rm]"), up = e.target.closest("[data-up]");
       if (up) { const p = byId(up.dataset.up); add(p.id, p.kind === "hat" ? "brown" : p.sizes[Math.min(1, p.sizes.length - 1)]); hideToast(); return; }
+      if (SERVER && (q || rm)) {
+        const l = cart[+(q ? q.dataset.q : rm.dataset.rm)];
+        post("teddy_cart_qty", { key: l.key, qty: q ? +l.qty + +q.dataset.d : 0 }).then(sync).catch(err => { $("#checkoutNote").textContent = err.message; });
+        return;
+      }
       if (q) { const l = cart[+q.dataset.q]; l.qty += +q.dataset.d; if (l.qty < 1) cart.splice(+q.dataset.q, 1); }
       if (rm) cart.splice(+rm.dataset.rm, 1);
       save(); renderCart();
     });
-    $("#checkout").addEventListener("click", () => { $("#checkoutNote").textContent = "Design preview: checkout hands off to the Shopify cart at launch."; });
+    $("#checkout").addEventListener("click", () => {
+      if (URLS.checkout) { location.href = URLS.checkout; return; }
+      $("#checkoutNote").textContent = "Design preview: checkout hands off to the store's checkout at launch.";
+    });
     renderCart();
+    if (SERVER) post("teddy_cart_get").then(sync).catch(() => {});
   }
 
   /* ================= SHARED UI ================= */
@@ -299,7 +344,7 @@
         <img class="main" src="${hatImg(p.id, c)}" alt="${p.name} in ${c} wool" loading="lazy">
         <img class="alt" src="${hatImg(p.id, o)}" alt="" loading="lazy">
       </a>
-      <div class="card__info"><div><h3 class="card__name"><a href="${productUrl(p.id)}">${p.name}</a></h3><p class="card__place">${p.place} monogram</p></div><span class="card__price">$${p.price}</span></div>
+      <div class="card__info"><div><h3 class="card__name"><a href="${productUrl(p.id)}">${p.name}</a></h3><p class="card__place">${p.place ? p.place + " monogram" : esc(p.color || "")}</p></div><span class="card__price">$${p.price}</span></div>
       <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
         <div class="swatches" role="group" aria-label="Color">
           <button class="sw sw--cream" data-color="cream" aria-pressed="${c === "cream"}" aria-label="Cream"></button>
@@ -313,8 +358,8 @@
     return `<article class="card" data-id="${p.id}">
       <a class="card__media" href="${productUrl(p.id)}" aria-label="${p.name}">
         <span class="badge badge--gold">Apparel drop</span>
-        <img class="main" src="img/${p.img[0]}.webp" alt="${p.name}" loading="lazy">
-        ${p.img[1] ? `<img class="alt" src="img/${p.img[1]}.webp" alt="" loading="lazy">` : ""}
+        <img class="main" src="${appImgs(p)[0]}" alt="${esc(p.name)}" loading="lazy">
+        ${appImgs(p)[1] ? `<img class="alt" src="${appImgs(p)[1]}" alt="" loading="lazy">` : ""}
       </a>
       <div class="card__info"><div><h3 class="card__name"><a href="${productUrl(p.id)}">${p.name}</a></h3><p class="card__place">${p.color}</p></div><span class="card__price">$${p.price}</span></div>
       <a class="btn btn--line btn--sm" href="${productUrl(p.id)}" style="justify-self:start">${p.sizes.length > 1 ? "Choose size" : "View"}</a>
@@ -334,7 +379,9 @@
       e.preventDefault();
       const v = $("#email").value.trim(), note = $("#signupNote");
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { note.className = "signup-note"; note.textContent = "Enter an email like you@email.com to join the list."; return; }
-      note.className = "signup-note ok"; note.textContent = `You're on the list. We'll email ${v} before every drop.`; $("#email").value = "";
+      const ok = () => { note.className = "signup-note ok"; note.textContent = `You're on the list. We'll email ${v} before every drop.`; $("#email").value = ""; };
+      if (!SERVER) return ok();
+      post("teddy_subscribe", { email: v }).then(ok).catch(err => { note.className = "signup-note"; note.textContent = err.message; });
     });
   }
   function reelNav() {
@@ -485,8 +532,8 @@
       studio($("#teaser"), { type: "cowboy", color: "cream", text: "JM", style: "script", thread: "gold", scale: 1 });
       // details hotspots
       const DETAIL = [
-        { src: "img/detail-interior.webp", pins: [[50, 44], [28, 56]] }, { src: "img/detail-interior.webp", pins: [[50, 44], [28, 56]] },
-        { src: "img/detail-label.webp", pins: [[68, 64], [36, 46]] }, { src: "img/detail-label.webp", pins: [[68, 64], [36, 46]] }
+        { src: A + "img/detail-interior.webp", pins: [[50, 44], [28, 56]] }, { src: A + "img/detail-interior.webp", pins: [[50, 44], [28, 56]] },
+        { src: A + "img/detail-label.webp", pins: [[68, 64], [36, 46]] }, { src: A + "img/detail-label.webp", pins: [[68, 64], [36, 46]] }
       ];
       const hotImg = $("#hotImg"), pins = $$(".pin"), feats = $$("#feat li");
       const open = i => {
@@ -524,14 +571,14 @@
       let variant = isHat ? (location.hash === "#brown" ? "brown" : location.hash === "#cream" ? "cream" : (p.mono === "t" || p.mono === "ny" ? "brown" : "cream")) : (p.sizes.length === 1 ? p.sizes[0] : null);
       let qty = 1, shot = 0;
       const shots = () => isHat
-        ? [hatImg(p.id, variant), hatImg(p.id, variant === "cream" ? "brown" : "cream"), ...LOOKS[p.id].map(k => `img/${k}.webp`), "img/detail-interior.webp", "img/detail-label.webp"]
-        : p.img.map(k => `img/${k}.webp`);
-      const city = isHat ? CITY[p.mono] : null;
-      const others = isHat
+        ? [hatImg(p.id, variant), hatImg(p.id, variant === "cream" ? "brown" : "cream"), ...looksOf(p), A + "img/detail-interior.webp", A + "img/detail-label.webp"]
+        : appImgs(p);
+      const city = isHat ? cityOf(p) : null;
+      const others = (isHat
         ? [byId(`${p.type === "cowboy" ? "fedora" : "cowboy"}-${p.mono}`), ...HATS.filter(h => h.type === p.type && h.id !== p.id).slice(0, 1), APPAREL[2], APPAREL[0]]
-        : [...APPAREL.filter(a => a.id !== p.id).slice(0, 2), HATS[1], HATS[2]];
+        : [...APPAREL.filter(a => a.id !== p.id).slice(0, 2), HATS[1], HATS[2]]).filter((o, i, a) => o && a.indexOf(o) === i);
       main.innerHTML = `
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="./">Home</a><span><a href="shop.html#${isHat ? p.type : "apparel"}">${isHat ? (p.type === "cowboy" ? "Cowboy hats" : "Fedoras") : "Apparel"}</a></span><span>${p.name}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="${URLS.home}">Home</a><span><a href="${URLS.shop}#${isHat ? p.type : "apparel"}">${isHat ? (p.type === "cowboy" ? "Cowboy hats" : "Fedoras") : "Apparel"}</a></span><span>${p.name}</span></nav>
         <div class="pdp">
           <div class="gallery">
             <div class="gallery__thumbs" id="thumbs"></div>
@@ -552,7 +599,7 @@
                 <button class="btn" id="addBtn">${isHat ? "Add to cart" : "Pre-order"} · <span id="addPrice">$${p.price}</span> <span class="arrow">→</span></button></div>
               <p id="addHint" style="margin:0;font-size:13px;color:var(--muted);min-height:1.2em" role="status"></p>
             </div>
-            ${isHat ? `<a class="studio-cta" href="studio.html#${p.type}-${variant}" id="studioCta">
+            ${isHat ? `<a class="studio-cta" href="${URLS.studio}#${p.type}-${variant}" id="studioCta">
               <span class="mini"><img id="miniImg" src="${blankImg(p.type, variant)}" alt=""><b>JM</b></span>
               <span><strong>Want your own letters?</strong><small>Design a custom monogram in the Monogram Studio. +$${CUSTOM_FEE}</small></span><i>→</i></a>` : ""}
             <div class="perks-row">${isHat ? `<div><b>100% wool</b>Felt crown and brim</div><div><b>Silk lined</b>Gold silk interior</div><div><b>Adjustable</b>Breathable sweatband</div>`
@@ -562,20 +609,20 @@
                 : `<ul><li>${esc(p.color)}</li><li>Original Teddy artwork</li><li>${p.sizes.length > 1 ? "Sizes S to XXL, relaxed unisex fit" : "One size"}</li></ul>`}</div></details>
               ${isHat ? `<details><summary>The ${city.mono} monogram</summary><div class="acc__body">${city.story}</div></details>
               <details><summary>Hat care</summary><div class="acc__body">Rest the hat on its crown or on a hook, never flat on the brim. Brush the felt with a soft brush, and let it dry naturally at room temperature if it gets wet.</div></details>` : ""}
-              <details><summary>Shipping and returns</summary><div class="acc__body">Rates and delivery times are shown at checkout. Questions? See the <a href="https://teddyheadwear.com/pages/faq" target="_blank" rel="noopener">FAQ</a>.</div></details>
+              <details><summary>Shipping and returns</summary><div class="acc__body">Rates and delivery times are shown at checkout. Questions? See the <a href="${URLS.faq}" target="_blank" rel="noopener">FAQ</a>.</div></details>
             </div>
           </div>
         </div>`;
       // story + related
       $("#after").innerHTML = (isHat ? `
-        <section class="story black">
-          <div class="story__img"><img src="img/${LOOKS[p.id][0]}.webp" alt="${p.name} on location" loading="lazy"></div>
+        <section class="story sec-night">
+          <div class="story__img"><img src="${looksOf(p)[0] || hatImg(p.id, "brown")}" alt="${esc(p.name)} on location" loading="lazy"></div>
           <div class="story__body"><span class="story__mono" aria-hidden="true">${city.mono}</span><span class="eyebrow">${city.place}</span>
             <h2 class="display h-md">${city.line.replace(/ (\S+)$/, ' <span class="serif-i gold">$1</span>')}</h2><p class="lede" style="margin:0">${city.story}</p>
-            <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#top" id="toTop">Add to cart <span class="arrow">↑</span></a><a class="btn btn--ghost" href="campaign.html">See the campaign</a></div></div>
+            <div style="display:flex;gap:12px;flex-wrap:wrap"><a class="btn" href="#top" id="toTop">Add to cart <span class="arrow">↑</span></a><a class="btn btn--ghost" href="${URLS.campaign}">See the campaign</a></div></div>
         </section>` : `
-        <section class="split">${p.img.map(k => `<div class="tile" style="min-height:clamp(380px,50vw,620px)"><img src="img/${k}.webp" alt="${p.name}" loading="lazy"></div>`).join("")}${p.img.length === 1 ? `<a class="tile" href="studio.html"><img src="img/scene-studio-duo.webp" alt="Two models in Teddy hats" loading="lazy"><div class="tile__body"><span class="eyebrow">Pair it</span><h3 class="display">Your <span class="serif-i">mark.</span></h3><span class="link">Design a hat <span>→</span></span></div></a>` : ""}</section>`) + `
-        <section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">Complete the look</span><h2 class="display h-md">Wear it <span class="serif-i">with.</span></h2></div><a class="btn btn--line" href="shop.html">Shop all</a></div>
+        <section class="split">${appImgs(p).slice(0, 2).map(src => `<div class="tile" style="min-height:clamp(380px,50vw,620px)"><img src="${src}" alt="${esc(p.name)}" loading="lazy"></div>`).join("")}${appImgs(p).length === 1 ? `<a class="tile" href="${URLS.studio}"><img src="${A}img/scene-studio-duo.webp" alt="Two models in Teddy hats" loading="lazy"><div class="tile__body"><span class="eyebrow">Pair it</span><h3 class="display">Your <span class="serif-i">mark.</span></h3><span class="link">Design a hat <span>→</span></span></div></a>` : ""}</section>`) + `
+        <section class="section"><div class="wrap"><div class="section-head"><div><span class="eyebrow">Complete the look</span><h2 class="display h-md">Wear it <span class="serif-i">with.</span></h2></div><a class="btn btn--line" href="${URLS.shop}">Shop all</a></div>
           <div class="grid" id="related">${others.map(o => o.kind === "hat" ? hatCard(o) : appCard(o)).join("")}</div></div></section>`;
       wireGrid($("#related"));
       const paint = () => {
@@ -587,7 +634,7 @@
         $$("#vSeg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.v === variant));
         $("#vOut").textContent = variant ? (isHat ? tc(variant) : variant) : "Choose";
         $("#qOut").textContent = qty; $("#addPrice").textContent = `$${p.price * qty}`;
-        if (isHat) { $("#studioCta").href = `studio.html#${p.type}-${variant}`; $("#miniImg").src = blankImg(p.type, variant); }
+        if (isHat) { $("#studioCta").href = `${URLS.studio}#${p.type}-${variant}`; $("#miniImg").src = blankImg(p.type, variant); }
         if ($("#mbarTxt")) $("#mbarTxt").innerHTML = `${esc(p.name)}${variant ? " · " + esc(isHat ? tc(variant) : variant) : ""} <b>$${p.price}</b>`;
       };
       $("#thumbs").addEventListener("click", e => { const b = e.target.closest("[data-i]"); if (b) { shot = +b.dataset.i; $("#gmain").classList.remove("zoom"); paint(); } });

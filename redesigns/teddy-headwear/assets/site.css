@@ -551,3 +551,4 @@ footer.ft { background: var(--night-2); color: var(--bone); padding-block: 56px 
 .opts { grid-template-columns: minmax(0, 1fr); }
 .letters input { width: 100%; }
 @media (max-width: 760px) { .club__pin { right: 2%; } }
+.section-head > .filters { display: flex; }
