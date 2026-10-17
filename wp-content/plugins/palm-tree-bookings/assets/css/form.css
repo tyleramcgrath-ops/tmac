@@ -1,0 +1,304 @@
+/*
+ * Booking form styles.
+ *
+ * Reads the theme's design tokens where they exist and falls back to its own
+ * values, so the form inherits the site's look but still renders correctly on
+ * any theme.
+ */
+
+.ptb {
+	--ptb-ink: var(--pt-ink-900, #14211f);
+	--ptb-body: var(--pt-ink-700, #2e3b38);
+	--ptb-muted: var(--pt-ink-500, #5f6b67);
+	--ptb-line: var(--pt-sand-200, #e4d9c8);
+	--ptb-surface: var(--pt-white, #fff);
+	--ptb-accent: var(--pt-sunset-500, #e2703a);
+	--ptb-accent-dark: var(--pt-sunset-600, #c55c2a);
+	--ptb-focus: var(--pt-ocean-500, #10788b);
+	--ptb-radius: var(--pt-radius-sm, 6px);
+
+	color: var(--ptb-body);
+}
+
+.ptb__title {
+	color: var(--ptb-ink);
+}
+
+.ptb-group {
+	margin: 0 0 2rem;
+	padding: 0;
+	border: 0;
+}
+
+.ptb-group__legend {
+	padding: 0;
+	margin-bottom: 1rem;
+	font-size: 0.8125rem;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--ptb-focus);
+}
+
+.ptb-group__fields {
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.ptb-field--textarea,
+.ptb-field--checkbox {
+	grid-column: 1 / -1;
+}
+
+.ptb-field__label {
+	display: block;
+	margin-bottom: 0.35rem;
+	font-weight: 600;
+	color: var(--ptb-ink);
+}
+
+.ptb-req {
+	margin-left: 0.15em;
+	color: var(--ptb-accent);
+}
+
+.ptb-input {
+	width: 100%;
+	padding: 0.75rem 0.9rem;
+	border: 1.5px solid var(--ptb-line);
+	border-radius: var(--ptb-radius);
+	background: var(--ptb-surface);
+	color: inherit;
+	font: inherit;
+}
+
+.ptb-input:focus-visible {
+	outline: 3px solid var(--ptb-focus);
+	outline-offset: 2px;
+	border-color: var(--ptb-focus);
+}
+
+.ptb-input[aria-invalid="true"] {
+	border-color: var(--ptb-accent-dark);
+}
+
+.ptb-hint,
+.ptb-error {
+	margin: 0.35rem 0 0;
+	font-size: 0.875rem;
+}
+
+.ptb-hint {
+	color: var(--ptb-muted);
+}
+
+.ptb-error {
+	color: var(--ptb-accent-dark);
+	font-weight: 600;
+}
+
+.ptb-check {
+	display: flex;
+	align-items: flex-start;
+	gap: 0.6rem;
+	font-weight: 500;
+}
+
+.ptb-check input {
+	width: 1.15rem;
+	height: 1.15rem;
+	margin-top: 0.2rem;
+	flex: none;
+}
+
+/* Honeypot: hidden from people, reachable by bots. Not display:none. */
+.ptb-hp {
+	position: absolute !important;
+	left: -9999px !important;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+.ptb__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1rem;
+}
+
+.ptb-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.6rem;
+	min-height: 44px;
+	padding: 0.85rem 2rem;
+	border: 0;
+	border-radius: var(--pt-radius-pill, 999px);
+	background: var(--ptb-accent);
+	color: #fff;
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 240ms, transform 240ms;
+}
+
+.ptb-btn:hover:not([disabled]) {
+	background: var(--ptb-accent-dark);
+	transform: translateY(-2px);
+}
+
+.ptb-btn:focus-visible {
+	outline: 3px solid var(--ptb-focus);
+	outline-offset: 2px;
+}
+
+.ptb-btn[disabled] {
+	opacity: 0.7;
+	cursor: progress;
+	transform: none;
+}
+
+.ptb-btn__spinner {
+	display: none;
+	width: 1em;
+	height: 1em;
+	border: 2px solid rgba(255, 255, 255, 0.4);
+	border-top-color: #fff;
+	border-radius: 50%;
+	animation: ptb-spin 700ms linear infinite;
+}
+
+.ptb-btn.is-loading .ptb-btn__spinner {
+	display: block;
+}
+
+@keyframes ptb-spin {
+	to { transform: rotate(360deg); }
+}
+
+.ptb__smallprint {
+	margin: 0;
+	font-size: 0.875rem;
+	color: var(--ptb-muted);
+}
+
+.ptb-notice {
+	padding: 1rem 1.25rem;
+	margin-bottom: 1.5rem;
+	border-left: 4px solid var(--ptb-focus);
+	border-radius: var(--ptb-radius);
+	background: var(--pt-sand-100, #f4ede3);
+}
+
+.ptb-notice--error {
+	border-left-color: var(--ptb-accent-dark);
+}
+
+.ptb-notice ul {
+	margin: 0.5rem 0 0;
+	padding-left: 1.25rem;
+}
+
+.ptb-notice--success h3 {
+	margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ptb-btn,
+	.ptb-btn__spinner {
+		transition-duration: 0.01ms;
+		animation-duration: 0.01ms;
+	}
+}
+
+/* Live price panel, built by quote.js. */
+.ptb-quote {
+	margin: 1.25rem 0;
+	padding: 1rem 1.15rem;
+	border: 1px solid rgba(0, 0, 0, 0.12);
+	border-radius: 14px;
+	background: rgba(0, 0, 0, 0.02);
+}
+.ptb-quote__heading {
+	margin: 0 0 0.6rem;
+	font-weight: 700;
+	font-size: 0.95rem;
+	letter-spacing: 0.01em;
+}
+.ptb-quote__row {
+	display: flex;
+	justify-content: space-between;
+	gap: 1rem;
+	padding: 0.3rem 0;
+	font-size: 0.95rem;
+}
+.ptb-quote__total {
+	margin-top: 0.4rem;
+	padding-top: 0.6rem;
+	border-top: 1px solid rgba(0, 0, 0, 0.12);
+	font-weight: 700;
+	font-size: 1.05rem;
+}
+.ptb-quote__note {
+	margin: 0.5rem 0 0;
+	font-size: 0.85rem;
+	opacity: 0.75;
+}
+
+/* Pay now or pay on the day
+   ------------------------------------------------------------------ */
+
+/* The decision the form leads to, so it reads as a choice between two
+   things rather than as one more question in a list. */
+.ptb-pay {
+	display: grid;
+	gap: 10px;
+	grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.ptb-pay__choice {
+	display: flex;
+	gap: 10px;
+	align-items: flex-start;
+	padding: 14px;
+	border: 1px solid #d9d2c4;
+	border-radius: 12px;
+	background: #fff;
+	cursor: pointer;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ptb-pay__choice:hover {
+	border-color: #9bb7bf;
+}
+
+/* :has keeps the selected state on the label without any JavaScript.
+   Browsers without it still show the radio itself, so nothing is lost. */
+.ptb-pay__choice:has(input:checked) {
+	border-color: #0f6b7d;
+	box-shadow: inset 0 0 0 1px #0f6b7d;
+}
+
+.ptb-pay__choice input {
+	margin: 2px 0 0;
+	flex: 0 0 auto;
+}
+
+.ptb-pay__body {
+	display: block;
+}
+
+.ptb-pay__title {
+	display: block;
+	font-weight: 600;
+	line-height: 1.3;
+}
+
+.ptb-pay__note {
+	display: block;
+	margin-top: 2px;
+	font-size: 0.875rem;
+	opacity: 0.75;
+}

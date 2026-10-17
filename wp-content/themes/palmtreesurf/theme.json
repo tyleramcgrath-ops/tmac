@@ -1,0 +1,79 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/theme.json",
+	"version": 2,
+	"settings": {
+		"appearanceTools": true,
+		"useRootPaddingAwareAlignments": true,
+		"layout": {
+			"contentSize": "760px",
+			"wideSize": "1240px"
+		},
+		"color": {
+			"custom": false,
+			"customGradient": false,
+			"defaultPalette": false,
+			"defaultGradients": false,
+			"palette": [
+				{ "slug": "sand-50", "name": "Sand Light", "color": "#ffffff" },
+				{ "slug": "sand-100", "name": "Sand", "color": "#faf5ec" },
+				{ "slug": "sand-200", "name": "Sand Dark", "color": "#e8e0d2" },
+				{ "slug": "ink-900", "name": "Ink", "color": "#12293f" },
+				{ "slug": "ink-700", "name": "Body", "color": "#35485c" },
+				{ "slug": "ink-500", "name": "Muted", "color": "#6b7c8c" },
+				{ "slug": "ocean-700", "name": "Deep Ocean", "color": "#0f2942" },
+				{ "slug": "ocean-500", "name": "Teal", "color": "#14b8a6" },
+				{ "slug": "ocean-300", "name": "Teal Light", "color": "#7fd8d0" },
+				{ "slug": "sunset-500", "name": "Coral", "color": "#ff6f61" },
+				{ "slug": "sunset-600", "name": "Coral Dark", "color": "#e8543f" }
+			],
+			"gradients": [
+				{ "slug": "action", "name": "Action", "gradient": "linear-gradient(135deg, #22c9c0 0%, #16a6b8 100%)" },
+				{ "slug": "brand", "name": "Pura Vida", "gradient": "linear-gradient(90deg, #5eead4 0%, #86efac 50%, #fde047 100%)" }
+			]
+		},
+		"typography": {
+			"customFontSize": false,
+			"fontFamilies": [
+				{
+					"slug": "body",
+					"name": "Body",
+					"fontFamily": "Inter, system-ui, -apple-system, sans-serif"
+				}
+			],
+			"fontSizes": [
+				{ "slug": "small", "name": "Small", "size": "0.875rem" },
+				{ "slug": "normal", "name": "Normal", "size": "1rem" },
+				{ "slug": "large", "name": "Large", "size": "1.125rem" },
+				{ "slug": "x-large", "name": "Heading", "size": "clamp(1.375rem, 2.2vw, 1.75rem)" },
+				{ "slug": "xx-large", "name": "Display", "size": "clamp(2rem, 4vw, 3.25rem)" }
+			]
+		},
+		"spacing": {
+			"units": [ "px", "rem", "%", "vw" ]
+		}
+	},
+	"styles": {
+		"color": {
+			"background": "var(--wp--preset--color--sand-50)",
+			"text": "var(--wp--preset--color--ink-700)"
+		},
+		"typography": {
+			"fontFamily": "var(--wp--preset--font-family--body)",
+			"fontSize": "var(--wp--preset--font-size--normal)",
+			"lineHeight": "1.7"
+		},
+		"elements": {
+			"link": { "color": { "text": "var(--wp--preset--color--ocean-500)" } },
+			"h1": { "typography": { "fontWeight": "800", "lineHeight": "1.05" } },
+			"h2": { "typography": { "fontWeight": "800", "lineHeight": "1.12" } },
+			"h3": { "typography": { "fontWeight": "700", "lineHeight": "1.25" } },
+			"button": {
+				"color": {
+					"background": "var(--wp--preset--color--sunset-500)",
+					"text": "#ffffff"
+				},
+				"border": { "radius": "999px" }
+			}
+		}
+	}
+}
