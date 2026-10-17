@@ -30,24 +30,26 @@ function whr_wants_google_photo( $post_id = null ) {
 }
 
 /**
- * Hero markup for a Google photo: an empty image the script fills in, plus its credit line.
+ * Markup for a Google photo: an empty image the script fills in when it scrolls into view,
+ * plus its credit line.
  *
  * @param int|null $post_id Post ID.
+ * @param string   $class   Image class (hero__img on profiles, card__gphoto on cards).
  * @return string HTML.
  */
-function whr_google_photo_slot( $post_id = null ) {
+function whr_google_photo_slot( $post_id = null, $class = 'hero__img' ) {
 	$post_id = $post_id ? $post_id : get_the_ID();
 	if ( ! whr_wants_google_photo( $post_id ) ) {
 		return '';
 	}
-	return '<img class="hero__img whr-gphoto" alt="" data-whr-gphoto="' . esc_attr( $post_id ) . '" hidden>'
-		. '<p class="whr-gphoto-credit" hidden></p>';
+	return '<img class="' . esc_attr( $class ) . ' whr-gphoto" alt="" data-whr-gphoto="' . esc_attr( $post_id ) . '" hidden>'
+		. '<span class="whr-gphoto-credit" hidden></span>';
 }
 
 add_action(
 	'wp_enqueue_scripts',
 	function () {
-		if ( is_singular( 'sanctuary' ) && whr_wants_google_photo( get_queried_object_id() ) ) {
+		if ( whr_option( 'google_places_key' ) ) { // Profiles and every page with listing cards.
 			wp_add_inline_script( 'whr-theme', 'window.whrPhotoApi=' . wp_json_encode( esc_url_raw( rest_url( 'whr/v1/photo/' ) ) ) . ';', 'before' );
 		}
 	}
@@ -139,8 +141,8 @@ function whr_google_photo_endpoint( WP_REST_Request $request ) {
 	$day_key = 'whr_gphoto_day_' . gmdate( 'Ymd' );
 	$ip      = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
 	$ip_key  = 'whr_gphoto_ip_' . md5( $ip );
-	$cap     = (int) whr_option( 'google_places_daily_cap', 1000 );
-	if ( (int) get_transient( $day_key ) >= $cap || (int) get_transient( $ip_key ) >= 60 ) {
+	$cap     = (int) whr_option( 'google_places_daily_cap', 2000 );
+	if ( (int) get_transient( $day_key ) >= $cap || (int) get_transient( $ip_key ) >= 300 ) {
 		return new WP_REST_Response( null, 204 );
 	}
 	set_transient( $day_key, (int) get_transient( $day_key ) + 1, DAY_IN_SECONDS );

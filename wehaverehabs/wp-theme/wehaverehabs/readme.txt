@@ -49,9 +49,10 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   lists paying listings.
 * Facility photos from Google Maps: add a Google Places API key (Places API (New)) in Appearance →
   Customize → We Have Rehabs. Listings without photos of their own then show the facility's Google
-  Maps photo with its photographer credit, fetched live when the page is viewed (Google does not
+  Maps photo with its photographer credit — on its page and on its cards in search results —
+  fetched live as it scrolls into view (Google does not
   allow copying or storing these photos; only the Place ID is saved). Google bills per lookup after
-  its monthly free allowance; "most lookups per day" (default 1000) caps it. If a listing shows the
+  its monthly free allowance; "most lookups per day" (default 2000) caps it. If a listing shows the
   wrong place, edit its "Google Place ID" field (type none to hide the photo).
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,

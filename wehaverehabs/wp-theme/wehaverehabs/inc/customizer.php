@@ -29,7 +29,7 @@ function whr_customizer_settings() {
 		'stripe_signature' => array( __( 'Plans: Stripe Payment Link for Signature', 'wehaverehabs' ), '', 'url' ),
 		'stripe_featured'  => array( __( 'Plans: Stripe Payment Link for Featured', 'wehaverehabs' ), '', 'url' ),
 		'google_places_key'       => array( __( 'Photos: Google Places API key', 'wehaverehabs' ), '', 'secret' ),
-		'google_places_daily_cap' => array( __( 'Photos: most Google photo lookups per day', 'wehaverehabs' ), '1000', 'secret' ),
+		'google_places_daily_cap' => array( __( 'Photos: most Google photo lookups per day', 'wehaverehabs' ), '2000', 'secret' ),
 		'stripe_webhook_secret' => array( __( 'Plans: Stripe webhook signing secret (whsec_…)', 'wehaverehabs' ), '', 'secret' ),
 	);
 }
