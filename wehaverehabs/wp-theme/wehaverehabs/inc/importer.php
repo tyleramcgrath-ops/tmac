@@ -251,6 +251,9 @@ function whr_import_file( $file, array $opts = array(), $tick = null ) {
 	wp_defer_term_counting( false );
 	add_action( 'save_post_sanctuary', 'whr_sync_sort_keys', 20 );
 	update_option( 'whr_count_gen', (int) get_option( 'whr_count_gen', 0 ) + 1 );
+	if ( $counts['created'] ) {
+		delete_option( 'whr_destphotos' ); // New countries or regions may need photos.
+	}
 	foreach ( array( 'destination', 'condition', 'care_level', 'setting' ) as $tax ) {
 		clean_taxonomy_cache( $tax );
 	}

@@ -18,11 +18,15 @@ $talk    = whr_option( 'advisor_url' ) ? whr_option( 'advisor_url' ) : whr_whats
 $details = whr_listing_facts();
 ?>
 
-<section class="hero hero--sm hero--plain">
+<?php
+$place_photo = whr_listing_place_photo(); // Region or country landscape, credited as such.
+$gphoto      = whr_google_photo_slot();
+?>
+<section class="hero hero--sm hero--plain<?php echo $place_photo ? ' has-place-photo' : ''; ?>">
 	<?php
-	$gphoto = whr_google_photo_slot();
-	if ( $gphoto ) {
-		echo $gphoto . '<div class="hero__shade whr-gphoto-shade"></div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
+	echo $place_photo . $gphoto; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helpers.
+	if ( $gphoto || $place_photo ) {
+		echo '<div class="hero__shade whr-gphoto-shade"></div>';
 	}
 	?>
 	<div class="hero__body">

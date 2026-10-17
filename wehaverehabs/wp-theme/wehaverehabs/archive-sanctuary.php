@@ -21,6 +21,9 @@ global $wp_query;
 	<?php if ( $hero ) : ?>
 		<?php echo $hero; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<div class="hero__shade"></div>
+		<?php if ( $dest ) : ?>
+			<span class="whr-place-credit"><?php echo whr_term_photo_credit( $dest ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></span>
+		<?php endif; ?>
 	<?php endif; ?>
 	<div class="hero__body">
 		<nav class="breadcrumbs" aria-label="<?php esc_attr_e( 'Breadcrumb', 'wehaverehabs' ); ?>">

@@ -188,6 +188,9 @@ function whr_source_note( $post_id = null ) {
  * @return bool
  */
 function whr_term_has_image( $term ) {
+	if ( 'destination' === $term->taxonomy ) {
+		return (bool) whr_destination_photo( $term )[0]; // Own photo, or its country's.
+	}
 	return (bool) get_term_meta( $term->term_id, 'whr_image', true );
 }
 
@@ -200,7 +203,8 @@ function whr_term_has_image( $term ) {
  * @return string HTML.
  */
 function whr_term_image( $term, $size = 'whr-card', $attr = array() ) {
-	return whr_image( (int) get_term_meta( $term->term_id, 'whr_image', true ), $size, $attr );
+	$id = 'destination' === $term->taxonomy ? whr_destination_photo( $term )[0] : (int) get_term_meta( $term->term_id, 'whr_image', true );
+	return whr_image( $id, $size, $attr );
 }
 
 /**

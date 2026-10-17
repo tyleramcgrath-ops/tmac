@@ -31,6 +31,7 @@ $count   = whr_term_count( $term );
 	<?php if ( $has_photo ) : ?>
 		<?php echo whr_term_image( $term, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 		<div class="hero__shade"></div>
+		<span class="whr-place-credit"><?php echo whr_term_photo_credit( $term ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></span>
 	<?php endif; ?>
 	<div class="hero__body" style="padding-bottom:90px">
 		<div class="eyebrow"><?php echo $term->parent ? wp_kses_post( whr_destination_trail( $term ) ) : esc_html__( 'Destination', 'wehaverehabs' ); ?></div>
@@ -115,6 +116,7 @@ $count   = whr_term_count( $term );
 						<span class="tile__name"><?php echo esc_html( $child->name ); ?></span>
 						<span class="tile__desc"><?php echo esc_html( trim( get_term_meta( $child->term_id, 'whr_card', true ) . ' · ' . whr_count_label( $child ), ' ·' ) ); ?></span>
 					</span>
+					<span class="tile__credit"><?php echo whr_term_photo_credit( $child, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></span>
 				</a>
 			<?php endforeach; ?>
 		</div>

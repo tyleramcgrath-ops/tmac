@@ -27,8 +27,12 @@ while ( have_posts() ) :
 	?>
 
 <section class="hero hero--md">
-	<?php echo whr_post_image( null, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-	<?php echo whr_google_photo_slot(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>
+	<?php
+	$own_photo = whr_has_full_profile() && get_post_thumbnail_id();
+	$hero_img  = $own_photo ? '' : whr_listing_place_photo(); // No photos yet: the region's landscape, credited as such.
+	echo $hero_img ? $hero_img : whr_post_image( null, 'whr-hero', array( 'class' => 'hero__img', 'alt' => '', 'loading' => 'eager', 'fetchpriority' => 'high' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	echo whr_google_photo_slot(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper.
+	?>
 	<div class="hero__shade"></div>
 	<div class="hero__body">
 		<?php if ( $dest ) : ?>

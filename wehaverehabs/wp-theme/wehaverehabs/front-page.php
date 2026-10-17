@@ -83,6 +83,7 @@ if ( $destinations && ! is_wp_error( $destinations ) ) :
 						<span class="tile__count"><?php echo esc_html( whr_count_label( $term ) ); ?></span>
 						<span class="tile__name"><?php echo esc_html( $term->name ); ?></span>
 					</span>
+					<span class="tile__credit"><?php echo whr_term_photo_credit( $term, false ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></span>
 				</a>
 			<?php endforeach; ?>
 		</div>
