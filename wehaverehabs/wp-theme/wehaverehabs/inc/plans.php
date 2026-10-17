@@ -607,6 +607,7 @@ function whr_render_plans_page() {
 		echo '<p>' . ( $ready ? '✓ ' . esc_html__( 'Stripe payment links and webhook are set.', 'wehaverehabs' ) : esc_html__( 'Not set up yet. In Stripe, create a Payment Link for each paid plan (a monthly subscription), then paste both links and the webhook signing secret in Appearance → Customize → We Have Rehabs.', 'wehaverehabs' ) ) . '</p>';
 		/* translators: %s: webhook URL */
 		echo '<p>' . esc_html( sprintf( __( 'Webhook endpoint: %s — events: checkout.session.completed, invoice.paid, customer.subscription.deleted.', 'wehaverehabs' ), rest_url( 'whr/v1/stripe' ) ) ) . '</p>';
+		whr_render_google_panel();
 		$paid = get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 200, 'meta_query' => array( array( 'key' => 'whr_claimed_sort', 'value' => 2, 'compare' => '>=', 'type' => 'NUMERIC' ), array( 'key' => 'whr_plan', 'value' => array( 'signature', 'featured' ), 'compare' => 'IN' ) ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
 		echo '<h2>' . esc_html__( 'Paying listings', 'wehaverehabs' ) . '</h2>';
 		if ( ! $paid ) {

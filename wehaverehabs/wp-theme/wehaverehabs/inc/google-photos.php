@@ -88,16 +88,35 @@ function whr_places_request( $method, $url, $fields, $body = array() ) {
 			'X-Goog-Api-Key'   => whr_option( 'google_places_key' ),
 			'X-Goog-FieldMask' => $fields,
 			'Content-Type'     => 'application/json',
+			'Referer'          => home_url( '/' ), // Lets keys restricted to this website work from the server.
 		),
 	);
 	if ( $body ) {
 		$args['body'] = wp_json_encode( $body );
 	}
 	$res = wp_remote_request( $url, $args );
-	if ( is_wp_error( $res ) || 200 !== wp_remote_retrieve_response_code( $res ) ) {
+	return whr_places_result( $res );
+}
+
+/**
+ * Decode a Places API response, remembering the last error for the admin screens.
+ *
+ * @param array|WP_Error $res HTTP response.
+ * @return array|null
+ */
+function whr_places_result( $res ) {
+	if ( is_wp_error( $res ) ) {
+		update_option( 'whr_gphoto_error', array( time(), 0, $res->get_error_message() ), false );
 		return null;
 	}
+	$code = (int) wp_remote_retrieve_response_code( $res );
 	$data = json_decode( wp_remote_retrieve_body( $res ), true );
+	if ( 200 !== $code ) {
+		$msg = isset( $data['error']['message'] ) ? $data['error']['message'] : wp_remote_retrieve_response_message( $res );
+		update_option( 'whr_gphoto_error', array( time(), $code, $msg ), false );
+		return null;
+	}
+	delete_option( 'whr_gphoto_error' );
 	return is_array( $data ) ? $data : null;
 }
 
@@ -120,8 +139,11 @@ function whr_places_is_match( $place, $post_id ) {
 		return false;
 	}
 	$shared = count( array_intersect( $ours, $theirs ) ) / min( count( $ours ), count( $theirs ) );
-	$city   = strtolower( remove_accents( (string) strtok( (string) whr_meta( 'location', $post_id ), ',' ) ) );
-	$addr   = strtolower( remove_accents( (string) ( $place['formattedAddress'] ?? '' ) ) );
+	if ( $shared >= 0.75 ) {
+		return true; // Clearly the same name, and Google searched near our address.
+	}
+	$city = trim( strtolower( remove_accents( (string) preg_split( '/[,·]/u', (string) whr_meta( 'location', $post_id ) )[0] ) ) );
+	$addr = strtolower( remove_accents( (string) ( $place['formattedAddress'] ?? '' ) ) );
 	return $shared >= 0.5 && ( '' === $city || false !== strpos( $addr, $city ) );
 }
 
@@ -172,11 +194,13 @@ function whr_google_photo_endpoint( WP_REST_Request $request ) {
 		return new WP_REST_Response( null, 204 );
 	}
 
-	$media = wp_remote_get(
-		'https://places.googleapis.com/v1/' . $photos[0]['name'] . '/media?maxWidthPx=1600&skipHttpRedirect=true&key=' . rawurlencode( whr_option( 'google_places_key' ) ),
-		array( 'timeout' => 8 )
+	$media = whr_places_result(
+		wp_remote_get(
+			'https://places.googleapis.com/v1/' . $photos[0]['name'] . '/media?maxWidthPx=1600&skipHttpRedirect=true&key=' . rawurlencode( whr_option( 'google_places_key' ) ),
+			array( 'timeout' => 8, 'headers' => array( 'Referer' => home_url( '/' ) ) )
+		)
 	);
-	$uri = is_wp_error( $media ) ? '' : ( json_decode( wp_remote_retrieve_body( $media ), true )['photoUri'] ?? '' );
+	$uri = $media['photoUri'] ?? '';
 	if ( ! $uri ) {
 		return new WP_REST_Response( null, 204 );
 	}
@@ -187,4 +211,78 @@ function whr_google_photo_endpoint( WP_REST_Request $request ) {
 	$response = new WP_REST_Response( array( 'uri' => esc_url_raw( $uri ), 'credits' => $credits ), 200 );
 	$response->header( 'Cache-Control', 'no-store' ); // Google does not allow caching photo data.
 	return $response;
+}
+
+/**
+ * Look up one listing on Google and describe what happened (for the admin test button).
+ *
+ * @param int $post_id Listing.
+ * @return string
+ */
+function whr_google_photo_diagnose( $post_id ) {
+	$query = trim( get_the_title( $post_id ) . ', ' . ( whr_meta( 'address', $post_id ) ? whr_meta( 'address', $post_id ) : whr_location( $post_id ) . ', ' . whr_term_names( 'destination', $post_id ) ), ', ' );
+	$found = whr_places_request( 'POST', 'https://places.googleapis.com/v1/places:searchText', 'places.id,places.displayName,places.formattedAddress,places.photos', array( 'textQuery' => $query, 'pageSize' => 1 ) );
+	if ( null === $found ) {
+		$e = get_option( 'whr_gphoto_error' );
+		/* translators: 1: HTTP status 2: Google's message */
+		return sprintf( __( 'Google refused the request (HTTP %1$s): %2$s', 'wehaverehabs' ), $e ? $e[1] : '?', $e ? $e[2] : '' );
+	}
+	$place = $found['places'][0] ?? null;
+	if ( ! $place ) {
+		/* translators: %s: search text */
+		return sprintf( __( 'The key works. Google found nothing for “%s”.', 'wehaverehabs' ), $query );
+	}
+	return sprintf(
+		/* translators: 1: our name 2: Google's name 3: address 4: photo count 5: match */
+		__( 'The key works. “%1$s” → Google: “%2$s”, %3$s — %4$d photos — %5$s.', 'wehaverehabs' ),
+		get_the_title( $post_id ),
+		$place['displayName']['text'] ?? '',
+		$place['formattedAddress'] ?? '',
+		count( $place['photos'] ?? array() ),
+		whr_places_is_match( $place, $post_id ) ? __( 'counted as the same place', 'wehaverehabs' ) : __( 'not counted as the same place', 'wehaverehabs' )
+	);
+}
+
+/** Staff warning when Google keeps refusing the key. */
+add_action(
+	'admin_notices',
+	function () {
+		$e = get_option( 'whr_gphoto_error' );
+		if ( ! $e || ! whr_option( 'google_places_key' ) || ! current_user_can( 'manage_options' ) || time() - $e[0] > DAY_IN_SECONDS ) {
+			return;
+		}
+		/* translators: 1: Google's message 2: link */
+		echo '<div class="notice notice-error"><p><strong>Google photos:</strong> ' . esc_html( sprintf( __( 'Google is refusing the API key — %s', 'wehaverehabs' ), $e[2] ) ) . ' <a href="' . esc_url( admin_url( 'edit.php?post_type=sanctuary&page=whr-plans#google' ) ) . '">' . esc_html__( 'Test it', 'wehaverehabs' ) . '</a></p></div>';
+	}
+);
+
+/** Google photos panel on Sanctuaries → Plans & upgrades (staff). */
+function whr_render_google_panel() {
+	echo '<h2 id="google">' . esc_html__( 'Google Maps photos', 'wehaverehabs' ) . '</h2>';
+	if ( ! whr_option( 'google_places_key' ) ) {
+		echo '<p>' . esc_html__( 'Off: add a Places API (New) key in Appearance → Customize → We Have Rehabs.', 'wehaverehabs' ) . '</p>';
+		return;
+	}
+	global $wpdb;
+	$none    = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = 'whr_gplace' AND meta_value = 'none'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$matched = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = 'whr_gplace' AND meta_value <> 'none' AND meta_value <> ''" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	/* translators: 1: matched 2: unmatched 3: lookups today 4: cap */
+	echo '<p>' . esc_html( sprintf( __( 'Matched on Google: %1$s · not matched: %2$s · lookups today: %3$s of %4$s.', 'wehaverehabs' ), number_format_i18n( $matched ), number_format_i18n( $none ), number_format_i18n( (int) get_transient( 'whr_gphoto_day_' . gmdate( 'Ymd' ) ) ), number_format_i18n( (int) whr_option( 'google_places_daily_cap', 2000 ) ) ) ) . '</p>';
+
+	if ( isset( $_POST['whr_gtest'] ) && check_admin_referer( 'whr_gtest' ) ) {
+		$sample = get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'orderby' => 'rand', 'meta_key' => 'whr_source', 'meta_value' => 'web' ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+		$sample = $sample ? $sample : get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'orderby' => 'rand' ) );
+		if ( $sample ) {
+			echo '<div class="notice notice-info inline"><p>' . esc_html( whr_google_photo_diagnose( $sample[0]->ID ) ) . '</p></div>';
+		}
+	}
+	if ( isset( $_POST['whr_gretry'] ) && check_admin_referer( 'whr_gtest' ) ) {
+		$n = $wpdb->query( "DELETE FROM {$wpdb->postmeta} WHERE meta_key = 'whr_gplace' AND meta_value = 'none'" ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		delete_option( 'whr_gphoto_error' );
+		/* translators: %s: count */
+		echo '<div class="notice notice-success inline"><p>' . esc_html( sprintf( __( '%s listings will be looked up again when next viewed.', 'wehaverehabs' ), number_format_i18n( (int) $n ) ) ) . '</p></div>';
+	}
+	echo '<form method="post">';
+	wp_nonce_field( 'whr_gtest' );
+	echo '<p><button class="button button-primary" name="whr_gtest" value="1">' . esc_html__( 'Test Google photos', 'wehaverehabs' ) . '</button> <button class="button" name="whr_gretry" value="1">' . esc_html__( 'Retry listings marked “not matched”', 'wehaverehabs' ) . '</button></p></form>';
 }
