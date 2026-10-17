@@ -40,6 +40,12 @@ describe("members", () => {
     expect(deck.some((m) => m.id === me.id)).toBe(false);
   });
 
+  it("filters the deck to people out tonight", async () => {
+    const deck = await deckFor(me, 100, { tonightOnly: true });
+    expect(deck.length).toBeGreaterThan(0);
+    expect(deck.every((m) => m.vibe === "tonight")).toBe(true);
+  });
+
   it("respects the other person's preferences too", async () => {
     const onlyWantsWomen = await makeUser({ gender: "woman", showMe: "women" });
     const deck = await deckFor(me, 100);

@@ -30,6 +30,15 @@ Twelve fictional **sample members** are loaded on first start so a new site
 has people to swipe on. Some of them "like back" and send a canned reply, so
 you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
 
+## Design
+
+"It's always night somewhere": a dark after-hours look (violet-black, hot
+magenta and amber neon, soft glow and film grain), Fraunces italic for display
+type, and a live world clock on the homepage that lights up the Passport cities
+where it's currently night out (8pm–4am local). On the swipe screen, **Out
+tonight** filters the deck to people who are free tonight, and members can
+change their own vibe in one tap.
+
 ## Running it
 
 ```bash

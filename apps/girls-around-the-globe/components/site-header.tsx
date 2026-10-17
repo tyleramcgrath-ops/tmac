@@ -37,12 +37,12 @@ export async function SiteHeader() {
               </Link>
             ))}
             {me.premium ? (
-              <Link href="/premium" className="chip !bg-ink !text-white">✦ Globe+</Link>
+              <Link href="/premium" className="chip !bg-transparent border border-gold/60 !text-gold">✦ Globe+</Link>
             ) : (
               <Link href="/premium" className="chip bg-sunset !text-white">✦ Get Globe+</Link>
             )}
             <Link href="/me" className="ml-1" aria-label="Your profile">
-              <Avatar profile={me} size="sm" className="!h-9 !w-9 ring-2 ring-white" />
+              <Avatar profile={me} size="sm" className="!h-9 !w-9 ring-2 ring-accent/70" />
             </Link>
             <form action={logout} className="hidden sm:block">
               <button type="submit" className="rounded-full px-3 py-2 text-ink-mute hover:text-ink">Log out</button>

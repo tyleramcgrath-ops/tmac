@@ -164,6 +164,14 @@ export async function swipe(targetId: string, liked: boolean, isSuper = false): 
   return recordSwipe(me, String(targetId), !!liked, !!isSuper);
 }
 
+export async function setVibe(vibe: string) {
+  const id = await requireUserId("/swipe");
+  const valid = pick(String(vibe), VIBES);
+  if (!valid) return;
+  await query("update users set vibe = $2 where id = $1", [id, valid]);
+  revalidatePath("/swipe");
+}
+
 export async function setPassport(city: string | null) {
   const id = await requireUserId("/swipe");
   const me = await getMember(id);

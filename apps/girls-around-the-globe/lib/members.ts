@@ -131,7 +131,7 @@ const GENDER_FOR_SHOW_ME = { women: "woman", men: "man" } as const;
 // People the member hasn't swiped on yet, who are open to the member's gender.
 // Real members come first, most recently active first; sample members follow
 // in their seeded order.
-export async function deckFor(me: Member, limit = 20): Promise<Member[]> {
+export async function deckFor(me: Member, limit = 20, opts: { tonightOnly?: boolean } = {}): Promise<Member[]> {
   const params: unknown[] = [me.id, me.gender === "woman" ? "women" : me.gender === "man" ? "men" : "everyone"];
   let where = `u.id <> $1
     and not exists (select 1 from swipes s where s.swiper_id = $1 and s.target_id = u.id)
@@ -140,6 +140,7 @@ export async function deckFor(me: Member, limit = 20): Promise<Member[]> {
     params.push(GENDER_FOR_SHOW_ME[me.showMe]);
     where += ` and u.gender = $${params.length}`;
   }
+  if (opts.tonightOnly) where += ` and u.vibe = 'tonight'`;
   if (me.premium && me.passport) {
     params.push(me.passport);
     where += ` and lower(u.city) = lower($${params.length})`;

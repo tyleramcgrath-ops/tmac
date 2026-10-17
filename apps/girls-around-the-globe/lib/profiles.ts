@@ -44,16 +44,17 @@ export const VIBE_EMOJI: Record<Vibe, string> = {
   "casual-ongoing": "😏",
 };
 
-// Cities available in Passport mode (swipe somewhere before you land).
+// Cities available in Passport mode (swipe somewhere before you land), with
+// their time zone for the "where it's night right now" clock.
 export const PASSPORT_CITIES = [
-  { city: "Medellín", flag: "🇨🇴" },
-  { city: "Lisbon", flag: "🇵🇹" },
-  { city: "Bangkok", flag: "🇹🇭" },
-  { city: "Berlin", flag: "🇩🇪" },
-  { city: "Tokyo", flag: "🇯🇵" },
-  { city: "Cape Town", flag: "🇿🇦" },
-  { city: "Rio de Janeiro", flag: "🇧🇷" },
-  { city: "Mexico City", flag: "🇲🇽" },
+  { city: "Medellín", flag: "🇨🇴", tz: "America/Bogota" },
+  { city: "Mexico City", flag: "🇲🇽", tz: "America/Mexico_City" },
+  { city: "Rio de Janeiro", flag: "🇧🇷", tz: "America/Sao_Paulo" },
+  { city: "Lisbon", flag: "🇵🇹", tz: "Europe/Lisbon" },
+  { city: "Berlin", flag: "🇩🇪", tz: "Europe/Berlin" },
+  { city: "Cape Town", flag: "🇿🇦", tz: "Africa/Johannesburg" },
+  { city: "Bangkok", flag: "🇹🇭", tz: "Asia/Bangkok" },
+  { city: "Tokyo", flag: "🇯🇵", tz: "Asia/Tokyo" },
 ];
 
 export const PROFILES: Profile[] = [

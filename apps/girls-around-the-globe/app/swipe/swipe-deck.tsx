@@ -3,18 +3,28 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import { setPassport, swipe } from "@/app/actions";
+import { setPassport, setVibe, swipe } from "@/app/actions";
 import { Avatar } from "@/components/avatar";
 import type { Member, SwipeQuota } from "@/lib/members";
-import { PASSPORT_CITIES, VIBE_EMOJI, VIBE_LABEL } from "@/lib/profiles";
+import { PASSPORT_CITIES, VIBE_EMOJI, VIBE_LABEL, type Vibe } from "@/lib/profiles";
 
 const THRESHOLD = 110;
 
-type Me = Pick<Member, "name" | "palette" | "photos" | "premium" | "passport">;
+type Me = Pick<Member, "name" | "palette" | "photos" | "premium" | "passport" | "vibe">;
 type Fly = { dir: 1 | -1 } | null;
 type Limit = "out-of-likes" | "out-of-super-likes" | null;
 
-export function SwipeDeck({ me, initialDeck, quota: initialQuota }: { me: Me; initialDeck: Member[]; quota: SwipeQuota }) {
+export function SwipeDeck({
+  me,
+  initialDeck,
+  quota: initialQuota,
+  tonightOnly,
+}: {
+  me: Me;
+  initialDeck: Member[];
+  quota: SwipeQuota;
+  tonightOnly: boolean;
+}) {
   const router = useRouter();
   const [deck, setDeck] = useState(initialDeck);
   const [quota, setQuota] = useState(initialQuota);
@@ -136,15 +146,43 @@ export function SwipeDeck({ me, initialDeck, quota: initialQuota }: { me: Me; in
         </span>
       </div>
 
-      <div className="relative mt-4 h-[min(64vh,620px)] w-full select-none">
+      <div className="mt-2 flex items-center gap-2">
+        <Link
+          href={tonightOnly ? "/swipe" : "/swipe?tonight=1"}
+          aria-pressed={tonightOnly}
+          className={`chip whitespace-nowrap border transition ${
+            tonightOnly ? "border-accent !bg-accent !text-white glow" : "border-transparent hover:!text-ink"
+          }`}
+        >
+          🔥 Out tonight{tonightOnly ? " ✓" : ""}
+        </Link>
+        <label className="ml-auto flex items-center gap-2 text-xs text-ink-mute">
+          You&rsquo;re
+          <select
+            className="field !w-auto !rounded-full !py-1.5 text-xs"
+            defaultValue={me.vibe}
+            onChange={(e) => startTransition(() => setVibe(e.target.value))}
+            aria-label="Your vibe"
+          >
+            {(Object.keys(VIBE_LABEL) as Vibe[]).map((v) => (
+              <option key={v} value={v}>{VIBE_EMOJI[v]} {VIBE_LABEL[v]}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <div className="relative mt-4 h-[min(60vh,600px)] w-full select-none">
         {!top && (
           <div className="card absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
             <p className="text-5xl">🌍</p>
-            <p className="font-display text-2xl font-semibold">You&rsquo;ve seen everyone for now</p>
+            <p className="font-display text-2xl font-semibold">
+              {tonightOnly ? "No one else is out tonight here" : "You\u2019ve seen everyone for now"}
+            </p>
             <p className="text-ink-dim">
               New people join every day.{" "}
               {me.premium ? "Try Passport to swipe in another city." : "With Globe+ you can Passport to another city."}
             </p>
+            {tonightOnly && <Link href="/swipe" className="btn btn-ghost">Show everyone</Link>}
             {!me.premium && <Link href="/premium" className="btn btn-primary">Get Globe+</Link>}
           </div>
         )}
@@ -220,7 +258,7 @@ function CardFace({ profile: p, expanded = false, onToggle }: { profile: Member;
               onClick={onToggle}
               aria-expanded={expanded}
               aria-label={expanded ? "Hide details" : "Show details"}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-ink"
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-night"
             >
               {expanded ? "↓" : "↑"}
             </button>
@@ -260,7 +298,7 @@ function RoundButton({ label, className, children, ...rest }: React.ButtonHTMLAt
 
 function MatchModal({ me, profile, onClose }: { me: Me; profile: Member; onClose: () => void }) {
   return (
-    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#ff4f7b]/95 to-ink/95 p-6 text-center text-white">
+    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#ff2e88]/90 via-[#3b0f3a]/95 to-night p-6 text-center text-white">
       <div className="w-full max-w-sm">
         <p className="font-display text-5xl font-semibold italic">It&rsquo;s a match!</p>
         <p className="mt-3 text-white/80">You and {profile.name} liked each other.</p>
@@ -268,7 +306,7 @@ function MatchModal({ me, profile, onClose }: { me: Me; profile: Member; onClose
           <Avatar profile={me} size="xl" className="!h-32 !w-32 border-4 border-white" />
           <Avatar profile={profile} size="xl" className="-ml-6 !h-32 !w-32 border-4 border-white" />
         </div>
-        <Link href={`/matches/${profile.id}`} className="btn mt-10 w-full bg-white !text-accent-deep hover:bg-white/90">Send a message</Link>
+        <Link href={`/matches/${profile.id}`} className="btn mt-10 w-full bg-white !text-[#c4105e] hover:bg-white/90">Send a message</Link>
         <button type="button" onClick={onClose} className="btn mt-3 w-full border border-white/50 text-white hover:bg-white/10">Keep swiping</button>
       </div>
     </div>
@@ -278,7 +316,7 @@ function MatchModal({ me, profile, onClose }: { me: Me; profile: Member; onClose
 function LimitModal({ limit, onClose }: { limit: Exclude<Limit, null>; onClose: () => void }) {
   const likes = limit === "out-of-likes";
   return (
-    <div role="dialog" aria-modal="true" aria-label="Daily limit reached" className="fixed inset-0 z-50 flex items-center justify-center bg-ink/70 p-6">
+    <div role="dialog" aria-modal="true" aria-label="Daily limit reached" className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-6 backdrop-blur-sm">
       <div className="card w-full max-w-sm p-8 text-center">
         <p className="text-5xl">{likes ? "💘" : "⭐"}</p>
         <h2 className="mt-4 font-display text-2xl font-semibold">

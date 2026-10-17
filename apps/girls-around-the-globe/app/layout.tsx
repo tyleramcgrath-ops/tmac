@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
@@ -22,6 +22,11 @@ export const metadata: Metadata = {
   title: "Girls Around the Globe — Casual encounters, worldwide",
   description:
     "Casual encounters, worldwide. Swipe on adults who want no-strings fun, from Medellín to Tokyo, and line something up before you land.",
+};
+
+export const viewport: Viewport = {
+  themeColor: "#0d0914",
+  colorScheme: "dark",
 };
 
 export default function RootLayout({

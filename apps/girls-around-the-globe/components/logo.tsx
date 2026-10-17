@@ -7,9 +7,9 @@ export function Logo({ size = 32 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 48 48" aria-hidden="true">
       <defs>
         <linearGradient id={`g${id}`} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#ff4f7b" />
-          <stop offset="0.55" stopColor="#ff7a59" />
-          <stop offset="1" stopColor="#ffb347" />
+          <stop offset="0" stopColor="#ff2e88" />
+          <stop offset="0.55" stopColor="#ff5f5f" />
+          <stop offset="1" stopColor="#ffb547" />
         </linearGradient>
       </defs>
       <circle cx="24" cy="24" r="17" fill={`url(#g${id})`} />
@@ -19,8 +19,8 @@ export function Logo({ size = 32 }: { size?: number }) {
         d="M24 32.5s-8-4.9-8-10.2a4.4 4.4 0 0 1 8-2.5 4.4 4.4 0 0 1 8 2.5c0 5.3-8 10.2-8 10.2z"
         fill="#fff"
       />
-      <ellipse cx="24" cy="24" rx="23" ry="8" fill="none" stroke="#1b1838" strokeWidth="1.6" transform="rotate(-24 24 24)" strokeDasharray="0 0 52 6 200" />
-      <circle cx="44" cy="15.5" r="2.4" fill="#1b1838" />
+      <ellipse cx="24" cy="24" rx="23" ry="8" fill="none" stroke="var(--ink)" strokeOpacity="0.85" strokeWidth="1.6" transform="rotate(-24 24 24)" strokeDasharray="0 0 52 6 200" />
+      <circle cx="44" cy="15.5" r="2.4" fill="var(--gold)" />
     </svg>
   );
 }

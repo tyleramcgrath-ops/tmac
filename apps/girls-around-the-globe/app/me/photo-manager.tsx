@@ -51,7 +51,7 @@ export function PhotoManager({ photos }: { photos: string[] }) {
               disabled={busy}
               onClick={() => remove(url)}
               aria-label={`Delete photo ${i + 1}`}
-              className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-ink shadow hover:bg-white"
+              className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/90 text-night shadow hover:bg-white"
             >
               ✕
             </button>
