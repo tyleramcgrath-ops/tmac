@@ -204,7 +204,365 @@ const CENSUS_SD = 'https://www.census.gov/quickfacts/sandiegocitycalifornia'
 const LSA_START = 'https://support.google.com/localservices/answer/6224841'
 const SCHEMA_ELECTRICIAN = 'https://schema.org/Electrician'
 
+const AZ_ORDER = 'https://www.azcourts.gov/Portals/0/20/2020%20Rules/Order-R200030.pdf?ver=jAV3etzHom7Ip5fNxtkrzA%3d%3d'
+const AZ_GUIDE = 'https://www.azbar.org/for-legal-professionals/ethics/best-practices/er-7-1-communications-concerning-a-lawyer-s-services-and-er-7-3-solicitation-of-new-clients'
+const AZ_BLS = 'https://www.azbar.org/for-legal-professionals/career-advancement/legal-specialization/'
+const AZ_ABS_NEWS = 'https://www.azcourts.gov/Portals/0/201/Press%20Releases/2020Releases/082720RulesAgenda.pdf'
+const AZ_ABS = 'https://www.azcourts.gov/cld/Alternative-Business-Structure'
+const AZ_7209 = 'https://www.azcourts.gov/Portals/0/0/admcode/pdfcurrentcode/7-209%20Alternative%20Business%20Structures%2003_2026.pdf?ver=fog-AzgjRxoB0r2bFCwjXw%3d%3d'
+const AZ_LP = 'https://www.azcourts.gov/cld/Legal-Paraprofessional'
+const AZ_7210 = 'https://www.azcourts.gov/Portals/0/0/admcode/pdfcurrentcode/7-210%20Legal%20Paraprofessional%20Amended%2010-2025.pdf?ver=Ddm1giI5UAxTqsb0meD3AQ%3d%3d'
+const AZ_CENSUS = 'https://www.census.gov/quickfacts/fact/table/phoenixcityarizona,US/PST045221'
+const AZ_BAR_REPORT = 'https://azbar.org/media/isdkyrww/2024annreportfor2023published.pdf'
+const AZ_COURTS = 'https://superiorcourt.maricopa.gov/court-locations/'
+const AZ_JUSTICE = 'https://justicecourts.maricopa.gov/about-us/about-the-justice-courts/'
+const AZ_MUNI = 'https://www.phoenix.gov/court'
+const AZ_FED = 'https://www.azd.uscourts.gov/content/phoenix'
+const SD_GUIDELINES = 'https://developers.google.com/search/docs/appearance/structured-data/sd-policies'
+const GA_ADV = 'https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-150-10-.01'
+const GA_SPEC = 'https://www.law.cornell.edu/regulations/georgia/Ga-Comp-R-Regs-R-150-11-.01'
+const GA_STATUTE = 'https://law.onecle.com/georgia/title-43/43-11-47.html'
+const NCRDSCB = 'https://ncrdscb.ada.org/recognized-dental-specialties'
+const FTC_PRESS = 'https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials'
+const FTC_FR = 'https://www.govinfo.gov/content/pkg/FR-2024-08-22/html/2024-18519.htm'
+const FTC_4654 = 'https://www.law.cornell.edu/cfr/text/16/465.4'
+const FTC_4657 = 'https://www.law.cornell.edu/cfr/text/16/465.7'
+const HHS_NEWVISION = 'https://www.hhs.gov/about/news/2022/12/14/hhs-civil-rights-office-enters-settlement-with-dental-practice-over-disclosures-of-patients-protected-health-information.html'
+const HHS_ELITE = 'https://www.hhs.gov/hipaa/for-professionals/compliance-enforcement/agreements/elite/index.html'
+const HHS_504 = 'https://www.law.cornell.edu/cfr/text/45/84.84'
+const HHS_504_EXT = 'https://www.federalregister.gov/documents/2026/05/11/2026-09266/extension-of-compliance-dates-for-nondiscrimination-on-the-basis-of-disability-accessibility-of-web'
+const PEACHCARE = 'https://dch.georgia.gov/peachcare-kids'
+const MARTA = 'https://www.itsmarta.com/'
+const GA_CENSUS = 'https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/PST120223'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'phoenix-law-firm-website-design',
+    title: 'Phoenix Law Firm Website Design: Arizona Bar Rules',
+    description: 'How a Phoenix law firm website should follow Arizona’s rewritten ER 7.1 and 7.3, plus Maricopa County courts, Spanish pages and Valley-wide searches.',
+    kind: 'guide',
+    summary: [
+      'Since January 1, 2021, Arizona’s advertising rules sit almost entirely in ER 7.1 and ER 7.3; ERs 7.2, 7.4 and 7.5 are reserved, and the old filing and “Advertising Material” labelling rules are gone.',
+      'Every page still has to name at least one lawyer or firm responsible for it, with contact information such as a phone number, address or email (ER 7.1(c)).',
+      '“Specializes in” is allowed if it is true, but “certified specialist” needs certification under Arizona Supreme Court Rule 44, and the certifying body must be named.',
+      'Arizona also licenses Alternative Business Structures and Legal Paraprofessionals, so a Phoenix site may compete with firms that look different from a traditional practice.',
+      'Phoenix clients search by courthouse, by problem and often in Spanish: 35.9% of residents age 5 and up speak a language other than English at home.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1650917409385-a3a9dc5b1e4c?auto=format&fit=crop&w=1600&q=75', alt: 'A wide downtown Phoenix street lined with palm trees and glass office towers under a clear blue desert sky' },
+    body: `A Phoenix law firm website is governed by Arizona Supreme Court Rule 42, and since 2021 nearly all of what it says about advertising lives in two rules: ER 7.1 (no false or misleading communications) and ER 7.3 (solicitation). The practical list is short. Put the name and contact information of a responsible lawyer or firm on every page. Say “certified specialist” only if the certification meets Rule 44, and name the certifying body. Present results so a reasonable reader doesn’t expect the same outcome. Pick a firm name and web address that are accurate. Then build pages around how people in the Valley actually look for help: by the courthouse their case is in, by the problem they have, and in many households in Spanish.
+
+What follows walks through the current Arizona text, what the 2021 rewrite removed, how Alternative Business Structures and Legal Paraprofessionals change the competition, and how to set up pages and Google Business Profiles for a firm that serves Phoenix, Mesa, Scottsdale and the West Valley. It is a practical guide, not an ethics opinion. For a question about your own advertising, the rule text and the State Bar of Arizona’s ethics resources are the authorities.
+
+## What do Arizona’s advertising rules require of a law firm website?
+
+The Arizona Supreme Court rewrote the lawyer advertising rules by Order R-20-0030, effective January 1, 2021 ([the court’s order](${AZ_ORDER})). If your website was built before then, the rule numbers in your footer are probably out of date: ERs 7.2, 7.4 and 7.5 are now “[Reserved],” and their content was folded into ER 7.1 and its comments.
+
+The core of ER 7.1 is one sentence: “A lawyer shall not make a false or misleading communication about the lawyer or the lawyer’s services.” A communication is misleading if it “contains a material misrepresentation of fact or law, or omits a fact necessary to make the statement considered as a whole not materially misleading.” That second half matters on websites, where a headline can be true and still misleading because of what it leaves out.
+
+Paragraph (c) adds the one item every page needs: “Any communication made pursuant to this Rule shall include the name and contact information for at least one lawyer or law firm responsible for its content.” Comment [9] explains that contact information “includes a website address, a telephone number, an email address or a physical office location.” A site-wide footer with the firm name, a phone number and the office address satisfies this on every page at once, including landing pages that people reach straight from a search.
+
+What went away is as useful to know as what stayed. The rewrite deleted the old ER 7.3 requirements to label targeted mail as “Advertising Material,” to file copies with the State Bar, and to wait 30 days before contacting accident victims in writing. It also struck the comment sentence that called any promise of a particular outcome misleading on its own, though promising results is still exactly the kind of statement the general rule catches.
+
+## Can a Phoenix lawyer say “specialist” on a website?
+
+Arizona draws a line between describing your practice and claiming a credential.
+
+Describing is broadly allowed. Comment [6] to ER 7.1 says a lawyer “is generally permitted to state that the lawyer ‘concentrates in’ or is a ‘specialist,’ practices a ‘specialty,’ or ‘specializes in’ particular fields based on the lawyer’s experience, specialized training or education,” subject to the false-and-misleading standard. A criminal defense lawyer who has spent fifteen years on DUI cases in Maricopa County can say she focuses on DUI defense.
+
+Certification is different. ER 7.1(b) says a lawyer “shall not state or imply that a lawyer is certified as a specialist in a particular field of law, unless the lawyer complies with Arizona Supreme Court Rule 44 requirements,” and comment [8] adds that “the name of the certifying organization must be included in any communication regarding the certification.” The State Bar’s Board of Legal Specialization certifies specialists in ten practice areas, and only lawyers certified by that board or by a national entity accredited by the State Bar may advertise themselves as Board-Certified Specialists ([State Bar of Arizona, legal specialization](${AZ_BLS})).
+
+On a website, that suggests three habits:
+
+- Use “focuses on” or “concentrates in” in headings and page titles, where a reader can’t see the qualifier.
+- Put “Board-Certified Specialist” only on the profile of the lawyer who holds it, with the full name of the certifying board beside it.
+- Check page titles and image alt text too. A title like “Phoenix Certified Family Law Specialists” on a firm page implies every lawyer holds the certification.
+
+## How should a Phoenix firm show results and reviews?
+
+Arizona has no testimonial-specific rule anymore. Reviews, case results and client stories are all judged under the general standard in ER 7.1, and comment [2] gives the test that matters most for a results page: a truthful report of a lawyer’s achievements “may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters without reference to the specific factual and legal circumstances of each client’s case.” The same comment says a “clear and conspicuous disclaimer or qualifying language may preclude a finding that a statement is likely to create unjustified expectations.”
+
+A results page that holds up under that test usually has these traits:
+
+1. Each result names the case type, the court or forum, and what happened, rather than a bare dollar figure.
+2. Net and gross amounts are not mixed, and fees and costs are explained where a reader might assume the client received the full figure.
+3. A qualifier sits next to the results themselves, in readable type, not only in the footer: past results depend on the facts of each case and don’t predict future outcomes.
+4. Reviews are real, quoted in full or fairly, and never written or edited by the firm. Google’s contribution policy bans fake engagement on Maps reviews ([Maps user contributed content policy](${MAPS_POLICY})), and the website should hold itself to the same standard. See [how to ask for Google reviews without breaking the rules](/blog/ask-for-google-reviews-the-right-way).
+
+![Downtown Phoenix at dusk, the city lights spreading to the horizon beneath a band of pink and blue clouds](https://images.unsplash.com/photo-1616475309237-e218fafab89b?auto=format&fit=crop&w=1200&q=75)
+
+## Are trade names and “and Associates” allowed in Arizona?
+
+Yes, within limits. Comment [4] to ER 7.1 says a firm “may be designated by the names of all or some of its current members” or “by a trade name if it is not false or misleading,” and that a lawyer or firm “may be designated by a distinctive website address, social media username or comparable professional designation that is not misleading.” Names are misleading if they imply “a connection with a government agency,” with a nonlawyer, or with a public or charitable legal services organization.
+
+The State Bar’s guidance on ERs 7.1 and 7.3 adds two specifics that come up constantly with domain names and branding. Factually accurate trade names are permitted for Arizona firms, and a firm must employ more than one actual associate attorney to use “and Associates” ([State Bar of Arizona guidance on ER 7.1 and 7.3](${AZ_GUIDE})).
+
+For a Phoenix firm the risky patterns are easy to spot:
+
+- A domain like “maricopacountyinjuryhelp.com” can read as a county service. Pair it with the firm’s real name everywhere it appears.
+- “Arizona Legal Aid Center” or anything that sounds like a nonprofit clinic implies a public legal services connection.
+- “Smith and Associates” when Smith practices alone falls foul of the State Bar’s guidance.
+
+## Can Arizona firms pay for leads, referrals or chat?
+
+This is where the 2021 rewrite changed the most for marketing. The 2021 order struck the old ER 7.2(b) ban on giving anything of value for a recommendation, and the State Bar’s guidance now says plainly that “Arizona lawyers may now pay referral fees to anyone for referring clients to them.” The same guidance reminds lawyers to “train employees and marketing companies,” because what a vendor says on your behalf is still your communication under ER 7.1.
+
+It also answers a question that comes up as more firms add chat to their sites: “Yes, the use of AI is permitted, but you should make clear that the chatbot is not a real person.” If your site has a chat window, the first message should say who or what the visitor is talking to, and anything it says about fees or outcomes is held to the same misleading-communication standard as the rest of the site.
+
+ER 7.3 keeps one firm line. A lawyer may not solicit work by “live person-to-person contact” when a significant motive is pecuniary gain, except with other lawyers, people with a family, close personal or prior professional relationship, and people who routinely use that type of legal service for business. Comment [1] confirms that a website itself is not solicitation, because it is “directed to the general public,” and comment [2] says live contact “does not include chat rooms, text messages, or other written communications that recipients may easily disregard.” A web form, a reply to an inquiry and a text follow-up are all on the safe side of that line. A lead vendor who phones accident victims on your behalf is not.
+
+## What do ABS firms and Legal Paraprofessionals mean for your website?
+
+Arizona allows nonlawyers to own part of a law firm. The court eliminated ER 5.4, the rule barring nonlawyer fee sharing and ownership, effective the same day as the advertising rewrite ([court news release](${AZ_ABS_NEWS})). Entities with nonlawyer owners or decision-makers are licensed as Alternative Business Structures under section 7-209 of the Arizona Code of Judicial Administration ([ABS program](${AZ_ABS})). A licensed ABS may use the designation “Arizona licensed” with its name, and no other business may use a title “reasonably likely to induce others to believe the business holds a valid ABS license” ([ACJA § 7-209](${AZ_7209})).
+
+Arizona also licenses Legal Paraprofessionals. As of December 31, 2024, LPs could be licensed in family law, administrative law, limited jurisdiction civil law, criminal law, probate law and juvenile dependency law ([Legal Paraprofessional program](${AZ_LP})). LPs are bound by Rule 42 with “legal paraprofessional” substituted for “lawyer,” so ER 7.1 and 7.3 apply to their sites too, and they must use the title “Arizona Legal Paraprofessional” or “LP” with their license number on documents they prepare ([ACJA § 7-210](${AZ_7210})).
+
+Two things follow for a traditional Phoenix firm’s website:
+
+- **Clients are comparing more kinds of providers.** Someone searching for help with an uncontested divorce or an eviction answer may see an LP or an ABS-owned company next to your firm. Your pages need to say plainly who will handle the matter, what a lawyer adds, and what the first step costs.
+- **Be exact about your own status.** If the firm is an ABS, “Arizona licensed” is the designation the code provides. If it isn’t, avoid wording that implies a license you don’t hold. If you employ LPs, list them with their LP title so clients know who is who.
+
+## How do people in Phoenix search for a lawyer?
+
+Phoenix is big and spread out. The Census Bureau puts the city’s population at 1,665,481 as of July 2025, with 42.0% of residents Hispanic or Latino and 35.9% of people age 5 and older speaking a language other than English at home ([Census QuickFacts, Phoenix](${AZ_CENSUS})). The State Bar reported 19,406 active members at the end of 2023 ([State Bar of Arizona annual report](${AZ_BAR_REPORT})), many of them competing for the same Valley searches. Three things about the local landscape shape a good firm site.
+
+**People search by courthouse.** The Maricopa County Superior Court runs its main downtown complex on Jefferson and Madison Streets, the Southeast Justice Center in Mesa, the Northeast Regional Center on North 40th Street in Phoenix, the Northwest Regional Center in Surprise, and juvenile court on West Durango Street ([Superior Court locations](${AZ_COURTS})). Family cases are heard at the regional centers as well as downtown, so a divorce client in Surprise and one in Ahwatukee may be going to different buildings. A family law page that explains which location handles what, with parking and security tips, answers a question people actually search.
+
+**Small cases go elsewhere.** Maricopa County has 26 justice court precincts, which hear small claims up to $5,000 and civil suits up to $10,000 ([Maricopa County Justice Courts](${AZ_JUSTICE})). The Phoenix Municipal Court, at 300 West Washington Street, describes itself as Arizona’s largest limited jurisdiction court and among the ten busiest municipal courts in the country ([Phoenix Municipal Court](${AZ_MUNI})). A DUI or misdemeanor practice that explains the city court process, step by step, serves readers better than a generic “criminal defense” page. Federal matters go to the Sandra Day O’Connor U.S. Courthouse at 401 West Washington Street ([District of Arizona, Phoenix](${AZ_FED})).
+
+**Many clients read Spanish first.** If a lawyer or staff member at the firm serves clients in Spanish, a Spanish version of the site lets those clients read about their problem in the language they think in. Write it, don’t machine-translate it; keep the ER 7.1(c) contact line and every result qualifier on the Spanish pages; and say on each attorney profile which languages that lawyer speaks. If nobody at the firm speaks Spanish, don’t publish Spanish pages that suggest otherwise.
+
+![A Valley Metro light rail train stopped beside downtown Phoenix office towers as people walk and cycle along the platform](https://images.unsplash.com/photo-1597271479771-757112f11d9f?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Phoenix firm make pages for Scottsdale, Mesa and Glendale?
+
+Only when there is something real to say. Google’s spam policies name doorway pages, including “multiple domain names or pages targeted at specific regions or cities that funnel users to one page,” as a violation ([Google spam policies](${SPAM})). A set of “Mesa personal injury lawyer,” “Chandler personal injury lawyer” and “Gilbert personal injury lawyer” pages that differ only in the city name is exactly that.
+
+A location page earns its place when it carries information a client in that place needs: the staffed office’s address, hours and parking; which courthouse handles their case (the Southeast Justice Center for many East Valley matters, for instance); and the lawyers who actually work from that office. If your only office is downtown, one strong page explaining how you serve clients across the Valley, including remote consultations, beats a dozen thin ones.
+
+The same discipline applies to Google Business Profile. Google’s guidelines say a virtual office, meaning a rented mailing address the business doesn’t operate from, isn’t eligible for a profile, and a co-working space qualifies only if the office has clear signage, receives customers during business hours and is staffed by your own people ([Business Profile guidelines](${GBP_GUIDELINES})). Lawyers count as individual practitioners: each lawyer who can be contacted directly at the verified location may have a profile, but a practitioner “shouldn’t have multiple Business Profiles to cover all of their specializations.” A firm with offices downtown and in Scottsdale can have a profile for each staffed office. It shouldn’t have one for a mailbox in Peoria. For how those profiles get chosen for the map, see [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).
+
+![Rugged desert mountain rising behind tree-lined Phoenix neighborhoods under a clear blue sky](https://images.unsplash.com/photo-1566855016870-41e82a391a9f?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a Phoenix law firm website have?
+
+Start with the pages that answer a client’s first questions, then add depth where the firm actually practices.
+
+- **Home.** What you do, for whom, where, and how to reach a lawyer today. The responsible lawyer or firm and contact details in the footer.
+- **One page per practice area you handle as real work.** Each one explains the problem, the process in Maricopa County, what it costs to start, and who at the firm handles it.
+- **Attorney profiles.** Bar admissions, years in practice, languages, and any Board certification with the certifying body named. A real photo of the real lawyer.
+- **Results, with qualifiers,** if you publish them at all.
+- **Office pages** for each staffed office, with address, hours and parking.
+- **A Spanish section** if the firm serves Spanish-speaking clients.
+- **A consultation form** on every page that asks only what you need to call back and run a conflict check.
+
+Pages written this way are also the pages AI answers can quote. Google says its AI features draw on the same signals as search and need no special markup ([AI features and your website](${GOOGLE_AI})); clear, specific answers to real questions are what get pulled into an answer. More on that in [Google AI Overviews: what law firms should know](/blog/google-ai-overviews-for-law-firms).
+
+## A launch checklist for an Arizona law firm website
+
+1. Every page names a responsible lawyer or firm with contact information (ER 7.1(c)).
+2. Footer and disclaimer text no longer cite ERs 7.2, 7.4 or 7.5 as if they had text.
+3. “Specializes in” appears only where it is true; “certified specialist” appears only with Rule 44 certification and the certifying body named (ER 7.1(b), comment [8]).
+4. Results show the case type, forum and outcome, with a qualifier beside them (comment [2]).
+5. Reviews are real and unedited; nothing is written by the firm or a vendor.
+6. The firm name, domain and social handles are accurate; “and Associates” only with more than one associate attorney.
+7. Any chatbot says it isn’t a person, and marketing vendors know the rules.
+8. No vendor makes live person-to-person contact with prospects on the firm’s behalf (ER 7.3).
+9. ABS status and LP titles, if any, are stated exactly.
+10. Spanish pages exist only if someone at the firm serves clients in Spanish, and they carry the same disclosures.
+11. One Business Profile per staffed office; no virtual office listings.
+12. Structured data describes only what each page shows ([structured data guidelines](${SD_GUIDELINES})).
+
+## How SaySites builds a Phoenix law firm site
+
+SaySites was built for exactly this kind of site. A law firm site comes with a page per practice area, a profile for each attorney, a page for each office, and a consultation form on every page whose intake questions ask for the other party’s name, so you can check conflicts before you call back. The firm is described to search engines as a LegalService, each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. A site can be written in English or in Spanish.
+
+You make changes by typing them in plain words, such as “change ‘certified’ to ‘focuses on’ on Maria’s profile” or “add the results disclaimer under the verdicts list,” and each change waits as a draft for you to approve. SaySites never invents a result, review, credential or photo; those come only from you.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [all pricing](/pricing)). If you already have a site, [request a free redesign](/redesign) and see your own pages rebuilt under Arizona’s rules before you decide, or [start a 7-day free trial](/signup) and draft the new site yourself this afternoon. Firms licensed in more than one state can compare the [California rules for Los Angeles firms](/blog/los-angeles-law-firm-website-design) and [Florida’s filing requirements](/blog/law-firm-website-design-florida).`,
+    faq: [
+      { q: 'What must an Arizona law firm website include?', a: 'ER 7.1(c) requires every communication to include the name and contact information of at least one lawyer or law firm responsible for its content. Comment [9] says contact information includes a website address, phone number, email address or physical office location. A site-wide footer with the firm name, phone and office address covers every page, including landing pages.' },
+      { q: 'Do Arizona lawyers still file website ads with the State Bar?', a: 'No. The Arizona Supreme Court’s rewrite effective January 1, 2021 removed the old filing and “Advertising Material” labelling requirements, along with the 30-day wait before written contact with accident victims. The rules that remain for websites are mainly ER 7.1 on false or misleading communications and ER 7.3 on live solicitation.' },
+      { q: 'Can a Phoenix lawyer call themselves a specialist?', a: 'Saying you specialize in or concentrate in a field is generally allowed if it is true, under comment [6] to ER 7.1. Claiming to be a certified specialist requires certification that meets Arizona Supreme Court Rule 44, such as from the State Bar’s Board of Legal Specialization, and the certifying organization must be named wherever the certification is mentioned.' },
+      { q: 'Can an Arizona law firm pay for leads or referrals?', a: 'Arizona removed its ban on paying for recommendations in 2021, and the State Bar’s guidance says lawyers may now pay referral fees to anyone. The firm is still responsible for what vendors say, which must not be false or misleading, and no one may make live person-to-person solicitation calls for the firm except as ER 7.3 allows.' },
+      { q: 'Can a Phoenix firm use an AI chatbot on its website?', a: 'Yes. The State Bar of Arizona’s guidance says AI use is permitted but the firm should make clear the chatbot is not a real person. Treat anything the chatbot says about fees, timelines or outcomes like any other statement on the site: it must not be false or misleading, and a lawyer should review how it answers.' },
+      { q: 'What is an ABS law firm in Arizona?', a: 'An Alternative Business Structure is a business licensed under ACJA section 7-209 that includes nonlawyers with an economic interest or decision-making authority and provides legal services. Arizona allowed them after eliminating ER 5.4 effective January 1, 2021. A licensed ABS may use the designation “Arizona licensed,” and other businesses may not imply they hold that license.' },
+      { q: 'Should a Phoenix law firm website be in Spanish?', a: 'If someone at the firm serves clients in Spanish, it often helps: Census figures show 35.9% of Phoenix residents age 5 and older speak a language other than English at home. Have the pages written or reviewed by a fluent speaker, keep every disclosure on them, and say which lawyers speak Spanish.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict check question, LegalService structured data and hosting. You can also send your current site for a free redesign and see your own pages rebuilt first.' },
+    ],
+    about: ['Arizona Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Phoenix, Arizona'],
+    published: '2026-10-17',
+    status: 'published',
+  },
+  {
+    slug: 'atlanta-dental-practice-website-design',
+    title: 'Atlanta Dental Websites: Georgia Advertising Rules',
+    description: 'What an Atlanta dental practice website can and can’t say under Georgia Board of Dentistry rules, plus HIPAA, reviews, accessibility and new-patient pages.',
+    kind: 'guide',
+    summary: [
+      'Georgia Board of Dentistry Rule 150-10-.01 treats your website as advertising, makes the dentist responsible for it, and requires a copy of each ad to be kept for at least a year after its last use.',
+      'The rule names phrases that are misleading on their face, including “quality dentistry,” “modern office,” “latest modern equipment” and any claim that treatment is painless.',
+      'Only dentists who meet the educational requirements for one of Georgia’s 12 recognized specialties may call themselves specialists; a general dentist can offer implants or aligners but not claim to specialize in them.',
+      'Advertised fees and “free” offers must be honored for at least 60 days after the ad last runs, and fee ranges must show both the minimum and the maximum.',
+      'Patient photos and stories need written consent, review replies must never reveal patient information, and tracking code on appointment forms can raise HIPAA questions.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1663601460253-aba72eea6edf?auto=format&fit=crop&w=1600&q=75', alt: 'Atlanta’s skyline in soft evening haze, with a tall tower topped by a gold spire rising above the downtown office blocks' },
+    body: `An Atlanta dental practice website counts as advertising under Georgia law, so it has to follow Georgia Board of Dentistry Rule 150-10-.01 on fraudulent, misleading or deceptive advertising. In short: the dentist is responsible for every claim on the site and must keep copies; certain phrases such as “quality dentistry,” “modern office” and “painless” are treated as misleading; “specialist” is reserved for the 12 specialties Georgia recognizes; advertised prices and free offers must be honored for 60 days; and nothing about a patient appears without written consent. Get those right, then build the site around what Atlanta patients actually check first: whether you take their insurance, whether you’re taking new patients, and how hard you are to get to.
+
+This guide quotes the Georgia rules, explains the federal rules that touch dental sites (HIPAA tracking guidance, the FTC’s review rule and accessibility), and ends with the pages and checklist an Atlanta practice needs. It’s practical guidance, not legal advice; the Georgia Board of Dentistry and your own counsel have the final word on your ads.
+
+## Does Georgia treat a dental website as advertising?
+
+Yes. Rule 150-10-.01(1) defines advertising broadly: it “shall include any information communicated in a manner designed to attract public attention to the practice of the licensee, including the use of a trade name or corporate name” ([Ga. Comp. R. & Regs. 150-10-.01](${GA_ADV})). A practice website, its Google Business Profile, social posts and paid search ads all fit that description.
+
+Two duties follow from paragraph (2), and both are easy to miss when a marketing agency runs the site:
+
+- **Responsibility.** “The dentist shall have ultimate responsibility for all advertisements approved or placed by the dentist or his or her agents, employees, or associates.” A claim an agency wrote is still your claim.
+- **Records.** The dentist “shall retain a copy, recording, or specification of the advertisement for at least one year following the last appearance or use of the advertisement,” and must provide a copy to the Board within ten days of a request.
+
+Websites change constantly, so the records duty needs a habit. Save a dated PDF or screenshot of the home page, every specials or pricing page and every treatment page each time it changes, and keep them for at least a year after that version comes down. If your website platform keeps a version history, check how long it keeps it before relying on it.
+
+The rule rests on O.C.G.A. § 43-11-47, the Georgia Dental Practice Act’s grounds for discipline, which include knowingly making any “fraudulent, misleading, or deceptive statement in any form of advertising” or any statement in an advertisement “concerning the quality of the dental services rendered” ([O.C.G.A. § 43-11-47](${GA_STATUTE})).
+
+## Which words does Georgia treat as misleading on a dental website?
+
+Paragraph (6) of the rule lists statements that “shall be deemed to be misleading.” This is the part of Georgia’s rule that catches the most ordinary website copy, because many of the banned phrases are marketing clichés:
+
+- Statements “claiming or implying the superiority of a method of treatment, material, drug or appliance.”
+- “Quality dentistry,” “quality work,” “staff of skilled dentists” and “skilled employees.”
+- “Scientifically equipped,” “latest modern equipment,” “modern office,” “modern methods” and “modern devices.”
+- Statements “that a dental operation or treatment can be performed without causing any pain.”
+- Saying a dentist practices at a location where he or she does not regularly treat patients.
+- A trade name or corporate name “confusingly similar to a trade name or corporate name already in use by a dental practice in this state.”
+
+The fix is to replace labels with facts a patient can check. Here are rewrites that keep the meaning without the banned wording:
+
+1. Instead of “Quality dentistry in Midtown,” try “General and family dentistry in Midtown, accepting new patients.”
+2. Instead of “Our modern office has the latest equipment,” describe what you actually use: “We take digital X-rays and use an intraoral camera, so you can see what we see on a screen.”
+3. Instead of “Painless dentistry,” describe what you offer for comfort: “We offer numbing gel before injections, and nitrous oxide for patients who want it.”
+4. Instead of “The best implant system available,” say which system you place and why you chose it, without claiming it beats the others.
+5. Instead of “Our skilled team,” introduce the team: names, roles, years in practice and a real photo of each person.
+
+Check the parts of the site people forget: page titles, image alt text, the meta description that appears in Google, and the practice’s Google Business Profile description all count as communications designed to attract attention to the practice.
+
+![A dental hygienist in blue gloves examines a smiling patient’s teeth while he leans back in the chair](https://images.unsplash.com/photo-1663755489920-5e09f66d011a?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist in Atlanta say “specialist” on a website?
+
+Not unless the dentist qualifies. Rule 150-10-.01(6)(b) makes it misleading to claim to be a specialist “unless that specialty is recognized by the Georgia Board of Dentistry pursuant to Rule 150-11-.01 and the dentist has completed the educational requirements” in the American Dental Association’s specialty practice guidelines.
+
+Rule 150-11-.01 says the Board “recognizes twelve (12) specialties of dental practice”: dental public health, endodontics, oral pathology, oral and maxillofacial surgery, orthodontics, pediatric dentistry, periodontics, prosthodontics, oral and maxillofacial radiology, dental anesthesiology, oral medicine and orofacial pain ([Ga. Comp. R. & Regs. 150-11-.01](${GA_SPEC})). That list lines up with the 12 specialties recognized nationally by the National Commission on Recognition of Dental Specialties and Certifying Boards ([recognized dental specialties](${NCRDSCB})).
+
+The same rule makes clear that a general dentist may still perform specialty procedures, “provided that the dentist does not represent himself or herself as a specialist.” On a website, that means:
+
+- “We place dental implants” and “We offer clear aligner treatment” are fine for a general dentist who does that work.
+- “Implant specialist,” “Invisalign specialist” and “cosmetic dentistry specialist” are not, because implants and cosmetic dentistry aren’t recognized specialties, and aligners belong to orthodontics.
+- A pediatric dentist or orthodontist who completed the specialty program can say so, and should name the specialty exactly as Georgia lists it.
+- Watch page titles. “Atlanta Implant Specialists” as a title tag makes the claim even if the page text is careful.
+
+## How should an Atlanta practice advertise fees, specials and free exams?
+
+New-patient specials are common on dental sites, and Georgia’s rule sets specific conditions in paragraph (3)(d):
+
+- **Ranges must be complete.** “If a range of fees is advertised (including use of words such as ‘from,’ ‘as low as,’ ‘starting at’), the minimum and maximum fees shall be fully disclosed.” “Crowns from $X” alone doesn’t meet this; “Crowns from $X to $Y” does.
+- **Prices and free offers last 60 days.** An advertised fee, or a service advertised as “free” or “no charge,” must be honored for at least 60 days after the last publication, unless the ad gives another date. Put an end date on every special, and remember that a page left up keeps the offer running.
+- **Related services.** Follow-up services related to an advertised one must be provided at no extra charge unless the ad says: “ADDITIONAL CHARGES MAY BE INCURRED FOR RELATED SERVICES WHICH MAY BE REQUIRED IN INDIVIDUAL CASES.” If your new-patient exam special doesn’t include X-rays or a cleaning, say what it includes and add that statement.
+
+A simple pattern keeps specials honest: one “New patient offers” page with each offer, what it includes, what it doesn’t, the dates it runs, and the required statement, and nothing promotional anywhere else that contradicts it.
+
+## Can a dental website show patient photos, reviews and testimonials?
+
+Yes, with consent and care. Rule 150-10-.01(5) says advertising “shall not reveal a patient’s personally identifiable facts, data or information obtained in a professional capacity, without the patient’s written consent.” Before-and-after photos, a patient’s first name with their story, or a video testimonial all need that written consent on file, and the photos should be real results from your practice.
+
+Reviews raise two more rules.
+
+**The FTC’s rule on fake reviews.** The Federal Trade Commission’s Consumer Reviews and Testimonials Rule took effect on October 21, 2024 ([Federal Register](${FTC_FR})). It bans fake reviews and testimonials, including AI-generated ones, and buying positive or negative reviews ([FTC announcement](${FTC_PRESS})). Section 465.4 bars offering compensation or incentives for reviews “expressing a particular sentiment, whether positive or negative” ([16 CFR 465.4](${FTC_4654})), and section 465.7 bars implying that the reviews you display are all or most of the reviews you received when you have suppressed negative ones ([16 CFR 465.7](${FTC_4657})). Showing only five-star reviews under a heading like “What our patients say” edges toward that line; quoting a mix, or linking to your full Google reviews, doesn’t.
+
+**HIPAA and review replies.** The HHS Office for Civil Rights has settled with dental practices that disclosed patient information while answering online reviews. In 2022 a California practice paid $23,000 after its replies to reviews disclosed patient names, treatment and insurance details, and OCR said plainly that “providers cannot disclose protected health information of their patients when responding to negative online reviews” ([HHS settlement announcement](${HHS_NEWVISION})). A Dallas dental practice paid $10,000 in 2019 over disclosures on social media ([HHS resolution agreement](${HHS_ELITE})). A safe reply thanks the reviewer, confirms nothing about whether they are a patient, and invites them to call the office.
+
+## Do tracking pixels on a dental website raise HIPAA issues?
+
+They can. HHS defines a tracking technology as “a script or code on a website or mobile app used to gather information about users or their actions,” and its bulletin explains when using one on a covered entity’s site can disclose protected health information ([HHS guidance on online tracking](${HHS_TRACKING})). On June 20, 2024, a federal court in Texas vacated one part of that guidance: the position that HIPAA is triggered when tracking connects a visitor’s IP address with a visit to a public, unauthenticated page about health conditions or providers. HHS’s page still carries the rest of the bulletin, including tracking on patient portals and similar authenticated pages.
+
+For a dental practice, the practical steps are:
+
+1. List every script on the site: analytics, ad pixels, chat widgets, scheduling tools, embedded maps and video.
+2. Keep advertising pixels off appointment request forms, patient portals and anything a patient fills in.
+3. Ask each vendor that could receive patient information whether it will sign a business associate agreement. If it won’t, don’t send it patient information.
+4. Keep the website’s contact form to scheduling details, and say on the form not to send medical history or insurance ID numbers through it.
+
+![A dentist points to a dental X-ray on a wall-mounted screen while a seated patient looks up at it](https://images.unsplash.com/photo-1606811841689-23dfddce3e95?auto=format&fit=crop&w=1200&q=75)
+
+## Does an Atlanta dental website have to be accessible?
+
+Accessibility is both a legal question and a practical one, since patients who use screen readers or can’t use a mouse need to book too. The Justice Department’s web guidance says Title III of the ADA prohibits discrimination against people with disabilities by businesses open to the public, and points to the Web Content Accessibility Guidelines as helpful guidance ([ADA web guidance](${ADA_WEB})).
+
+Practices that receive federal financial assistance from HHS, which can include billing Medicaid or Georgia’s PeachCare for Kids, have a dated deadline. Under the Section 504 rule, recipients with 15 or more employees must meet WCAG 2.1 Level A and AA starting May 11, 2027, and those with fewer than 15 employees starting May 10, 2028 ([45 CFR 84.84](${HHS_504})). HHS extended those dates by a year in May 2026 ([Federal Register notice](${HHS_504_EXT})).
+
+The basics fix most problems: real text instead of text in images, alt text on photos, labels on every form field, enough color contrast, and pages that work with a keyboard. They also tend to make the site faster, which helps every visitor ([is your website fast enough?](/blog/is-your-website-fast-enough)).
+
+## How do Atlanta patients choose a dentist online?
+
+Most people looking for a new dentist want three answers before they call, and a good site gives them on the first screen.
+
+**Insurance.** List the plans you accept by name, and keep the list current. If you take Medicaid or PeachCare for Kids, say so; PeachCare is Georgia’s program for uninsured children, and its benefits include dental care ([PeachCare for Kids](${PEACHCARE})). If you’re out of network with most plans, say what you do instead, such as filing claims for patients or offering an in-house membership plan.
+
+**Availability.** “Accepting new patients” at the top of the home page answers the most common question. If you see emergencies the same day, say what counts as an emergency and how to reach you after hours.
+
+**Getting there.** Atlanta is a driving city with a rail and bus network, so tell people how to arrive: parking (garage, deck validation or surface lot), the building entrance, the suite number, and the nearest MARTA station or bus route if one is within walking distance ([MARTA](${MARTA})). An office inside a medical building on Peachtree Street needs different directions than a strip-center office in Decatur.
+
+The Census Bureau counts 529,110 people in the city of Atlanta, with 12.2% of residents age 5 and older speaking a language other than English at home ([Census QuickFacts, Atlanta](${GA_CENSUS})). If someone on your team speaks Spanish, Korean, Vietnamese or another language your patients use, say so on the team page and in your Google Business Profile.
+
+On Google Business Profile, dentists are individual practitioners. Each dentist who sees patients directly at the verified location may have a profile, and a practice with several dentists should also have a profile for the location itself ([Business Profile guidelines](${GBP_GUIDELINES})). Keep the practice name in the profile exactly as it appears on your sign and site. Rule 150-10-.01(6)(c) also makes it misleading to list a dentist at a location where that dentist doesn’t regularly treat patients, so a dentist who works at your Buckhead office only, and not at your Decatur office, should appear only on the Buckhead page and profile.
+
+![The Atlanta skyline reflected in a still lake ringed by green trees under a bright, cloudy sky](https://images.unsplash.com/photo-1702494600481-043a92b6271e?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should an Atlanta dental practice website have?
+
+- **Home:** who you are, which neighborhood, hours, whether you’re accepting new patients, and a phone number that calls with one tap.
+- **New patients:** what happens at the first visit, how long it takes, what to bring, and a request form.
+- **Insurance and payment:** the plans you accept by name, financing if you offer it, and any membership plan.
+- **One page per treatment** you actually provide: cleanings, fillings, crowns, implants, clear aligners, whitening, emergency visits. Each page describes the treatment, who it suits and what it involves, with no superiority claims.
+- **Team:** each dentist and hygienist with a real photo, role, education and, for specialists, the specialty named as Georgia lists it.
+- **Offers,** if you run them, with dates and the required related-charges statement.
+- **Contact and directions:** address, suite, parking, MARTA access, hours and a map.
+
+For more on the first page people see, read [what to put on your home page so visitors get in touch](/blog/what-to-put-on-your-home-page). Practices with an office in Texas as well can compare [Houston’s dental website rules](/blog/houston-dental-practice-website-texas-rules).
+
+## A checklist for a Georgia dental website
+
+1. A dated copy of each version of every page is kept for at least a year after it changes (Rule 150-10-.01(2)).
+2. No “quality dentistry,” “skilled staff,” “modern office,” “latest equipment” or “painless,” including in titles and alt text (paragraph (6)).
+3. No claims that a method, material or appliance is superior.
+4. “Specialist” only for qualified dentists in one of Georgia’s 12 recognized specialties (Rule 150-11-.01).
+5. Fee ranges show the minimum and maximum; offers have end dates and are honored for 60 days (paragraph (3)(d)).
+6. The related-charges statement appears with any advertised service that may need more work.
+7. Written consent on file for every patient photo, name or story (paragraph (5)).
+8. Reviews are real; none are bought, filtered to hide negatives, or written by staff.
+9. Review replies reveal nothing about the patient.
+10. No advertising pixels on forms or portals; vendors that touch patient information sign a business associate agreement.
+11. The site meets WCAG 2.1 AA basics, with the Section 504 dates in mind if you bill Medicaid or PeachCare.
+12. Each dentist appears only at the offices where he or she regularly treats patients.
+
+## How SaySites builds an Atlanta dental website
+
+A SaySites dental site starts with the pages patients look for: new patients, insurance and payment, a page for each treatment, the team and contact. The practice is described to Google as a Dentist with its address, phone and hours, and every page passes a 95+ speed check before it goes live. The appointment form can use a new-patient question set that asks nothing clinical, and requests arrive in a Leads pipeline where your front desk tracks each one from first contact to booked.
+
+You change the site by typing what you want, such as “replace ‘quality dentistry’ with ‘family dentistry in Grant Park’” or “add an end date of December 31 to the whitening special,” and each change waits as a draft for you to approve. SaySites never invents reviews, results, credentials or patient photos; those only come from you.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). If you have a site now, [ask for a free redesign](/redesign) to see your own pages rebuilt under Georgia’s rules, or [start your 7-day free trial](/signup) and make the changes yourself.`,
+    faq: [
+      { q: 'Is a dental website considered advertising in Georgia?', a: 'Yes. Georgia Board of Dentistry Rule 150-10-.01 defines advertising as any information communicated in a manner designed to attract public attention to the practice, including a trade name. The dentist is ultimately responsible for every ad placed by staff or agents, and must keep a copy of each ad for at least one year after it was last used.' },
+      { q: 'What phrases can’t a Georgia dentist use in advertising?', a: 'Rule 150-10-.01(6) deems misleading “quality dentistry,” “quality work,” “staff of skilled dentists,” “skilled employees,” “scientifically equipped,” “latest modern equipment,” “modern office,” “modern methods” and “modern devices,” along with claims that treatment is painless, claims that a method or material is superior, and trade names confusingly similar to another Georgia practice’s name.' },
+      { q: 'Can a general dentist in Georgia say they specialize in implants?', a: 'No. Only dentists who meet the educational requirements for one of the 12 specialties the Georgia Board of Dentistry recognizes may represent themselves as specialists, and implant dentistry is not one of them. A general dentist may say the practice places implants or offers clear aligners, as long as nothing presents the dentist as a specialist.' },
+      { q: 'How long must a Georgia dentist honor an advertised price?', a: 'At least 60 days after the date the ad was last published or broadcast, unless the ad specifies another date. The same applies to services advertised as free or no charge. A website page counts as published while it is live, so give each special an end date and remove it when the offer ends.' },
+      { q: 'Can a dentist reply to a bad Google review?', a: 'Yes, but without revealing anything about the patient. HHS has settled with dental practices that disclosed patient names, treatment and insurance details in review replies, and says providers cannot disclose protected health information when responding to negative reviews. Thank the reviewer, don’t confirm they are a patient, and invite them to call the office.' },
+      { q: 'Do dental websites need to meet WCAG accessibility standards?', a: 'The ADA applies to businesses open to the public, and the Justice Department points to WCAG as helpful guidance. Practices that receive HHS financial assistance, such as Medicaid payments, must meet WCAG 2.1 AA under the Section 504 rule from May 11, 2027 with 15 or more employees, or May 10, 2028 with fewer.' },
+      { q: 'How much does a SaySites dental website cost?', a: 'The Site plan is $15 a month with a 7-day free trial, and includes hosting, Dentist structured data, a page per treatment, a new-patient request form and the Leads pipeline. You can also send your current site for a free redesign and see your own pages rebuilt before you decide.' },
+    ],
+    about: ['Georgia Board of Dentistry', 'Dental advertising', 'Dental practice websites', 'Atlanta, Georgia'],
+    published: '2026-10-17',
+    status: 'published',
+  },
   {
     slug: 'philadelphia-law-firm-website-design',
     title: 'Philadelphia Law Firm Website Design: PA Ad Rules',
