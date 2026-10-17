@@ -74,11 +74,11 @@ add_action(
 				array( 'key' => 'whr_price_from', 'compare' => 'NOT EXISTS' ),
 			);
 		}
-		// Sponsored first, then the chosen order.
-		// Every sanctuary carries whr_sponsored (see whr_ensure_sponsored_flag), so this clause excludes nothing.
-		$meta_query['sponsored'] = array( 'key' => 'whr_sponsored', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+		// Sponsored (Featured plan) first, then by plan, then the chosen order. Every sanctuary
+		// carries both keys (see whr_sync_sort_keys), so these clauses exclude nothing.
+		$meta_query['sponsored'] = array( 'key' => 'whr_sponsored_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
 
-		// Facilities that manage their own profile come before unclaimed public listings.
+		// whr_claimed_sort is the plan rank: Signature, then Essential, then public listings.
 		$meta_query['claimed'] = array( 'key' => 'whr_claimed_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
 		$order                 = array( 'sponsored' => 'DESC', 'claimed' => 'DESC' );
 		if ( 'price' === $f['sort'] ) {
@@ -132,8 +132,8 @@ function whr_sync_sort_keys( $post_id ) {
 	if ( 'sanctuary' !== get_post_type( $post_id ) ) {
 		return;
 	}
-	add_post_meta( $post_id, 'whr_sponsored', 0, true );
-	update_post_meta( $post_id, 'whr_claimed_sort', whr_is_claimed( $post_id ) ? 1 : 0 );
+	update_post_meta( $post_id, 'whr_sponsored_sort', whr_is_sponsored( $post_id ) ? 1 : 0 );
+	update_post_meta( $post_id, 'whr_claimed_sort', whr_plan_rank( $post_id ) );
 	$price = (int) get_post_meta( $post_id, 'whr_price_from', true );
 	$stay  = (int) get_post_meta( $post_id, 'whr_stay_min', true );
 	update_post_meta( $post_id, 'whr_price_sort', $price ? $price : 999999999 );
@@ -144,7 +144,7 @@ foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) a
 	add_action(
 		$whr_meta_hook,
 		function ( $meta_id, $post_id, $key ) {
-			if ( in_array( $key, array( 'whr_price_from', 'whr_stay_min', 'whr_claimed', 'whr_source' ), true ) ) {
+			if ( in_array( $key, array( 'whr_price_from', 'whr_stay_min', 'whr_claimed', 'whr_source', 'whr_sponsored', 'whr_plan', 'whr_plan_until' ), true ) ) {
 				whr_sync_sort_keys( $post_id );
 			}
 		},
@@ -153,26 +153,42 @@ foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) a
 	);
 }
 
-/** Backfill sort keys once for sanctuaries created before this version. */
-add_action(
-	'admin_init',
-	function () {
-		if ( get_option( 'whr_sort_keys_version' ) === WHR_VERSION ) {
-			return;
-		}
-		$missing = get_posts(
-			array(
-				'post_type'   => 'sanctuary',
-				'post_status' => 'any',
-				'numberposts' => -1,
-				'fields'      => 'ids',
-				'meta_query'  => array( array( 'key' => 'whr_claimed_sort', 'compare' => 'NOT EXISTS' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
-			)
-		);
-		foreach ( $missing as $id ) {
-			whr_sync_sort_keys( $id );
-		}
+/**
+ * Backfill sort keys for sanctuaries created before this version, in batches. Runs on admin
+ * page loads and on WP-Cron until done (or at once with `wp whr-import resync`).
+ *
+ * @param int $batch Listings per run.
+ * @return int Listings updated.
+ */
+function whr_backfill_sort_keys( $batch = 500 ) {
+	if ( get_option( 'whr_sort_keys_version' ) === WHR_VERSION ) {
+		return 0;
+	}
+	$missing = get_posts(
+		array(
+			'post_type'   => 'sanctuary',
+			'post_status' => 'any',
+			'numberposts' => $batch,
+			'fields'      => 'ids',
+			'meta_query'  => array( array( 'key' => 'whr_sponsored_sort', 'compare' => 'NOT EXISTS' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+		)
+	);
+	foreach ( $missing as $id ) {
+		whr_sync_sort_keys( $id );
+	}
+	if ( count( $missing ) < $batch ) {
 		update_option( 'whr_sort_keys_version', WHR_VERSION );
+		wp_clear_scheduled_hook( 'whr_backfill_sort_keys' );
+	} elseif ( ! wp_next_scheduled( 'whr_backfill_sort_keys' ) ) {
+		wp_schedule_single_event( time() + 60, 'whr_backfill_sort_keys' );
+	}
+	return count( $missing );
+}
+add_action( 'admin_init', 'whr_backfill_sort_keys' );
+add_action(
+	'whr_backfill_sort_keys',
+	function () {
+		whr_backfill_sort_keys( 1000 );
 	}
 );
 

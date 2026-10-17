@@ -7,12 +7,13 @@
 
 $stay    = whr_stay_text();
 $claimed = whr_is_claimed();
+$full    = whr_has_full_profile();
 ?>
-<a class="card<?php echo $claimed ? '' : ' card--public'; ?>" href="<?php the_permalink(); ?>">
+<a class="card<?php echo $full ? '' : ' card--public'; ?>" href="<?php the_permalink(); ?>">
 	<span class="card__media">
 		<?php echo whr_post_image( null, 'whr-card', array( 'alt' => '' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- built by core image functions. ?>
 		<?php echo whr_care_badge(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?>
-		<?php if ( whr_meta( 'sponsored' ) ) : ?>
+		<?php if ( whr_is_sponsored() ) : ?>
 			<span class="badge badge--sponsored"><?php esc_html_e( 'Sponsored', 'wehaverehabs' ); ?></span>
 		<?php endif; ?>
 	</span>
@@ -25,6 +26,8 @@ $claimed = whr_is_claimed();
 		<?php
 		if ( ! $claimed ) {
 			esc_html_e( 'Public listing · Unclaimed', 'wehaverehabs' );
+		} elseif ( ! $full ) {
+			echo '<span class="verified">' . esc_html__( 'Verified by the facility', 'wehaverehabs' ) . '</span>';
 		} else {
 			if ( $stay ) {
 				echo esc_html( $stay ) . ' · ';

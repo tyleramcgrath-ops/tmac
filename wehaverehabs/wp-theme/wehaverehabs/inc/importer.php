@@ -3,6 +3,7 @@
  * Bulk import of public facility listings from a JSON Lines file (one facility per line),
  * as produced by wehaverehabs/data/build_listings.py.
  *
+ *   wp whr-import bundled            (the 21,842 facilities shipped in data/listings.jsonl.gz)
  *   wp whr-import listings.jsonl [--limit=<n>] [--offset=<n>] [--update] [--source=<samhsa|cqc|web>] [--country=<name>]
  *   wp whr-import remove --source=<samhsa|cqc|web>
  *
@@ -293,6 +294,17 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 	WP_CLI::add_command(
 		'whr-import',
 		function ( $args, $assoc ) {
+			if ( 'resync' === ( isset( $args[0] ) ? $args[0] : '' ) ) {
+				delete_option( 'whr_sort_keys_version' );
+				$n = 0;
+				while ( ( $done = whr_backfill_sort_keys( 1000 ) ) > 0 ) { // phpcs:ignore WordPress.CodeAnalysis.AssignmentInCondition
+					$n += $done;
+					WP_CLI::log( $n . ' listings re-ranked' );
+					wp_cache_flush_runtime();
+				}
+				WP_CLI::success( 'Sort keys are up to date.' );
+				return;
+			}
 			if ( 'remove' === ( isset( $args[0] ) ? $args[0] : '' ) ) {
 				if ( empty( $assoc['source'] ) ) {
 					WP_CLI::error( 'Pass --source=<samhsa|cqc|web>.' );
@@ -301,6 +313,9 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 				return;
 			}
 			$file = isset( $args[0] ) ? $args[0] : '';
+			if ( 'bundled' === $file ) {
+				$file = whr_bundled_listings();
+			}
 			if ( ! $file || ! is_readable( $file ) ) {
 				WP_CLI::error( 'Usage: wp whr-import <listings.jsonl> [--limit=<n>] [--offset=<n>] [--update] [--source=<s>] [--country=<c>]' );
 			}
@@ -327,7 +342,7 @@ if ( defined( 'WP_CLI' ) && WP_CLI ) {
 add_filter(
 	'manage_sanctuary_posts_columns',
 	function ( $cols ) {
-		$cols['whr_status'] = __( 'Listing', 'wehaverehabs' );
+		$cols['whr_status'] = __( 'Plan', 'wehaverehabs' );
 		return $cols;
 	}
 );
@@ -338,7 +353,7 @@ add_action(
 			return;
 		}
 		$source = whr_meta( 'source', $post_id );
-		$label  = whr_is_claimed( $post_id ) ? __( 'Claimed / managed', 'wehaverehabs' ) : __( 'Public · unclaimed', 'wehaverehabs' );
+		$label  = whr_plans()[ whr_plan( $post_id ) ][0];
 		echo esc_html( $label . ( $source && 'manual' !== $source ? ' (' . $source . ')' : '' ) );
 	},
 	10,
@@ -347,12 +362,12 @@ add_action(
 add_action(
 	'restrict_manage_posts',
 	function ( $post_type ) {
-		if ( 'sanctuary' !== $post_type ) {
+		if ( 'sanctuary' !== $post_type || ! whr_is_staff() ) {
 			return;
 		}
 		$current = isset( $_GET['whr_status'] ) ? sanitize_key( $_GET['whr_status'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		echo '<select name="whr_status"><option value="">' . esc_html__( 'All listings', 'wehaverehabs' ) . '</option>';
-		foreach ( array( 'claimed' => __( 'Claimed / managed', 'wehaverehabs' ), 'public' => __( 'Public · unclaimed', 'wehaverehabs' ) ) as $value => $label ) {
+		foreach ( array( 'paid' => __( 'Paid plans', 'wehaverehabs' ), 'claimed' => __( 'Claimed (any plan)', 'wehaverehabs' ), 'public' => __( 'Public · unclaimed', 'wehaverehabs' ) ) as $value => $label ) {
 			printf( '<option value="%s" %s>%s</option>', esc_attr( $value ), selected( $current, $value, false ), esc_html( $label ) );
 		}
 		echo '</select>';
@@ -364,19 +379,41 @@ add_action(
 		if ( ! is_admin() || ! $q->is_main_query() || 'sanctuary' !== $q->get( 'post_type' ) || empty( $_GET['whr_status'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			return;
 		}
-		// whr_claimed_sort is 1 for claimed or hand-made listings (kept in sync by whr_sync_sort_keys()).
-		$q->set( 'meta_query', array( array( 'key' => 'whr_claimed_sort', 'value' => 'claimed' === $_GET['whr_status'] ? '1' : '0' ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		// whr_claimed_sort holds the plan rank, 0 public … 3 featured (kept in sync by whr_sync_sort_keys()).
+		$status = sanitize_key( $_GET['whr_status'] ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		$min    = array( 'paid' => 2, 'claimed' => 1 );
+		$q->set( 'meta_query', array( isset( $min[ $status ] ) ? array( 'key' => 'whr_claimed_sort', 'value' => $min[ $status ], 'compare' => '>=', 'type' => 'NUMERIC' ) : array( 'key' => 'whr_claimed_sort', 'value' => 0, 'type' => 'NUMERIC' ) ) );
 	}
 );
 
 /**
- * Tools → Import listings: upload a .jsonl or .jsonl.gz file and import it in batches,
- * for hosts without WP-CLI.
+ * Tools → Import listings: import the bundled listings, or upload a .jsonl / .jsonl.gz file,
+ * in batches (works on hosts without WP-CLI).
  */
 add_action(
 	'admin_menu',
 	function () {
 		add_management_page( __( 'Import listings', 'wehaverehabs' ), __( 'Import listings', 'wehaverehabs' ), 'manage_options', 'whr-import', 'whr_import_page' );
+	}
+);
+
+/** The listings file that ships with the theme. */
+function whr_bundled_listings() {
+	return WHR_DIR . '/data/listings.jsonl.gz';
+}
+
+/** Point new sites at the import screen until some listings exist. */
+add_action(
+	'admin_notices',
+	function () {
+		if ( ! current_user_can( 'manage_options' ) || ( isset( $_GET['page'] ) && 'whr-import' === $_GET['page'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			return;
+		}
+		$counts = wp_count_posts( 'sanctuary' );
+		if ( (int) $counts->publish > 50 || get_option( 'whr_import_notice_dismissed' ) ) {
+			return;
+		}
+		echo '<div class="notice notice-info"><p><strong>We Have Rehabs:</strong> ' . esc_html__( 'Fill the directory with 21,842 real treatment facilities in 65 countries, ready for them to claim.', 'wehaverehabs' ) . ' <a class="button button-primary" href="' . esc_url( admin_url( 'tools.php?page=whr-import' ) ) . '">' . esc_html__( 'Import listings', 'wehaverehabs' ) . '</a></p></div>';
 	}
 );
 
@@ -437,7 +474,7 @@ function whr_import_page() {
 		} else {
 			$dest = whr_import_dir() . '/' . wp_generate_password( 12, false ) . '-' . $name;
 			if ( move_uploaded_file( $_FILES['listings']['tmp_name'], $dest ) ) { // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-				if ( $file && is_file( $file ) ) {
+				if ( $file && is_file( $file ) && whr_bundled_listings() !== $file ) {
 					wp_delete_file( $file );
 				}
 				update_option( 'whr_import_file', $dest, false );
@@ -447,14 +484,27 @@ function whr_import_page() {
 		}
 	}
 
-	echo '<p>' . esc_html__( 'Add public facility listings from a listings.jsonl or listings.jsonl.gz file (see wehaverehabs/data in the project). Listings already on the site are skipped, and claimed listings are never changed.', 'wehaverehabs' ) . '</p>';
+	// One click: the facilities bundled with the theme.
+	if ( isset( $_POST['whr_import_bundled'] ) && check_admin_referer( 'whr_import_bundled' ) && is_readable( whr_bundled_listings() ) ) {
+		update_option( 'whr_import_file', whr_bundled_listings(), false );
+		delete_option( 'whr_import_totals' );
+		$file = whr_bundled_listings();
+	}
+	if ( is_readable( whr_bundled_listings() ) ) {
+		echo '<div class="card" style="max-width:720px"><h2>' . esc_html__( 'Real facilities included with the theme', 'wehaverehabs' ) . '</h2><p>' . esc_html__( '21,842 treatment facilities in 65 countries: the US government’s FindTreatment.gov locator, the UK Care Quality Commission directory, and 662 facilities checked on their own websites. Each one is published as an unclaimed public listing with its source shown, ready for the facility to claim.', 'wehaverehabs' ) . '</p><form method="post">';
+		wp_nonce_field( 'whr_import_bundled' );
+		echo '<p><button class="button button-primary" name="whr_import_bundled" value="1">' . esc_html__( 'Use the included listings', 'wehaverehabs' ) . '</button></p></form></div>';
+	}
+
+	echo '<h2>' . esc_html__( 'Or upload your own file', 'wehaverehabs' ) . '</h2>';
+	echo '<p>' . esc_html__( 'A listings.jsonl or listings.jsonl.gz file in the same format. Listings already on the site are skipped, and claimed listings are never changed.', 'wehaverehabs' ) . '</p>';
 	echo '<form method="post" enctype="multipart/form-data">';
 	wp_nonce_field( 'whr_import_upload' );
 	echo '<p><input type="file" name="listings" accept=".jsonl,.gz" required> <button class="button" name="whr_import_upload" value="1">' . esc_html__( 'Upload', 'wehaverehabs' ) . '</button></p></form>';
 	if ( $file && is_readable( $file ) ) {
 		$run = wp_nonce_url( add_query_arg( array( 'page' => 'whr-import', 'run' => 1, 'offset' => 0 ), admin_url( 'tools.php' ) ), 'whr_import_run' );
 		/* translators: %s: file name */
-		echo '<p>' . esc_html( sprintf( __( 'Ready: %s', 'wehaverehabs' ), preg_replace( '/^[A-Za-z0-9]{12}-/', '', basename( $file ) ) ) ) . '</p>';
+		echo '<p><strong>' . esc_html( sprintf( __( 'Ready: %s', 'wehaverehabs' ), whr_bundled_listings() === $file ? __( 'the included listings', 'wehaverehabs' ) : preg_replace( '/^[A-Za-z0-9]{12}-/', '', basename( $file ) ) ) ) . '</strong></p>';
 		echo '<p><a class="button button-primary" href="' . esc_url( $run ) . '">' . esc_html__( 'Start import', 'wehaverehabs' ) . '</a> ';
 		echo '<a class="button" href="' . esc_url( add_query_arg( 'update', 1, $run ) ) . '">' . esc_html__( 'Import and refresh existing unclaimed listings', 'wehaverehabs' ) . '</a></p>';
 	}

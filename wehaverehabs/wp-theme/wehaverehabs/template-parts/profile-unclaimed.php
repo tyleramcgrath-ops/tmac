@@ -1,32 +1,21 @@
 <?php
 /**
- * Profile for a public listing that its facility has not claimed yet.
- * Shows only the facts from the public source, with attribution, and a claim form.
+ * Simple profile for public listings (facts from the source, attribution, claim form) and for
+ * verified listings on the free Essential plan (facts kept by the facility, its short
+ * description and the inquiry form). Paid plans use the full profile in single-sanctuary.php.
  * Expects to run inside The Loop.
  *
  * @package WeHaveRehabs
  */
 
 $post_id = get_the_ID();
+$claimed = whr_is_claimed();
 $dest    = whr_first_term( 'destination' );
-$care    = whr_first_term( 'care_level' );
-$focus   = whr_term_names( 'condition' );
 $site    = whr_meta( 'website' );
 $phone   = whr_meta( 'phone' );
 $intake  = whr_meta( 'intake_phone' );
 $talk    = whr_option( 'advisor_url' ) ? whr_option( 'advisor_url' ) : whr_whatsapp_url( whr_option( 'whatsapp' ) );
-$details = array(
-	__( 'Care level', 'wehaverehabs' )       => $care ? $care->name : '',
-	__( 'Helps with', 'wehaverehabs' )       => $focus,
-	__( 'Service settings', 'wehaverehabs' ) => whr_meta( 'service_setting' ),
-	__( 'Approaches', 'wehaverehabs' )       => whr_meta( 'approaches' ),
-	__( 'Programs', 'wehaverehabs' )         => whr_meta( 'programs' ),
-	__( 'Ages served', 'wehaverehabs' )      => whr_meta( 'ages' ),
-	__( 'Languages', 'wehaverehabs' )        => whr_meta( 'languages' ),
-	__( 'Payment', 'wehaverehabs' )          => whr_meta( 'payment' ),
-	__( 'License', 'wehaverehabs' )          => whr_meta( 'license_text' ),
-	__( 'Operated by', 'wehaverehabs' )      => whr_meta( 'operator' ),
-);
+$details = whr_listing_facts();
 ?>
 
 <section class="hero hero--sm hero--plain">
@@ -47,34 +36,48 @@ $details = array(
 	</div>
 </section>
 
-<div class="claim-banner">
+<?php if ( current_user_can( 'edit_post', $post_id ) ) : ?>
+	<div class="owner-bar">
+		<div class="wrap">
+			<p><strong><?php echo esc_html( whr_plans()[ whr_plan() ][0] ); ?></strong> · <?php esc_html_e( 'Add photos, your full story, rates and rooms with the Signature plan.', 'wehaverehabs' ); ?></p>
+			<a class="btn btn--primary" href="<?php echo esc_url( get_edit_post_link( $post_id ) ); ?>"><?php esc_html_e( 'Edit listing & plans', 'wehaverehabs' ); ?></a>
+		</div>
+	</div>
+<?php endif; ?>
+
+<div class="claim-banner<?php echo $claimed ? ' claim-banner--verified' : ''; ?>">
 	<div class="wrap">
-		<p><strong><?php esc_html_e( 'Public listing', 'wehaverehabs' ); ?></strong> · <?php esc_html_e( 'This facility has not claimed its page, so we only show the details published by the source below. We have not visited or vetted it.', 'wehaverehabs' ); ?></p>
-		<a class="btn btn--outline" href="#claim"><?php esc_html_e( 'Is this yours? Claim this listing', 'wehaverehabs' ); ?></a>
+		<?php if ( $claimed ) : ?>
+			<p><strong><?php esc_html_e( 'Verified by the facility', 'wehaverehabs' ); ?></strong> · <?php esc_html_e( 'The details on this page are kept up to date by the facility itself. We have not visited it.', 'wehaverehabs' ); ?></p>
+			<a class="btn btn--outline" href="#inquire"><?php esc_html_e( 'Send an inquiry', 'wehaverehabs' ); ?></a>
+		<?php else : ?>
+			<p><strong><?php esc_html_e( 'Public listing', 'wehaverehabs' ); ?></strong> · <?php esc_html_e( 'This facility has not claimed its page, so we only show the details published by the source below. We have not visited or vetted it.', 'wehaverehabs' ); ?></p>
+			<a class="btn btn--outline" href="#claim"><?php esc_html_e( 'Is this yours? Claim this listing', 'wehaverehabs' ); ?></a>
+		<?php endif; ?>
 	</div>
 </div>
 
 <section class="section">
 	<div class="wrap listing-layout">
 		<div>
-			<?php if ( has_excerpt() || get_the_content() ) : ?>
+			<?php if ( has_excerpt() ) : ?>
 				<div class="entry-content" style="color:var(--text-soft);margin-bottom:30px">
-					<?php get_the_content() ? the_content() : the_excerpt(); ?>
+					<?php the_excerpt(); // The short description; the full story is a Signature feature. ?>
 				</div>
 			<?php endif; ?>
 			<dl class="listing-facts">
 				<?php foreach ( $details as $label => $value ) : ?>
-					<?php if ( $value ) : ?>
-						<div><dt><?php echo esc_html( $label ); ?></dt><dd><?php echo esc_html( $value ); ?></dd></div>
-					<?php endif; ?>
+					<div><dt><?php echo esc_html( $label ); ?></dt><dd><?php echo esc_html( $value ); ?></dd></div>
 				<?php endforeach; ?>
 			</dl>
-			<p class="source-note"><?php echo whr_source_note(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></p>
+			<?php if ( ! $claimed ) : ?>
+				<p class="source-note"><?php echo whr_source_note(); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped in helper. ?></p>
+			<?php endif; ?>
 		</div>
 
 		<aside class="side-card listing-contact">
 			<h2><?php echo wp_kses_post( __( 'Contact <em>directly</em>', 'wehaverehabs' ) ); ?></h2>
-			<p><?php esc_html_e( 'Reach the facility yourself to ask about availability, cost and admission. Details can change — please confirm them with the facility.', 'wehaverehabs' ); ?></p>
+			<p><?php echo esc_html( $claimed ? __( 'Call or write to the facility, or send an inquiry below — it goes straight to their team.', 'wehaverehabs' ) : __( 'Reach the facility yourself to ask about availability, cost and admission. Details can change — please confirm them with the facility.', 'wehaverehabs' ) ); ?></p>
 			<ul class="contact-list">
 				<?php if ( $phone ) : ?>
 					<li><span><?php esc_html_e( 'Phone', 'wehaverehabs' ); ?></span><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li>
@@ -95,6 +98,21 @@ $details = array(
 	</div>
 </section>
 
+<?php if ( $claimed ) : ?>
+<section class="section bg-sand" id="inquire">
+	<div class="wrap inquiry-layout">
+		<div>
+			<div class="eyebrow"><?php esc_html_e( 'Begin a conversation', 'wehaverehabs' ); ?></div>
+			<h2 class="display display--md"><?php echo wp_kses_post( sprintf( /* translators: %s: facility */ __( 'Write to <em>%s</em>', 'wehaverehabs' ), esc_html( get_the_title() ) ) ); ?></h2>
+			<p class="lede"><?php esc_html_e( 'No commitment and no payment. Your note goes only to the facility.', 'wehaverehabs' ); ?></p>
+		</div>
+		<div class="inquiry-card">
+			<h2><?php echo wp_kses_post( __( 'Send an <em>inquiry</em>', 'wehaverehabs' ) ); ?></h2>
+			<?php get_template_part( 'template-parts/inquiry-form' ); ?>
+		</div>
+	</div>
+</section>
+<?php else : ?>
 <section class="section bg-sand" id="claim">
 	<div class="wrap inquiry-layout">
 		<div>
@@ -126,3 +144,4 @@ $details = array(
 		</div>
 	</div>
 </section>
+<?php endif; ?>

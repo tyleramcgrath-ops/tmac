@@ -9,8 +9,8 @@ get_header();
 
 while ( have_posts() ) :
 	the_post();
-	if ( ! whr_is_claimed() ) {
-		get_template_part( 'template-parts/profile-unclaimed' );
+	if ( ! whr_has_full_profile() ) {
+		get_template_part( 'template-parts/profile-unclaimed' ); // Public and Essential listings.
 		continue;
 	}
 	$post_id  = get_the_ID();
@@ -69,12 +69,13 @@ while ( have_posts() ) :
 	</div>
 </section>
 
+<?php if ( get_the_content() || has_excerpt() || count( $gallery ) >= 2 ) : ?>
 <section class="section">
 	<div class="wrap two-col">
 		<div>
 			<div class="eyebrow"><?php esc_html_e( 'The sanctuary', 'wehaverehabs' ); ?></div>
-			<h2 class="display display--md" style="margin-bottom:24px"><?php echo wp_kses_post( __( 'A slower place to do <em>the deep work</em>', 'wehaverehabs' ) ); ?></h2>
-			<div class="entry-content" style="color:var(--text-soft)"><?php the_content(); ?></div>
+			<h2 class="display display--md" style="margin-bottom:24px"><?php echo wp_kses_post( sprintf( /* translators: %s: sanctuary */ __( 'About <em>%s</em>', 'wehaverehabs' ), esc_html( get_the_title() ) ) ); ?></h2>
+			<div class="entry-content" style="color:var(--text-soft)"><?php get_the_content() ? the_content() : the_excerpt(); ?></div>
 		</div>
 		<?php if ( count( $gallery ) >= 2 ) : ?>
 			<div class="intro-collage">
@@ -84,6 +85,45 @@ while ( have_posts() ) :
 		<?php endif; ?>
 	</div>
 </section>
+<?php endif; ?>
+
+<?php
+$facts = whr_listing_facts();
+$phone = whr_meta( 'phone' );
+$site  = whr_meta( 'website' );
+$where = $phone || $site || whr_meta( 'address' );
+if ( $where || count( $facts ) > 3 ) : // More than the care level, focus and languages already shown above.
+	?>
+<section class="section--tight">
+	<div class="wrap listing-layout">
+		<div>
+			<div class="eyebrow"><?php esc_html_e( 'Details', 'wehaverehabs' ); ?></div>
+			<dl class="listing-facts">
+				<?php foreach ( $facts as $label => $value ) : ?>
+					<div><dt><?php echo esc_html( $label ); ?></dt><dd><?php echo esc_html( $value ); ?></dd></div>
+				<?php endforeach; ?>
+			</dl>
+		</div>
+		<?php if ( $where ) : ?>
+		<aside class="side-card listing-contact">
+			<h2><?php echo wp_kses_post( __( 'Find <em>us</em>', 'wehaverehabs' ) ); ?></h2>
+			<ul class="contact-list">
+				<?php if ( whr_meta( 'address' ) ) : ?>
+					<li><span><?php esc_html_e( 'Address', 'wehaverehabs' ); ?></span><?php echo esc_html( whr_meta( 'address' ) ); ?></li>
+				<?php endif; ?>
+				<?php if ( $phone ) : ?>
+					<li><span><?php esc_html_e( 'Phone', 'wehaverehabs' ); ?></span><a href="tel:<?php echo esc_attr( preg_replace( '/[^0-9+]/', '', $phone ) ); ?>"><?php echo esc_html( $phone ); ?></a></li>
+				<?php endif; ?>
+				<?php if ( $site ) : ?>
+					<li><span><?php esc_html_e( 'Website', 'wehaverehabs' ); ?></span><a href="<?php echo esc_url( $site ); ?>" target="_blank" rel="noopener"><?php echo esc_html( preg_replace( '#^https?://(www\.)?#', '', untrailingslashit( $site ) ) ); ?></a></li>
+				<?php endif; ?>
+			</ul>
+			<a class="btn btn--primary" href="#inquire"><?php esc_html_e( 'Send an inquiry', 'wehaverehabs' ); ?></a>
+		</aside>
+		<?php endif; ?>
+	</div>
+</section>
+<?php endif; ?>
 
 <?php if ( $schedule ) : ?>
 <section class="section bg-sand">
@@ -189,7 +229,9 @@ while ( have_posts() ) :
 					<?php endif; ?>
 				</blockquote>
 			<?php endif; ?>
-			<?php echo whr_image( isset( $gallery[2] ) ? $gallery[2] : 0, 'whr-wide', array( 'alt' => '', 'style' => 'width:100%;height:440px;object-fit:cover' ), 'beachview.jpg' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php if ( isset( $gallery[2] ) ) : // Only the sanctuary's own photos, never a stock fallback. ?>
+				<?php echo whr_image( $gallery[2], 'whr-wide', array( 'alt' => '', 'style' => 'width:100%;height:440px;object-fit:cover' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+			<?php endif; ?>
 			<?php if ( whr_meta( 'airport' ) ) : ?>
 				<p style="font-size:15px;color:var(--muted)"><strong style="font-weight:500"><?php esc_html_e( 'Getting here:', 'wehaverehabs' ); ?></strong> <?php echo esc_html( whr_meta( 'airport' ) ); ?></p>
 			<?php endif; ?>
@@ -203,30 +245,7 @@ while ( have_posts() ) :
 				echo esc_html( sprintf( __( 'No commitment, no payment. Your note goes only to %s.', 'wehaverehabs' ), get_the_title() ) );
 				?>
 			</p>
-			<?php whr_form_notice( __( 'Thank you — your message is on its way. The sanctuary usually replies within two working days.', 'wehaverehabs' ) ); ?>
-			<form class="form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
-				<input type="hidden" name="action" value="whr_inquiry">
-				<input type="hidden" name="sanctuary_id" value="<?php echo esc_attr( $post_id ); ?>">
-				<?php wp_nonce_field( 'whr_inquiry', '_whr_nonce' ); ?>
-				<label class="hp" aria-hidden="true">Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label>
-				<div class="row">
-					<label><?php esc_html_e( 'Arriving', 'wehaverehabs' ); ?><input type="month" name="arriving"></label>
-					<label><?php esc_html_e( 'Stay', 'wehaverehabs' ); ?>
-						<select name="stay">
-							<option value=""><?php esc_html_e( 'Not sure yet', 'wehaverehabs' ); ?></option>
-							<option>7 nights</option><option>14 nights</option><option>21 nights</option><option>30 nights</option><option>Longer</option>
-						</select>
-					</label>
-				</div>
-				<label><?php esc_html_e( 'Your name', 'wehaverehabs' ); ?><input type="text" name="guest_name" required autocomplete="name"></label>
-				<label><?php esc_html_e( 'Email or WhatsApp', 'wehaverehabs' ); ?><input type="text" name="guest_contact" required autocomplete="email"></label>
-				<label><?php esc_html_e( 'Travelling from', 'wehaverehabs' ); ?><input type="text" name="country" autocomplete="country-name"></label>
-				<label><?php esc_html_e( 'Anything you’d like them to know', 'wehaverehabs' ); ?><textarea name="message" rows="3"></textarea></label>
-				<button type="submit" class="btn btn--primary"><?php esc_html_e( 'Send inquiry', 'wehaverehabs' ); ?></button>
-				<?php if ( $whatsapp ) : ?>
-					<a class="btn btn--outline" href="<?php echo esc_url( $whatsapp ); ?>" target="_blank" rel="noopener"><?php esc_html_e( 'Message on WhatsApp', 'wehaverehabs' ); ?></a>
-				<?php endif; ?>
-			</form>
+			<?php get_template_part( 'template-parts/inquiry-form', null, array( 'whatsapp' => $whatsapp ) ); ?>
 			<?php if ( $care ) : ?>
 				<p class="trust-note">
 					<strong style="font-weight:500"><?php echo esc_html( $care->name ); ?>:</strong>
@@ -250,15 +269,18 @@ while ( have_posts() ) :
 </section>
 
 	<?php
-	$related = new WP_Query(
-		array(
-			'post_type'      => 'sanctuary',
-			'posts_per_page' => 3,
-			'post__not_in'   => array( $post_id ),
-			'no_found_rows'  => true,
-			'tax_query'      => $dest ? array( array( 'taxonomy' => 'destination', 'terms' => $dest->parent ? $dest->parent : $dest->term_id ) ) : array(), // phpcs:ignore WordPress.DB.SlowDBQuery
-		)
+	// Other full profiles nearby first, then any full profile, then anything.
+	$related_base = array(
+		'post_type'      => 'sanctuary',
+		'posts_per_page' => 3,
+		'post__not_in'   => array( $post_id ),
+		'no_found_rows'  => true,
+		'meta_query'     => array( array( 'key' => 'whr_claimed_sort', 'value' => 2, 'compare' => '>=', 'type' => 'NUMERIC' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
 	);
+	$related      = new WP_Query( $related_base + array( 'tax_query' => $dest ? array( array( 'taxonomy' => 'destination', 'terms' => $dest->parent ? $dest->parent : $dest->term_id ) ) : array() ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+	if ( $related->post_count < 3 ) {
+		$related = new WP_Query( $related_base );
+	}
 	if ( $related->post_count < 3 ) {
 		$related = new WP_Query( array( 'post_type' => 'sanctuary', 'posts_per_page' => 3, 'post__not_in' => array( $post_id ), 'no_found_rows' => true ) );
 	}

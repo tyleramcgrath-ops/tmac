@@ -24,8 +24,11 @@ function whr_customizer_settings() {
 		'contact_email' => array( __( 'Public contact email', 'wehaverehabs' ), '', 'email' ),
 		'crisis_text'   => array( __( 'Crisis line text (top bar)', 'wehaverehabs' ), __( 'Need help right now? US: call or text 988', 'wehaverehabs' ), 'text' ),
 		'helplines_url' => array( __( 'Worldwide helplines link', 'wehaverehabs' ), 'https://findahelpline.com', 'url' ),
-		'price_signature' => array( __( 'For sanctuaries: Signature plan price', 'wehaverehabs' ), '', 'text' ),
-		'price_featured'  => array( __( 'For sanctuaries: Featured plan price', 'wehaverehabs' ), '', 'text' ),
+		'price_signature' => array( __( 'Plans: Signature price (e.g. $149 / month)', 'wehaverehabs' ), '', 'text' ),
+		'price_featured'  => array( __( 'Plans: Featured price (e.g. $399 / month)', 'wehaverehabs' ), '', 'text' ),
+		'stripe_signature' => array( __( 'Plans: Stripe Payment Link for Signature', 'wehaverehabs' ), '', 'url' ),
+		'stripe_featured'  => array( __( 'Plans: Stripe Payment Link for Featured', 'wehaverehabs' ), '', 'url' ),
+		'stripe_webhook_secret' => array( __( 'Plans: Stripe webhook signing secret (whsec_…)', 'wehaverehabs' ), '', 'secret' ),
 	);
 }
 
@@ -39,9 +42,15 @@ add_action(
 				'email'    => 'sanitize_email',
 				'textarea' => 'wp_kses_post',
 				'text'     => 'wp_kses_post',
+				'secret'   => 'sanitize_text_field',
 			);
 			$wp_customize->add_setting( 'whr_' . $key, array( 'default' => $s[1], 'sanitize_callback' => $sanitize[ $s[2] ] ) );
-			$wp_customize->add_control( 'whr_' . $key, array( 'label' => $s[0], 'section' => 'whr', 'type' => 'url' === $s[2] ? 'url' : ( 'email' === $s[2] ? 'email' : $s[2] ) ) );
+			$control = array( 'label' => $s[0], 'section' => 'whr', 'type' => 'secret' === $s[2] ? 'text' : $s[2] );
+			if ( 'stripe_webhook_secret' === $key ) {
+				/* translators: %s: webhook URL */
+				$control['description'] = sprintf( __( 'In Stripe → Developers → Webhooks, add the endpoint %s with the events checkout.session.completed, invoice.paid and customer.subscription.deleted, then paste its signing secret here.', 'wehaverehabs' ), rest_url( 'whr/v1/stripe' ) );
+			}
+			$wp_customize->add_control( 'whr_' . $key, $control );
 		}
 		foreach ( array( 'hero_image' => __( 'Homepage hero photo', 'wehaverehabs' ), 'split_image' => __( 'Homepage "what brings you here" photo', 'wehaverehabs' ), 'quote_image' => __( 'Homepage quote photo', 'wehaverehabs' ), 'cta_image' => __( 'Homepage guide photo', 'wehaverehabs' ) ) as $key => $label ) {
 			$wp_customize->add_setting( 'whr_' . $key, array( 'sanitize_callback' => 'absint' ) );

@@ -211,14 +211,14 @@ function whr_handle_claim() {
 			/* translators: %s: facility name */
 			'post_title'   => sprintf( __( 'Claim request: %s', 'wehaverehabs' ), $title ),
 			'post_content' => $body,
-			'meta_input'   => array( '_whr_sanctuary' => $sanctuary_id, '_whr_kind' => 'claim' ),
+			'meta_input'   => array( '_whr_sanctuary' => $sanctuary_id, '_whr_kind' => 'claim', '_whr_email' => $email, '_whr_name' => $name ),
 		)
 	);
 	wp_mail(
 		get_option( 'admin_email' ),
 		/* translators: %s: facility name */
 		sprintf( __( 'Claim request: %s', 'wehaverehabs' ), $title ),
-		$body . "\n— " . get_permalink( $sanctuary_id ) . "\n— " . admin_url( 'post.php?action=edit&post=' . $sanctuary_id ),
+		$body . "\n— " . get_permalink( $sanctuary_id ) . "\n— " . __( 'Approve it under Inquiries (hover the claim → Approve claim):', 'wehaverehabs' ) . ' ' . admin_url( 'edit.php?post_type=whr_inquiry' ),
 		array( 'Reply-To: ' . $name . ' <' . $email . '>' )
 	);
 	whr_form_redirect( $back, 'sent', 'claim' );

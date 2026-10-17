@@ -104,8 +104,18 @@ $featured = new WP_Query(
 	array(
 		'post_type'      => 'sanctuary',
 		'posts_per_page' => 2,
-		'meta_key'       => 'whr_featured', // phpcs:ignore WordPress.DB.SlowDBQuery
-		'meta_value'     => 1, // phpcs:ignore WordPress.DB.SlowDBQuery
+		// Hand-picked listings and the Featured plan rotate through the editorial rows.
+		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery
+			'relation' => 'AND',
+			array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ),
+			array(
+				'relation' => 'OR',
+				array( 'key' => 'whr_featured', 'value' => 1 ),
+				array( 'key' => 'whr_sponsored_sort', 'value' => 1 ),
+			),
+			array( 'key' => 'whr_claimed_sort', 'value' => 2, 'compare' => '>=', 'type' => 'NUMERIC' ),
+		),
+		'orderby'        => 'rand',
 		'no_found_rows'  => true,
 	)
 );
@@ -116,7 +126,11 @@ $more_query  = new WP_Query(
 		'posts_per_page' => 3,
 		'post__not_in'   => $shown,
 		'no_found_rows'  => true,
-		'meta_key'       => '_thumbnail_id', // phpcs:ignore WordPress.DB.SlowDBQuery -- only listings with photos on the homepage.
+		// Only listings whose plan shows photos, with a photo set.
+		'meta_query'     => array( // phpcs:ignore WordPress.DB.SlowDBQuery
+			array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ),
+			array( 'key' => 'whr_claimed_sort', 'value' => 2, 'compare' => '>=', 'type' => 'NUMERIC' ),
+		),
 	)
 );
 if ( $featured->have_posts() || $more_query->have_posts() ) :

@@ -32,8 +32,12 @@ function whr_register_content_types() {
 			'rewrite'       => array( 'slug' => 'sanctuary', 'with_front' => false ),
 			'menu_icon'     => 'dashicons-palmtree',
 			'menu_position' => 5,
-			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions' ),
+			'supports'      => array( 'title', 'editor', 'excerpt', 'thumbnail', 'revisions', 'author' ),
 			'show_in_rest'  => true,
+			// Own capabilities so facility owners can edit only their listing (see inc/plans.php).
+			'capability_type' => array( 'sanctuary', 'sanctuaries' ),
+			'capabilities'    => array( 'create_posts' => 'create_sanctuaries' ),
+			'map_meta_cap'    => true,
 		)
 	);
 

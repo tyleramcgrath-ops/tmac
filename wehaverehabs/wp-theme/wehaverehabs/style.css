@@ -3,7 +3,7 @@ Theme Name: We Have Rehabs
 Theme URI: https://wehaverehabs.com
 Author: We Have Rehabs
 Description: Boutique directory theme for holistic mental-health and recovery sanctuaries worldwide. Includes the Sanctuary post type, destination guides, filtered search, inquiry handling and demo content.
-Version: 1.1.0
+Version: 1.2.0
 Requires at least: 6.3
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -484,3 +484,13 @@ h1 em, h2 em, h3 em, p em { font-style: italic; }
 .tile--plain::before { content: ""; position: absolute; inset: 0; background: url(assets/brand/mark-lotus-reversed.svg) no-repeat 50% 36% / 120px auto; opacity: .1; }
 .tile--plain::after { display: none; }
 .tiles--regions .tile--plain { height: 220px; }
+.claim-banner--verified strong { color: var(--gold-deep, #8C6E3E); }
+.claim-banner--verified strong::before { content: "✓ "; }
+.owner-bar { background: var(--forest-deep); color: var(--on-dark-softer); }
+.owner-bar .wrap { display: flex; flex-wrap: wrap; gap: 12px 30px; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+.owner-bar p { margin: 0; font-size: 14px; flex: 1 1 380px; }
+.owner-bar strong { color: var(--gold-light); font-weight: 500; letter-spacing: .18em; text-transform: uppercase; font-size: 12px; }
+.card__meta .verified { color: var(--forest); }
+.card__meta .verified::before { content: "✓ "; }
+.plan-steps { max-width: 760px; margin: 40px auto 0; padding-left: 22px; color: var(--on-dark-softer); font-size: 15px; }
+.plan-steps li { margin-bottom: 8px; }

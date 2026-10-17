@@ -44,27 +44,53 @@ the_post();
 			<div class="eyebrow"><?php esc_html_e( 'Plans', 'wehaverehabs' ); ?></div>
 			<h2 class="display"><?php echo wp_kses_post( __( 'Simple, <em>and fair</em>', 'wehaverehabs' ) ); ?></h2>
 		</div>
+		<?php
+		// A logged-in owner gets checkout links for their own listing; everyone else claims first.
+		$own = is_user_logged_in() ? get_posts( array( 'post_type' => 'sanctuary', 'author' => get_current_user_id(), 'numberposts' => 1, 'fields' => 'ids' ) ) : array();
+		$own = $own ? (int) $own[0] : 0;
+		$find = get_post_type_archive_link( 'sanctuary' );
+		$plan_cta = function ( $plan ) use ( $own, $find ) {
+			if ( $own ) {
+				$url = whr_plan_checkout_url( $plan, $own );
+				return $url ? $url : get_edit_post_link( $own );
+			}
+			return $find;
+		};
+		$features = array(
+			'essential' => array( __( 'Claim your listing — verified badge', 'wehaverehabs' ), __( 'Keep your address, phones and website correct', 'wehaverehabs' ), __( 'A short description of your program', 'wehaverehabs' ), __( 'Guest inquiries straight to your inbox', 'wehaverehabs' ), __( 'Your own login to update it any time', 'wehaverehabs' ) ),
+			'signature' => array( __( 'Everything in Essential', 'wehaverehabs' ), __( 'Full photo profile: hero image and gallery', 'wehaverehabs' ), __( 'Your story, daily rhythm, therapies and team', 'wehaverehabs' ), __( 'Rooms, rates and stay lengths', 'wehaverehabs' ), __( 'WhatsApp inquiry button', 'wehaverehabs' ), __( 'Shown above free listings in search', 'wehaverehabs' ) ),
+			'featured'  => array( __( 'Everything in Signature', 'wehaverehabs' ), __( 'Top of search and your destination’s results', 'wehaverehabs' ), __( 'Homepage “Places we love” rotation', 'wehaverehabs' ), __( 'Always marked “Sponsored”', 'wehaverehabs' ) ),
+		);
+		?>
 		<div class="plans">
 			<div class="plan">
 				<div class="plan__name"><?php esc_html_e( 'Essential', 'wehaverehabs' ); ?></div>
 				<div class="plan__price"><?php esc_html_e( 'Free', 'wehaverehabs' ); ?></div>
-				<ul><li><?php esc_html_e( 'Full sanctuary profile', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Care-level label after review', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Up to 8 photographs', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Email inquiries', 'wehaverehabs' ); ?></li></ul>
-				<a class="btn btn--light" href="#list"><?php esc_html_e( 'Begin free', 'wehaverehabs' ); ?></a>
+				<ul><?php foreach ( $features['essential'] as $item ) { echo '<li>' . esc_html( $item ) . '</li>'; } ?></ul>
+				<a class="btn btn--light" href="<?php echo esc_url( $own ? get_edit_post_link( $own ) : $find ); ?>"><?php echo esc_html( $own ? __( 'Edit your listing', 'wehaverehabs' ) : __( 'Find & claim your listing', 'wehaverehabs' ) ); ?></a>
 			</div>
 			<div class="plan plan--featured">
 				<div class="plan__name"><?php esc_html_e( 'Signature · most chosen', 'wehaverehabs' ); ?></div>
 				<div class="plan__price"><?php echo esc_html( whr_option( 'price_signature', __( 'Ask us', 'wehaverehabs' ) ) ); ?></div>
-				<ul><li><?php esc_html_e( 'Everything in Essential', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Unlimited photography & film', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'WhatsApp inquiry button', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Profile in several languages', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Inquiry reports by country', 'wehaverehabs' ); ?></li></ul>
-				<a class="btn btn--primary" href="#list"><?php esc_html_e( 'Choose Signature', 'wehaverehabs' ); ?></a>
+				<ul><?php foreach ( $features['signature'] as $item ) { echo '<li>' . esc_html( $item ) . '</li>'; } ?></ul>
+				<a class="btn btn--primary" href="<?php echo esc_url( $plan_cta( 'signature' ) ); ?>"><?php esc_html_e( 'Choose Signature', 'wehaverehabs' ); ?></a>
 			</div>
 			<div class="plan">
 				<div class="plan__name"><?php esc_html_e( 'Featured', 'wehaverehabs' ); ?></div>
 				<div class="plan__price"><?php echo esc_html( whr_option( 'price_featured', __( 'Ask us', 'wehaverehabs' ) ) ); ?></div>
-				<ul><li><?php esc_html_e( 'Everything in Signature', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Top placement on your destination page', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Homepage “Places we love” rotation', 'wehaverehabs' ); ?></li><li><?php esc_html_e( 'Always marked “Sponsored”', 'wehaverehabs' ); ?></li></ul>
-				<a class="btn btn--light" href="#list"><?php esc_html_e( 'Speak with us', 'wehaverehabs' ); ?></a>
+				<ul><?php foreach ( $features['featured'] as $item ) { echo '<li>' . esc_html( $item ) . '</li>'; } ?></ul>
+				<a class="btn btn--light" href="<?php echo esc_url( $plan_cta( 'featured' ) ); ?>"><?php esc_html_e( 'Choose Featured', 'wehaverehabs' ); ?></a>
 			</div>
 		</div>
-		<p class="center lede" style="margin-top:30px;font-size:14px"><?php esc_html_e( 'Paid plans never change your care-level label, license check or guest reviews.', 'wehaverehabs' ); ?></p>
+		<ol class="plan-steps">
+			<li><?php esc_html_e( 'Find your facility in the directory and press “Claim this listing”. Not listed yet? Use the form below.', 'wehaverehabs' ); ?></li>
+			<li><?php esc_html_e( 'We verify you, then email your login. Your listing goes live on Essential, free.', 'wehaverehabs' ); ?></li>
+			<li><?php esc_html_e( 'Upgrade from your listing’s edit screen whenever you like. Cancel any time; you return to Essential.', 'wehaverehabs' ); ?></li>
+		</ol>
+		<?php if ( ! is_user_logged_in() ) : ?>
+			<p class="center" style="margin-top:18px;font-size:14px"><a href="<?php echo esc_url( wp_login_url( get_permalink() . '#plans' ) ); ?>" style="color:var(--gold-light)"><?php esc_html_e( 'Already claimed? Log in to upgrade', 'wehaverehabs' ); ?></a></p>
+		<?php endif; ?>
+		<p class="center lede" style="margin-top:30px;font-size:14px"><?php esc_html_e( 'Paid plans never change your care-level label, license check or what guests are told about you.', 'wehaverehabs' ); ?></p>
 	</div>
 </section>
 

@@ -93,9 +93,9 @@ function whr_image( $attachment_id, $size = 'large', $attr = array(), $fallback 
 function whr_post_image( $post_id = null, $size = 'whr-card', $attr = array() ) {
 	$post_id = $post_id ? $post_id : get_the_ID();
 	$thumb   = (int) get_post_thumbnail_id( $post_id );
-	if ( ! $thumb && 'sanctuary' === get_post_type( $post_id ) ) {
-		// No photos yet (e.g. an unclaimed public listing): a neutral brand panel, never a stock photo
-		// that could be mistaken for the facility.
+	if ( 'sanctuary' === get_post_type( $post_id ) && ( ! $thumb || ! whr_has_full_profile( $post_id ) ) ) {
+		// No photos yet, or not on a plan that shows them: a neutral brand panel, never a stock
+		// photo that could be mistaken for the facility.
 		$class = trim( 'whr-placeholder ' . ( isset( $attr['class'] ) ? $attr['class'] : '' ) );
 		return '<img src="' . esc_url( whr_asset( 'brand/placeholder.svg' ) ) . '" alt="" class="' . esc_attr( $class ) . '" loading="lazy">';
 	}
@@ -110,8 +110,31 @@ function whr_post_image( $post_id = null, $size = 'whr-card', $attr = array() ) 
  * @return bool
  */
 function whr_is_claimed( $post_id = null ) {
-	$source = whr_meta( 'source', $post_id );
-	return (bool) whr_meta( 'claimed', $post_id ) || '' === $source || 'manual' === $source;
+	return whr_plan_rank( $post_id ) >= 1;
+}
+
+/**
+ * Factual details of a listing (from its source or kept by the facility), label => value.
+ *
+ * @param int|null $post_id Post ID.
+ * @return array
+ */
+function whr_listing_facts( $post_id = null ) {
+	$care = whr_first_term( 'care_level', $post_id );
+	return array_filter(
+		array(
+			__( 'Care level', 'wehaverehabs' )       => $care ? $care->name : '',
+			__( 'Helps with', 'wehaverehabs' )       => whr_term_names( 'condition', $post_id ),
+			__( 'Service settings', 'wehaverehabs' ) => whr_meta( 'service_setting', $post_id ),
+			__( 'Approaches', 'wehaverehabs' )       => whr_meta( 'approaches', $post_id ),
+			__( 'Programs', 'wehaverehabs' )         => whr_meta( 'programs', $post_id ),
+			__( 'Ages served', 'wehaverehabs' )      => whr_meta( 'ages', $post_id ),
+			__( 'Languages', 'wehaverehabs' )        => whr_meta( 'languages', $post_id ),
+			__( 'Payment', 'wehaverehabs' )          => whr_meta( 'payment', $post_id ),
+			__( 'License', 'wehaverehabs' )          => whr_meta( 'license_text', $post_id ),
+			__( 'Operated by', 'wehaverehabs' )      => whr_meta( 'operator', $post_id ),
+		)
+	);
 }
 
 /**

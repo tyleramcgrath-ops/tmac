@@ -19,7 +19,18 @@
 				<h2><?php esc_html_e( 'Destinations', 'wehaverehabs' ); ?></h2>
 				<ul>
 					<?php
-					$dests = get_terms( array( 'taxonomy' => 'destination', 'parent' => 0, 'number' => 6, 'hide_empty' => false ) );
+					$dests = get_terms( array( 'taxonomy' => 'destination', 'parent' => 0, 'hide_empty' => false ) );
+					if ( ! is_wp_error( $dests ) ) {
+						// Guide destinations (with a photo) first, then the most-listed countries.
+						usort(
+							$dests,
+							function ( $a, $b ) {
+								$photo = (int) whr_term_has_image( $b ) - (int) whr_term_has_image( $a );
+								return $photo ? $photo : whr_term_count( $b ) - whr_term_count( $a );
+							}
+						);
+						$dests = array_slice( $dests, 0, 6 );
+					}
 					foreach ( is_wp_error( $dests ) ? array() : $dests as $d ) {
 						printf( '<li><a href="%s">%s</a></li>', esc_url( get_term_link( $d ) ), esc_html( $d->name ) );
 					}

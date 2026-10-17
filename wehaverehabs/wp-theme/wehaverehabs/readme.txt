@@ -10,7 +10,8 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
 
 1. WordPress admin → Appearance → Themes → Add New → Upload Theme → choose wehaverehabs.zip → Install → Activate.
 2. Settings → Permalinks → choose "Post name" → Save.
-3. Optional: Appearance → Demo content → "Import demo content" to fill the site with the example
+3. Tools → Import listings → "Use the included listings" → Start import, to add the real facilities.
+4. Optional: Appearance → Demo content → "Import demo content" to fill the site with the example
    sanctuaries, destinations, pages and photos from the design. Remove them later with one click.
 
 == What the theme adds ==
@@ -26,11 +27,26 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   and sorting. Sponsored listings appear first and are always labeled.
 * Inquiries: the form on each sanctuary emails the sanctuary's inquiry address (or the site admin)
   and keeps a private copy under wp-admin → Inquiries. "List your sanctuary" requests land there too.
-* Public listings & claims: import real facilities from listings.jsonl.gz (Tools → Import listings,
-  or `wp whr-import listings.jsonl.gz`). Imported listings show only their source facts with
-  attribution and a "Claim this listing" form. Claims land in Inquiries; tick "Claimed by the
-  facility" on the sanctuary to switch it to the full profile. Claimed listings rank above public ones.
-  The results page also has a "Name or city" keyword search.
+* Real facilities: 21,842 treatment facilities in 65 countries ship with the theme
+  (data/listings.jsonl.gz). Tools → Import listings → "Use the included listings" → Start import
+  (or `wp whr-import bundled`). Each is an unclaimed public listing showing its source.
+* Plans:
+    Public listing — imported facts only, attribution, "Claim this listing" form.
+    Essential (free) — claimed & verified: owner keeps facts and a short description up to date,
+      "Verified" badge, guest inquiries go straight to them.
+    Signature (paid) — full profile: photos, story, daily rhythm, therapies, team, rooms & rates,
+      WhatsApp button; ranked above free listings.
+    Featured (paid) — Signature + top of search, homepage rotation, "Sponsored" label.
+* Claims & owner accounts: claims land in Inquiries. Hover a claim → "Approve claim": the claimant
+  gets a Facility owner login (they can edit only their own listing and photos; placement,
+  verification and billing stay with you) and an email to set their password.
+* Payments (Stripe): create a monthly Payment Link for Signature and for Featured in Stripe, then
+  paste both links, the prices and the webhook signing secret in Appearance → Customize → We Have
+  Rehabs. Add the webhook endpoint shown there (…/wp-json/whr/v1/stripe) with the events
+  checkout.session.completed, invoice.paid and customer.subscription.deleted. Paying turns the plan
+  on, renewals extend it, cancelling returns the listing to Essential. You can also set a plan and
+  "paid until" date by hand on any listing (Plan & billing box). Sanctuaries → Plans & upgrades
+  lists paying listings.
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,
   book-a-call link, contact email, crisis-line text, helplines link, plan prices.

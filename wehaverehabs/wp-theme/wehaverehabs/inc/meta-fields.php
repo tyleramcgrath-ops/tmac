@@ -99,8 +99,8 @@ add_action(
 					'type'          => $type,
 					'single'        => true,
 					'show_in_rest'  => true,
-					'auth_callback' => function () {
-						return current_user_can( 'edit_posts' );
+					'auth_callback' => function ( $allowed, $meta_key, $post_id ) {
+						return current_user_can( 'edit_post', $post_id ) && ( whr_is_staff() || ! in_array( $meta_key, whr_staff_only_fields(), true ) );
 					},
 				)
 			);
@@ -202,7 +202,16 @@ add_action(
 					if ( 'basics' === $group ) {
 						wp_nonce_field( 'whr_save_sanctuary', 'whr_sanctuary_nonce' );
 					}
+					if ( in_array( $group, array( 'basics', 'content' ), true ) && ! whr_has_full_profile( $post->ID ) ) {
+						echo '<p class="notice notice-info inline" style="padding:8px 12px">' . esc_html__( 'Fields marked ★ are shown on the page with the Signature or Featured plan (see Plan & billing). You can fill them in now.', 'wehaverehabs' ) . '</p>';
+					}
 					foreach ( whr_sanctuary_fields() as $key => $f ) {
+						if ( ! whr_is_staff() && in_array( $key, whr_staff_only_fields(), true ) ) {
+							continue;
+						}
+						if ( in_array( $key, whr_paid_fields(), true ) && ! whr_has_full_profile( $post->ID ) ) {
+							$f[0] = '★ ' . $f[0];
+						}
 						if ( $f[3] === $group ) {
 							whr_render_field( $key, $f, get_post_meta( $post->ID, $key, true ) );
 						}
@@ -225,9 +234,21 @@ add_action(
 		if ( ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) || ! current_user_can( 'edit_post', $post_id ) ) {
 			return;
 		}
-		foreach ( whr_sanctuary_fields() as $key => $f ) {
+		$fields = whr_sanctuary_fields();
+		if ( whr_is_staff() ) {
+			$fields += whr_plan_fields();
+		}
+		foreach ( $fields as $key => $f ) {
+			if ( ! whr_is_staff() && in_array( $key, whr_staff_only_fields(), true ) ) {
+				continue; // Owners cannot change placement, verification or billing.
+			}
 			$raw = isset( $_POST[ $key ] ) ? wp_unslash( $_POST[ $key ] ) : ''; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- sanitized below per type.
-			update_post_meta( $post_id, $key, whr_sanitize_field( $f[1], $raw ) );
+			if ( 'select' === $f[1] ) {
+				$value = in_array( $raw, array( 'essential', 'signature', 'featured' ), true ) ? $raw : '';
+			} else {
+				$value = whr_sanitize_field( $f[1], $raw );
+			}
+			update_post_meta( $post_id, $key, $value );
 		}
 	}
 );
