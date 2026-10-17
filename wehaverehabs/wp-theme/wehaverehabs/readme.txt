@@ -59,6 +59,14 @@ Boutique directory theme for holistic mental-health and recovery sanctuaries wor
   CC BY / BY-SA / CC0 / public domain), with the photographer credit shown on the photo. Regions
   without one use their country's. Listings without photos show their region's landscape, credited
   "Photo of <place>". Replace any photo on the destination's edit screen.
+* Journal: 10 in-depth guides (2,500–3,600 words each, with photos) ship with the theme in
+  content/posts and publish themselves the first time you open wp-admin after installing or updating:
+  choosing a rehab, holistic rehab, rehab in Costa Rica, inpatient vs outpatient, dual diagnosis,
+  medical detox, paying for rehab, rehab abroad, helping a loved one, and aftercare. They live at
+  /blog/<article>/ under a "Journal" page (created if you don't have one; the homepage stays the
+  same), with a contents list, related reading, and Article + FAQ structured data for Google.
+  Edit or delete them like any post — edited or deleted articles are never brought back.
+  (`wp whr-blog` publishes them from the command line.)
 * Page template "For sanctuaries (listing & plans)" for the owners' page.
 * Appearance → Customize → We Have Rehabs: homepage text and photos, care-team WhatsApp,
   book-a-call link, contact email, crisis-line text, helplines link, plan prices.
