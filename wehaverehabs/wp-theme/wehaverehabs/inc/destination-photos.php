@@ -134,20 +134,21 @@ function whr_commons_categories( $term ) {
 }
 
 /**
- * Ask Commons for a suitable photo in a category.
+ * Ask Commons for a suitable photo. Uses search (ranked by relevance, not alphabetically) and
+ * prefers Commons "Quality images".
  *
- * @param string $category Category name without prefix.
+ * @param string $search CirrusSearch query.
  * @return array|null
  */
-function whr_commons_pick( $category ) {
+function whr_commons_pick( $search ) {
 	$url = add_query_arg(
 		array(
 			'action'       => 'query',
 			'format'       => 'json',
-			'generator'    => 'categorymembers',
-			'gcmtitle'     => 'Category:' . $category,
-			'gcmtype'      => 'file',
-			'gcmlimit'     => 40,
+			'generator'    => 'search',
+			'gsrnamespace' => 6,
+			'gsrlimit'     => 20,
+			'gsrsearch'    => $search . ' filemime:image/jpeg filew:>1599',
 			'prop'         => 'imageinfo',
 			'iiprop'       => 'url|size|mime|extmetadata',
 			'iiurlwidth'   => 1600,
@@ -160,15 +161,26 @@ function whr_commons_pick( $category ) {
 		return null;
 	}
 	$data  = json_decode( wp_remote_retrieve_body( $res ), true );
-	$pages = isset( $data['query']['pages'] ) ? $data['query']['pages'] : array();
+	$pages = isset( $data['query']['pages'] ) ? array_values( $data['query']['pages'] ) : array();
+	usort(
+		$pages,
+		function ( $a, $b ) {
+			return ( $a['index'] ?? 99 ) - ( $b['index'] ?? 99 );
+		}
+	);
 	foreach ( $pages as $p ) {
 		$ii   = $p['imageinfo'][0] ?? array();
 		$meta = $ii['extmetadata'] ?? array();
 		$lic  = trim( wp_strip_all_tags( $meta['LicenseShortName']['value'] ?? '' ) );
-		if ( 'image/jpeg' !== ( $ii['mime'] ?? '' ) || ( $ii['width'] ?? 0 ) < 1600 || $ii['width'] < 1.3 * ( $ii['height'] ?? 0 ) ) {
+		$text = $p['title'] . ' ' . wp_strip_all_tags( $meta['ImageDescription']['value'] ?? '' ) . ' ' . wp_strip_all_tags( $meta['DateTimeOriginal']['value'] ?? '' );
+		if ( 'image/jpeg' !== ( $ii['mime'] ?? '' ) || ( $ii['width'] ?? 0 ) < 1600 || $ii['width'] < 1.3 * ( $ii['height'] ?? 0 ) || $ii['width'] > 4 * ( $ii['height'] ?? 1 ) ) {
 			continue;
 		}
-		if ( ! preg_match( '/^(CC BY(-SA)? [0-9.]+|CC0|Public domain)/i', $lic ) || preg_match( '/\b(map|flag|logo|coat of arms|seal|diagram|stamp|night)\b/i', $p['title'] ) ) {
+		if ( ! preg_match( '/^(CC BY(-SA)? [0-9.]+|CC0|Public domain)/i', $lic ) ) {
+			continue;
+		}
+		// Not maps, flags, old prints, paintings or night shots — a calm, modern landscape.
+		if ( preg_match( '/\b(map|flag|logo|coat of arms|seal|diagram|stamp|night|stereo\w*|postcard|engraving|lithograph|painting|drawing|illustration|sketch|aerial view of the|panorama of the city|1[0-9]{3}s?|19[0-6][0-9])\b/i', $text ) ) {
 			continue;
 		}
 		return array(
@@ -190,9 +202,21 @@ function whr_commons_pick( $category ) {
  * @return bool Found one.
  */
 function whr_fetch_destination_photo( $term ) {
-	$pick = null;
-	foreach ( whr_commons_categories( $term ) as $cat ) {
-		$pick = whr_commons_pick( $cat );
+	// Best first: Quality images anywhere under the place's landscape category, then photos in it
+	// ranked by search relevance, then under its subcategories, then Quality images naming the place.
+	$pick  = null;
+	$cats  = whr_commons_categories( $term );
+	$tries = array();
+	foreach ( $cats as $cat ) {
+		$tries[] = 'deepcat:"' . $cat . '" incategory:"Quality images"';
+	}
+	foreach ( $cats as $cat ) {
+		$tries[] = 'incategory:"' . $cat . '"';
+		$tries[] = 'deepcat:"' . $cat . '"';
+	}
+	$tries[] = '"' . html_entity_decode( $term->name, ENT_QUOTES ) . '" landscape incategory:"Quality images"';
+	foreach ( $tries as $query ) {
+		$pick = whr_commons_pick( $query );
 		if ( $pick ) {
 			break;
 		}
@@ -220,6 +244,9 @@ function whr_fetch_destination_photo( $term ) {
 	update_post_meta( $id, '_whr_commons', $pick['page'] );
 	update_term_meta( $term->term_id, 'whr_image', (string) $id );
 	update_term_meta( $term->term_id, 'whr_image_credit', array_intersect_key( $pick, array_flip( array( 'artist', 'license', 'license_url', 'page' ) ) ) );
+	$recent = (array) get_option( 'whr_destphotos_recent', array() );
+	array_unshift( $recent, $term->name . ': ' . $pick['title'] . ' (' . $query . ')' );
+	update_option( 'whr_destphotos_recent', array_slice( $recent, 0, 30 ), false );
 	return true;
 }
 
@@ -280,10 +307,36 @@ add_action(
 	}
 );
 
+/**
+ * Version 2 of the picker (search, Quality images first, no old prints): clear the photos the
+ * first version chose automatically, so they are picked again. Photos set by hand are kept.
+ */
+function whr_destphotos_upgrade() {
+	if ( (int) get_option( 'whr_destphotos_picker' ) >= 2 ) {
+		return;
+	}
+	$terms = get_terms( array( 'taxonomy' => 'destination', 'hide_empty' => false, 'fields' => 'ids' ) );
+	foreach ( is_wp_error( $terms ) ? array() : $terms as $tid ) {
+		$credit = get_term_meta( $tid, 'whr_image_credit', true );
+		if ( $credit ) {
+			$att = (int) get_term_meta( $tid, 'whr_image', true );
+			if ( $att && get_post_meta( $att, '_whr_commons', true ) ) {
+				wp_delete_attachment( $att, true );
+			}
+			delete_term_meta( $tid, 'whr_image' );
+			delete_term_meta( $tid, 'whr_image_credit' );
+		}
+		delete_term_meta( $tid, 'whr_image_none' );
+	}
+	update_option( 'whr_destphotos_picker', 2, false );
+	delete_option( 'whr_destphotos' );
+}
+
 /** Start (or restart a stalled run) on admin page loads until every destination has been tried. */
 add_action(
 	'admin_init',
 	function () {
+		whr_destphotos_upgrade();
 		if ( 'done' === get_option( 'whr_destphotos' ) || 'running' === get_option( 'whr_autoimport' ) || wp_doing_ajax() ) {
 			return;
 		}
@@ -365,6 +418,7 @@ add_action(
 							'waiting'        => is_wp_error( $left ) ? 0 : count( $left ),
 							'next_run'       => wp_next_scheduled( 'whr_destphotos_batch' ),
 							'last_error'     => get_option( 'whr_destphotos_error' ),
+							'recent'         => get_option( 'whr_destphotos_recent', array() ),
 						)
 					);
 					$r->header( 'Cache-Control', 'no-store' );
