@@ -114,6 +114,9 @@ function whr_places_result( $res ) {
 	if ( 200 !== $code ) {
 		$msg = isset( $data['error']['message'] ) ? $data['error']['message'] : wp_remote_retrieve_response_message( $res );
 		update_option( 'whr_gphoto_error', array( time(), $code, $msg ), false );
+		if ( 429 === $code ) {
+			set_transient( 'whr_gphoto_paused', 1, HOUR_IN_SECONDS ); // Google's quota is used up: stop asking for a while.
+		}
 		return null;
 	}
 	delete_option( 'whr_gphoto_error' );
@@ -236,6 +239,9 @@ function whr_google_photo_endpoint( WP_REST_Request $request ) {
 	if ( (int) get_transient( $day_key ) >= $cap || (int) get_transient( $ip_key ) >= 300 ) {
 		return $none( 'cap-reached' );
 	}
+	if ( get_transient( 'whr_gphoto_paused' ) ) {
+		return $none( 'paused: Google quota exceeded — ' . whr_gphoto_error_text() );
+	}
 	set_transient( $day_key, (int) get_transient( $day_key ) + 1, DAY_IN_SECONDS );
 	set_transient( $ip_key, (int) get_transient( $ip_key ) + 1, HOUR_IN_SECONDS );
 
@@ -288,7 +294,8 @@ add_action(
 			return;
 		}
 		/* translators: 1: Google's message 2: link */
-		echo '<div class="notice notice-error"><p><strong>Google photos:</strong> ' . esc_html( sprintf( __( 'Google is refusing the API key — %s', 'wehaverehabs' ), $e[2] ) ) . ' <a href="' . esc_url( admin_url( 'edit.php?post_type=sanctuary&page=whr-plans#google' ) ) . '">' . esc_html__( 'Test it', 'wehaverehabs' ) . '</a></p></div>';
+		$text = 429 === (int) $e[1] ? __( 'Google’s daily quota for your project is used up, so photos are paused for an hour. Raise the quota or turn on billing in Google Cloud — %s', 'wehaverehabs' ) : __( 'Google is refusing the API key — %s', 'wehaverehabs' );
+		echo '<div class="notice notice-error"><p><strong>Google photos:</strong> ' . esc_html( sprintf( $text, $e[2] ) ) . ' <a href="' . esc_url( admin_url( 'edit.php?post_type=sanctuary&page=whr-plans#google' ) ) . '">' . esc_html__( 'Test it', 'wehaverehabs' ) . '</a></p></div>';
 	}
 );
 
