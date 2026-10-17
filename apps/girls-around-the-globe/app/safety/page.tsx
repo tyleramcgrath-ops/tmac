@@ -6,7 +6,8 @@ export const metadata: Metadata = {
 };
 
 const MEETING = [
-  "Video chat before you meet. It's the fastest way to confirm someone is real.",
+  "Video chat before you meet: tap 📹 Video in any match's chat. It's the fastest way to confirm someone is real, and you never have to share your number.",
+  "On video, you can mute, turn your camera off or hang up any time. Calls aren't recorded, so never let anyone pressure you into something on camera.",
   "Meet somewhere public first, like a bar, café or busy square, and get there on your own.",
   "Share your plans and your match's profile with a friend.",
   "Keep your drink in sight, and leave whenever you want. You never owe anyone anything.",
@@ -35,14 +36,14 @@ const GUIDELINES = [
 export default function SafetyPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <h1 className="font-display text-5xl font-semibold">Safety center</h1>
+      <h1 className="font-display text-5xl font-bold">Safety center</h1>
       <p className="mt-4 max-w-2xl text-lg text-ink-dim">
         Meeting someone from another country is half the fun. Here&rsquo;s how to keep it fun.
       </p>
 
       <section className="mt-12 grid gap-6 md:grid-cols-2">
         <div className="card p-6">
-          <h2 className="font-display text-2xl font-semibold">Before you meet</h2>
+          <h2 className="font-display text-2xl font-bold">Before you meet</h2>
           <ul className="mt-4 space-y-3 text-ink-dim">
             {MEETING.map((t) => (
               <li key={t} className="flex gap-2"><span className="text-ok">✓</span>{t}</li>
@@ -50,7 +51,7 @@ export default function SafetyPage() {
           </ul>
         </div>
         <div className="card p-6">
-          <h2 className="font-display text-2xl font-semibold">Red flags</h2>
+          <h2 className="font-display text-2xl font-bold">Red flags</h2>
           <ul className="mt-4 space-y-3 text-ink-dim">
             {RED_FLAGS.map((t) => (
               <li key={t} className="flex gap-2"><span className="text-warn">⚠</span>{t}</li>
@@ -63,7 +64,7 @@ export default function SafetyPage() {
       </section>
 
       <section id="guidelines" className="mt-16 scroll-mt-24">
-        <h2 className="font-display text-3xl font-semibold">Community guidelines</h2>
+        <h2 className="font-display text-3xl font-bold">Community guidelines</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2">
           {GUIDELINES.map((g) => (
             <div key={g.title} className="card p-5">
@@ -76,7 +77,7 @@ export default function SafetyPage() {
 
       <section id="report" className="mt-16 scroll-mt-24">
         <div className="card !bg-accent-soft p-8">
-          <h2 className="font-display text-3xl font-semibold text-accent-deep">Report a member</h2>
+          <h2 className="font-display text-3xl font-bold text-accent-deep">Report a member</h2>
           <p className="mt-3 text-ink-dim">
             Use <strong>Report</strong> on any profile or chat. A person reviews every report, usually
             within a few hours, and the member is never told who reported them. If you&rsquo;re in

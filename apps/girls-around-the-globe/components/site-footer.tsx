@@ -1,16 +1,14 @@
 import Link from "next/link";
-import { Logo } from "./logo";
+import { Wordmark } from "./logo";
 
 export function SiteFooter() {
   return (
     <footer className="mt-24 border-t bg-surface">
       <div className="mx-auto grid max-w-6xl gap-8 px-4 py-10 text-sm text-ink-dim sm:grid-cols-3 sm:px-6">
         <div>
-          <p className="flex items-center gap-2 font-display text-lg text-ink">
-            <Logo size={26} /> Girls Around the Globe
-          </p>
-          <p className="mt-2 max-w-xs">
-            Casual encounters for adults 18+, around the world. Consent first, and no paid
+          <Wordmark height={44} />
+          <p className="mt-3 max-w-xs">
+            Swipe the world and video chat tonight. Adults 18+ only. Consent first, and no paid
             arrangements, ever.
           </p>
         </div>

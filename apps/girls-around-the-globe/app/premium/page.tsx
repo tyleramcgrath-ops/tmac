@@ -26,10 +26,10 @@ export default async function PremiumPage({ searchParams }: PageProps<"/premium"
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
       <div className="card overflow-hidden">
-        <div className="bg-sunset px-6 py-10 text-center text-white sm:px-12">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-white/80">✦ Globe+</p>
-          <h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">The whole world, unlocked.</h1>
-          <p className="mx-auto mt-3 max-w-lg text-white/90">
+        <div className="bg-gold px-6 py-10 text-center sm:px-12">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-[#1a1206]/70">✦ Globe+</p>
+          <h1 className="mt-3 font-display text-4xl font-extrabold uppercase sm:text-5xl">The whole world, unlocked.</h1>
+          <p className="mx-auto mt-3 max-w-lg text-[#1a1206]/80">
             {feature === "passport"
               ? "Passport is a Globe+ feature. Upgrade to swipe in any city before you get there."
               : feature === "likes"
@@ -86,10 +86,10 @@ export default async function PremiumPage({ searchParams }: PageProps<"/premium"
               </>
             ) : (
               <>
-                <p className="font-display text-3xl font-semibold">{PREMIUM_PRICE_LABEL}</p>
+                <p className="font-display text-3xl font-bold">{PREMIUM_PRICE_LABEL}</p>
                 <p className="text-sm text-ink-mute">Cancel any time.</p>
                 <form action={startCheckout} className="mt-5">
-                  <button type="submit" className="btn btn-primary min-w-56" disabled={!stripeReady}>
+                  <button type="submit" className="btn btn-gold min-w-56" disabled={!stripeReady}>
                     {stripeReady ? "Upgrade to Globe+" : "Checkout not set up yet"}
                   </button>
                 </form>

@@ -30,16 +30,28 @@ Twelve fictional **sample members** are loaded on first start so a new site
 has people to swipe on. Some of them "like back" and send a canned reply, so
 you can test matching and chat alone. Turn them off with `SEED_MEMBERS=off`.
 
+## Video chat
+
+Matches can video call each other from the chat screen (📹 Video). An incoming
+call rings on any page with Accept and Decline. Audio and video go peer to
+peer over WebRTC; the server only relays the connection setup through the
+`calls` and `call_signals` tables (`lib/calls.ts`). Calls ring for 45 seconds,
+then count as missed. Sample members can't take calls.
+
+For production, add a TURN relay (`TURN_URL`, `TURN_USERNAME`,
+`TURN_PASSWORD`, e.g. from Twilio, Cloudflare Calls or a self-hosted coturn).
+Without one, calls between people on strict mobile or corporate networks can
+fail to connect.
+
 ## Design
 
-"It's always night somewhere": a dark after-hours look (violet-black, hot
-magenta and amber neon, soft glow and film grain), Fraunces italic for display
-type, and a live world clock on the homepage that lights up the Passport cities
-where it's currently night out (8pm–4am local). The logo, "Night Globe", is a crescent
-moon whose lit side is a globe, with a spark of a star (`components/logo.tsx`,
-`app/icon.svg`, `app/apple-icon.png`, and the share image `app/opengraph-image.png`). On the swipe screen, **Out
-tonight** filters the deck to people who are free tonight, and members can
-change their own vibe in one tap.
+Built around the GAG logo: black, hot pink and metallic gold, Montserrat for
+headings (echoing the logo's geometric caps) and Manrope for body text. The
+header uses the "Girls Around the Globe" wordmark, the app icon is the pink A
+with the woman's profile, and the homepage hero and share image use the
+emblem. Logo files live in `public/brand/` (cut out of their black backgrounds
+so they sit on any dark surface). The homepage also keeps the live world clock
+that lights up cities where it's currently night out.
 
 ## Running it
 

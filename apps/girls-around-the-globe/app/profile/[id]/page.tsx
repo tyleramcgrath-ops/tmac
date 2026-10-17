@@ -48,7 +48,7 @@ export default async function ProfilePage({ params }: PageProps<"/profile/[id]">
 
         <div className="space-y-6">
           <div>
-            <h1 className="font-display text-4xl font-semibold">{p.name}, {p.age}</h1>
+            <h1 className="font-display text-4xl font-bold">{p.name}, {p.age}</h1>
             <p className="mt-1 text-ink-dim">
               {[`${p.flag} ${p.city}${p.country ? `, ${p.country}` : ""}`, p.occupation, p.lastActive].filter(Boolean).join(" · ")}
             </p>

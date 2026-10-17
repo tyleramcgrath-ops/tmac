@@ -5,11 +5,12 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
 // Self-hosted so the build never depends on reaching fonts.googleapis.com.
-const fraunces = localFont({
-  variable: "--font-fraunces",
+// Montserrat echoes the geometric caps of the GAG logo; Manrope is body copy.
+const montserrat = localFont({
+  variable: "--font-montserrat",
   src: [
-    { path: "./fonts/fraunces.woff2", weight: "300 900", style: "normal" },
-    { path: "./fonts/fraunces-italic.woff2", weight: "300 900", style: "italic" },
+    { path: "./fonts/montserrat.woff2", weight: "100 900", style: "normal" },
+    { path: "./fonts/montserrat-italic.woff2", weight: "100 900", style: "italic" },
   ],
 });
 
@@ -21,13 +22,13 @@ const manrope = localFont({
 export const metadata: Metadata = {
   // Absolute base for the social share image; set SITE_URL in production.
   metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
-  title: "Girls Around the Globe — Casual encounters, worldwide",
+  title: "Girls Around the Globe — Swipe the world, video chat tonight",
   description:
     "Casual encounters, worldwide. Swipe on adults who want no-strings fun, from Medellín to Tokyo, and line something up before you land.",
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0d0914",
+  themeColor: "#070508",
   colorScheme: "dark",
 };
 
@@ -37,7 +38,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${manrope.variable} h-full`}>
+    <html lang="en" className={`${montserrat.variable} ${manrope.variable} h-full`}>
       <body className="min-h-full flex flex-col">
         <SiteHeader />
         <main className="flex-1">{children}</main>

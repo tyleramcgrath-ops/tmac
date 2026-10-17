@@ -16,7 +16,7 @@ export default async function LikesPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-10">
-      <h1 className="font-display text-4xl font-semibold">
+      <h1 className="font-display text-4xl font-bold">
         {likes.length} {likes.length === 1 ? "person likes" : "people like"} you
       </h1>
       <p className="mt-2 text-ink-dim">
@@ -54,9 +54,9 @@ export default async function LikesPage() {
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="card max-w-sm p-8 text-center">
                 <p className="text-4xl">👀</p>
-                <h2 className="mt-3 font-display text-2xl font-semibold">See who likes you</h2>
+                <h2 className="mt-3 font-display text-2xl font-bold">See who likes you</h2>
                 <p className="mt-2 text-sm text-ink-dim">Globe+ shows everyone who already swiped right, so you can match in one tap.</p>
-                <Link href="/premium?feature=likes" className="btn btn-primary mt-6 w-full">Get Globe+</Link>
+                <Link href="/premium?feature=likes" className="btn btn-gold mt-6 w-full">Get Globe+</Link>
               </div>
             </div>
           )}

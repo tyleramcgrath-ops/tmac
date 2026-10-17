@@ -12,7 +12,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
   const { next } = await searchParams;
   return (
     <div className="mx-auto max-w-md px-4 py-12 sm:px-6">
-      <h1 className="font-display text-4xl font-semibold">Welcome back</h1>
+      <h1 className="font-display text-4xl font-bold">Welcome back</h1>
       <p className="mt-2 text-ink-dim">Log in to keep swiping.</p>
       <LoginForm next={typeof next === "string" ? next : "/swipe"} />
     </div>

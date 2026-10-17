@@ -11,7 +11,7 @@ export default async function JoinPage() {
   if (await sessionUserId()) redirect("/swipe");
   return (
     <div className="mx-auto max-w-lg px-4 py-12 sm:px-6">
-      <h1 className="font-display text-4xl font-semibold">Join Girls Around the Globe</h1>
+      <h1 className="font-display text-4xl font-bold">Join Girls Around the Globe</h1>
       <p className="mt-2 text-ink-dim">Free, takes two minutes, adults 18+ only.</p>
       <JoinForm />
     </div>

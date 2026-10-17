@@ -175,7 +175,7 @@ export function SwipeDeck({
         {!top && (
           <div className="card absolute inset-0 flex flex-col items-center justify-center gap-4 p-8 text-center">
             <p className="text-5xl">🌍</p>
-            <p className="font-display text-2xl font-semibold">
+            <p className="font-display text-2xl font-bold">
               {tonightOnly ? "No one else is out tonight here" : "You\u2019ve seen everyone for now"}
             </p>
             <p className="text-ink-dim">
@@ -245,7 +245,7 @@ function CardFace({ profile: p, expanded = false, onToggle }: { profile: Member;
         </div>
         <div className="mt-2 flex items-end justify-between gap-3">
           <div>
-            <p className="font-display text-3xl font-semibold leading-tight">
+            <p className="font-display text-3xl font-bold leading-tight">
               {p.name} <span className="font-normal">{p.age}</span>
             </p>
             <p className="text-sm text-white/85">{p.flag} {p.city}{p.country ? `, ${p.country}` : ""}</p>
@@ -298,9 +298,9 @@ function RoundButton({ label, className, children, ...rest }: React.ButtonHTMLAt
 
 function MatchModal({ me, profile, onClose }: { me: Me; profile: Member; onClose: () => void }) {
   return (
-    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#ff2e88]/90 via-[#3b0f3a]/95 to-night p-6 text-center text-white">
+    <div role="dialog" aria-modal="true" aria-label={`You matched with ${profile.name}`} className="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-b from-[#ff1f8f]/90 via-[#3b0a22]/95 to-night p-6 text-center text-white">
       <div className="w-full max-w-sm">
-        <p className="font-display text-5xl font-semibold italic">It&rsquo;s a match!</p>
+        <p className="font-display text-5xl font-extrabold uppercase"><span className="text-gold">It&rsquo;s a</span> <span className="text-white">match!</span></p>
         <p className="mt-3 text-white/80">You and {profile.name} liked each other.</p>
         <div className="mt-8 flex justify-center">
           <Avatar profile={me} size="xl" className="!h-32 !w-32 border-4 border-white" />
@@ -319,7 +319,7 @@ function LimitModal({ limit, onClose }: { limit: Exclude<Limit, null>; onClose: 
     <div role="dialog" aria-modal="true" aria-label="Daily limit reached" className="fixed inset-0 z-50 flex items-center justify-center bg-night/80 p-6 backdrop-blur-sm">
       <div className="card w-full max-w-sm p-8 text-center">
         <p className="text-5xl">{likes ? "💘" : "⭐"}</p>
-        <h2 className="mt-4 font-display text-2xl font-semibold">
+        <h2 className="mt-4 font-display text-2xl font-bold">
           {likes ? "You're out of likes for today" : "You're out of super likes"}
         </h2>
         <p className="mt-2 text-ink-dim">

@@ -32,7 +32,7 @@ export function JoinForm() {
       </div>
 
       <div data-step="1" className={show(1)}>
-        <h2 className="font-display text-2xl font-semibold">Your account</h2>
+        <h2 className="font-display text-2xl font-bold">Your account</h2>
         <label className="block">
           <span className="mb-1 block text-sm font-semibold">Email</span>
           <input name="email" type="email" required className="field" autoComplete="email" />
@@ -54,7 +54,7 @@ export function JoinForm() {
       </div>
 
       <div data-step="2" className={show(2)}>
-        <h2 className="font-display text-2xl font-semibold">Where in the world?</h2>
+        <h2 className="font-display text-2xl font-bold">Where in the world?</h2>
         <fieldset>
           <legend className="mb-1 text-sm font-semibold">I am a</legend>
           <input type="hidden" name="gender" value={gender} />
@@ -99,7 +99,7 @@ export function JoinForm() {
       </div>
 
       <div data-step="3" className={show(3)}>
-        <h2 className="font-display text-2xl font-semibold">The ground rules</h2>
+        <h2 className="font-display text-2xl font-bold">The ground rules</h2>
         <ul className="space-y-2 text-sm text-ink-dim">
           <li>✓ I&rsquo;m 18 or older and my photos are really me.</li>
           <li>✓ I&rsquo;m here for casual encounters, and I&rsquo;ll be upfront about what I want.</li>

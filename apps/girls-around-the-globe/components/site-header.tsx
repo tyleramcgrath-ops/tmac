@@ -3,12 +3,13 @@ import { logout } from "@/app/actions";
 import { getMember } from "@/lib/members";
 import { sessionUserId } from "@/lib/session";
 import { Avatar } from "./avatar";
+import { IncomingCall } from "./incoming-call";
 import { Logo, Wordmark } from "./logo";
 
 const APP_NAV = [
   { href: "/swipe", label: "Swipe" },
   { href: "/likes", label: "Likes" },
-  { href: "/matches", label: "Matches" },
+  { href: "/matches", label: "Chats" },
 ];
 
 export async function SiteHeader() {
@@ -17,12 +18,11 @@ export async function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-30 border-b bg-bg/85 backdrop-blur">
+      {me && <IncomingCall />}
       <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <Link href={me ? "/swipe" : "/"} className="flex items-center gap-2" aria-label="Girls Around the Globe home">
-          <Logo />
-          <span className="hidden min-[400px]:inline">
-            <Wordmark />
-          </span>
+          <span className="sm:hidden"><Logo size={34} /></span>
+          <span className="hidden sm:inline"><Wordmark height={38} priority /></span>
         </Link>
 
         {me ? (
@@ -39,7 +39,7 @@ export async function SiteHeader() {
             {me.premium ? (
               <Link href="/premium" className="chip !bg-transparent border border-gold/60 !text-gold">✦ Globe+</Link>
             ) : (
-              <Link href="/premium" className="chip bg-sunset !text-white">✦ Get Globe+</Link>
+              <Link href="/premium" className="chip bg-gold !text-[#1a1206] font-semibold">✦ Get Globe+</Link>
             )}
             <Link href="/me" className="ml-1" aria-label="Your profile">
               <Avatar profile={me} size="sm" className="!h-9 !w-9 ring-2 ring-accent/70" />

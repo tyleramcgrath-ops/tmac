@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { reportAction, send, unmatchAction } from "@/app/actions";
+import { reportAction, send, startCallAction, unmatchAction } from "@/app/actions";
 import { Avatar } from "@/components/avatar";
 import type { ChatMessage, Member } from "@/lib/members";
 import { scanMessage } from "@/lib/scam-guard";
@@ -66,7 +66,19 @@ export function Chat({ other: p, initialMessages }: { other: Member; initialMess
             <span className="block text-xs text-ink-dim">{p.flag} {p.city}{p.country ? `, ${p.country}` : ""} · {p.lastActive}</span>
           </span>
         </Link>
-        <div className="relative ml-auto">
+        <button
+          type="button"
+          onClick={async () => {
+            setError("");
+            const res = await startCallAction(p.id);
+            if (res && !res.ok) setError(res.error);
+          }}
+          className="ml-auto flex items-center gap-1.5 rounded-full bg-sunset px-3.5 py-2 text-sm font-semibold text-white shadow-[0_8px_20px_-10px_rgb(255_31_143)]"
+          aria-label={`Video call ${p.name}`}
+        >
+          📹 <span className="hidden sm:inline">Video</span>
+        </button>
+        <div className="relative">
           <button type="button" onClick={() => setMenu((v) => !v)} aria-expanded={menu} aria-label="Chat options" className="rounded-full px-3 py-1 text-lg text-ink-mute hover:bg-surface-2 hover:text-ink">
             ⋯
           </button>

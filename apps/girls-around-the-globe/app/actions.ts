@@ -16,6 +16,7 @@ import {
   unmatch,
   type SwipeResult,
 } from "@/lib/members";
+import { answerCall, endCall, startCall } from "@/lib/calls";
 import { hashPassword, verifyPassword } from "@/lib/password";
 import { PASSPORT_CITIES, VIBE_LABEL, type Vibe } from "@/lib/profiles";
 import { createSession, destroySession, requireUserId, sessionUserId } from "@/lib/session";
@@ -255,4 +256,25 @@ export async function demoUpgrade() {
   const id = await requireUserId("/premium");
   await query("update users set premium_until = now() + interval '30 days' where id = $1", [id]);
   redirect("/premium?success=1");
+}
+
+// ---------- Video calls ----------
+
+export async function startCallAction(otherId: string): Promise<{ ok: false; error: string } | never> {
+  const me = await requireUserId("/matches");
+  const res = await startCall(me, String(otherId));
+  if (!res.ok) return { ok: false, error: res.reason };
+  redirect(`/call/${res.callId}`);
+}
+
+export async function answerCallAction(callId: string): Promise<{ ok: boolean; error?: string }> {
+  const me = await sessionUserId();
+  if (!me) return { ok: false, error: "Not signed in." };
+  const res = await answerCall(me, String(callId));
+  return res.ok ? { ok: true } : { ok: false, error: res.reason };
+}
+
+export async function endCallAction(callId: string) {
+  const me = await sessionUserId();
+  if (me) await endCall(me, String(callId));
 }

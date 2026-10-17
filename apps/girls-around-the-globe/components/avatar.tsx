@@ -30,7 +30,7 @@ export function Avatar({ profile, size = "md", className = "" }: Props) {
   }
   return (
     <div
-      className={`relative flex shrink-0 items-center justify-center overflow-hidden font-display font-semibold text-white ${SIZES[size]} ${round} ${className}`}
+      className={`relative flex shrink-0 items-center justify-center overflow-hidden font-display font-bold text-white ${SIZES[size]} ${round} ${className}`}
       style={{ background: `linear-gradient(135deg, ${a}, ${b})` }}
       aria-hidden="true"
     >

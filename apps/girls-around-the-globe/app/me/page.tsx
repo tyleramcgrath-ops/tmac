@@ -22,11 +22,11 @@ export default async function MePage({ searchParams }: PageProps<"/me">) {
     <div className="mx-auto max-w-3xl px-4 py-10 sm:px-6">
       {welcome ? (
         <div className="card mb-8 bg-sunset p-6 text-white">
-          <h1 className="font-display text-3xl font-semibold">Welcome, {me.name}! 🌍</h1>
+          <h1 className="font-display text-3xl font-bold">Welcome, {me.name}! 🌍</h1>
           <p className="mt-1 text-white/90">Add a few photos so people can see you. Profiles with photos get far more matches.</p>
         </div>
       ) : (
-        <h1 className="mb-8 font-display text-4xl font-semibold">Your profile</h1>
+        <h1 className="mb-8 font-display text-4xl font-bold">Your profile</h1>
       )}
 
       <section className="card p-6">

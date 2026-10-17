@@ -2,22 +2,23 @@
 
 :root {
   color-scheme: dark;
-  /* After hours: violet-black night, hot magenta and amber neon. */
-  --night: #07050c;
-  --bg: #0d0914;
-  --surface: #161020;
-  --surface-2: #211830;
-  --border: #31264a;
-  --ink: #f7eef6;
-  --ink-dim: #bcaecb;
-  --ink-mute: #85779a;
-  --accent: #ff3d8b;
-  --accent-deep: #ff7cb0;
-  --accent-soft: rgb(255 61 139 / 0.14);
-  --gold: #ffb547;
+  /* Brand: black, hot pink and metallic gold, from the GAG logo. */
+  --night: #030203;
+  --bg: #070508;
+  --surface: #121014;
+  --surface-2: #1c1820;
+  --border: #2e2631;
+  --ink: #fbf6f3;
+  --ink-dim: #c9bdc6;
+  --ink-mute: #8c808a;
+  --accent: #ff1f8f;
+  --accent-deep: #ff6fb5;
+  --accent-soft: rgb(255 31 143 / 0.14);
+  --gold: #e9b95c;
   --ok: #4ade80;
   --warn: #fbbf24;
-  --sunset: linear-gradient(115deg, #ff2e88 0%, #ff5f5f 50%, #ffb547 100%);
+  --sunset: linear-gradient(115deg, #ff1f8f 0%, #ff4fa6 55%, #ff7cc0 100%);
+  --gold-metal: linear-gradient(180deg, #fbe3a1 0%, #e9b95c 45%, #b57d2e 100%);
 }
 
 @theme inline {
@@ -35,7 +36,7 @@
   --color-ok: var(--ok);
   --color-warn: var(--warn);
   --color-night: var(--night);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-montserrat);
   --font-body: var(--font-manrope);
 }
 
@@ -49,9 +50,9 @@ html {
 
 body {
   background:
-    radial-gradient(60rem 40rem at 10% -10%, rgb(255 46 136 / 0.16), transparent 60%),
-    radial-gradient(50rem 40rem at 110% 10%, rgb(124 58 237 / 0.18), transparent 60%),
-    radial-gradient(40rem 30rem at 50% 120%, rgb(255 181 71 / 0.08), transparent 60%),
+    radial-gradient(60rem 40rem at 5% -10%, rgb(255 31 143 / 0.16), transparent 60%),
+    radial-gradient(50rem 40rem at 105% 5%, rgb(233 185 92 / 0.12), transparent 60%),
+    radial-gradient(40rem 30rem at 50% 120%, rgb(255 31 143 / 0.08), transparent 60%),
     var(--bg);
   background-attachment: fixed;
   color: var(--ink);
@@ -76,12 +77,12 @@ body::after {
 }
 
 .glow {
-  box-shadow: 0 0 0 1px rgb(255 61 139 / 0.35), 0 10px 40px -10px rgb(255 61 139 / 0.55);
+  box-shadow: 0 0 0 1px rgb(255 31 143 / 0.4), 0 10px 40px -10px rgb(255 31 143 / 0.6);
 }
 
 .neon {
   /* drop-shadow, not text-shadow: it stays clean on gradient-clipped text */
-  filter: drop-shadow(0 0 18px rgb(255 61 139 / 0.45));
+  filter: drop-shadow(0 0 18px rgb(255 31 143 / 0.45));
 }
 
 @keyframes rise {
@@ -93,8 +94,8 @@ body::after {
 }
 
 @keyframes pulse-dot {
-  0%, 100% { box-shadow: 0 0 0 0 rgb(255 61 139 / 0.7); }
-  50% { box-shadow: 0 0 0 6px rgb(255 61 139 / 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgb(255 31 143 / 0.7); }
+  50% { box-shadow: 0 0 0 6px rgb(255 31 143 / 0); }
 }
 .live-dot {
   display: inline-block;
@@ -126,7 +127,7 @@ body::after {
 .btn-primary {
   background: var(--sunset);
   color: #fff;
-  box-shadow: 0 10px 30px -10px rgb(255 46 136 / 0.9);
+  box-shadow: 0 10px 30px -10px rgb(255 31 143 / 0.9);
 }
 .btn-primary:hover {
   filter: brightness(0.95) saturate(1.1);
@@ -185,4 +186,36 @@ body::after {
 }
 .bg-sunset {
   background: var(--sunset);
+}
+.text-gold {
+  background: var(--gold-metal);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.bg-gold {
+  background: var(--gold-metal);
+  color: #1a1206;
+}
+.btn-gold {
+  background: var(--gold-metal);
+  color: #1a1206;
+  box-shadow: 0 10px 30px -12px rgb(233 185 92 / 0.8);
+}
+.btn-gold:hover {
+  filter: brightness(1.05);
+}
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+/* Fades the emblem's black square into the page on all four edges. */
+.edge-fade {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent),
+    linear-gradient(to bottom, transparent, #000 7%, #000 93%, transparent);
+  mask-composite: intersect;
 }

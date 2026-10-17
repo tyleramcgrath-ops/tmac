@@ -23,7 +23,7 @@ export default async function MatchesPage({ searchParams }: PageProps<"/matches"
       {matches.length === 0 ? (
         <div className="card mx-auto max-w-md p-10 text-center">
           <p className="text-5xl">💌</p>
-          <h1 className="mt-4 font-display text-3xl font-semibold">No matches yet</h1>
+          <h1 className="mt-4 font-display text-3xl font-bold">No matches yet</h1>
           <p className="mt-2 text-ink-dim">When someone you liked likes you back, they&rsquo;ll show up here.</p>
           <Link href="/swipe" className="btn btn-primary mt-6">Start swiping</Link>
         </div>

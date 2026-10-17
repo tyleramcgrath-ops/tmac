@@ -62,4 +62,24 @@ export const SCHEMA = [
     reason text not null,
     created_at timestamptz not null default now()
   )`,
+  // Video calls between matches, and their WebRTC signalling messages.
+  `create table if not exists calls (
+    id text primary key,
+    caller_id text not null references users(id) on delete cascade,
+    callee_id text not null references users(id) on delete cascade,
+    status text not null default 'ringing',
+    created_at timestamptz not null default now(),
+    answered_at timestamptz,
+    ended_at timestamptz
+  )`,
+  `create index if not exists calls_callee_idx on calls (callee_id, status)`,
+  `create table if not exists call_signals (
+    id bigserial primary key,
+    call_id text not null references calls(id) on delete cascade,
+    from_id text not null,
+    kind text not null,
+    payload jsonb not null,
+    created_at timestamptz not null default now()
+  )`,
+  `create index if not exists call_signals_idx on call_signals (call_id, id)`,
 ];
