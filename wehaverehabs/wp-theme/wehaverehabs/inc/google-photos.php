@@ -148,52 +148,42 @@ function whr_places_is_match( $place, $post_id ) {
 }
 
 /**
- * GET /wp-json/whr/v1/photo/<id> → { uri, credits: [ { name, uri } ] } or 204.
+ * Find a photo for a listing on Google.
  *
- * @param WP_REST_Request $request Request.
- * @return WP_REST_Response
+ * @param int    $id  Listing.
+ * @param string $why Set to the reason when no photo is returned.
+ * @return array|null { uri, credits }
  */
-function whr_google_photo_endpoint( WP_REST_Request $request ) {
-	$id = (int) $request['id'];
-	if ( 'sanctuary' !== get_post_type( $id ) || 'publish' !== get_post_status( $id ) || ! whr_wants_google_photo( $id ) ) {
-		return new WP_REST_Response( null, 204 );
-	}
-
-	// Cost guards: a daily cap for the site and an hourly cap per visitor.
-	$day_key = 'whr_gphoto_day_' . gmdate( 'Ymd' );
-	$ip      = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
-	$ip_key  = 'whr_gphoto_ip_' . md5( $ip );
-	$cap     = (int) whr_option( 'google_places_daily_cap', 2000 );
-	if ( (int) get_transient( $day_key ) >= $cap || (int) get_transient( $ip_key ) >= 300 ) {
-		return new WP_REST_Response( null, 204 );
-	}
-	set_transient( $day_key, (int) get_transient( $day_key ) + 1, DAY_IN_SECONDS );
-	set_transient( $ip_key, (int) get_transient( $ip_key ) + 1, HOUR_IN_SECONDS );
-
+function whr_google_photo_fetch( $id, &$why = '' ) {
 	$place_id = (string) whr_meta( 'gplace', $id );
 	$photos   = null;
 	if ( '' === $place_id ) {
 		$query = trim( get_the_title( $id ) . ', ' . ( whr_meta( 'address', $id ) ? whr_meta( 'address', $id ) : whr_location( $id ) . ', ' . whr_term_names( 'destination', $id ) ), ', ' );
 		$found = whr_places_request( 'POST', 'https://places.googleapis.com/v1/places:searchText', 'places.id,places.displayName,places.formattedAddress,places.photos', array( 'textQuery' => $query, 'pageSize' => 1 ) );
 		if ( null === $found ) {
-			return new WP_REST_Response( null, 204 ); // API error: try again on a later visit.
+			$why = 'search-error: ' . whr_gphoto_error_text();
+			return null; // Try again on a later visit.
 		}
 		$place = $found['places'][0] ?? null;
 		if ( ! $place || ! whr_places_is_match( $place, $id ) ) {
 			update_post_meta( $id, 'whr_gplace', 'none' ); // Not on Google, or not confidently the same place.
-			return new WP_REST_Response( null, 204 );
+			$why = $place ? 'no-match: ' . ( $place['displayName']['text'] ?? '' ) : 'not-found';
+			return null;
 		}
-		$place_id = sanitize_text_field( $place['id'] );
-		update_post_meta( $id, 'whr_gplace', $place_id ); // Place IDs may be stored.
+		update_post_meta( $id, 'whr_gplace', sanitize_text_field( $place['id'] ) ); // Place IDs may be stored.
 		$photos = $place['photos'] ?? array();
 	} else {
 		$details = whr_places_request( 'GET', 'https://places.googleapis.com/v1/places/' . rawurlencode( $place_id ), 'photos' );
-		$photos  = $details['photos'] ?? array();
+		if ( null === $details ) {
+			$why = 'details-error: ' . whr_gphoto_error_text();
+			return null;
+		}
+		$photos = $details['photos'] ?? array();
 	}
 	if ( empty( $photos[0]['name'] ) ) {
-		return new WP_REST_Response( null, 204 );
+		$why = 'no-photos';
+		return null;
 	}
-
 	$media = whr_places_result(
 		wp_remote_get(
 			'https://places.googleapis.com/v1/' . $photos[0]['name'] . '/media?maxWidthPx=1600&skipHttpRedirect=true&key=' . rawurlencode( whr_option( 'google_places_key' ) ),
@@ -202,13 +192,59 @@ function whr_google_photo_endpoint( WP_REST_Request $request ) {
 	);
 	$uri = $media['photoUri'] ?? '';
 	if ( ! $uri ) {
-		return new WP_REST_Response( null, 204 );
+		$why = 'media-error: ' . ( null === $media ? whr_gphoto_error_text() : 'no photoUri' );
+		return null;
 	}
 	$credits = array();
 	foreach ( (array) ( $photos[0]['authorAttributions'] ?? array() ) as $a ) {
 		$credits[] = array( 'name' => sanitize_text_field( $a['displayName'] ?? '' ), 'uri' => esc_url_raw( $a['uri'] ?? '' ) );
 	}
-	$response = new WP_REST_Response( array( 'uri' => esc_url_raw( $uri ), 'credits' => $credits ), 200 );
+	return array( 'uri' => esc_url_raw( $uri ), 'credits' => $credits );
+}
+
+/** Google's last error as one line. */
+function whr_gphoto_error_text() {
+	$e = get_option( 'whr_gphoto_error' );
+	return $e ? 'HTTP ' . $e[1] . ' ' . $e[2] : 'unknown';
+}
+
+/**
+ * GET /wp-json/whr/v1/photo/<id> → { uri, credits: [ { name, uri } ] }, or 204 with the reason
+ * in an X-WHR-Photo header.
+ *
+ * @param WP_REST_Request $request Request.
+ * @return WP_REST_Response
+ */
+function whr_google_photo_endpoint( WP_REST_Request $request ) {
+	$id   = (int) $request['id'];
+	$none = function ( $why ) use ( $id ) {
+		update_option( 'whr_gphoto_last', array( time(), $id, $why ), false );
+		$r = new WP_REST_Response( null, 204 );
+		$r->header( 'X-WHR-Photo', substr( preg_replace( '/[^\x20-\x7E]/', '', $why ), 0, 200 ) );
+		$r->header( 'Cache-Control', 'no-store' );
+		return $r;
+	};
+	if ( 'sanctuary' !== get_post_type( $id ) || 'publish' !== get_post_status( $id ) || ! whr_wants_google_photo( $id ) ) {
+		return $none( 'not-wanted' );
+	}
+
+	// Cost guards: a daily cap for the site and an hourly cap per visitor.
+	$day_key = 'whr_gphoto_day_' . gmdate( 'Ymd' );
+	$ip      = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : '';
+	$ip_key  = 'whr_gphoto_ip_' . md5( $ip );
+	$cap     = (int) whr_option( 'google_places_daily_cap', 2000 );
+	if ( (int) get_transient( $day_key ) >= $cap || (int) get_transient( $ip_key ) >= 300 ) {
+		return $none( 'cap-reached' );
+	}
+	set_transient( $day_key, (int) get_transient( $day_key ) + 1, DAY_IN_SECONDS );
+	set_transient( $ip_key, (int) get_transient( $ip_key ) + 1, HOUR_IN_SECONDS );
+
+	$why   = '';
+	$photo = whr_google_photo_fetch( $id, $why );
+	if ( ! $photo ) {
+		return $none( $why );
+	}
+	$response = new WP_REST_Response( $photo, 200 );
 	$response->header( 'Cache-Control', 'no-store' ); // Google does not allow caching photo data.
 	return $response;
 }
@@ -269,7 +305,19 @@ function whr_render_google_panel() {
 	/* translators: 1: matched 2: unmatched 3: lookups today 4: cap */
 	echo '<p>' . esc_html( sprintf( __( 'Matched on Google: %1$s · not matched: %2$s · lookups today: %3$s of %4$s.', 'wehaverehabs' ), number_format_i18n( $matched ), number_format_i18n( $none ), number_format_i18n( (int) get_transient( 'whr_gphoto_day_' . gmdate( 'Ymd' ) ) ), number_format_i18n( (int) whr_option( 'google_places_daily_cap', 2000 ) ) ) ) . '</p>';
 
+	$last = get_option( 'whr_gphoto_last' );
+	if ( $last ) {
+		/* translators: 1: listing 2: reason */
+		echo '<p class="description">' . esc_html( sprintf( __( 'Last photo that could not be shown: %1$s — %2$s', 'wehaverehabs' ), get_the_title( $last[1] ), $last[2] ) ) . '</p>';
+	}
 	if ( isset( $_POST['whr_gtest'] ) && check_admin_referer( 'whr_gtest' ) ) {
+		$matched = get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'meta_query' => array( array( 'key' => 'whr_gplace', 'value' => array( '', 'none' ), 'compare' => 'NOT IN' ) ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+		if ( $matched ) {
+			$why   = '';
+			$photo = whr_google_photo_fetch( $matched[0]->ID, $why );
+			/* translators: 1: listing 2: result */
+			echo '<div class="notice notice-info inline"><p>' . esc_html( sprintf( __( 'Photo for %1$s: %2$s', 'wehaverehabs' ), $matched[0]->post_title, $photo ? __( 'OK — Google returned a photo.', 'wehaverehabs' ) : $why ) ) . '</p></div>';
+		}
 		$sample = get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'orderby' => 'rand', 'meta_key' => 'whr_source', 'meta_value' => 'web' ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
 		$sample = $sample ? $sample : get_posts( array( 'post_type' => 'sanctuary', 'numberposts' => 1, 'orderby' => 'rand' ) );
 		if ( $sample ) {
