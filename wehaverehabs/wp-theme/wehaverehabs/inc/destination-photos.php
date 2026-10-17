@@ -156,6 +156,7 @@ function whr_commons_pick( $category ) {
 	);
 	$res = wp_remote_get( $url, array( 'timeout' => 15, 'user-agent' => 'WeHaveRehabsTheme/' . WHR_VERSION . ' (' . home_url( '/' ) . ')' ) );
 	if ( is_wp_error( $res ) || 200 !== wp_remote_retrieve_response_code( $res ) ) {
+		update_option( 'whr_destphotos_error', is_wp_error( $res ) ? $res->get_error_message() : 'Commons HTTP ' . wp_remote_retrieve_response_code( $res ), false );
 		return null;
 	}
 	$data  = json_decode( wp_remote_retrieve_body( $res ), true );
@@ -212,8 +213,8 @@ function whr_fetch_destination_photo( $term ) {
 	$id = media_sideload_image( $pick['url'], 0, sprintf( __( 'Landscape of %s', 'wehaverehabs' ), $term->name ), 'id' );
 	remove_filter( 'intermediate_image_sizes_advanced', $sizes );
 	if ( is_wp_error( $id ) ) {
-		update_term_meta( $term->term_id, 'whr_image_none', 1 );
-		return false;
+		update_option( 'whr_destphotos_error', 'Download: ' . $id->get_error_message(), false );
+		return false; // Try again on the next run.
 	}
 	update_post_meta( $id, '_wp_attachment_image_alt', '' );
 	update_post_meta( $id, '_whr_commons', $pick['page'] );
@@ -339,5 +340,37 @@ add_action(
 		$left = whr_destinations_missing_photo( 500 );
 		/* translators: %s: count */
 		echo '<div class="notice notice-info"><p><strong>We Have Rehabs:</strong> ' . esc_html( sprintf( __( 'Adding landscape photos to destinations in the background — %s to go.', 'wehaverehabs' ), number_format_i18n( is_wp_error( $left ) ? 0 : count( $left ) ) ) ) . '</p></div>';
+	}
+);
+
+/** GET /wp-json/whr/v1/status: progress of the background jobs (counts only). */
+add_action(
+	'rest_api_init',
+	function () {
+		register_rest_route(
+			'whr/v1',
+			'/status',
+			array(
+				'methods'             => 'GET',
+				'permission_callback' => '__return_true',
+				'callback'            => function () {
+					$left   = whr_destinations_missing_photo( 1000 );
+					$photos = get_terms( array( 'taxonomy' => 'destination', 'hide_empty' => false, 'fields' => 'ids', 'meta_key' => 'whr_image_credit' ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+					$r      = new WP_REST_Response(
+						array(
+							'version'        => WHR_VERSION,
+							'listings'       => get_option( 'whr_autoimport' ),
+							'photos'         => get_option( 'whr_destphotos' ),
+							'with_photo'     => is_wp_error( $photos ) ? 0 : count( $photos ),
+							'waiting'        => is_wp_error( $left ) ? 0 : count( $left ),
+							'next_run'       => wp_next_scheduled( 'whr_destphotos_batch' ),
+							'last_error'     => get_option( 'whr_destphotos_error' ),
+						)
+					);
+					$r->header( 'Cache-Control', 'no-store' );
+					return $r;
+				},
+			)
+		);
 	}
 );
