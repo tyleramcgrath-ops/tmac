@@ -235,7 +235,356 @@ const PEACHCARE = 'https://dch.georgia.gov/peachcare-kids'
 const MARTA = 'https://www.itsmarta.com/'
 const GA_CENSUS = 'https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/PST120223'
 
+const MA_71 = 'https://www.mass.gov/supreme-judicial-court-rules/rules-of-professional-conduct-rule-71-communications-concerning-a-lawyers-services'
+const MA_72 = 'https://www.mass.gov/supreme-judicial-court-rules/rules-of-professional-conduct-rule-72-communications-concerning-a-lawyers-services-specific-rules'
+const MA_73 = 'https://www.mass.gov/supreme-judicial-court-rules/rules-of-professional-conduct-rule-73-solicitation-of-clients'
+const MA_COURTS_BOS = 'https://www.mass.gov/info-details/courts-serving-boston'
+const CENSUS_BOS = 'https://census.gov/quickfacts/fact/table/bostoncitymassachusetts/PST120223'
+const GBP_PRACTITIONERS = 'https://support.google.com/business/answer/3038177?hl=en'
+const FL_64B8 = 'https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64B8-11-001'
+const FL_458_3312 = 'https://m.flsenate.gov/Statutes/458.3312'
+const FL_456_062 = 'https://www.flsenate.gov/Laws/Statutes/2025/456.062'
+const FL_456_47 = 'https://flsenate.gov/Laws/Statutes/2026/456.47'
+const CENSUS_MIA_CITY = 'https://census.gov/quickfacts/fact/table/miamicityflorida,miamidadecountyflorida/PST045221'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'boston-law-firm-website-design',
+    title: 'Boston Law Firm Website Design: Massachusetts Rules',
+    description: 'Build a Boston law firm website under Massachusetts Rules 7.1 to 7.3: certification wording, lead generators, Suffolk County courts and multilingual clients.',
+    kind: 'guide',
+    summary: [
+      'Massachusetts rewrote its lawyer advertising rules in 2022: the current Rules 7.1, 7.2 and 7.3 were adopted on July 13 and took effect on October 1, 2022.',
+      'Every advertising page must name at least one lawyer or law firm responsible for its content (Rule 7.2(d)).',
+      '“Focuses on” is fine if true; “certified” needs an approved or ABA-accredited certifier, or a statement that the certifier is a private, unregulated organization, and the certifier’s name every time.',
+      'A website is not a solicitation, but lead generators are allowed only if they don’t recommend you and their own claims meet Rule 7.1.',
+      'Boston clients search by court and neighborhood: eight Boston Municipal Court divisions, Suffolk Superior, Suffolk Probate and Family, and the Housing Court’s Boston session.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1565127803082-69dd82351360?auto=format&fit=crop&w=1600&q=75', alt: 'The Boston skyline rising beyond the Charles River on a clear day, with dozens of small sailboats on the water and trees along the bank' },
+    body: `A Boston law firm website has to follow the Massachusetts Rules of Professional Conduct, and since October 1, 2022 the parts that matter for a website fit on one page. Say nothing false or misleading about the firm (Rule 7.1). Name at least one lawyer or firm responsible for each advertising page (Rule 7.2(d)). Use the word “certified” only with a qualifying certifier, named every time, or with a statement that the certifier is private and unregulated (Rule 7.2(c)). Don’t pay anyone to recommend you, and check that any lead generator you pay stays within the limits in comment [5] to Rule 7.2. Then build the site around the way Bostonians actually look for a lawyer: by the courthouse their case is in, by the neighborhood they live in, and, in about a third of households, in a language other than English.
+
+This guide takes each of those in turn, quoting the Supreme Judicial Court’s rule text as published on Mass.gov, and finishes with a page plan and a checklist for a Boston firm. It’s practical guidance for building a website, not an ethics opinion; the rules themselves and the Board of Bar Overseers have the final word.
+
+## What do the Massachusetts rules say about law firm websites?
+
+Three rules do the work. The Supreme Judicial Court adopted the current versions of Rules 7.1, 7.2 and 7.3 on July 13, 2022, effective October 1, 2022, as shown at the foot of each rule on Mass.gov ([Rule 7.1](${MA_71}), [Rule 7.2](${MA_72}), [Rule 7.3](${MA_73})). If your site went up before late 2022 and your footer or disclaimer page quotes rule language, check it against the current text.
+
+Rule 7.1 is the general standard: “A lawyer shall not make a false or misleading communication about the lawyer or the lawyer’s services.” A statement is misleading if it misstates a material fact or law, or leaves out a fact needed to keep the whole statement from misleading. The comments add that a statement can be literally true and still mislead, for instance when it leads a reader to a conclusion about the lawyer that has no factual basis.
+
+Rule 7.2(a) is permissive: “A lawyer may communicate information regarding the lawyer’s services through any media.” A website, a Google Business Profile, a YouTube channel and a newsletter are all fine. Comment [1] lists what that information can include, among other things “the kinds of services the lawyer will undertake,” “the basis on which the lawyer’s fees are determined, including prices for specific services and payment and credit arrangements,” and “a lawyer’s foreign language ability.”
+
+Rule 7.2(d) is the one item every advertising page needs: “Any communication made under this Rule must include the name of at least one lawyer or law firm responsible for its content.” On a website the simplest way to meet it on every page, including landing pages people reach straight from Google, is a footer with the firm’s full name. Many firms also name the responsible attorney on the disclaimer page, which costs nothing and answers the question for good.
+
+## Can a Boston lawyer call herself a specialist or “certified”?
+
+Massachusetts separates describing a practice from claiming a credential.
+
+Describing is allowed. Rule 7.2(c) permits a lawyer to say that she focuses on or specializes in an area of law, as long as the statement isn’t false or misleading. Comment [9] adds a catch that matters for marketing copy: a lawyer who holds herself out as a specialist is held to the standard of a specialist in that field. Write “our practice focuses on employment law” only if that is where most of your work actually goes.
+
+Claiming certification is narrower. A lawyer may not state or imply certification as a specialist unless one of two things is true:
+
+1. She “has been certified as a specialist by an organization that has been approved by an appropriate State authority or that has been accredited by the American Bar Association”; or
+2. The communication “states that the certifying organization is a private organization, whose standards for certification are not regulated by a state authority or the American Bar Association.”
+
+In both cases the certifying organization must be named in the communication itself. On a website that means the full name of the certifying body sits next to the word “certified” on the lawyer’s bio, and the qualifying statement from the second path, if it applies, sits right there too, not three clicks away. Watch the places where a credential slips in without context: page titles, image alt text, schema markup and the short description Google may show under your link ([how Google builds snippets](${SNIPPETS})). A title like “Certified Boston Estate Planning Attorneys” on the firm’s home page implies every lawyer holds a certification.
+
+![The gold-domed Massachusetts State House rising above its columned brick facade against a clear blue sky](https://images.unsplash.com/photo-1723853310614-d2da3634806a?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Boston firm show results, reviews and fees?
+
+The test comes from comment [3] to Rule 7.1. A truthful report of results can mislead if it is presented so that a reader expects similar results for themselves without regard to the facts of their own case, and an unverifiable comparison of one lawyer’s services or fees with another’s can mislead in the same way. The comment also notes that “the inclusion of an appropriate disclaimer or qualifying language may preclude a finding” that a statement is misleading.
+
+For a results page that holds up, a few habits help:
+
+- **Give context, not just a number.** Name the case type, the court and what was at stake. A $1.2 million figure means little without knowing whether it was a verdict or a settlement and what the injuries were.
+- **Put the qualifier next to the results.** A line such as “Every case is different; these results do not predict the outcome of yours” belongs under the list, in normal-sized type, not only on a disclaimer page.
+- **Don’t compare yourself to unnamed rivals.** “Boston’s most aggressive DUI defense” or “lower fees than other firms” are the kind of claims comment [3] warns about unless you can prove them.
+- **Quote reviews as written.** Show real clients’ words without editing them, and never post or pay for reviews. Google’s own policy forbids fake engagement on Maps ([Maps user contributed content policy](${MAPS_POLICY})), and the steps in [how to ask for Google reviews without breaking the rules](/blog/ask-for-google-reviews-the-right-way) apply to law firms as well.
+
+Fees are an opportunity more than a risk. Comment [1] to Rule 7.2 expressly lists prices for specific services and payment arrangements as information a lawyer may share. A Boston firm that posts a flat fee for an uncontested divorce, a simple will package or a first-offense OUI consultation answers the question many visitors are too uncomfortable to ask on the phone. Keep the price page accurate: say what the fee covers, what it doesn’t (filing fees, expert costs), and when it was last updated.
+
+## What can a Massachusetts firm pay for: ads, directories and lead generators?
+
+Rule 7.2(b) starts with a prohibition: a lawyer generally may not give anything of value to a person for recommending the lawyer’s services. The exceptions are what make online marketing possible. A lawyer may pay for permitted advertising, pay the usual charges of a legal service plan, a lawyer referral service or a qualified legal assistance organization, pay for a law practice under Rule 1.17, enter a disclosed, non-exclusive reciprocal referral arrangement with another lawyer or professional, and give nominal gifts that aren’t tied to referrals.
+
+Comment [3] spells out what counts as advertising cost, including online directory listings, banner ads, sponsorships and domain registrations. It also confirms that a lawyer may pay employees, agencies and vendors for marketing work, website design included.
+
+Lead generators get their own paragraph. Under comment [5], a lawyer may pay one only if:
+
+- “the lead generator does not recommend the lawyer”;
+- “any payment to the lead generator is consistent with Rules 1.5(e)” (fee division) “and 5.4 (professional independence of the lawyer)”; and
+- “the lead generator’s communications are consistent with Rule 7.1.”
+
+The same comment says a lawyer must not pay a lead generator that “states, implies, or creates a reasonable impression that it is recommending the lawyer,” that suggests it is making the referral without payment from the lawyer, or that “has analyzed a person’s legal problems when determining which lawyer should receive the referral.” Before signing with any pay-per-lead or “matched attorney” service, read its consumer-facing pages as if you were the client. If they say “we’ll find the right Boston lawyer for your case,” that is the kind of wording the comment describes.
+
+## Is a website, live chat or follow-up email a solicitation?
+
+Rule 7.3 defines a solicitation as a communication initiated by or on behalf of a lawyer or firm that is “directed to a specific person the lawyer knows or reasonably should know needs legal services” in a particular matter and offers to provide them. Comment [1] puts general advertising outside that definition, naming “a billboard, an Internet banner advertisement, a website” among its examples, and also excludes responses to a person’s request for information and automatically generated responses to electronic searches.
+
+So the website itself isn’t a solicitation, and neither is a reply to someone who filled in your consultation form. The rule bites on live person-to-person contact. Rule 7.3(b) restricts solicitation by “live person-to-person contact” when a significant motive is the lawyer’s pecuniary gain, and comment [2] describes that as in-person, face-to-face, live telephone and other real-time visual or auditory contact where the person has no time to reflect. Comment [2] treats text messages and other written communications that a person can easily disregard differently. Paragraph (c) adds limits that apply even when (b) doesn’t: no solicitation of someone who has said they don’t want it, and none that involves coercion, duress or harassment.
+
+In practice, for a Boston firm’s site:
+
+1. A chat window the visitor opens is a response to their request. Have it collect contact details and a short description, and keep anyone answering it from pressing for a decision.
+2. Automated follow-up emails after a form is submitted are fine; stop them as soon as the person asks.
+3. Don’t buy lists of people who were just arrested or injured and call them. That is exactly what Rule 7.3(b) addresses.
+
+![Boston’s Old State House, a red brick building with a white clock tower, framed by modern office towers in the Financial District](https://images.unsplash.com/photo-1623607769583-f95269221eaf?auto=format&fit=crop&w=1200&q=75)
+
+## Firm names, shared offices and multistate firms
+
+Comment [5] to Rule 7.1 covers firm names and designations. A firm may practice under a trade name if it isn’t false or misleading, but a name is misleading if it implies a connection with a government agency, with a lawyer not associated with the firm, with a nonlawyer, or with a public or charitable legal services organization. Comment [9] points to Supreme Judicial Court Rule 3:06 for the extra limits on names of professional corporations, LLCs and LLPs. A domain name is part of your designation too, so “bostonlegalaid” style addresses for a private firm are a bad idea.
+
+Two more comments come up often around Boston:
+
+- **Office sharing.** Comment [7] says lawyers “may not imply or hold themselves out as practicing together in one firm when they are not a firm.” Solo lawyers who share a suite in the Financial District or Back Bay shouldn’t share a website that reads like one firm, a joint name like “Smith & Lee,” or one “Our attorneys” page, unless they effectively disclaim joint responsibility.
+- **Offices in more than one state.** Some Boston firms also have lawyers admitted in New Hampshire, Rhode Island or New York. Comment [6] allows the same firm name in every jurisdiction but requires the firm to show which lawyers are not licensed in the jurisdiction where an office is located. On the website, list each lawyer’s bar admissions on their profile and on each office page.
+
+## How do people in Boston search for a lawyer?
+
+Boston’s courts give a firm a natural structure for its pages, because clients often know which courthouse their case is in before they know which lawyer they want. According to the Massachusetts Trial Court, the courts serving Boston include eight Boston Municipal Court divisions (Brighton, Central, Charlestown, Dorchester, East Boston, Roxbury, South Boston and West Roxbury), the Boston session of the Eastern Housing Court, the Suffolk County Juvenile Court, the Land Court, Suffolk Probate and Family Court and Suffolk Superior Court, with the Supreme Judicial Court and Appeals Court at the John Adams Courthouse ([courts serving Boston](${MA_COURTS_BOS})).
+
+That list turns into useful pages without inventing anything:
+
+- **A criminal defense firm** can write a page for the court divisions where it regularly appears, explaining what happens at arraignment there and where to go. The division names double as the neighborhood names people type into Google.
+- **A landlord-tenant practice** has a clear anchor in the Housing Court’s Boston session, for both tenants facing eviction and owners with problem tenancies.
+- **A family law firm** can explain what to expect at Suffolk Probate and Family Court, from filing to a first hearing.
+- **A real estate or title practice** can explain when a matter goes to the Land Court.
+
+Each page should carry real knowledge from the lawyers who go there, not a paragraph with the place name swapped. Google’s spam policies name doorway pages, pages made to rank for similar searches that funnel visitors to one place, as a violation ([Google spam policies](${SPAM})). A courthouse page earns its place when it would help a client even if they never hired you.
+
+Language is the other half of local search. The Census Bureau’s QuickFacts for Boston reports that 35.6% of residents age 5 and older speak a language other than English at home and 27.8% were born outside the United States (2020 to 2024 figures), and that 19.3% of residents are Hispanic or Latino ([Census QuickFacts, Boston](${CENSUS_BOS})). If someone at your firm serves clients in Spanish, Portuguese, Haitian Creole or Chinese, say so on the home page, on that lawyer’s profile and in your Google Business Profile, and consider pages in that language written or reviewed by a fluent speaker. Comment [1] to Rule 7.2 lists foreign language ability among the things you may advertise; only claim the languages someone can actually use with a client.
+
+## How should a Boston firm set up its Google Business Profile?
+
+Google ranks local results on relevance, distance and prominence ([how Google ranks local results](${LOCAL_RANKING})), and its guidelines are specific about law practices ([Google Business Profile guidelines](${GBP_PRACTITIONERS})):
+
+- **One profile per staffed office.** A downtown office and a Quincy or Cambridge office can each have a profile if clients can meet a lawyer there during posted hours. A virtual office or a mail drop doesn’t qualify.
+- **Individual lawyers.** A lawyer in a public-facing role who can be contacted at the verified location during stated hours may have their own profile, but not several profiles for several practice areas. Support staff shouldn’t create profiles.
+- **Solo lawyers practicing under a brand.** When a lawyer is the only public-facing practitioner, the guidelines say to share one profile with the firm, named in the form “[brand]: [practitioner name].”
+- **The real name only.** Google doesn’t allow extra information in the business name, so “Smith Law” stays “Smith Law,” never “Smith Law Boston OUI Lawyer.”
+
+Link each profile to the matching office page on your site, and keep the name, address and phone number identical in both places.
+
+![A narrow cobblestone lane of red brick row houses with black shutters, its stones covered in fallen autumn leaves](https://images.unsplash.com/photo-1608845920884-3c88800feebc?auto=format&fit=crop&w=1200&q=75)
+
+## What pages does a Boston law firm website need?
+
+A small Boston firm doesn’t need hundreds of pages. It needs the right dozen or two, each answering a real question:
+
+1. **Home page.** Who you represent, in which matters, where, and how to reach you, with the firm name and phone number visible on a phone without scrolling.
+2. **One page per practice area.** “Employment discrimination,” not “Litigation.” Each page explains the process in Massachusetts, the deadlines a client should know about, and what to bring to a consultation. For more on writing pages AI answers can quote, see [write pages AI answers can quote](/blog/write-pages-ai-answers-can-quote).
+3. **Attorney profiles.** Education, Massachusetts and other bar admissions, languages, the courts each lawyer appears in, and any certification with the certifier named.
+4. **Office pages.** Address, hours, parking or the nearest T stop, and a map.
+5. **Fees page.** What you charge for flat-fee matters, how hourly and contingency arrangements work, and what isn’t included.
+6. **Results and reviews,** with context and a qualifier next to them.
+7. **A consultation form** that asks only for what you need to call back and check conflicts.
+8. **Disclaimer and privacy pages,** naming the responsible lawyer or firm and explaining that sending the form doesn’t create an attorney-client relationship.
+
+## A checklist before your Boston site goes live
+
+- Every page shows the firm name, meeting Rule 7.2(d).
+- “Specialist” and “focuses on” only where accurate; “certified” only with the certifier named and, if needed, the private-organization statement.
+- Results have context and a nearby qualifier; reviews are real and unedited.
+- Fee information is current and says what’s excluded.
+- Lead generators and directories you pay don’t recommend you or analyze clients’ problems.
+- Out-of-state admissions are shown on each lawyer’s profile and office page.
+- Shared-office arrangements don’t look like a single firm.
+- Language claims are true and backed by a real speaker.
+- Courthouse and neighborhood pages contain real, specific knowledge.
+- One Google Business Profile per staffed office, with the real firm name.
+- Structured data describes only what’s on the page ([structured data guidelines](${SD_GUIDELINES})).
+- Pages load fast on a phone ([Core Web Vitals](${WEB_VITALS})); see [is your website fast enough](/blog/is-your-website-fast-enough).
+
+## How SaySites builds a Boston law firm website
+
+SaySites builds law firm sites around this structure from the start. Each practice area gets its own page, each attorney a profile, each office its own page, and every page has a consultation form whose intake questions include the other party’s name, so you can run a conflict check before you call back. The firm is described to search engines as a LegalService, each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. You change anything by saying it in plain words, like “add the certifying board’s full name next to ‘certified’ on Dana’s profile,” and each change waits as a draft until you approve it. SaySites never invents results, reviews or credentials; they come only from you.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). If your current site predates the 2022 rules or just feels dated, [ask for a free redesign](/redesign) and see your own pages rebuilt before you pay anything, or [start a 7-day free trial](/signup) and build the new site yourself. Firms licensed in New York as well can read the [New York advertising rule changes](/blog/new-york-law-firm-website-rules), and anyone curious about AI answers can start with [Google AI Overviews for law firms](/blog/google-ai-overviews-for-law-firms).`,
+    faq: [
+      { q: 'When did the current Massachusetts lawyer advertising rules take effect?', a: 'The Supreme Judicial Court adopted the current versions of Rules 7.1, 7.2 and 7.3 of the Massachusetts Rules of Professional Conduct on July 13, 2022, and they took effect on October 1, 2022. A website built before then may quote outdated rule language in its disclaimer or footer and is worth checking against the text on Mass.gov.' },
+      { q: 'What must every page of a Massachusetts law firm website include?', a: 'Rule 7.2(d) requires any communication made under the rule to include the name of at least one lawyer or law firm responsible for its content. A footer with the firm’s full name on every page meets it, including landing pages people reach directly from search. Naming the responsible attorney on the disclaimer page adds clarity.' },
+      { q: 'Can a Boston lawyer advertise as a certified specialist?', a: 'Only if the certifying organization is approved by an appropriate state authority or accredited by the American Bar Association, or the ad states that the certifier is a private organization whose standards are not regulated by a state authority or the ABA. Either way, the certifying organization must be named wherever the certification is mentioned.' },
+      { q: 'Can a Massachusetts law firm pay for leads?', a: 'Yes, within limits. Comment [5] to Rule 7.2 allows paying a lead generator only if it does not recommend the lawyer, the payment is consistent with Rules 1.5(e) and 5.4, and its own communications meet Rule 7.1. A service that implies it chose the best lawyer for the person’s problem crosses the line.' },
+      { q: 'Is a law firm website a solicitation under Rule 7.3?', a: 'No. Comment [1] to Rule 7.3 lists a website, a billboard and an internet banner ad as general communications, not solicitations. Replies to someone who asked for information, such as a consultation form submission, are also excluded. Live person-to-person contact with someone who did not ask, for pecuniary gain, is what the rule restricts.' },
+      { q: 'Can a Boston law firm list its fees on its website?', a: 'Yes. Comment [1] to Rule 7.2 lists the basis on which fees are determined, including prices for specific services and payment arrangements, as information a lawyer may share. Keep the figures current, explain what each fee covers and what it leaves out, and avoid unproven comparisons with other firms’ fees.' },
+      { q: 'Should a Boston law firm website be in more than one language?', a: 'If a lawyer at the firm serves clients in another language, it often helps. Census QuickFacts reports that 35.6% of Boston residents age 5 and older speak a language other than English at home. Say which lawyers speak which languages, and have translated pages written or reviewed by a fluent speaker.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month and starts with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also request a free redesign and see your current site rebuilt first.' },
+    ],
+    about: ['Massachusetts Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Boston, Massachusetts'],
+    published: '2026-10-18',
+    status: 'published',
+  },
+  {
+    slug: 'miami-medical-practice-website-design',
+    title: 'Miami Medical Practice Websites: Florida Ad Rules',
+    description: 'What a Miami medical practice website can say under Florida Board of Medicine Rule 64B8-11.001, free-service notices, board certification and telehealth rules.',
+    kind: 'guide',
+    summary: [
+      'Florida Board of Medicine Rule 64B8-11.001 lists eleven ways a physician ad becomes false, deceptive or misleading, from partial disclosure to implying superiority over other doctors.',
+      '“Board-certified” requires recognition from an American Board of Medical Specialties board or a Board-approved agency (s. 458.3312), and the certifying board must be named.',
+      'Any page advertising a free, discounted or reduced-fee service must carry Florida’s 72-hour statement in capital letters (s. 456.062).',
+      'Out-of-state doctors registered for Florida telehealth must link to the Department of Health’s site and can’t open an office in Florida (s. 456.47).',
+      'In the city of Miami, 77.2% of residents age 5 and up speak a language other than English at home, so a Spanish site is often worth building.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1586474714711-59ad5a5798bb?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Miami towers above a waterfront park and arena on Biscayne Bay under a bright sky with scattered clouds' },
+    body: `A Miami medical practice website is advertising under Florida law, and the Board of Medicine’s advertising rule, Florida Administrative Code Rule 64B8-11.001, decides most of what it may say. In short: identify each physician by name and as an M.D. (or P.A. or anesthesiologist assistant), say “board-certified” only with a recognized certifying board named beside it, disclose every variable when you quote a fee, never imply you are better than other physicians, and put Florida’s required statement in capital letters on any page that advertises a free or discounted service. Then write the site for the people who actually live in Miami, which in most of the city means writing it in Spanish too.
+
+Below, each of those rules is quoted from its source, followed by Florida’s telehealth registration rule, how referral services fit in, how to set up Google Business Profiles for a group practice, and a page plan and checklist. It’s practical guidance for building a website, not legal advice; for a question about your own advertising, your counsel and the Board’s rule text are the authorities.
+
+## What does Florida’s Board of Medicine allow on a practice website?
+
+Rule 64B8-11.001 opens permissively. The Board allows physicians to share “legitimate information” about the practice of medicine and where to obtain it, as long as it isn’t false, deceptive or misleading ([Rule 64B8-11.001](${FL_64B8})). Subsection (3) defines advertising broadly: any oral or written statement made to the public “with the intent of furthering the purpose” of selling professional services. A practice website, a Google Business Profile, social posts and a YouTube channel all fit.
+
+Subsection (2) is the part to read closely, because it lists what makes an ad false, deceptive or misleading. Paraphrasing each item, an ad crosses the line if it:
+
+1. contains a misrepresentation of facts;
+2. makes only a partial disclosure of relevant facts;
+3. creates false or unjustified expectations of beneficial assistance;
+4. promises something the physician doesn’t expect to perform;
+5. contains any other representation likely to mislead;
+6. claims specialty recognition from an agency the Board hasn’t approved, without the required disclaimer;
+7. says a service can be competently performed for a stated fee when it can’t, or quotes fees without disclosing the variables that affect what patients are actually charged;
+8. conveys that the physician is superior to other physicians, beyond a simple list of recognized achievements;
+9. fails to conspicuously identify the physician by name;
+10. mentions specialty certification without naming the certifying board; or
+11. implies a specialty or subspecialty the physician has no recognition for.
+
+Items 3 and 8 are the easiest to break by accident on a website. “Pain-free,” “guaranteed results,” “Miami’s top cardiologist” and “the most advanced care in South Florida” are all common headlines that read as unjustified expectations or claims of superiority. Plain descriptions of what you do, how and for whom are safer, and they give patients comparing practices something real to go on.
+
+The rule ends with practical housekeeping. Subsection (4) says a physician using electronic media must keep an exact copy of an audio or video ad for at least six months after it airs, and subsection (7) requires that M.D.s, P.A.s and anesthesiologist assistants named in ads be clearly identified as such. The rule was last amended effective November 16, 2020.
+
+## Can a Miami doctor say “board-certified” on a website?
+
+Only with the right certifier, named. Florida Statutes section 458.3312 says a physician “may not hold himself or herself out as a board-certified specialist unless the physician has received formal recognition as a specialist from a specialty board of the American Board of Medical Specialties or other recognizing agency that has been approved by the board” ([s. 458.3312](${FL_458_3312})). Rule 64B8-11.001(8) lists the additional agencies the Board has approved, such as the American Board of Facial Plastic and Reconstructive Surgery and the American Board of Pain Medicine.
+
+Recognition from an organization that isn’t on either list can still be mentioned, but only with the disclaimer in subsection (2)(f): that it comes from “a private organization not affiliated with or recognized by the Florida Board of Medicine.”
+
+The statute also leaves room to describe a practice honestly without the credential: a physician “may indicate the services offered and may state that his or her practice is limited to one or more types of services when this accurately reflects the scope of practice.” So “Our practice is limited to sports medicine and joint injections” is fine for a doctor who isn’t board-certified in sports medicine, while “board-certified sports medicine specialist” is not.
+
+On the website, that comes down to three habits:
+
+- On each provider profile, write the full name of the certifying board next to the certification, every time.
+- Keep “board-certified” out of page titles, the home page headline and image alt text unless every physician the line refers to holds that certification.
+- Separate physicians from other clinicians. Nurse practitioners and physician assistants have their own credentials; list them accurately rather than under a “Our doctors” heading.
+
+![A clean exam room with a stethoscope and blood pressure cuff mounted on the wall, a monitor on an adjustable arm and a rolling stool](https://images.unsplash.com/photo-1682365114691-f0264ad25c52?auto=format&fit=crop&w=1200&q=75)
+
+## What must a “free consultation” or discount page say in Florida?
+
+Florida has a specific statute for this, and it applies well beyond medicine. Section 456.062 says that “in any advertisement for a free, discounted fee, or reduced fee service, examination, or treatment” by a practitioner licensed under chapter 458 and a long list of other health professions, the following statement must appear ([s. 456.062](${FL_456_062})):
+
+> THE PATIENT AND ANY OTHER PERSON RESPONSIBLE FOR PAYMENT HAS A RIGHT TO REFUSE TO PAY, CANCEL PAYMENT, OR BE REIMBURSED FOR PAYMENT FOR ANY OTHER SERVICE, EXAMINATION, OR TREATMENT THAT IS PERFORMED AS A RESULT OF AND WITHIN 72 HOURS OF RESPONDING TO THE ADVERTISEMENT FOR THE FREE, DISCOUNTED FEE, OR REDUCED FEE SERVICE, EXAMINATION, OR TREATMENT.
+
+The statute requires it “in capital letters clearly distinguishable from the rest of the text.” It sets no type size, but a statement hidden in a light grey footer would hardly be clearly distinguishable.
+
+On a website the practical question is where it goes. Put it on each page that offers the free or reduced-fee service: the “free hearing screening” landing page, the “new patient special” banner’s destination page, the “$99 sports physical” page. If your Google Ads or social posts send people to that page, the statement should be on the page they land on. Pages without a free or discounted offer don’t need it.
+
+## How should prices and fees appear?
+
+Posting prices helps patients, especially those paying out of pocket; the city’s QuickFacts lists 18.9% of residents under 65 without health insurance ([Census QuickFacts, Miami](${CENSUS_MIA_CITY})). Florida’s rule doesn’t stop you. It asks that a fee be complete: subsection (2)(g) treats as misleading an ad that represents a service can be competently performed for a stated fee when it can’t, or that makes fee representations without disclosing all the variables that affect the fee actually charged.
+
+A self-pay price list that passes that test says what each price includes (the visit, a basic panel, one follow-up), what can add to it (labs sent out, imaging, a second procedure), and when it was updated. If the price is a promotion, it’s also a reduced-fee ad, and the 72-hour statement above belongs on the page.
+
+## Do names, titles and “superior” claims matter?
+
+They do, and they’re easy to fix. Subsection (2)(i) requires the physician to be conspicuously identified by name, and subsection (7) requires licensees named in ads to be clearly identified as an M.D., P.A. or A.A. A home page that shows only the practice’s name, with no physician named anywhere, misses both. Give each physician a profile page with their full name and credential, and name the responsible physicians on the home page or in the footer.
+
+Superiority is subtler. A simple listing of Board-recognized achievements, such as residency, fellowship and certifications, is allowed. “Miami’s best,” “the leading,” and “#1” rankings from paid directories are the kind of claim subsection (2)(h) addresses.
+
+## Can patients book a telehealth visit with an out-of-state doctor?
+
+Florida allows it, with conditions that should shape your telehealth page. Section 456.47 defines telehealth as using synchronous or asynchronous telecommunications technology to provide health care services, excluding email and fax, and holds telehealth providers to the same standard of care as in-person care in Florida ([s. 456.47](${FL_456_47})).
+
+A physician who isn’t licensed in Florida can treat patients located in Florida by telehealth only after registering with the Board. A registered provider’s website must “prominently display a hyperlink” to the Department of Health’s website, which lists registrants and their Florida telehealth registration numbers, and a registered provider “may not open an office in this state” or provide in-person care to patients in Florida.
+
+For a Miami practice that means:
+
+- If your telehealth visits are with Florida-licensed physicians, say so on the telehealth page.
+- If any provider is registered from another state, the required link to the Department of Health belongs on the site, and that provider can’t be presented as seeing patients at your Miami office.
+- Say which states you can see patients in, so seasonal residents know whether a video visit is possible once they’ve left Florida.
+
+![A physician in a white coat with a stethoscope writing notes on a clipboard while a patient sits across the desk](https://images.unsplash.com/photo-1758691461990-03b49d969495?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Miami practice website be in Spanish?
+
+For most practices in the city, yes. Census QuickFacts reports that 77.2% of Miami residents age 5 and older speak a language other than English at home, and 57.7% were born outside the United States (2020 to 2024 figures) ([Census QuickFacts, Miami](${CENSUS_MIA_CITY})).
+
+A few things make a Spanish site work rather than just exist:
+
+- **Write it, don’t machine-translate it.** Have pages written or reviewed by someone fluent, ideally someone at the front desk who talks to patients every day and knows the words they use.
+- **Translate the disclosures too.** Florida’s rules apply to every ad, in any language, so the 72-hour statement and certifying board names appear on the Spanish pages as well.
+- **Say who speaks what.** List each provider’s languages on their profile. Patients often choose a doctor because they can explain symptoms in their first language.
+- **Help Google match the versions.** If you run English and Spanish sites, link each page to its counterpart so Google can show the right one ([Google on localized versions](${HREFLANG})).
+
+## How do referral services and agents fit in?
+
+Subsection (5) makes a physician who solicits patients, directly or through an agent, responsible for that advertising, and soliciting through an agent includes accepting patients referred by a business you have an employment or contractual relationship with (managed care plans licensed by Florida’s insurance regulator are excluded). Subsection (6) adds that a physician advertising through a medical referral service is responsible for its content, and the service’s ads must say it acts on behalf of physician members, refers only to physicians who paid for or were selected for membership, limits membership, and that those physicians charge no more than their usual fees, in type comparable to the rest of the ad.
+
+So before paying a directory or “find a doctor” service, read its patient-facing pages. If it presents your listing as an independent recommendation without those disclosures, its ad is still yours under the rule.
+
+## How should a Miami group practice set up Google Business Profiles?
+
+Google ranks local results on relevance, distance and prominence ([how Google ranks local results](${LOCAL_RANKING})), and its guidelines treat practices with several physicians in a particular way ([Google Business Profile guidelines](${GBP_PRACTITIONERS})):
+
+- **The practice gets the location’s profile.** When several practitioners work at one location, the organization should create the profile for that location.
+- **Physicians may have their own profiles** if they are public-facing and can be contacted at the verified location during stated hours, titled with the practitioner’s name only. One per physician, not one per specialty.
+- **Solo physicians in a branded practice** share one profile, named in the form “[practice]: [physician name].”
+- **Departments** that operate as distinct entities, common in larger groups and hospitals, may have their own profiles with names that differ from the main practice.
+- **Nothing extra in the name.** “Smith Pediatrics” stays “Smith Pediatrics,” not “Smith Pediatrics Best Pediatrician Miami.”
+
+Practices in Kendall, Doral, Brickell and Coral Gables often draw patients from across Miami-Dade, so make each office page specific: parking, which entrance, whether the building has valet, which Metrorail or Metromover stop is closest and the hours each provider is in.
+
+![An elevated Metromover train crossing a downtown Miami street between palm trees and glass high-rises](https://images.unsplash.com/photo-1618217050253-d740e5d14b2d?auto=format&fit=crop&w=1200&q=75)
+
+## What pages does a Miami medical practice website need?
+
+1. **Home page** with the practice name, physicians named with credentials, whether you’re accepting new patients, insurance basics and a call button that works on a phone.
+2. **One page per service or condition** you treat, written in plain language, with what to expect at a visit.
+3. **Provider profiles** with full names, credentials, the certifying board named beside any certification, languages and office days.
+4. **New patients and insurance** page listing plans you accept, kept current, and self-pay prices with what they include.
+5. **Telehealth page** stating who can be seen by video and from which states, with the Department of Health link if any provider is a registered out-of-state provider.
+6. **Office pages** with address, hours, parking and directions.
+7. **An appointment request form** that asks only for contact details and a short note, and tells patients not to send medical details through it.
+8. **A note on every page** that the site isn’t for emergencies and that anyone with an urgent need should call 911.
+9. **Spanish versions** of the pages that matter, if you serve patients in Spanish.
+
+On privacy and accessibility, keep two federal points in view. HHS guidance on tracking code warns that pixels on appointment and portal pages can expose protected health information; part of it was vacated by a federal court in 2024, and HHS lists what remains on its site ([HHS guidance on online tracking](${HHS_TRACKING})). And if the practice receives HHS financial assistance, the Section 504 web accessibility deadlines now fall in May 2027 for practices with 15 or more employees and May 2028 for smaller ones ([Federal Register, May 11, 2026](${HHS_504_EXT})).
+
+## A checklist before your Miami site goes live
+
+- Every physician named, conspicuously, with M.D. or the right credential.
+- “Board-certified” only with an ABMS board or Board-approved agency, named; other recognition carries the private-organization disclaimer.
+- No promises of results, no “best” or “top,” no implied superiority.
+- Fees list what’s included and what can change the price.
+- The 72-hour statement, in capitals, on every free, discounted or reduced-fee offer page, in every language.
+- Telehealth page accurate; required Department of Health link for any registered out-of-state provider.
+- Referral services you pay carry the disclosures in subsection (6).
+- Copies of video and audio ads kept for six months.
+- Spanish pages written by a fluent speaker, with disclosures included.
+- One Google Business Profile per location, and per public-facing physician if you choose, with real names only.
+- Structured data matches what each page shows ([structured data guidelines](${SD_GUIDELINES})); see [structured data for local businesses](/blog/structured-data-for-local-businesses).
+- The site is fast on a phone ([is your website fast enough](/blog/is-your-website-fast-enough)).
+
+## How SaySites builds a Miami medical practice website
+
+SaySites builds medical practice sites with these pages from day one: a page for each service, a profile for each provider, a new patients and insurance page, office pages, an appointment request form that asks patients not to send medical details, and an emergency note on every page. The practice and its details are described to search engines in structured data, every page has to pass a 95+ speed check before it goes live, and a site can be written in English or in Spanish. You make changes by saying them in plain words, such as “add the 72-hour statement under the free screening offer” or “add Dr. Rivera’s certifying board to her profile,” and each change waits as a draft until you approve it. SaySites never invents credentials, reviews or outcomes.
+
+The Site plan is $15 a month ([websites for medical practices](/websites-for/medical-practices), [pricing](/pricing)). If your current site is out of date, [request a free redesign](/redesign) to see your own pages rebuilt first, or [start a 7-day free trial](/signup) and put the new site together this week. Florida law firms have their own guide to [the Florida Bar’s website rules](/blog/law-firm-website-design-florida), and practices offering aesthetic treatments can compare the Texas approach in [Dallas med spa websites](/blog/dallas-med-spa-website-design).`,
+    faq: [
+      { q: 'What Florida rule governs medical practice advertising?', a: 'Florida Administrative Code Rule 64B8-11.001, the Board of Medicine’s advertising rule, governs ads by physicians licensed under chapter 458, including websites. It bans false, deceptive or misleading ads and lists eleven examples, such as partial disclosure of facts, unjustified expectations, implying superiority over other physicians and failing to name the physician conspicuously.' },
+      { q: 'Can a Florida physician advertise as board-certified?', a: 'Only with formal recognition from an American Board of Medical Specialties board or another agency the Board of Medicine has approved, under section 458.3312, and the certifying board must be named. Recognition from other organizations needs a disclaimer that it comes from a private organization not affiliated with or recognized by the Florida Board of Medicine.' },
+      { q: 'What does the Florida 72-hour statement on medical ads say?', a: 'Section 456.062 requires ads for free, discounted or reduced-fee services to state that the patient and anyone responsible for payment may refuse to pay, cancel payment or be reimbursed for other services performed as a result of, and within 72 hours of, responding to the ad. It must appear in capital letters clearly distinguishable from the rest of the text.' },
+      { q: 'Can a Miami practice post its prices online?', a: 'Yes. Rule 64B8-11.001(2)(g) only requires fee advertising to be complete: it is misleading to quote a fee for a service that cannot be competently performed for that fee, or to omit variables that affect the fee actually charged. List what each price includes and what can add to it, and update the page when prices change.' },
+      { q: 'Can an out-of-state doctor see Florida patients by telehealth?', a: 'Yes, after registering with the Florida Board of Medicine under section 456.47. The registered provider’s website must prominently link to the Department of Health’s website, which lists registrants, and the provider may not open an office in Florida or provide in-person care to patients located in the state.' },
+      { q: 'Should a Miami medical website have a Spanish version?', a: 'Usually. Census QuickFacts reports that 77.2% of Miami residents age 5 and older speak a language other than English at home. A Spanish site works best when written or reviewed by a fluent speaker, includes every required disclosure, and lists the languages each provider speaks.' },
+      { q: 'How long must a Florida physician keep copies of video ads?', a: 'Rule 64B8-11.001(4) requires a physician who advertises through electronic media to keep an exact copy of the audio or video ad for at least six months after it is aired or shown. Keeping dated copies of website versions and campaign pages is a sensible habit even where the rule does not require it.' },
+      { q: 'How much does a SaySites medical practice website cost?', a: 'The Site plan is $15 a month and starts with a 7-day free trial. It includes service pages, provider profiles, a new patients and insurance page, office pages, an appointment request form, an emergency note on every page and hosting. You can also request a free redesign of your current site first.' },
+    ],
+    about: ['Florida Board of Medicine', 'Medical advertising', 'Medical practice websites', 'Miami, Florida'],
+    published: '2026-10-18',
+    status: 'published',
+  },
   {
     slug: 'phoenix-law-firm-website-design',
     title: 'Phoenix Law Firm Website Design: Arizona Bar Rules',
