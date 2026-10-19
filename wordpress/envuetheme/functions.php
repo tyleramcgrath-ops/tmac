@@ -26,7 +26,7 @@ add_action( 'wp_enqueue_scripts', function () {
         true
     );
     // The demo-offer flyer page uses the flyer's condensed display face.
-    if ( function_exists( 'envue_current_slug' ) && in_array( envue_current_slug(), [ 'gofocusplus-demo50', 'gofocusplus-email50' ], true ) ) {
+    if ( function_exists( 'envue_current_slug' ) && in_array( envue_current_slug(), [ 'gofocusplus-demo50', 'gofocusplus-email50', 'gofocusplus-ads50' ], true ) ) {
         wp_enqueue_style( 'envue-font-display', 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap', [], null );
     }
 } );
@@ -134,6 +134,7 @@ function envue_template_map() {
         'promiles'                => 'page-promiles.php',
         'gofocusplus-demo50'      => 'page-gofocusplus-demo50.php',
         'gofocusplus-email50'     => 'page-gofocusplus-email50.php',
+        'gofocusplus-ads50'       => 'page-gofocusplus-ads50.php',
         'drivewyze'               => 'page-drivewyze.php',
         'route4me'                => 'page-route4me.php',
         'elite-extra'             => 'page-elite-extra.php',
@@ -716,6 +717,7 @@ function envue_seo_meta() {
         'geotab-go-focus-plus'      => [ 'GO Focus Plus™ AI Dash Cam: Dual-Facing Video Telematics | EnVue', 'GO Focus Plus is a dual-facing AI dash cam with driver monitoring (DMS), ADAS, real-time in-cab coaching and MyGeotab integration. Deploy it with EnVue Telematics.' ],
         'gofocusplus-demo50'        => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-email50'       => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
+        'gofocusplus-ads50'         => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
     ];
 }

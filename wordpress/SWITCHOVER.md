@@ -241,3 +241,8 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
   (to /get-in-touch/), and a clarified Swift Ride card. The full change log, sources and open questions for Bosch
   are in `wordpress/RIDECARE_CHANGELOG.md`.
 - Install envuetheme-final-v6.19.0.zip only after the page is approved, then purge the SiteGround cache.
+
+## v6.20 — ad-campaign copy of the GO Focus Plus page
+- New page at **/gofocusplus-ads50/**. It matches /gofocusplus-demo50/ and /gofocusplus-email50/ exactly but tags
+  its leads `source=gofocusplus-ads50`, so ad sign-ups stay separate from email and trade-show sign-ups on /get-in-touch/.
+  All three pages are built from one template, so any change to the offer shows up on all of them.
