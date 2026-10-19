@@ -247,7 +247,328 @@ const FL_456_062 = 'https://www.flsenate.gov/Laws/Statutes/2025/456.062'
 const FL_456_47 = 'https://flsenate.gov/Laws/Statutes/2026/456.47'
 const CENSUS_MIA_CITY = 'https://census.gov/quickfacts/fact/table/miamicityflorida,miamidadecountyflorida/PST045221'
 
+const GA_ORDER = 'https://www.gabar.org/news-events-publications/news-archive/view/2025/11/20/supreme-court-of-georgia-approves-amendments-to-the-rules-and-regulations-of-the-state-bar-of-georgia'
+const GA_RPC = 'https://www.gabar.org/general-counsel/georgia-rules-of-professional-conduct'
+const GA_71 = 'https://www.gabar.org/handbook?rule=rule145'
+const GA_72 = 'https://www.gabar.org/handbook?rule=rule147'
+const GA_73 = 'https://www.gabar.org/handbook?rule=rule149'
+const ATL_LRIS = 'https://atlantabar.org/?pg=History'
+const FULTON_SUP = 'https://www.fultoncourt.org/'
+const CENSUS_ATL = 'https://www.census.gov/quickfacts/fact/table/atlantacitygeorgia/PST045225'
+const CENSUS_GWN = 'https://www.census.gov/quickfacts/fact/table/gwinnettcountygeorgia/PST045225'
+const LNI_PC = 'https://lni.wa.gov/licensing-permits/plumbing/licensed-plumbing-contractor/licensing-requirements'
+const LNI_FAQ = 'https://www.lni.wa.gov/licensing-permits/plumbing/licensed-plumbing-contractor/licensing-requirement-faqs'
+const LNI_VERIFY = 'https://secure.lni.wa.gov/verify/'
+const RCW_106_400 = 'https://app.leg.wa.gov/RCW/default.aspx?cite=18.106.400'
+const RCW_106_020 = 'https://app.leg.wa.gov/RCW/default.aspx?cite=18.106.020'
+const RCW_27_100 = 'https://app.leg.wa.gov/RCW/default.aspx?cite=18.27.100'
+const WAC_430 = 'https://app.leg.wa.gov/WAC/default.aspx?cite=296-400A-430'
+const SPU_SS = 'https://www.seattle.gov/utilities/construction-resources/sewer-and-drainage/side-sewer-permits'
+const SEA_SS_MOVE = 'https://buildingconnections.seattle.gov/2025/10/01/side-sewer-work-transfers-to-seattle-public-utilities/'
+const SDOT_SS = 'https://seattlegov.zendesk.com/hc/en-us/articles/1500004813821-SDOT-Right-of-Way-Work-Side-Sewer-FAQs'
+const KC_PERMITS = 'https://kingcounty.gov/en/dept/dph/health-safety/environmental-health/plumbing-gas-piping/applications-and-permits'
+const KC_HIRE = 'https://kingcounty.gov/en/dept/dph/health-safety/environmental-health/plumbing-gas-piping/hire-registered-contractor'
+const CENSUS_SEA = 'https://www.census.gov/quickfacts/fact/table/seattlecitywashington/PST045225'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'atlanta-law-firm-website-design',
+    title: 'Atlanta Law Firm Website Design: Georgia’s 2026 Rules',
+    description: 'Plan an Atlanta law firm website under Georgia’s Rules 7.1 to 7.3 as amended March 1, 2026: contact details, specialty wording, the 30-day rule and more.',
+    kind: 'guide',
+    summary: [
+      'The Supreme Court of Georgia amended Rules 7.1, 7.2 and 7.3 by order of November 18, 2025, effective March 1, 2026, and left 7.4 and 7.5 reserved.',
+      'Every page that advertises your services needs the name and contact information of at least one responsible lawyer or firm (Rule 7.2(d)).',
+      'Georgia lets a lawyer say “specialist” based on experience, training or education, or a certification from a recognized and bona fide professional entity, as long as it isn’t misleading.',
+      'Written outreach about an accident or injury is off limits for 30 days after it happens (Rule 7.3(c)(3)), which matters for email and text follow-ups.',
+      'Metro Atlanta is not one audience: 12.2% of Atlanta residents speak a language other than English at home, against 38.1% in Gwinnett County.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1610741686854-5948cd981569?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Atlanta’s office towers, including the pointed spire of a tall granite skyscraper, against a pale evening sky with dark pine trees in the foreground' },
+    body: `An Atlanta law firm website now answers to Georgia’s rewritten advertising rules, which took effect on March 1, 2026. For a website, they come down to five habits. Tell the truth and don’t leave out the facts that keep a statement honest (Rule 7.1). Put the name and contact information of a responsible lawyer or firm on every advertising page (Rule 7.2(d)). Call yourself a specialist only when your experience, training, education or a bona fide certification backs it up (Rule 7.2(c)). Pay for advertising and leads, never for recommendations (Rule 7.2(b)). And keep your follow-up to accident and injury victims in line with the 30-day limit on written solicitations (Rule 7.3(c)(3)). Then build pages for the part of metro Atlanta you actually serve, because Midtown, Decatur and Gwinnett clients don’t search the same way.
+
+Below, each point is tied to the rule text published in the State Bar of Georgia’s handbook, followed by Atlanta-specific advice on courts, languages, Google Business Profile and a page plan. It is a guide to building a compliant website, not an ethics opinion: the State Bar’s Office of the General Counsel and the rules themselves decide close questions.
+
+## What changed in Georgia’s lawyer advertising rules in 2026?
+
+The State Bar reported that the Supreme Court of Georgia, by order dated November 18, 2025, amended Rule 7.1 (communications concerning a lawyer’s services), Rule 7.2 (specific rules) and Rule 7.3 (solicitation of clients), with Rules 7.4 and 7.5 now marked reserved, all effective March 1, 2026 ([State Bar announcement](${GA_ORDER})). The current text is in the [Georgia Rules of Professional Conduct](${GA_RPC}): [Rule 7.1](${GA_71}), [Rule 7.2](${GA_72}) and [Rule 7.3](${GA_73}).
+
+The practical consequence for a firm with an existing site is simple: any disclaimer, footer or “attorney advertising” notice written before March 2026 was written for rules that no longer read the same way. Pull up your current disclaimer page and compare each sentence with the rules as they stand today. Delete language that cites old rule numbers, and add what the new text asks for.
+
+One feature of Georgia’s version stands out: each of the three rules ends with the sentence “The maximum penalty for a violation of this rule is disbarment.” That doesn’t make a sloppy home page a disbarment case, but it is a clear signal that the Supreme Court treats advertising as part of professional conduct, not marketing trivia.
+
+## What must every page of a Georgia law firm website show?
+
+Rule 7.2(d) reads: “Any communication made under this Rule must include the name and contact information of at least one lawyer or law firm responsible for its content.” Comment [11] explains that contact information includes “a website address, a telephone number, an e-mail address or a physical office location.”
+
+Notice the two parts. Some states ask only for a name; Georgia asks for a name and a way to reach the responsible lawyer or firm. On a website the clean way to satisfy both on every page is a footer with:
+
+- the firm’s full name as registered,
+- a phone number and office address (or at least one of the forms of contact the comment lists), and
+- on the disclaimer page, the name of the lawyer responsible for the site’s content.
+
+Landing pages built for ads are where firms slip. A stripped-down page with a headline, a form and nothing else can fail Rule 7.2(d) even when the main site is fine. Give every landing page the same footer.
+
+## Can an Atlanta lawyer say “specialist” or “certified”?
+
+Georgia is more permissive here than many states, but the permission has a condition. Rule 7.2(c) lets a lawyer say she does or doesn’t practice in particular fields. It continues: a lawyer “who is a specialist in a particular field of law by experience, specialized training or education, or is certified by a recognized and bona fide professional entity, may communicate such specialty or certification so long as the statement is not false or misleading.”
+
+Comment [9] confirms that words like “concentrates in,” “specialist,” “specialty” and “specializes in” are generally allowed on that basis, subject to Rule 7.1’s false-and-misleading standard. Comment [10] notes the long-standing designations for patent practice before the Patent and Trademark Office and for admiralty practice.
+
+So the test for every bio and practice page is whether the claim has a reasonable factual foundation. Comment [2] to Rule 7.1 says a truthful statement is misleading if it is likely to lead a reasonable person to a specific conclusion about the lawyer “for which there is no reasonable factual foundation.” Three practical rules follow:
+
+1. **Back up “specializes in” with facts on the same page.** Years in the field, the share of the practice devoted to it, published work or relevant training. A first-year associate described as a “workers’ compensation specialist” is the kind of claim that invites trouble.
+2. **Name the certifying body.** If a lawyer holds a certification, write out the organization’s name next to it. A reader can’t judge whether an entity is “recognized and bona fide” if they can’t see who it is.
+3. **Watch the places nobody proofreads.** Page titles, meta descriptions, image alt text and structured data can all repeat a claim out of context. A page title like “Atlanta’s Top DUI Specialists” makes a claim about every lawyer at the firm and adds a comparison you would need to substantiate.
+
+![The Georgia State Capitol in Atlanta, its gold dome and columned portico rising above green trees and a wide lawn under a bright blue sky](https://images.unsplash.com/photo-1641998112073-bb7f8f16819f?auto=format&fit=crop&w=1200&q=75)
+
+## How should an Atlanta firm present results, fees and urgency?
+
+Comment [3] to Rule 7.1 is the one to keep beside you when writing a results page. It warns that a truthful report of achievements can mislead if it leads a reasonable person to form “an unjustified expectation that the same results could be obtained for other clients in similar matters” without regard to each client’s facts. It also covers unsubstantiated claims about fees and comparisons with other firms, and adds that a suitable disclaimer “may preclude a finding” that a statement misleads.
+
+For an Atlanta firm, that translates into a results page that lists the type of case, the court or county, whether the figure was a verdict or a settlement, and a plain-language note directly under the list that past results don’t predict future ones. Leave out superlatives you can’t prove, such as “highest settlements in Fulton County.”
+
+Georgia’s comment [2] adds a point many sites overlook. A truthful statement is also misleading if it is presented so that a reasonable person “would believe the lawyer’s communication requires that person to take further action when, in fact, no action is required.” Countdown banners, “Respond within 48 hours” pop-ups and pages styled like official notices are risky on a law firm site. If a real deadline exists, such as a statute of limitations, explain it accurately and link to the source rather than manufacturing urgency.
+
+Fees are worth publishing. Comment [1] to Rule 7.2 lists “the basis on which the lawyer’s fees are determined, including prices for specific services and payment and credit arrangements” among the information a lawyer may share. If you handle uncontested divorces, simple wills, traffic tickets or business formations for a flat fee, saying so on the page answers the question most visitors want answered before they call. Say what the fee includes, what it excludes, and the date it was last reviewed.
+
+## Who can a Georgia firm pay: directories, lead generators and referral services?
+
+Rule 7.2(b) bars giving anything of value for recommending a lawyer, then lists exceptions. The ones that matter most online:
+
+- **Advertising costs.** Comment [3] names online directory listings, domain-name registrations, sponsorship fees and internet ads, and confirms a lawyer may pay website designers and other marketing vendors.
+- **Directories that don’t vouch for you.** Comment [2] defines a recommendation as something that “endorses or vouches for” a lawyer’s credentials or abilities, and says directory listings and group ads that list lawyers by practice area, “without more,” are not recommendations. A paid “Top Lawyer” badge that implies an endorsement is a different matter.
+- **Lead generators, with limits.** Under comment [5], a lead generator must not recommend you, payments must be consistent with Rules 1.5(f) and 5.4, and its own communications must meet Rule 7.1. You must not pay one that implies it is recommending you, that the referral is free, or that it “has analyzed a person’s legal problems” to pick a lawyer.
+- **Bar-operated referral services.** Georgia’s Rule 7.2(b)(3) specifically allows paying a bar-operated nonprofit referral service a fee calculated as a percentage of fees earned, if the service meets conditions set out in the rule, including an annual report to the Office of the General Counsel and a combined fee no higher than the client would otherwise pay. The Atlanta Bar Association has run its Lawyer Referral and Information Service since 1955 and says it met the American Bar Association’s standards for lawyer referral programs in 2003 ([Atlanta Bar LRIS history](${ATL_LRIS})).
+- **Reciprocal referrals.** Allowed if not exclusive and the client is told about the arrangement.
+
+Before you buy leads, read the vendor’s public pages as a prospective client would. Phrases like “we match you with the best attorney for your case” are the warning sign comment [5] describes.
+
+## Does the 30-day rule affect a law firm website?
+
+The website itself, no. Comment [1] to Rule 7.3 says a communication is not a solicitation if it is “directed to the general public, such as through a billboard, an Internet banner advertisement, a website or television commercial,” or if it responds to a request for information or is generated automatically in response to electronic searches.
+
+What the site sets in motion can be covered, though. Rule 7.3(c)(3) prohibits a solicitation when “the written communication concerns an action for personal injury or wrongful death or otherwise relates to an accident or disaster involving the person to whom the communication is addressed or a relative of that person, unless the accident or disaster occurred more than 30 days prior to the communication.” Rule 7.3(c)(4) adds a separate bar when the lawyer knows or reasonably should know the person’s physical, emotional or mental state prevents reasonable judgment.
+
+How that plays out for a personal injury firm in Atlanta:
+
+1. **Form submissions are requests.** When someone fills in your “free case review” form, your reply responds to their request for information. Answer promptly.
+2. **Don’t build lists from crash reports.** Emailing or texting people you learned were in a wreck last week, who never contacted you, is the written solicitation paragraph (c)(3) addresses.
+3. **Separate nurture emails from cold outreach.** Automated sequences should go only to people who asked to hear from you, and stop the moment they ask.
+4. **Keep live contact off the table.** Rule 7.3(b) bars live person-to-person solicitation for pecuniary gain, and comment [2] defines that as in-person, live phone and real-time visual or audio contact. Text messages and chat are treated as written communications that can be ignored, but they remain subject to paragraph (c).
+
+Comment [6] to Rule 7.3 also says live contact is ordinarily not appropriate for people who may be especially vulnerable, naming “the elderly, those whose first language is not English, or the disabled.” For a firm marketing to Atlanta’s immigrant communities, that is a reason to invest in good translated pages people can read in their own time, rather than outreach calls.
+
+![A large white PEACHTREE sign mounted on a highway overpass in Atlanta, with a green Spring Street and West Peachtree exit sign and traffic below](https://images.unsplash.com/photo-1745206890921-eaea8079cf3d?auto=format&fit=crop&w=1200&q=75)
+
+## Firm names, domains and shared office space
+
+Comment [5] to Rule 7.1 treats firm names, letterhead and “a distinctive website address, social media username or comparable professional designation” as communications that must not mislead. A name is misleading if it implies a connection with a government agency, with a lawyer not associated with the firm, with a nonlawyer, or with a public or charitable legal services organization. The comment also gives a direct warning about geography: a trade name such as “Springfield Legal Clinic” may need “an express statement explaining that it is not a public legal aid organization.”
+
+That example maps neatly onto Atlanta. Names and domains built from “Atlanta Legal Help,” “Georgia Justice Center” or “Fulton Legal Clinic” can read like public services. If you use one, add the clarifying statement in the footer and on the about page, or choose a name that can’t be confused.
+
+Two more comments come up often:
+
+- **Shared suites.** Comment [7] bars lawyers from holding themselves out as practicing together in one firm when they are not a firm. Lawyers sharing space in a Buckhead or Downtown office building shouldn’t share a single site with one “our team” page unless they are, in fact, one firm.
+- **Offices in more than one state.** Comment [6] lets a firm use the same name in each jurisdiction. Listing each lawyer’s bar admissions on their profile is still good practice, and it answers the first question a visitor from Alabama or Tennessee will have.
+
+## How do people across metro Atlanta search for a lawyer?
+
+Start with the courts, because clients often know their case number or courthouse before they know a lawyer. The Superior Court of Fulton County describes itself as a trial court of general jurisdiction handling civil and criminal actions, and its site sends the public to divorce and custody paperwork, temporary protective orders, interpreter requests, case records and livestreamed proceedings ([Superior Court of Fulton County](${FULTON_SUP})). Those are the moments when people go looking for a lawyer, and each is the starting point for a useful page:
+
+- A family law firm can write a page explaining how a divorce or custody case moves through Fulton Superior, from filing to a first hearing, in the terms the court itself uses.
+- A domestic violence practice can explain the temporary protective order process and what happens at the follow-up hearing.
+- A criminal defense firm can describe what happens after an arrest in Fulton County and what a first appearance involves.
+
+Write those pages from experience in those courtrooms. Google’s spam policies describe doorway pages, pages made for similar searches that send everyone to the same place, as a violation ([Google spam policies](${SPAM})). One genuinely useful Fulton County page beats ten thin pages that swap in DeKalb, Cobb and Clayton.
+
+Language is where Atlanta firms most often misjudge their market. The Census Bureau’s QuickFacts reports that 12.2% of Atlanta city residents age 5 and over speak a language other than English at home and 9.0% were born abroad ([QuickFacts, Atlanta](${CENSUS_ATL})). In Gwinnett County the figures are 38.1% and 28.4%, with 25.5% of residents Hispanic or Latino and 15.7% Asian ([QuickFacts, Gwinnett](${CENSUS_GWN})). A firm with offices in Lawrenceville or Duluth and a Spanish-, Korean- or Vietnamese-speaking lawyer has a real reason for pages in that language. A Midtown business litigation boutique may not. Comment [1] to Rule 7.2 lists “a lawyer’s foreign language ability” as information you may advertise; just make sure the person named can actually handle a consultation in that language.
+
+## How should an Atlanta firm set up its Google Business Profile?
+
+Google weighs relevance, distance and prominence for local results ([how Google ranks local results](${LOCAL_RANKING})), and distance matters in a metro where a client in Marietta may never drive to Decatur. Google’s guidelines for representing a business ([Business Profile guidelines](${GBP_GUIDELINES})) set the boundaries:
+
+- **A profile only for a staffed location.** Each real office where clients can meet a lawyer during stated hours can have one. Virtual offices and mailboxes don’t qualify.
+- **Practitioners, with limits.** A public-facing lawyer can have an individual profile, but not one profile per practice area.
+- **No keywords in the name.** Use the firm’s real name, not “Firm Name Atlanta Car Accident Lawyers.”
+
+Point each profile to the matching office page, keep the name, address and phone number identical on both, and ask satisfied clients for reviews the way Google allows ([asking for reviews the right way](/blog/ask-for-google-reviews-the-right-way)).
+
+![A smiling attorney in a dark suit and red tie talking with a colleague across a wooden conference table in an office with exposed brick walls](https://images.unsplash.com/photo-1551836022-aadb801c60ae?auto=format&fit=crop&w=1200&q=75)
+
+## Which pages should an Atlanta law firm website have?
+
+A focused set of pages does more than a sprawling one:
+
+1. **Home page** that states who you represent, in what kinds of matters and in which counties, with a click-to-call number visible on a phone.
+2. **A page per practice area,** written around Georgia procedure and the questions clients ask in the first meeting. Our checklist on [writing pages AI answers can quote](/blog/write-pages-ai-answers-can-quote) helps here.
+3. **Attorney profiles** with bar admissions, courts, languages, and any specialty claim backed by facts or a named certifying body.
+4. **Office pages** for each staffed location, with hours, parking and transit directions.
+5. **A fees page** that gives prices or explains how you charge.
+6. **Results and testimonials** with context and a qualifier right underneath.
+7. **A consultation form** that collects only what you need to call back and check for conflicts.
+8. **A disclaimer page** naming the responsible lawyer, with contact details, and explaining that submitting the form doesn’t create an attorney-client relationship.
+
+## Atlanta law firm website checklist
+
+- Footer on every page, landing pages included, shows the firm name and contact information (Rule 7.2(d)).
+- Disclaimer and footer text rewritten for the rules effective March 1, 2026.
+- Every “specialist” or “specializes in” is supported by facts; certifications name the certifying body.
+- Results show context and a nearby qualifier; no unprovable comparisons.
+- No fake urgency that makes visitors think they must act.
+- Directories, lead generators and referral services you pay meet Rule 7.2(b) and comment [5].
+- Follow-up emails and texts go only to people who contacted you; no written outreach to accident victims within 30 days.
+- Trade names and domains can’t be mistaken for public legal aid.
+- Language claims match a real lawyer’s ability.
+- Court pages are written from real experience, not swapped place names.
+- One Business Profile per staffed office, with the real firm name.
+- Structured data describes only what visitors can see on the page ([structured data guidelines](${SD_GUIDELINES})), and pages load quickly on a phone ([is your website fast enough](/blog/is-your-website-fast-enough)).
+
+## How SaySites builds an Atlanta law firm website
+
+A SaySites law firm site starts with this page plan: a page per practice area, a profile per attorney, a page per office, and a consultation form on every page whose intake questions include the other party’s name for a conflict check. The firm is described to search engines as a LegalService, each attorney as a Person and each practice area as a Service, and pages must pass a 95+ speed check before they go live. A site can be written in English or in Spanish. To make a change you type it in plain words, such as “add our phone number and Peachtree Street address to the footer of the car accident landing page,” and the change waits as a draft until you approve it. Results, reviews and credentials come only from you; nothing is made up.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [see pricing](/pricing)). If your current site still carries a pre-2026 disclaimer, [request a free redesign](/redesign) and see your own pages rebuilt before paying anything, or [start a 7-day free trial](/signup) and build it yourself. For more on what top sites do, see [what we found testing 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites) and [Google AI Overviews for law firms](/blog/google-ai-overviews-for-law-firms).`,
+    faq: [
+      { q: 'When did Georgia’s current lawyer advertising rules take effect?', a: 'The Supreme Court of Georgia amended Rules 7.1, 7.2 and 7.3 of the Georgia Rules of Professional Conduct by order dated November 18, 2025, and the changes took effect on March 1, 2026. Rules 7.4 and 7.5 are now reserved. Website disclaimers written before March 2026 should be checked against the current text in the State Bar handbook.' },
+      { q: 'What contact details does a Georgia law firm website need?', a: 'Rule 7.2(d) requires the name and contact information of at least one lawyer or law firm responsible for the content. Comment [11] says contact information includes a website address, phone number, email address or physical office location. A site footer with the firm name, phone and address on every page, including ad landing pages, covers it.' },
+      { q: 'Can a Georgia lawyer advertise as a specialist?', a: 'Yes, if it is true and not misleading. Rule 7.2(c) allows a lawyer who is a specialist by experience, specialized training or education, or who is certified by a recognized and bona fide professional entity, to say so. The claim is still judged under Rule 7.1, so back it with facts on the page and name any certifying body.' },
+      { q: 'What is Georgia’s 30-day rule for accident cases?', a: 'Rule 7.3(c)(3) bars a written solicitation about personal injury, wrongful death or an accident or disaster involving the recipient or a relative unless the event happened more than 30 days earlier. It does not cover your website or replies to people who contacted you, but it does cover cold emails, letters and texts to accident victims.' },
+      { q: 'Can an Atlanta law firm pay for leads or directory listings?', a: 'Yes, within limits. Rule 7.2 allows paying for advertising, including online directories, and comment [5] allows paying lead generators that do not recommend the lawyer, take payments consistent with Rules 1.5(f) and 5.4, and make no misleading claims. A service that implies it analyzed the person’s case to choose a lawyer crosses the line.' },
+      { q: 'Should an Atlanta law firm website be in Spanish or another language?', a: 'It depends on where the firm practices. Census QuickFacts reports 12.2% of Atlanta city residents age 5 and over speak a language other than English at home, compared with 38.1% in Gwinnett County. If a lawyer at the firm consults in another language and serves those communities, translated pages reviewed by a fluent speaker make sense.' },
+      { q: 'What does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month and begins with a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign to see your current site rebuilt before you decide.' },
+    ],
+    about: ['Georgia Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Atlanta, Georgia'],
+    published: '2026-10-19',
+    status: 'published',
+  },
+  {
+    slug: 'seattle-plumber-website-design',
+    title: 'Seattle Plumber Websites: Washington License Rules',
+    description: 'Build a Seattle plumbing website around Washington’s plumbing contractor license, side sewer permits now run by SPU, King County permits and local search.',
+    kind: 'guide',
+    summary: [
+      'Since July 1, 2021, Washington requires a plumbing contractor license under RCW 18.106 to advertise, bid or contract plumbing work; general contractors can’t advertise plumbing.',
+      'Each day a business advertises plumbing work in violation of the chapter is a separate infraction, so an unlicensed website keeps counting.',
+      'Seattle Public Utilities took over side sewer permits on October 1, 2025; a sanitary side sewer repair permit generally costs $280 and is processed by the next business day.',
+      'Plumbing inside the building is permitted by Public Health – Seattle & King County, and only owners doing their own work or licensed plumbing contractors may buy those permits.',
+      'Most Seattle homes are rented (43.7% are owner-occupied), so a site has to speak to tenants, landlords and property managers as well as owners.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1502175353174-a7a70e73b362?auto=format&fit=crop&w=1600&q=75', alt: 'The Space Needle and downtown Seattle towers lit by low sun, with snow-capped Mount Rainier on the horizon under a deep blue sky' },
+    body: `A Seattle plumber’s website does three jobs at once. It proves the business is allowed to advertise plumbing in Washington, which since July 1, 2021 means holding a plumbing contractor license under chapter 18.106 RCW. It explains the permits a Seattle job really involves, from side sewer permits issued by Seattle Public Utilities to inside-the-house plumbing permits from Public Health – Seattle & King County. And it gets the phone to ring from the right people, in a city where more households rent than own and where a cracked side sewer is the owner’s problem, not the city’s. Get those three right and the design questions mostly answer themselves.
+
+This guide walks through each one with links to the state law, the city and the county, then gives a page plan and a launch checklist. Rules change, so check the linked sources before you rely on any detail; Labor & Industries (L&I) and the permitting agencies have the final word.
+
+## What license does a Seattle plumbing company need to advertise?
+
+Washington rewrote its plumbing laws in 2020. According to L&I, beginning July 1, 2021 the old “specialty plumbing” registration stopped being valid, all plumbing contract work must be done by a Licensed Plumbing Contractor under chapter 18.106 RCW, and “general contractors cannot offer, advertise, and/or bid on projects that require plumbing work” ([L&I plumbing contractor licensing](${LNI_PC})).
+
+The statute itself is direct. [RCW 18.106.400](${RCW_106_400}) makes it unlawful, as of July 1, 2021, “to advertise, offer to do work, submit a bid, or perform any work” under the chapter without a plumbing contractor license. The license lasts 24 months. To get one, L&I says the business must designate a certified plumber as its dedicated plumber, carry a $6,000 continuous plumbing contractor bond and hold general liability insurance.
+
+Two details matter for marketing:
+
+- **The website is advertising.** Under [RCW 18.106.020](${RCW_106_020}), each day a person or business “advertises, offers to do work, submits a bid, or performs any work in the trade of plumbing” in violation of the chapter is a separate infraction. L&I’s FAQ says penalties for performing, bidding or advertising without the license range from $500 to $5,000 ([L&I licensing FAQs](${LNI_FAQ})). A site that stays up while a license is lapsed or suspended keeps advertising every day.
+- **Certified plumbers who moonlight still need the license.** [WAC 296-400A-430](${WAC_430}) says anyone who advertises or does plumbing work must be a licensed plumbing contractor “or an employee of such a licensed plumbing contractor, with wages as their sole compensation.” A journey-level plumber with a side website offering weekend repairs needs a contractor license of their own.
+
+## Should the license number be on the website?
+
+The plumbing chapter doesn’t spell out a website format, but showing the number is the easiest trust signal you have. L&I lists every licensed business in its [Verify a Contractor, Tradesperson, or Business tool](${LNI_VERIFY}), and careful customers, property managers and general contractors check it. Put the license number in the footer of every page and on your about page, next to the exact business name on the license, so anyone can match the two in seconds.
+
+If your company is also registered as a general contractor under chapter 18.27 RCW for non-plumbing work like cabinets or tile, which L&I says licensed plumbing contractors may choose to do, that registration brings its own advertising rules. [RCW 18.27.100](${RCW_27_100}) requires that advertising showing a registered contractor’s name or address show the name as registered and the current registration number, forbids using a false or expired number, and says a contractor shall not advertise that it is “bonded and insured” because of the bond and insurance the chapter requires. L&I’s FAQ notes the two registrations carry different numbers, so make sure the right number sits next to the right kind of work.
+
+What to avoid on the page:
+
+1. **Services outside your certificates.** [RCW 18.106.020](${RCW_106_020}) limits plumbing to people holding the right certificate, and medical gas piping requires a journey-level certificate plus a medical gas piping installer endorsement. List only work your team is certified to do.
+2. **A trade name that isn’t on the license.** If customers know you as “Rainier Drain Pros” but the license says “R. Alvarez Plumbing LLC,” say both, clearly.
+3. **Stale numbers.** When the license renews or the business changes structure, update every page the same week.
+
+![A person with an umbrella crossing a rain-soaked Seattle street at night, streetlights reflecting off the wet pavement between apartment buildings](https://images.unsplash.com/photo-1742183635084-64c141301176?auto=format&fit=crop&w=1200&q=75)
+
+## Who issues plumbing and side sewer permits in Seattle?
+
+Two different agencies, which confuses customers and gives you something genuinely useful to explain.
+
+**Inside the building: Public Health – Seattle & King County.** The city’s utility notes that piping inside a building is considered plumbing and is regulated, permitted and inspected by Public Health – Seattle & King County ([SPU side sewer permits](${SPU_SS})). The county’s Plumbing & Gas Program takes applications, plan review submissions and inspection requests through its Public Health Permit Center ([county permits page](${KC_PERMITS})). Its guidance for homeowners adds that if you pay someone to do plumbing work, the installer must be a certified plumber working for a properly licensed contractor, and that plumbing permits can be bought only by owners doing their own work or by licensed plumbing contractors, citing RCW 18.106.440 ([King County hiring guidance](${KC_HIRE})). Within the City of Seattle, the same page says a gas pipe installer must be the property owner or hold a Seattle Gas Piping Mechanic License.
+
+**Outside the building: Seattle Public Utilities.** Side sewer work moved from the Seattle Department of Construction and Inspections to Seattle Public Utilities (SPU) on October 1, 2025. The city’s announcement says SPU now reviews plans, issues side sewer permits and inspects the work, that core tap fees are now paid up front on the permit invoice, and that SPU planned to reinstate its Registered Side Sewer Contractor Program in 2026 ([City of Seattle announcement](${SEA_SS_MOVE})). Check SPU’s page for the program’s current status before you describe it on your site.
+
+SPU’s side sewer page gives the facts customers ask about most ([SPU side sewer permits](${SPU_SS})):
+
+- **Who owns the pipe.** The entire side sewer, all the way to the connection to the public main, “is owned and maintained by the property owner.”
+- **When a permit is needed.** To connect, repair, alter, add to, abandon or cap a side sewer, among other things. A repair permit is required any time a pipe or external fixture such as a cleanout needs repair or replacement.
+- **What it costs.** A sanitary repair permit on private property generally costs $280 and a drainage repair permit generally $375, each including one to two inspections; fees vary by scope.
+- **How long it takes.** SPU processes repair and addition or alteration permits by the end of the next business day after it receives the application.
+- **Work in the street.** A separate permit from the Seattle Department of Transportation is required for work in the public right-of-way ([SDOT side sewer FAQs](${SDOT_SS})).
+- **Before digging.** SPU recommends calling 811 two business days ahead to have utilities marked.
+
+A page titled something like “Side sewer repair in Seattle: who owns it, permits and timelines” built from those facts, plus your own experience of what a typical repair involves, is the kind of page a worried homeowner actually reads to the end. It also shows you know the process, which is the point.
+
+## Who is actually searching for a plumber in Seattle?
+
+The Census Bureau’s QuickFacts for Seattle reports an owner-occupied housing rate of 43.7% for 2020 to 2024, a median owner-occupied home value of $938,600, and that 23.7% of residents age 5 and over speak a language other than English at home ([QuickFacts, Seattle](${CENSUS_SEA})). Each of those numbers shapes the site:
+
+- **Renters call too, but they can’t approve the job.** With most households renting, a large share of calls come from tenants with a leak and no authority to sign off on the repair. A short page for tenants (what to tell your landlord, what to do while you wait) and a separate page for landlords and property managers (how you handle access, approvals and billing) keeps both kinds of calls productive.
+- **Owners of expensive homes want proof.** Homeowners deciding on a side sewer replacement or a repipe want to see the license, the permit process, photos of real jobs and clear explanations before they call.
+- **Language matters in some neighborhoods.** If someone on your team can talk a customer through a job in Spanish, Vietnamese, Chinese or another language, say so on the home page and in your Google Business Profile. Only promise a language someone on staff actually speaks, and if you add translated pages, follow Google’s guidance for [localized versions of pages](${HREFLANG}).
+
+## How should a Seattle plumber set up Google Business Profile?
+
+Most plumbing companies serve customers at their homes and don’t take walk-ins, which makes them service-area businesses in Google’s terms. Google’s guidance says to set the area you serve and hide the street address if customers don’t visit you there ([service-area businesses](${SERVICE_AREAS})). Its guidelines also bar keywords stuffed into the business name ([Business Profile guidelines](${GBP_GUIDELINES})): “Alvarez Plumbing” stays “Alvarez Plumbing,” not “Alvarez Plumbing Seattle Emergency Drain Cleaning.”
+
+Google ranks local results on relevance, distance and prominence ([how local ranking works](${LOCAL_RANKING})). You can’t change where a caller is, but you can make relevance obvious by naming the services you really offer and the neighborhoods and nearby cities you really cover, both on the profile and on your website. Ask every satisfied customer for a review, never offer anything in return, and reply to reviews in your own words ([tips on reviews](${REVIEW_TIPS})). Our guide on [service-area businesses on Google](/blog/service-area-business-google) covers the setup step by step.
+
+![A plumber in navy overalls working on exposed pipes inside the wall of a modern gray-tiled bathroom, with a blue toolbox on the toilet lid](https://images.unsplash.com/photo-1749532125405-70950966b0e5?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a Seattle plumbing website have?
+
+Think of each page as an answer to a call you already get:
+
+1. **Home page.** What you do, where, your hours, a tap-to-call number visible on a phone, and your L&I license number in the footer.
+2. **Emergency service page,** if you offer it: what counts as an emergency, your real response window and how after-hours pricing works. Never promise a response time you can’t meet.
+3. **One page per core service.** Drain cleaning, water heaters, leak detection, repiping, fixtures, side sewer repair. Explain what the work involves, which permit applies (county plumbing permit or SPU side sewer permit), and what affects the price.
+4. **Side sewer guide,** built on SPU’s rules above.
+5. **Service area page** listing the neighborhoods and nearby cities you truly serve, with something specific to say about each one if you can, such as older housing stock you often work on. A page per neighborhood with nothing but the name swapped is the doorway pattern Google’s [spam policies](${SPAM}) warn against.
+6. **Landlords and property managers page** covering access, approvals, invoicing and multifamily work.
+7. **About and licensing page** with the business name exactly as licensed, the license number, the designated plumber and how to verify both on L&I’s site.
+8. **Reviews and recent jobs,** with real photos and customers’ words unedited.
+9. **Job request form** asking only what you need to call back: how urgent, the ZIP code, and whether they own or rent.
+
+For more on the first screen visitors see, read [what to put on your home page](/blog/what-to-put-on-your-home-page).
+
+## Seattle plumbing website launch checklist
+
+- Business name on the site matches the name on the L&I plumbing contractor license.
+- License number in the footer of every page and on the about page.
+- If also registered under chapter 18.27, that registration number appears where required, with no “bonded and insured” claim based on the required bond.
+- Services listed are within your team’s certificates and endorsements.
+- Side sewer content reflects SPU as the permitting agency since October 1, 2025.
+- Inside-plumbing content points to Public Health – Seattle & King County permits.
+- Separate paths for owners, tenants and landlords.
+- Google Business Profile set up as a service-area business with the real name.
+- Service area page has real, specific content.
+- Pages load fast on a phone ([Core Web Vitals](${WEB_VITALS})); see [is your website fast enough](/blog/is-your-website-fast-enough).
+- Structured data matches what’s on the page ([structured data guidelines](${SD_GUIDELINES})).
+
+![Close-up of a plumber’s hands, one wearing a steel wristwatch, tightening a white drain fitting under a sink lit in blue](https://images.unsplash.com/photo-1676210134190-3f2c0d5cf58d?auto=format&fit=crop&w=1200&q=75)
+
+## How SaySites helps Seattle plumbers
+
+SaySites gives a plumbing company the structure above without a long build. A new site comes with a page for each service, a service-area page, a tap-to-call button and a job request form on every page, whose questions ask how soon the customer needs you, the ZIP code of the job and whether they own or rent. The business is described to search engines as a Plumber, and each page has to pass a 95+ speed check before it goes live. Requests land in a leads pipeline where you call, email, add notes and follow each one to a won job, and you can invite office staff to work the leads without touching the rest of the site. You edit by saying what you want in plain words, for example “add our L&I plumbing contractor license number to the footer” or “write a page about side sewer repair permits from SPU,” and each change appears as a draft for you to approve. Licenses, photos and reviews come only from you.
+
+The Site plan is $15 a month with hosting included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). To see your current site rebuilt before you decide, [ask for a free redesign](/redesign), or [start a 7-day free trial](/signup) and have it live this week. Plumbers in other cities can compare notes with our [Chicago plumber website guide](/blog/chicago-plumber-website-design), and anyone curious how local results work can read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses).`,
+    faq: [
+      { q: 'Do Seattle plumbers need a contractor license to advertise?', a: 'Yes. Since July 1, 2021, RCW 18.106.400 makes it unlawful to advertise, offer, bid or perform plumbing work in Washington without a plumbing contractor license from Labor & Industries. General contractors can no longer advertise plumbing work. Each day of advertising in violation of the chapter counts as a separate infraction, and L&I lists penalties from $500 to $5,000.' },
+      { q: 'Should my Washington plumbing license number be on my website?', a: 'It is the simplest way to show customers you are licensed. L&I’s Verify a Contractor tool lets anyone look up the business, so put the license number and exact licensed name in the footer and on your about page. If you are also registered under RCW 18.27 for other work, that law requires the registration number on advertising.' },
+      { q: 'Who issues side sewer permits in Seattle?', a: 'Seattle Public Utilities has issued and inspected side sewer permits since October 1, 2025, when the work moved over from the Seattle Department of Construction and Inspections. Applications still go through the Seattle Services Portal. Work in the public right-of-way also needs a separate permit from the Seattle Department of Transportation.' },
+      { q: 'How much is a side sewer repair permit in Seattle?', a: 'SPU says a sanitary side sewer repair permit for work on private property generally costs $280 and a drainage repair permit generally costs $375, each including one to two inspections. Fees vary with the scope of work, and SPU processes repair permits by the end of the next business day after receiving the application.' },
+      { q: 'Who is responsible for a broken side sewer in Seattle?', a: 'The property owner. Seattle Public Utilities says the entire side sewer, all the way to the connection to the public main, is owned and maintained by the property owner. That is why a clear side sewer page on a plumber’s website helps: homeowners often learn this only when something goes wrong.' },
+      { q: 'Who permits plumbing work inside a Seattle home?', a: 'Public Health – Seattle & King County regulates, permits and inspects plumbing inside buildings through its Plumbing & Gas Program and online Permit Center. The county says plumbing permits can be bought by owners doing their own work or by licensed plumbing contractors. Gas piping in Seattle needs the owner or a Seattle Gas Piping Mechanic License holder.' },
+      { q: 'What does a SaySites plumbing website cost?', a: 'The Site plan is $15 a month, or $150 a year, with hosting included and a 7-day free trial to start. It includes service pages, a service-area page, a job request form with urgency, ZIP code and own-or-rent questions, Plumber structured data and a leads pipeline. You can also request a free redesign of your current site first.' },
+    ],
+    about: ['Plumbing contractor licensing in Washington', 'Plumber websites', 'Side sewer permits', 'Seattle, Washington'],
+    published: '2026-10-19',
+    status: 'published',
+  },
   {
     slug: 'boston-law-firm-website-design',
     title: 'Boston Law Firm Website Design: Massachusetts Rules',
@@ -450,7 +771,7 @@ Subsection (2) is the part to read closely, because it lists what makes an ad fa
 10. mentions specialty certification without naming the certifying board; or
 11. implies a specialty or subspecialty the physician has no recognition for.
 
-Items 3 and 8 are the easiest to break by accident on a website. “Pain-free,” “guaranteed results,” “Miami’s top cardiologist” and “the most advanced care in South Florida” are all common headlines that read as unjustified expectations or claims of superiority. Plain descriptions of what you do, how and for whom are safer, and they give patients comparing practices something real to go on.
+Items 3 and 8 are the easiest to break by accident on a website. “Pain-free,” “guaranteed outcomes,” “Miami’s top cardiologist” and “the most advanced care in South Florida” are all common headlines that read as unjustified expectations or claims of superiority. Plain descriptions of what you do, how and for whom are safer, and they give patients comparing practices something real to go on.
 
 The rule ends with practical housekeeping. Subsection (4) says a physician using electronic media must keep an exact copy of an audio or video ad for at least six months after it airs, and subsection (7) requires that M.D.s, P.A.s and anesthesiologist assistants named in ads be clearly identified as such. The rule was last amended effective November 16, 2020.
 
