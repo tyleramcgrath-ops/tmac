@@ -45,7 +45,7 @@ export function Header() {
           <Logo />
           <nav className="nav" aria-label="Main">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href}>{n.label}</Link>
+              <Link key={n.href} href={n.href} className={n.href === '/for-attorneys' ? 'nav-firms' : undefined}>{n.label}</Link>
             ))}
           </nav>
           <Link href="/get-started" className="btn btn-dark btn-sm header-cta">Free case review</Link>
