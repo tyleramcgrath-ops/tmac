@@ -1,8 +1,12 @@
 // Postgres storage for leads, traffic and SEO results. Set DATABASE_URL (the
 // SaySites database works: every table here is prefixed lmn_). Tables create
 // themselves on first use. Without a database, the site still runs and leads
-// are still emailed; the dashboard just has nothing stored to show.
+// are still emailed; the dashboard has no leads or traffic to show,
+// though SEO results are kept in a local file (see kvGet).
 
+import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
+import { homedir } from 'node:os'
+import { join } from 'node:path'
 import { Pool, types } from 'pg'
 
 // Return timestamps and dates as ISO strings, as the rest of the site expects.
@@ -70,13 +74,31 @@ export async function q<T = Record<string, unknown>>(sql: string, params: unknow
   return r.rows as T[]
 }
 
+// Without a database, small settings and SEO results (audits, PageSpeed runs)
+// go to a JSON file in the home folder, outside SiteGround's release folders
+// so it survives deploys. LMN_DATA_DIR overrides the location.
+type KvFile = Record<string, { value: unknown; updated_at: string }>
+const kvPath = () => join(process.env.LMN_DATA_DIR || join(homedir(), 'lmn-data'), 'kv.json')
+function readKvFile(): KvFile {
+  try { return JSON.parse(readFileSync(kvPath(), 'utf8')) as KvFile } catch { return {} }
+}
+function writeKvFile(data: KvFile) {
+  const file = kvPath()
+  mkdirSync(join(file, '..'), { recursive: true })
+  writeFileSync(`${file}.tmp`, JSON.stringify(data))
+  renameSync(`${file}.tmp`, file)
+}
+
 export async function kvGet<T>(key: string): Promise<{ value: T; updated_at: string } | null> {
-  if (!hasDb()) return null
+  if (!hasDb()) return (readKvFile()[key] as { value: T; updated_at: string } | undefined) ?? null
   const [row] = await q<{ value: T; updated_at: string }>('SELECT value, updated_at FROM lmn_kv WHERE key = $1', [key])
   return row ?? null
 }
 
 export async function kvSet(key: string, value: unknown) {
-  if (!hasDb()) return
+  if (!hasDb()) {
+    try { writeKvFile({ ...readKvFile(), [key]: { value, updated_at: new Date().toISOString() } }) } catch (err) { console.error('[kv]', (err as Error).message) }
+    return
+  }
   await q('INSERT INTO lmn_kv (key, value, updated_at) VALUES ($1, $2, now()) ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value, updated_at = now()', [key, JSON.stringify(value)])
 }

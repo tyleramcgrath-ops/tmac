@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!t) return {}
   const year = researchedOn(t.lead).slice(0, 4)
   return {
-    title: `${t.name} by State (${year}): All 50 States Compared`,
+    title: `${t.name} by State: 50-State Chart (${year})`,
     description: `${t.name} in every U.S. state and D.C.: ${columns(t.slug).map((k) => FIELDS[k].label.toLowerCase()).join(', ')}, with the statute for each and a full guide per state.`,
     alternates: { canonical: `/laws/${t.slug}` },
   }

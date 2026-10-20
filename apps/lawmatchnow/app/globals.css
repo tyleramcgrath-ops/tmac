@@ -1184,3 +1184,11 @@ a.lf-c:hover { text-decoration: underline; }
 @media (max-width: 640px) { .tool-card { padding: 18px; } }
 .art-layout.tool-layout { grid-template-columns: minmax(0, 1fr); }
 @media (min-width: 1000px) { .art-layout.tool-layout { grid-template-columns: minmax(0, 1fr) 340px; } }
+.ad-start { border: 1px solid var(--sky); background: #fff; border-radius: var(--radius); padding: 22px 24px; margin-bottom: 22px; box-shadow: var(--shadow); }
+.ad-start h2 { font-size: 1.35rem; margin: 0 0 6px; }
+.ad-start ul { list-style: none; margin: 16px 0 18px; padding: 0; display: grid; gap: 12px; }
+.ad-start li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+.ad-check { width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--line); display: grid; place-items: center; font-size: .8rem; color: #fff; }
+.ad-start li.on .ad-check { background: var(--ok); border-color: var(--ok); }
+.ad-start li .muted { font-size: .85rem; }
+.ad-start-why { font-size: .9rem; color: var(--navy-2); }

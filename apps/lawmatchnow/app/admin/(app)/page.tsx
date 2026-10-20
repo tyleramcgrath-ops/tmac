@@ -4,6 +4,11 @@ import { KIND_LABEL, leadStats, listLeads, stageLabel } from '@/lib/admin/leads'
 import { trafficStats } from '@/lib/admin/traffic'
 import { ga4Configured, ga4Realtime, gscConfigured, gscOverview } from '@/lib/admin/google'
 import { fmtDate } from '@/lib/site'
+import { setupItems } from '@/lib/admin/setup'
+import { STATES } from '@/lib/geo'
+import { FIELDS, type FieldKey, allStates } from '@/lib/law/facts'
+import { topicsFor } from '@/lib/law/topics'
+import { TOOLS, statesFor } from '@/lib/law/tools'
 
 type Props = { searchParams: Promise<{ d?: string }> }
 
@@ -17,11 +22,38 @@ export default async function Overview({ searchParams }: Props) {
     gscConfigured() ? gscOverview(days).catch(() => null) : null,
   ])
   const conv = traffic && traffic.sessions ? (leads?.total ?? 0) / traffic.sessions : 0
+  const setup = setupItems()
+  const todo = setup.filter((s) => !s.on)
+  const guides = STATES.reduce((n, s) => n + topicsFor(s.code).length, 0)
+  const calcPages = TOOLS.reduce((n, t) => n + statesFor(t).length, 0)
+  const facts = (Object.keys(FIELDS) as FieldKey[]).reduce((n, k) => n + allStates(k).length, 0)
   return (
     <>
       <div className="ad-head">
         <div><div className="eyebrow">Dashboard</div><h1>Overview</h1></div>
         <RangePicker days={days} base="/admin" />
+      </div>
+      {todo.length > 0 && (
+        <div className="ad-start">
+          <div className="ad-start-head">
+            <h2>Finish setup: {setup.length - todo.length} of {setup.length} connected</h2>
+            <p className="muted">Numbers below stay at zero until the pieces that collect them are connected. Each one is an environment variable in SiteGround (Site Tools → Devs → Node.js → Environment variables), then restart the app.</p>
+          </div>
+          <ul>
+            {setup.map((s) => (
+              <li key={s.key} className={s.on ? 'on' : ''}>
+                <span className="ad-check" aria-hidden="true">{s.on ? '✓' : ''}</span>
+                <div><b>{s.name}</b> <span className="muted">{s.on ? 'Connected' : s.env.map((e) => e).join(', ')}</span><br /><span className="ad-start-why">{s.unlocks}</span></div>
+              </li>
+            ))}
+          </ul>
+          <Link className="btn btn-primary btn-sm" href="/admin/settings">Step-by-step setup</Link>
+        </div>
+      )}
+      <div className="ad-kpis">
+        <Kpi label="State law guides live" value={guides} hint="Each fact cited" />
+        <Kpi label="Calculator pages live" value={calcPages} hint={`${TOOLS.length} tools`} />
+        <Kpi label="Verified legal facts" value={facts} />
       </div>
       <div className="ad-kpis">
         <Kpi label="Leads" value={leads?.total ?? 0} prev={leads?.prev} />
