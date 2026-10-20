@@ -2,7 +2,9 @@ import type { MetadataRoute } from 'next'
 import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { attorneySlugs, listPosts } from '@/lib/directory'
-import { CITIES, STATES } from '@/lib/geo'
+import { CITIES, STATES, stateByCode } from '@/lib/geo'
+import { researchedOn } from '@/lib/law/facts'
+import { TOPICS, ctxFor, topicsFor, topicsForPractice } from '@/lib/law/topics'
 import { CONTENT_REVIEWED, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -19,6 +21,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...GUIDES.map((g) => page(`/guide/${g.slug}`, 0.8)),
     ...STATES.map((s) => page(`/state/${s.slug}`, 0.7)),
     ...CITIES.map((c) => page(`/${c.slug}`, 0.8)),
+    page('/laws', 0.8),
+    ...TOPICS.map((t) => page(`/laws/${t.slug}`, 0.8, new Date(researchedOn(t.lead)))),
+    ...STATES.flatMap((s) => topicsFor(s.code).map((t) => page(`/state/${s.slug}/${t.slug}`, 0.8, new Date(researchedOn(t.lead))))),
+    // City + issue pages that carry verified state law (the rest are noindex until listings arrive).
+    ...CITIES.flatMap((c) => {
+      const law = ctxFor(stateByCode(c.state)!)
+      return PRACTICE_AREAS.filter((p) => topicsForPractice(p.slug).some((t) => law.f(t.lead))).map((p) => page(`/${c.slug}/${p.slug}`, 0.7))
+    }),
     ...posts.items.map((p) => page(`/blog/${p.slug}`, 0.5, new Date((p.updated || p.created).replace(' ', 'T')))),
     ...attorneys.map((a) => page(`/attorney/${a.slug}`, 0.5, new Date(a.updated.replace(' ', 'T')))),
   ]

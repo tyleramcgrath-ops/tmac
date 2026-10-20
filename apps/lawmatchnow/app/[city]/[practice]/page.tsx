@@ -11,6 +11,10 @@ import { COMMON_FEES, FEE_TYPES } from '@/lib/content/fees'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { cityBySlug, citiesInState, stateByCode } from '@/lib/geo'
 import { searchAttorneys } from '@/lib/directory'
+import { LocalCards } from '@/components/CityLocal'
+import { FactTable } from '@/components/LawFacts'
+import { type CityLocal, cityLocal } from '@/lib/law/cities'
+import { ctxFor, topicsForPractice } from '@/lib/law/topics'
 
 type Props = { params: Promise<{ city: string; practice: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -18,21 +22,44 @@ export const revalidate = 3600
 function resolve(city: string, practice: string) {
   const c = cityBySlug(city)
   const p = PRACTICE_AREAS.find((x) => x.slug === practice)
-  return c && p ? { c, p, st: stateByCode(c.state)! } : null
+  if (!c || !p) return null
+  const st = stateByCode(c.state)!
+  const law = ctxFor(st)
+  // The state law guides that apply to this practice and are verified for this state.
+  const topics = topicsForPractice(p.slug).filter((t) => law.f(t.lead))
+  return { c, p, st, law, topics }
+}
+
+// Which local court cards matter for each kind of case.
+function localFor(practice: string, loc: CityLocal): CityLocal {
+  const pick = (keys: (keyof CityLocal)[]) => ({
+    ...loc,
+    stateCourt: keys.includes('stateCourt') ? loc.stateCourt : null,
+    smallClaims: keys.includes('smallClaims') ? loc.smallClaims : null,
+    federalCourt: keys.includes('federalCourt') ? loc.federalCourt : null,
+    immigrationCourt: keys.includes('immigrationCourt') ? loc.immigrationCourt : null,
+  })
+  if (practice === 'immigration') return pick(['immigrationCourt', 'federalCourt', 'bar', 'legalAid'])
+  if (['bankruptcy', 'civil-rights', 'intellectual-property', 'social-security-disability'].includes(practice)) return pick(['federalCourt', 'bar', 'legalAid'])
+  if (['consumer-protection', 'business-law', 'real-estate'].includes(practice)) return pick(['smallClaims', 'stateCourt', 'bar', 'legalAid'])
+  return pick(['stateCourt', 'bar', 'legalAid'])
 }
 
 export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { city, practice } = await params
   const r = resolve(city, practice)
   if (!r) return {}
-  const { c, p, st } = r
-  // A city page for an issue we have few listings for adds nothing to search
-  // results, so it stays out of the index until the directory fills in.
+  const { c, p, st, law, topics } = r
+  // Indexed when it has real listings or verified state law for this issue;
+  // otherwise it would add nothing to search results.
   const { total } = await searchAttorneys({ city: c.name, state: c.state, practice: p.slug, perPage: 1 })
-  const thin = total < 3 || pageParam((await searchParams).page) > 1
+  const thin = (total < 3 && !topics.length) || pageParam((await searchParams).page) > 1
+  const lead = topics[0] ? law.f(topics[0].lead) : null
   return {
-    title: `${c.name} ${p.lawyerTitle} | ${st.code}`,
-    description: `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${p.short}`,
+    title: `${c.name} ${p.lawyerTitle}: ${st.name} Law & Local Attorneys`,
+    description: (lead && topics[0]
+      ? `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${topics[0].answer(law)} Compare local attorneys and get a free case review.`
+      : `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${p.short}`).slice(0, 300),
     alternates: { canonical: `/${c.slug}/${p.slug}` },
     robots: thin ? { index: false, follow: true } : undefined,
   }
@@ -42,8 +69,13 @@ export default async function CityPractice({ params, searchParams }: Props) {
   const { city, practice } = await params
   const r = resolve(city, practice)
   if (!r) notFound()
-  const { c, p, st } = r
+  const { c, p, st, law, topics } = r
   const page = pageParam((await searchParams).page)
+  const loc = cityLocal(c.slug)
+  const local = loc ? localFor(p.slug, loc) : null
+  const topic = topics[0]
+  const lawRows = topic ? topic.fields.map((key) => ({ key, f: law.f(key)! })).filter((x) => x.f).slice(0, 6) : []
+  const stateFaqs = topics.flatMap((t) => t.faqs(law)).slice(0, 4)
   const g = p.guide
   const fees = COMMON_FEES[p.slug] ?? []
   const nearby = citiesInState(c.state).filter((x) => x.slug !== c.slug)
@@ -70,7 +102,7 @@ export default async function CityPractice({ params, searchParams }: Props) {
       >
         <SearchBar practice={p.slug} location={`${c.name}, ${c.state}`} />
       </TopicHero>
-      <SectionNav items={[{ id: 'lawyers', label: 'Attorneys' }, ...(g ? [{ id: 'when', label: 'When to call' }] : []), { id: 'map', label: 'Other cities' }, ...(g ? [{ id: 'faq', label: 'FAQ' }] : [])]} />
+      <SectionNav items={[{ id: 'lawyers', label: 'Attorneys' }, ...(lawRows.length ? [{ id: 'law', label: `${st.name} law` }] : []), ...(local ? [{ id: 'local', label: `${c.name} courts & help` }] : []), ...(g ? [{ id: 'when', label: 'When to call' }] : []), { id: 'map', label: 'Other cities' }, ...(g || stateFaqs.length ? [{ id: 'faq', label: 'FAQ' }] : [])]} />
 
       <section className="section" id="lawyers">
         <div className="wrap">
@@ -79,6 +111,33 @@ export default async function CityPractice({ params, searchParams }: Props) {
             emptyHint={<>Try <Link href={`/practice-area/${p.slug}`}>{p.lawyerTitle.toLowerCase()} nationwide</Link> or <Link href={`/${c.slug}`}>all {c.name} attorneys</Link>.</>} />
         </div>
       </section>
+
+      {topic && lawRows.length > 0 && (
+        <section className="section alt" id="law">
+          <div className="wrap">
+            <div className="section-head reveal">
+              <div><div className="eyebrow">{st.name} law</div><h2>What {st.name} law says about your {p.name.toLowerCase()} case</h2></div>
+              <p>{topic.answer(law)}</p>
+            </div>
+            <div className="reveal"><FactTable rows={lawRows} /></div>
+            <div className="pill-row reveal" style={{ marginTop: 24 }}>
+              {topics.map((t) => <Link key={t.slug} className="pill" href={`/state/${st.slug}/${t.slug}`}>{t.heading(st)} <span aria-hidden="true">→</span></Link>)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {local && (
+        <section className="section" id="local">
+          <div className="wrap">
+            <div className="section-head reveal">
+              <div><div className="eyebrow">Local help</div><h2>Courts and free help in {c.name}</h2></div>
+              <p>Where {p.name.toLowerCase()} cases from {c.name} are heard, and where to turn if you can&apos;t afford a lawyer.</p>
+            </div>
+            <div className="reveal"><LocalCards loc={local} city={c.name} /></div>
+          </div>
+        </section>
+      )}
 
       {g && (
         <section className="section alt" id="when">
@@ -109,13 +168,13 @@ export default async function CityPractice({ params, searchParams }: Props) {
         </div>
       </section>
 
-      {g && (
+      {(g || stateFaqs.length > 0) && (
         <section className="section" id="faq">
           <div className="wrap reveal" style={{ maxWidth: 900 }}>
             <div className="eyebrow">FAQ</div>
-            <h2>{p.name} questions</h2>
-            <p className="muted">General answers that apply across the U.S.; {st.name} rules may differ, so confirm with a local attorney.</p>
-            <Faqs faqs={g.faqs} schema={false} />
+            <h2>{p.name} questions in {c.name}</h2>
+            {stateFaqs.length > 0 && <Faqs faqs={stateFaqs} />}
+            {g && <Faqs faqs={g.faqs.slice(0, stateFaqs.length ? 3 : g.faqs.length)} schema={!stateFaqs.length} />}
           </div>
         </section>
       )}

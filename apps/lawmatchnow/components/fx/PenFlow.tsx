@@ -46,14 +46,22 @@ export function PenFlow({ children }: { children: ReactNode }) {
       plen = path.getTotalLength()
       path.style.strokeDasharray = `${plen} ${plen}`
       samples = []
-      for (let l = 0; l <= plen; l += 12) samples.push([l, path.getPointAtLength(l).y])
+      // Every 48px of path is plenty: targetLen() interpolates between samples.
+      for (let l = 0; l <= plen; l += 48) samples.push([l, path.getPointAtLength(l).y])
       samples.push([plen, path.getPointAtLength(plen).y])
       drawn = -1
     }
     const targetLen = () => {
       const yT = innerHeight * 0.62 - flow.getBoundingClientRect().top
       let best = 0
-      for (const [l, y] of samples) { if (y <= yT) best = l; else break }
+      for (let i = 0; i < samples.length; i++) {
+        const [l, y] = samples[i]
+        if (y > yT) {
+          const [pl, py] = samples[i - 1] ?? [0, y]
+          return y === py ? best : pl + ((yT - py) / (y - py)) * (l - pl)
+        }
+        best = l
+      }
       return best
     }
     const tick = () => {
@@ -65,18 +73,28 @@ export function PenFlow({ children }: { children: ReactNode }) {
         const pt = path.getPointAtLength(Math.max(0.1, drawn))
         nib.setAttribute('transform', `translate(${pt.x.toFixed(1)},${pt.y.toFixed(1)})`)
         nib.style.opacity = drawn > 2 && drawn < plen - 2 ? '1' : '0'
+        // Stop once the line has caught up; scrolling starts it again.
+        if (Math.abs(lt - drawn) < 0.5) { raf = 0; return }
       }
       raf = requestAnimationFrame(tick)
     }
+    const kick = () => { if (!raf) raf = requestAnimationFrame(tick) }
     let rz = 0
-    const onResize = () => { clearTimeout(rz); rz = window.setTimeout(build, 150) }
+    const rebuild = () => { build(); kick() }
+    const onResize = () => { clearTimeout(rz); rz = window.setTimeout(rebuild, 150) }
     const ro = new ResizeObserver(onResize)
     ro.observe(flow)
-    document.fonts?.ready.then(build)
-    build()
-    raf = requestAnimationFrame(tick)
+    // Built once the page is idle (the ResizeObserver's first callback also
+    // lands here), so it never competes with the first paint.
+    const idle = (window as Window & { requestIdleCallback?: (cb: () => void, o?: object) => number }).requestIdleCallback
+    const first = idle ? idle(rebuild, { timeout: 2500 }) : window.setTimeout(rebuild, 400)
+    document.fonts?.ready.then(onResize)
     addEventListener('resize', onResize)
-    return () => { cancelAnimationFrame(raf); clearTimeout(rz); ro.disconnect(); removeEventListener('resize', onResize) }
+    addEventListener('scroll', kick, { passive: true })
+    return () => {
+      cancelAnimationFrame(raf); clearTimeout(rz); clearTimeout(first); ro.disconnect()
+      removeEventListener('resize', onResize); removeEventListener('scroll', kick)
+    }
   }, [])
 
   return (

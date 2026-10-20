@@ -1,0 +1,2235 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "Will must be signed by the testator and by at least two individuals who each witnessed the signing or the testator's acknowledgment.",
+"cite": "Alaska Stat. § 13.12.502(a)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secEnd=13.12.502&secStart=13.12.502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Alaska Stat. § 13.12.502(b)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secEnd=13.12.502&secStart=13.12.502",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary or other officer.",
+"cite": "Alaska Stat. § 13.12.504",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secend=13.12.504&secstart=13.12.504",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Affidavit collects personal property up to $50,000 (plus registered vehicles up to $100,000) after 30 days, if no personal representative petition is pending.",
+"cite": "Alaska Stat. § 13.16.680",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secEnd=13.16.680&secStart=13.16.680",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Alaska's estate tax was tied to the federal state death tax credit and imposes no tax for deaths after 2004; there is no inheritance tax.",
+"cite": "Alaska Stat. § 43.31.011",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Alaska has no electronic wills statute; its electronic transactions law excludes wills.",
+"cite": "Alaska Stat. § 13.12.502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"AL": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "Will must be in writing, signed by the testator, and signed by at least two people who each witnessed the signing or the testator's acknowledgment.",
+"cite": "Ala. Code § 43-8-131",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=43-8-131",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Alabama has no holographic-will exception; an unwitnessed handwritten will is valid only if it met the law of the place where it was executed.",
+"cite": "Ala. Code §§ 43-8-131, 43-8-135",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=43-8-135",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will can be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary or other officer.",
+"cite": "Ala. Code §§ 43-8-132, 43-8-133",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=43-8-132",
+"verified": true
+},
+"smallEstate": {
+"value": "$47,000",
+"detail": "Summary distribution in probate court for personal property only (no real estate); the cap equals the combined CPI-adjusted homestead, exempt property and family allowances.",
+"cite": "Ala. Code §§ 43-2-690 to 43-2-698; § 43-2-696.02; § 43-8-116",
+"source": "https://treasury.alabama.gov/resources/consumer-price-index-law",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Alabama's estate tax was tied to the federal state death tax credit and imposes no tax for deaths after 2004; there is no inheritance tax.",
+"cite": "Ala. Code § 40-15-2",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Alabama has no electronic wills statute; a will must be a signed writing with two witnesses.",
+"cite": "Ala. Code § 43-8-131",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"AR": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A non-holographic will needs the testator's signature at the end and two attesting witnesses, who sign at the testator's request and in his or her presence.",
+"cite": "Ark. Code Ann. § 28-25-103",
+"source": "https://law.justia.com/codes/arkansas/title-28/subtitle-3/chapter-25/section-28-25-103",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will whose entire body and signature are in the testator's handwriting is valid without witnesses if three credible disinterested witnesses prove the handwriting.",
+"cite": "Ark. Code Ann. §§ 28-25-104, 28-40-117",
+"source": "https://law.justia.com/codes/arkansas/title-28/subtitle-3/chapter-25/section-28-25-103",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign a sworn affidavit, which the court can accept in an uncontested probate instead of live testimony.",
+"cite": "Ark. Code Ann. § 28-25-106",
+"source": "https://law.justia.com/codes/arkansas/title-28/subtitle-3/chapter-25/section-28-25-106",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Distributees may file an affidavit with the probate clerk 45 days after death if the estate (excluding homestead and statutory allowances) is $100,000 or less.",
+"cite": "Ark. Code Ann. § 28-41-101",
+"source": "https://law.justia.com/codes/arkansas/title-28/subtitle-4/chapter-41/section-28-41-101",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Arkansas's estate tax was tied to the federal state death tax credit and imposes no tax for deaths after 2004; there is no inheritance tax.",
+"cite": "Ark. Code Ann. §§ 26-59-103, 26-59-106",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Arkansas has no electronic wills statute.",
+"cite": "Ark. Code Ann. § 28-25-103",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"AZ": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A paper will must be signed by the testator and by at least two people who witnessed the signing or the testator's acknowledgment.",
+"cite": "Ariz. Rev. Stat. § 14-2502",
+"source": "https://azleg.gov/ars/14/02502.htm",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material provisions are in the testator's handwriting.",
+"cite": "Ariz. Rev. Stat. § 14-2503",
+"source": "https://azleg.gov/ars/14/02503.htm",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary; electronic wills have their own self-proving rules.",
+"cite": "Ariz. Rev. Stat. §§ 14-2504, 14-2519",
+"source": "https://azleg.gov/ars/14/02504.htm",
+"verified": true
+},
+"smallEstate": {
+"value": "$200,000",
+"detail": "Affidavit collects personal property worth up to $200,000 (net of liens) 30 days after death if no personal representative is pending or appointed.",
+"cite": "Ariz. Rev. Stat. § 14-3971(B)",
+"source": "https://azleg.gov/ars/14/03971.htm",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Arizona repealed its estate tax and has no inheritance tax.",
+"cite": "Ariz. Rev. Stat. §§ 42-4001, 42-4051",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Electronic wills signed electronically by the testator and two witnesses (physically or electronically present) are valid; Arizona's law took effect in 2019.",
+"cite": "Ariz. Rev. Stat. §§ 14-2518 to 14-2523",
+"source": "https://azleg.gov/ars/14/02518.htm",
+"verified": true
+}
+},
+"CA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "Two witnesses, present at the same time, must sign during the testator's life; a defective will can still be upheld on clear and convincing evidence of intent.",
+"cite": "Cal. Prob. Code § 6110",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=6110.",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material provisions are in the testator's handwriting.",
+"cite": "Cal. Prob. Code § 6111",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaysection.xhtml?lawcode=prob&sectionnum=6111.",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "No notarized affidavit is used; instead a witness affidavit or the attestation clause in the will lets an uncontested will be proved without live testimony.",
+"cite": "Cal. Prob. Code § 8220(b)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=8220.",
+"verified": true
+},
+"smallEstate": {
+"value": "$208,850",
+"detail": "Affidavit collects personal property if the California estate is $208,850 or less (deaths on/after April 1, 2025) and 40 days have passed since death.",
+"cite": "Cal. Prob. Code §§ 13100, 890",
+"source": "https://selfhelp.courts.ca.gov/probate/simple-transfer",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "California's estate tax was tied to the federal state death tax credit and has been inoperative since 2005; there is no inheritance tax.",
+"cite": "Cal. Rev. & Tax. Code §§ 13302, 13411",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "California has no electronic wills statute; a will must be a signed writing with two witnesses or a holographic will.",
+"cite": "Cal. Prob. Code § 6110",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"CO": {
+"witnesses": {
+"value": "2 witnesses or notary",
+"detail": "A will must be signed by two witnesses or, alternatively, acknowledged by the testator before a notary public.",
+"cite": "Colo. Rev. Stat. § 15-11-502(1)",
+"source": "https://law.justia.com/codes/colorado/title-15/colorado-probate-code/article-11/part-5/section-15-11-502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Colo. Rev. Stat. § 15-11-502(2)",
+"source": "https://law.justia.com/codes/colorado/title-15/colorado-probate-code/article-11/part-5/section-15-11-502",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A witnessed will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "Colo. Rev. Stat. § 15-11-504",
+"source": "https://law.justia.com/codes/colorado/title-15/colorado-probate-code/article-11/part-5/section-15-11-504",
+"verified": true
+},
+"smallEstate": {
+"value": "$88,000",
+"detail": "Affidavit collects property if the estate (less liens) is $88,000 or less for 2026 deaths and at least 10 days have passed since death.",
+"cite": "Colo. Rev. Stat. § 15-12-1201",
+"source": "https://coloradojudicial.gov/sites/default/files/2026-04/JDF999.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Colorado's estate tax is tied to the federal state death tax credit, so none has been due for deaths after 2004; there is no inheritance tax.",
+"cite": "Colo. Rev. Stat. §§ 39-23.5-102, 39-23.5-103",
+"source": "https://content.leg.colorado.gov/agencies/legislative-council-staff/estate-tax",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Colorado Uniform Electronic Wills Act allows wills signed electronically with witnesses in physical or electronic presence.",
+"cite": "Colo. Rev. Stat. §§ 15-11-1301 to 15-11-1311",
+"source": "https://www.nlrg.com/legal-content/the-lawletter/estates-enactments-of-the-uniform-electronic-wills-act",
+"verified": true
+}
+},
+"CT": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator and attested by two witnesses who each sign in the testator's presence.",
+"cite": "Conn. Gen. Stat. § 45a-251",
+"source": "https://law.justia.com/codes/connecticut/title-45a/chapter-802a/section-45a-251-formerly-sec-45-161",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Unwitnessed handwritten wills are not valid if made in Connecticut, but one valid where it was executed can be admitted to probate.",
+"cite": "Conn. Gen. Stat. § 45a-251",
+"source": "https://law.justia.com/codes/connecticut/title-45a/chapter-802a/section-45a-251-formerly-sec-45-161",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign sworn affidavits about the will's execution, so they need not testify when it is probated.",
+"cite": "Conn. Gen. Stat. § 45a-285",
+"source": "https://ctprobate.gov/Forms/PC-210.pdf",
+"verified": true
+},
+"smallEstate": {
+"value": "$40,000",
+"detail": "Affidavit filed in probate court settles the estate if solely owned personal property is $40,000 or less and the decedent owned no Connecticut real estate alone.",
+"cite": "Conn. Gen. Stat. § 45a-273",
+"source": "https://ctprobate.gov/Forms/PC-212.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $15,000,000)",
+"detail": "Connecticut taxes estates over $15 million for 2026 deaths (matching the federal exclusion) at a flat 12%, and also has a gift tax.",
+"cite": "Conn. Gen. Stat. § 12-391",
+"source": "https://portal.ct.gov/DRS/Individuals/Individual-Income-Tax-Portal/Estate-and-Gift-Taxes/Tax-Information",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Connecticut has no electronic wills statute; a will must be a signed writing attested by two witnesses.",
+"cite": "Conn. Gen. Stat. § 45a-251",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"DC": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A paper will is void unless signed by the testator and attested and subscribed in the testator's presence by at least two credible witnesses.",
+"cite": "D.C. Code § 18-103",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/18-103",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "D.C. has no holographic-will exception; an unwitnessed handwritten will is void (only soldiers' and sailors' oral wills are excepted).",
+"cite": "D.C. Code §§ 18-103, 18-107",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/18-103",
+"verified": true
+},
+"selfProving": {
+"value": "No",
+"detail": "D.C. has no self-proving affidavit for paper wills; only electronic wills can be made self-proving under the Uniform Electronic Wills Act.",
+"cite": "D.C. Code § 18-908",
+"source": "https://law.justia.com/codes/district-of-columbia/title-18/chapter-9/section-18-908",
+"verified": true
+},
+"smallEstate": {
+"value": "$80,000",
+"detail": "Court-supervised small estate administration is available if probate property is $80,000 or less; a no-court small-asset affidavit (60 days after death) applies up to $40,000.",
+"cite": "D.C. Code §§ 20-351, 20-361",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/20-351",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $4,988,400)",
+"detail": "D.C. taxes estates of 2026 decedents above $4,988,400 (inflation-adjusted annually) at rates of 11.2% to 16%; there is no inheritance tax.",
+"cite": "D.C. Code § 47-3701 et seq.",
+"source": "https://otr.cfo.dc.gov/sites/default/files/dc/sites/otr/publication/attachments/2026_D-76_v1.0_final.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "The D.C. Uniform Electronic Wills Act allows wills signed electronically, with witnesses physically or electronically present.",
+"cite": "D.C. Code §§ 18-901 to 18-911",
+"source": "https://code.dccouncil.gov/us/dc/council/code/titles/18/chapters/9",
+"verified": true
+}
+},
+"DE": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and attested in the testator's presence by two or more credible witnesses; an interested witness does not invalidate it.",
+"cite": "12 Del. C. §§ 202, 203",
+"source": "https://delcode.delaware.gov/title12/c002/sc01",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "A will lacking two attesting witnesses is void unless it was validly executed under the law of another place where it was made.",
+"cite": "12 Del. C. §§ 202(b), 1306",
+"source": "https://delcode.delaware.gov/title12/c002/sc01",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "An attested will can be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "12 Del. C. § 1305",
+"source": "https://delcode.delaware.gov/title12/c013/index.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Affidavit collects personal estate (excluding joint property and exempt items) worth $50,000 or less after 30 days, once known debts are paid.",
+"cite": "12 Del. C. § 2306",
+"source": "https://delcode.delaware.gov/title12/c023/sc01/index.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Delaware repealed its estate tax for deaths after December 31, 2017, and has no inheritance tax.",
+"cite": "30 Del. C. § 1502 et seq. (repealed)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Delaware has no electronic wills statute, and its electronic transactions act excludes wills.",
+"cite": "12 Del. C. § 202; 6 Del. C. § 12A-103",
+"source": "https://delcode.delaware.gov/title6/c012A",
+"verified": true
+}
+},
+"FL": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator must sign at the end in the presence of two attesting witnesses, who sign in the presence of the testator and of each other.",
+"cite": "Fla. Stat. § 732.502(1)",
+"source": "https://leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0732/Sections/0732.502.html",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Florida does not accept unwitnessed handwritten wills, even from nonresidents; a handwritten will is valid only if signed with two witnesses.",
+"cite": "Fla. Stat. § 732.502(2)",
+"source": "https://leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0732/Sections/0732.502.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, at signing or later.",
+"cite": "Fla. Stat. § 732.503",
+"source": "https://flsenate.gov/Laws/Statutes/2025/Chapter732/All",
+"verified": true
+},
+"smallEstate": {
+"value": "$150,000",
+"detail": "Court summary administration is available if the Florida estate, less creditor-exempt property, is $150,000 or less (or the decedent died over 2 years ago).",
+"cite": "Fla. Stat. § 735.201",
+"source": "https://leg.state.fl.us/Statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0735/Sections/0735.201.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Florida's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; the state constitution bars an inheritance tax.",
+"cite": "Fla. Stat. § 198.02; Fla. Const. art. VII, § 5",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Florida's Electronic Wills Act permits electronically signed wills, with remote witnessing only through supervised online notarization.",
+"cite": "Fla. Stat. §§ 732.521-732.528",
+"source": "https://leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&Search_String=&URL=0700-0799/0732/Sections/0732.522.html",
+"verified": true
+}
+},
+"GA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and attested by two competent witnesses age 14 or older; a gift to a witness is void unless two other disinterested witnesses signed.",
+"cite": "O.C.G.A. §§ 53-4-20, 53-4-22, 53-4-23",
+"source": "https://law.justia.com/codes/georgia/title-53/chapter-4/article-3/section-53-4-20",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Georgia requires two attesting witnesses for every will; an unwitnessed handwritten will is not valid.",
+"cite": "O.C.G.A. § 53-4-20",
+"source": "https://law.justia.com/codes/georgia/title-53/chapter-4/article-3/section-53-4-20",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by affidavits of the testator and witnesses before a notary, at signing or later during their lifetimes.",
+"cite": "O.C.G.A. § 53-4-24",
+"source": "https://law.justia.com/codes/georgia/title-53/chapter-4/article-3/section-53-4-24",
+"verified": true
+},
+"smallEstate": {
+"value": "No dollar threshold",
+"detail": "Georgia has no general small estate affidavit; heirs of an intestate estate with no debts (or consenting creditors) may petition for an order that no administration is necessary.",
+"cite": "O.C.G.A. §§ 53-2-40 to 53-2-42",
+"source": "https://law.justia.com/codes/georgia/title-53/chapter-2/article-4/section-53-2-40",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Georgia repealed its estate tax effective July 1, 2014, and has no inheritance tax.",
+"cite": "O.C.G.A. § 48-12-1.1",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Georgia has no electronic wills statute.",
+"cite": "O.C.G.A. § 53-4-20",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"HI": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Haw. Rev. Stat. § 560:2-502(a)",
+"source": "https://capitol.hawaii.gov/hrscurrent/vol12_ch0501-0588/hrs0560/HRS_0560-0002-0502.htm",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Haw. Rev. Stat. § 560:2-502(b)",
+"source": "https://capitol.hawaii.gov/hrscurrent/vol12_ch0501-0588/hrs0560/HRS_0560-0002-0502.htm",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary or other officer.",
+"cite": "Haw. Rev. Stat. § 560:2-504",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0560/HRS_0560-0002-0504.htm",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property if the gross Hawaii estate (excluding motor vehicles) is $100,000 or less and no personal representative has been sought.",
+"cite": "Haw. Rev. Stat. § 560:3-1201",
+"source": "https://courts.state.hi.us/docs/form/hawaii/3CE210.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $5,490,000)",
+"detail": "Hawaii taxes estates above its own $5.49 million exclusion at rates of 10% to 20%; there is no inheritance tax.",
+"cite": "Haw. Rev. Stat. §§ 236E-6, 236E-8",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol04_Ch0201-0257/HRS0236E/HRS_0236E-0006.htm",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Hawaii has no electronic wills statute.",
+"cite": "Haw. Rev. Stat. § 560:2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"IA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator must sign and declare the will, and two competent witnesses must sign at the testator's request in the presence of the testator and each other.",
+"cite": "Iowa Code § 633.279(1)",
+"source": "https://legis.iowa.gov/docs/code/633.279.pdf",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Iowa requires two witnesses for every will; an unwitnessed handwritten will is not valid unless valid where executed.",
+"cite": "Iowa Code §§ 633.279, 633.283",
+"source": "https://legis.iowa.gov/docs/code/633.279.pdf",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved at signing or later by affidavits of the testator and both witnesses before a notary.",
+"cite": "Iowa Code § 633.279(2)",
+"source": "https://legis.iowa.gov/docs/code/633.279.pdf",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Affidavit collects personal property worth $50,000 or less 40 days after death if there is no real property; probate estates up to $200,000 may use simplified small estate administration.",
+"cite": "Iowa Code §§ 633.356, 635.1",
+"source": "https://legis.iowa.gov/docs/code/633.356.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Iowa's inheritance tax was fully repealed for deaths on or after January 1, 2025, and Iowa has no estate tax.",
+"cite": "Iowa Code §§ 450.2, 450.10",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Iowa has no electronic wills statute.",
+"cite": "Iowa Code § 633.279",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"ID": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two people who witnessed the signing or the testator's acknowledgment.",
+"cite": "Idaho Code § 15-2-502",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title15/t15ch2/sect15-2-502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material provisions are in the testator's handwriting.",
+"cite": "Idaho Code § 15-2-503",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title15/t15ch2/sect15-2-503",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary; electronic wills may also be self-proved.",
+"cite": "Idaho Code §§ 15-2-504, 15-2-1108",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title15/T15CH2PT5",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects property 30 days after death if the probate estate, less liens, is $100,000 or less and no administration is pending.",
+"cite": "Idaho Code § 15-3-1201",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title15/T15CH3/SECT15-3-1201",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Idaho's estate tax was tied to the federal state death tax credit and imposes no tax for deaths after 2004; there is no inheritance tax.",
+"cite": "Idaho Code §§ 14-402, 14-403",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Idaho's Uniform Electronic Wills Act allows tamper-evident electronic wills signed with two witnesses in physical or electronic presence.",
+"cite": "Idaho Code §§ 15-2-1101 to 15-2-1111",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title15/T15CH2PT11",
+"verified": true
+}
+},
+"IL": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and attested in the testator's presence by two or more credible witnesses.",
+"cite": "755 ILCS 5/4-3",
+"source": "https://ilga.gov/legislation/ilcs/fulltext.asp?DocName=075500050K4-3",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Illinois requires two attesting witnesses for every will; an unwitnessed handwritten will is not valid.",
+"cite": "755 ILCS 5/4-3",
+"source": "https://ilga.gov/legislation/ilcs/fulltext.asp?DocName=075500050K4-3",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "No separate notarized affidavit is needed; a will with a proper attestation clause (or witness affidavits) can be admitted without witness testimony.",
+"cite": "755 ILCS 5/6-4",
+"source": "https://ilga.gov/ftp/ILCS/Ch%200755/Act%200005/075500050K6-4.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$150,000",
+"detail": "Small estate affidavit transfers personal property up to $150,000 (registered vehicles excluded from the cap) when no probate is open or planned.",
+"cite": "755 ILCS 5/25-1",
+"source": "https://ilga.gov/ftp/ILCS/Ch%200755/Act%200005/075500050K25-1.html",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $4,000,000)",
+"detail": "Illinois taxes estates over $4 million; the exclusion is not indexed, and proposals to raise it had not passed.",
+"cite": "35 ILCS 405/2",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Illinois allows electronic wills signed electronically and attested by two witnesses, including remote witnesses.",
+"cite": "755 ILCS 6/ (Electronic Wills, Electronic Estate Planning Documents, and Remote Witnesses Act)",
+"source": "https://ilga.gov/legislation/ILCS/details?ActID=4176&ActName=Electronic%20Wills,%20Electronic%20Estate%20Planning%20Documents,%20and%20Remote%20Witnesses%20Act.&ChapAct=FullText&Chapter=ESTATES&ChapterID=60&MajorTopic=RIGHTS%20AND%20REMEDIES&Print=True&SeqStart=",
+"verified": true
+}
+},
+"IN": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator signs (or acknowledges) the will in the presence of two witnesses, who sign in the presence of the testator and each other.",
+"cite": "Ind. Code § 29-1-5-3",
+"source": "https://iga.in.gov/ic/2025/Title_29/Article_1/Chapter_5.pdf",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Indiana requires two attesting witnesses; an unwitnessed handwritten will is not valid.",
+"cite": "Ind. Code §§ 29-1-5-2, 29-1-5-3",
+"source": "https://iga.in.gov/ic/2025/Title_29/Article_1/Chapter_5.pdf",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will can include a self-proving clause signed by the testator and witnesses under penalties for perjury; no notary is required.",
+"cite": "Ind. Code § 29-1-5-3.1",
+"source": "https://iga.in.gov/ic/2025/Title_29/Article_1/Chapter_5.pdf",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects property 45 days after death if the gross probate estate (less liens and encumbrances) is $100,000 or less, for deaths after June 30, 2022.",
+"cite": "Ind. Code § 29-1-8-1",
+"source": "https://law.justia.com/codes/indiana/title-29/article-1/chapter-8/section-29-1-8-1",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Indiana repealed its inheritance tax for deaths after 2012 and has no estate tax.",
+"cite": "Ind. Code § 6-4.1-1-0.5 (inheritance tax repeal); § 6-4.1-11 (repealed)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Indiana's electronic wills chapter allows wills signed electronically with two witnesses and stored as electronic records.",
+"cite": "Ind. Code ch. 29-1-21",
+"source": "https://iga.in.gov/ic/2025/Title_29/Article_1/Chapter_21.pdf",
+"verified": true
+}
+},
+"KS": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed at the end by the testator and attested in the testator's presence by two or more competent witnesses who saw the signing or heard it acknowledged.",
+"cite": "Kan. Stat. Ann. § 59-606",
+"source": "https://kslegislature.gov/b2025_26/laws/059_000_0000_chapter/059_006_0000_article/059_006_0006_section/059_006_0006_k",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Kansas requires two attesting witnesses for written wills; an unwitnessed handwritten will is not valid unless valid where executed.",
+"cite": "Kan. Stat. Ann. § 59-606",
+"source": "https://kslegislature.gov/b2025_26/laws/059_000_0000_chapter/059_006_0000_article/059_006_0006_section/059_006_0006_k",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved at signing or later by acknowledgments and affidavits of the testator and witnesses before a notary.",
+"cite": "Kan. Stat. Ann. § 59-606",
+"source": "https://kslegislature.gov/b2025_26/laws/059_000_0000_chapter/059_006_0000_article/059_006_0006_section/059_006_0006_k",
+"verified": true
+},
+"smallEstate": {
+"value": "$75,000",
+"detail": "A successor may collect personal property by affidavit if total probate assets of a Kansas resident are $75,000 or less and no executor has been sought.",
+"cite": "Kan. Stat. Ann. § 59-1507b",
+"source": "https://ksrevisor.gov/statutes/chapters/ch59/059_015_0007b.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Kansas has no estate or inheritance tax for current deaths.",
+"cite": "Kan. Stat. Ann. § 79-15,100 et seq. (expired)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Kansas has no electronic wills statute.",
+"cite": "Kan. Stat. Ann. § 59-606",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"KY": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will not wholly in the testator's handwriting must be signed or acknowledged before two credible witnesses, who sign in the presence of the testator and each other.",
+"cite": "Ky. Rev. Stat. § 394.040",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=36237",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will wholly written by the testator and signed at the end is valid without witnesses.",
+"cite": "Ky. Rev. Stat. §§ 394.040, 446.060",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=36237",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, so it can be probated without witness testimony.",
+"cite": "Ky. Rev. Stat. § 394.225",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=36262",
+"verified": true
+},
+"smallEstate": {
+"value": "$30,000",
+"detail": "No affidavit; a surviving spouse (or children) may petition the court to dispense with administration when the personal estate does not exceed the $30,000 statutory exemption.",
+"cite": "Ky. Rev. Stat. §§ 395.455, 391.030",
+"source": "https://kycourts.gov/Legal-Help/Documents/probateguide.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "Inheritance tax",
+"detail": "Kentucky has an inheritance tax (4%-16%) on heirs outside Class A (spouse, parents, children, siblings are exempt); there is no estate tax.",
+"cite": "Ky. Rev. Stat. §§ 140.010, 140.070, 140.080",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Kentucky enacted the Uniform Electronic Wills Act in 2026; it applies to decedents dying on or after July 15, 2026, and requires two Kentucky-resident witnesses.",
+"cite": "Ky. Rev. Stat. §§ 394.700-394.715 (2026 Ky. Acts ch. 134)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=57699",
+"verified": true
+}
+},
+"LA": {
+"witnesses": {
+"value": "Notary + 2 witnesses",
+"detail": "A typed (notarial) testament must be dated and signed by the testator before a notary and two witnesses, who also sign; 2025 reforms relaxed the old page-by-page and attestation-clause formalities.",
+"cite": "La. Civ. Code art. 1576 (as amended by 2025 La. Acts No. 30)",
+"source": "https://legis.la.gov/legis/Law.aspx?d=108901",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "An olographic testament entirely written, dated and signed in the testator's handwriting is valid with no witnesses; it is proved at probate by two credible witnesses.",
+"cite": "La. Civ. Code art. 1575; La. Code Civ. Proc. art. 2883",
+"source": "https://legis.la.gov/legis/Law.aspx?d=111560",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A notarial testament signed on each page with a declaration by the notary and witnesses (in the will or a later affidavit) needs no further proof at probate.",
+"cite": "La. Code Civ. Proc. art. 2891",
+"source": "https://legis.la.gov/LEGIS/Law.aspx?d=111564",
+"verified": true
+},
+"smallEstate": {
+"value": "$200,000",
+"detail": "A small succession (Louisiana domiciliary, gross property $200,000 or less) can often be settled by a small succession affidavit without opening a court succession.",
+"cite": "La. Code Civ. Proc. arts. 3421, 3431-3434",
+"source": "https://legis.la.gov/Legis/ViewDocument.aspx?d=1479530",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Louisiana's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; its inheritance tax was repealed.",
+"cite": "La. R.S. 47:2431-2434",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Louisiana has no electronic wills statute; testaments must be olographic or notarial.",
+"cite": "La. Civ. Code arts. 1574-1576",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"MA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and signed by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Mass. Gen. Laws ch. 190B, § 2-502",
+"source": "https://mass.gov/info-details/mass-general-laws-c190b-ss-2-502",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Massachusetts did not adopt the UPC holographic-will provision; an unwitnessed handwritten will is valid only if it met the law where it was executed.",
+"cite": "Mass. Gen. Laws ch. 190B, §§ 2-502, 2-506",
+"source": "https://mass.gov/info-details/mass-general-laws-c190b-ss-2-502",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, so execution is presumed without witness testimony.",
+"cite": "Mass. Gen. Laws ch. 190B, §§ 2-504, 3-406",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleII/Chapter190B/Section2-504",
+"verified": true
+},
+"smallEstate": {
+"value": "$25,000",
+"detail": "Voluntary administration through the Probate and Family Court is available when the estate is only personal property worth $25,000 or less (excluding one car) and no real estate.",
+"cite": "Mass. Gen. Laws ch. 190B, § 3-1201",
+"source": "https://mass.gov/info-details/mupc-estate-administration-procedural-guide-voluntary-administration",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $2,000,000)",
+"detail": "Massachusetts taxes estates over $2 million (rates 0.8%-16%), with a credit that eliminates tax on the first $2 million; there is no inheritance tax.",
+"cite": "Mass. Gen. Laws ch. 65C, § 2A",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Massachusetts has no electronic wills statute.",
+"cite": "Mass. Gen. Laws ch. 190B, § 2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"MD": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and attested by two or more credible witnesses in the testator's physical presence (or electronic presence for qualifying electronic or remotely witnessed wills).",
+"cite": "Md. Code, Est. & Trusts § 4-102",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=get&section=4-102",
+"verified": true
+},
+"holographic": {
+"value": "Recognized only if made by a service member abroad",
+"detail": "A handwritten unwitnessed will is valid only if written by a member of the U.S. armed services outside the U.S.; it lapses one year after discharge.",
+"cite": "Md. Code, Est. & Trusts § 4-103",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=get&enactments=false&section=4-103",
+"verified": true
+},
+"selfProving": {
+"value": "No",
+"detail": "Maryland has no statutory self-proving affidavit; properly attested wills are normally admitted administratively by the Register of Wills without witness testimony.",
+"cite": "Md. Code, Est. & Trusts § 4-102",
+"source": "https://registers.maryland.gov/main",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Estates with Maryland probate assets of $50,000 or less ($100,000 if the surviving spouse is sole heir or legatee) use simplified small estate administration through the Register of Wills.",
+"cite": "Md. Code, Est. & Trusts §§ 5-601 to 5-608",
+"source": "https://registers.maryland.gov/main/seinfo.html",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $5,000,000) + inheritance tax",
+"detail": "Maryland has both a $5 million estate tax exemption (not indexed) and a 10% inheritance tax on transfers to non-exempt beneficiaries such as siblings, nieces and friends.",
+"cite": "Md. Code, Tax-Gen. §§ 7-202, 7-203, 7-309",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Maryland permits electronic and remotely witnessed wills signed with a supervising attorney present physically or electronically.",
+"cite": "Md. Code, Est. & Trusts §§ 4-101, 4-102(c)-(d)",
+"source": "https://law.justia.com/codes/maryland/estates-and-trusts/title-4/subtitle-1/section-4-102",
+"verified": true
+}
+},
+"ME": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or acknowledgment; an interested witness does not invalidate the will.",
+"cite": "Me. Rev. Stat. tit. 18-C, §§ 2-502(1), 2-504",
+"source": "https://legislature.maine.gov/statutes/18-c/title18-csec2-502.html",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-502(2)",
+"source": "https://legislature.maine.gov/statutes/18-c/title18-csec2-502.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary or other officer.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-503",
+"source": "https://legislature.maine.gov/legis/statutes/18-C/title18-Csec2-503.html",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $7,160,000)",
+"detail": "Maine taxes estates of 2026 decedents above $7,160,000 at rates of 8% to 12%; there is no inheritance tax.",
+"cite": "Me. Rev. Stat. tit. 36, ch. 577 (§ 4102 et seq.)",
+"source": "https://maine.gov/revenue/taxes/income-estate-tax/estate-tax-706me",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Maine has no electronic wills statute.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"MI": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Mich. Comp. Laws § 700.2502(1)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-700-2502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A holographic will is valid without witnesses if it is dated and the signature and material portions are in the testator's handwriting.",
+"cite": "Mich. Comp. Laws § 700.2502(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-700-2502",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by sworn statements of the testator and witnesses before a notary, or by an unsworn statement signed under penalty of perjury.",
+"cite": "Mich. Comp. Laws § 700.2504",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-700-2504",
+"verified": true
+},
+"smallEstate": {
+"value": "$53,000",
+"detail": "With no real property, a successor can collect personal property by sworn statement 28 days after death if the estate is $53,000 or less (2026 deaths, inflation-adjusted).",
+"cite": "Mich. Comp. Laws §§ 700.3983, 700.1210",
+"source": "https://cdn.oaklandcountymi.gov/oakland-sitefinity-prod/docs/default-source/courts/cola-cost-of-living-adjustment.pdf?sfvrsn=bd72fa5e_1",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Michigan's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Mich. Comp. Laws §§ 205.232, 205.256",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Michigan has no electronic wills statute.",
+"cite": "Mich. Comp. Laws § 700.2502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"MN": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Minn. Stat. § 524.2-502",
+"source": "https://revisor.mn.gov/statutes/cite/524.2-502",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Minnesota omitted the UPC holographic-will provision; an unwitnessed handwritten will is valid only if it complied with the law where it was executed.",
+"cite": "Minn. Stat. §§ 524.2-502, 524.2-506",
+"source": "https://revisor.mn.gov/statutes/cite/524.2-506",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "Minn. Stat. § 524.2-504",
+"source": "https://revisor.mn.gov/statutes/cite/524",
+"verified": true
+},
+"smallEstate": {
+"value": "$75,000",
+"detail": "Affidavit collects personal property 30 days after death if the entire probate estate, less liens, is $75,000 or less and no personal representative is sought.",
+"cite": "Minn. Stat. § 524.3-1201",
+"source": "https://revisor.mn.gov/statutes/cite/524.3-1201",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $3,000,000)",
+"detail": "Minnesota taxes estates over $3 million at 13% to 16%, and adds back taxable gifts made within three years of death; there is no inheritance tax.",
+"cite": "Minn. Stat. §§ 291.016, 291.03",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Minnesota's probate code treats electronic wills as wills and provides for certified paper copies of them; a 2026 act added electronic non-testamentary estate documents.",
+"cite": "Minn. Stat. §§ 524.1-201(62), 524.2-518; 2026 Minn. Laws ch. 45",
+"source": "https://revisor.mn.gov/statutes/cite/524.2-518",
+"verified": true
+}
+},
+"MO": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and attested by two or more competent witnesses who sign in the testator's presence.",
+"cite": "Mo. Rev. Stat. § 474.320",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=474.320",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Missouri requires two attesting witnesses for every written will; an unwitnessed handwritten will is not valid.",
+"cite": "Mo. Rev. Stat. § 474.320",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=474.320",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A written will may be made self-proved at signing or later by acknowledgment of the testator and witnesses before a notary.",
+"cite": "Mo. Rev. Stat. § 474.337",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=474.337",
+"verified": true
+},
+"smallEstate": {
+"value": "$40,000",
+"detail": "Distributees may file a small estate affidavit with the probate division 30 days after death if the estate, less liens and debts, is $40,000 or less; a bond is usually required.",
+"cite": "Mo. Rev. Stat. § 473.097",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=473.097",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Missouri's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Mo. Rev. Stat. §§ 145.011, 145.091",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "The Missouri Electronic Wills and Electronic Estate Planning Documents Act (effective Aug. 28, 2025) recognizes electronic wills.",
+"cite": "Mo. Rev. Stat. §§ 474.540-474.564",
+"source": "https://revisor.mo.gov/main/OneChapter.aspx?chapter=474",
+"verified": true
+}
+},
+"MS": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will not wholly written and signed by the testator must be attested by two or more credible witnesses in the testator's presence.",
+"cite": "Miss. Code Ann. § 91-5-1",
+"source": "https://law.justia.com/codes/mississippi/title-91/chapter-5/section-91-5-1",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will wholly written and signed in the testator's own handwriting is valid without attesting witnesses.",
+"cite": "Miss. Code Ann. § 91-5-1",
+"source": "https://law.justia.com/codes/mississippi/title-91/chapter-5/section-91-5-1",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A subscribing witness's sworn affidavit before a notary is accepted in place of live testimony when the will is not contested.",
+"cite": "Miss. Code Ann. § 91-7-9",
+"source": "https://law.justia.com/codes/mississippi/title-91/chapter-7/section-91-7-9",
+"verified": true
+},
+"smallEstate": {
+"value": "$75,000",
+"detail": "Affidavit collects personal property 30 days after death if the probate estate, excluding liens, is $75,000 or less and no personal representative is pending or appointed.",
+"cite": "Miss. Code Ann. § 91-7-322",
+"source": "https://law.justia.com/codes/mississippi/title-91/chapter-7/general-provisions/section-91-7-322",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Mississippi's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Miss. Code Ann. § 27-9-5",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Mississippi has no electronic wills statute.",
+"cite": "Miss. Code Ann. § 91-5-1",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"MT": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Mont. Code Ann. § 72-2-522(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0720/chapter_0020/part_0050/section_0220/0720-0020-0050-0220.html",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Mont. Code Ann. § 72-2-522(2)",
+"source": "https://mca.legmt.gov/bills/mca/title_0720/chapter_0020/part_0050/section_0220/0720-0020-0050-0220.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, so no witness testimony is needed.",
+"cite": "Mont. Code Ann. §§ 72-2-524, 72-3-321",
+"source": "https://mca.legmt.gov/bills/mca/title_0720/chapter_0020/part_0050/section_0240/0720-0020-0050-0240.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 30 days after death if the probate estate, less liens, is $100,000 or less and no personal representative is pending or appointed.",
+"cite": "Mont. Code Ann. § 72-3-1101",
+"source": "https://mca.legmt.gov/bills/mca/title_0720/chapter_0030/part_0110/section_0010/0720-0030-0110-0010.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Montana's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Mont. Code Ann. § 72-16-905",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Montana has no electronic wills statute.",
+"cite": "Mont. Code Ann. § 72-2-522",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"NC": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "An attested written will must be signed by the testator and attested by at least two competent witnesses.",
+"cite": "N.C. Gen. Stat. § 31-3.3",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/ByChapter/Chapter_31.html",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will written entirely in the testator's handwriting and signed (or with the name written in it) by the testator needs no witnesses.",
+"cite": "N.C. Gen. Stat. § 31-3.4",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_31/GS_31-3.4.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "An attested will can be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "N.C. Gen. Stat. §§ 31-11.6, 28A-2A-8(a)(4)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_31/GS_31-11.6.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$20,000 ($30,000 for spouse)",
+"detail": "Affidavit filed with the clerk collects personal property up to $20,000 (net of liens), or $30,000 if the surviving spouse is the sole heir or devisee, after 30 days.",
+"cite": "N.C. Gen. Stat. §§ 28A-25-1, 28A-25-1.1",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_28A/Article_25.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "North Carolina repealed its estate tax for deaths on or after January 1, 2013, and has no inheritance tax.",
+"cite": "N.C. Sess. Law 2013-316 (HB 998)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "North Carolina does not allow electronically signed wills; since 2025 an attorney may store a signed paper will as an electronic record with a certified copy.",
+"cite": "N.C. Gen. Stat. §§ 31-72, 31-73 (S.L. 2025-33)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_31/GS_31-73.html",
+"verified": true
+}
+},
+"ND": {
+"witnesses": {
+"value": "2 witnesses or notary",
+"detail": "A will must be signed by two witnesses or, alternatively, acknowledged by the testator before a notary public.",
+"cite": "N.D. Cent. Code § 30.1-08-02(1)",
+"source": "https://ndlegis.gov/cencode/t30-1c08.pdf",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "N.D. Cent. Code § 30.1-08-02(2)",
+"source": "https://ndlegis.gov/cencode/t30-1c08.pdf",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "N.D. Cent. Code § 30.1-08-04",
+"source": "https://ndlegis.gov/cencode/t30-1c08.pdf",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 30 days after death if the estate, less liens, is $100,000 or less, with no real estate and no probate pending.",
+"cite": "N.D. Cent. Code § 30.1-23-01",
+"source": "https://ndlegis.gov/cencode/t30-1c23.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "North Dakota's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "N.D. Cent. Code § 57-37.1-04",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "North Dakota's Uniform Electronic Wills Act treats electronically signed and witnessed wills as valid wills.",
+"cite": "N.D. Cent. Code ch. 30.1-37",
+"source": "https://ndlegis.gov/cencode/t30-1c37.pdf",
+"verified": true
+}
+},
+"NE": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and signed by at least two individuals who witnessed the signing or acknowledgment.",
+"cite": "Neb. Rev. Stat. § 30-2327",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=30-2327",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A holographic will is valid without witnesses if the signature, material provisions and an indication of the date are in the testator's handwriting.",
+"cite": "Neb. Rev. Stat. § 30-2328",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=30-2328",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary or other officer.",
+"cite": "Neb. Rev. Stat. § 30-2329",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=30-2329",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 30 days after death if all personal property, less liens, is $100,000 or less; a separate affidavit transfers Nebraska real estate valued at $100,000 or less.",
+"cite": "Neb. Rev. Stat. §§ 30-24,125, 30-24,129",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=30-24,125",
+"verified": true
+},
+"estateTax": {
+"value": "Inheritance tax",
+"detail": "Nebraska's county inheritance tax is 1% over $100,000 for close relatives, 11% over $40,000 for remote relatives, and 15% over $25,000 for others; spouses and heirs under 22 are exempt.",
+"cite": "Neb. Rev. Stat. §§ 77-2004 to 77-2006",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=77-2004",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Nebraska has no electronic wills statute.",
+"cite": "Neb. Rev. Stat. § 30-2327",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"NH": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by two or more credible witnesses who attest at the testator's request and in his or her presence; attorney-supervised video witnessing is allowed.",
+"cite": "N.H. Rev. Stat. Ann. § 551:2",
+"source": "https://gc.nh.gov/rsa/html/LVI/551/551-2.htm",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "New Hampshire requires two witnesses for every will; an unwitnessed handwritten will is not valid.",
+"cite": "N.H. Rev. Stat. Ann. § 551:2",
+"source": "https://gc.nh.gov/rsa/html/LVI/551/551-2.htm",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will is self-proved if the testator's and witnesses' signatures are followed by a sworn acknowledgment before a notary or justice of the peace.",
+"cite": "N.H. Rev. Stat. Ann. §§ 551:2-a, 552:5-b",
+"source": "https://gc.nh.gov/rsa/html/LVI/551/551-2-a.htm",
+"verified": true
+},
+"smallEstate": {
+"value": "No dollar threshold",
+"detail": "New Hampshire has no small estate affidavit; instead, when sole or all heirs/beneficiaries serve as administrator, the court can waive bond, inventory and accounting (waiver of administration).",
+"cite": "N.H. Rev. Stat. Ann. § 553:32",
+"source": "https://gc.nh.gov/rsa/html/LVI/553/553-32.htm",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "New Hampshire's estate tax was tied to the federal state death tax credit (no return required for deaths after 2004) and its legacy and succession tax no longer applies.",
+"cite": "N.H. Rev. Stat. Ann. § 87:1",
+"source": "https://revenue.nh.gov/resource-center/frequently-asked-questions/inheritance-estate-taxes",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "New Hampshire's will statute expressly states that its remote-witnessing rule does not allow an electronic will.",
+"cite": "N.H. Rev. Stat. Ann. § 551:2, III(b)",
+"source": "https://gc.nh.gov/rsa/html/LVI/551/551-2.htm",
+"verified": true
+}
+},
+"NJ": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "N.J. Stat. Ann. § 3B:3-2(a)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/3735/3755?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A 'writing intended as a will' is valid without witnesses if the signature and material portions are in the testator's handwriting; it must be probated in Superior Court.",
+"cite": "N.J. Stat. Ann. §§ 3B:3-2(b), 3B:3-19",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/3735/3755?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will acknowledged and sworn to by the testator and witnesses before a notary can be admitted by the surrogate without further proof.",
+"cite": "N.J. Stat. Ann. §§ 3B:3-4, 3B:3-5, 3B:3-19",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/3735/3774?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000 (spouse) / $20,000 (heirs)",
+"detail": "For intestate estates only: a surviving spouse or partner may take assets up to $50,000 by affidavit before the Surrogate; other heirs may use an affidavit for estates up to $20,000.",
+"cite": "N.J. Stat. Ann. §§ 3B:10-3, 3B:10-4",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/3735/3877?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"estateTax": {
+"value": "Inheritance tax",
+"detail": "New Jersey repealed its estate tax for deaths after 2017 but keeps an inheritance tax (0%-16%) on transfers to siblings and more distant or unrelated heirs; spouses, children and parents are exempt.",
+"cite": "N.J. Stat. Ann. §§ 54:34-2, 54:38-1",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "New Jersey has no electronic wills statute.",
+"cite": "N.J. Stat. Ann. § 3B:3-2",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"NM": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two witnesses, who sign in the presence of the testator and of each other after seeing the testator sign.",
+"cite": "N.M. Stat. Ann. § 45-2-502",
+"source": "https://nmonesource.com/nmos/nmsa/en/4393/1/document.do",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "New Mexico omitted the UPC holographic-will provision; unwitnessed handwritten wills are valid only if valid where executed.",
+"cite": "N.M. Stat. Ann. §§ 45-2-502, 45-2-506",
+"source": "https://nmonesource.com/nmos/nmsa/en/4393/1/document.do",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits or affirmations under penalty of perjury before a notary.",
+"cite": "N.M. Stat. Ann. § 45-2-504",
+"source": "https://law.justia.com/codes/new-mexico/chapter-45/article-2/section-45-2-504",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "An affidavit of successor collects property 30 days after death if the entire estate, less liens, is $50,000 or less and no probate has been filed; real property is excluded.",
+"cite": "N.M. Stat. Ann. § 45-3-1201",
+"source": "https://nmcourts.gov/wp-content/uploads/2024/01/SRL_Probate.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "New Mexico's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "N.M. Stat. Ann. § 7-7-3",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "New Mexico has no electronic wills statute.",
+"cite": "N.M. Stat. Ann. § 45-2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"NV": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A non-holographic, non-electronic will must be signed by the testator and attested by at least two competent witnesses who sign in the testator's presence.",
+"cite": "Nev. Rev. Stat. § 133.040",
+"source": "https://leg.state.nv.us/NRS/NRS-133.html",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A holographic will is valid without witnesses if the signature, date and material provisions are in the testator's own handwriting.",
+"cite": "Nev. Rev. Stat. § 133.090",
+"source": "https://selfhelp.nvcourts.gov/pro/overview",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign a declaration under penalty of perjury or a notarized affidavit, which the court accepts in place of testimony.",
+"cite": "Nev. Rev. Stat. § 133.050",
+"source": "https://leg.state.nv.us/NRS/NRS-133.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$25,000 ($150,000 for spouse)",
+"detail": "With no Nevada real property, an affidavit collects property worth up to $25,000, or $150,000 if the claimant is the surviving spouse, 40 days after death.",
+"cite": "Nev. Rev. Stat. § 146.080",
+"source": "https://leg.state.nv.us/NRS/NRS-146.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Nevada's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Nev. Rev. Stat. §§ 375A.025, 375A.100",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Nevada allows electronic wills with an electronic signature and authentication characteristic; they need no witnesses if stored as a single authoritative copy.",
+"cite": "Nev. Rev. Stat. §§ 133.085, 133.086",
+"source": "https://selfhelp.nvcourts.gov/pro/overview",
+"verified": true
+}
+},
+"NY": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator signs at the end and declares the will to two attesting witnesses, who sign within one 30-day period; a gift to a witness is void unless two other disinterested witnesses signed.",
+"cite": "N.Y. Est. Powers & Trusts Law §§ 3-2.1, 3-3.2",
+"source": "https://law.justia.com/codes/new-york/ept/article-3/part-2/3-2-1",
+"verified": true
+},
+"holographic": {
+"value": "Recognized only if made by military members in conflict or mariners at sea",
+"detail": "Handwritten unwitnessed wills are valid only for armed forces members (or those accompanying them) during armed conflict and mariners at sea, and expire after set periods.",
+"cite": "N.Y. Est. Powers & Trusts Law § 3-2.2",
+"source": "https://nysenate.gov/legislation/laws/EPT/3-2.2",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses can sign an affidavit at execution (SCPA 1406) so the will can be probated without their testimony.",
+"cite": "N.Y. Surr. Ct. Proc. Act § 1406",
+"source": "https://nysenate.gov/legislation/laws/SCP/1406",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Voluntary administration in Surrogate's Court is available when personal property (excluding family set-off exemptions) is $50,000 or less, with or without a will.",
+"cite": "N.Y. Surr. Ct. Proc. Act § 1301",
+"source": "https://nysenate.gov/legislation/laws/SCP/1301",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $7,350,000)",
+"detail": "New York taxes estates of 2026 decedents above $7,350,000; estates over 105% of that amount lose the exemption entirely (the 'cliff'). No inheritance tax.",
+"cite": "N.Y. Tax Law §§ 951(a), 952(a)",
+"source": "https://tax.ny.gov/pit/estate/etidx.htm",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "New York enacted an Electronic Wills Act in December 2025, but it does not take effect until June 10, 2027; electronic wills are not yet valid.",
+"cite": "N.Y. Est. Powers & Trusts Law art. 3, pt. 6 (eff. June 10, 2027)",
+"source": "https://law.justia.com/codes/new-york/ept/article-3/part-2/3-2-1",
+"verified": true
+}
+},
+"OH": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed at the end by the testator and attested in the testator's conscious presence by two or more competent witnesses age 18 or older.",
+"cite": "Ohio Rev. Code §§ 2107.03, 2107.06",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2107.03",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "A will may be handwritten, but it still must be signed at the end and attested by two witnesses; unwitnessed handwritten wills are invalid.",
+"cite": "Ohio Rev. Code § 2107.03",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2107.03",
+"verified": true
+},
+"selfProving": {
+"value": "No",
+"detail": "Ohio has no self-proving affidavit procedure; uncontested wills are generally admitted by the probate court without witness testimony anyway.",
+"cite": "Ohio Rev. Code ch. 2107",
+"source": "https://codes.ohio.gov/ohio-revised-code/chapter-2107",
+"verified": true
+},
+"smallEstate": {
+"value": "$35,000 ($100,000 for spouse)",
+"detail": "Probate court may release an estate from administration if assets are $35,000 or less, or $100,000 or less when everything passes to the surviving spouse.",
+"cite": "Ohio Rev. Code § 2113.03",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2113.03",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Ohio repealed its estate tax for deaths after December 31, 2012, and has no inheritance tax.",
+"cite": "Ohio Rev. Code ch. 5731 (repealed by 2011 H.B. 153)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Ohio has no electronic wills statute, and its will statute excludes presence by electronic communication.",
+"cite": "Ohio Rev. Code § 2107.03",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2107.03",
+"verified": true
+}
+},
+"OK": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator signs at the end (or acknowledges) and declares the will to two attesting witnesses, who sign at the end at the testator's request and in his or her presence.",
+"cite": "Okla. Stat. tit. 84, § 55",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os84.pdf?section=84-55",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will entirely written, dated and signed in the testator's own hand is valid without witnesses.",
+"cite": "Okla. Stat. tit. 84, § 54",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os84.pdf?section=84-54",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "An attested will may be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "Okla. Stat. tit. 84, § 55",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os84.pdf?section=84-55",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Affidavit collects property 10 or more days after death if the decedent's Oklahoma property, less liens, is worth $50,000 or less and all taxes and debts are paid or provided for.",
+"cite": "Okla. Stat. tit. 58, § 393",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os58.pdf?section=58-393",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Oklahoma repealed its estate tax effective January 1, 2010, and has no inheritance tax.",
+"cite": "Okla. Stat. tit. 68, § 804",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Oklahoma's Uniform Electronic Estate Planning Documents Act (effective Nov. 1, 2024) allows electronic wills signed with two witnesses in physical or electronic presence.",
+"cite": "Okla. Stat. tit. 84, §§ 901-910",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os84.pdf?section=84-905",
+"verified": true
+}
+},
+"OR": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be in writing, signed by the testator, and attested by two witnesses who saw the signing or heard the acknowledgment; witnesses must sign before the testator's death.",
+"cite": "Or. Rev. Stat. § 112.235",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors112.html",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Oregon requires two attesting witnesses; an unwitnessed handwritten will is not valid (a court may excuse some defects only on clear and convincing evidence).",
+"cite": "Or. Rev. Stat. §§ 112.235, 112.238",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors112.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "An attesting witness's affidavit, signed at or after execution, can be used instead of live testimony when the will is probated.",
+"cite": "Or. Rev. Stat. §§ 112.235(2), 113.055",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors113.html",
+"verified": true
+},
+"smallEstate": {
+"value": "$275,000",
+"detail": "A simple estate affidavit can be filed with the probate court 30 days after death if personal property is $75,000 or less and real property $200,000 or less.",
+"cite": "Or. Rev. Stat. §§ 114.510, 114.515",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors114.html",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $1,000,000)",
+"detail": "Oregon taxes estates over a fixed $1 million exemption at 10% to 16%; there is no inheritance tax.",
+"cite": "Or. Rev. Stat. § 118.010",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Oregon law states that a 'writing' for will execution does not include an electronic record, so electronic wills are not valid.",
+"cite": "Or. Rev. Stat. § 112.235(4) (2025 Or. Laws ch. 34)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors112.html",
+"verified": true
+}
+},
+"PA": {
+"witnesses": {
+"value": "None required to sign",
+"detail": "A will need only be in writing and signed at the end; witnesses must sign only if the testator signs by mark or by another, but two witnesses must later prove it at probate.",
+"cite": "20 Pa. Cons. Stat. §§ 2502, 3132",
+"source": "https://law.justia.com/codes/pennsylvania/title-20/chapter-25/section-2502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "Because no attesting witnesses are required, a handwritten will signed at the end is valid; two witnesses who know the handwriting prove the signature at probate.",
+"cite": "20 Pa. Cons. Stat. §§ 2502, 3132",
+"source": "https://legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?ttl=20&txtType=HTM",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "An attested will can be made self-proved by the testator's acknowledgment and witness affidavits before a notary (or an attorney certified to an officer).",
+"cite": "20 Pa. Cons. Stat. § 3132.1",
+"source": "https://law.justia.com/codes/pennsylvania/title-20/chapter-31/section-3132-1",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Personal property estates of $50,000 or less (excluding certain items like real estate and wages) may be settled by petition to the Orphans' Court without full administration.",
+"cite": "20 Pa. Cons. Stat. § 3102",
+"source": "https://yorkcountypa.gov/DocumentCenter/View/2106/Petition-for-Settlement-of-Small-Estate-PDF",
+"verified": true
+},
+"estateTax": {
+"value": "Inheritance tax",
+"detail": "Pennsylvania's inheritance tax is 0% for spouses and transfers to parents from a child 21 or younger, 4.5% for lineal heirs, 12% for siblings and 15% for others.",
+"cite": "72 P.S. § 9116",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Pennsylvania has no electronic wills statute.",
+"cite": "20 Pa. Cons. Stat. § 2502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"RI": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator must sign or acknowledge the will before two or more witnesses present at the same time, who then sign in the testator's presence.",
+"cite": "R.I. Gen. Laws § 33-5-5",
+"source": "https://law.justia.com/codes/rhode-island/title-33/chapter-33-5/section-33-5-5",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Rhode Island requires two witnesses; the only exceptions are oral or informal wills of soldiers in service and mariners at sea.",
+"cite": "R.I. Gen. Laws §§ 33-5-5, 33-5-6",
+"source": "https://law.justia.com/codes/rhode-island/title-33/chapter-33-5/section-33-5-5",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Witnesses may sign a sworn affidavit in the statutory form, which proves the will's execution without their testimony.",
+"cite": "R.I. Gen. Laws § 33-7-26",
+"source": "https://law.justia.com/codes/rhode-island/title-33/chapter-33-7/section-33-7-26",
+"verified": true
+},
+"smallEstate": {
+"value": "$15,000",
+"detail": "Voluntary informal administration through probate court is available 30 days after death when the estate is only personal property worth $15,000 or less (excluding tangible items).",
+"cite": "R.I. Gen. Laws §§ 33-24-1, 33-24-2",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE33/33-24/33-24-1.HTM",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $1,838,056)",
+"detail": "Rhode Island taxes estates of 2026 decedents above $1,838,056 (inflation-adjusted each year) at rates up to 16%; there is no inheritance tax.",
+"cite": "R.I. Gen. Laws § 44-22-1.1",
+"source": "https://tax.ri.gov/sites/g/files/xkgbur541/files/2025-12/ADV_2025_27_Estate_Updates.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Rhode Island has no electronic wills statute.",
+"cite": "R.I. Gen. Laws § 33-5-5",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"SC": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "S.C. Code Ann. § 62-2-502",
+"source": "https://scstatehouse.gov/code/t62c002.php",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "South Carolina requires two witnesses for wills executed in the state; an unwitnessed handwritten will is valid only if valid where it was executed.",
+"cite": "S.C. Code Ann. §§ 62-2-502, 62-2-505",
+"source": "https://scstatehouse.gov/code/t62c002.php",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, so no witness testimony is needed.",
+"cite": "S.C. Code Ann. §§ 62-2-503, 62-3-406",
+"source": "https://scstatehouse.gov/code/t62c002.php",
+"verified": true
+},
+"smallEstate": {
+"value": "$45,000",
+"detail": "Affidavit, approved by the probate judge, collects personal property 30 days after death if the probate estate less liens is $45,000 or less.",
+"cite": "S.C. Code Ann. § 62-3-1201",
+"source": "https://scstatehouse.gov/code/t62c003.php",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "South Carolina's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "S.C. Code Ann. § 12-16-510 (inoperative)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "South Carolina has no electronic wills statute, and its electronic transactions act excludes wills.",
+"cite": "S.C. Code Ann. § 62-2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"SD": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A non-holographic will must be signed by the testator and by two or more individuals in the testator's conscious presence who witnessed the signing or acknowledgment.",
+"cite": "S.D. Codified Laws § 29A-2-502(b)",
+"source": "https://sdlegislature.gov/Statutes/29A-2-502",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "S.D. Codified Laws § 29A-2-502(a)",
+"source": "https://sdlegislature.gov/Statutes/29A-2-502",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, so signatures are conclusively presumed valid.",
+"cite": "S.D. Codified Laws §§ 29A-2-504, 29A-3-406",
+"source": "https://sdlegislature.gov/Statutes/29A-2-504",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 30 days after death if the estate less liens is $100,000 or less and the decedent owed no Medicaid institutional-care debt.",
+"cite": "S.D. Codified Laws § 29A-3-1201",
+"source": "https://sdlegislature.gov/Statutes/29A-3-1201",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "South Dakota permanently repealed its estate tax effective July 1, 2014, and has no inheritance tax.",
+"cite": "S.D. Codified Laws ch. 10-40A (repealed)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "South Dakota has no electronic wills statute.",
+"cite": "S.D. Codified Laws § 29A-2-502",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"TN": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator signs or acknowledges the will before two or more attesting witnesses, who sign in the presence of the testator and of each other.",
+"cite": "Tenn. Code Ann. § 32-1-104",
+"source": "https://law.justia.com/codes/tennessee/title-32/chapter-1/part-1/section-32-1-104",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "No witnesses are needed if the signature and all material provisions are in the testator's handwriting; the handwriting must be proved by two witnesses.",
+"cite": "Tenn. Code Ann. § 32-1-105",
+"source": "https://law.justia.com/cases/tennessee/court-of-appeals/1957/314-s-w-2d-39-1.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign an affidavit on or attached to the will, which the probate court accepts as their testimony if the will is not contested.",
+"cite": "Tenn. Code Ann. § 32-2-110",
+"source": "https://law.justia.com/codes/tennessee/title-32/chapter-2/section-32-2-110",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "A small estate affidavit filed in probate court covers probate personal property worth $50,000 or less; it does not transfer real estate.",
+"cite": "Tenn. Code Ann. §§ 30-4-101 to 30-4-105",
+"source": "https://law.justia.com/codes/tennessee/title-30/chapter-4/section-30-4-102",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Tennessee repealed its inheritance tax for deaths after 2015 and its pick-up estate tax is inoperative; there is no state death tax.",
+"cite": "Tenn. Code Ann. § 67-8-204",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Tennessee has no electronic wills statute.",
+"cite": "Tenn. Code Ann. § 32-1-104",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"TX": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and attested by two or more credible witnesses at least 14 years old who sign in their own handwriting in the testator's presence.",
+"cite": "Tex. Est. Code § 251.051",
+"source": "https://statutes.capitol.texas.gov/Docs/ES/htm/ES.251.htm",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will written wholly in the testator's handwriting does not need attesting witnesses.",
+"cite": "Tex. Est. Code § 251.052",
+"source": "https://statutes.capitol.texas.gov/Docs/ES/htm/ES.251.htm",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved with an affidavit of the testator and witnesses before a notary, attached to the will.",
+"cite": "Tex. Est. Code §§ 251.101-251.107",
+"source": "https://statutes.capitol.texas.gov/Docs/ES/htm/ES.251.htm",
+"verified": true
+},
+"smallEstate": {
+"value": "$75,000",
+"detail": "For intestate estates only, distributees may file a court-approved small estate affidavit 30 days after death if assets (excluding homestead and exempt property) are $75,000 or less.",
+"cite": "Tex. Est. Code §§ 205.001-205.008",
+"source": "https://statutes.capitol.texas.gov/Docs/ES/pdf/ES.205.pdf",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Texas repealed its estate tax in 2015 and has no inheritance tax.",
+"cite": "Tex. Tax Code ch. 211 (repealed)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Texas has no electronic wills statute; witnesses must sign in their own handwriting.",
+"cite": "Tex. Est. Code § 251.051",
+"source": "https://statutes.capitol.texas.gov/Docs/ES/htm/ES.251.htm",
+"verified": true
+}
+},
+"UT": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by at least two individuals who witnessed the signing or the testator's acknowledgment.",
+"cite": "Utah Code § 75-2-502(1)",
+"source": "https://le.utah.gov/xcode/Title75/Chapter2/75-2-S502.html",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will is valid as a holographic will, witnessed or not, if the signature and material portions are in the testator's handwriting.",
+"cite": "Utah Code § 75-2-502(2)",
+"source": "https://le.utah.gov/xcode/Title75/Chapter2/75-2-S502.html",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "Utah Code § 75-2-504",
+"source": "https://le.utah.gov/xcode/Title75/Chapter2/C75-2-P5_1800010118000101.pdf",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 30 days after death if the estate subject to administration, less liens, is $100,000 or less; it cannot transfer real estate.",
+"cite": "Utah Code § 75-3-1201",
+"source": "https://le.utah.gov/xcode/Title75/Chapter3/75-3-S1201.html",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Utah's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Utah Code §§ 59-11-101 to 59-11-103",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Utah's Uniform Electronic Wills Act allows wills signed electronically with witnesses in physical or electronic presence.",
+"cite": "Utah Code §§ 75-2-1401 to 75-2-1411",
+"source": "https://www.nlrg.com/legal-content/the-lawletter/estates-enactments-of-the-uniform-electronic-wills-act",
+"verified": true
+}
+},
+"VA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will not wholly in the testator's handwriting must be signed or acknowledged before two competent witnesses present at the same time, who sign in the testator's presence.",
+"cite": "Va. Code Ann. § 64.2-403(C)",
+"source": "https://law.lis.virginia.gov/vacode/64.2-403",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will wholly in the testator's handwriting and signed is valid without witnesses, if two disinterested witnesses later prove the handwriting.",
+"cite": "Va. Code Ann. § 64.2-403(B)",
+"source": "https://law.lis.virginia.gov/vacode/64.2-403",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by the testator's acknowledgment and witnesses' affidavits before a notary, which the court accepts as live testimony.",
+"cite": "Va. Code Ann. § 64.2-452",
+"source": "https://law.lis.virginia.gov/vacode/title64.2/chapter4/section64.2-452",
+"verified": true
+},
+"smallEstate": {
+"value": "$75,000",
+"detail": "Successors may collect small assets by affidavit 60 days after death if the entire personal probate estate is $75,000 or less and any will has been probated.",
+"cite": "Va. Code Ann. §§ 64.2-600, 64.2-601",
+"source": "https://law.lis.virginia.gov/vacodeupdates/title64.2/section64.2-601",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Virginia repealed its estate tax for deaths on or after July 1, 2007, and has no inheritance tax.",
+"cite": "Va. Code Ann. §§ 58.1-901, 58.1-902",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Virginia has no electronic wills statute; bills to adopt the Uniform Electronic Wills Act (most recently HB 133 in 2026) failed.",
+"cite": "Va. Code Ann. § 64.2-403",
+"source": "https://lis.virginia.gov/bill-details/20261/HB133",
+"verified": true
+}
+},
+"VT": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "The testator signs in the presence of two or more credible witnesses, who attest and sign in the presence of the testator and each other. (Vermont required three witnesses before 2006.)",
+"cite": "14 V.S.A. § 5",
+"source": "https://legislature.vermont.gov/statutes/section/14/001/00005",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Vermont requires two witnesses for every will; an unwitnessed handwritten will is not valid.",
+"cite": "14 V.S.A. § 5",
+"source": "https://legislature.vermont.gov/statutes/section/14/001/00005",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be self-proved by the sworn acknowledgment of the testator and witnesses before a notary, letting the court allow it without a hearing if unopposed.",
+"cite": "14 V.S.A. §§ 108, 107",
+"source": "https://legislature.vermont.gov/statutes/section/14/003/00108",
+"verified": true
+},
+"smallEstate": {
+"value": "$45,000",
+"detail": "Simplified small estate administration in probate court is available when the estate's value at death is $45,000 or less.",
+"cite": "14 V.S.A. §§ 1901, 1902",
+"source": "https://legislature.vermont.gov/statutes/fullchapter/14/081",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $5,000,000)",
+"detail": "Vermont taxes estates over $5 million at a flat 16%, adding back taxable gifts made within two years of death; there is no inheritance tax.",
+"cite": "32 V.S.A. §§ 7402, 7442a",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Vermont has no electronic wills statute; pandemic-era remote witnessing applied only under emergency rules.",
+"cite": "14 V.S.A. § 5",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"WA": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and attested by two or more competent witnesses, who may be physically or electronically present.",
+"cite": "Wash. Rev. Code § 11.12.020",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=11.12.020",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Washington requires two attesting witnesses; an unwitnessed handwritten will is valid only if it met the law where it was executed or of the testator's domicile.",
+"cite": "Wash. Rev. Code § 11.12.020",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=11.12.020",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign a sworn affidavit on or attached to the will, which the court accepts as if they testified.",
+"cite": "Wash. Rev. Code § 11.20.020(2)",
+"source": "https://app.leg.wa.gov/RCW/Default.aspx?cite=11.20.020",
+"verified": true
+},
+"smallEstate": {
+"value": "$100,000",
+"detail": "Affidavit collects personal property 40 days after death if the probate estate (excluding the spouse's community half), less liens, is $100,000 or less.",
+"cite": "Wash. Rev. Code § 11.62.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=11.62.010",
+"verified": true
+},
+"estateTax": {
+"value": "Estate tax (exemption $3,000,000)",
+"detail": "Washington taxes estates over $3,000,000 for deaths on or after July 1, 2026 (it was $3,076,000 for Jan.-June 2026), at rates of 10% to 20%.",
+"cite": "Wash. Rev. Code §§ 83.100.020, 83.100.040",
+"source": "https://dor.wa.gov/taxes-rates/other-taxes/estate-tax",
+"verified": true
+},
+"electronicWills": {
+"value": "Yes",
+"detail": "Washington's Uniform Electronic Estate Planning Documents Act allows electronic wills held by a qualified custodian.",
+"cite": "Wash. Rev. Code §§ 11.12.400-11.12.491",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=11.12.020",
+"verified": true
+}
+},
+"WI": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and by two witnesses in the testator's conscious presence; attorney-supervised remote witnessing by live audio-video is also allowed.",
+"cite": "Wis. Stat. § 853.03",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/853.03",
+"verified": true
+},
+"holographic": {
+"value": "Not recognized",
+"detail": "Wisconsin requires two witnesses for every will; an unwitnessed handwritten will is valid only if it met the law where it was executed.",
+"cite": "Wis. Stat. §§ 853.03, 853.05",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/853.03",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved by affidavits of the testator and witnesses before a notary, at signing or later.",
+"cite": "Wis. Stat. § 853.04",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/853.04",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000",
+"detail": "Heirs, trustees or named personal representatives may collect property by affidavit if Wisconsin property subject to administration is $50,000 or less in gross value.",
+"cite": "Wis. Stat. § 867.03",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/867/03",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Wisconsin's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Wis. Stat. § 72.01(11m)",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "Wisconsin permits remote witnessing of paper wills under attorney supervision but has no electronic wills statute.",
+"cite": "Wis. Stat. § 853.03(2)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/853.03",
+"verified": true
+}
+},
+"WV": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will not wholly in the testator's handwriting must be signed or acknowledged before two competent witnesses present at the same time, who sign in the presence of the testator and each other.",
+"cite": "W. Va. Code § 41-1-3",
+"source": "https://code.wvlegislature.gov/41-1-3",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will wholly in the testator's handwriting and signed is valid without witnesses.",
+"cite": "W. Va. Code § 41-1-3",
+"source": "https://code.wvlegislature.gov/41-1-3",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "Attesting witnesses may sign affidavits during the testator's life; if kept with the will they substitute for live testimony unless the will is contested.",
+"cite": "W. Va. Code § 41-5-15",
+"source": "https://code.wvlegislature.gov/41-5-15",
+"verified": true
+},
+"smallEstate": {
+"value": "$50,000 personal / $100,000 real",
+"detail": "Under the Small Estate Act, an estate qualifies if probate personal property is $50,000 or less and West Virginia real estate is $100,000 or less, allowing a simplified affidavit process.",
+"cite": "W. Va. Code § 44-1A-1 et seq.",
+"source": "https://code.wvlegislature.gov/email/44",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "West Virginia's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "W. Va. Code § 11-11-3",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+},
+"electronicWills": {
+"value": "No",
+"detail": "West Virginia has no electronic wills statute.",
+"cite": "W. Va. Code § 41-1-3",
+"source": "https://www.willstrustsestates.info/states-that-have-enacted-electronic-wills/",
+"verified": true
+}
+},
+"WY": {
+"witnesses": {
+"value": "2 witnesses",
+"detail": "A will must be signed by the testator and witnessed by two competent witnesses, who may appear in person or by real-time audio-video; a gift to a witness fails unless two disinterested witnesses signed.",
+"cite": "Wyo. Stat. Ann. § 2-6-112",
+"source": "https://wyoleg.gov/statutes/compress/title02.pdf?section=2-6-112",
+"verified": true
+},
+"holographic": {
+"value": "Recognized",
+"detail": "A will entirely in the testator's handwriting and signed by the testator is valid without witnesses.",
+"cite": "Wyo. Stat. Ann. § 2-6-113",
+"source": "https://wyoleg.gov/statutes/compress/title02.pdf?section=2-6-113",
+"verified": true
+},
+"selfProving": {
+"value": "Yes",
+"detail": "A will may be made self-proved at signing or later by the testator's acknowledgment and witnesses' affidavits before a notary.",
+"cite": "Wyo. Stat. Ann. § 2-6-114",
+"source": "https://wyoleg.gov/statutes/compress/title02.pdf?section=2-6-114",
+"verified": true
+},
+"smallEstate": {
+"value": "$400,000",
+"detail": "An affidavit filed with the county clerk collects property 30 days after death if the Wyoming estate subject to administration, less liens, is $400,000 or less.",
+"cite": "Wyo. Stat. Ann. § 2-1-201",
+"source": "https://wyoleg.gov/statutes/compress/title02.pdf?section=2-1-201",
+"verified": true
+},
+"estateTax": {
+"value": "None",
+"detail": "Wyoming's estate tax was tied to the federal state death tax credit and imposes none for deaths after 2004; there is no inheritance tax.",
+"cite": "Wyo. Stat. Ann. §§ 39-19-103, 39-19-104",
+"source": "https://www.key.com/content/dam/kco/documents/wealth_management/2026-state-summary-inheritance-estate-gift-transfer-tax.pdf",
+"verified": true
+}
+}
+}
+}

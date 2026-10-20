@@ -1,0 +1,1902 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"medMalCap": {
+"value": "$250,000",
+"detail": "$400,000 for wrongful death or severe permanent physical impairment over 70% disabling.",
+"cite": "Alaska Stat. § 09.55.549",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Post-filing expert advisory panel",
+"detail": "No pre-suit affidavit; after filing, the court appoints a three-person expert advisory panel unless the parties arbitrate or the court finds it unnecessary.",
+"cite": "Alaska Stat. § 09.55.536",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Judgment is entered against each liable party on the basis of several liability in proportion to its percentage of fault.",
+"cite": "Alaska Stat. § 09.17.080(d)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Alaska Bar Association",
+"source": "https://alaskabar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://member.alaskabar.org/cvweb/cgi-bin/memberdll.dll/info?wrp=searchMembers.htm",
+"detail": "Member Directory Search",
+"source": "https://member.alaskabar.org/cvweb/cgi-bin/memberdll.dll/info?wrp=searchMembers.htm",
+"verified": true
+},
+"barReferral": {
+"value": "Alaska Bar Association Lawyer Referral Service",
+"detail": "907-272-0352; toll-free in Alaska 1-800-770-9999",
+"source": "https://alaskabar.org/for-the-public/lawyer-referral-service/",
+"verified": true
+}
+},
+"AL": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Alabama's $400,000 noneconomic cap was struck down; no current cap on noneconomic damages in medical malpractice.",
+"cite": "Moore v. Mobile Infirmary Ass'n, 592 So. 2d 156 (Ala. 1991)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None",
+"detail": "No affidavit/certificate of merit or screening panel; the Alabama Medical Liability Act instead requires detailed pleading of the alleged breach.",
+"cite": "Ala. Code § 6-5-540 et seq.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory or $500,000",
+"detail": "Greater of 3x compensatory or $500,000; physical-injury cases greater of 3x or $1.5M; lower limits for small businesses.",
+"cite": "Ala. Code § 6-11-21",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Common-law joint and several liability applies; each tortfeasor contributing to an indivisible injury may be liable for the whole.",
+"cite": "Holcim (US), Inc. v. Ohio Cas. Ins. Co., 38 So. 3d 722 (Ala. 2009)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Alabama State Bar",
+"source": "https://www.alabar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://members.alabar.org/Member_Portal/Member_Portal/Member-Search.aspx",
+"detail": "Member Search",
+"source": "https://members.alabar.org/Member_Portal/Member_Portal/Member-Search.aspx",
+"verified": true
+},
+"barReferral": {
+"value": "Alabama State Bar Lawyer Referral Service",
+"source": "https://www.alabar.org/programs/lawyer-referral-service/",
+"verified": true
+}
+},
+"AR": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Arkansas Constitution bars the legislature from limiting recovery for injuries; no medical malpractice damages cap.",
+"cite": "Ark. Const. art. 5, § 32",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (affidavit requirement struck down)",
+"detail": "The 30-day reasonable-cause affidavit requirement of § 16-114-209 was held unconstitutional.",
+"cite": "Summerville v. Thrower, 369 Ark. 231, 253 S.W.3d 415 (2007)",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "In personal injury, medical injury, property damage and wrongful death actions, each defendant's liability is several only, in proportion to fault.",
+"cite": "Ark. Code Ann. § 16-55-201",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Arkansas Supreme Court — Office of Professional Programs (attorney licensing)",
+"source": "https://arcourts.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://attorneyinfo.aoc.arkansas.gov/info/attorney/attorneysearch.aspx",
+"detail": "Attorney Search (Arkansas Judiciary)",
+"source": "https://attorneyinfo.aoc.arkansas.gov/info/attorney/attorneysearch.aspx",
+"verified": true
+}
+},
+"AZ": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Arizona Constitution prohibits laws limiting the amount of damages recoverable for death or injury.",
+"cite": "Ariz. Const. art. 2, § 31",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Preliminary expert opinion affidavit required",
+"detail": "If expert testimony is needed, plaintiff must serve a preliminary expert opinion affidavit with the initial disclosures.",
+"cite": "Ariz. Rev. Stat. § 12-2603",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Several liability in proportion to fault, except concerted intentional torts, agency/servant relationships, and FELA duties.",
+"cite": "Ariz. Rev. Stat. § 12-2506",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Arizona",
+"source": "https://www.azbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.azbar.org/for-legal-professionals/practice-tools-management/member-directory/",
+"detail": "Member Directory (Check Legal Professional Discipline)",
+"source": "https://www.azbar.org/for-legal-professionals/practice-tools-management/member-directory/",
+"verified": true
+}
+},
+"CA": {
+"medMalCap": {
+"value": "$470,000 (non-death); $650,000 (death)",
+"detail": "AB 35 schedule for 2026; rises yearly to $750,000/$1M in 2033, then 2% per year. Separate caps can apply to up to three defendant categories.",
+"cite": "Cal. Civ. Code § 3333.2 (as amended by AB 35, Stats. 2022, ch. 17)",
+"source": "https://www.milliman.com/en/insight/how-will-ab-35-affect-micra-and-non-economic-damage-caps",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — joint for economic, several for noneconomic",
+"detail": "Defendants are jointly liable for economic damages but only severally liable for noneconomic damages in proportion to fault (Prop. 51).",
+"cite": "Cal. Civ. Code §§ 1431, 1431.2",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "The State Bar of California",
+"source": "https://www.calbar.ca.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch",
+"detail": "Attorney Search (Licensee Search)",
+"source": "https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch",
+"verified": true
+}
+},
+"CO": {
+"medMalCap": {
+"value": "$530,000 (acts in 2026)",
+"detail": "Rises yearly to $875,000 in 2029, then inflation-adjusted. Total damages capped at greater of $1M or 125% of wrongful-death cap, with an economic-damages exception.",
+"cite": "Colo. Rev. Stat. § 13-64-302 (as amended by HB 24-1472)",
+"source": "https://leg.colorado.gov/sites/default/files/documents/2024A/bills/2024a_1472_enr.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of review required",
+"detail": "Plaintiff's attorney must file a certificate of review, based on consultation with a qualified expert, within 60 days after service of the complaint.",
+"cite": "Colo. Rev. Stat. § 13-20-602",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "1x actual damages (up to 3x)",
+"detail": "Exemplary damages may not exceed actual damages; the court may raise them to 3x if misconduct continued during the case.",
+"cite": "Colo. Rev. Stat. § 13-21-102",
+"source": "https://colorado.public.law/statutes/crs_13-21-102",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "No defendant is liable for more than its percentage of fault; conspirators are jointly liable.",
+"cite": "Colo. Rev. Stat. § 13-21-111.5",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Colorado Supreme Court — Office of Attorney Regulation Counsel",
+"source": "https://www.coloradolegalregulation.com/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.coloradolegalregulation.com/attorney-search/",
+"detail": "Attorney / LLP Search & Disciplinary History",
+"source": "https://www.coloradolegalregulation.com/attorney-search/",
+"verified": true
+}
+},
+"CT": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Connecticut has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Good-faith certificate + expert opinion",
+"detail": "Complaint must include an attorney's good-faith certificate and a written, detailed opinion of a similar health care provider that there appears to be negligence.",
+"cite": "Conn. Gen. Stat. § 52-190a",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — several with reallocation",
+"detail": "In negligence actions each party pays its proportionate share, but uncollectible shares are reallocated; product liability remains joint and several.",
+"cite": "Conn. Gen. Stat. § 52-572h",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Connecticut Judicial Branch (attorney registration; Statewide Grievance Committee)",
+"source": "https://www.jud.ct.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.jud.ct.gov/attorneyfirminquiry/AttorneyFirmInquiry.aspx",
+"detail": "Attorney/Firm Look-up",
+"source": "https://www.jud.ct.gov/attorneyfirminquiry/AttorneyFirmInquiry.aspx",
+"verified": true
+}
+},
+"DC": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The District of Columbia has no cap on damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Tortfeasors who jointly contribute to an indivisible harm are each potentially liable for the entire harm.",
+"cite": "Nat'l Health Labs., Inc. v. Ahmadi, 596 A.2d 555 (D.C. 1991)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "District of Columbia Bar",
+"source": "https://www.dcbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://my.dcbar.org/memberdirectory",
+"detail": "Find a Member (Member Directory)",
+"source": "https://my.dcbar.org/memberdirectory",
+"verified": true
+}
+},
+"DE": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Delaware has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Affidavit of merit required",
+"detail": "An affidavit of merit signed by an expert, with the expert's CV, must accompany the complaint for each defendant.",
+"cite": "Del. Code Ann. tit. 18, § 6853",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Joint tortfeasors remain jointly and severally liable, with contribution rights under the Uniform Contribution Act.",
+"cite": "Del. Code Ann. tit. 10, § 6301; Christiana Care Health Servs., Inc. v. Crist, 956 A.2d 622 (Del. 2008)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Supreme Court of Delaware (Board of Bar Examiners; Office of Disciplinary Counsel)",
+"source": "https://courts.delaware.gov/odc/",
+"verified": true
+},
+"barReferral": {
+"value": "DSBA Online Lawyer Referral Service",
+"source": "https://www.dsba.org/resources/public-resources/",
+"verified": true
+}
+},
+"FL": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Florida's § 766.118 caps were held unconstitutional for wrongful death (McCall, 2014) and personal injury (Kalitan, 2017).",
+"cite": "N. Broward Hosp. Dist. v. Kalitan, 219 So. 3d 49 (Fla. 2017); Estate of McCall v. United States, 134 So. 3d 894 (Fla. 2014)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-suit investigation, notice and expert affidavit",
+"detail": "Before suit, claimant must investigate, serve a notice of intent, and provide a corroborating verified expert opinion; 90-day presuit period.",
+"cite": "Fla. Stat. §§ 766.106, 766.203–.206",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory or $500,000",
+"detail": "Greater of 3x or $500,000; 4x or $2M if driven by unreasonable financial gain; no cap for specific intent to harm.",
+"cite": "Fla. Stat. § 768.73",
+"source": "https://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0768/Sections/0768.73.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (with exceptions)",
+"detail": "Judgment is entered on each party's percentage of fault in negligence actions; joint liability remains for intentional torts and certain pollution claims.",
+"cite": "Fla. Stat. § 768.81",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "The Florida Bar",
+"source": "https://www.floridabar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.floridabar.org/directories/find-mbr/",
+"detail": "Find a Lawyer (Member Directory)",
+"source": "https://www.floridabar.org/directories/find-mbr/",
+"verified": true
+},
+"barReferral": {
+"value": "The Florida Bar Lawyer Referral Service",
+"detail": "1-800-342-8011",
+"source": "https://www.floridabar.org/public/lrs/",
+"verified": true
+}
+},
+"GA": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Georgia's 2005 noneconomic caps for medical malpractice were held unconstitutional.",
+"cite": "Atlanta Oculoplastic Surgery, P.C. v. Nestlehutt, 286 Ga. 731 (2010)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Expert affidavit with complaint",
+"detail": "Plaintiff must file an expert affidavit setting out at least one negligent act and its factual basis with the complaint.",
+"cite": "O.C.G.A. § 9-11-9.1",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Damages are apportioned by percentage of fault and are not joint; no contribution among liable parties.",
+"cite": "O.C.G.A. § 51-12-33",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Georgia",
+"source": "https://www.gabar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.gabar.org/member-directory/",
+"detail": "Member Directory",
+"source": "https://www.gabar.org/member-directory/",
+"verified": true
+}
+},
+"HI": {
+"medMalCap": {
+"value": "$375,000",
+"detail": "Cap on pain-and-suffering damages, with statutory exceptions for certain types of harm.",
+"cite": "Haw. Rev. Stat. § 663-8.7",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-suit inquiry to conciliation panel",
+"detail": "Before suit, claim must go to the Medical Inquiry and Conciliation Panel, generally with a certificate that a physician was consulted.",
+"cite": "Haw. Rev. Stat. §§ 671-12, 671-12.5",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Generally abolished, but retained for economic damages in injury cases, several tort categories, and noneconomic damages against defendants 25%+ at fault.",
+"cite": "Haw. Rev. Stat. § 663-10.9",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Hawaii State Bar Association",
+"source": "https://hsba.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://hsba.org/find-a-lawyer",
+"detail": "Find a Lawyer (Member Directory)",
+"source": "https://hsba.org/find-a-lawyer",
+"verified": true
+},
+"barReferral": {
+"value": "HSBA Lawyer Referral & Information Service (LRIS)",
+"source": "https://hsba.org/get-involved/lris",
+"verified": true
+}
+},
+"IA": {
+"medMalCap": {
+"value": "$250,000 (up to $1M / $2M)",
+"detail": "If jury finds substantial/permanent harm or death, cap rises to $1M, or $2M when a hospital is a defendant; increases 2.1%/yr from 2028.",
+"cite": "Iowa Code § 147.136A (2023 Iowa Acts, HF 161)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of merit affidavit required",
+"detail": "Plaintiff must serve an expert's certificate of merit affidavit within 60 days of the defendant's answer.",
+"cite": "Iowa Code § 147.140",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "No joint liability for defendants under 50% at fault; those 50%+ at fault are jointly liable for economic damages only.",
+"cite": "Iowa Code § 668.4",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Iowa Supreme Court — Office of Professional Regulation",
+"source": "https://www.iacourtcommissions.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.iacourtcommissions.org/ords/f?p=106:10:::PR,10::",
+"detail": "Search Lawyers Licensed in Iowa",
+"source": "https://www.iacourtcommissions.org/ords/f?p=106:10:::PR,10::",
+"verified": true
+},
+"barReferral": {
+"value": "Iowa Find-A-Lawyer (Iowa State Bar Association)",
+"detail": "(515) 243-3179",
+"source": "https://www.iowabar.org/?pg=Find-A-LawyerHP",
+"verified": true
+}
+},
+"ID": {
+"medMalCap": {
+"value": "$538,425.04",
+"detail": "Noneconomic cap for all personal injury claims, effective July 1, 2026 (adjusted yearly); not applicable to willful/reckless or felonious conduct.",
+"cite": "Idaho Code § 6-1603",
+"source": "https://iic.idaho.gov/wp-content/uploads/2026/06/Benefits-Non-economic-caps-effective-07_01_26.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-litigation screening panel required",
+"detail": "Claims against physicians and hospitals must go through an informal, nonbinding Board of Medicine prelitigation panel before suit.",
+"cite": "Idaho Code § 6-1001 et seq.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory or $250,000",
+"detail": "Punitive awards may not exceed the greater of $250,000 or three times compensatory damages.",
+"cite": "Idaho Code § 6-1604(3)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title6/t6ch16/sect6-1604/",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — mostly several",
+"detail": "Joint liability only for concerted intentional/reckless acts, agency, hazardous waste and certain medical products.",
+"cite": "Idaho Code § 6-803",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Idaho State Bar",
+"source": "https://isb.idaho.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://isb.idaho.gov/licensing-mcle/attorney-roster-search/",
+"detail": "Attorney Roster Search",
+"source": "https://isb.idaho.gov/licensing-mcle/attorney-roster-search/",
+"verified": true
+},
+"barReferral": {
+"value": "Idaho State Bar Lawyer Referral Service",
+"detail": "(208) 334-4500",
+"source": "https://isb.idaho.gov/lawyer-referral-service/",
+"verified": true
+}
+},
+"IL": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Illinois' 2005 caps ($500,000 physicians / $1M hospitals) were held unconstitutional.",
+"cite": "LeBron v. Gottlieb Mem'l Hosp., 237 Ill. 2d 217, 930 N.E.2d 895 (2010)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Attorney affidavit + health professional report",
+"detail": "Complaint must attach an attorney affidavit and a written report from a qualified health professional finding a reasonable and meritorious cause.",
+"cite": "735 ILCS 5/2-622",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants under 25% at fault are severally liable for non-medical damages; joint liability for medical expenses and for 25%+ fault.",
+"cite": "735 ILCS 5/2-1117",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Attorney Registration & Disciplinary Commission of the Supreme Court of Illinois (ARDC)",
+"source": "https://www.iardc.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.iardc.org/Lawyer/Search",
+"detail": "Lawyer Search",
+"source": "https://www.iardc.org/Lawyer/Search",
+"verified": true
+},
+"barReferral": {
+"value": "ISBA Lawyer Referral Service / Illinois Lawyer Finder",
+"source": "https://www.isba.org/illinoislawyerfinder",
+"verified": true
+}
+},
+"IN": {
+"medMalCap": {
+"value": "No separate noneconomic cap; $1.8M total cap",
+"detail": "Total recovery capped at $1.8M for acts after June 30, 2019; provider pays up to $500,000, the Patient's Compensation Fund the rest.",
+"cite": "Ind. Code § 34-18-14-3",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Medical review panel opinion required",
+"detail": "For claims over $15,000 against qualified providers, a medical review panel must issue an opinion before suit unless the parties waive it.",
+"cite": "Ind. Code § 34-18-8-4",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (not in med mal)",
+"detail": "Comparative Fault Act imposes several liability by fault, but it does not apply to medical malpractice actions.",
+"cite": "Ind. Code §§ 34-51-2-1, 34-51-2-8; Cavens v. Zaberdac, 849 N.E.2d 526 (Ind. 2006)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Indiana Supreme Court — Roll of Attorneys (Office of Admissions & Continuing Education)",
+"source": "https://www.in.gov/courts/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://courtapps.in.gov/rollofattorneys/",
+"detail": "Roll of Attorneys search",
+"source": "https://courtapps.in.gov/rollofattorneys/",
+"verified": true
+}
+},
+"KS": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Kansas Supreme Court held the statutory noneconomic damages cap (K.S.A. 60-19a02) unconstitutional.",
+"cite": "Hilburn v. Enerpipe Ltd., 309 Kan. 1127, 442 P.3d 509 (2019)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (screening panel on request)",
+"detail": "No affidavit of merit; a medical malpractice screening panel is convened if a party requests it or the judge orders it.",
+"cite": "K.S.A. 65-4901",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "Lesser of annual gross income or $5M",
+"detail": "Capped at lesser of defendant's highest annual gross income (prior 5 years) or $5M; up to 1.5x profit if misconduct profit exceeds that.",
+"cite": "K.S.A. 60-3702(e)-(f)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_037_0002.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Each party is liable only for its proportionate share of fault.",
+"cite": "K.S.A. 60-258a",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Kansas Supreme Court — Office of Judicial Administration (attorney registration)",
+"source": "https://www.kscourts.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://directory-kard.kscourts.gov/",
+"detail": "Kansas Attorney Registration Directory",
+"source": "https://directory-kard.kscourts.gov/",
+"verified": true
+},
+"barReferral": {
+"value": "Kansas Bar Association Lawyer Referral Service",
+"detail": "785-861-8826",
+"source": "https://ksbar.org/?pg=lrs_public",
+"verified": true
+}
+},
+"KY": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Kentucky Constitution forbids limits on damages for injury or death.",
+"cite": "Ky. Const. § 54",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of merit required",
+"detail": "Plaintiff must file a certificate of merit with the complaint stating an expert was consulted and there is a reasonable basis for the claim.",
+"cite": "Ky. Rev. Stat. § 411.167",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Each tortfeasor's liability is limited to its equitable share according to percentage of fault.",
+"cite": "Ky. Rev. Stat. § 411.182",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Kentucky Bar Association",
+"source": "https://kybar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://kybar.org/For-Public/Find-a-Lawyer",
+"detail": "Find a Lawyer (Directory of Kentucky Attorneys)",
+"source": "https://kybar.org/For-Public/Find-a-Lawyer",
+"verified": true
+}
+},
+"LA": {
+"medMalCap": {
+"value": "$500,000 total (excl. future medical)",
+"detail": "Total cap on damages other than future medical care; a qualified provider pays up to $100,000 and the Patient's Compensation Fund the rest.",
+"cite": "La. R.S. 40:1231.2",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Medical review panel required",
+"detail": "Claims against qualified providers must be reviewed by a medical review panel before suit unless the parties waive it.",
+"cite": "La. R.S. 40:1231.8",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (except conspiracy)",
+"detail": "A joint tortfeasor is not liable for more than its degree of fault unless tortfeasors conspired to commit an intentional act.",
+"cite": "La. Civ. Code art. 2324",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Louisiana State Bar Association",
+"source": "https://www.lsba.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.lsba.org/MD321654/MembershipDirectory.aspx",
+"detail": "Member Directory / Verify",
+"source": "https://www.lsba.org/MD321654/MembershipDirectory.aspx",
+"verified": true
+}
+},
+"MA": {
+"medMalCap": {
+"value": "$500,000",
+"detail": "Cap can be exceeded for substantial disfigurement, permanent loss of bodily function, or other special circumstances.",
+"cite": "Mass. Gen. Laws ch. 231, § 60H",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Malpractice tribunal screening",
+"detail": "After filing, a tribunal (judge, physician, attorney) screens the offer of proof; if unfavorable, plaintiff must post a $6,000 bond to proceed.",
+"cite": "Mass. Gen. Laws ch. 231, § 60B",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "A plaintiff injured by more than one tortfeasor may recover full damages from any of them.",
+"cite": "Shantigar Found. v. Bear Mountain Builders, 441 Mass. 131, 804 N.E.2d 324 (2004)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Massachusetts Board of Bar Overseers",
+"source": "https://www.massbbo.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.massbbo.org/s/attorney-lookup",
+"detail": "Attorney Lookup",
+"source": "https://www.massbbo.org/s/attorney-lookup",
+"verified": true
+}
+},
+"MD": {
+"medMalCap": {
+"value": "$920,000 (2026)",
+"detail": "Rises $15,000 each January 1; applies in aggregate to all claims from one injury; 125% ($1,150,000) in death cases with 2+ beneficiaries.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 3-2A-09",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "ADR filing + certificate of qualified expert",
+"detail": "Claim is filed with the Health Care Alternative Dispute Resolution Office and a certificate of a qualified expert is due within 90 days.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 3-2A-04",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Concurrent tortfeasors are jointly and severally liable for an indivisible injury.",
+"cite": "Consumer Prot. Div. v. Morgan, 387 Md. 125, 874 A.2d 919 (2005)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Supreme Court of Maryland (Attorney Grievance Commission; Client Protection Fund)",
+"source": "https://www.mdcourts.gov/lawyers",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.mdcourts.gov/attysearch",
+"detail": "Attorney Search",
+"source": "https://www.mdcourts.gov/attysearch",
+"verified": true
+}
+},
+"ME": {
+"medMalCap": {
+"value": "No cap (wrongful death only)",
+"detail": "No general cap; wrongful-death damages for loss of comfort/companionship are capped at $1,000,000, adjusted for inflation.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-807",
+"source": "https://legislature.maine.gov/statutes/18-C/title18-Csec2-807.html",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-litigation screening panel required",
+"detail": "Claimant must serve a notice of claim and go through a mandatory prelitigation screening and mediation panel unless all parties agree to bypass.",
+"cite": "Me. Rev. Stat. tit. 24, §§ 2851–2859",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "No cap ($500,000 in wrongful death)",
+"detail": "No general statutory cap; punitive damages in wrongful death actions are capped at $500,000.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-807",
+"source": "https://legislature.maine.gov/statutes/18-C/title18-Csec2-807.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Multiple defendants are jointly and severally liable for the plaintiff's full damages.",
+"cite": "Me. Rev. Stat. tit. 14, § 156",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Maine Board of Overseers of the Bar",
+"source": "https://www.mebaroverseers.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://apps.web.maine.gov/cgi-bin/online/maine_bar/attorney_directory.pl",
+"detail": "Attorney Search",
+"source": "https://apps.web.maine.gov/cgi-bin/online/maine_bar/attorney_directory.pl",
+"verified": true
+}
+},
+"MI": {
+"meritRequirement": {
+"value": "Notice of intent + affidavit of merit",
+"detail": "Plaintiff must serve a notice of intent 182 days before suit and file an expert affidavit of merit with the complaint.",
+"cite": "Mich. Comp. Laws §§ 600.2912b, 600.2912d",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — mostly several",
+"detail": "Several liability generally; in med mal, joint liability applies if the plaintiff is fault-free or a share is uncollectible.",
+"cite": "Mich. Comp. Laws §§ 600.2956, 600.6304, 600.6312",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Michigan",
+"source": "https://www.michbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.michbar.org/memberdirectory/home",
+"detail": "Member Directory (Attorney Search)",
+"source": "https://www.michbar.org/memberdirectory/home",
+"verified": true
+},
+"barReferral": {
+"value": "State Bar of Michigan Lawyer Referral Service",
+"detail": "(800) 968-0738",
+"source": "https://lrs.michbar.org/LRS-Info/Lawyer-Referral-Service",
+"verified": true
+}
+},
+"MN": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Minnesota has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Affidavit of expert review",
+"detail": "Complaint must include an affidavit of expert review; an affidavit identifying experts and opinions is due within 180 days.",
+"cite": "Minn. Stat. § 145.682",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Several liability unless defendant is over 50% at fault, acted in a common scheme, committed an intentional tort, or under certain environmental laws.",
+"cite": "Minn. Stat. § 604.02",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Minnesota Supreme Court — Lawyer Registration Office",
+"source": "https://mars.courts.state.mn.us/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://mars.courts.state.mn.us/",
+"detail": "Attorney Search (MARS)",
+"source": "https://mars.courts.state.mn.us/",
+"verified": true
+}
+},
+"MO": {
+"meritRequirement": {
+"value": "Health care affidavit within 90 days",
+"detail": "Plaintiff must file an affidavit that a qualified health care provider found merit within 90 days of filing.",
+"cite": "Mo. Rev. Stat. § 538.225",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "5x net judgment or $500,000",
+"detail": "Greater of $500,000 or 5x net judgment; cap held unconstitutional for common-law claims that existed in 1820 (e.g., fraud).",
+"cite": "Mo. Rev. Stat. § 510.265; Lewellen v. Franklin, 441 S.W.3d 136 (Mo. 2014)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=510.265",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants less than 51% at fault are severally liable only; 51%+ are jointly and severally liable.",
+"cite": "Mo. Rev. Stat. § 537.067",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "The Missouri Bar",
+"source": "https://mobar.org/",
+"verified": true
+}
+},
+"MS": {
+"medMalCap": {
+"value": "$500,000",
+"detail": "Cap on noneconomic damages in actions against health care providers.",
+"cite": "Miss. Code Ann. § 11-1-60(2)(a)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "60-day notice + certificate of consultation",
+"detail": "Plaintiff must give 60 days' written notice before suit and attach an attorney certificate of expert consultation to the complaint.",
+"cite": "Miss. Code Ann. §§ 15-1-36(15), 11-1-58",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (except conspiracy)",
+"detail": "Each defendant is liable only for damages in proportion to its fault; joint liability for conspiracies.",
+"cite": "Miss. Code Ann. § 85-5-7",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "The Mississippi Bar",
+"source": "https://msbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://msbar.reliaguide.com/home",
+"detail": "Find a Lawyer",
+"source": "https://msbar.reliaguide.com/home",
+"verified": true
+}
+},
+"MT": {
+"medMalCap": {
+"value": "$250,000",
+"detail": "Cap on noneconomic damages in medical malpractice actions.",
+"cite": "Mont. Code Ann. § 25-9-411",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Medical-legal panel review required",
+"detail": "Claims against covered health care providers must be submitted to the Montana Medical Legal Panel before suit.",
+"cite": "Mont. Code Ann. § 27-6-301 et seq.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "Lesser of $10M or 3% of net worth",
+"detail": "Punitive awards may not exceed $10 million or 3% of the defendant's net worth, whichever is less (class actions excepted).",
+"cite": "Mont. Code Ann. § 27-1-220(3)",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0010/part_0020/section_0200/0270-0010-0020-0200.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Parties 50% or less at fault are severally liable; over 50% jointly liable; concert/agency creates joint liability.",
+"cite": "Mont. Code Ann. § 27-1-703",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Montana",
+"source": "https://www.montanabar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.montanabar.org/For-Attorneys/Attorney-Directory",
+"detail": "Attorney Directory",
+"source": "https://www.montanabar.org/For-Attorneys/Attorney-Directory",
+"verified": true
+},
+"barReferral": {
+"value": "Licensed Lawyer Montana (State Bar of Montana)",
+"source": "https://www.montanabar.org/For-the-Public/Find-a-Lawyer",
+"verified": true
+}
+},
+"NC": {
+"meritRequirement": {
+"value": "Rule 9(j) expert certification",
+"detail": "Complaint must assert the records were reviewed by a person expected to qualify as an expert who will testify the care was substandard.",
+"cite": "N.C. R. Civ. P. 9(j) (N.C. Gen. Stat. § 1A-1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1A/GS_1A-1,_Rule_9.html",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory or $250,000",
+"detail": "Greater of three times compensatory damages or $250,000; DWI-related cases exempt.",
+"cite": "N.C. Gen. Stat. § 1D-25",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1D/GS_1D-25.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Joint and several liability applies to concerted wrongs and to separate wrongs producing an indivisible injury.",
+"cite": "G.E. Betz, Inc. v. Conrad, 752 S.E.2d 634 (N.C. Ct. App. 2013)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "North Carolina State Bar",
+"source": "https://www.ncbar.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://portal.ncbar.gov/verification/search.aspx",
+"detail": "Membership Directory / Lawyer Verification",
+"source": "https://portal.ncbar.gov/verification/search.aspx",
+"verified": true
+}
+},
+"ND": {
+"medMalCap": {
+"value": "$500,000",
+"detail": "Total noneconomic damages cap in health care malpractice actions, regardless of number of defendants; a 2025 bill to raise it failed.",
+"cite": "N.D. Cent. Code § 32-42-02; Condon v. St. Alexius Med. Ctr., 2019 ND 113",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Expert affidavit within 3 months",
+"detail": "Plaintiff must serve an expert affidavit supporting a prima facie case within three months of commencing suit, except obvious-negligence cases.",
+"cite": "N.D. Cent. Code § 28-01-46",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "2x compensatory or $250,000",
+"detail": "Exemplary damages may not exceed the greater of twice compensatory damages or $250,000; may not be pleaded in the initial complaint.",
+"cite": "N.D. Cent. Code § 32-03.2-11",
+"source": "https://ndlegis.gov/cencode/t32c03-2.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (except concert)",
+"detail": "Each party is liable only for damages attributable to its percentage of fault; those acting in concert are jointly liable.",
+"cite": "N.D. Cent. Code § 32-03.2-02",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "North Dakota Supreme Court (State Board of Law Examiners) / State Bar Association of North Dakota",
+"source": "https://www.ndcourts.gov/lawyers",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.ndcourts.gov/lawyers",
+"detail": "Find an Attorney (Lawyer Directory)",
+"source": "https://www.ndcourts.gov/lawyers",
+"verified": true
+}
+},
+"NE": {
+"medMalCap": {
+"value": "$2.25M total cap",
+"detail": "Total damages (economic and noneconomic) capped at $2.25M for malpractice after Dec. 31, 2014, for providers qualified under the Hospital-Medical Liability Act.",
+"cite": "Neb. Rev. Stat. § 44-2825",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Medical review panel (waivable)",
+"detail": "Claims against covered providers go to a medical review panel before suit unless the claimant waives it.",
+"cite": "Neb. Rev. Stat. § 44-2840 et seq.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Joint liability for economic damages; noneconomic damages several only, except concerted action.",
+"cite": "Neb. Rev. Stat. § 25-21,185.10",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Nebraska Supreme Court — Attorney Services Division / Nebraska State Bar Association",
+"source": "https://www.nebar.com/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://attorneys.nejudicial.gov/member-search",
+"detail": "Attorney Roster Search (Nebraska Supreme Court)",
+"source": "https://attorneys.nejudicial.gov/member-search",
+"verified": true
+}
+},
+"NH": {
+"medMalCap": {
+"value": "No cap",
+"detail": "New Hampshire's caps have been struck down on equal-protection grounds.",
+"cite": "Brannigan v. Usitalo, 134 N.H. 50 (1991)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (screening panel repealed)",
+"detail": "New Hampshire's mandatory pretrial screening panel (RSA 519-B) was repealed in 2023.",
+"cite": "N.H. SB 65 (2023)",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Joint liability for defendants 50%+ at fault or acting in a common plan; others severally liable.",
+"cite": "N.H. Rev. Stat. Ann. § 507:7-e",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "New Hampshire Bar Association",
+"source": "https://www.nhbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.nhbar.org/attorney-verification-good-standing-request",
+"detail": "Attorney Verification / Good Standing Request",
+"source": "https://www.nhbar.org/attorney-verification-good-standing-request",
+"verified": true
+},
+"barReferral": {
+"value": "NHBA Lawyer Referral Service",
+"detail": "603-229-0002",
+"source": "https://www.nhbar.org/lawyer-referral-service",
+"verified": true
+}
+},
+"NJ": {
+"medMalCap": {
+"value": "No cap",
+"detail": "New Jersey has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Affidavit of merit required",
+"detail": "Plaintiff must serve an expert's affidavit of merit within 60 days (extendable to 120) after the defendant's answer.",
+"cite": "N.J. Stat. Ann. § 2A:53A-27",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "5x compensatory or $350,000",
+"detail": "Greater of five times compensatory damages or $350,000; exceptions include discrimination, sexual abuse and DUI cases.",
+"cite": "N.J. Stat. Ann. § 2A:15-5.14",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants 60%+ at fault are jointly and severally liable; under 60% pay only their share; environmental torts excepted.",
+"cite": "N.J. Stat. Ann. § 2A:15-5.3",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Supreme Court of New Jersey (attorney registration; Office of Attorney Ethics)",
+"source": "https://www.njcourts.gov/attorneys",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://portalattysearch-cloud.njcourts.gov/prweb/PRServletPublicAuth/app/Attorney/-amRUHgepTwWWiiBQpI9_yQNuum4oN16*/!STANDARD?AppName=AttorneySearch",
+"detail": "Statewide Attorney Index",
+"source": "https://portalattysearch-cloud.njcourts.gov/prweb/PRServletPublicAuth/app/Attorney/-amRUHgepTwWWiiBQpI9_yQNuum4oN16*/!STANDARD?AppName=AttorneySearch",
+"verified": true
+}
+},
+"NM": {
+"medMalCap": {
+"value": "Total-damages cap: $750,000+CPI (doctors); $6M (hospitals, 2026)",
+"detail": "Excludes medical care and punitive damages. Independent providers $750,000 CPI-adjusted since 2023; outpatient facilities $1M+ CPI; hospitals $6M for 2026 injuries.",
+"cite": "N.M. Stat. Ann. § 41-5-6 (as amended by 2026 HB 99)",
+"source": "https://www.nmlegis.gov/Sessions/26%20Regular/final/HB0099.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Medical review commission panel (independent providers)",
+"detail": "Claims against qualified independent providers must go to a New Mexico Medical Review Commission panel before suit; hospitals excluded since July 1, 2021.",
+"cite": "N.M. Stat. Ann. § 41-5-14 et seq.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — mostly several",
+"detail": "Several liability, with joint liability for intentional torts, vicarious liability, strict product liability, and strong public-policy cases.",
+"cite": "N.M. Stat. Ann. § 41-3A-1",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of New Mexico",
+"source": "https://www.sbnm.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.sbnm.org/For-Public/I-Need-a-Lawyer/Online-Bar-Directory",
+"detail": "Online Bar Directory (Find an Attorney)",
+"source": "https://www.sbnm.org/For-Public/I-Need-a-Lawyer/Online-Bar-Directory",
+"verified": true
+}
+},
+"NV": {
+"medMalCap": {
+"value": "$590,000 (2026)",
+"detail": "Rises $80,000 each January 1 to $750,000 in 2028, then 2.1% yearly; applies regardless of number of plaintiffs or defendants.",
+"cite": "Nev. Rev. Stat. § 41A.035 (as amended by AB 404 (2023))",
+"source": "https://www.leg.state.nv.us/nrs/nrs-041a.html",
+"verified": true
+},
+"meritRequirement": {
+"value": "Affidavit of merit required",
+"detail": "Action is dismissed unless filed with a supporting affidavit from a medical expert in a substantially similar practice area.",
+"cite": "Nev. Rev. Stat. § 41A.071",
+"source": "https://www.leg.state.nv.us/nrs/nrs-041a.html",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory (if ≥$100k) or $300,000",
+"detail": "3x compensatory when compensatory is $100,000+, otherwise $300,000; exceptions for products, insurer bad faith, DUI and others.",
+"cite": "Nev. Rev. Stat. § 42.005",
+"source": "https://www.leg.state.nv.us/nrs/nrs-042.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Several liability where plaintiff is comparatively negligent (with exceptions); health care providers are severally liable only in malpractice.",
+"cite": "Nev. Rev. Stat. §§ 41.141, 41A.045",
+"source": "https://www.leg.state.nv.us/nrs/nrs-041a.html",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Nevada",
+"source": "https://nvbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://nvbar.org/for-the-public/find-a-lawyer/",
+"detail": "Find a Lawyer",
+"source": "https://nvbar.org/for-the-public/find-a-lawyer/",
+"verified": true
+},
+"barReferral": {
+"value": "State Bar of Nevada Lawyer Referral Service",
+"detail": "Las Vegas 702-382-2200; Reno 775-329-4100",
+"source": "https://nvbar.org/for-the-public/find-a-lawyer/lrs/",
+"verified": true
+}
+},
+"NY": {
+"medMalCap": {
+"value": "No cap",
+"detail": "New York has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of merit required",
+"detail": "Plaintiff's attorney must file a certificate with the complaint stating an expert was consulted and there is a reasonable basis for the action.",
+"cite": "N.Y. C.P.L.R. 3012-a",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants 50% or less at fault in personal injury cases pay only their share of noneconomic damages; many exceptions (e.g., motor vehicles, recklessness).",
+"cite": "N.Y. C.P.L.R. 1601, 1602",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "New York State Unified Court System — Attorney Registration",
+"source": "https://www.nycourts.gov/attorneys/",
+"verified": true
+},
+"barReferral": {
+"value": "NYSBA Lawyer Referral Service",
+"source": "https://www.nysba.org/lawyerreferral/",
+"verified": true
+}
+},
+"OH": {
+"medMalCap": {
+"value": "$250,000 or 3x economic (max $350k/$500k)",
+"detail": "Greater of $250,000 or 3x economic, up to $350,000 per plaintiff / $500,000 per occurrence; catastrophic injuries $500,000 / $1M.",
+"cite": "Ohio Rev. Code § 2323.43",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Affidavit of merit required",
+"detail": "An expert affidavit of merit for each defendant must be filed with the complaint (or a motion to extend).",
+"cite": "Ohio Civ. R. 10(D)(2)",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "2x compensatory",
+"detail": "Punitive damages may not exceed twice compensatory damages; small employers/individuals: lesser of 2x or 10% of net worth up to $350,000.",
+"cite": "Ohio Rev. Code § 2315.21(D)(2)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2315.21",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Noneconomic damages several only; economic damages joint only for defendants over 50% at fault or intentional torts.",
+"cite": "Ohio Rev. Code § 2307.22",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Supreme Court of Ohio — Office of Attorney Services",
+"source": "https://www.supremecourt.ohio.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.supremecourt.ohio.gov/AttorneySearch/",
+"detail": "Attorney Directory Search",
+"source": "https://www.supremecourt.ohio.gov/AttorneySearch/",
+"verified": true
+}
+},
+"OK": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Oklahoma's $350,000 noneconomic cap (23 O.S. § 61.2) was held unconstitutional.",
+"cite": "Beason v. I.E. Miller Servs., Inc., 2019 OK 28, 441 P.3d 1107",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (affidavit requirement struck down)",
+"detail": "The affidavit-of-merit requirement in 12 O.S. § 19.1 was held unconstitutional.",
+"cite": "John v. Saint Francis Hosp., Inc., 2017 OK 81, 405 P.3d 681",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "For claims arising on/after Nov. 1, 2011, a joint tortfeasor is liable only for damages allocated to it (state actions excepted).",
+"cite": "Okla. Stat. tit. 23, § 15",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Oklahoma Bar Association",
+"source": "https://www.okbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://my.okbar.org/member-verification/",
+"detail": "Member Verification",
+"source": "https://my.okbar.org/member-verification/",
+"verified": true
+}
+},
+"OR": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The $500,000 noneconomic cap (ORS 31.710) was held unconstitutional as applied in personal injury cases.",
+"cite": "Busch v. McInnis Waste Sys., Inc., 366 Or. 628, 468 P.3d 419 (2020)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (post-filing ADR required)",
+"detail": "No affidavit of merit; parties must complete arbitration, mediation or a settlement conference within 270 days after filing.",
+"cite": "Or. Rev. Stat. § 31.250",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "No cap (70% to state)",
+"detail": "No cap; 30% of punitive award goes to the plaintiff and the rest to state accounts.",
+"cite": "Or. Rev. Stat. § 31.735",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors031.html",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — several with reallocation",
+"detail": "Liability is several, but uncollectible shares may be reallocated; joint liability for hazardous materials and pollution.",
+"cite": "Or. Rev. Stat. § 31.610",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Oregon State Bar",
+"source": "https://www.osbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.osbar.org/members/membersearch_start.asp",
+"detail": "Member Search",
+"source": "https://www.osbar.org/members/membersearch_start.asp",
+"verified": true
+},
+"barReferral": {
+"value": "Oregon State Bar Referral & Information Services (Lawyer Referral Service)",
+"source": "https://www.osbar.org/ris",
+"verified": true
+}
+},
+"PA": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Pennsylvania Constitution prohibits limits on recovery for injury or death.",
+"cite": "Pa. Const. art. III, § 18",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of merit within 60 days",
+"detail": "Plaintiff must file a certificate of merit for each defendant within 60 days of filing the complaint.",
+"cite": "Pa. R. Civ. P. 1042.3",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "No cap (2x in med mal)",
+"detail": "No general cap; in medical malpractice, punitive damages against an individual provider are limited to twice compensatory.",
+"cite": "40 P.S. § 1303.505(d)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified (Fair Share Act)",
+"detail": "Defendants 60%+ at fault are jointly liable; others pay their share; exceptions for intentional torts, hazardous releases, dram shop.",
+"cite": "42 Pa. Cons. Stat. § 7102(a.1)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Disciplinary Board of the Supreme Court of Pennsylvania (attorney registration)",
+"source": "https://www.padisciplinaryboard.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.padisciplinaryboard.org/for-the-public/find-attorney",
+"detail": "Look Up an Attorney",
+"source": "https://www.padisciplinaryboard.org/for-the-public/find-attorney",
+"verified": true
+}
+},
+"RI": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Rhode Island has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None",
+"detail": "No affidavit/certificate of merit or screening panel is required.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "A plaintiff may recover all damages from any joint tortfeasor that contributed to the injury.",
+"cite": "R.I. Gen. Laws § 10-6-2",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Supreme Court of Rhode Island (attorney registration) / Rhode Island Bar Association",
+"source": "https://www.courts.ri.gov/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "http://rijrs.courts.ri.gov/rijrs/attorney.do",
+"detail": "Attorney Search (RI Judiciary)",
+"source": "http://rijrs.courts.ri.gov/rijrs/attorney.do",
+"verified": true
+}
+},
+"SC": {
+"medMalCap": {
+"value": "$350,000 per defendant; $1.05M total (CPI-adjusted)",
+"detail": "Base caps per claimant, adjusted yearly by CPI (2024: about $564,000 / $1.69M); exceptions for gross negligence, fraud, etc.",
+"cite": "S.C. Code Ann. § 15-32-220",
+"source": "https://www.scstatehouse.gov/code/t15c032.php",
+"verified": true
+},
+"meritRequirement": {
+"value": "Notice of intent + expert affidavit before suit",
+"detail": "Plaintiff must file a notice of intent with an expert affidavit before suit, followed by mandatory pre-suit mediation.",
+"cite": "S.C. Code Ann. §§ 15-79-125, 15-36-100",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "3x compensatory or $500,000",
+"detail": "Greater of 3x or $500,000; up to 4x or $2M for financial-gain or felony conduct; no cap for intent to harm or DUI.",
+"cite": "S.C. Code Ann. § 15-32-530",
+"source": "https://www.scstatehouse.gov/code/t15c032.php",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants under 50% at fault are liable only for their share; 50%+ jointly liable (with exceptions).",
+"cite": "S.C. Code Ann. § 15-38-15",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "South Carolina Bar",
+"source": "https://www.scbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.scbar.org/for-lawyers/quicklinks/member-directory/",
+"detail": "Member Directory",
+"source": "https://www.scbar.org/for-lawyers/quicklinks/member-directory/",
+"verified": true
+},
+"barReferral": {
+"value": "South Carolina Bar Lawyer Referral Service",
+"detail": "(803) 799-7100",
+"source": "https://www.scbar.org/lrs",
+"verified": true
+}
+},
+"SD": {
+"medMalCap": {
+"value": "$500,000",
+"detail": "Cap on noneconomic damages in medical malpractice actions.",
+"cite": "S.D. Codified Laws § 21-3-11",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None",
+"detail": "No affidavit/certificate of merit or screening panel is required.",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "A party under 50% of total fault may not be jointly liable for more than twice its percentage of fault.",
+"cite": "S.D. Codified Laws § 15-8-15.1",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of South Dakota",
+"source": "https://www.statebarofsouthdakota.com/",
+"verified": true
+}
+},
+"TN": {
+"medMalCap": {
+"value": "$750,000 ($1M catastrophic)",
+"detail": "General noneconomic cap (all torts, including health care liability); $1M for catastrophic injuries; no cap for intent, records destruction, or intoxication.",
+"cite": "Tenn. Code Ann. § 29-39-102",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Several liability for causes of action on/after July 1, 2013, with exceptions for conspiracy, product claims and vicarious liability.",
+"cite": "Tenn. Code Ann. § 29-11-107; McIntyre v. Balentine, 833 S.W.2d 52 (Tenn. 1992)",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Board of Professional Responsibility of the Supreme Court of Tennessee",
+"source": "https://www.tbpr.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.tbpr.org/for-the-public/online-attorney-directory",
+"detail": "Online Attorney Directory",
+"source": "https://www.tbpr.org/for-the-public/online-attorney-directory",
+"verified": true
+}
+},
+"TX": {
+"medMalCap": {
+"value": "$250,000 per category (max $750,000)",
+"detail": "$250,000 for all physicians/providers; $250,000 per institution, $500,000 for all institutions.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 74.301",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-suit notice + expert report",
+"detail": "Claimant must give 60 days' pre-suit notice and serve an expert report within 120 days after each defendant's answer.",
+"cite": "Tex. Civ. Prac. & Rem. Code §§ 74.051, 74.351",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "2x economic + noneconomic (≤$750k), or $200,000",
+"detail": "Greater of (2x economic damages plus noneconomic up to $750,000) or $200,000; exceptions for certain felonies.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 41.008",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_41.008",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants over 50% responsible are jointly and severally liable; others pay their share, except specified intentional crimes.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 33.013",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Texas",
+"source": "https://www.texasbar.com/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.texasbar.com/AM/Template.cfm?Section=Find_A_Lawyer&Template=/CustomSource/MemberDirectory/Search_Form_Client_Main.cfm",
+"detail": "Find a Lawyer",
+"source": "https://www.texasbar.com/AM/Template.cfm?Section=Find_A_Lawyer&Template=/CustomSource/MemberDirectory/Search_Form_Client_Main.cfm",
+"verified": true
+},
+"barReferral": {
+"value": "State Bar of Texas Lawyer Referral & Information Service",
+"detail": "(800) 252-9690",
+"source": "https://www.texasbar.com/LRIS",
+"verified": true
+}
+},
+"UT": {
+"medMalCap": {
+"value": "$450,000",
+"detail": "Noneconomic cap for malpractice arising on/after May 15, 2010; unconstitutional as applied to wrongful death.",
+"cite": "Utah Code Ann. § 78B-3-410; Smith v. United States, 2015 UT 68, 356 P.3d 1249",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Notice of intent + prelitigation panel",
+"detail": "Plaintiff must serve a 90-day notice of intent and complete DOPL prelitigation panel review (or obtain an affidavit of merit) before suit.",
+"cite": "Utah Code Ann. §§ 78B-3-412, 78B-3-416, 78B-3-423",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Each defendant is liable only for its proportion of fault; some immune-party fault may be reallocated.",
+"cite": "Utah Code Ann. § 78B-5-820",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Utah State Bar",
+"source": "https://www.utahbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://services.utahbar.org/Licensee-Directory",
+"detail": "Licensee Directory",
+"source": "https://services.utahbar.org/Licensee-Directory",
+"verified": true
+}
+},
+"VA": {
+"medMalCap": {
+"value": "$2.75M total cap",
+"detail": "Total-damages cap for malpractice occurring July 1, 2026–June 30, 2027; rises $50,000 yearly to $3M for acts after July 1, 2031.",
+"cite": "Va. Code Ann. § 8.01-581.15",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter21.1/section8.01-581.15/",
+"verified": true
+},
+"meritRequirement": {
+"value": "Expert certification at service",
+"detail": "Plaintiff must certify, when serving the defendant, that a qualified expert has given a written opinion supporting the claim.",
+"cite": "Va. Code Ann. § 8.01-20.1",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "$350,000",
+"detail": "Total punitive damages against all defendants may not exceed $350,000.",
+"cite": "Va. Code Ann. § 8.01-38.1",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter3/section8.01-38.1/",
+"verified": true
+},
+"jointSeveral": {
+"value": "Retained",
+"detail": "Independent negligent acts that combine to cause a single indivisible injury make each actor liable for the whole.",
+"cite": "Dickenson v. Tabb, 208 Va. 184, 156 S.E.2d 795 (1967); Va. Code § 8.01-443",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Virginia State Bar",
+"source": "https://vsb.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://vsb.org/Shared_Content/Directory/va-lawyer-directory.aspx",
+"detail": "Lawyer Look Up (Virginia Lawyer Directory)",
+"source": "https://vsb.org/Shared_Content/Directory/va-lawyer-directory.aspx",
+"verified": true
+}
+},
+"VT": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Vermont has no cap on noneconomic damages in medical malpractice cases.",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Certificate of merit required",
+"detail": "Complaint must include a certificate that the attorney consulted a qualified health care provider who found merit.",
+"cite": "Vt. Stat. Ann. tit. 12, § 1042",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Joint and several liability unless the plaintiff is comparatively negligent, in which case each defendant pays its share.",
+"cite": "Vt. Stat. Ann. tit. 12, § 1036",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Vermont Judiciary — Office of Attorney Licensing",
+"source": "https://www.vtcourts.gov/attorneys/attorney-licensing",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.vtcourts.gov/attorneys/attorney-licensing",
+"detail": "Attorneys in Good Standing list",
+"source": "https://www.vtcourts.gov/attorneys/attorney-licensing",
+"verified": true
+},
+"barReferral": {
+"value": "Vermont Bar Association Lawyer Referral Service",
+"detail": "1-800-639-7036",
+"source": "https://www.vtbar.org/find-a-lawyer/",
+"verified": true
+}
+},
+"WA": {
+"medMalCap": {
+"value": "No cap",
+"detail": "Washington's noneconomic damages cap was held unconstitutional (right to jury trial).",
+"cite": "Sofie v. Fibreboard Corp., 112 Wn.2d 636, 771 P.2d 711 (1989)",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (certificate of merit struck down)",
+"detail": "The certificate-of-merit requirement (RCW 7.70.150) was held unconstitutional; mediation provisions apply before trial.",
+"cite": "Putman v. Wenatchee Valley Med. Ctr., 166 Wn.2d 974 (2009)",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified — mostly several",
+"detail": "Several liability, but joint where the plaintiff is fault-free, defendants acted in concert, or in hazardous waste and similar cases.",
+"cite": "Wash. Rev. Code § 4.22.070",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "Washington State Bar Association",
+"source": "https://wsba.org/",
+"verified": true
+}
+},
+"WI": {
+"medMalCap": {
+"value": "$750,000",
+"detail": "Noneconomic cap per occurrence in medical negligence; facially upheld by the Wisconsin Supreme Court in 2018.",
+"cite": "Wis. Stat. § 893.55(4)(d); Mayo v. Wis. Injured Patients & Families Comp. Fund, 2018 WI 78",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "Mediation request required",
+"detail": "Claimant must request mediation, either before filing (tolling the limitation period) or within 15 days after filing.",
+"cite": "Wis. Stat. §§ 655.43–655.445",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Modified",
+"detail": "Defendants under 51% at fault pay only their share; 51%+ or acting in a common scheme are jointly and severally liable.",
+"cite": "Wis. Stat. § 895.045",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "State Bar of Wisconsin",
+"source": "https://www.wisbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.wisbar.org/Pages/BasicLawyerSearch.aspx",
+"detail": "Lawyer Search",
+"source": "https://www.wisbar.org/Pages/BasicLawyerSearch.aspx",
+"verified": true
+},
+"barReferral": {
+"value": "State Bar of Wisconsin Lawyer Referral Service",
+"detail": "1-800-362-9082",
+"source": "https://www.wisbar.org/forPublic/INeedaLawyer/Pages/i-need-a-lawyer.aspx",
+"verified": true
+}
+},
+"WV": {
+"medMalCap": {
+"value": "$250,000 / $500,000 (CPI-adjusted)",
+"detail": "$500,000 for death or catastrophic injury; amounts CPI-adjusted but capped at $375,000 / $750,000.",
+"cite": "W. Va. Code § 55-7B-8",
+"source": "https://code.wvlegislature.gov/55-7B-8/",
+"verified": true
+},
+"meritRequirement": {
+"value": "Pre-suit notice + screening certificate of merit",
+"detail": "At least 30 days before suit, plaintiff must serve a notice of claim and an expert's screening certificate of merit.",
+"cite": "W. Va. Code § 55-7B-6",
+"source": "https://www.ama-assn.org/system/files/mlr-state-laws-chart-II.pdf",
+"verified": true
+},
+"punitiveCap": {
+"value": "4x compensatory or $500,000",
+"detail": "Punitive damages may not exceed the greater of four times compensatory damages or $500,000.",
+"cite": "W. Va. Code § 55-7-29(c)",
+"source": "https://code.wvlegislature.gov/55-7-29/",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability (med mal several only)",
+"detail": "Since 2015 several liability by fault, with exceptions (conspiracy, DUI, crimes); medical malpractice liability is several.",
+"cite": "W. Va. Code §§ 55-7-13c, 55-7B-9",
+"source": "https://whiteandwilliams.com/assets/htmldocuments/Subro%20Charts%20Updated%205_10_16/JOINT%20AND%20SEVERAL%20LIABILITY%20-%20REV.%201-10-20.PDF",
+"verified": true
+},
+"barName": {
+"value": "The West Virginia State Bar",
+"source": "https://wvbar.org/",
+"verified": true
+},
+"barReferral": {
+"value": "West Virginia State Bar Lawyer Referral Service",
+"detail": "(304) 553-7220",
+"source": "https://wvlawyerreferral.org/",
+"verified": true
+}
+},
+"WY": {
+"medMalCap": {
+"value": "No cap",
+"detail": "The Wyoming Constitution prohibits laws limiting damages for injury or death.",
+"cite": "Wyo. Const. art. 10, § 4",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"meritRequirement": {
+"value": "None (review panel repealed)",
+"detail": "The Medical Review Panel Act (W.S. 9-2-1513 to -1523) was repealed in 2021; no merit affidavit is required.",
+"cite": "2021 Wyo. Sess. Laws, HB 0195",
+"source": "https://wyoleg.gov/2021/Enroll/HB0195.pdf",
+"verified": true
+},
+"jointSeveral": {
+"value": "Abolished — several liability only",
+"detail": "Each defendant is liable only for the portion of damages matching its percentage of fault.",
+"cite": "Wyo. Stat. Ann. § 1-1-109",
+"source": "https://www.ama-assn.org/sites/default/files/media-browser/premium/arc/state-laws-chart-1_0.pdf",
+"verified": true
+},
+"barName": {
+"value": "Wyoming State Bar",
+"source": "https://www.wyomingbar.org/",
+"verified": true
+},
+"lawyerLookup": {
+"value": "https://www.wyomingbar.org/for-the-public/hire-a-lawyer/lawyer-search/",
+"detail": "Lawyer Search and Referral",
+"source": "https://www.wyomingbar.org/for-the-public/hire-a-lawyer/lawyer-search/",
+"verified": true
+},
+"barReferral": {
+"value": "Wyoming State Bar Lawyer Search and Referral",
+"source": "https://www.wyomingbar.org/for-the-public/hire-a-lawyer/request-a-referral-online/",
+"verified": true
+}
+}
+}
+}
