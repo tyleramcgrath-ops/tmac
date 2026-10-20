@@ -13,6 +13,7 @@ import { STATES, citiesInState, stateBySlug } from '@/lib/geo'
 import { neighborValues, rankSentence, shareSentence } from '@/lib/law/compare'
 import { FIELDS, researchedOn } from '@/lib/law/facts'
 import { ctxFor, paras, topicBySlug, topicsFor } from '@/lib/law/topics'
+import { TOOLS } from '@/lib/law/tools'
 import { photoUrl } from '@/lib/photos'
 import { SITE, abs, fmtDate } from '@/lib/site'
 
@@ -81,6 +82,7 @@ export default async function StateTopicPage({ params }: Props) {
     { id: 'sources', label: 'Sources' },
   ]
   const heading = t.heading(s)
+  const tools = TOOLS.filter((x) => x.topic === t.slug && x.data(s.code))
 
   return (
     <>
@@ -118,6 +120,13 @@ export default async function StateTopicPage({ params }: Props) {
           <aside className="art-toc"><TocSpy items={toc} /></aside>
           <article className="art-body prose">
             <div className="art-answer"><span className="label">The short answer</span><p>{t.answer(c)}</p></div>
+            {tools.map((x) => (
+              <Link key={x.slug} href={`/calculators/${x.slug}/${s.slug}`} className="tool-promo">
+                <span className="tool-ico" aria-hidden="true">{x.icon}</span>
+                <span><b>Try the free {s.name} {x.name.toLowerCase()}</b><br />{x.blurb}</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+            ))}
             <section id="at-a-glance" className="art-sec">
               <h2><span className="art-n">01</span>{s.name} at a glance</h2>
               <FactTable rows={rows} />

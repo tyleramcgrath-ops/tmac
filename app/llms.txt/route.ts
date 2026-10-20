@@ -2,6 +2,7 @@ import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { STATES } from '@/lib/geo'
 import { TOPICS, topicsFor } from '@/lib/law/topics'
+import { TOOLS } from '@/lib/law/tools'
 import { SITE, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -28,6 +29,9 @@ export function GET() {
     '## State laws (each fact cites its statute)',
     ...TOPICS.map((t) => `- [${t.name} by state](${abs(`/laws/${t.slug}`)}): all 50 states and D.C. compared`),
     ...STATES.flatMap((s) => topicsFor(s.code).map((t) => `- [${t.heading(s)}](${abs(`/state/${s.slug}/${t.slug}`)})`)),
+    '',
+    '## Free legal calculators (state-specific, statutes cited)',
+    ...TOOLS.map((t) => `- [${t.name}](${abs(`/calculators/${t.slug}`)}): ${t.blurb}`),
     '',
     '## Reference',
     `- [Common legal questions](${abs('/questions')})`,
