@@ -44,6 +44,10 @@ jobs:
             pnpm install --no-frozen-lockfile
           fi
 
+      - name: Type-check
+        if: matrix.project == 'apps/lawmatchnow'
+        run: pnpm type-check
+
       - name: Build
         run: pnpm build
 

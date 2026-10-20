@@ -25,6 +25,12 @@ const MOVED: [string, string][] = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Hosted on SiteGround's Node.js hosting, like SaySites: builds use one
+  // CPU, no worker threads and webpack (package.json) to stay inside shared
+  // hosting's memory and process limits. Types are checked in CI
+  // (pnpm type-check), so the build skips that step.
+  experimental: { cpus: 1, workerThreads: false },
+  typescript: { ignoreBuildErrors: true },
   turbopack: { root: path.join(__dirname) },
   async redirects() {
     return MOVED.map(([source, destination]) => ({ source, destination, permanent: true }))

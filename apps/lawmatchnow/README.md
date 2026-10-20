@@ -13,7 +13,8 @@ and legal library in the mold of FindLaw, Lawyers.com and USAttorneys.com.
   attorneys is thousands of pages generated from data, which is what Next.js
   does natively. In WordPress that means a stack of directory plugins,
   slower pages and more to patch.
-- **Same stack as SaySites**, so it can be hosted and maintained the same way.
+- **Same stack as SaySites**, and hosted the same way: SiteGround Node.js
+  hosting, deployed from the `lawmatchnow-host` branch.
 
 ## Features
 
@@ -68,6 +69,16 @@ to succeed.
 3. Set a lead delivery variable and send a test case review.
 4. Set `/for-attorneys` prices in `PLANS` when they're decided.
 5. Have a lawyer review `/privacy`, `/terms` and `/disclaimer`.
+
+## Hosting (SiteGround, like SaySites)
+
+SiteGround's Node.js hosting builds from the top of a branch, so
+`.github/workflows/lawmatchnow-host.yml` copies `apps/lawmatchnow` to the
+`lawmatchnow-host` branch on every merge to main. Builds use webpack, one
+CPU and no worker threads to fit shared hosting; types are checked in CI.
+`lib/prune-releases.ts` deletes old SiteGround release folders on start so
+they don't eat the plan's file (inode) limit. Settings in Site Tools:
+Node 22, install `npm install`, build `npm run build`, start `npm start`.
 
 ## Develop
 
