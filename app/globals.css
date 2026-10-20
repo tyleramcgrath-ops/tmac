@@ -1138,3 +1138,4 @@ a.lf-c:hover { text-decoration: underline; }
 .ad-dot.on { background: #dcf3e5; color: #1d7a46; }
 .ad-how ol { padding-left: 20px; margin: 0; } .ad-how li { padding: 3px 0; }
 .ad-login h1 { margin: 6px 0 18px; font-size: 1.8rem; }
+.ad-problems { margin: 8px 0 14px; padding-left: 20px; color: var(--oxblood); font-weight: 500; }
