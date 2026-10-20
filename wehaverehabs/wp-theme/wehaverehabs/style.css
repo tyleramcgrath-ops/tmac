@@ -3,7 +3,7 @@ Theme Name: We Have Rehabs
 Theme URI: https://wehaverehabs.com
 Author: We Have Rehabs
 Description: Boutique directory theme for holistic mental-health and recovery sanctuaries worldwide. Includes the Sanctuary post type, destination guides, filtered search, inquiry handling and demo content.
-Version: 1.4.0
+Version: 1.4.1
 Requires at least: 6.3
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -551,4 +551,36 @@ h1 em, h2 em, h3 em, p em { font-style: italic; }
 	.entry h3 { font-size: 25px; }
 	.entry-lede { font-size: 21px; }
 	.entry .whr-callout { padding: 22px 20px; }
+}
+
+/* Mobile readability (1.4.1): a solid, compact header and stronger text on phones. */
+@media (max-width: 860px) {
+	body { font-weight: 400; }
+	:root { --muted: #4a5247; --muted-2: #5f675b; }
+
+	/* Header: one row on a solid band instead of floating over the photo. */
+	.site--photo .site-chrome { position: relative; background: var(--forest-deep); }
+	.admin-bar.site--photo .site-chrome { top: 0; }
+	.support-bar, .site--photo .support-bar { background: var(--forest-ink); }
+	.site-header .wrap { flex-wrap: wrap; justify-content: space-between; gap: 10px 10px; padding: 12px 20px; }
+	.site-logo { order: 0; flex: 1 1 auto; }
+	.site-logo img { height: 52px; }
+	.site--light .site-logo img { height: auto; width: 170px; max-width: 100%; }
+	.site-logo { min-width: 0; }
+	.header-actions { order: 1; flex: 0 0 auto; gap: 10px; }
+	.nav-toggle { order: 2; }
+	.header-nav { order: 3; flex: 1 1 100%; }
+	.header-actions .header-inquire, .nav-toggle { min-height: 40px; padding: 0 12px; font-size: 12px; letter-spacing: .12em; }
+	.header-actions .lang-list, .header-actions > a:not(.header-inquire), .header-actions .menu-item { display: none; }
+	.site-header.is-open .header-nav { padding: 6px 0 10px; font-size: 14px; }
+
+	/* Photo heroes start below the header, with a deeper shade behind the words. */
+	.site--photo .hero, .hero { min-height: 620px; }
+	.hero--sm { min-height: 420px; }
+	.site--photo .hero__body { padding-top: 90px; padding-bottom: 110px; }
+	.hero__shade { background: linear-gradient(180deg, rgba(22,30,24,.45) 0%, rgba(22,30,24,.45) 35%, rgba(22,30,24,.88) 100%); }
+	.hero__sub { font-weight: 400; color: var(--on-dark); }
+	.hero .eyebrow, .breadcrumbs { color: #e6d3ad; text-shadow: 0 1px 12px rgba(0,0,0,.35); }
+	.hero__title { text-shadow: 0 2px 24px rgba(0,0,0,.25); }
+	.lede, .entry p, .entry li { color: var(--text); }
 }
