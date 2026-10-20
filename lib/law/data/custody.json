@@ -1,0 +1,1164 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "Alabama sets no age at which a child chooses; the judge may consider the child's preference, weighed by the child's age and maturity, but the judge decides.",
+"cite": "Ala. Code § 30-3-169.3(a)(6)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=30-3-169.3",
+"verified": true
+},
+"supportEndAge": {
+"value": "19",
+"detail": "Alabama's age of majority is 19, so child support normally continues until the child turns 19.",
+"cite": "Ala. Code § 26-1-1",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=26-1-1",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "For joint custody the court weighs the parents' agreement or lack of it, their ability to cooperate and make decisions jointly, each parent's willingness to encourage the child's relationship with the other parent, and any history of abuse.",
+"cite": "Ala. Code § 30-3-152(a)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=30-3-152",
+"verified": true
+}
+},
+"AK": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The judge must consider the child's preference if the child is of sufficient age and capacity to form one, but the child does not decide.",
+"cite": "AS 25.24.150(c)(3)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secend=25.24.150&secstart=25.24.150",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support normally stops at 18, but a court may order support for an unmarried 18-year-old who is pursuing a high school diploma and living as a dependent with a parent.",
+"cite": "AS 25.24.170(a)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secEnd=25.24.170&secStart=25.24.170",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's physical, emotional, mental, religious and social needs; each parent's capability to meet them; the love and affection between child and each parent; and any domestic violence or substance abuse.",
+"cite": "AS 25.24.150(c)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secend=25.24.150&secstart=25.24.150",
+"verified": true
+}
+},
+"AZ": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "If the child is of suitable age and maturity, the judge considers the child's wishes as one best-interest factor; the child does not decide.",
+"cite": "A.R.S. § 25-403(A)(4)",
+"source": "https://azleg.gov/ars/25/00403.htm",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18, but if the child is still attending high school or an equivalency program it continues while the child attends, up to age 19.",
+"cite": "A.R.S. § 25-320(F); § 25-501(A)",
+"source": "https://azleg.gov/ars/25/00320.htm",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the past, present and future relationship between parent and child, the child's adjustment to home, school and community, the mental and physical health of everyone involved, and which parent is more likely to allow frequent contact with the other parent.",
+"cite": "A.R.S. § 25-403(A)",
+"source": "https://azleg.gov/ars/25/00403.htm",
+"verified": true
+}
+},
+"AR": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court may consider the child's preferences if the child has sufficient age and mental capacity to reason, regardless of chronological age; the judge decides.",
+"cite": "Ark. Code Ann. § 9-13-101(a)(1)(A)(ii)",
+"source": "https://law.justia.com/codes/arkansas/title-9/subtitle-2/chapter-13/subchapter-1/section-9-13-101",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18 unless the child is still in high school, in which case it ends at graduation or the end of the school year after the child turns 19, whichever is earlier.",
+"cite": "Ark. Code Ann. § 9-14-237; 9 CAR § 5-1201",
+"source": "https://codeofarrules.arkansas.gov/Rules/Rule?chapterID=257&levelType=section&partID=1253&sectionID=49075&subChapterID=322&subPartID=7548&titleID=9",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "The statute requires custody to be decided solely on the child's welfare and best interest, allows the child's preference to be considered, and creates a rebuttable presumption favoring joint custody; detailed factors come from case law.",
+"cite": "Ark. Code Ann. § 9-13-101(a)",
+"source": "https://law.justia.com/codes/arkansas/title-9/subtitle-2/chapter-13/subchapter-1/section-9-13-101",
+"verified": true
+}
+},
+"CA": {
+"childPreference": {
+"value": "14 (child may address the court; considered, not controlling)",
+"detail": "The judge must give due weight to the wishes of a child mature enough to form an intelligent preference, and a child 14 or older who wants to speak to the court must be allowed to unless that is not in the child's best interest; the judge still decides.",
+"cite": "Cal. Fam. Code § 3042",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=3042.",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support continues past 18 for an unmarried, full-time high school student who is not self-supporting, until the child finishes 12th grade or turns 19, whichever comes first.",
+"cite": "Cal. Fam. Code § 3901(a)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=3901",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The court must consider, among other relevant factors, the child's health, safety and welfare and any history of abuse by a parent or other person seeking custody against the child, the other parent, or certain household members.",
+"cite": "Cal. Fam. Code § 3011(a)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=3011",
+"verified": true
+}
+},
+"CO": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the child's wishes if the child is mature enough to express reasoned and independent preferences about parenting time; the judge decides.",
+"cite": "C.R.S. § 14-10-124(1.5)(a)(II)",
+"source": "https://law.justia.com/codes/colorado/title-14/dissolution-of-marriage-parental-responsibilities/article-10/section-14-10-124",
+"verified": true
+},
+"supportEndAge": {
+"value": "19 (or up to 21 if still in high school)",
+"detail": "Child support ends automatically when the child turns 19, but if the child is still in high school it continues until the end of the month after graduation, and not beyond 21.",
+"cite": "C.R.S. § 14-10-115(13)(a)",
+"source": "https://law.justia.com/codes/colorado/title-14/dissolution-of-marriage-parental-responsibilities/article-10/section-14-10-115",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's wishes if mature enough, the child's interaction with parents and siblings, the child's adjustment to home, school and community, the mental and physical health of everyone involved, and each party's ability to encourage the child's relationship with the other party.",
+"cite": "C.R.S. § 14-10-124(1.5)(a)",
+"source": "https://law.justia.com/codes/colorado/title-14/dissolution-of-marriage-parental-responsibilities/article-10/section-14-10-124",
+"verified": true
+}
+},
+"CT": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The court may consider relevant information from the child, including the child's informed preferences, as one best-interest factor; the judge decides.",
+"cite": "Conn. Gen. Stat. § 46b-56(c)(4)",
+"source": "https://courtlistener.com/opinion/10287978/k-s-v-r-s",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support is owed until 18, and for an unmarried full-time high school student until the child finishes 12th grade or turns 19, whichever comes first.",
+"cite": "Conn. Gen. Stat. § 46b-84(b)",
+"source": "https://cga.ct.gov/2016/rpt/pdf/2016-R-0234.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The court may consider the child's physical and emotional safety, the child's temperament and developmental needs, each parent's capacity to understand and meet those needs, and the child's informed preferences, among other listed factors.",
+"cite": "Conn. Gen. Stat. § 46b-56(c)",
+"source": "https://courtlistener.com/opinion/10287978/k-s-v-r-s",
+"verified": true
+}
+},
+"DE": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The child's wishes as to custodian and living arrangements are one of the factors the Family Court weighs; the judge decides.",
+"cite": "13 Del. C. § 722(a)(2)",
+"source": "https://courts.delaware.gov/family/visitation/visitation.aspx",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Parents must support a child until 18, and a child over 18 who is in high school and likely to graduate until graduation or age 19, whichever comes first.",
+"cite": "13 Del. C. § 501(d)",
+"source": "https://delcode.delaware.gov/title13/c005/sc01/index.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the wishes of the parents and the child, the child's relationships with parents, siblings and household members, the child's adjustment to home, school and community, and evidence of domestic violence.",
+"cite": "13 Del. C. § 722(a)",
+"source": "https://courts.delaware.gov/family/visitation/visitation.aspx",
+"verified": true
+}
+},
+"DC": {
+"childPreference": {
+"value": "No set age (considered where practicable)",
+"detail": "The court considers the wishes of the child as to custodian where practicable, as one best-interest factor; the judge decides.",
+"cite": "D.C. Code § 16-914(a)(3)(A)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-914",
+"verified": true
+},
+"supportEndAge": {
+"value": "21",
+"detail": "In D.C., child support usually lasts until the child turns 21; the 18 age of majority does not affect the right to child support.",
+"cite": "D.C. Code § 46-101",
+"source": "https://dccourts.gov/superior-court/superior-court-divisions/family-court-operations-division/parentage-and-child-support-branch",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's and parents' wishes, the child's adjustment to home, school and community, evidence of an intrafamily offense, and the parents' capacity to communicate and reach shared decisions.",
+"cite": "D.C. Code § 16-914(a)(3)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-914",
+"verified": true
+}
+},
+"FL": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court weighs the child's reasonable preference if it finds the child has sufficient intelligence, understanding and experience to express one; the judge decides.",
+"cite": "Fla. Stat. § 61.13(3)(i)",
+"source": "https://flsenate.gov/Laws/Statutes/2025/61.13",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support may continue past 18 for a dependent child who is still in high school and expected in good faith to graduate before turning 19.",
+"cite": "Fla. Stat. § 743.07(2)",
+"source": "https://flhouse.gov/Statutes/2025/0743.07",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include each parent's capacity to encourage a close relationship with the other parent and honor the time-sharing schedule, the moral fitness and mental and physical health of the parents, and the child's home, school and community record.",
+"cite": "Fla. Stat. § 61.13(3)",
+"source": "https://flsenate.gov/Laws/Statutes/2025/61.13",
+"verified": true
+}
+},
+"GA": {
+"childPreference": {
+"value": "14 (child may choose, subject to court approval)",
+"detail": "A child 14 or older has the right to select the parent to live with, and that choice is presumptive unless the judge finds the chosen parent is not in the child's best interests.",
+"cite": "O.C.G.A. § 19-9-3(a)(5)",
+"source": "https://law.justia.com/codes/georgia/title-19/chapter-9/article-1/section-19-9-3",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in high school)",
+"detail": "Support normally ends at 18, but the court may extend it for a child enrolled full-time in secondary school until graduation or age 20, whichever comes first.",
+"cite": "O.C.G.A. § 19-6-15(e)",
+"source": "https://courtlistener.com/opinion/2507086/francis-rolle-v-harvey",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The judge may consider any relevant factor, including the love, affection, bonding and emotional ties between each parent and the child, and the child's emotional ties with siblings, half-siblings and stepsiblings, among the other factors listed.",
+"cite": "O.C.G.A. § 19-9-3(a)(3)",
+"source": "https://law.justia.com/codes/georgia/title-19/chapter-9/article-1/section-19-9-3",
+"verified": true
+}
+},
+"HI": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "If the child has sufficient age and capacity to reason and form an intelligent preference, the court must consider the child's wishes and give them due weight; the judge decides.",
+"cite": "Haw. Rev. Stat. § 571-46(a)(3)",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0571/HRS_0571-0046.htm",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or up to 23 if in high school or college)",
+"detail": "Support usually ends at 18, but commonly continues while the child attends high school or, until 23, while enrolled full-time in college or vocational school.",
+"cite": "Haw. Rev. Stat. § 580-47(a); Hawaii Child Support Guidelines",
+"source": "https://ag.hawaii.gov/csea/order-processing",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include any history of sexual or physical abuse or neglect of a child by a parent, the overall quality of the parent-child relationship, each parent's history of caregiving, and each parent's cooperation in developing a plan to meet the child's needs.",
+"cite": "Haw. Rev. Stat. § 571-46(b)",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0571/HRS_0571-0046.htm",
+"verified": true
+}
+},
+"ID": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The wishes of the child as to custodian are one of the factors the court may consider; the judge decides.",
+"cite": "Idaho Code § 32-717(1)(b)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-717",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support runs to 18, and the court may continue it while the child is still in high school until the child stops attending or turns 19, whichever is sooner.",
+"cite": "Idaho Code § 32-706(1)-(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-706",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' and child's wishes, the child's relationships with parents and siblings, the child's adjustment to home, school and community, the need for continuity and stability, and domestic violence.",
+"cite": "Idaho Code § 32-717(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-717",
+"verified": true
+}
+},
+"IL": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the child's wishes, taking into account the child's maturity and ability to express reasoned and independent preferences; the judge decides.",
+"cite": "750 ILCS 5/602.7(b)(2); 5/602.5(c)(1)",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/075000050K602.7.htm",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18, or for a child still in high school at graduation or age 19, whichever is earlier.",
+"cite": "750 ILCS 5/505(g); 5/510(d)",
+"source": "https://ilga.gov/documents/legislation/ilcs/documents/075000050k510.htm",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "For parenting time the court considers each parent's wishes, the child's wishes, the time each parent spent on caretaking in the prior 24 months, and the child's interaction with parents and siblings, among other factors.",
+"cite": "750 ILCS 5/602.7(b); 5/602.5(c)",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/075000050K602.7.htm",
+"verified": true
+}
+},
+"IN": {
+"childPreference": {
+"value": "14 (more weight given; considered, not controlling)",
+"detail": "The court considers the child's wishes, giving them more consideration if the child is at least 14, but the judge decides.",
+"cite": "Ind. Code § 31-17-2-8(3)",
+"source": "https://law.justia.com/codes/indiana/title-31/article-17/chapter-2/section-31-17-2-8",
+"verified": true
+},
+"supportEndAge": {
+"value": "19",
+"detail": "The duty to pay child support generally ends when the child turns 19, with exceptions for incapacity and certain other circumstances.",
+"cite": "Ind. Code § 31-16-6-6(a)",
+"source": "https://law.justia.com/codes/indiana/title-31/article-16/chapter-6/section-31-16-6-6",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the age and sex of the child, the wishes of the parents and child, the child's adjustment to home, school and community, and evidence of a pattern of domestic or family violence.",
+"cite": "Ind. Code § 31-17-2-8",
+"source": "https://law.justia.com/codes/indiana/title-31/article-17/chapter-2/section-31-17-2-8",
+"verified": true
+}
+},
+"IA": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The court considers whether the custody arrangement matches the child's wishes or whether the child strongly opposes it, taking into account the child's age and maturity; the judge decides.",
+"cite": "Iowa Code § 598.41(3)(f)",
+"source": "https://iowacourts.gov/courtcases/15647/embed/CourtAppealsOpinion",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support includes a child aged 18 to 19 who is full-time completing high school and expected to finish before turning 19.",
+"cite": "Iowa Code § 598.1(9)",
+"source": "https://iowacourts.gov/for-the-public/representing-yourself/child-support",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include whether each parent would be a suitable custodian, whether the parents can communicate about the child's needs, whether each parent supports the other's relationship with the child, and any history of domestic abuse.",
+"cite": "Iowa Code § 598.41(3)",
+"source": "https://iowacourts.gov/courtcases/15647/embed/CourtAppealsOpinion",
+"verified": true
+}
+},
+"KS": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the desires of a child of sufficient age and maturity about custody or residency as one factor; the judge decides.",
+"cite": "K.S.A. 23-3203(a)(3)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch23/023_032_0003.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or end of school year if still in high school)",
+"detail": "Support ends at 18, but if the child is still in high school it continues until June 30 of that school year, and the court may extend it through the school year in which the child turns 19 in some cases.",
+"cite": "K.S.A. 23-3001(b)",
+"source": "https://kslegislature.gov/b2025_26/laws/023_000_0000_chapter/023_030_0000_article/023_030_0001_section/023_030_0001_k",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include each parent's role with the child before and after separation, the child's emotional and physical needs, each parent's willingness to support the child's bond with the other parent, and evidence of domestic abuse.",
+"cite": "K.S.A. 23-3203(a)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch23/023_032_0003.html",
+"verified": true
+}
+},
+"KY": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The court considers the child's wishes as to custodian, with due consideration of any influence a parent may have had over those wishes; the judge decides.",
+"cite": "KRS 403.270(4)(b)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=57567",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18 unless the child is still in high school, in which case it continues while the child is a student but not beyond the school year in which the child turns 19.",
+"cite": "KRS 403.213(3)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=1457",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the wishes of the parents and child, the child's relationships with parents and siblings, the child's adjustment to home, school and community, and the mental and physical health of everyone involved; Kentucky presumes joint custody with equal parenting time.",
+"cite": "KRS 403.270",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=57567",
+"verified": true
+}
+},
+"LA": {
+"childPreference": {
+"value": "No set age (considered if old enough)",
+"detail": "The court weighs the child's reasonable preference if it finds the child old enough to express one, as one of the best-interest factors; the judge decides.",
+"cite": "La. Civ. Code art. 134(A)(11)",
+"source": "https://legis.la.gov/legis/Law.aspx?d=108693",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at majority (18) but continues automatically for an unmarried, dependent child who is a full-time student in good standing in secondary school, until age 19.",
+"cite": "La. R.S. 9:315.22(C)",
+"source": "https://legis.la.gov/Legis/Law.aspx?d=107388",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The primary consideration is the potential for the child to be abused; other factors include the emotional ties between each party and the child, each party's capacity to provide for the child's material needs, and the moral fitness and mental and physical health of each party.",
+"cite": "La. Civ. Code art. 134(A)",
+"source": "https://legis.la.gov/legis/Law.aspx?d=108693",
+"verified": true
+}
+},
+"ME": {
+"childPreference": {
+"value": "No set age (considered if old enough)",
+"detail": "The court considers the child's preference if the child is old enough to express a meaningful preference, as one best-interest factor; the judge decides.",
+"cite": "19-A M.R.S. § 1653(3)(C)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec1653.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support must continue past 18 while the child attends secondary school, until the child graduates, withdraws, is expelled, or turns 19, whichever comes first.",
+"cite": "19-A M.R.S. § 1653(12)(B)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec1653.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's age, the child's relationship with each parent, the stability of current and proposed living arrangements, and each parent's capacity to encourage frequent contact with the other parent.",
+"cite": "19-A M.R.S. § 1653(3)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec1653.html",
+"verified": true
+}
+},
+"MD": {
+"childPreference": {
+"value": "No set age (considered if age-appropriate)",
+"detail": "The court may consider the child's preference, if age-appropriate, as one of the listed best-interest factors; the judge decides.",
+"cite": "Md. Code, Fam. Law § 9-201(a)(15)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&enactments=false&section=9-201",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "An 18-year-old still enrolled in secondary school has the right to support from both parents until graduation, leaving school, or turning 19, whichever comes first.",
+"cite": "Md. Code, Gen. Prov. § 1-401(b)",
+"source": "https://mgaleg.maryland.gov/2025RS/Statute_Web/ggp/ggp.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's stability and foreseeable health and welfare, the child's relationship with each parent and siblings, protection from exposure to conflict and violence, and the parents' ability to communicate and co-parent.",
+"cite": "Md. Code, Fam. Law § 9-201(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&enactments=false&section=9-201",
+"verified": true
+}
+},
+"MA": {
+"childPreference": {
+"value": "No set age (considered, never the deciding factor)",
+"detail": "Depending on the child's age and maturity, the judge may consider the child's preference, but it is never the deciding factor.",
+"cite": "Mass. Gen. Laws ch. 208, § 31 (best-interest standard)",
+"source": "https://mass.gov/info-details/learn-about-how-child-custody-or-parenting-time-is-decided",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or up to 21 if living at home and dependent; 23 if in college)",
+"detail": "The court may order support for a child aged 18-21 who lives in a parent's home and depends on that parent, and up to 23 if the child is also enrolled in an educational program (through an undergraduate degree).",
+"cite": "Mass. Gen. Laws ch. 208, § 28",
+"source": "https://mass.gov/info-details/massachusetts-law-about-child-support-over-age-18",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "Massachusetts uses a general best-interest-of-the-child standard; the statute addresses specific issues such as abuse and shared custody plans, while detailed factors come from case law.",
+"cite": "Mass. Gen. Laws ch. 208, § 31",
+"source": "https://mass.gov/info-details/learn-about-how-child-custody-or-parenting-time-is-decided",
+"verified": true
+}
+},
+"MI": {
+"childPreference": {
+"value": "No set age (considered if old enough)",
+"detail": "The court weighs the child's reasonable preference if it considers the child old enough to express one, as one of 12 best-interest factors; the judge decides.",
+"cite": "MCL 722.23(i)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=MCL-722-23",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19½ if still in high school)",
+"detail": "The court may order support past 18 while the child attends high school full time with a reasonable expectation of graduating, but never after age 19 years and 6 months.",
+"cite": "MCL 552.605b(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-552-605b",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the love and emotional ties between the parties and the child, each party's capacity to provide food, clothing and medical care, the length of time in a stable environment, and the moral fitness and health of the parties.",
+"cite": "MCL 722.23",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=MCL-722-23",
+"verified": true
+}
+},
+"MN": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the child's reasonable preference if the child has sufficient ability, age and maturity to express an independent, reliable preference; the judge decides.",
+"cite": "Minn. Stat. § 518.17, subd. 1(a)(3)",
+"source": "https://revisor.mn.gov/statutes/cite/518.17",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in high school)",
+"detail": "A 'child' for support purposes is anyone under 18, or under 20 and still attending secondary school.",
+"cite": "Minn. Stat. § 518A.26, subd. 5",
+"source": "https://revisor.mn.gov/statutes/cite/518A/pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's physical, emotional and cultural needs, any special medical or educational needs, whether domestic abuse has occurred, and each parent's history of caring for the child.",
+"cite": "Minn. Stat. § 518.17, subd. 1(a)",
+"source": "https://revisor.mn.gov/statutes/cite/518.17",
+"verified": true
+}
+},
+"MS": {
+"childPreference": {
+"value": "12 (considered, not controlling)",
+"detail": "If both parents are fit, the chancellor may consider the preference of a child 12 or older, and must explain on the record why the child's wishes were or were not honored; the judge is not bound by the child's choice.",
+"cite": "Miss. Code Ann. § 93-11-65(1)(a)",
+"source": "https://courtlistener.com/opinion/4485446/julia-n-bennett-v-andre-d-bennett",
+"verified": true
+},
+"supportEndAge": {
+"value": "21",
+"detail": "Unless the support judgment says otherwise, child support ends when the child turns 21, marries, joins the military full time, or is incarcerated for two or more years on a felony.",
+"cite": "Miss. Code Ann. § 93-11-65(8)(a)",
+"source": "https://courtlistener.com/opinion/4572098/tammy-h-ratliff-v-dennis-ratliff",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "Mississippi courts apply the judge-made Albright factors (such as the child's age, health and sex, continuity of care, parenting skills, and the child's preference at 12 or older); the statute itself only addresses the child's preference and certain presumptions.",
+"cite": "Miss. Code Ann. § 93-11-65; Albright v. Albright, 437 So. 2d 1003 (Miss. 1983)",
+"source": "https://courtlistener.com/opinion/4485446/julia-n-bennett-v-andre-d-bennett",
+"verified": true
+}
+},
+"MO": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The wishes of the child as to custodian are one of the factors the court must consider; the judge decides.",
+"cite": "RSMo § 452.375.2(8)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.375",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 21 if in high school or college)",
+"detail": "Support generally ends at 18, but continues up to 21 while the child is still in secondary school or enrolled in vocational or higher education and meets attendance requirements.",
+"cite": "RSMo § 452.340.3, .5",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.340",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' wishes and proposed parenting plans, the child's need for a meaningful relationship with both parents, which parent is more likely to allow frequent contact with the other, and the child's adjustment to home, school and community; Missouri presumes equal or approximately equal parenting time.",
+"cite": "RSMo § 452.375.2",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.375",
+"verified": true
+}
+},
+"MT": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The wishes of the child are one of the parenting factors the court considers; the judge decides.",
+"cite": "Mont. Code Ann. § 40-4-212(1)(b)",
+"source": "https://mca.legmt.gov/bills/mca/title_0400/chapter_0040/part_0020/section_0120/0400-0040-0020-0120.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at emancipation or high school graduation, whichever is later, but no later than the child's 19th birthday unless extended by agreement or the decree.",
+"cite": "Mont. Code Ann. § 40-4-208(5)",
+"source": "https://mca.legmt.gov/bills/mca/title_0400/chapter_0040/part_0020/section_0080/0400-0040-0020-0080.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the wishes of the parents and child, the child's adjustment to home, school and community, physical abuse or threats by a parent, and chemical dependency of either parent.",
+"cite": "Mont. Code Ann. § 40-4-212(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0400/chapter_0040/part_0020/section_0120/0400-0040-0020-0120.html",
+"verified": true
+}
+},
+"NE": {
+"childPreference": {
+"value": "No set age (considered if based on sound reasoning)",
+"detail": "The court considers the child's wishes if the child is of an age of comprehension, regardless of chronological age, and the wishes are based on sound reasoning; they are not controlling.",
+"cite": "Neb. Rev. Stat. § 43-2923(6)(b)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=43-2923",
+"verified": true
+},
+"supportEndAge": {
+"value": "19",
+"detail": "Nebraska's age of majority is 19, so child support normally continues until the child turns 19.",
+"cite": "Neb. Rev. Stat. § 43-2101",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=43-2101",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's relationship with each parent before the case, the child's wishes, the child's general health and welfare, and credible evidence of abuse in the household.",
+"cite": "Neb. Rev. Stat. § 43-2923(6)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=43-2923",
+"verified": true
+}
+},
+"NV": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court must consider the child's wishes if the child is of sufficient age and capacity to form an intelligent preference about physical custody; the judge decides.",
+"cite": "NRS 125C.0035(4)(a)",
+"source": "https://leg.state.nv.us/nrs/NRS-125C.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18, or if the child is still in high school, at graduation or age 19, whichever comes first.",
+"cite": "NRS 125B.200; NAC ch. 425",
+"source": "https://leg.state.nv.us/NAC/NAC-425.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include which parent is more likely to allow a continuing relationship with the other parent, the level of conflict between the parents, the child's physical, developmental and emotional needs, and any domestic violence or abuse.",
+"cite": "NRS 125C.0035(4)",
+"source": "https://leg.state.nv.us/nrs/NRS-125C.html",
+"verified": true
+}
+},
+"NH": {
+"childPreference": {
+"value": "No set age (substantial weight if mature)",
+"detail": "If the court finds by clear and convincing evidence that the child is mature enough to make a sound judgment, it may give substantial weight to the child's preference, while also weighing any improper influence; the judge decides.",
+"cite": "RSA 461-A:6, II",
+"source": "https://gc.nh.gov/rsa/html/XLIII/461-A/461-A-6.htm",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support ends at 18, but for a full-time high school student it continues until graduation or 2 months after the child turns 19, whichever comes first.",
+"cite": "RSA 461-A:14, IV",
+"source": "https://gc.nh.gov/rsa/html/XLIII/461-A/461-A-14.htm",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's relationship with each parent, each parent's ability to provide food, shelter, medical care and a safe environment, the child's developmental needs, and each parent's support for the child's contact with the other parent.",
+"cite": "RSA 461-A:6, I",
+"source": "https://gc.nh.gov/rsa/html/XLIII/461-A/461-A-6.htm",
+"verified": true
+}
+},
+"NJ": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the child's preference when the child is of sufficient age and capacity to reason and form an intelligent decision, as one of many factors; the judge decides.",
+"cite": "N.J.S.A. 9:2-4(c)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/7155/7160?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"supportEndAge": {
+"value": "19 (or up to 23 if ordered)",
+"detail": "Child support ends automatically at 19 unless a court order sets a later age (no later than 23, commonly for college) or another statutory exception applies.",
+"cite": "N.J.S.A. 2A:17-56.67(a)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/112/604?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' ability to agree, communicate and cooperate, the child's relationship with parents and siblings, any history of domestic violence, and the stability of the home environment.",
+"cite": "N.J.S.A. 9:2-4(c)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/7155/7160?f=templates$fn%3Ddocument-frame.htm$3.0",
+"verified": true
+}
+},
+"NM": {
+"childPreference": {
+"value": "14 (considered, not controlling)",
+"detail": "For a child 14 or older, the court must consider the child's wishes about whom to live with before awarding custody; younger children's wishes are one best-interest factor. The judge decides.",
+"cite": "NMSA 1978, § 40-4-9(B)",
+"source": "https://law.justia.com/codes/new-mexico/chapter-40/article-4/section-40-4-9",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support normally ends at 18, but can continue until 19 if the child is still attending high school.",
+"cite": "NMSA 1978, § 40-4-7(B)",
+"source": "https://yes.nm.gov/nmhr/s/child-support-home",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' wishes, the child's wishes, the child's relationships with parents and siblings, the child's adjustment to home, school and community, and the mental and physical health of everyone involved.",
+"cite": "NMSA 1978, § 40-4-9(A)",
+"source": "https://law.justia.com/codes/new-mexico/chapter-40/article-4/section-40-4-9",
+"verified": true
+}
+},
+"NY": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "Courts consider the child's wishes, weighed by age and maturity and possible influence, but they are not determinative; older, mature children's wishes get great weight.",
+"cite": "Eschbach v. Eschbach, 56 N.Y.2d 167 (1982)",
+"source": "https://nycourts.gov/reporter/archives/eschbach_eschbach.htm",
+"verified": true
+},
+"supportEndAge": {
+"value": "21",
+"detail": "Parents are responsible for supporting a child until the child turns 21.",
+"cite": "N.Y. Fam. Ct. Act § 413(1)(a); Dom. Rel. Law § 240",
+"source": "https://nysenate.gov/legislation/laws/FCT/413",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "New York courts apply judge-made best-interest factors such as the relative fitness of the parents, the quality of each home environment, each parent's ability to provide for the child's emotional and intellectual development, and the effect on the child's relationship with the other parent.",
+"cite": "Dom. Rel. Law § 240(1); Eschbach v. Eschbach, 56 N.Y.2d 167 (1982)",
+"source": "https://courtlistener.com/opinion/4475298/hogan-v-hogan",
+"verified": true
+}
+},
+"NC": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "A child who has reached the 'age of discretion' (sufficient maturity and judgment) may tell the judge their preference; judges often consider teenagers' wishes but are not required to follow them.",
+"cite": "N.C. Gen. Stat. § 50-13.2(a) (best-interest standard)",
+"source": "https://nccourts.gov/help-topics/family-and-children/child-custody",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in school)",
+"detail": "Support ends at 18, but if the child is still in primary or secondary school it continues until graduation, the child stops attending or progressing, or age 20, whichever comes first.",
+"cite": "N.C. Gen. Stat. § 50-13.4(c)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-13.4.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "The statute requires custody to best promote the child's interest and welfare and directs the court to consider all relevant factors including domestic violence and the safety of the child and parties, with written findings.",
+"cite": "N.C. Gen. Stat. § 50-13.2(a)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/PDF/BySection/Chapter_50/GS_50-13.2.pdf",
+"verified": true
+}
+},
+"ND": {
+"childPreference": {
+"value": "No set age (substantial weight if mature)",
+"detail": "If the court finds by clear and convincing evidence that the child is mature enough to make a sound judgment, it may give substantial weight to the child's preference, while weighing any improper influence; the judge decides.",
+"cite": "N.D.C.C. § 14-09-06.2(1)(i)",
+"source": "https://courtlistener.com/opinion/10589858/van-beek-v-van-beek",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support continues past 18 until the end of the month the child graduates from high school or turns 19, whichever is first, if the child is enrolled in high school and living with the parent owed support.",
+"cite": "N.D.C.C. § 14-09-08.2",
+"source": "https://ndlegis.gov/cencode/t14c09.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The court must consider the listed factors (a) through (m), which include the preference of a child mature enough to make a sound judgment, along with factors such as the parents' ability to care for the child.",
+"cite": "N.D.C.C. § 14-09-06.2(1)",
+"source": "https://courtlistener.com/opinion/10589858/van-beek-v-van-beek",
+"verified": true
+}
+},
+"OH": {
+"childPreference": {
+"value": "No set age (considered via judge interview)",
+"detail": "If the judge interviews the child in chambers, the child's wishes and concerns are one best-interest factor; the child does not decide.",
+"cite": "Ohio Rev. Code § 3109.04(B), (F)(1)(b)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3109.04",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support continues past 18 only while the child attends an accredited high school full-time (or for disability or by agreement), and orders typically end it at 19 at the latest.",
+"cite": "Ohio Rev. Code §§ 3119.86, 3119.88(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3119.86",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' wishes, the child's wishes as expressed in a judge interview, the child's adjustment to home, school and community, and which parent is more likely to honor court-ordered parenting time.",
+"cite": "Ohio Rev. Code § 3109.04(F)(1)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3109.04",
+"verified": true
+}
+},
+"OK": {
+"childPreference": {
+"value": "12 (presumed able to state a preference; considered, not controlling)",
+"detail": "A child 12 or older is presumed old enough to form an intelligent preference, which the court must consider if it lets the child speak, but the court is not bound by the child's choice.",
+"cite": "43 O.S. § 113(C)-(D)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os43.pdf?section=43-113",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in high school)",
+"detail": "Support lasts until 18, or for a full-time high school student until graduation or age 20, whichever comes first, without a new hearing.",
+"cite": "43 O.S. § 112(E)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os43.pdf?section=43-112",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "The statute directs the court to the child's best interests, frequent and continuing contact with both parents, which parent is more likely to allow contact with the other parent, and no preference based on a parent's gender; detailed factors come from case law.",
+"cite": "43 O.S. § 112(A), (C)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os43.pdf?section=43-112",
+"verified": true
+}
+},
+"OR": {
+"supportEndAge": {
+"value": "18 (or 21 if attending school)",
+"detail": "Support can continue for a 'child attending school' (high school, college or vocational training) who is between 18 and 21 and making satisfactory progress.",
+"cite": "ORS 107.108",
+"source": "https://doj.state.or.us/child-support/services/support-for-students-under-21/child-support-professional",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the emotional ties between the child and family members, the parties' interest in and attitude toward the child, the desirability of continuing an existing relationship, abuse of one parent by the other, and a preference for a fit primary caregiver.",
+"cite": "ORS 107.137(1)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors107.html",
+"verified": true
+}
+},
+"PA": {
+"childPreference": {
+"value": "No set age (well-reasoned preference considered)",
+"detail": "The court considers the child's well-reasoned preference based on the child's maturity and judgment as one of the custody factors; it is not dispositive.",
+"cite": "23 Pa.C.S. § 5328(a)",
+"source": "https://courtlistener.com/opinion/5346707/mjs-v-bb",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or high school graduation, whichever is later)",
+"detail": "Support usually stops when the child turns 18 or graduates from high school, whichever happens last.",
+"cite": "23 Pa.C.S. § 4321",
+"source": "https://berkspa.gov/getmedia/3452b5a4-b981-4ba3-a4d6-eb28e1709163/Children-in-Placement-Pamphlet-3-23.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include which party is more likely to provide a stable, nurturing relationship and attend to the child's daily needs, the need for stability and continuity, the level of conflict between the parties, and any history of drug or alcohol abuse.",
+"cite": "23 Pa.C.S. § 5328(a)",
+"source": "https://courtlistener.com/opinion/5346707/mjs-v-bb",
+"verified": true
+}
+},
+"RI": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "Under Rhode Island case law, the court considers the child's reasonable preference if the child has sufficient intelligence, understanding and experience; the judge decides.",
+"cite": "Pettinato v. Pettinato, 582 A.2d 909 (R.I. 1990)",
+"source": "https://courts.ri.gov/Opinions/No.%2022-269.pdf",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "The court may order support for a child in high school at 18 until 90 days after graduation, but never beyond the 19th birthday.",
+"cite": "R.I. Gen. Laws § 15-5-16.2(b)",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-16.2.HTM",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "Rhode Island courts apply the eight Pettinato factors, including the parents' wishes, the child's reasonable preference, the stability of the home environment, and each parent's willingness to foster the child's relationship with the other parent.",
+"cite": "Pettinato v. Pettinato, 582 A.2d 909 (R.I. 1990)",
+"source": "https://courts.ri.gov/Opinions/No.%2022-269.pdf",
+"verified": true
+}
+},
+"SC": {
+"childPreference": {
+"value": "No set age (weighted by age and maturity)",
+"detail": "The court must consider the child's reasonable preference and weighs it according to the child's age, experience, maturity, judgment and ability to express a preference; the judge decides.",
+"cite": "S.C. Code Ann. § 63-15-30",
+"source": "https://www.scstatehouse.gov/code/t63c015.php",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support runs until 18, or past 18 while the child is still in high school, up to graduation or the end of the school year after the child turns 19, whichever is later.",
+"cite": "S.C. Code Ann. § 63-3-530(A)(17)",
+"source": "https://www.scstatehouse.gov/code/t63c003.php",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's temperament and developmental needs, each parent's capacity to understand and meet those needs, the preferences of each child, and the child's relationships with parents, siblings and grandparents.",
+"cite": "S.C. Code Ann. § 63-15-240(B)",
+"source": "https://www.scstatehouse.gov/code/t63c015.php",
+"verified": true
+}
+},
+"SD": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "If the child is old enough to form an intelligent preference, the court may consider it; the judge decides.",
+"cite": "SDCL § 25-4-45",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-45.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Parents must support a child until 18, or until 19 if the child is a full-time secondary school student.",
+"cite": "SDCL § 25-5-18.1",
+"source": "https://sdlegislature.gov/api/Statutes/25-5-18.1.html",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "No comprehensive statutory factor list",
+"detail": "The statute directs the court to the child's temporal, mental and moral welfare and gives neither parent a preference; detailed factors come from South Dakota case law.",
+"cite": "SDCL § 25-4-45",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-45.html",
+"verified": true
+}
+},
+"TN": {
+"childPreference": {
+"value": "12 (considered, not controlling)",
+"detail": "The court must consider the reasonable preference of a child 12 or older, may hear a younger child's preference on request, and generally gives older children's preferences more weight; the judge decides.",
+"cite": "Tenn. Code Ann. § 36-6-106(a)(13)",
+"source": "https://www.tncourts.gov/sites/default/files/docs/10.%20Parenting%20Plan%20Modification%20-%20Handout%20X.pdf",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or high school graduation, whichever is later)",
+"detail": "Support for a child who turns 18 while in high school continues until the child graduates or the child's class graduates, whichever comes last.",
+"cite": "Tenn. Code Ann. §§ 34-1-102(b), 36-5-101",
+"source": "https://www.tn.gov/content/dam/tn/human-services/documents/Clerk%27s%20Guide%20-%20FINAL%201.14.2025%20with%20Appendix%20Combined.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The court must consider the listed relevant factors, which include the reasonable preference of a child 12 or older and other factors concerning each parent's relationship with and ability to care for the child.",
+"cite": "Tenn. Code Ann. § 36-6-106(a)",
+"source": "https://www.tncourts.gov/sites/default/files/docs/10.%20Parenting%20Plan%20Modification%20-%20Handout%20X.pdf",
+"verified": true
+}
+},
+"TX": {
+"childPreference": {
+"value": "12 (judge must interview on request; considered, not controlling)",
+"detail": "On a party's request the judge must interview a child 12 or older in chambers about which parent should decide the child's primary residence, but the child's wishes are not binding.",
+"cite": "Tex. Fam. Code § 153.009(a)",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_153.009",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or high school graduation, whichever is later)",
+"detail": "Support is ordered until the child turns 18 or graduates from high school, whichever occurs later.",
+"cite": "Tex. Fam. Code § 154.001(a)(1)",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_154.001",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute (joint conservatorship)",
+"detail": "For joint managing conservatorship the court weighs whether it benefits the child's needs and development, the parents' ability to put the child first and make shared decisions, whether each parent encourages a positive relationship with the other, and the child's preference at 12 or older.",
+"cite": "Tex. Fam. Code § 153.134(a)",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_153.134",
+"verified": true
+}
+},
+"UT": {
+"childPreference": {
+"value": "14 (added weight, not controlling)",
+"detail": "The court may consider the child's desires, and a child 14 or older gets added weight, but the child's wishes are not the single controlling factor; the judge decides.",
+"cite": "Utah Code § 30-3-10(7)(b)",
+"source": "https://le.utah.gov/xcode/Title30/Chapter3/C30-3-S10_2024050120240501.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or high school graduation, whichever is later)",
+"detail": "Support usually ends when the child turns 18 or graduates from high school with the child's normal class, whichever happens later.",
+"cite": "Utah Code § 78B-12-219",
+"source": "https://ors.utah.gov/child-support/case-closure",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "The court must consider domestic violence or abuse and threats to the child's safety, and may consider each parent's ability to meet the child's developmental needs, parenting and co-parenting skills, willingness to allow contact with the other parent, and emotional stability.",
+"cite": "Utah Code § 30-3-10(3)-(4)",
+"source": "https://le.utah.gov/xcode/Title30/Chapter3/C30-3-S10_2024050120240501.html",
+"verified": true
+}
+},
+"VT": {
+"supportEndAge": {
+"value": "18 (or end of high school, whichever is later)",
+"detail": "The court may order support until the child reaches the age of majority or finishes secondary education, whichever is later.",
+"cite": "15 V.S.A. § 658(c)",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00658",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's relationship with each parent, each parent's ability to provide food, clothing, medical care and a safe environment, each parent's ability to foster contact with the other parent, and evidence of abuse.",
+"cite": "15 V.S.A. § 665(b)",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00665",
+"verified": true
+}
+},
+"VA": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the child's reasonable preference if it finds the child has the intelligence, understanding, age and experience to express one; the judge decides.",
+"cite": "Va. Code § 20-124.3(8)",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6.1/section20-124.3/",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "Support continues for a child over 18 who is a full-time high school student, not self-supporting and living at home, until age 19 or graduation, whichever comes first.",
+"cite": "Va. Code § 20-124.2(C)",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6.1/section20-124.2/",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the child's age and physical and mental condition, each parent's age and condition, each parent's propensity to support the child's relationship with the other parent, and the child's reasonable preference.",
+"cite": "Va. Code § 20-124.3",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6.1/section20-124.3/",
+"verified": true
+}
+},
+"WA": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "The court considers the wishes of a child who is mature enough to express reasoned and independent preferences about the residential schedule; the judge decides.",
+"cite": "RCW 26.09.187(3)(a)(vi)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.187",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or until high school completion if extended)",
+"detail": "Support ends at emancipation (18) unless the decree provides otherwise; the court may extend it past 18 for a child still in high school, and may order post-secondary support separately.",
+"cite": "RCW 26.09.170(3), (8)(b)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.170",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the strength and stability of the child's relationship with each parent, each parent's past and future performance of parenting functions, the child's emotional needs and developmental level, and the wishes of the parents and a mature child.",
+"cite": "RCW 26.09.187(3)(a)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.187",
+"verified": true
+}
+},
+"WV": {
+"childPreference": {
+"value": "14 (firm and reasonable preference respected)",
+"detail": "Equal 50-50 custody can be departed from if it is contrary to the firm and reasonable preferences of a child 14 or older; a younger child's preference may be accommodated if the child is mature enough and it serves the child's best interests.",
+"cite": "W. Va. Code § 48-9-209(f)(5)(E)",
+"source": "https://code.wvlegislature.gov/48-9-209/",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in high school)",
+"detail": "Support continues past 18 for an unmarried child living at home who is a full-time secondary or vocational student making substantial progress toward a diploma, but not past age 20.",
+"cite": "W. Va. Code § 48-11-103(a)",
+"source": "https://code.wvlegislature.gov/48-11-103/",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest objectives listed in statute",
+"detail": "The statute's best-interest objectives include stability of the child, parental planning and agreement, continuity of existing parent-child attachments, and meaningful contact between the child and each parent.",
+"cite": "W. Va. Code § 48-9-102; § 48-9-209(f)",
+"source": "https://code.wvlegislature.gov/48-9-102/",
+"verified": true
+}
+},
+"WI": {
+"childPreference": {
+"value": "No set age (considered, not controlling)",
+"detail": "The wishes of the child, communicated directly or through the guardian ad litem or another professional, are one of the factors the court must consider; the judge decides.",
+"cite": "Wis. Stat. § 767.41(5)(am)2.",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/767/v/41/5/am",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 19 if still in high school)",
+"detail": "The court orders support for a child under 18, or under 19 if the child is pursuing a high school diploma or its equivalent.",
+"cite": "Wis. Stat. § 767.511(4)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/767/vi/511",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the parents' wishes and proposed parenting plans, the child's wishes, the cooperation and communication between the parties, and whether each party supports the other's relationship with the child.",
+"cite": "Wis. Stat. § 767.41(5)(am)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/767/v/41/5/am",
+"verified": true
+}
+},
+"WY": {
+"childPreference": {
+"value": "No set age (considered if mature enough)",
+"detail": "Wyoming courts treat the preference of a child of sufficient age and maturity as one factor in the best-interest analysis, but it is not controlling.",
+"cite": "Dowdy v. Dowdy (Wyo. 1993); Mulkey-Yelverton v. Blevins (Wyo. 1994)",
+"source": "https://law.justia.com/cases/wyoming/supreme-court/1993/122981.html",
+"verified": true
+},
+"supportEndAge": {
+"value": "18 (or 20 if still in high school)",
+"detail": "Support ends at the age of majority (18), but continues for a child between 18 and 20 who is attending high school or an equivalent program.",
+"cite": "W.S. 14-1-101(a); 14-2-204(a)(iii)",
+"source": "https://wyoleg.gov/statutes/compress/title14.pdf",
+"verified": true
+},
+"custodyFactorsCite": {
+"value": "Best-interest factors listed in statute",
+"detail": "Factors include the quality of each child's relationship with each parent, each parent's ability to provide adequate care, the relative competency and fitness of each parent, and each parent's willingness to respect the other parent's rights and responsibilities.",
+"cite": "W.S. 20-2-201(a)",
+"source": "https://wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+}
+}
+}
+}
