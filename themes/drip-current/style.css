@@ -1,0 +1,19 @@
+/*
+Theme Name: DRIP Current
+Theme URI: https://dripclothingcompany.com/
+Author: DRIP Clothing Company
+Author URI: https://dripclothingcompany.com/
+Description: "The Daily Current" storefront for DRIP Clothing Company. Coastal, letter-spaced, minimal WooCommerce theme: full-bleed hero with a wave edge, a three-up graphic tee edit pulled from your live products, an editorial "Between Tides and Traffic" band, a "Find Your Line" call to action and a dark footer. Every image, headline and link on the homepage is editable in Appearance → Customize → DRIP Homepage.
+Version: 1.0.0
+Requires at least: 6.4
+Tested up to: 6.8
+Requires PHP: 7.4
+WC requires at least: 8.0
+WC tested up to: 10.2
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: drip-current
+Tags: e-commerce, woocommerce, custom-logo, custom-menu, featured-images, full-width-template
+*/
+
+/* All styles live in assets/css/main.css and assets/css/woocommerce.css. */
