@@ -17,3 +17,12 @@ export const photoUrl = (key: PhotoKey, w: number) =>
 
 export const photoSrcSet = (key: PhotoKey, widths = [640, 1080, 1600, 2200]) =>
   widths.map((w) => `${photoUrl(key, w)} ${w}w`).join(', ')
+
+/** A fitting photo for each guide category (blog posts use the Supreme Court). */
+export const CATEGORY_PHOTO: Record<string, PhotoKey> = {
+  'Hiring a Lawyer': 'signing',
+  'Costs & Fees': 'library',
+  'Your Rights': 'justice',
+  'After an Accident': 'gavel',
+  'Courts & Process': 'columns',
+}
