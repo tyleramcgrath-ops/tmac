@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { IssueFinder, type Issue } from '@/components/fx/IssueFinder'
-import { JusticeReveal } from '@/components/fx/JusticeReveal'
+import { type HeroPhoto, JusticeReveal } from '@/components/fx/JusticeReveal'
 import { Odometer } from '@/components/fx/Odometer'
 import { PenFlow } from '@/components/fx/PenFlow'
 import { PracticeLens, type LensItem } from '@/components/fx/PracticeLens'
@@ -12,7 +12,7 @@ import { GLOSSARY } from '@/lib/content/glossary'
 import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { CITIES, STATES } from '@/lib/geo'
-import { photoUrl, type PhotoKey } from '@/lib/photos'
+import { PHOTOS, photoSrcSet, photoUrl, type PhotoKey } from '@/lib/photos'
 import { faqLd } from '@/lib/site'
 import './home.css'
 
@@ -48,6 +48,14 @@ const LENS: [string, string, PhotoKey][] = [
 const HOME_CITIES = ['new-york', 'los-angeles', 'chicago', 'houston', 'miami', 'dallas', 'atlanta', 'phoenix', 'seattle', 'denver', 'boston', 'san-francisco']
 
 export default async function Home() {
+  // The hero photo is the largest thing on screen, so it's served from our own
+  // domain (no extra connection), as AVIF, in a portrait crop on phones.
+  const h = (w: number | 'm', ext: string) => `/img/hero-scotus-${w}.${ext}`
+  const hero: HeroPhoto = {
+    alt: PHOTOS.scotus.alt,
+    mobile: { avif: h('m', 'avif'), jpg: h('m', 'jpg') },
+    desktop: { avif: [960, 1280, 1600, 2000].map((w) => `${h(w, 'avif')} ${w}w`).join(', '), jpg: [640, 960, 1280].map((w) => `${h(w, 'jpg')} ${w}w`).join(', '), src: h(1280, 'jpg') },
+  }
   const area = (slug: string) => PRACTICE_AREAS.find((p) => p.slug === slug)!
   const issues: Issue[] = SITUATIONS.map(([label, slug, img]) => {
     const p = area(slug)
@@ -72,7 +80,9 @@ export default async function Home() {
     <div className="h5">
       <RevealOnScroll />
       <JsonLd data={faqLd(HOME_FAQS)} />
-      <JusticeReveal photo={photoUrl('scotus', 2000)} caption="Washington, D.C.">
+      <link rel="preload" as="image" type="image/avif" href={hero.mobile.avif} media="(max-width: 820px)" fetchPriority="high" />
+      <link rel="preload" as="image" type="image/avif" imageSrcSet={hero.desktop.avif} imageSizes="112vw" media="(min-width: 821px)" fetchPriority="high" />
+      <JusticeReveal photo={hero} caption="Washington, D.C.">
         <h1 className="jr-h1">
           <span className="jr-line"><span>The right attorney,</span></span>
           <span className="jr-line"><span>found with <em>care</em>,</span></span>
@@ -194,7 +204,7 @@ export default async function Home() {
           <div className="wrap">
             {rule('06', 'For law firms')}
             <div className="h5-firms reveal">
-              <div className="h5-firms-photo" style={{ backgroundImage: `url(${photoUrl('signing', 1600)})` }} />
+              <div className="h5-firms-photo"><img src={photoUrl('signing', 1200)} srcSet={photoSrcSet('signing', [640, 960, 1200, 1600])} sizes="(min-width: 900px) 50vw, 100vw" alt="" loading="lazy" decoding="async" /></div>
               <div className="h5-firms-copy">
                 <div className="eyebrow">For attorneys</div>
                 <h2>Your next client is searching <em>right now.</em></h2>

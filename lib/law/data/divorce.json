@@ -1,0 +1,1941 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"residency": {
+"value": "6 months",
+"detail": "Applies when the other spouse is a nonresident; the filing spouse must have lived in Alabama 6 months before filing.",
+"cite": "Ala. Code § 30-2-5",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_30-2-5",
+"verified": true
+},
+"waitingPeriod": {
+"value": "30 days",
+"detail": "A final divorce judgment cannot be entered until 30 days after the summons and complaint are filed.",
+"cite": "Ala. Code § 30-2-8.1(a)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_30-2-8.1",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irretrievable breakdown of the marriage, or complete incompatibility of temperament; fault grounds include adultery, abandonment and cruelty.",
+"cite": "Ala. Code § 30-2-1(a)(7), (9)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_30-2-1",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A court may grant a legal separation instead of a divorce.",
+"cite": "Ala. Code § 30-2-40",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_30-2-40",
+"verified": true
+}
+},
+"AK": {
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "Incompatibility of temperament is the no-fault ground; joint dissolution requires incompatibility causing irremediable breakdown. Fault grounds include adultery.",
+"cite": "AS 25.24.050(5); AS 25.24.200",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=25.24.010&secEnd=25.24.240",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Property acquired during marriage is divided in a just manner without regard to fault.",
+"cite": "AS 25.24.160(a)(4)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=25.24.010&secEnd=25.24.240",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is set as a percentage of the obligor parent's adjusted income under Civil Rule 90.3.",
+"cite": "Alaska R. Civ. P. 90.3",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Legal separation may be granted for incompatibility when staying married protects significant interests; one party must be a resident.",
+"cite": "AS 25.24.400-.420",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=25.24.400&secEnd=25.24.460",
+"verified": true
+}
+},
+"AZ": {
+"residency": {
+"value": "90 days",
+"detail": "One spouse must be domiciled in Arizona (or stationed there in the military) for 90 days before filing.",
+"cite": "A.R.S. § 25-312",
+"source": "https://www.azleg.gov/ars/25/00312.htm",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "No decree, trial or hearing until 60 days after service or acceptance of process.",
+"cite": "A.R.S. § 25-329",
+"source": "https://www.azleg.gov/ars/25/00329.htm",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken; covenant marriages are limited to the grounds in A.R.S. § 25-903.",
+"cite": "A.R.S. § 25-312",
+"source": "https://www.azleg.gov/ars/25/00312.htm",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Community and jointly held property is divided equitably, though not necessarily in kind, without regard to marital misconduct.",
+"cite": "A.R.S. § 25-318",
+"source": "https://www.azleg.gov/ars/25/00318.htm",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Court enters a decree of legal separation on the same findings as dissolution.",
+"cite": "A.R.S. § 25-313",
+"source": "https://www.azleg.gov/ars/25/00313.htm",
+"verified": true
+}
+},
+"AR": {
+"residency": {
+"value": "60 days",
+"detail": "60 days' residence before filing, plus 3 full months' residence before the final decree.",
+"cite": "Ark. Code § 9-12-307(a)(1)(A)",
+"source": "https://codes.findlaw.com/ar/title-9-family-law/ar-code-sect-9-12-307/",
+"verified": true
+},
+"waitingPeriod": {
+"value": "30 days",
+"detail": "No divorce decree may be granted until at least 30 days after the complaint is filed.",
+"cite": "Ark. Code § 9-12-307(a)(1)(B)",
+"source": "https://codes.findlaw.com/ar/title-9-family-law/ar-code-sect-9-12-307/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: spouses lived separate and apart for 18 continuous months without cohabitation. Fault grounds include adultery and cruelty.",
+"cite": "Ark. Code § 9-12-301(b)(5)",
+"source": "https://codes.findlaw.com/ar/title-9-family-law/ar-code-sect-9-12-301/",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided one-half to each spouse unless the court finds that inequitable and explains its reasons.",
+"cite": "Ark. Code § 9-12-315(a)(1)(A)",
+"source": "https://codes.findlaw.com/ar/title-9-family-law/ar-code-sect-9-12-315/",
+"verified": true
+}
+},
+"CA": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must live in California 6 months and in the filing county 3 months; legal separation has no minimum.",
+"cite": "Cal. Fam. Code §§ 2320, 2321",
+"source": "https://california.public.law/codes/family_code_section_2320",
+"verified": true
+},
+"waitingPeriod": {
+"value": "6 months",
+"detail": "A divorce is not final until 6 months after service of the summons and petition or the respondent's appearance.",
+"cite": "Cal. Fam. Code § 2339",
+"source": "https://california.public.law/codes/family_code_section_2339",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Irreconcilable differences that caused the irremediable breakdown of the marriage, or permanent legal incapacity to make decisions.",
+"cite": "Cal. Fam. Code § 2310",
+"source": "https://california.public.law/codes/family_code_section_2310",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "The community estate is divided equally.",
+"cite": "Cal. Fam. Code § 2550",
+"source": "https://california.public.law/codes/family_code_section_2550",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The statewide formula CS = K[HN − (H%)(TN)] uses both parents' net incomes and parenting time.",
+"cite": "Cal. Fam. Code § 4055",
+"source": "https://california.public.law/codes/family_code_section_4055",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Legal separation may be sought on the same grounds as divorce without meeting the residency rule.",
+"cite": "Cal. Fam. Code §§ 2310, 2321",
+"source": "https://california.public.law/codes/family_code_section_2321",
+"verified": true
+}
+},
+"CO": {
+"residency": {
+"value": "91 days",
+"detail": "One spouse must be domiciled in Colorado for 91 days before the case is filed.",
+"cite": "C.R.S. § 14-10-106(1)(a)(I)",
+"source": "https://colorado.public.law/statutes/crs_14-10-106",
+"verified": true
+},
+"waitingPeriod": {
+"value": "91 days",
+"detail": "Decree can enter only after 91 days have passed since the court gained jurisdiction over the respondent (service or joining the petition).",
+"cite": "C.R.S. § 14-10-106(1)(a)(III)",
+"source": "https://colorado.public.law/statutes/crs_14-10-106",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken.",
+"cite": "C.R.S. § 14-10-106(1)(a)(II)",
+"source": "https://colorado.public.law/statutes/crs_14-10-106",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided in proportions the court deems just, without regard to marital misconduct.",
+"cite": "C.R.S. § 14-10-113",
+"source": "https://colorado.public.law/statutes/crs_14-10-113",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The guideline uses the parents' combined gross income to set the basic obligation.",
+"cite": "C.R.S. § 14-10-115",
+"source": "https://colorado.public.law/statutes/crs_14-10-115",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of legal separation is entered on the same findings as dissolution.",
+"cite": "C.R.S. § 14-10-106",
+"source": "https://colorado.public.law/statutes/crs_14-10-106",
+"verified": true
+}
+},
+"CT": {
+"residency": {
+"value": "12 months",
+"detail": "12 months' residence before filing or before the decree; exceptions if domiciled in CT at marriage and returned, or the cause arose after moving there.",
+"cite": "Conn. Gen. Stat. § 46b-44(c)",
+"source": "https://www.cga.ct.gov/current/pub/chap_815j.htm",
+"verified": true
+},
+"waitingPeriod": {
+"value": "90 days (contested)",
+"detail": "A contested trial cannot begin until 90 days after the return date; a joint nonadversarial petition can be decided no sooner than 30 days after filing.",
+"cite": "Conn. Gen. Stat. §§ 46b-67(a), 46b-44c",
+"source": "https://codes.findlaw.com/ct/title-46b-family-law/ct-gen-st-sect-46b-67/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: the marriage has broken down irretrievably, or 18 months apart due to incompatibility. Fault grounds include adultery.",
+"cite": "Conn. Gen. Stat. § 46b-40(c)",
+"source": "https://www.cga.ct.gov/current/pub/chap_815j.htm",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of legal separation may be granted on the same causes as dissolution.",
+"cite": "Conn. Gen. Stat. § 46b-40(c)",
+"source": "https://www.cga.ct.gov/current/pub/chap_815j.htm",
+"verified": true
+}
+},
+"DE": {
+"residency": {
+"value": "6 months",
+"detail": "Either spouse must have lived in Delaware (or been stationed there) continuously for 6 or more months before filing.",
+"cite": "13 Del. C. § 1504(a)",
+"source": "https://delcode.delaware.gov/title13/c015/index.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "No post-filing wait, but a no-fault divorce generally requires 6 months living separate and apart before the ruling.",
+"cite": "13 Del. C. §§ 1503(8), 1505",
+"source": "https://delcode.delaware.gov/title13/c015/index.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken and reconciliation is improbable (shown by separation, misconduct, mental illness or incompatibility).",
+"cite": "13 Del. C. § 1505",
+"source": "https://delcode.delaware.gov/title13/c015/index.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court equitably divides marital property without regard to marital misconduct.",
+"cite": "13 Del. C. § 1513(a)",
+"source": "https://delcode.delaware.gov/title13/c015/index.html",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Melson formula",
+"detail": "Delaware Family Court's child support formula is the Melson formula.",
+"cite": "Del. Fam. Ct. Civ. R. 52(c)",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Not available",
+"detail": "Delaware's Divorce and Annulment Act provides no legal separation action.",
+"cite": "13 Del. C. ch. 15",
+"source": "https://delcode.delaware.gov/title13/c015/index.html",
+"verified": true
+}
+},
+"DC": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must be a bona fide D.C. resident for 6 months before filing; limited exception for same-sex marriages performed in D.C.",
+"cite": "D.C. Code § 16-902",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-902",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "No waiting or separation period; since a 2025 amendment, divorce may be granted when a spouse asserts they no longer wish to remain married.",
+"cite": "D.C. Code § 16-904(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-904",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Divorce may be granted on one or both spouses' assertion that they no longer wish to remain married.",
+"cite": "D.C. Code § 16-904(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-904",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is distributed in an equitable, just and reasonable manner.",
+"cite": "D.C. Code § 16-910",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-910",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic obligation comes from a schedule using both parents' combined adjusted gross income, then is prorated by income.",
+"cite": "D.C. Code § 16-916.01",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-916.01",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Legal separation from bed and board may be granted when a spouse intends to pursue a separate life without divorce.",
+"cite": "D.C. Code § 16-904(b)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-904",
+"verified": true
+}
+},
+"FL": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must reside in Florida for 6 months before filing the petition.",
+"cite": "Fla. Stat. § 61.021",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/61.021",
+"verified": true
+},
+"waitingPeriod": {
+"value": "20 days",
+"detail": "No final judgment until 20 days after the petition is filed, unless the court finds injustice would result.",
+"cite": "Fla. Stat. § 61.19",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/61.19",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken, or one spouse has been adjudged mentally incapacitated for at least 3 years.",
+"cite": "Fla. Stat. § 61.052(1)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/61.052",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Courts start from an equal split of marital assets and debts unless factors justify an unequal division.",
+"cite": "Fla. Stat. § 61.075(1)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/61.075",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Both parents' net incomes are combined and applied to the guidelines schedule.",
+"cite": "Fla. Stat. § 61.30",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/61.30",
+"verified": true
+},
+"legalSeparation": {
+"value": "Not available",
+"detail": "Florida has no legal separation, but a spouse may seek alimony and child support without divorce.",
+"cite": "Fla. Stat. § 61.09",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/Chapter61/All",
+"verified": true
+}
+},
+"GA": {
+"residency": {
+"value": "6 months",
+"detail": "The filing spouse must be a bona fide Georgia resident for 6 months; a nonresident may sue a spouse who meets that rule.",
+"cite": "O.C.G.A. § 19-5-2",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-5-2/",
+"verified": true
+},
+"waitingPeriod": {
+"value": "30 days",
+"detail": "A no-fault divorce cannot be granted until at least 30 days after service on the respondent.",
+"cite": "O.C.G.A. § 19-5-3(13)",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-5-3/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: the marriage is irretrievably broken. Twelve fault grounds include adultery, desertion and cruel treatment.",
+"cite": "O.C.G.A. § 19-5-3",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-5-3/",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Both parents' adjusted incomes are combined to find the basic obligation, which is split by each parent's share.",
+"cite": "O.C.G.A. § 19-6-15",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-6-15/",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Separate maintenance is available when spouses live apart and no divorce is pending.",
+"cite": "O.C.G.A. § 19-6-10",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-6-10/",
+"verified": true
+}
+},
+"HI": {
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken, or the spouses have lived apart 2+ years (including under a separation or separate maintenance decree).",
+"cite": "Haw. Rev. Stat. § 580-41",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0580/HRS_0580-0041.htm",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court divides the estate as appears just and equitable.",
+"cite": "Haw. Rev. Stat. § 580-47(a)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0580/HRS_0580-0047.htm",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Melson formula",
+"detail": "Hawaii's Child Support Guidelines use the Melson formula.",
+"cite": "Haw. Rev. Stat. § 576D-7; Hawaii Child Support Guidelines",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Separation from bed and board up to 2 years may be decreed when the marriage is temporarily disrupted.",
+"cite": "Haw. Rev. Stat. § 580-71",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0580/HRS_0580-0071.htm",
+"verified": true
+}
+},
+"ID": {
+"residency": {
+"value": "6 weeks",
+"detail": "The plaintiff must be an Idaho resident for 6 full weeks before filing.",
+"cite": "Idaho Code § 32-701",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-701/",
+"verified": true
+},
+"waitingPeriod": {
+"value": "21 days",
+"detail": "No final decree until at least 21 days after the action is commenced and process is served.",
+"cite": "Idaho Code § 32-716",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-716/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences. Fault grounds include adultery, extreme cruelty and desertion.",
+"cite": "Idaho Code § 32-603",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH6/SECT32-603/",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Community property is divided substantially equally unless there are compelling reasons otherwise.",
+"cite": "Idaho Code § 32-712",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH7/SECT32-712/",
+"verified": true
+}
+},
+"IL": {
+"residency": {
+"value": "90 days",
+"detail": "One spouse must reside in Illinois (or be stationed there) for 90 days before filing or before findings.",
+"cite": "750 ILCS 5/401(a)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K401.htm",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "No mandatory wait; living apart 6 months before judgment creates an irrebuttable presumption that irreconcilable differences exist.",
+"cite": "750 ILCS 5/401(a-5)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K401.htm",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Irreconcilable differences have caused the irretrievable breakdown of the marriage.",
+"cite": "750 ILCS 5/401(a)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K401.htm",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided in just proportions without regard to marital misconduct.",
+"cite": "750 ILCS 5/503(d)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K503.htm",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A spouse living apart may seek reasonable support and maintenance through legal separation.",
+"cite": "750 ILCS 5/402",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K402.htm",
+"verified": true
+}
+},
+"IN": {
+"residency": {
+"value": "6 months",
+"detail": "6 months in Indiana and 3 months in the filing county (or a military installation there) before filing.",
+"cite": "Ind. Code § 31-15-2-6",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_31-15-2-6",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "The final hearing cannot be held earlier than 60 days after the petition is filed.",
+"cite": "Ind. Code § 31-15-2-10",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_31-15-2-10",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "Irretrievable breakdown is the no-fault ground; limited others include felony conviction, impotency and incurable insanity.",
+"cite": "Ind. Code § 31-15-2-3",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_31-15-2-3",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Courts presume an equal division of marital property is just and reasonable, subject to rebuttal.",
+"cite": "Ind. Code § 31-15-7-5",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_31-15-7-5",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Indiana establishes a cause of action for legal separation.",
+"cite": "Ind. Code § 31-15-3-2",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_31-15-3-2",
+"verified": true
+}
+},
+"IA": {
+"residency": {
+"value": "1 year",
+"detail": "The petitioner must have been an Iowa resident for the last year, unless the respondent is an Iowa resident served personally.",
+"cite": "Iowa Code § 598.5(1)(k)",
+"source": "https://www.legis.iowa.gov/docs/code/598.5.pdf",
+"verified": true
+},
+"waitingPeriod": {
+"value": "90 days",
+"detail": "No decree until 90 days after original notice is served (or publication/waiver), unless waived for good cause.",
+"cite": "Iowa Code § 598.19",
+"source": "https://www.legis.iowa.gov/docs/code/598.19.pdf",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "A breakdown of the marriage relationship so that the legitimate objects of matrimony are destroyed.",
+"cite": "Iowa Code § 598.17",
+"source": "https://www.legis.iowa.gov/docs/code/598.17.pdf",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "All property except inheritances and gifts is divided equitably after weighing statutory factors.",
+"cite": "Iowa Code § 598.21",
+"source": "https://www.legis.iowa.gov/docs/code/598.21.pdf",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The schedule uses the parents' combined adjusted net incomes.",
+"cite": "Iowa Ct. R. ch. 9",
+"source": "https://www.legis.iowa.gov/docs/ACO/CourtRulesChapter/9.pdf",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Separate maintenance actions proceed like dissolution actions.",
+"cite": "Iowa Code § 598.28",
+"source": "https://www.legis.iowa.gov/docs/code/598.28.pdf",
+"verified": true
+}
+},
+"KS": {
+"residency": {
+"value": "60 days",
+"detail": "The petitioner or respondent must have been an actual Kansas resident for 60 days before filing.",
+"cite": "K.S.A. 23-2703(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_027_0003.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "A divorce cannot be heard until 60 days after the petition is filed, unless an emergency is declared.",
+"cite": "K.S.A. 23-2708",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_027_0008.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "Incompatibility is the no-fault ground; also failure to perform a material marital duty, or incompatibility from mental illness.",
+"cite": "K.S.A. 23-2701(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_027_0001.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court makes a just and reasonable division of property after weighing statutory factors.",
+"cite": "K.S.A. 23-2802",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_028_0002.html",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of separate maintenance may be granted on the same grounds as divorce.",
+"cite": "K.S.A. 23-2701(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_027_0001.html",
+"verified": true
+}
+},
+"KY": {
+"residency": {
+"value": "180 days",
+"detail": "One spouse must reside in Kentucky (or be stationed there) for 180 days before filing.",
+"cite": "KRS 403.140(1)(a)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-140",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "No decree until spouses have lived apart 60 days; with minor children, no testimony until 60 days after service.",
+"cite": "KRS 403.170(1); 403.044",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-170",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken.",
+"cite": "KRS 403.140(1)(c)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-140",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided in just proportions without regard to marital misconduct.",
+"cite": "KRS 403.190(1)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-190",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Support uses the parents' combined monthly adjusted parental gross income.",
+"cite": "KRS 403.212",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-212",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of legal separation is granted on request unless the other party objects.",
+"cite": "KRS 403.140(2)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_403-140",
+"verified": true
+}
+},
+"LA": {
+"residency": {
+"value": "Domicile (6-month presumption)",
+"detail": "A spouse must be domiciled in Louisiana; 6 months' residence in a parish creates a rebuttable presumption of domicile.",
+"cite": "La. C.C.P. art. 10",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_code_of_civil_procedure_10",
+"verified": true
+},
+"waitingPeriod": {
+"value": "180 or 365 days",
+"detail": "No-fault divorce requires living apart 180 days (no minor children) or 365 days (minor children).",
+"cite": "La. C.C. arts. 102, 103(1), 103.1",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_103-1",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: living separate and apart for the required period. Fault: adultery, felony with hard labor, abuse, or a protective order.",
+"cite": "La. C.C. arts. 102, 103",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_103",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Each spouse owns a present undivided one-half interest in community property.",
+"cite": "La. C.C. art. 2336",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_2336",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The guideline uses both parties' combined adjusted gross income.",
+"cite": "La. R.S. 9:315.2",
+"source": "https://www.lawserver.com/law/state/louisiana/la-laws/louisiana_revised_statutes_9-315-2",
+"verified": true
+},
+"legalSeparation": {
+"value": "Covenant marriages only",
+"detail": "Separation from bed and board is available only in covenant marriages.",
+"cite": "La. R.S. 9:307",
+"source": "https://www.lawserver.com/law/state/louisiana/la-laws/louisiana_revised_statutes_9-307",
+"verified": true
+}
+},
+"ME": {
+"residency": {
+"value": "6 months",
+"detail": "6 months' residence, or no minimum if the plaintiff resides in Maine and the parties married or lived there when the cause arose.",
+"cite": "19-A M.R.S. § 901(1)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec901.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable marital differences. Fault grounds include adultery and cruel and abusive treatment.",
+"cite": "19-A M.R.S. § 902(1)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec902.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided in proportions the court considers just after weighing statutory factors.",
+"cite": "19-A M.R.S. § 953(1)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec953.html",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The parents' incomes are added for a combined annual gross income applied to the support table.",
+"cite": "19-A M.R.S. § 2006",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec2006.html",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Maine provides for judicial separation.",
+"cite": "19-A M.R.S. § 851",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec851.html",
+"verified": true
+}
+},
+"MD": {
+"residency": {
+"value": "6 months",
+"detail": "Required only if the grounds arose outside Maryland; otherwise no minimum period applies.",
+"cite": "Md. Code, Fam. Law § 7-101",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=7-101&enactments=false",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "No post-filing wait; the 6-month separation ground requires 6 months apart before filing.",
+"cite": "Md. Code, Fam. Law § 7-103(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=7-103&enactments=false",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Absolute divorce for 6-month separation, irreconcilable differences, or mutual consent with a signed settlement agreement.",
+"cite": "Md. Code, Fam. Law § 7-103(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=7-103&enactments=false",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court may transfer interests or grant a monetary award to adjust the equities in marital property.",
+"cite": "Md. Code, Fam. Law § 8-205",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=8-205&enactments=false",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The schedule uses the parents' combined adjusted actual income.",
+"cite": "Md. Code, Fam. Law § 12-204",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=12-204&enactments=false",
+"verified": true
+},
+"legalSeparation": {
+"value": "Not available",
+"detail": "Limited divorce was repealed effective Oct. 1, 2023; only absolute divorce remains.",
+"cite": "Md. Code, Fam. Law §§ 7-102 (repealed), 7-103",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=7-102&enactments=false",
+"verified": true
+}
+},
+"MA": {
+"residency": {
+"value": "1 year (or none)",
+"detail": "1 year if the grounds arose outside MA; no minimum if the plaintiff is domiciled in MA and the grounds arose there.",
+"cite": "M.G.L. c. 208, §§ 4-5",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter208/Section5",
+"verified": true
+},
+"waitingPeriod": {
+"value": "Varies (6 months for 1B)",
+"detail": "Contested no-fault (1B): no hearing until 6 months after filing. Agreed no-fault (1A): judgment nisi after court approval.",
+"cite": "M.G.L. c. 208, §§ 1A, 1B",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter208/Section1B",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irretrievable breakdown of the marriage. Fault grounds include adultery, desertion and cruel and abusive treatment.",
+"cite": "M.G.L. c. 208, §§ 1, 1A, 1B",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter208/Section1",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court may assign to either spouse all or part of the other's estate after weighing statutory factors.",
+"cite": "M.G.L. c. 208, § 34",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter208/Section34",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A spouse with justifiable cause to live apart may seek separate support.",
+"cite": "M.G.L. c. 209, § 32",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter209/Section32",
+"verified": true
+}
+},
+"MI": {
+"residency": {
+"value": "180 days",
+"detail": "180 days in Michigan and 10 days in the filing county, with limited exceptions to the county rule.",
+"cite": "MCL 552.9",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-552-9",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days (6 months with children)",
+"detail": "No proofs until 60 days after filing, or 6 months if there are minor children (may be shortened for hardship).",
+"cite": "MCL 552.9f",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-552-9f",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "A breakdown of the marriage relationship so that the objects of matrimony are destroyed.",
+"cite": "MCL 552.6",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-552-6",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Separate maintenance may be filed on the same grounds as divorce.",
+"cite": "MCL 552.7",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-552-7",
+"verified": true
+}
+},
+"MN": {
+"residency": {
+"value": "180 days",
+"detail": "One spouse must have resided (or been domiciled or stationed) in Minnesota for 180 days before filing.",
+"cite": "Minn. Stat. § 518.07",
+"source": "https://www.revisor.mn.gov/statutes/cite/518.07",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "No general waiting period; for a joint declaration (summary) dissolution, the decree is entered 30 days after filing.",
+"cite": "Minn. Stat. ch. 518",
+"source": "https://www.revisor.mn.gov/statutes/cite/518/full",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "An irretrievable breakdown of the marriage relationship.",
+"cite": "Minn. Stat. § 518.06",
+"source": "https://www.revisor.mn.gov/statutes/cite/518.06",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court makes a just and equitable division of marital property without regard to misconduct.",
+"cite": "Minn. Stat. § 518.58",
+"source": "https://www.revisor.mn.gov/statutes/cite/518.58",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic obligation is set from the parents' combined parental income.",
+"cite": "Minn. Stat. § 518A.35",
+"source": "https://www.revisor.mn.gov/statutes/cite/518A.35",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of legal separation is granted when one or both parties need it.",
+"cite": "Minn. Stat. § 518.06",
+"source": "https://www.revisor.mn.gov/statutes/cite/518.06",
+"verified": true
+}
+},
+"MS": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must be an actual bona fide Mississippi resident for 6 months before filing.",
+"cite": "Miss. Code § 93-5-5",
+"source": "https://codes.findlaw.com/ms/title-93-domestic-relations/ms-code-sect-93-5-5/",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "An irreconcilable-differences complaint must be on file 60 days before it can be heard.",
+"cite": "Miss. Code § 93-5-2(4)",
+"source": "https://codes.findlaw.com/ms/title-93-domestic-relations/ms-code-sect-93-5-2/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences (needs both spouses' consent). Twelve fault grounds include adultery and habitual cruel treatment.",
+"cite": "Miss. Code §§ 93-5-1, 93-5-2",
+"source": "https://codes.findlaw.com/ms/title-93-domestic-relations/ms-code-sect-93-5-1/",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is a percentage of the paying parent's adjusted gross income: 14% for one child up to 26% for five or more.",
+"cite": "Miss. Code § 43-19-101(1)",
+"source": "https://codes.findlaw.com/ms/title-43-public-welfare/ms-code-sect-43-19-101/",
+"verified": true
+}
+},
+"MO": {
+"residency": {
+"value": "90 days",
+"detail": "One spouse must be a Missouri resident (or stationed there) for 90 days before filing.",
+"cite": "Mo. Rev. Stat. § 452.305.1(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.305",
+"verified": true
+},
+"waitingPeriod": {
+"value": "30 days",
+"detail": "Judgment requires that 30 days have passed since the petition was filed.",
+"cite": "Mo. Rev. Stat. § 452.305.1(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.305",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "No reasonable likelihood the marriage can be preserved, so it is irretrievably broken; misconduct may be shown as evidence.",
+"cite": "Mo. Rev. Stat. §§ 452.305, 452.320",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.320",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property and debts are divided in proportions the court deems just after weighing statutory factors.",
+"cite": "Mo. Rev. Stat. § 452.330",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.330",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "The court may enter a judgment of legal separation instead of dissolution.",
+"cite": "Mo. Rev. Stat. § 452.305",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=452.305",
+"verified": true
+}
+},
+"MT": {
+"residency": {
+"value": "90 days",
+"detail": "One spouse must be domiciled in Montana (or stationed there) for 90 days before filing.",
+"cite": "Mont. Code Ann. § 40-4-104(1)(a)",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0040/part_0010/section_0040/0400-0040-0010-0040.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "21 days",
+"detail": "A decree may not be entered until 21 days after the date of service.",
+"cite": "Mont. Code Ann. § 40-4-105(3)",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0040/part_0010/section_0050/0400-0040-0010-0050.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Irretrievably broken, shown by 180+ days living apart or serious marital discord with no reasonable prospect of reconciliation.",
+"cite": "Mont. Code Ann. § 40-4-104(1)(b)",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0040/part_0010/section_0040/0400-0040-0010-0040.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court equitably apportions all property, however and whenever acquired, without regard to misconduct.",
+"cite": "Mont. Code Ann. § 40-4-202",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0040/part_0020/section_0020/0400-0040-0020-0020.html",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Melson formula",
+"detail": "Montana's guidelines (ARM 37.62) use the Melson formula.",
+"cite": "Admin. R. Mont. 37.62.101 et seq.",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A decree of legal separation may be entered on the same findings as dissolution.",
+"cite": "Mont. Code Ann. § 40-4-104",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0040/part_0010/section_0040/0400-0040-0010-0040.html",
+"verified": true
+}
+},
+"NE": {
+"residency": {
+"value": "1 year",
+"detail": "1 year's residence before filing, or married in Nebraska with one spouse residing there since the marriage.",
+"cite": "Neb. Rev. Stat. § 42-349",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-349",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "No divorce may be heard or tried until 60 days after service of process is perfected.",
+"cite": "Neb. Rev. Stat. § 42-363",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-363",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken.",
+"cite": "Neb. Rev. Stat. § 42-361",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-361",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Courts make an equitable division of the marital estate under the statute and case law.",
+"cite": "Neb. Rev. Stat. § 42-365",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-365",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Legal separation decrees adjust property, support and custody without dissolving the marriage.",
+"cite": "Neb. Rev. Stat. § 42-347(7)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-347",
+"verified": true
+}
+},
+"NV": {
+"residency": {
+"value": "6 weeks",
+"detail": "A spouse must have resided in Nevada at least 6 weeks before filing, unless the cause arose in the county while both lived there.",
+"cite": "NRS 125.020(2)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-125.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "Nevada law sets no mandatory waiting period after filing.",
+"cite": "NRS ch. 125",
+"source": "https://www.leg.state.nv.us/NRS/NRS-125.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Incompatibility, living separate and apart 1 year, or insanity existing 2 years.",
+"cite": "NRS 125.010",
+"source": "https://www.leg.state.nv.us/NRS/NRS-125.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Courts make an equal disposition of community property unless there is a compelling reason for an unequal one.",
+"cite": "NRS 125.150(1)(b)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-125.html",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is a tiered percentage of the obligor's gross monthly income under NAC chapter 425.",
+"cite": "NAC ch. 425",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Nevada allows actions for separate maintenance.",
+"cite": "NRS 125.190",
+"source": "https://www.leg.state.nv.us/NRS/NRS-125.html",
+"verified": true
+}
+},
+"NH": {
+"residency": {
+"value": "1 year (or none)",
+"detail": "1 year if only the plaintiff is domiciled in NH; no minimum if both spouses are domiciled there, or the plaintiff is and the defendant is served in NH.",
+"cite": "RSA 458:5",
+"source": "https://gc.nh.gov/rsa/html/XLIII/458/458-5.htm",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences causing the irremediable breakdown of the marriage. Fault grounds include adultery and extreme cruelty.",
+"cite": "RSA 458:7, 458:7-a",
+"source": "https://gc.nh.gov/rsa/html/XLIII/458/458-7-a.htm",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Courts presume an equal division is equitable unless it would not be appropriate.",
+"cite": "RSA 458:16-a(II)",
+"source": "https://gc.nh.gov/rsa/html/XLIII/458/458-16-a.htm",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Legal separation may be decreed in any case where a divorce could be, but neither spouse may remarry.",
+"cite": "RSA 458:26",
+"source": "https://gc.nh.gov/rsa/html/XLIII/458/458-26.htm",
+"verified": true
+}
+},
+"NJ": {
+"residency": {
+"value": "1 year",
+"detail": "One spouse must be a bona fide NJ resident for 1 year before filing, except when the ground is adultery.",
+"cite": "N.J.S.A. 2A:34-10",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_34-10",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences for 6 months, or 18 months living apart. Fault grounds include adultery and extreme cruelty.",
+"cite": "N.J.S.A. 2A:34-2",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_34-2",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is distributed equitably using statutory criteria.",
+"cite": "N.J.S.A. 2A:34-23.1",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_34-23-1",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Divorce from bed and board (a form of legal separation) is available on the divorce grounds.",
+"cite": "N.J.S.A. 2A:34-3",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_34-3",
+"verified": true
+}
+},
+"NM": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must have resided in New Mexico 6 months before filing and be domiciled there.",
+"cite": "N.M. Stat. § 40-4-5",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_40-4-5",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: incompatibility. Fault grounds: cruel and inhuman treatment, adultery, or abandonment.",
+"cite": "N.M. Stat. § 40-4-1",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_40-4-1",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Property acquired by either spouse during marriage, other than separate property, is community property.",
+"cite": "N.M. Stat. § 40-3-8(B)",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_40-3-8",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic obligation is based on both parents' combined income and paid proportionately.",
+"cite": "N.M. Stat. § 40-4-11.1",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_40-4-11-1",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Permanently separated spouses may seek property division, custody or alimony without a divorce.",
+"cite": "N.M. Stat. § 40-4-3",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_40-4-3",
+"verified": true
+}
+},
+"NY": {
+"residency": {
+"value": "1 or 2 years",
+"detail": "2 years' residence, or 1 year if married or lived in NY as spouses or the grounds arose there; none if grounds arose in NY and both live there.",
+"cite": "N.Y. Dom. Rel. Law § 230",
+"source": "https://newyork.public.law/laws/n.y._domestic_relations_law_section_230",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irretrievable breakdown for at least 6 months, with economic issues resolved first. Fault grounds include adultery and cruel treatment.",
+"cite": "N.Y. Dom. Rel. Law § 170",
+"source": "https://newyork.public.law/laws/n.y._domestic_relations_law_section_170",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is distributed equitably based on the circumstances of the case and the parties.",
+"cite": "N.Y. Dom. Rel. Law § 236(B)(5)(c)",
+"source": "https://newyork.public.law/laws/n.y._domestic_relations_law_section_236",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Child support percentages (17% for one child to 35%+ for five) apply to combined parental income, then are prorated.",
+"cite": "N.Y. Dom. Rel. Law § 240(1-b)",
+"source": "https://newyork.public.law/laws/n.y._domestic_relations_law_section_240",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A spouse may sue for a judgment of separation from bed and board.",
+"cite": "N.Y. Dom. Rel. Law § 200",
+"source": "https://newyork.public.law/laws/n.y._domestic_relations_law_section_200",
+"verified": true
+}
+},
+"NC": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must be a North Carolina resident for at least 6 months before filing.",
+"cite": "N.C. Gen. Stat. § 50-8",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-8.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "1 year separation",
+"detail": "Absolute divorce requires that the spouses have lived separate and apart for 1 year before filing.",
+"cite": "N.C. Gen. Stat. § 50-6",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-6.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Absolute divorce for 1 year's separation or incurable insanity; fault matters only for divorce from bed and board.",
+"cite": "N.C. Gen. Stat. §§ 50-5.1, 50-6",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-6.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital and divisible property is divided equally unless the court finds equal division is not equitable.",
+"cite": "N.C. Gen. Stat. § 50-20(c)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-20.html",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Divorce from bed and board is available for fault such as abandonment or cruel treatment.",
+"cite": "N.C. Gen. Stat. § 50-7",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_50/GS_50-7.html",
+"verified": true
+}
+},
+"ND": {
+"residency": {
+"value": "6 months",
+"detail": "The plaintiff must be a resident for 6 months before filing, or before the decree is entered.",
+"cite": "N.D. Cent. Code § 14-05-17",
+"source": "https://ndlegis.gov/cencode/t14c05.pdf",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "North Dakota law sets no mandatory waiting period after filing.",
+"cite": "N.D. Cent. Code ch. 14-05",
+"source": "https://ndlegis.gov/cencode/t14c05.pdf",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences. Fault grounds include adultery, extreme cruelty and willful desertion.",
+"cite": "N.D. Cent. Code § 14-05-03",
+"source": "https://ndlegis.gov/cencode/t14c05.pdf",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court makes an equitable distribution of the parties' property and debts.",
+"cite": "N.D. Cent. Code § 14-05-24(1)",
+"source": "https://ndlegis.gov/cencode/t14c05.pdf",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is a varying percentage of the obligor's net income.",
+"cite": "N.D. Admin. Code ch. 75-02-04.1",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A temporary or permanent decree of separation may be granted for any cause allowing divorce.",
+"cite": "N.D. Cent. Code § 14-05-03.1",
+"source": "https://ndlegis.gov/cencode/t14c05.pdf",
+"verified": true
+}
+},
+"OH": {
+"residency": {
+"value": "6 months",
+"detail": "The plaintiff must be an Ohio resident for at least 6 months before filing.",
+"cite": "Ohio Rev. Code § 3105.03",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3105.03",
+"verified": true
+},
+"waitingPeriod": {
+"value": "42 days (divorce)",
+"detail": "A divorce can't be heard until 42 days after service; for dissolution, the hearing is 30 to 90 days after filing.",
+"cite": "Ohio Civ.R. 75(K); Ohio Rev. Code § 3105.64",
+"source": "https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/civil/CivilProcedure.pdf",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: incompatibility unless denied, or 1 year living apart. Fault grounds include adultery and extreme cruelty.",
+"cite": "Ohio Rev. Code § 3105.01",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3105.01",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided equally unless that would be inequitable.",
+"cite": "Ohio Rev. Code § 3105.171(C)(1)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3105.171",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic schedule is based on the parents' combined annual income.",
+"cite": "Ohio Rev. Code § 3119.021",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3119.021",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Either spouse may file a complaint for legal separation.",
+"cite": "Ohio Rev. Code § 3105.17",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3105.17",
+"verified": true
+}
+},
+"OK": {
+"residency": {
+"value": "6 months",
+"detail": "The plaintiff must be an actual Oklahoma resident in good faith for 6 months before filing.",
+"cite": "43 O.S. § 102(A)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=71812",
+"verified": true
+},
+"waitingPeriod": {
+"value": "90 days (with minor children)",
+"detail": "With minor children, no final order until 90 days after filing, unless waived for good cause.",
+"cite": "43 O.S. § 107.1",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=71818",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: incompatibility. Fault grounds include abandonment for 1 year, adultery and extreme cruelty.",
+"cite": "43 O.S. § 101",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=71811",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Jointly acquired property is divided as may appear just and reasonable.",
+"cite": "43 O.S. § 121(B)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=71844",
+"verified": true
+}
+},
+"OR": {
+"residency": {
+"value": "6 months",
+"detail": "6 months' residence or domicile before filing if the marriage was not performed in Oregon; separation needs residence only at filing.",
+"cite": "ORS 107.075",
+"source": "https://oregon.public.law/statutes/ors_107.075",
+"verified": true
+},
+"waitingPeriod": {
+"value": "None",
+"detail": "Oregon law sets no mandatory waiting period after filing.",
+"cite": "ORS ch. 107",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors107.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Irreconcilable differences that have caused the irremediable breakdown of the marriage.",
+"cite": "ORS 107.025",
+"source": "https://oregon.public.law/statutes/ors_107.025",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Property of either or both spouses is divided as may be just and proper in all the circumstances.",
+"cite": "ORS 107.105(1)(f)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors107.html",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A suit for separation may be filed if one spouse is a resident when it is filed.",
+"cite": "ORS 107.075(3)",
+"source": "https://oregon.public.law/statutes/ors_107.075",
+"verified": true
+}
+},
+"PA": {
+"residency": {
+"value": "6 months",
+"detail": "At least one spouse must be a bona fide Pennsylvania resident for 6 months before filing.",
+"cite": "23 Pa.C.S. § 3104(b)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/23/00.031.004.000..HTM",
+"verified": true
+},
+"waitingPeriod": {
+"value": "90 days (mutual consent)",
+"detail": "Mutual-consent divorce needs 90 days after filing; contested no-fault needs 1 year living separate and apart.",
+"cite": "23 Pa.C.S. § 3301(c), (d)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/23/00.033.001.000..HTM",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irretrievable breakdown by mutual consent or after 1 year apart. Fault grounds include adultery and desertion.",
+"cite": "23 Pa.C.S. § 3301",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/23/00.033.001.000..HTM",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided equitably, without regard to misconduct, in percentages the court deems just.",
+"cite": "23 Pa.C.S. § 3502(a)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/CT/HTM/23/00.035.002.000..HTM",
+"verified": true
+}
+},
+"RI": {
+"residency": {
+"value": "1 year",
+"detail": "The plaintiff (or a served defendant) must be domiciled in Rhode Island for 1 year before filing.",
+"cite": "R.I. Gen. Laws § 15-5-12",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-12.htm",
+"verified": true
+},
+"waitingPeriod": {
+"value": "3 months after decision",
+"detail": "A divorce judgment becomes final 3 months after the trial and decision.",
+"cite": "R.I. Gen. Laws § 15-5-23",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-23.htm",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences that caused the irremediable breakdown of the marriage; fault grounds also exist.",
+"cite": "R.I. Gen. Laws §§ 15-5-2, 15-5-3.1",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-3.1.htm",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court may assign either spouse a portion of the other's estate after weighing statutory factors.",
+"cite": "R.I. Gen. Laws § 15-5-16.1",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-16.1.htm",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Divorce from bed and board may be granted for any divorce cause or other appropriate causes.",
+"cite": "R.I. Gen. Laws § 15-5-9",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE15/15-5/15-5-9.htm",
+"verified": true
+}
+},
+"SC": {
+"residency": {
+"value": "1 year (3 months if both)",
+"detail": "1 year if one spouse lives in South Carolina; 3 months if both spouses are residents.",
+"cite": "S.C. Code § 20-3-30",
+"source": "https://www.scstatehouse.gov/code/t20c003.php",
+"verified": true
+},
+"waitingPeriod": {
+"value": "3 months",
+"detail": "No final decree until 3 months after filing; the no-fault ground also requires 1 year living apart.",
+"cite": "S.C. Code § 20-3-80",
+"source": "https://www.scstatehouse.gov/code/t20c003.php",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: living separate and apart without cohabitation for 1 year. Fault: adultery, desertion, physical cruelty, habitual drunkenness.",
+"cite": "S.C. Code § 20-3-10",
+"source": "https://www.scstatehouse.gov/code/t20c003.php",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is equitably apportioned using statutory factors.",
+"cite": "S.C. Code §§ 20-3-610, 20-3-620",
+"source": "https://www.scstatehouse.gov/code/t20c003.php",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Actions for separate maintenance and support are available.",
+"cite": "S.C. Code § 20-3-130",
+"source": "https://www.scstatehouse.gov/code/t20c003.php",
+"verified": true
+}
+},
+"SD": {
+"residency": {
+"value": "Resident at filing",
+"detail": "The plaintiff must be a South Dakota resident (or stationed there) when filing; no minimum period or later residence required.",
+"cite": "S.D. Codified Laws § 25-4-30",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-30.html",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "No hearing or decree until 60 days after the summons and complaint are served.",
+"cite": "S.D. Codified Laws § 25-4-34",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-34.html",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences. Fault grounds include adultery, extreme cruelty and willful desertion.",
+"cite": "S.D. Codified Laws § 25-4-2",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-2.html",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Courts make an equitable division of property belonging to either or both spouses.",
+"cite": "S.D. Codified Laws § 25-4-44",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-44.html",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The parents' combined monthly net incomes set the obligation, divided by each parent's share.",
+"cite": "S.D. Codified Laws § 25-7-6.2",
+"source": "https://sdlegislature.gov/api/Statutes/25-7-6.2.html",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Separate maintenance may be sought without divorce on any divorce ground.",
+"cite": "S.D. Codified Laws § 25-4-40",
+"source": "https://sdlegislature.gov/api/Statutes/25-4-40.html",
+"verified": true
+}
+},
+"TN": {
+"residency": {
+"value": "6 months",
+"detail": "Required if the grounds arose outside Tennessee or the plaintiff then lived elsewhere; either spouse may meet it.",
+"cite": "Tenn. Code § 36-4-104",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_36-4-104",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 or 90 days",
+"detail": "Irreconcilable-differences cases must be on file 60 days (no minor children) or 90 days (minor children) before hearing.",
+"cite": "Tenn. Code § 36-4-103(c)",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_36-4-103",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences, or 2+ years living apart with no minor children. Many fault grounds also exist.",
+"cite": "Tenn. Code § 36-4-101(a)",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_36-4-101",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided equitably, without regard to marital fault.",
+"cite": "Tenn. Code § 36-4-121",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_36-4-121",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Tennessee law provides for legal separation.",
+"cite": "Tenn. Code § 36-4-102",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_36-4-102",
+"verified": true
+}
+},
+"TX": {
+"residency": {
+"value": "6 months",
+"detail": "Either spouse must be domiciled in Texas 6 months and live in the filing county 90 days before filing.",
+"cite": "Tex. Fam. Code § 6.301",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_6.301",
+"verified": true
+},
+"waitingPeriod": {
+"value": "60 days",
+"detail": "A divorce cannot be granted before the 60th day after filing, with exceptions for family violence.",
+"cite": "Tex. Fam. Code § 6.702",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_6.702",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: the marriage has become insupportable because of discord or conflict. Fault grounds include cruelty and adultery.",
+"cite": "Tex. Fam. Code §§ 6.001-6.007",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_6.001",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "The community estate is divided in a manner the court deems just and right.",
+"cite": "Tex. Fam. Code § 7.001",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_7.001",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is a percentage of the obligor's net resources (20% for one child, rising with more children).",
+"cite": "Tex. Fam. Code § 154.125",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+}
+},
+"UT": {
+"waitingPeriod": {
+"value": "30 days",
+"detail": "No divorce hearing until 30 days after the complaint is filed, unless extraordinary circumstances exist.",
+"cite": "Utah Code § 30-3-18",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_30-3-18",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences, or 3 years apart under separate maintenance. Fault grounds include adultery and desertion.",
+"cite": "Utah Code § 30-3-1(3)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_30-3-1",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The divorce decree may include equitable orders relating to property and debts.",
+"cite": "Utah Code § 30-3-5(2)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_30-3-5",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Parents pay proportionate shares of a base combined child support obligation.",
+"cite": "Utah Code § 78B-12-205",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-12-205",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Utah allows separate maintenance actions, including property and support orders.",
+"cite": "Utah Code §§ 30-4-1, 30-4-3",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_30-4-1",
+"verified": true
+}
+},
+"VT": {
+"residency": {
+"value": "6 months",
+"detail": "6 months' residence to file; one spouse must have lived in Vermont 1 year before the final hearing.",
+"cite": "15 V.S.A. § 592(a)",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00592",
+"verified": true
+},
+"waitingPeriod": {
+"value": "6 months separation",
+"detail": "The no-fault ground requires living apart 6 consecutive months; a decree also needs 1 year's residence.",
+"cite": "15 V.S.A. §§ 551(7), 592",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00551",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: living apart 6 consecutive months with resumption of marital relations not reasonably probable. Fault grounds also exist.",
+"cite": "15 V.S.A. § 551",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00551",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court equitably divides and assigns all property, however and whenever acquired.",
+"cite": "15 V.S.A. § 751(a)",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00751",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The guideline is based on the parents' combined available income.",
+"cite": "15 V.S.A. §§ 654, 656",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00656",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Vermont provides for legal separation.",
+"cite": "15 V.S.A. § 555",
+"source": "https://legislature.vermont.gov/statutes/section/15/011/00555",
+"verified": true
+}
+},
+"VA": {
+"residency": {
+"value": "6 months",
+"detail": "One spouse must be a bona fide Virginia resident and domiciliary for 6 months before filing.",
+"cite": "Va. Code § 20-97",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-97/",
+"verified": true
+},
+"waitingPeriod": {
+"value": "1 year (or 6 months) separation",
+"detail": "No-fault divorce requires 1 year apart, or 6 months if there are no minor children and a separation agreement.",
+"cite": "Va. Code § 20-91(A)(9)",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-91/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: living separate and apart without cohabitation for the required period. Fault grounds include adultery, felony and cruelty.",
+"cite": "Va. Code § 20-91",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-91/",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court classifies property and may grant a monetary award to achieve a fair and equitable result.",
+"cite": "Va. Code § 20-107.3",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-107.3/",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic obligation is computed from the parents' combined monthly gross income.",
+"cite": "Va. Code § 20-108.2",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-108.2/",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Divorce from bed and board is available on fault grounds.",
+"cite": "Va. Code § 20-95",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter6/section20-95/",
+"verified": true
+}
+},
+"WA": {
+"residency": {
+"value": "Resident at filing",
+"detail": "The petitioner must be a Washington resident (or military member stationed there); no minimum period.",
+"cite": "RCW 26.09.030",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.030",
+"verified": true
+},
+"waitingPeriod": {
+"value": "90 days",
+"detail": "The court acts only after 90 days have passed since both filing and service of the summons.",
+"cite": "RCW 26.09.030",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.030",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken.",
+"cite": "RCW 26.09.030",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.030",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "The court disposes of community and separate property as appears just and equitable.",
+"cite": "RCW 26.09.080",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.080",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The economic table sets the basic obligation from the parents' combined monthly net income.",
+"cite": "RCW 26.19.020",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.19.020",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A legal separation may be entered instead of dissolution.",
+"cite": "RCW 26.09.030",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.09.030",
+"verified": true
+}
+},
+"WV": {
+"residency": {
+"value": "1 year (or none)",
+"detail": "1 year's residence; none if married in West Virginia and one spouse lives there at filing.",
+"cite": "W. Va. Code § 48-5-105",
+"source": "https://code.wvlegislature.gov/48-5-105/",
+"verified": true
+},
+"grounds": {
+"value": "No-fault and fault-based",
+"detail": "No-fault: irreconcilable differences (admitted by answer), or 1 year living separate and apart. Fault grounds include adultery and cruelty.",
+"cite": "W. Va. Code §§ 48-5-201, 48-5-202",
+"source": "https://code.wvlegislature.gov/48-5-201/",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "Marital property is divided equally unless statutory factors justify a different division.",
+"cite": "W. Va. Code § 48-7-101",
+"source": "https://code.wvlegislature.gov/48-7-101/",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "The basic support table uses the parents' combined gross monthly income.",
+"cite": "W. Va. Code § 48-13-301",
+"source": "https://code.wvlegislature.gov/48-13-301/",
+"verified": true
+}
+},
+"WI": {
+"residency": {
+"value": "6 months",
+"detail": "6 months in Wisconsin and 30 days in the filing county before filing.",
+"cite": "Wis. Stat. § 767.301",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/767.301",
+"verified": true
+},
+"waitingPeriod": {
+"value": "120 days",
+"detail": "No final hearing until 120 days after service (or filing of a joint petition), except emergencies.",
+"cite": "Wis. Stat. § 767.335",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/767.335",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "The marriage is irretrievably broken.",
+"cite": "Wis. Stat. § 767.315",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/767.315",
+"verified": true
+},
+"propertyDivision": {
+"value": "Community property",
+"detail": "Wisconsin is a marital (community) property state; divisible property is presumed to be split equally.",
+"cite": "Wis. Stat. § 767.61(3); ch. 766",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/767.61",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Percentage of income",
+"detail": "Support is a percentage of the payer's income under the DCF 150 standard.",
+"cite": "Wis. Admin. Code DCF 150",
+"source": "https://www.ncsl.org/human-services/child-support-guideline-models",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "A judgment of legal separation may be granted.",
+"cite": "Wis. Stat. § 767.35",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/767.35",
+"verified": true
+}
+},
+"WY": {
+"residency": {
+"value": "60 days",
+"detail": "60 days before filing, or married in Wyoming with one spouse residing there since the marriage.",
+"cite": "Wyo. Stat. § 20-2-107(a)",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+},
+"waitingPeriod": {
+"value": "20 days",
+"detail": "A divorce decree cannot be entered less than 20 days after the complaint is filed.",
+"cite": "Wyo. Stat. § 20-2-108",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+},
+"grounds": {
+"value": "No-fault only",
+"detail": "Irreconcilable differences in the marital relationship, or incurable insanity with confinement.",
+"cite": "Wyo. Stat. §§ 20-2-104, 20-2-105",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+},
+"propertyDivision": {
+"value": "Equitable distribution",
+"detail": "The court disposes of the parties' property as appears just and equitable.",
+"cite": "Wyo. Stat. § 20-2-114(a)",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+},
+"childSupportGuidelines": {
+"value": "Income shares",
+"detail": "Presumptive tables use the parents' combined net income.",
+"cite": "Wyo. Stat. § 20-2-304",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+},
+"legalSeparation": {
+"value": "Available",
+"detail": "Judicial separation may be sought when grounds for divorce exist.",
+"cite": "Wyo. Stat. § 20-2-106",
+"source": "https://www.wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+}
+}
+}
+}

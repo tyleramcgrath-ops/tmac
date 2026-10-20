@@ -17,16 +17,16 @@ export function PracticeLens({ items }: { items: LensItem[] }) {
     const el = lens.current
     if (!el || !matchMedia('(hover: hover) and (min-width: 821px)').matches || !document.documentElement.classList.contains('fx')) return
     let lx = -400, ly = -400, tx = -400, ty = -400, rot = 0, raf = 0
-    const onMove = (e: MouseEvent) => { tx = e.clientX + 34; ty = e.clientY - 105 }
     const loop = () => {
       const dx = (tx - lx) * 0.12
       lx += dx; ly += (ty - ly) * 0.12
       rot += (Math.max(-9, Math.min(9, dx * 0.35)) - rot) * 0.15
       el.style.transform = `translate3d(${lx.toFixed(1)}px,${ly.toFixed(1)}px,0) rotate(${rot.toFixed(2)}deg)`
-      raf = requestAnimationFrame(loop)
+      // Runs only while the lens is catching up with the mouse.
+      raf = Math.abs(tx - lx) + Math.abs(ty - ly) + Math.abs(rot) > 0.3 ? requestAnimationFrame(loop) : 0
     }
+    const onMove = (e: MouseEvent) => { tx = e.clientX + 34; ty = e.clientY - 105; if (!raf) raf = requestAnimationFrame(loop) }
     addEventListener('mousemove', onMove)
-    raf = requestAnimationFrame(loop)
     return () => { removeEventListener('mousemove', onMove); cancelAnimationFrame(raf) }
   }, [])
 

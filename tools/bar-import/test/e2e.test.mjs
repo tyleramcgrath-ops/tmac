@@ -135,7 +135,7 @@ test('apply creates sourced profiles, leaves the claimed one alone', async () =>
 test('re-running the same file changes nothing', async () => {
   const before = db.attorneys.length
   await cli(['florida', join(dir, 'members.xlsx'), '--certifications', join(dir, 'certs.csv'), '--as-of', '2026-10-01', '--apply'])
-  const s = JSON.parse(await readFile(join(await latest('florida'), 'summary.json'), 'utf8'))
+  const s = JSON.parse(await readFile(join(await latest('florida', true), 'summary.json'), 'utf8'))
   assert.equal(s.create, 0)
   assert.equal(s.update, 0)
   assert.equal(s.unchanged, 2)

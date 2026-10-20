@@ -7,8 +7,9 @@
 .jr { position: relative; }
 .jr-stage { position: relative; min-height: 100vh; overflow: hidden; isolation: isolate; background: #fff; }
 .jr-photo { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
-.jr-ph { position: absolute; inset: -6%; background-position: center 42%; background-size: cover; background-repeat: no-repeat; }
-.jr-drift { position: absolute; inset: 0; background: inherit; }
+.jr-ph { position: absolute; inset: -6%; }
+.jr-drift { position: absolute; inset: 0; }
+.jr-drift img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
 .jr-veil { position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background: linear-gradient(90deg, rgba(255,255,255,.95) 0%, rgba(255,255,255,.86) 30%, rgba(255,255,255,.35) 52%, rgba(255,255,255,0) 68%),
               linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,0) 22%); }
@@ -39,11 +40,13 @@
 .fx .jr-drift { animation: jrDrift 22s ease-in-out infinite alternate; }
 @keyframes jrDrift { from { transform: translate3d(1.5%,0,0) scale(1.04); } to { transform: translate3d(-2.5%,-1%,0) scale(1.1); } }
 .fx .jr-mask { display: flex; position: absolute; inset: 0; z-index: 2; background: #fff; mix-blend-mode: screen; align-items: center; justify-content: center; padding-top: var(--hh); pointer-events: none; }
-.fx .jr-word { font-family: var(--display); font-weight: 900; color: #000; line-height: 1; letter-spacing: -.01em; font-size: 20vw; white-space: nowrap; display: block; }
-.fx .jr-word span { display: inline-block; opacity: 0; transform: translate3d(0,.22em,0); transition: opacity 1.2s var(--ease), transform 1.4s var(--ease); }
-.fx.jr-loaded .jr-word span { opacity: 1; transform: none; }
-.fx .jr-word span:nth-child(2) { transition-delay: .06s; } .fx .jr-word span:nth-child(3) { transition-delay: .12s; } .fx .jr-word span:nth-child(4) { transition-delay: .18s; }
-.fx .jr-word span:nth-child(5) { transition-delay: .24s; } .fx .jr-word span:nth-child(6) { transition-delay: .30s; } .fx .jr-word span:nth-child(7) { transition-delay: .36s; }
+.fx .jr-stage { --fs: min(calc(84vw / 4.0934), calc((100vh - 90px) * .5)); --wh: calc(var(--fs) * .78); }
+.fx .jr-word { font-family: var(--display); font-weight: 900; color: #000; line-height: 1; letter-spacing: -.01em; font-size: var(--fs); white-space: nowrap; display: block; }
+/* The letters rise in on load (transform only, so they count as painted at once). */
+.fx .jr-word span { display: inline-block; animation: jrRise 1.3s var(--ease) both; }
+@keyframes jrRise { from { transform: translate3d(0,.22em,0); } to { transform: none; } }
+.fx .jr-word span:nth-child(2) { animation-delay: .06s; } .fx .jr-word span:nth-child(3) { animation-delay: .12s; } .fx .jr-word span:nth-child(4) { animation-delay: .18s; }
+.fx .jr-word span:nth-child(5) { animation-delay: .24s; } .fx .jr-word span:nth-child(6) { animation-delay: .30s; } .fx .jr-word span:nth-child(7) { animation-delay: .36s; }
 .jr-base { display: inline-block; width: 0; height: 0; }
 .fx .jr-intro { display: block; position: absolute; inset: 0; z-index: 3; pointer-events: none; }
 .jr-i-top, .jr-i-sub { position: absolute; left: 0; right: 0; text-align: center; }
@@ -57,8 +60,8 @@
 .jr-cue i { display: block; width: 1px; height: 46px; background: var(--line); position: relative; overflow: hidden; }
 .jr-cue i::after { content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 46px; background: var(--sky); animation: jrCue 2.2s var(--ease) infinite; }
 @keyframes jrCue { from { transform: translateY(-100%); } to { transform: translateY(100%); } }
-.jr-fade { opacity: 0; transform: translateY(12px); transition: opacity 1.2s var(--ease) .55s, transform 1.2s var(--ease) .55s; }
-.fx.jr-loaded .jr-fade { opacity: 1; transform: none; }
+.fx .jr-fade { animation: jrFade 1.2s var(--ease) .55s both; }
+@keyframes jrFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
 .jr-lift { will-change: transform, opacity; }
 .fx .jr-veil, .fx .jr-caption, .fx .jr-line > span, .fx .jr-side, .fx .jr-card { opacity: 0; }
 
@@ -97,7 +100,8 @@
 .pk-opt.on::before { transform: scaleX(1); }
 .pk-opt.on .pk-ar { background: var(--sky); border-color: var(--sky); color: #fff; transform: rotate(-45deg); }
 .pk-panel { background: #fff; border-radius: 6px; overflow: hidden; box-shadow: 0 30px 60px -40px rgba(21,40,74,.4); position: sticky; top: 110px; }
-.pk-ph { height: 220px; background-size: cover; background-position: center; position: relative; }
+.pk-ph { height: 220px; position: relative; overflow: hidden; }
+.pk-ph img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .pk-ph::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, #fff, rgba(255,255,255,0) 55%); }
 .pk-body { padding: 4px 40px 40px; }
 .pk-k { font-size: .75rem; letter-spacing: .2em; text-transform: uppercase; color: var(--sky); font-weight: 500; }
@@ -185,7 +189,8 @@
 
 /* ---------- Firms ---------- */
 .h5-firms { display: grid; grid-template-columns: 1fr 1fr; border-radius: 8px; overflow: hidden; background: var(--sky-pale); }
-.h5-firms-photo { min-height: 520px; background-size: cover; background-position: center; }
+.h5-firms-photo { min-height: 520px; position: relative; overflow: hidden; }
+.h5-firms-photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .h5-firms-copy { padding: 72px 64px; display: flex; flex-direction: column; justify-content: center; }
 .h5-firms-copy h2 { margin: 16px 0 20px; }
 .h5-firms-copy p { color: var(--navy-2); font-weight: 300; font-size: 1.1rem; max-width: 460px; margin: 0; }
@@ -227,7 +232,8 @@
   .h5 { --hh: 64px; }
   .fx .jr { height: 270vh; }
   .jr-veil { background: linear-gradient(to bottom, rgba(255,255,255,.9) 0%, rgba(255,255,255,.82) 40%, rgba(255,255,255,.2) 70%, rgba(255,255,255,0)); }
-  .jr-ph { background-position: center 30%; }
+  .jr-drift img { object-position: center 30%; }
+  .fx .jr-stage { --fs: min(calc(90vw / 4.0934), calc((100vh - 90px) * .5)); }
   .jr-final, .fx .jr-final { padding: calc(var(--hh) - 30px) 0 18px; justify-content: flex-start; }
   .jr-h1 { font-size: 2.5rem !important; }
   .jr-side { margin-top: 14px; }

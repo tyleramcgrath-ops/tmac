@@ -1,5 +1,7 @@
 import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
+import { STATES } from '@/lib/geo'
+import { TOPICS, topicsFor } from '@/lib/law/topics'
 import { SITE, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -22,6 +24,10 @@ export function GET() {
     '',
     '## Legal guides',
     ...GUIDES.map((g) => `- [${g.title}](${abs(`/guide/${g.slug}`)}): ${g.description}`),
+    '',
+    '## State laws (each fact cites its statute)',
+    ...TOPICS.map((t) => `- [${t.name} by state](${abs(`/laws/${t.slug}`)}): all 50 states and D.C. compared`),
+    ...STATES.flatMap((s) => topicsFor(s.code).map((t) => `- [${t.heading(s)}](${abs(`/state/${s.slug}/${t.slug}`)})`)),
     '',
     '## Reference',
     `- [Common legal questions](${abs('/questions')})`,

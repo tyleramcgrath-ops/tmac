@@ -13,7 +13,9 @@ const eInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2
  * rise in. Without JS or with reduced motion, the finished hero shows as is.
  * The `fx` class on <html> is set before paint by the script in the layout.
  */
-export function JusticeReveal({ photo, caption, children }: { photo: string; caption: string; children: ReactNode }) {
+export type HeroPhoto = { alt: string; mobile: { avif: string; jpg: string }; desktop: { avif: string; jpg: string; src: string } }
+
+export function JusticeReveal({ photo, caption, children }: { photo: HeroPhoto; caption: string; children: ReactNode }) {
   const root = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -83,40 +85,50 @@ export function JusticeReveal({ photo, caption, children }: { photo: string; cap
       const kc = eOut(clamp((p - 0.68) / 0.16)); card.style.opacity = kc.toFixed(3); card.style.transform = `translate3d(0,${((1 - kc) * 90).toFixed(1)}px,0)`
       card.style.pointerEvents = kc > 0.5 ? 'auto' : 'none'
     }
+    // The loop runs only while the scroll position is settling, then stops,
+    // so an idle page costs nothing.
     const tick = () => {
       const t = target()
       pT += (t - pT) * 0.11
       if (Math.abs(t - pT) < 0.0002) pT = t
       if (pT !== pS) { pS = pT; render(pT) }
-      raf = requestAnimationFrame(tick)
+      raf = pT === t ? 0 : requestAnimationFrame(tick)
     }
+    const kick = () => { if (started && !raf) raf = requestAnimationFrame(tick) }
     // Keyboard users who tab into the search jump straight to the finished hero.
     const onFocus = () => { if (target() < 0.85) scrollTo({ top: sec.offsetTop + (sec.offsetHeight - innerHeight) * 0.9, behavior: 'auto' }) }
     card.addEventListener('focusin', onFocus)
     let rz = 0
-    const onResize = () => { clearTimeout(rz); rz = window.setTimeout(layout, 120) }
+    const onResize = () => { clearTimeout(rz); rz = window.setTimeout(() => { layout(); render(pT) }, 120) }
     let started = false
     const go = () => {
       if (started) return
       started = true
-      layout(); pT = target()
-      raf = requestAnimationFrame(tick)
-      requestAnimationFrame(() => requestAnimationFrame(() => html.classList.add('jr-loaded')))
+      layout(); pT = target(); pS = -1
+      render(pT)
     }
     document.fonts?.ready.then(go)
     const fallback = window.setTimeout(go, 2500)
     addEventListener('resize', onResize)
+    addEventListener('scroll', kick, { passive: true })
     return () => {
       cancelAnimationFrame(raf); clearTimeout(fallback); clearTimeout(rz)
-      removeEventListener('resize', onResize); card.removeEventListener('focusin', onFocus)
-      html.classList.remove('jr-live', 'jr-loaded')
+      removeEventListener('resize', onResize); removeEventListener('scroll', kick); card.removeEventListener('focusin', onFocus)
+      html.classList.remove('jr-live')
     }
   }, [])
 
   return (
     <section className="jr" ref={root}>
       <div className="jr-stage">
-        <div className="jr-photo"><div className="jr-ph" style={{ backgroundImage: `url(${photo})` }}><div className="jr-drift" /></div></div>
+        <div className="jr-photo"><div className="jr-ph"><div className="jr-drift">
+          <picture>
+            <source media="(max-width: 820px)" type="image/avif" srcSet={photo.mobile.avif} />
+            <source media="(max-width: 820px)" srcSet={photo.mobile.jpg} />
+            <source type="image/avif" srcSet={photo.desktop.avif} sizes="112vw" />
+            <img src={photo.desktop.src} srcSet={photo.desktop.jpg} sizes="112vw" alt={photo.alt} fetchPriority="high" decoding="async" />
+          </picture>
+        </div></div></div>
         <div className="jr-veil" />
         <div className="jr-mask" aria-hidden="true">
           <div className="jr-word">

@@ -13,7 +13,7 @@ export const PHOTOS = {
 export type PhotoKey = keyof typeof PHOTOS
 
 export const photoUrl = (key: PhotoKey, w: number) =>
-  `https://images.unsplash.com/photo-${PHOTOS[key].id}?w=${w}&q=72&auto=format&fit=crop`
+  `https://images.unsplash.com/photo-${PHOTOS[key].id}?w=${w}&q=${w > 1000 ? 62 : 68}&auto=format&fit=crop`
 
 export const photoSrcSet = (key: PhotoKey, widths = [640, 1080, 1600, 2200]) =>
   widths.map((w) => `${photoUrl(key, w)} ${w}w`).join(', ')
