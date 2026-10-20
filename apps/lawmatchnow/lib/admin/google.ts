@@ -3,15 +3,16 @@
 //   GOOGLE_SERVICE_ACCOUNT_JSON  the service account key (JSON, or base64 of it)
 //   GA4_PROPERTY_ID              numeric GA4 property id (not the G- measurement id)
 //   GSC_SITE_URL                 Search Console property, e.g. sc-domain:lawmatchnow.com
+// All three can instead be saved from /admin/settings (see localconf.ts),
+// since SiteGround's variable fields are too short for a key file.
 
 import { createSign } from 'node:crypto'
 import { kvGet, kvSet } from './db'
+import { readConf } from './localconf'
 
 type Key = { client_email: string; private_key: string }
 
-function serviceAccount(): Key | null {
-  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.trim()
-  if (!raw) return null
+export function parseKey(raw: string): Key | null {
   try {
     const json = raw.startsWith('{') ? raw : Buffer.from(raw, 'base64').toString('utf8')
     const k = JSON.parse(json) as Key
@@ -21,18 +22,47 @@ function serviceAccount(): Key | null {
   }
 }
 
+function serviceAccount(): Key | null {
+  const raw = process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.trim() || readConf().googleKey
+  return raw ? parseKey(raw.trim()) : null
+}
+
+const ga4Id = () => process.env.GA4_PROPERTY_ID?.trim() || readConf().ga4PropertyId || ''
+const gscSite = () => process.env.GSC_SITE_URL?.trim() || readConf().gscSiteUrl || ''
+
 export const googleConfigured = () => !!serviceAccount()
-export const ga4Configured = () => googleConfigured() && !!process.env.GA4_PROPERTY_ID
-export const gscConfigured = () => googleConfigured() && !!process.env.GSC_SITE_URL
+export const ga4Configured = () => googleConfigured() && !!ga4Id()
+export const gscConfigured = () => googleConfigured() && !!gscSite()
 export const serviceEmail = () => serviceAccount()?.client_email ?? null
 
 const tokens = new Map<string, { token: string; exp: number }>()
+
+/** Forget cached tokens and reports, after the key or properties change. */
+export function resetGoogle() { tokens.clear() }
+
+/** Signs in with the saved key and checks each property, for the settings page. */
+export async function testGoogle(): Promise<string[]> {
+  const out: string[] = []
+  await accessToken(GA_SCOPE)
+  out.push(`Signed in as ${serviceAccount()!.client_email}.`)
+  if (ga4Id()) {
+    await gaReport({ dateRanges: [{ startDate: '7daysAgo', endDate: 'today' }], metrics: [{ name: 'activeUsers' }] })
+      .then(() => out.push('Google Analytics: working.'))
+      .catch((e: Error) => out.push(`Google Analytics: ${e.message}`))
+  }
+  if (gscSite()) {
+    await gapi(GSC_SCOPE, `https://www.googleapis.com/webmasters/v3/sites/${site()}`)
+      .then(() => out.push('Search Console: working.'))
+      .catch((e: Error) => out.push(`Search Console: ${e.message}`))
+  }
+  return out
+}
 
 async function accessToken(scope: string): Promise<string> {
   const hit = tokens.get(scope)
   if (hit && hit.exp > Date.now() + 60_000) return hit.token
   const key = serviceAccount()
-  if (!key) throw new Error('GOOGLE_SERVICE_ACCOUNT_JSON is not set')
+  if (!key) throw new Error('No Google service account key is saved')
   const now = Math.floor(Date.now() / 1000)
   const b64 = (o: object) => Buffer.from(JSON.stringify(o)).toString('base64url')
   const unsigned = `${b64({ alg: 'RS256', typ: 'JWT' })}.${b64({ iss: key.client_email, scope, aud: 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600 })}`
@@ -78,7 +108,7 @@ type GaReport = { rows?: GaRow[]; totals?: GaRow[] }
 const GA_SCOPE = 'https://www.googleapis.com/auth/analytics.readonly'
 
 async function gaReport(body: object) {
-  return gapi<GaReport>(GA_SCOPE, `https://analyticsdata.googleapis.com/v1beta/properties/${process.env.GA4_PROPERTY_ID}:runReport`, body)
+  return gapi<GaReport>(GA_SCOPE, `https://analyticsdata.googleapis.com/v1beta/properties/${ga4Id()}:runReport`, body)
 }
 
 const rowsOf = (r: GaReport, dims = 1) =>
@@ -113,7 +143,7 @@ export async function ga4Overview(days: number) {
 
 /** Visitors on the site right now. Not cached. */
 export async function ga4Realtime() {
-  const r = await gapi<GaReport>(GA_SCOPE, `https://analyticsdata.googleapis.com/v1beta/properties/${process.env.GA4_PROPERTY_ID}:runRealtimeReport`, {
+  const r = await gapi<GaReport>(GA_SCOPE, `https://analyticsdata.googleapis.com/v1beta/properties/${ga4Id()}:runRealtimeReport`, {
     dimensions: [{ name: 'unifiedScreenName' }], metrics: [{ name: 'activeUsers' }], limit: 10,
   })
   const rows = rowsOf(r).map((x) => ({ page: x.dims[0], users: x.m[0] }))
@@ -123,7 +153,7 @@ export async function ga4Realtime() {
 // ---------- Search Console ----------
 
 const GSC_SCOPE = 'https://www.googleapis.com/auth/webmasters'
-const site = () => encodeURIComponent(process.env.GSC_SITE_URL!)
+const site = () => encodeURIComponent(gscSite())
 
 type GscRow = { keys?: string[]; clicks: number; impressions: number; ctr: number; position: number }
 
@@ -174,6 +204,6 @@ export async function gscSubmitSitemap(sitemapUrl: string) {
 /** Google's index status for one URL. */
 export async function gscInspect(url: string) {
   const r = await gapi<{ inspectionResult?: { indexStatusResult?: { verdict?: string; coverageState?: string; lastCrawlTime?: string; googleCanonical?: string; robotsTxtState?: string; pageFetchState?: string }; richResultsResult?: { verdict?: string; detectedItems?: { richResultType: string }[] } } }>(
-    GSC_SCOPE, 'https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', { inspectionUrl: url, siteUrl: process.env.GSC_SITE_URL })
+    GSC_SCOPE, 'https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', { inspectionUrl: url, siteUrl: gscSite() })
   return r.inspectionResult ?? null
 }

@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
+import { ActionForm } from '@/components/admin/ActionForm'
 import { Panel } from '@/components/admin/ui'
+import { readConf } from '@/lib/admin/localconf'
+import { saveGoogle } from '../../actions'
 import { hasDb } from '@/lib/admin/db'
 import { ga4Configured, googleConfigured, gscConfigured, serviceEmail } from '@/lib/admin/google'
 import { mailConfigured } from '@/lib/admin/mail'
@@ -11,6 +14,7 @@ const Dot = ({ on }: { on: boolean }) => <span className={`ad-dot ${on ? 'on' : 
 
 export default function Settings() {
   const svc = serviceEmail()
+  const conf = readConf()
   const items = [
     {
       name: 'Database (leads + traffic)', on: hasDb(), env: ['DATABASE_URL'],
@@ -25,16 +29,25 @@ export default function Settings() {
       how: <>Optional. Every lead is POSTed here as JSON: use a Zapier or Make &quot;catch hook&quot; URL to send leads to Google Sheets, HubSpot, Clio Grow, Slack, text messages and more.</>,
     },
     {
-      name: 'Google Analytics + Search Console', on: googleConfigured(), env: ['GOOGLE_SERVICE_ACCOUNT_JSON', 'GA4_PROPERTY_ID', 'GSC_SITE_URL'],
+      name: 'Google Analytics + Search Console', on: googleConfigured(), env: ['(or use the form below) GOOGLE_SERVICE_ACCOUNT_JSON', 'GA4_PROPERTY_ID', 'GSC_SITE_URL'],
       how: (
         <ol>
           <li>In <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">Google Cloud Console</a>, create a project, enable the <b>Google Analytics Data API</b> and the <b>Google Search Console API</b>.</li>
-          <li>Create a <b>service account</b>, add a JSON key, and paste the whole JSON file as <code>GOOGLE_SERVICE_ACCOUNT_JSON</code>.</li>
-          <li>Google Analytics → Admin → Property access management: add the service account&apos;s email as a <b>Viewer</b>. Put the numeric <b>Property ID</b> (Admin → Property details) in <code>GA4_PROPERTY_ID</code>.</li>
-          <li>Search Console → Settings → Users and permissions: add the same email with <b>Full</b> permission (needed to submit sitemaps). Set <code>GSC_SITE_URL</code> to <code>sc-domain:lawmatchnow.com</code> (or the exact URL-prefix property).</li>
+          <li>Create a <b>service account</b>, then Keys → Add key → <b>JSON</b>. Upload that file in the form below (it&apos;s too long for a SiteGround variable).</li>
+          <li>Google Analytics → Admin → Property access management: add the service account&apos;s email as a <b>Viewer</b>. Enter the numeric <b>Property ID</b> (Admin → Property details) below.</li>
+          <li>Search Console → Settings → Users and permissions: add the same email with <b>Full</b> permission (needed to submit sitemaps). Enter <code>sc-domain:lawmatchnow.com</code> below (or the exact URL-prefix property).</li>
         </ol>
       ),
-      extra: svc ? <>Service account: <code>{svc}</code> · Analytics {ga4Configured() ? 'ready' : 'needs GA4_PROPERTY_ID'} · Search Console {gscConfigured() ? 'ready' : 'needs GSC_SITE_URL'}</> : null,
+      extra: svc ? <>Service account: <code>{svc}</code> (add this email in Analytics and Search Console) · Analytics {ga4Configured() ? 'ready' : 'needs the property ID'} · Search Console {gscConfigured() ? 'ready' : 'needs the property'}</> : null,
+      form: (
+        <ActionForm action={saveGoogle} submit="Save and test" pendingLabel="Testing with Google…">
+          <div className="field"><label htmlFor="g-key">Service account key (.json file)</label><input id="g-key" name="keyFile" type="file" accept="application/json,.json" /></div>
+          <details><summary className="muted">Or paste the file’s contents</summary><div className="field"><textarea name="keyText" rows={4} placeholder='{"type": "service_account", ...}' /></div></details>
+          <div className="field"><label htmlFor="g-ga4">GA4 property ID</label><input id="g-ga4" name="ga4" inputMode="numeric" placeholder="123456789" defaultValue={conf.ga4PropertyId ?? ''} /></div>
+          <div className="field"><label htmlFor="g-gsc">Search Console property</label><input id="g-gsc" name="gsc" placeholder="sc-domain:lawmatchnow.com" defaultValue={conf.gscSiteUrl ?? ''} /></div>
+          <p className="muted">{conf.googleKey ? 'A key is saved. Upload a new file only to replace it.' : 'No key saved yet.'} The key is stored on the server in a private file, never shown again.</p>
+        </ActionForm>
+      ),
     },
     {
       name: 'IndexNow', on: !!indexNowKey(), env: ['INDEXNOW_KEY'],
@@ -54,6 +67,7 @@ export default function Settings() {
           <Panel key={i.name} title={i.name} actions={<Dot on={i.on} />} wide>
             <div className="ad-how">{i.how}</div>
             {i.extra && <p className="muted">{i.extra}</p>}
+            {'form' in i && i.form}
             <p className="muted">Variables: {i.env.map((e) => <code key={e}>{e} </code>)}</p>
           </Panel>
         ))}
