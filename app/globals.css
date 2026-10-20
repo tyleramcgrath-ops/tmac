@@ -730,8 +730,9 @@ h3 { font-weight: 500; }
 .nav a:hover { background: transparent; color: var(--navy); }
 .nav a:hover::before { transform: scaleX(1); transform-origin: left; }
 .nav a.nav-firms::after { color: var(--sky); border-color: var(--sky); }
-.logo-mark { width: 34px; height: 34px; border: 1.5px solid var(--navy); border-radius: 50%; display: grid; place-items: center; font-family: var(--display); font-style: italic; font-size: 15px; position: relative; color: var(--navy); }
-.logo-mark::after { content: ''; position: absolute; inset: 3px; border: 1px solid var(--sky-2); border-radius: 50%; }
+.logo-mark { flex: none; display: block; }
+.logo-dark, .logo-dark:hover { color: #fff; }
+.logo-dark .logo-word i { color: var(--sky-2); }
 .logo-word { font-size: 1.5rem; font-weight: 500; }
 .logo-word i { color: var(--sky); font-style: normal; }
 .footer { background: var(--stone); color: var(--muted); border-top: 1px solid var(--stone-2); }
