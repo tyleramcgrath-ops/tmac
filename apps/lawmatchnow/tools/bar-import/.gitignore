@@ -1,0 +1,5 @@
+reports/
+# Bar files contain personal contact details; keep them out of git.
+*.xlsx
+*.xls
+*.csv

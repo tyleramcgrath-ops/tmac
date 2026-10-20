@@ -1,0 +1,16 @@
+{
+  "name": "lawmatchnow-bar-import",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Imports state bar membership files into the LawMatchNow attorney directory (PocketBase).",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "dependencies": {
+    "exceljs": "4.4.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
