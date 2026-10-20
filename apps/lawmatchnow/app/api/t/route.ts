@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server'
 import { classify, isBot, recordEvent, recordView } from '@/lib/admin/traffic'
 
-const EVENTS = new Set(['case_review_click', 'phone_click', 'email_click', 'form_start', 'search', 'outbound_click', 'profile_contact'])
+const EVENTS = new Set(['case_review_click', 'phone_click', 'email_click', 'form_start', 'search', 'outbound_click', 'profile_contact', 'tool_use'])
 
 export async function POST(req: Request) {
   if (isBot(req.headers.get('user-agent'))) return new NextResponse(null, { status: 204 })
