@@ -269,8 +269,350 @@ const SDOT_SS = 'https://seattlegov.zendesk.com/hc/en-us/articles/1500004813821-
 const KC_PERMITS = 'https://kingcounty.gov/en/dept/dph/health-safety/environmental-health/plumbing-gas-piping/applications-and-permits'
 const KC_HIRE = 'https://kingcounty.gov/en/dept/dph/health-safety/environmental-health/plumbing-gas-piping/hire-registered-contractor'
 const CENSUS_SEA = 'https://www.census.gov/quickfacts/fact/table/seattlecitywashington/PST045225'
+const NV_ADS = 'https://nvbar.org/for-lawyers/ethics-discipline/lawyer-advertising/'
+const NV_RPC = 'https://www.leg.state.nv.us/CourtRules/RPC.html'
+const NV_LAWYER_2022 = 'https://nvbar.org/wp-content/uploads/NevadaLawyer_Sept2022_Lawyer-Advertising.pdf'
+const EJDC_ADR = 'https://www.clarkcountycourts.us/ejdc-holds-high-turnout-biennial-training-for-short-trial-judges-and-arbitrators-2/'
+const CENSUS_CLARK = 'https://www.census.gov/quickfacts/fact/table/clarkcountynevada/PST045225'
+const SCHEMA_LEGAL = 'https://schema.org/LegalService'
+const FL_489_119 = 'https://m.flsenate.gov/statutes/489.119'
+const FL_489_105 = 'https://m.flsenate.gov/Statutes/489.105'
+const FL_489_127 = 'https://flsenate.gov/Laws/Statutes/2024/489.127'
+const FL_468_8419 = 'https://m.flsenate.gov/Statutes/468.8419'
+const FAC_61G4_12_011 = 'https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-61G4-12-011'
+const DBPR_VERIFY = 'https://www2.myfloridalicense.com/how-to-verify-a-license/'
+const NOAA_2026 = 'https://www.cpc.ncep.noaa.gov/products/outlooks/hurricane2026/May/hurricane.shtml'
+const TPA_STORM_PERMITS = 'https://www.tampa.gov/news/2025-08/city-tampa-offering-virtual-appointments-hurricane-recovery-permit-assistance-158896'
+const CENSUS_HILLS = 'https://www.census.gov/quickfacts/fact/table/hillsboroughcountyflorida/PST045225'
 
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'las-vegas-law-firm-website-design',
+    title: 'Las Vegas Law Firm Website Design: Nevada Ad Rules',
+    description: 'Plan a Las Vegas law firm website under Nevada RPC 7.1 to 7.5: fee warnings, past results, specialist claims, Spanish pages and which ads need filing.',
+    kind: 'guide',
+    summary: [
+      'Nevada does not make you file your website with the State Bar, but paid ads must be filed within 15 days of first use, with a $100 fee.',
+      'Rule 7.2(b)(4): if you advertise contingency fees, say the client may still owe the other side’s fees and costs.',
+      'Results need a disclaimer, lead-counsel involvement and the net amount the client actually received, not a gross figure (Rule 7.2(b)(7)).',
+      'Required statements must appear in every language the page uses (Rule 7.2(c)), which matters in Clark County, where 33.6% of residents speak a language other than English at home.',
+      '“Specialist” is reserved for lawyers certified by a bar-approved organization who meet Rule 7.4(d)’s practice, education and insurance tests.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1516975698824-571e2c952dbd?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of the Las Vegas Strip at dusk, with lit fountains in front of a resort and the city grid stretching to the mountains' },
+    body: `A Las Vegas law firm website does not have to be filed with the State Bar of Nevada, but everything on it still answers to Nevada Rules of Professional Conduct 7.1 through 7.5. In practice that means five things. Say nothing false or misleading (Rule 7.1). If you mention contingency fees, warn that the client may still owe the other side’s fees and costs (Rule 7.2(b)(4)). Show past results only with the conditions and disclaimer Rule 7.2(b)(7) requires. Use the word “specialist” only if you hold a certification Rule 7.4(d) recognizes. And repeat every required statement in each language the page is written in (Rule 7.2(c)). Paid ads that send people to the site are a separate matter: those are filed with the bar within 15 days.
+
+This guide walks through each rule as it applies to a website, using the rule text published by the Nevada Legislature and the State Bar’s own advertising page, then turns to what clients in the Las Vegas Valley need from the site itself. It is a practical guide, not an ethics opinion. For a close call, the State Bar offers an advance opinion, described below.
+
+## Does a Nevada law firm website have to be filed with the State Bar?
+
+No. The State Bar of Nevada says plainly on its lawyer advertising page that “websites are not considered to be advertisements subject to filing requirements” ([State Bar of Nevada: lawyer advertising](${NV_ADS})). Rule 7.2A, which sets up the filing system, carves websites out ([Nevada Rules of Professional Conduct](${NV_RPC})).
+
+What does have to be filed is paid advertising. The bar’s page says lawyers must submit advertisements that are paid for to its Lawyer Advertising Advisory Committee, each within 15 days of first dissemination, with a $100 non-refundable fee per filing. Substantially similar ads can go in one filing. Video and audio ads need a full transcript, and an ad in another language needs a complete English translation. Social media posts are covered only when they are disseminated in exchange for something of value, so a boosted post is a different animal from an ordinary one.
+
+For a firm that runs paid search or social ads pointing at its website, the practical setup looks like this:
+
+- The website itself: no filing, but it must meet Rules 7.1 to 7.5.
+- Each paid ad that sends people to it: filed within 15 days, unless it falls in an exemption the bar recognizes.
+- A new campaign you are unsure about: ask for an advance opinion under Rule 7.2B before it runs. The bar lists the fee as $250 and says an opinion issues within 30 days, and a finding of compliance binds discipline panels as long as the facts you gave were accurate.
+
+A State Bar article in Nevada Lawyer noted that many lawyers “simply do not realize they are supposed to submit their ads” ([Lawyer Advertising: From Networking to Hashtag Law](${NV_LAWYER_2022})). If your firm has been running paid ads for years without filing, that is worth fixing before anything else on this list.
+
+![Last light over the mountains above the Las Vegas Valley, with the city’s lights spread across the desert floor below](https://images.unsplash.com/photo-1525648703170-3c8f42836383?auto=format&fit=crop&w=1200&q=75)
+
+## Which Nevada rules govern the words on your website?
+
+Rule 7.1 covers every communication about a lawyer’s services, website included: nothing false or misleading, and no statement that leaves out a fact needed to keep it from misleading. Rule 7.2(b) then lists specific requirements for advertising. For a website, read these as the content standard even though the site isn’t filed:
+
+1. **Name a responsible lawyer.** Rule 7.2(b)(2) requires the name of at least one lawyer responsible for the content. Put it in the site footer so it appears on every page.
+2. **Disclose actors and dramatizations.** Rule 7.2(b)(1) requires disclosure when actors or fictionalized scenes are used, for as long as they appear. A stock photo of strangers shaking hands in a conference room shouldn’t be captioned “our team.” The Nevada Lawyer article calls a room full of actors posing as attorneys “inherently misleading.”
+3. **Warn about costs in contingency ads** (Rule 7.2(b)(4)), covered in the next section.
+4. **Date your fee offers.** If you publish a fee, Rule 7.2(b)(5) requires saying how long it stays in effect and any conditions that limit it. “Flat-fee uncontested divorce, $X, quoted through December 31, 2026, filing fees not included” is the shape to aim for.
+5. **Be ready to prove quality claims.** Rule 7.2(b)(6) says claims about the quality of your services must be provable on request. “Aggressive” and “trusted” are hard to prove; “every case is handled by a licensed attorney, not a case manager” is a fact you can show.
+6. **Follow the results rules** in Rule 7.2(b)(7), covered below.
+7. **Make it readable.** Rule 7.2(d) says required information must be reasonably prominent and legible. The bar article put it simply: “All disclaimers need to be visible and appropriately sized.” Gray eight-point text at the bottom of a phone screen doesn’t qualify.
+
+## How should a Las Vegas firm write “no fee unless we win”?
+
+Carefully, because this is where Nevada differs from many states. Rule 7.2(b)(4) says an ad that mentions contingency fees must state that the client may be liable for the opposing party’s fees and costs. The Nevada Lawyer article is blunt about it: without that warning, a “no payment unless you win” message is misleading.
+
+A compliant version on a personal injury page might read:
+
+> You pay no attorney’s fee unless we recover money for you. If your case is lost, you may still be responsible for court costs and for the other side’s fees and costs.
+
+Put that sentence wherever the fee promise appears: the hero section, the practice area page, the paid-ad landing page and the Spanish version of each. A footnote on a separate “disclaimers” page that the visitor never sees doesn’t meet the spirit of Rule 7.2(d), and a reviewer reading the page as a prospective client would see it is the test that matters.
+
+## Can you show verdicts and settlements on a Nevada website?
+
+Yes, under conditions that are stricter than in many states. Rule 7.2(b)(7) allows references to past results only when:
+
+- The lawyer was lead counsel in the matter or primarily responsible for the result.
+- The communication includes a disclaimer that past results do not guarantee or predict future outcomes.
+- A monetary result was actually received by the client, and the ad includes enough about the case to understand it.
+- If a gross amount is stated, the attorney’s fees and litigation expenses withheld from it are stated too.
+
+The bar’s own guidance goes further in plain words: the number “must reflect the amount that went to the clients,” and verdicts that were later overturned cause problems ([Nevada Lawyer, September 2022](${NV_LAWYER_2022})). So a results page built for Nevada looks different from one built elsewhere. Each entry names the type of case, says which of your lawyers handled it, gives the amount the client received (or the gross with fees and costs shown), and sits under a clear statement that past results do not predict future outcomes.
+
+If your firm’s results page came from a template, check each line against those four conditions. Entries where the firm was co-counsel without primary responsibility, or where the figure was a verdict that settled for less, should come down or be rewritten.
+
+If your current site has results, fee promises or photos that wouldn’t survive this review, SaySites will show you your own pages rebuilt for Nevada’s rules at no cost: [request a free redesign](/redesign).
+
+## Can a Nevada lawyer say “specialist” or “expert” on a website?
+
+Rule 7.4(a) lets a lawyer say which fields they practice in, as long as it isn’t false or misleading. “We handle construction defect claims” is fine. Claiming to be a specialist is different. Under Rule 7.4(d), a Nevada lawyer may advertise as a specialist only when certified by an organization the State Bar has approved under Rule 7.4A, and only while meeting ongoing conditions that include:
+
+- At least one third of the lawyer’s practice in that specialty in each of the two preceding years.
+- Ten hours a year of accredited continuing legal education in the specialty.
+- Malpractice insurance of at least $500,000, unless the lawyer practices only in public law.
+- Registration with the State Bar, a $250 fee and annual renewal.
+- Naming the certifying organization in any advertising of the specialty.
+
+Patent and admiralty practitioners have their own titles under Rules 7.4(b) and (c). For everyone else, the safe website wording is “practice focused on” or “handles,” plus a plain statement of experience you can document: years in practice, the courts you appear in, the bar sections you belong to. If a lawyer at the firm holds a qualifying certification, put the certifying body’s name right next to the word.
+
+“Expert” deserves the same caution. It implies a credential, and Rule 7.1 asks whether a reasonable reader would take it that way.
+
+## Do Spanish pages need their own disclaimers?
+
+Yes. Rule 7.2(c) says the statements the rules require must appear in each language used in the advertisement. Merely saying that a language is spoken at the office doesn’t trigger the requirement, but a full page written in Spanish does.
+
+That matters in Las Vegas. Census QuickFacts reports that 33.6% of Clark County residents age 5 and older speak a language other than English at home, and 33.4% of residents are Hispanic or Latino ([QuickFacts: Clark County, Nevada](${CENSUS_CLARK})). For a personal injury, family, immigration-adjacent or employment practice, Spanish pages can be the difference between being considered and being skipped.
+
+Build them as real pages, not machine translations pasted into a widget:
+
+- Translate the fee warning, the results disclaimer and the responsible-lawyer statement along with everything else.
+- Have each page reviewed by a fluent speaker, ideally the lawyer or staff member who will take the calls.
+- Only offer Spanish if a person at the firm can actually consult in Spanish, or say clearly that an interpreter will be used.
+- Link each English page to its Spanish version so Google can show the right one to the right person ([localized versions of your pages](${HREFLANG})).
+
+![A lawyer in a gray suit smiles across a desk at a client while reviewing a paper document together](https://images.unsplash.com/photo-1780733064275-d1ade9b83a3d?auto=format&fit=crop&w=1200&q=75)
+
+## Firm names, trade names and firms with offices outside Nevada
+
+Rule 7.5(a) applies Rule 7.1 to firm names and adds a specific bar: a trade name may not imply a connection with a government agency or with a public or charitable legal services organization. A domain like “clarkcountyinjuryhelp” on a private firm’s website deserves a second look for exactly that reason, and so does any page title or Business Profile name built around it.
+
+Firms that practice across state lines have extra steps. Rule 7.5A requires a firm with an office in Nevada and offices elsewhere to register with the State Bar, with an annual fee listed in the rule as $500. Rule 7.5(b) lets a registered multijurisdictional firm use one name everywhere, but its listings must show the jurisdictional limits of lawyers who aren’t licensed in Nevada. On the website, that means each attorney profile states where the lawyer is admitted. The Nevada Lawyer article also flags a related trap: an ad that implies an out-of-state lawyer will handle a Nevada case when that isn’t true is inherently misleading.
+
+## Does Nevada’s 30-day rule affect your website?
+
+Not the website itself, which people come to on their own. It affects what your firm sends after. Rule 7.3(d) bars written solicitation of an injured person, or their family or legal representative, about a personal injury or wrongful death matter for 30 days after the incident, and the restriction applies to lawyers representing defendants and insurers too. Once the 30 days pass, mailed solicitations to people who haven’t contacted you must carry the rule’s required notice. Rule 7.3(c) calls for “NOTICE: THIS IS AN ADVERTISEMENT!” in red ink on the envelope and on each page.
+
+A website form changes the picture, because the person reached out first. Keep it that way. Your intake process should answer the person who submitted the form, and nobody else: no “we noticed you were in an accident” follow-ups to relatives, no automated texts to numbers pulled from crash reports.
+
+## What do Las Vegas clients need from a law firm website?
+
+The rules tell you what you can’t say. The city tells you what people need to hear.
+
+### People who were hurt here and have gone home
+
+Las Vegas draws visitors from across the country, and a crash on Las Vegas Boulevard or a fall in a resort can involve someone who flies home days later. If your firm represents clients who live out of state, say so on the relevant practice pages and explain how it works: consultations by phone or video, signing documents electronically, and when, if ever, the client needs to come back to Nevada. That answers the first question an out-of-state visitor has, which is whether a Las Vegas firm can help them at all.
+
+### Small cases have a different path in Clark County
+
+District Court in Clark County sends many smaller civil cases through a program that a client may never have heard of. According to the Eighth Judicial District Court, civil cases with a probable jury award value of not more than $50,000 per plaintiff are generally subject to the Court Annexed Arbitration Program, with some exceptions, and cases that aren’t resolved there move into the Short Trial Program, which is designed to reach trial in eight months or less ([Eighth Judicial District Court](${EJDC_ADR})). A personal injury page that explains this in plain words, without promising how any case will go, is the kind of specific, local help that a generic template never offers.
+
+### Answers before the phone call
+
+Most people comparing firms want three things settled before they call: whether you handle their kind of problem, what it will cost to talk to you, and what happens next. Put a short “what to expect” section on each practice page: how to reach the firm, whether the first consultation is free, what documents to have ready, and how quickly someone replies. Answer-first pages like these also give AI search features something clear to quote ([how to write pages AI answers can quote](/blog/write-pages-ai-answers-can-quote)).
+
+## How should a Las Vegas firm set up its Google Business Profile?
+
+Google’s guidelines for Business Profiles apply the same way in Nevada as anywhere, and three of them trip up law firms most often ([Business Profile guidelines](${GBP_GUIDELINES})):
+
+- **No virtual offices.** Google says a location that rents a mailing address but doesn’t operate from it is a virtual office and isn’t eligible. An office suite in Summerlin you visit twice a month is not a staffed office; a profile for it puts the whole listing at risk.
+- **The real name only.** Google doesn’t permit unnecessary information in the business name, including taglines and keywords. Your profile is “Firm Name,” not “Firm Name Las Vegas Car Accident Lawyers.”
+- **Practitioner profiles, carefully.** Google allows individual practitioners who are public-facing and reachable at the verified location to have their own profile, but says one practitioner shouldn’t have several profiles to cover different specialties.
+
+Match the name, address and phone on the profile exactly to the website footer, and link each office’s profile to that office’s own page.
+
+## Which pages should a Las Vegas law firm website have?
+
+A plan that serves clients and keeps you inside the rules:
+
+1. **Home page** that says who you help, where you practice and how to reach you, with the responsible lawyer named in the footer.
+2. **One page per practice area**, each with its own fee language (and the Rule 7.2(b)(4) warning wherever contingency fees are mentioned).
+3. **Attorney profiles** with bar admissions, courts, education and any Rule 7.4 certification named in full.
+4. **A results page**, only if every entry meets Rule 7.2(b)(7), with the disclaimer at the top.
+5. **An office page for each staffed location**, with directions, parking and hours.
+6. **Spanish versions** of the pages your Spanish-speaking clients actually need, with every required statement translated.
+7. **A consultation form** that asks only what you need for a conflict check and a callback.
+8. **A plain-language process page** for your main practice: for an injury firm, how a claim moves from the first call through arbitration or trial.
+
+Avoid the template trick of one page per suburb with the name swapped: “Henderson car accident lawyer,” “North Las Vegas car accident lawyer,” and so on, all saying the same thing. Google’s spam policies describe pages like that as doorway pages ([spam policies](${SPAM})). Write a page about a place only when you have something true and different to say about it.
+
+## Las Vegas law firm website checklist
+
+- Responsible lawyer named on every page.
+- Contingency fee promises carry the opposing-costs warning, in every language used.
+- Published fees state how long they last and what they exclude.
+- Every result meets Rule 7.2(b)(7) and sits under the disclaimer.
+- No actors or stock photos presented as your people.
+- “Specialist” appears only with a qualifying certification and the certifier’s name.
+- Attorney profiles show where each lawyer is admitted.
+- Trade names and domains don’t suggest a government or legal aid connection.
+- Paid ads pointing to the site have been filed within 15 days.
+- Business Profiles exist only for staffed offices, under the firm’s real name.
+- Structured data describes only what the page shows ([structured data guidelines](${SD_GUIDELINES})).
+
+![Three professionals in a bright office discuss printed documents during a client meeting](https://images.unsplash.com/photo-1758518727077-ffb66ffccced?auto=format&fit=crop&w=1200&q=75)
+
+## How SaySites builds a Las Vegas law firm website
+
+SaySites law firm sites come with the page plan above: practice area pages, attorney profiles, office pages and a consultation form on every page, with intake questions that include the other party’s name for a conflict check. The firm is described to search engines as a [LegalService](${SCHEMA_LEGAL}), each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live. Sites can be built in English or Spanish. You change anything by typing it in plain words, such as “add the opposing-costs sentence under the no-fee promise on the car accident page,” and each change waits as a draft until you approve it. Results, credentials and reviews come only from you; nothing is made up.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Nevada site yourself, or [request a free redesign](/redesign) and see your current pages rebuilt first. For more background, read [what we found testing 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites) and [what Google AI Overviews mean for law firms](/blog/google-ai-overviews-for-law-firms).`,
+    faq: [
+      { q: 'Does a Nevada law firm have to file its website with the State Bar?', a: 'No. The State Bar of Nevada says websites are not advertisements subject to its filing requirement under Rule 7.2A. Paid advertisements are different: each must be filed with the bar within 15 days of first dissemination, with a $100 non-refundable fee. The website still has to follow Rules 7.1 through 7.5 on what it says.' },
+      { q: 'Can a Las Vegas lawyer advertise “no fee unless we win”?', a: 'Yes, with a warning. Nevada Rule 7.2(b)(4) requires any advertising of contingency fees to state that the client may be liable for the opposing party’s fees and costs. The State Bar’s own article says a no-payment-unless-you-win message without that warning is misleading. Put the sentence next to the promise on every page that makes it.' },
+      { q: 'What does Nevada require before a firm posts settlements or verdicts?', a: 'Rule 7.2(b)(7) requires that the lawyer was lead counsel or primarily responsible, that a disclaimer says past results don’t guarantee or predict future outcomes, and that any money was actually received by the client. If a gross amount is shown, the fees and expenses withheld must be shown too. Overturned verdicts should not appear.' },
+      { q: 'Can a Nevada lawyer call themselves a specialist on a website?', a: 'Only with a certification from an organization approved by the State Bar under Rule 7.4A, plus the conditions in Rule 7.4(d): a third of practice in the field in each of the last two years, ten CLE hours a year, at least $500,000 in malpractice coverage and registration with the bar. The ad must name the certifying organization.' },
+      { q: 'Do Spanish pages on a Nevada law firm website need disclaimers?', a: 'Yes. Rule 7.2(c) says required statements must appear in each language used in the advertisement, so a Spanish page needs its own fee warning, results disclaimer and responsible-lawyer statement. Simply mentioning that staff speak Spanish doesn’t trigger the requirement. Have a fluent speaker at the firm review each translated page.' },
+      { q: 'How much does an advance opinion on a Nevada lawyer ad cost?', a: 'The State Bar lists a $250 non-refundable fee for an advance opinion under Rule 7.2B and says the committee issues it within 30 days. A finding that the ad complies is binding on discipline panels as long as the information you provided was accurate. It is worth considering before a large campaign or a new type of ad.' },
+      { q: 'What does a SaySites website for a Las Vegas law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also request a free redesign to see your current site rebuilt before you decide anything.' },
+    ],
+    about: ['Nevada Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Las Vegas, Nevada'],
+    published: '2026-10-20',
+    status: 'published',
+  },
+  {
+    slug: 'tampa-hvac-website-design',
+    title: 'Tampa HVAC Websites: Florida License Number Rules',
+    description: 'What a Tampa HVAC company website must show under Florida law, from the license number on every page to mold claims, plus pages built for storm season.',
+    kind: 'guide',
+    summary: [
+      'Florida law puts your certification or registration number in every advertisement “regardless of medium,” and the licensing board’s rule names Internet sites as advertising.',
+      'Say exactly what your license covers: a Class B air-conditioning license is limited to 25 tons of cooling and 500,000 Btu of heating in any one system.',
+      'Advertising contracting without a license is a crime in Florida, and a felony during a declared state of emergency, so a visible, checkable license number is a trust signal after a storm.',
+      'Mold assessment and remediation are licensed separately in Florida; don’t offer them unless you hold that license.',
+      'Hillsborough County is a bilingual market: 30.7% of residents speak a language other than English at home.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1609964956781-519678450be5?auto=format&fit=crop&w=1600&q=75', alt: 'Drone view up the Hillsborough River toward downtown Tampa’s towers, with a small boat leaving a wake past riverside neighborhoods' },
+    body: `A Tampa HVAC company website has one legal requirement that shapes everything else: Florida law says your state certification or registration number must appear in every advertisement, “regardless of medium,” and the Construction Industry Licensing Board’s rules list Internet sites among the media that count. So the number belongs on every page of the site, not just the contact page. After that, the site’s job is practical. It should state honestly what your license lets you do, help a homeowner check you out in under a minute, and be ready for the weeks after a hurricane, when people are searching from their phones and unlicensed operators are advertising too.
+
+Below, each legal point links to the Florida statute or rule it comes from, followed by advice for the Tampa Bay market: storm season, permits, Spanish-speaking customers, service areas and the pages a heating and air company actually needs. It is a guide for business owners, not legal advice; the statutes and the licensing board have the final word.
+
+## Does a Florida HVAC website need the license number on it?
+
+Yes. Section 489.119(5)(b) of the Florida Statutes says the registration or certification number of each contractor “shall appear in each offer of services, business proposal, bid, contract, or advertisement, regardless of medium, as defined by board rule” ([s. 489.119, Florida Statutes](${FL_489_119})). The board’s definitions rule spells out what advertising includes: business cards, proposals, contracts, site signs, newspapers, broadcast, phone directories, flyers, vehicle signs and “any electronic media including Internet sites” ([Fla. Admin. Code r. 61G4-12.011](${FAC_61G4_12_011})).
+
+Florida offers no footer shortcut or link-to-the-home-page alternative here. The plain reading is that each place you advertise carries the number. On a website, that means:
+
+- **The site-wide header or footer**, so every page shows it, including blog posts and pages people land on from Google.
+- **Paid ad landing pages**, which are often built outside the main site and are easy to forget.
+- **Your online profiles**: Business Profile description, social media bios and directory listings you control.
+- **Quotes and proposals** sent from the website or by email.
+
+The same statute covers trucks. Under s. 489.119(5)(c), if a vehicle carries your company name or anything that would make a reasonable person think it’s used for contracting, the number must be displayed conspicuously and legibly with that name. If your website shows photos of branded vans, they should show the number too.
+
+Format matters less than visibility. “State Certified Class A Air Conditioning Contractor, License CAC000000” (with your real number) next to the phone number in the header is clear to customers and easy to verify.
+
+## Class A, Class B or mechanical: does your site match your license?
+
+Florida’s definitions in s. 489.105(3) set out what each air-conditioning license covers, and your service pages should stay inside yours ([s. 489.105, Florida Statutes](${FL_489_105})):
+
+- **Class A air-conditioning contractor:** unlimited in scope for central air-conditioning, refrigeration, heating and ventilating systems, with listed exclusions such as potable water lines, sanitary sewer lines, pool piping and electrical power wiring beyond certain disconnects.
+- **Class B air-conditioning contractor:** the same kinds of work, but limited to “25 tons of cooling and 500,000 Btu of heating in any one system.”
+- **Class C air-conditioning contractor:** servicing only, including duct cleaning and equipment sanitizing that requires at least partial disassembly. The statute says only people who held this classification as of October 1, 1988 may hold it now.
+- **Mechanical contractor:** the broadest scope, adding items such as medical gas and vacuum lines, fuel lines and gas piping inside buildings.
+
+Why it matters on a website: a Class B contractor whose commercial page promises “rooftop systems of any size” is advertising work the license doesn’t cover. Write commercial pages around the jobs you can legally take, such as restaurant and retail units within your tonnage, and name the license class in plain words on the about page. Customers rarely know the classes exist, but a property manager comparing bids often does.
+
+![A modern outdoor heat pump unit on a gravel bed beside a white wall, flanked by small evergreen shrubs](https://images.unsplash.com/photo-1700124113583-81aa99ea2aa2?auto=format&fit=crop&w=1200&q=75)
+
+## Why does an unlicensed competitor’s ad make your license number more valuable?
+
+Florida treats advertising without a license as a crime. Section 489.127(1)(f) bars advertising yourself or a business as available to work as a contractor without being registered or certified. An unlicensed person who does that commits a first-degree misdemeanor, and under s. 489.127(2)(c) the same violation during a state of emergency declared by the Governor is a third-degree felony ([s. 489.127, Florida Statutes](${FL_489_127})).
+
+Those rules exist because storms bring out people who aren’t licensed. For a legitimate company, that makes verification a selling point. The Florida Department of Business and Professional Regulation explains how consumers can look up a contractor’s license ([DBPR: verify a license](${DBPR_VERIFY})). Link to that page from your site, next to your number, with a line like “Check our license with the State of Florida.” It costs nothing and answers the question a cautious homeowner is already asking.
+
+Never borrow someone else’s license number, list a number for a classification you don’t hold, or let a subcontractor’s number stand in for yours. The website is evidence of what you advertised.
+
+## Can a Tampa HVAC company advertise mold removal?
+
+Be careful. Florida licenses mold assessment and mold remediation separately, under part XVI of chapter 468. Section 468.8419 says a person may not perform or offer to perform mold assessment or mold remediation without complying with that part, and bars using titles like “certified mold assessor” or “licensed mold remediator” without the license ([s. 468.8419, Florida Statutes](${FL_468_8419})). Penalties escalate with repeat violations, up to a third-degree felony.
+
+Humid summers mean Tampa homeowners do search for help with musty smells and dirty ducts, and there is plenty you can honestly offer within an air-conditioning license: duct cleaning, coil cleaning, drain line service, humidity control and indoor air quality equipment. Describe those jobs as what they are. If you want a page about mold itself, either hold the mold license or write the page as “when to call a licensed mold assessor,” and refer the work out. Overpromising here is a legal risk, not just a marketing one.
+
+Not sure your current site passes these checks? [Ask for a free redesign](/redesign) and we’ll rebuild your own pages with the license number placed correctly, so you can compare before paying anything.
+
+## How should a Tampa HVAC website handle storm season?
+
+NOAA’s outlook for 2026 repeats the standard dates: “The North Atlantic hurricane season officially runs from June 1st through November 30th” ([NOAA Climate Prediction Center](${NOAA_2026})). Those six months overlap with the hottest, most humid part of the year, which is also when an air conditioner failure feels most urgent.
+
+A few habits make the site useful when it counts:
+
+1. **Keep the phone number tappable at the top of every page**, with your real hours. If you offer after-hours service, say what it costs or how it’s priced. If you don’t, say when you open.
+2. **Write a storm page you actually maintain.** What to do with the outdoor unit before a storm, what to check before turning the system back on after flooding or a power surge, and when to call. Date it, and update it when your advice changes rather than changing the date.
+3. **Explain permits honestly.** Rules and fees can change after a disaster. After Hurricanes Helene and Milton, the City of Tampa announced that it would waive permit fees for storm-related HVAC mechanical change-outs and offered expedited review ([City of Tampa](${TPA_STORM_PERMITS})). The city itself now warns that the page is old and may no longer be accurate. That’s the lesson: when you mention a temporary program, link the official source, say when it applied, and take it down when it ends.
+4. **Say which jurisdictions you pull permits in.** The City of Tampa, unincorporated Hillsborough County and neighboring cities each run their own permitting. A sentence like “we handle the permit for change-outs in every area we serve” answers a question customers don’t always know to ask.
+
+## Should a Tampa HVAC website have Spanish pages?
+
+For many companies, yes. Census QuickFacts reports that 30.7% of Hillsborough County residents age 5 and older speak a language other than English at home, and 32.1% of residents are Hispanic or Latino ([QuickFacts: Hillsborough County, Florida](${CENSUS_HILLS})).
+
+Spanish pages pay off only when a Spanish speaker can answer the phone or the text. If someone on your team can, say so, and build real Spanish versions of the pages that matter most: the home page, AC repair, AC replacement, maintenance plans and the request form. Put the license number on those pages too, since the statute doesn’t make an exception for language. Link each English page to its Spanish twin so Google can show people the version that fits ([localized versions](${HREFLANG})). If nobody on the team speaks Spanish, a translated site creates calls you can’t handle well, which is worse than not having one.
+
+## How do you cover Tampa Bay without doorway pages?
+
+Most HVAC companies go to the customer and don’t serve walk-ins, which makes them service-area businesses in Google’s terms. Google’s instructions are to set the areas you serve and hide your address if customers don’t come to you ([service-area businesses](${SERVICE_AREAS})). Its guidelines also bar keywords in the business name, so the profile reads “Ortega Air Conditioning,” not “Ortega Air Conditioning Tampa AC Repair 24/7” ([Business Profile guidelines](${GBP_GUIDELINES})).
+
+On the website, resist the old trick of fifty near-identical pages, one per suburb, each saying the same thing with a new place name. Google’s spam policies call those doorway pages ([spam policies](${SPAM})). Instead:
+
+- **One service-area page** that lists the cities and neighborhoods you cover, with a map or a ZIP list and your travel limits.
+- **A separate area page only where you have something real to say**, such as a different permitting office, an office or warehouse you actually run there, or a type of housing you work on often.
+- **Job stories** written from real work, with the customer’s permission, mentioning the area naturally.
+
+That approach also reads better to the person deciding whether you’ll come to their street. If you want the details, read our guide on [showing Google where you work without a storefront](/blog/service-area-business-google).
+
+![Downtown Tampa’s glass towers lit against a purple evening sky, reflected in the river beside a waterfront railing](https://images.unsplash.com/photo-1573611586863-e4d9ef7fc2b5?auto=format&fit=crop&w=1200&q=75)
+
+## Which pages should a Tampa HVAC company website have?
+
+A page plan that matches how people look for help:
+
+1. **Home page** that names your services, your service area, your license number and the fastest way to reach you.
+2. **AC repair**, with the problems you fix and what a service call costs or how it’s priced.
+3. **AC replacement**, explaining how you size a system, what’s included (permit, removal of the old unit, startup) and how financing works if you offer it.
+4. **Maintenance plans**, with exactly what a visit includes and how often.
+5. **Indoor air quality and duct services**, described within your license.
+6. **Commercial service**, only within your license class.
+7. **Storm and power-outage page**, kept current.
+8. **Service area page**, as described above.
+9. **About page**, with your license class, the qualifying agent, years in business and photos of your real team and trucks.
+10. **Request form** on every page, short enough to finish on a phone in a hot house.
+
+Make structured data match the page. Schema.org has a type for heating and air contractors ([HVACBusiness](${SCHEMA_HVAC})), and Google’s local business documentation lists the properties it reads ([local business structured data](${LOCAL_SD})). Google’s policies require markup to describe content that visitors can see on the page ([structured data guidelines](${SD_GUIDELINES})), so hours, phone and service area should be identical in the code, on the page and in your Business Profile.
+
+## Tampa HVAC website checklist
+
+- License number in the header or footer of every page, including Spanish pages and ad landing pages.
+- License class named in words on the about page.
+- Commercial pages stay within your tonnage and classification.
+- A link to the state’s license lookup next to your number.
+- No mold assessment or remediation offers without that license.
+- Truck photos show the number the way the trucks must.
+- Storm page dated and current; expired programs removed.
+- Permit jurisdictions you work in listed plainly.
+- One honest service-area page, no swapped-name doorway pages.
+- Business Profile under your real name, with your service area set.
+- Structured data matches the page.
+
+## How SaySites builds a Tampa HVAC website
+
+SaySites builds heating and air websites with the page plan above already in place: a page for each service, a service-area page, a tap-to-call number and a job request form on every page. The site is described to search engines as an HVACBusiness, and no page goes live until it passes a 95+ speed check. Requests land in a leads pipeline where you can call, text, add notes and follow each one through to a booked job. To change something, you type it in plain words, such as “put our CAC license number next to the phone number in the header on every page,” and you see it as a draft before it goes live.
+
+The Site plan is $15 a month with hosting included and your own domain connected ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your site ready before the next storm, or [request a free redesign](/redesign) to see your current site rebuilt first. For more on local search, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses), and for a different state’s rules, see our [Phoenix HVAC website guide](/blog/phoenix-hvac-website-design).`,
+    faq: [
+      { q: 'Does a Florida HVAC contractor have to put the license number on its website?', a: 'Yes. Section 489.119(5)(b) of the Florida Statutes requires the certification or registration number in every advertisement regardless of medium, and the licensing board’s rule 61G4-12.011 lists electronic media including Internet sites as advertising. The simplest way to comply is to show the number in the header or footer of every page, plus any ad landing pages.' },
+      { q: 'What is the difference between a Class A and Class B air conditioning license in Florida?', a: 'Both cover installing and servicing central air-conditioning, heating and ventilating systems. Under s. 489.105(3), Class A is unlimited in size, while Class B is limited to 25 tons of cooling and 500,000 Btu of heating in any one system. Class C covers servicing only and is no longer issued to new applicants.' },
+      { q: 'Is it illegal to advertise HVAC work in Florida without a license?', a: 'Yes. Section 489.127(1)(f) bars advertising yourself as available to work as a contractor without being registered or certified. A violation by an unlicensed person is a first-degree misdemeanor, and it becomes a third-degree felony during a state of emergency declared by the Governor, such as after a hurricane.' },
+      { q: 'Can an air conditioning company in Florida offer mold remediation?', a: 'Only with the right license. Florida licenses mold assessment and remediation separately under part XVI of chapter 468, and s. 468.8419 bars offering to perform either without complying. An HVAC company can describe duct cleaning, coil cleaning and humidity control within its license, but should refer mold work to a licensed provider unless it holds that license itself.' },
+      { q: 'Should a Tampa HVAC website be in Spanish?', a: 'If someone on your team can serve customers in Spanish, it is worth considering. Census QuickFacts reports 30.7% of Hillsborough County residents age 5 and older speak a language other than English at home. Build real Spanish versions of your key pages, include your license number on them, and link each to its English version.' },
+      { q: 'How should an HVAC website handle hurricane season in Tampa?', a: 'Keep the phone number at the top of every page with real hours, maintain a dated storm page with practical before-and-after advice, and explain permits for replacements. When a city offers a temporary program, like Tampa’s waived fees after Hurricanes Helene and Milton, link the official source, say when it applied and remove it once it ends.' },
+      { q: 'What does a SaySites website for an HVAC company cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting and your own domain included. It comes with service pages, a service-area page, tap-to-call, a job request form on every page, HVACBusiness structured data and a leads pipeline. You can also request a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['Florida contractor licensing', 'HVAC company websites', 'Hurricane season', 'Tampa, Florida'],
+    published: '2026-10-20',
+    status: 'published',
+  },
   {
     slug: 'atlanta-law-firm-website-design',
     title: 'Atlanta Law Firm Website Design: Georgia’s 2026 Rules',
