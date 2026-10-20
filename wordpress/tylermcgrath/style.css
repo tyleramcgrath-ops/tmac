@@ -1,0 +1,17 @@
+/*
+Theme Name: Tyler McGrath — North Star
+Theme URI: https://tylermcgrath.com
+Author: Tyler McGrath
+Author URI: https://tylermcgrath.com
+Description: A night-sky portfolio theme built around a live 3D brass compass. The compass wakes on arrival, follows the cursor, glides to a corner as you scroll and reacts to each section; projects light up as stars in a constellation map. Includes a Projects post type, a Customizer panel for every word on the home page, a working contact form and automatic dawn/day/dusk/night lighting based on the visitor's clock.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: tylermcgrath
+Tags: portfolio, one-column, custom-menu, custom-logo, featured-images, dark, translation-ready
+*/
+
+/* All styles live in assets/css/theme.css, enqueued from functions.php. */
