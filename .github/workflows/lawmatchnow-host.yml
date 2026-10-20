@@ -1,0 +1,29 @@
+# Keeps the lawmatchnow-host branch in step with apps/lawmatchnow on main.
+# SiteGround's Node.js hosting builds from the top of a branch and can't be
+# pointed at a subfolder, so lawmatchnow-host holds just the LawMatchNow app.
+name: LawMatchNow host branch
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/lawmatchnow/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: lawmatchnow-host
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split apps/lawmatchnow and push it to lawmatchnow-host
+        run: |
+          git subtree split --prefix apps/lawmatchnow -b lawmatchnow-host-new
+          git push origin lawmatchnow-host-new:lawmatchnow-host
