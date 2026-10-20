@@ -138,6 +138,43 @@ export const QUESTIONS: Question[] = [
     practice: 'family-law',
   },
   {
+    id: 'child-choose',
+    key: 'custody.childPreference',
+    slug: (s) => `at-what-age-can-a-child-choose-which-parent-to-live-with-in-${s.slug}`,
+    ask: (s) => `At what age can a child choose which parent to live with in ${s.name}?`,
+    answer: (s, f) => {
+      const age = /^(\d+)\s*\((.*)\)$/.exec(v(f))
+      if (age) return { verdict: 'info', short: `Age ${age[1]}`, text: `In ${s.name}, a child's preference gets special weight from age ${age[1]}: ${age[2]}${cite(f)}. ${f.detail ?? ''}`.trim() }
+      const rule = /\((.*)\)$/.exec(v(f))?.[1]
+      return { verdict: 'info', short: 'No set age', text: `${s.name} sets no age at which a child can choose which parent to live with${rule ? `; the child's wishes are ${rule.replace(/^considered/, 'considered')}` : ''}${cite(f)}. ${f.detail ?? ''}`.trim() }
+    },
+    meaning: (s) => [
+      `Even where a child's choice carries great weight, a ${s.name} judge can override it if living with that parent isn't in the child's best interests, for example if the choice seems driven by fewer rules or by pressure from a parent.`,
+      'Judges usually hear from children privately, in chambers or through a guardian ad litem or custody evaluator, so the child doesn’t have to testify against a parent in open court.',
+      `A parent hoping a child's preference will change custody should let the child speak freely rather than coach them; judges notice rehearsed answers, and coaching can count against the parent.`,
+    ],
+    national: { slug: 'child-custody-age-by-state', title: 'At What Age Can a Child Choose Which Parent to Live With? (By State)', h1: 'At what age can a child choose which parent to live with?', lede: 'Only a few states give a child of a set age a strong say in custody; most let the judge weigh any mature child’s wishes. Here is every state’s rule, with the statute or case.', group: 'Set age' },
+    yesLabel: 'Age',
+    topic: 'child-custody-laws',
+    practice: 'family-law',
+  },
+  {
+    id: 'support-end',
+    key: 'custody.supportEndAge',
+    slug: (s) => `when-does-child-support-end-in-${s.slug}`,
+    ask: (s) => `When does child support end in ${s.name}?`,
+    answer: (s, f) => ({ verdict: 'info', short: `Age ${v(f).replace(/\s*\(.*$/, '')}`, text: `Child support in ${s.name} normally ends at ${v(f)}${cite(f)}. ${f.detail ?? ''}`.trim() }),
+    meaning: (s) => [
+      `The date in your own support order controls, so read it: some ${s.name} orders end on a set date, others when the child finishes high school, and a parent may need to ask the court to formally end the withholding from a paycheck.`,
+      'Support for a child with a disability can continue into adulthood in many states, and parents can agree in writing to pay for college even where the law doesn’t require it.',
+      'Past-due support doesn’t disappear when payments stop. It can still be collected, often with interest, through wage garnishment, tax refund intercepts and license suspensions.',
+    ],
+    national: { slug: 'child-support-age-by-state', title: 'When Does Child Support End? Age by State', h1: 'At what age does child support end in each state?', lede: 'In most states child support ends at 18, or later if the child is still in high school; a few run to 19, 21 or beyond. Here is every state’s rule, with the statute.', group: '18' },
+    yesLabel: 'Ends at',
+    topic: 'child-custody-laws',
+    practice: 'family-law',
+  },
+  {
     id: 'pip',
     key: 'car-accident.pipRequired',
     slug: (s) => `does-${s.slug}-require-pip-insurance`,

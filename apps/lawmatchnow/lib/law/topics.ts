@@ -278,6 +278,52 @@ export const TOPICS: Topic[] = [
     photo: 'signing',
   },
   {
+    slug: 'child-custody-laws',
+    name: 'Child Custody Laws',
+    heading: (s) => `${s.name} Child Custody Laws`,
+    description: ({ s, f }) => `${s.name} child custody law: when a child's preference counts${f('custody.childPreference') ? ` (${lc(v(f('custody.childPreference')).replace(/\s*\(.*$/, ''))})` : ''}, the best-interest factors, and when child support ends${f('custody.supportEndAge') ? ` (${v(f('custody.supportEndAge')).replace(/\s*\(.*$/, '')})` : ''}. Statutes cited.`,
+    fields: ['custody.childPreference', 'custody.supportEndAge', 'custody.custodyFactorsCite', 'divorce.childSupportGuidelines'],
+    lead: 'custody.supportEndAge',
+    answer: ({ s, f }) => {
+      const pref = f('custody.childPreference')
+      const age = pref && /^\d+/.exec(v(pref))?.[0]
+      return `${s.name} courts decide custody by the child's best interests${cited(f('custody.custodyFactorsCite'))}. ${pref ? (age ? `From age ${age}, a child's preference carries special weight${cited(pref)}` : `There is no age at which a child can choose; the judge considers the child's wishes as one factor${cited(pref)}`) : 'A child’s wishes are one factor the judge can consider'}. Child support normally ends at ${v(f('custody.supportEndAge'))}${cited(f('custody.supportEndAge'))}.`
+    },
+    sections: [
+      {
+        h: ({ s }) => `How ${s.name} courts decide custody`,
+        body: ({ s, f }) => [
+          `Every custody decision in ${s.name} turns on the best interests of the child. Judges decide two things: legal custody (who makes major decisions about school, health care and religion) and physical custody (where the child lives), and either can be shared.`,
+          f('custody.custodyFactorsCite') && `${has(f('custody.custodyFactorsCite'), /^No comprehensive/i) ? `${s.name}'s statute has no complete list of factors; courts apply factors from case law` : `${s.name}'s statute lists the factors a judge must weigh`}${cited(f('custody.custodyFactorsCite'))}. ${f('custody.custodyFactorsCite')!.detail ?? ''}`,
+          'A parenting plan the parents agree on is usually approved if it serves the child, which keeps the decision with the people who know the child best and avoids a costly custody trial.',
+        ],
+      },
+      {
+        h: ({ s }) => `Does the child get a say in ${s.name}?`,
+        body: ({ s, f }) => [
+          f('custody.childPreference') && `${s.name}: ${lc(v(f('custody.childPreference')))}${cited(f('custody.childPreference'))}. ${f('custody.childPreference')!.detail ?? ''}`,
+          'Judges usually hear a child’s views privately in chambers, through a guardian ad litem, or through a custody evaluator, rather than on the witness stand. A preference that is well reasoned, consistent and free of pressure from a parent carries the most weight.',
+        ],
+      },
+      {
+        h: ({ s }) => `Child support in ${s.name}`,
+        body: ({ s, f }) => [
+          f('custody.supportEndAge') && `Child support in ${s.name} normally ends at ${v(f('custody.supportEndAge'))}${cited(f('custody.supportEndAge'))}. ${f('custody.supportEndAge')!.detail ?? ''}`,
+          f('divorce.childSupportGuidelines') && `The amount is set with the ${v(f('divorce.childSupportGuidelines'))} model${cited(f('divorce.childSupportGuidelines'))}.`,
+          'Support doesn’t stop on its own in every case: check the order’s end date, and ask the court to modify it if income or parenting time changes substantially. Unpaid support doesn’t go away when the child turns 18.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`At what age can a child choose which parent to live with in ${s.name}?`, f('custody.childPreference') && `${v(f('custody.childPreference'))}${cited(f('custody.childPreference'))}. ${f('custody.childPreference')!.detail ?? ''}`.trim()),
+      ...faq(`When does child support end in ${s.name}?`, f('custody.supportEndAge') && `${v(f('custody.supportEndAge'))}${cited(f('custody.supportEndAge'))}. ${f('custody.supportEndAge')!.detail ?? ''}`.trim()),
+      ...faq(`What do ${s.name} judges look at to decide custody?`, f('custody.custodyFactorsCite') && `The child's best interests${cited(f('custody.custodyFactorsCite'))}. ${f('custody.custodyFactorsCite')!.detail ?? ''}`.trim()),
+      { q: 'Do mothers get custody more often?', a: 'Custody laws are gender-neutral: judges are not allowed to favor a parent because they are the mother or the father. What matters is each parent’s involvement, stability and ability to meet the child’s needs and support the child’s relationship with the other parent.' },
+    ],
+    practices: ['family-law'],
+    photo: 'signing',
+  },
+  {
     slug: 'dui-laws',
     name: 'DUI Laws',
     heading: (s) => `${s.name} DUI Laws`,
