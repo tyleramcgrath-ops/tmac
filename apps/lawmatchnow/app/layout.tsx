@@ -1,11 +1,11 @@
 import type { Metadata, Viewport } from 'next'
-import { Instrument_Serif, Public_Sans } from 'next/font/google'
+import { Cormorant_Garamond, Public_Sans } from 'next/font/google'
 import { Footer, Header } from '@/components/Shell'
 import { JsonLd } from '@/components/ui'
 import { SITE, orgLd, websiteLd } from '@/lib/site'
 import './globals.css'
 
-const display = Instrument_Serif({ subsets: ['latin'], weight: '400', style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
+const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '600', '700'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
 const sans = Public_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
 
 export const metadata: Metadata = {

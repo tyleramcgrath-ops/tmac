@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-export type Issue = { label: string; icon: string; slug: string; name: string; title: string; short: string; steps: string[] }
+export type Issue = { label: string; slug: string; name: string; title: string; short: string; steps: string[] }
 
 /** "What happened?" picker: one tap shows the kind of lawyer you need and what to do next. */
 export function IssueFinder({ issues }: { issues: Issue[] }) {
@@ -14,7 +14,7 @@ export function IssueFinder({ issues }: { issues: Issue[] }) {
       <div className="finder-chips" role="tablist" aria-label="What happened?">
         {issues.map((x, i) => (
           <button key={x.label} role="tab" aria-selected={i === sel} className={`chip${i === sel ? ' on' : ''}`} onClick={() => setSel(i)}>
-            <span aria-hidden="true">{x.icon}</span> {x.label}
+            {x.label}
           </button>
         ))}
       </div>
