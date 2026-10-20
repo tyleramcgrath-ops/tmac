@@ -1,0 +1,218 @@
+<?php
+/**
+ * Filtered sanctuary search: /sanctuaries/?dest=costa-rica&need=burnout&care=clinical-program&stay=14&budget=4000&setting=ocean&sort=price
+ *
+ * The same filters also apply on destination / condition archives.
+ *
+ * @package WeHaveRehabs
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Current filter values from the query string.
+ *
+ * @return array
+ */
+function whr_filters() {
+	// phpcs:disable WordPress.Security.NonceVerification.Recommended -- read-only search filters.
+	$get = function ( $key ) {
+		return isset( $_GET[ $key ] ) ? sanitize_title( wp_unslash( $_GET[ $key ] ) ) : '';
+	};
+	$filters = array(
+		'dest'    => $get( 'dest' ),
+		'need'    => $get( 'need' ),
+		'care'    => $get( 'care' ),
+		'setting' => $get( 'setting' ),
+		'stay'    => isset( $_GET['stay'] ) ? absint( $_GET['stay'] ) : 0,
+		'budget'  => isset( $_GET['budget'] ) ? absint( $_GET['budget'] ) : 0,
+		'sort'    => in_array( $get( 'sort' ), array( 'price', 'stay', 'name' ), true ) ? $get( 'sort' ) : '',
+		'q'       => isset( $_GET['q'] ) ? mb_substr( sanitize_text_field( wp_unslash( $_GET['q'] ) ), 0, 80 ) : '',
+	);
+	// phpcs:enable
+	return $filters;
+}
+
+add_action(
+	'pre_get_posts',
+	function ( $query ) {
+		if ( is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+		$is_listing = $query->is_post_type_archive( 'sanctuary' ) || $query->is_tax( array( 'destination', 'condition', 'care_level', 'approach', 'setting' ) );
+		if ( ! $is_listing ) {
+			return;
+		}
+
+		$f = whr_filters();
+		$query->set( 'post_type', 'sanctuary' );
+		$query->set( 'posts_per_page', 12 );
+
+		$tax_query = (array) $query->get( 'tax_query' );
+		$map       = array( 'dest' => 'destination', 'need' => 'condition', 'care' => 'care_level', 'setting' => 'setting' );
+		foreach ( $map as $param => $taxonomy ) {
+			if ( $f[ $param ] ) {
+				$tax_query[] = array( 'taxonomy' => $taxonomy, 'field' => 'slug', 'terms' => $f[ $param ], 'include_children' => true );
+			}
+		}
+		if ( count( $tax_query ) > 1 ) {
+			$tax_query['relation'] = 'AND';
+		}
+		$query->set( 'tax_query', $tax_query ); // phpcs:ignore WordPress.DB.SlowDBQuery
+
+		$meta_query = array( 'relation' => 'AND' );
+		if ( $f['stay'] ) {
+			// Programs that offer a stay at least this long.
+			$meta_query[] = array( 'key' => 'whr_stay_max', 'value' => $f['stay'], 'compare' => '>=', 'type' => 'NUMERIC' );
+		}
+		if ( $f['budget'] ) {
+			$meta_query[] = array(
+				'relation' => 'OR',
+				array( 'key' => 'whr_price_from', 'value' => $f['budget'], 'compare' => '<=', 'type' => 'NUMERIC' ),
+				// "Rates on request" listings stay visible: price saved empty, or never saved.
+				array( 'key' => 'whr_price_from', 'value' => '', 'compare' => '=' ),
+				array( 'key' => 'whr_price_from', 'compare' => 'NOT EXISTS' ),
+			);
+		}
+		// Sponsored (Featured plan) first, then by plan, then the chosen order. Every sanctuary
+		// carries both keys (see whr_sync_sort_keys), so these clauses exclude nothing.
+		$meta_query['sponsored'] = array( 'key' => 'whr_sponsored_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+
+		// whr_claimed_sort is the plan rank: Signature, then Essential, then public listings.
+		$meta_query['claimed'] = array( 'key' => 'whr_claimed_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+		$order                 = array( 'sponsored' => 'DESC', 'claimed' => 'DESC' );
+		if ( 'price' === $f['sort'] ) {
+			$meta_query['price_sort'] = array( 'key' => 'whr_price_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+			$order['price_sort']      = 'ASC';
+		} elseif ( 'stay' === $f['sort'] ) {
+			$meta_query['stay_sort'] = array( 'key' => 'whr_stay_sort', 'compare' => 'EXISTS', 'type' => 'NUMERIC' );
+			$order['stay_sort']      = 'ASC';
+		} elseif ( 'name' === $f['sort'] ) {
+			$order['title'] = 'ASC';
+		} else {
+			$order['menu_order'] = 'ASC';
+			$order['date']       = 'DESC';
+		}
+		$query->set( 'meta_query', $meta_query ); // phpcs:ignore WordPress.DB.SlowDBQuery
+		$query->set( 'orderby', $order );
+	}
+);
+
+/**
+ * Keyword search on name, city and summary for the results page. Uses its own "q"
+ * parameter so the page keeps the sanctuary results template.
+ */
+add_filter(
+	'posts_where',
+	function ( $where, $query ) {
+		if ( is_admin() || ! $query->is_main_query() || 'sanctuary' !== $query->get( 'post_type' ) ) {
+			return $where;
+		}
+		$q = whr_filters()['q'];
+		if ( '' === $q ) {
+			return $where;
+		}
+		global $wpdb;
+		$like   = '%' . $wpdb->esc_like( $q ) . '%';
+		$where .= $wpdb->prepare( " AND ({$wpdb->posts}.post_title LIKE %s OR {$wpdb->posts}.post_excerpt LIKE %s)", $like, $like );
+		return $where;
+	},
+	10,
+	2
+);
+
+/**
+ * Keep the keys the results page sorts on present on every sanctuary, however it was
+ * created (editor, REST, import), so sorting never drops a listing. Listings without a
+ * price or stay sort last.
+ *
+ * @param int $post_id Post ID.
+ */
+function whr_sync_sort_keys( $post_id ) {
+	if ( 'sanctuary' !== get_post_type( $post_id ) ) {
+		return;
+	}
+	update_post_meta( $post_id, 'whr_sponsored_sort', whr_is_sponsored( $post_id ) ? 1 : 0 );
+	update_post_meta( $post_id, 'whr_claimed_sort', whr_plan_rank( $post_id ) );
+	$price = (int) get_post_meta( $post_id, 'whr_price_from', true );
+	$stay  = (int) get_post_meta( $post_id, 'whr_stay_min', true );
+	update_post_meta( $post_id, 'whr_price_sort', $price ? $price : 999999999 );
+	update_post_meta( $post_id, 'whr_stay_sort', $stay ? $stay : 99999 );
+}
+add_action( 'save_post_sanctuary', 'whr_sync_sort_keys', 20 );
+foreach ( array( 'added_post_meta', 'updated_post_meta', 'deleted_post_meta' ) as $whr_meta_hook ) {
+	add_action(
+		$whr_meta_hook,
+		function ( $meta_id, $post_id, $key ) {
+			if ( in_array( $key, array( 'whr_price_from', 'whr_stay_min', 'whr_claimed', 'whr_source', 'whr_sponsored', 'whr_plan', 'whr_plan_until' ), true ) ) {
+				whr_sync_sort_keys( $post_id );
+			}
+		},
+		10,
+		3
+	);
+}
+
+/**
+ * Backfill sort keys for sanctuaries created before this version, in batches. Runs on admin
+ * page loads and on WP-Cron until done (or at once with `wp whr-import resync`).
+ *
+ * @param int $batch Listings per run.
+ * @return int Listings updated.
+ */
+function whr_backfill_sort_keys( $batch = 500 ) {
+	if ( get_option( 'whr_sort_keys_version' ) === WHR_VERSION ) {
+		return 0;
+	}
+	$missing = get_posts(
+		array(
+			'post_type'   => 'sanctuary',
+			'post_status' => 'any',
+			'numberposts' => $batch,
+			'fields'      => 'ids',
+			'meta_query'  => array( array( 'key' => 'whr_sponsored_sort', 'compare' => 'NOT EXISTS' ) ), // phpcs:ignore WordPress.DB.SlowDBQuery
+		)
+	);
+	foreach ( $missing as $id ) {
+		whr_sync_sort_keys( $id );
+	}
+	if ( count( $missing ) < $batch ) {
+		update_option( 'whr_sort_keys_version', WHR_VERSION );
+		wp_clear_scheduled_hook( 'whr_backfill_sort_keys' );
+	} elseif ( ! wp_next_scheduled( 'whr_backfill_sort_keys' ) ) {
+		wp_schedule_single_event( time() + 60, 'whr_backfill_sort_keys' );
+	}
+	return count( $missing );
+}
+add_action( 'admin_init', 'whr_backfill_sort_keys' );
+add_action(
+	'whr_backfill_sort_keys',
+	function () {
+		whr_backfill_sort_keys( 1000 );
+	}
+);
+
+/**
+ * Human heading for the current results, e.g. "Sanctuaries for burnout in Costa Rica".
+ *
+ * @return string HTML (escaped).
+ */
+function whr_results_heading() {
+	$f    = whr_filters();
+	$need = $f['need'] ? get_term_by( 'slug', $f['need'], 'condition' ) : null;
+	$dest = $f['dest'] ? get_term_by( 'slug', $f['dest'], 'destination' ) : null;
+	if ( is_tax( 'destination' ) ) {
+		$dest = get_queried_object();
+	}
+	if ( is_tax( 'condition' ) ) {
+		$need = get_queried_object();
+	}
+	$html = esc_html__( 'Sanctuaries', 'wehaverehabs' );
+	if ( $need ) {
+		$html .= ' ' . esc_html__( 'for', 'wehaverehabs' ) . ' <em>' . esc_html( mb_strtolower( $need->name ) ) . '</em>';
+	}
+	if ( $dest ) {
+		$html .= ' ' . esc_html__( 'in', 'wehaverehabs' ) . ' <em>' . esc_html( $dest->name ) . '</em>';
+	}
+	return $html;
+}
