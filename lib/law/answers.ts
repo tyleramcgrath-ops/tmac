@@ -175,6 +175,54 @@ export const QUESTIONS: Question[] = [
     practice: 'family-law',
   },
   {
+    id: 'one-party-consent',
+    key: 'recording.consent',
+    slug: (s) => `is-${s.slug}-a-one-party-consent-state`,
+    ask: (s) => `Is ${s.name} a one-party consent state?`,
+    answer: (s, f) => /^one-party/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} is a one-party consent state: you can legally record a phone call or conversation you are part of without the other people's permission${cite(f)}.` }
+      : /^all-party/i.test(v(f))
+        ? { verdict: 'no', short: 'No', text: `No. ${s.name} is an all-party (two-party) consent state: everyone in a private conversation or phone call must agree before it is recorded${cite(f)}.` }
+        : { verdict: 'partly', short: 'It depends', text: `It depends. ${s.name}'s rules are mixed${cite(f)}. ${f.detail ?? ''}`.trim() },
+    meaning: (s, f, a) => [
+      a.verdict === 'yes'
+        ? `In ${s.name} you can record your own calls and conversations, for example with a landlord, a boss or a debt collector, without announcing it. You can't record a conversation you aren't part of, or plant a device to capture other people's private talk.`
+        : a.verdict === 'no'
+          ? `In ${s.name}, record only after everyone agrees. Saying "this call is being recorded" at the start and having people continue usually counts as consent. Secretly recording a private conversation can be a crime and lets the other side sue.`
+          : `Because ${s.name}'s rule changes with the situation, the safe practice is to tell everyone you are recording before you start.`,
+      f.detail && a.verdict !== 'partly' ? f.detail : '',
+      `Calls with someone in another state can bring in that state's stricter rule. If a recording matters to a divorce, custody, workplace or criminal case, ask a ${s.name} lawyer before you rely on it.`,
+    ].filter(Boolean),
+    national: { slug: 'one-party-consent-states', title: 'One-Party Consent States: Recording Laws by State', h1: 'Which states are one-party consent states?', lede: 'Most states let you record a conversation you take part in without telling the others. A minority require everyone’s consent. Here is every state’s recording law, with the statute.', group: 'One-party consent' },
+    yesLabel: 'One-party consent',
+    topic: 'recording-laws',
+    practice: 'criminal-defense',
+  },
+  {
+    id: 'dog-bite-strict',
+    key: 'dog-bite.liability',
+    slug: (s) => `is-${s.slug}-a-strict-liability-dog-bite-state`,
+    ask: (s) => `Is ${s.name} a strict liability state for dog bites?`,
+    answer: (s, f) => /^strict/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. In ${s.name}, a dog owner is strictly liable for bite injuries: the victim doesn't have to prove the owner knew the dog was dangerous${cite(f)}.` }
+      : /^one-bite/i.test(v(f))
+        ? { verdict: 'no', short: 'No', text: `No. ${s.name} follows the "one-bite" rule: an owner is liable if they knew or should have known the dog was dangerous, or if they were negligent${cite(f)}.` }
+        : { verdict: 'partly', short: 'Partly', text: `Partly. ${s.name} has a strict liability law that applies only in some situations${cite(f)}. ${f.detail ?? ''}`.trim() },
+    meaning: (s, f, a) => [
+      a.verdict === 'yes'
+        ? `Strict liability makes a ${s.name} dog bite claim simpler: you show the dog bit you and you were lawfully where you were. Provoking the dog or trespassing can still defeat or reduce the claim.`
+        : a.verdict === 'no'
+          ? `Under the one-bite rule, evidence of the dog's history wins the case: earlier bites, complaints, aggressive behavior or a "beware of dog" sign. Owners who broke a leash law or let the dog roam can be liable for negligence even without that history.`
+          : `When ${s.name}'s strict liability rule doesn't apply, for example when a dog knocks someone down without biting, the injured person must usually prove the owner knew the dog was dangerous or was negligent.`,
+      a.verdict !== 'partly' && f.detail ? f.detail : '',
+      `Most dog bite claims are paid by the owner's homeowner's or renter's insurance. Get medical care, report the bite to animal control, and keep photos of the injuries.`,
+    ].filter(Boolean),
+    national: { slug: 'dog-bite-strict-liability-states', title: 'Dog Bite Laws by State: Strict Liability vs. One-Bite Rule', h1: 'Which states have strict liability for dog bites?', lede: 'Some states make owners automatically liable for bites; others follow the one-bite rule, which requires knowing the dog was dangerous. Here is every state’s rule, with the statute or case.', group: 'Strict liability' },
+    yesLabel: 'Strict liability',
+    topic: 'dog-bite-laws',
+    practice: 'personal-injury',
+  },
+  {
     id: 'pip',
     key: 'car-accident.pipRequired',
     slug: (s) => `does-${s.slug}-require-pip-insurance`,
