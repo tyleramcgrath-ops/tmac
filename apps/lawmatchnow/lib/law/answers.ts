@@ -28,6 +28,10 @@ export type Question = {
 const v = (f: Fact) => f.value ?? ''
 const lc = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
 const cite = (f: Fact) => (f.cite ? ` (${f.cite})` : '')
+/** "3 days (excluding weekends)" -> "3 days of notice (excluding weekends)" */
+const noticeOf = (val: string) => { const m = /^([^(]*?)\s*(\(.*\))?$/.exec(val)!; return `${lc(m[1])} of notice${m[2] ? ` ${m[2]}` : ''}` }
+/** "next regular payday" reads as "on the next regular payday" */
+export const due = (val: string) => (/^next\b/i.test(val) ? `on the ${lc(val)}` : lc(val))
 
 export const QUESTIONS: Question[] = [
   {
@@ -221,6 +225,65 @@ export const QUESTIONS: Question[] = [
     yesLabel: 'Strict liability',
     topic: 'dog-bite-laws',
     practice: 'personal-injury',
+  },
+  {
+    id: 'eviction-notice',
+    key: 'eviction.nonpaymentNotice',
+    slug: (s) => `how-much-notice-to-evict-for-unpaid-rent-in-${s.slug}`,
+    ask: (s) => `How much notice does a landlord have to give to evict for unpaid rent in ${s.name}?`,
+    answer: (s, f) => ({ verdict: 'info', short: v(f).replace(/\s*\(.*$/, ''), text: `${/^no\b/i.test(v(f)) ? `In ${s.name}, there is ${lc(v(f)).replace(/^no notice required/, 'no notice requirement').replace(/^no set notice period/, 'no set notice period')}` : `In ${s.name}, the landlord must give ${noticeOf(v(f))}`} before filing an eviction case for unpaid rent${cite(f)}. ${f.detail ?? ''}`.trim() }),
+    meaning: (s) => [
+      `The notice is only the first step. If the rent isn't paid or the tenant doesn't leave, the landlord must file a case in court, the tenant gets a chance to respond at a hearing, and only a court order carried out by a sheriff or marshal can remove the tenant. Lockouts and utility shutoffs are illegal in ${s.name}.`,
+      'Paying in full within the notice period usually stops the eviction. A notice that is served the wrong way, demands the wrong amount or gives too few days can get a case dismissed, so tenants should read it closely and landlords should follow the statute exactly.',
+    ],
+    national: { slug: 'eviction-notice-by-state', title: 'Eviction Notice Periods by State (Unpaid Rent)', h1: 'How much notice is required to evict for unpaid rent?', lede: 'Before filing an eviction for unpaid rent, a landlord must give the tenant written notice. The required time ranges from a few days to two weeks. Here is every state, with the statute.', group: 'Notice' },
+    yesLabel: 'Notice',
+    topic: 'eviction-laws',
+    practice: 'real-estate',
+    tool: 'security-deposit-calculator',
+  },
+  {
+    id: 'final-paycheck',
+    key: 'final-pay.fired',
+    slug: (s) => `when-do-you-get-your-final-paycheck-in-${s.slug}`,
+    ask: (s) => `When do you get your final paycheck in ${s.name}?`,
+    answer: (s, f) => {
+      const quit = fact(s.code, 'final-pay.quit')
+      return /^no state law/i.test(v(f))
+        ? { verdict: 'info', short: 'No state deadline', text: `${s.name} has no state law setting a special deadline for final paychecks${cite(f)}, so final wages are due on the employer's regular payday.` }
+        : { verdict: 'info', short: v(f).replace(/\s*\(.*$/, '').replace(/,.*$/, ''), text: `If you're fired in ${s.name}, your final paycheck is due ${due(v(f))}${cite(f)}.${quit ? ` If you quit, it is due ${due(v(quit))}${cite(quit)}.` : ''}` }
+    },
+    meaning: (s, f) => [
+      f.detail ?? '',
+      `The final check must include every hour worked, including overtime, at no less than ${s.name}'s minimum wage. Whether unused vacation must be added depends on ${s.name} law and your employer's written policy.`,
+      `If it's late, ask in writing, then file a wage claim with the ${s.name} labor department or the U.S. Department of Labor. Many states add penalties for late final pay.`,
+    ].filter(Boolean),
+    national: { slug: 'final-paycheck-laws-by-state', title: 'Final Paycheck Laws by State: When Your Last Check Is Due', h1: 'When is a final paycheck due in each state?', lede: 'States set different deadlines for a final paycheck, and many treat being fired differently from quitting. Here is every state’s rule, with the statute.', group: 'Deadline' },
+    yesLabel: 'If fired',
+    topic: 'final-paycheck-laws',
+    practice: 'employment-law',
+    tool: 'minimum-wage-calculator',
+  },
+  {
+    id: 'vacation-payout',
+    key: 'final-pay.accruedVacation',
+    slug: (s) => `does-${s.slug}-require-vacation-payout`,
+    ask: (s) => `Does ${s.name} require employers to pay out unused vacation?`,
+    answer: (s, f) => /^required unless/i.test(v(f))
+      ? { verdict: 'partly', short: 'Unless policy says otherwise', text: `Usually. In ${s.name}, earned vacation must be paid out when you leave unless the employer's written policy or contract clearly says otherwise${cite(f)}.` }
+      : /^required/i.test(v(f))
+        ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} treats earned, unused vacation as wages that must be paid out when employment ends${/\(/.test(v(f)) ? ` (${v(f).replace(/^.*\((.*)\)$/, '$1')})` : ''}${cite(f)}.` }
+        : { verdict: 'no', short: 'No', text: `No. ${s.name} law doesn't require employers to pay out unused vacation; it depends on the employer's policy or your contract${cite(f)}.` },
+    meaning: (s, f, a) => [
+      f.detail ?? '',
+      a.verdict === 'no'
+        ? `Check your handbook or offer letter: if your employer promised to pay out unused vacation, that promise can be enforced in ${s.name} like any other wage agreement.`
+        : `Some ${s.name} employers try "use it or lose it" policies; whether those are allowed depends on the state's rule above. Keep your last pay stub showing your vacation balance.`,
+    ].filter(Boolean),
+    national: { slug: 'vacation-payout-laws-by-state', title: 'Vacation Payout Laws by State (Unused PTO at Termination)', h1: 'Which states require unused vacation to be paid out?', lede: 'A minority of states treat earned vacation as wages that must be paid when a job ends; most leave it to company policy. Here is every state’s rule, with the source.', group: 'Required' },
+    yesLabel: 'Required',
+    topic: 'final-paycheck-laws',
+    practice: 'employment-law',
   },
   {
     id: 'pip',

@@ -5,6 +5,7 @@
 import type { PhotoKey } from '@/lib/photos'
 import type { State } from '@/lib/geo'
 import { type Fact, FIELDS, type FieldKey, fact } from './facts'
+import { due } from './answers'
 
 export type Ctx = { s: State; f: (k: FieldKey) => Fact | null }
 export const ctxFor = (s: State): Ctx => ({ s, f: (k) => fact(s.code, k) })
@@ -399,6 +400,76 @@ export const TOPICS: Topic[] = [
     ],
     practices: ['personal-injury'],
     photo: 'justice',
+  },
+  {
+    slug: 'eviction-laws',
+    name: 'Eviction Laws',
+    heading: (s) => `${s.name} Eviction Laws`,
+    description: ({ s, f }) => `${s.name} eviction law: ${v(f('eviction.nonpaymentNotice'))} notice for unpaid rent${f('eviction.monthToMonthNotice') ? `, ${lc(v(f('eviction.monthToMonthNotice')))} to end a month-to-month lease` : ''}${f('eviction.lateFeeCap') ? `, late fees: ${lc(v(f('eviction.lateFeeCap')))}` : ''}. Statutes cited.`,
+    fields: ['eviction.nonpaymentNotice', 'eviction.monthToMonthNotice', 'eviction.lateFeeCap', 'small-claims.securityDepositReturn', 'small-claims.securityDepositCap'],
+    lead: 'eviction.nonpaymentNotice',
+    answer: ({ s, f }) => `In ${s.name}, the notice a landlord must give before filing to evict a tenant for unpaid rent is ${lc(v(f('eviction.nonpaymentNotice')))}${cited(f('eviction.nonpaymentNotice'))}${f('eviction.monthToMonthNotice') ? `. Ending a month-to-month lease takes ${lc(v(f('eviction.monthToMonthNotice')))}${cited(f('eviction.monthToMonthNotice'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `How eviction works in ${s.name}`,
+        body: ({ s, f }) => [
+          f('eviction.nonpaymentNotice') && `For unpaid rent: ${lc(v(f('eviction.nonpaymentNotice')))}${cited(f('eviction.nonpaymentNotice'))}. ${f('eviction.nonpaymentNotice')!.detail ?? ''}`,
+          `Only a court can evict a tenant in ${s.name}. A landlord who changes the locks, removes belongings or shuts off utilities to force a tenant out ("self-help" eviction) can be liable for damages. After the notice runs out, the landlord files an eviction case, the tenant can answer and appear at a hearing, and only after a judgment does a sheriff or marshal carry out the removal.`,
+          'Paying everything owed within the notice period often ends the case. Tenants can also raise defenses such as an improper notice, unaddressed repairs that make the home unsafe, or retaliation for complaining to housing inspectors.',
+        ],
+      },
+      {
+        h: () => 'Ending a lease and late fees',
+        body: ({ f }) => [
+          f('eviction.monthToMonthNotice') && `Month-to-month tenancies: ${lc(v(f('eviction.monthToMonthNotice')))}${cited(f('eviction.monthToMonthNotice'))}. ${f('eviction.monthToMonthNotice')!.detail ?? ''}`,
+          f('eviction.lateFeeCap') && `Late fees: ${lc(v(f('eviction.lateFeeCap')))}${cited(f('eviction.lateFeeCap'))}. ${f('eviction.lateFeeCap')!.detail ?? ''}`,
+          f('small-claims.securityDepositReturn') && `When the tenancy ends, the security deposit must come back within ${lc(v(f('small-claims.securityDepositReturn')))}${cited(f('small-claims.securityDepositReturn'))}.`,
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`How much notice does a landlord have to give to evict in ${s.name}?`, f('eviction.nonpaymentNotice') && `For unpaid rent: ${v(f('eviction.nonpaymentNotice'))}${cited(f('eviction.nonpaymentNotice'))}. ${f('eviction.nonpaymentNotice')!.detail ?? ''}`.trim()),
+      ...faq(`How much notice to end a month-to-month lease in ${s.name}?`, f('eviction.monthToMonthNotice') && `${v(f('eviction.monthToMonthNotice'))}${cited(f('eviction.monthToMonthNotice'))}. ${f('eviction.monthToMonthNotice')!.detail ?? ''}`.trim()),
+      ...faq(`Is there a limit on late fees in ${s.name}?`, f('eviction.lateFeeCap') && `${v(f('eviction.lateFeeCap'))}${cited(f('eviction.lateFeeCap'))}. ${f('eviction.lateFeeCap')!.detail ?? ''}`.trim()),
+      { q: 'Can a landlord lock me out or shut off utilities?', a: 'No. In every state, only a court order carried out by a sheriff or similar officer can remove a tenant. Lockouts, removing belongings and cutting utilities to force a tenant out are illegal and can entitle the tenant to damages.' },
+    ],
+    practices: ['real-estate'],
+    photo: 'columns',
+  },
+  {
+    slug: 'final-paycheck-laws',
+    name: 'Final Paycheck Laws',
+    heading: (s) => `${s.name} Final Paycheck Laws`,
+    description: ({ s, f }) => `${s.name} final paycheck law: if fired, ${lc(v(f('final-pay.fired')))}${f('final-pay.quit') ? `; if you quit, ${lc(v(f('final-pay.quit')))}` : ''}${f('final-pay.accruedVacation') ? `. Unused vacation payout: ${lc(v(f('final-pay.accruedVacation')))}` : ''}. Statutes cited.`,
+    fields: ['final-pay.fired', 'final-pay.quit', 'final-pay.accruedVacation', 'employment.minimumWage'],
+    lead: 'final-pay.fired',
+    answer: ({ s, f }) => /^no state law/i.test(v(f('final-pay.fired')))
+      ? `${s.name} has no state law setting a deadline for final paychecks${cited(f('final-pay.fired'))}; wages are due on the employer's normal schedule, and federal law still requires payment for all hours worked.`
+      : `In ${s.name}, a fired employee must get their final paycheck ${due(v(f('final-pay.fired')))}${cited(f('final-pay.fired'))}${f('final-pay.quit') ? `; an employee who quits, ${due(v(f('final-pay.quit')))}${cited(f('final-pay.quit'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `When the final paycheck is due in ${s.name}`,
+        body: ({ s, f }) => [
+          f('final-pay.fired') && `If you are fired or laid off: ${lc(v(f('final-pay.fired')))}${cited(f('final-pay.fired'))}. ${f('final-pay.fired')!.detail ?? ''}`,
+          f('final-pay.quit') && `If you quit: ${lc(v(f('final-pay.quit')))}${cited(f('final-pay.quit'))}. ${f('final-pay.quit')!.detail ?? ''}`,
+          `Your final pay must cover every hour worked, including overtime, at no less than the ${s.name} minimum wage. An employer generally can't hold back a paycheck because you didn't return equipment or give notice, unless state law and a signed agreement allow a specific deduction.`,
+        ],
+      },
+      {
+        h: () => 'Unused vacation and what to do if you aren’t paid',
+        body: ({ s, f }) => [
+          f('final-pay.accruedVacation') && `Unused vacation: ${lc(v(f('final-pay.accruedVacation')))}${cited(f('final-pay.accruedVacation'))}. ${f('final-pay.accruedVacation')!.detail ?? ''}`,
+          `If the deadline passes, ask in writing and keep a copy. You can then file a wage claim with the ${s.name} labor department or the U.S. Department of Labor, or sue; many states add penalties for late final pay, and wage lawyers often work without an upfront fee.`,
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`When do I get my final paycheck if I'm fired in ${s.name}?`, f('final-pay.fired') && `${v(f('final-pay.fired'))}${cited(f('final-pay.fired'))}. ${f('final-pay.fired')!.detail ?? ''}`.trim()),
+      ...faq(`When do I get my final paycheck if I quit in ${s.name}?`, f('final-pay.quit') && `${v(f('final-pay.quit'))}${cited(f('final-pay.quit'))}. ${f('final-pay.quit')!.detail ?? ''}`.trim()),
+      ...faq(`Does ${s.name} require employers to pay out unused vacation?`, f('final-pay.accruedVacation') && `${v(f('final-pay.accruedVacation'))}${cited(f('final-pay.accruedVacation'))}. ${f('final-pay.accruedVacation')!.detail ?? ''}`.trim()),
+    ],
+    practices: ['employment-law'],
+    photo: 'signing',
   },
   {
     slug: 'dui-laws',

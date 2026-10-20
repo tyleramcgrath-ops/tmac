@@ -4,6 +4,8 @@
 import carAccident from './data/car-accident.json'
 import custody from './data/custody.json'
 import dogBite from './data/dog-bite.json'
+import eviction from './data/eviction.json'
+import finalPay from './data/final-pay.json'
 import recording from './data/recording.json'
 import damagesBar from './data/damages-bar.json'
 import divorce from './data/divorce.json'
@@ -39,6 +41,8 @@ const DATA: Record<string, Dataset> = {
   custody: custody as Dataset,
   recording: recording as Dataset,
   'dog-bite': dogBite as Dataset,
+  eviction: eviction as Dataset,
+  'final-pay': finalPay as Dataset,
 }
 
 /** What each fact is, for table labels and FAQ wording. */
@@ -70,6 +74,12 @@ export const FIELDS = {
   'recording.penalty': { label: 'Penalty for illegal recording', ask: 'penalty for recording without consent' },
   'dog-bite.liability': { label: 'Owner liability', ask: 'dog bite liability rule' },
   'dog-bite.deadline': { label: 'Deadline to sue', ask: 'deadline to sue for a dog bite' },
+  'eviction.nonpaymentNotice': { label: 'Notice to evict for unpaid rent', ask: 'notice required before an eviction for unpaid rent' },
+  'eviction.monthToMonthNotice': { label: 'Notice to end a month-to-month lease', ask: 'notice to end a month-to-month tenancy' },
+  'eviction.lateFeeCap': { label: 'Late fee limit', ask: 'limit on rent late fees' },
+  'final-pay.fired': { label: 'Final paycheck if fired', ask: 'deadline for a final paycheck after being fired' },
+  'final-pay.quit': { label: 'Final paycheck if you quit', ask: 'deadline for a final paycheck after quitting' },
+  'final-pay.accruedVacation': { label: 'Unused vacation payout', ask: 'rule on paying out unused vacation' },
   'custody.custodyFactorsCite': { label: 'Best-interest factors', ask: 'factors courts weigh in custody cases' },
   'dui.name': { label: 'Name of the offense', ask: 'name for drunk driving' },
   'dui.bacLimit': { label: 'Legal limit (21+)', ask: 'legal blood alcohol limit' },
