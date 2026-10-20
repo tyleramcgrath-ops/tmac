@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'DRIP_CURRENT_VERSION', '1.0.0' );
+define( 'DRIP_CURRENT_VERSION', '1.0.1' );
 define( 'DRIP_CURRENT_DIR', get_template_directory() );
 define( 'DRIP_CURRENT_URI', get_template_directory_uri() );
 

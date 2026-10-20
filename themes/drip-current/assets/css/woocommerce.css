@@ -92,7 +92,7 @@ ul.products li.product-category mark { background: none; color: var(--muted); }
 	gap: clamp(30px, 5.5vw, 90px); padding-top: clamp(16px, 2vw, 30px); position: relative;
 }
 .single-product div.product .woocommerce-product-gallery { grid-column: 1; margin: 0; position: relative; width: auto !important; float: none !important; }
-.single-product div.product .summary { grid-column: 2; align-self: start; position: sticky; top: calc(var(--header-h) + 30px); width: auto !important; float: none !important; margin: 0; }
+.single-product div.product .summary { grid-column: 2; align-self: start; position: static; width: auto !important; float: none !important; margin: 0; }
 .single-product div.product .woocommerce-tabs,
 .single-product div.product .related,
 .single-product div.product .upsells { grid-column: 1 / -1; }
@@ -215,8 +215,8 @@ ul.products li.product-category mark { background: none; color: var(--muted); }
 
 @media (max-width: 960px) {
 	ul.products, ul.products.columns-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-	.single-product div.product { grid-template-columns: 1fr; }
-	.single-product div.product .summary { grid-column: 1; position: static; }
+	.single-product div.product { grid-template-columns: minmax(0, 1fr); }
+	.single-product div.product .summary { grid-column: 1; }
 	.woocommerce-checkout .col2-set, .woocommerce-account .u-columns.col2-set { grid-template-columns: 1fr; }
 	.woocommerce-account.logged-in .woocommerce { grid-template-columns: 1fr; gap: 30px; }
 }
@@ -254,3 +254,11 @@ ul.products li.product-category mark { background: none; color: var(--muted); }
 	.shop-cats::-webkit-scrollbar { display: none; }
 	.shop-cats li { flex: none; }
 }
+@media (max-width: 640px) {
+	.woocommerce div.product .woocommerce-tabs ul.tabs { flex-wrap: nowrap; gap: 22px; overflow-x: auto; scrollbar-width: none; }
+	.woocommerce div.product .woocommerce-tabs ul.tabs::-webkit-scrollbar { display: none; }
+	.woocommerce div.product .woocommerce-tabs ul.tabs li { flex: none; }
+	.woocommerce div.product .woocommerce-tabs ul.tabs li a { font-size: 11px; white-space: nowrap; }
+}
+.single-product div.product > * { min-width: 0; }
+.woocommerce div.product .woocommerce-tabs ul.tabs li.active { background: none; border-bottom-color: transparent; }
