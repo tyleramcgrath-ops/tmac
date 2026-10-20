@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { CITIES } from '@/lib/geo'
 import { SITE } from '@/lib/site'
+import { SEAL_L, SEAL_M, SEAL_TONES } from '@/lib/brand'
 
 const NAV = [
   { href: '/find-a-lawyer', label: 'Find a Lawyer' },
@@ -11,10 +12,22 @@ const NAV = [
   { href: '/for-attorneys', label: 'For Attorneys' },
 ]
 
-export function Logo() {
+export function SealMark({ tone = 'light', size = 38 }: { tone?: keyof typeof SEAL_TONES; size?: number }) {
+  const c = SEAL_TONES[tone]
   return (
-    <Link href="/" className="logo" aria-label={`${SITE.name} home`}>
-      <span className="logo-mark" aria-hidden="true">L</span>
+    <svg className="logo-mark" width={size} height={size} viewBox="0 0 74 74" aria-hidden="true">
+      <circle cx="37" cy="37" r="35" fill="none" stroke={c.ring} strokeWidth="1.8" />
+      <circle cx="37" cy="37" r="29.5" fill="none" stroke={c.inner} strokeWidth="1.1" />
+      <path d={SEAL_L} fill={c.l} />
+      <path d={SEAL_M} fill={c.m} />
+    </svg>
+  )
+}
+
+export function Logo({ tone = 'light' }: { tone?: keyof typeof SEAL_TONES }) {
+  return (
+    <Link href="/" className={`logo${tone === 'dark' ? ' logo-dark' : ''}`} aria-label={`${SITE.name} home`}>
+      <SealMark tone={tone} />
       <span className="logo-word">
         LawMatch<i>Now</i>
       </span>
