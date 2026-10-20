@@ -112,6 +112,7 @@ export function Footer() {
               <li><Link href="/glossary">Legal dictionary</Link></li>
               <li><Link href="/laws">State laws</Link></li>
               <li><Link href="/calculators">Free legal calculators</Link></li>
+              <li><Link href="/answers">State law answers</Link></li>
               <li><Link href="/emergency">Legal emergency help</Link></li>
               <li><Link href="/blog">Legal news</Link></li>
             </ul>

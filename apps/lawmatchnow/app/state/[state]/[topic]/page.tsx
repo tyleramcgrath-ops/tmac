@@ -14,6 +14,7 @@ import { neighborValues, rankSentence, shareSentence } from '@/lib/law/compare'
 import { FIELDS, researchedOn } from '@/lib/law/facts'
 import { ctxFor, paras, topicBySlug, topicsFor } from '@/lib/law/topics'
 import { TOOLS } from '@/lib/law/tools'
+import { answersForState } from '@/lib/law/answers'
 import { photoUrl } from '@/lib/photos'
 import { SITE, abs, fmtDate } from '@/lib/site'
 
@@ -83,6 +84,7 @@ export default async function StateTopicPage({ params }: Props) {
   ]
   const heading = t.heading(s)
   const tools = TOOLS.filter((x) => x.topic === t.slug && x.data(s.code))
+  const quick = answersForState(s.code).filter((x) => x.q.topic === t.slug)
 
   return (
     <>
@@ -171,6 +173,12 @@ export default async function StateTopicPage({ params }: Props) {
           </article>
           <aside className="art-side">
             <CaseReviewCard practice={practices[0]?.slug} />
+            {quick.length > 0 && (
+              <div className="card art-related">
+                <div className="kicker">Quick answers</div>
+                {quick.map((x) => <Link key={x.q.id} href={`/answers/${x.q.slug(s)}`}>{x.q.ask(s)} <b>{x.a.short}</b></Link>)}
+              </div>
+            )}
             {others.length > 0 && (
               <div className="card art-related">
                 <div className="kicker">More {s.name} law</div>
