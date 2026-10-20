@@ -3,6 +3,7 @@ import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { STATES } from '@/lib/geo'
 import { TOPICS, topicsFor } from '@/lib/law/topics'
 import { TOOLS } from '@/lib/law/tools'
+import { QUESTIONS } from '@/lib/law/answers'
 import { SITE, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -32,6 +33,9 @@ export function GET() {
     '',
     '## Free legal calculators (state-specific, statutes cited)',
     ...TOOLS.map((t) => `- [${t.name}](${abs(`/calculators/${t.slug}`)}): ${t.blurb}`),
+    '',
+    '## State-law answers (yes/no for every state, statutes cited)',
+    ...QUESTIONS.map((q) => `- [${q.national.h1}](${abs(`/answers/${q.national.slug}`)}): ${q.national.lede.split('. ')[0]}.`),
     '',
     '## Reference',
     `- [Common legal questions](${abs('/questions')})`,

@@ -6,6 +6,7 @@ import { CITIES, STATES, stateByCode } from '@/lib/geo'
 import { researchedOn } from '@/lib/law/facts'
 import { TOPICS, ctxFor, topicsFor, topicsForPractice } from '@/lib/law/topics'
 import { TOOLS, statesFor } from '@/lib/law/tools'
+import { QUESTIONS, answerPages } from '@/lib/law/answers'
 import { CONTENT_REVIEWED, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -24,6 +25,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...CITIES.map((c) => page(`/${c.slug}`, 0.8)),
     page('/laws', 0.8),
     page('/calculators', 0.9),
+    page('/answers', 0.9),
+    ...QUESTIONS.map((q) => page(`/answers/${q.national.slug}`, 0.8, new Date(researchedOn(q.key)))),
+    ...[...answerPages().entries()].map(([slug, p]) => page(`/answers/${slug}`, 0.7, new Date(researchedOn(p.q.key)))),
     ...TOOLS.map((t) => page(`/calculators/${t.slug}`, 0.8)),
     ...TOOLS.flatMap((t) => statesFor(t).map((s) => page(`/calculators/${t.slug}/${s.slug}`, 0.7))),
     ...TOPICS.map((t) => page(`/laws/${t.slug}`, 0.8, new Date(researchedOn(t.lead)))),

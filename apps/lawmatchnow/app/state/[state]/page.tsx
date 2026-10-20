@@ -12,6 +12,7 @@ import { STATES, citiesInState, stateBySlug } from '@/lib/geo'
 import { cityLocal } from '@/lib/law/cities'
 import { fact } from '@/lib/law/facts'
 import { ctxFor, glanceRows, topicsFor } from '@/lib/law/topics'
+import { answersForState } from '@/lib/law/answers'
 
 type Props = { params: Promise<{ state: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -131,6 +132,14 @@ export default async function StatePage({ params, searchParams }: Props) {
           <div className="eyebrow">FAQ</div>
           <h2>Hiring a lawyer in {s.name}</h2>
           <Faqs faqs={faqs} />
+          {answersForState(s.code).length > 0 && (
+            <div id="answers" style={{ marginTop: 40 }}>
+              <h3>Quick answers about {s.name} law</h3>
+              <ul className="ans-more">
+                {answersForState(s.code).map((x) => <li key={x.q.id}><Link href={`/answers/${x.q.slug(s)}`}>{x.q.ask(s)}</Link> <span className="muted">{x.a.short}</span></li>)}
+              </ul>
+            </div>
+          )}
         </div>
       </section>
       <CtaBand title={`Need a lawyer in ${s.name}?`} />
