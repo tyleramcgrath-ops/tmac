@@ -37,7 +37,7 @@ export default async function Overview({ searchParams }: Props) {
         <div className="ad-start">
           <div className="ad-start-head">
             <h2>Finish setup: {setup.length - todo.length} of {setup.length} connected</h2>
-            <p className="muted">Numbers below stay at zero until the pieces that collect them are connected. Each one is an environment variable in SiteGround (Site Tools → Devs → Node.js → Environment variables), then restart the app.</p>
+            <p className="muted">Numbers below stay at zero until the pieces that collect them are connected. Google is connected by uploading its key file on the Settings page; the rest are environment variables in SiteGround (Site Tools → Devs → Node.js → Environment variables), followed by an app restart.</p>
           </div>
           <ul>
             {setup.map((s) => (
