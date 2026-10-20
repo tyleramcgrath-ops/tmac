@@ -324,6 +324,83 @@ export const TOPICS: Topic[] = [
     photo: 'signing',
   },
   {
+    slug: 'recording-laws',
+    name: 'Recording Laws',
+    heading: (s) => `${s.name} Recording Laws`,
+    description: ({ s, f }) => `${s.name} recording law: ${lc(v(f('recording.consent')))}${f('recording.penalty') ? `; illegal recording is ${lc(v(f('recording.penalty')))}` : ''}. When you can record calls and conversations, with the statute cited.`,
+    fields: ['recording.consent', 'recording.penalty'],
+    lead: 'recording.consent',
+    answer: ({ s, f }) => {
+      const c = f('recording.consent')
+      return has(c, /^One-party/i)
+        ? `${s.name} is a one-party consent state: you can record a conversation or phone call you take part in without telling the others${cited(c)}.`
+        : has(c, /^All-party/i)
+          ? `${s.name} is an all-party (two-party) consent state: everyone in a private conversation or call must agree before it is recorded${cited(c)}.`
+          : `${s.name}'s recording rules are mixed: whether you need everyone's consent depends on the kind of conversation${cited(c)}.`
+    },
+    sections: [
+      {
+        h: ({ s }) => `Can you record a conversation in ${s.name}?`,
+        body: ({ s, f }) => [
+          f('recording.consent') && `${s.name}: ${lc(v(f('recording.consent')))}${cited(f('recording.consent'))}. ${f('recording.consent')!.detail ?? ''}`,
+          'Recording laws protect conversations where people reasonably expect privacy. Talk in a public place, where anyone could overhear, generally isn’t protected the same way, but secretly recording a conversation you’re not part of is illegal almost everywhere.',
+          'For calls between states, the stricter state’s rule may apply. When in doubt, tell everyone on the call it’s being recorded; their staying on the line is usually treated as consent.',
+        ],
+      },
+      {
+        h: ({ s }) => `Penalties in ${s.name}`,
+        body: ({ s, f }) => [
+          f('recording.penalty') && `Illegally recording or intercepting a conversation in ${s.name}: ${lc(v(f('recording.penalty')))}${cited(f('recording.penalty'))}. ${f('recording.penalty')!.detail ?? ''}`,
+          'Beyond criminal charges, people recorded illegally can often sue for damages, and an illegal recording may be excluded as evidence in court, which matters in divorce, custody and employment disputes.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`Is ${s.name} a one-party consent state?`, f('recording.consent') && `${v(f('recording.consent'))}${cited(f('recording.consent'))}. ${f('recording.consent')!.detail ?? ''}`.trim()),
+      ...faq(`Is it illegal to record someone without their permission in ${s.name}?`, f('recording.penalty') && `It can be: ${lc(v(f('recording.penalty')))}${cited(f('recording.penalty'))} for recording that breaks ${s.name}'s consent rule.`),
+      { q: 'Can I use a secret recording in court?', a: 'Sometimes. A recording made legally can be offered as evidence if it is authenticated and relevant; one made in violation of a consent law is often excluded and can expose the person who made it to criminal and civil liability. Ask a lawyer before relying on one.' },
+    ],
+    practices: ['criminal-defense', 'family-law'],
+    photo: 'library',
+  },
+  {
+    slug: 'dog-bite-laws',
+    name: 'Dog Bite Laws',
+    heading: (s) => `${s.name} Dog Bite Laws`,
+    description: ({ s, f }) => `${s.name} dog bite law${f('dog-bite.liability') ? `: ${lc(v(f('dog-bite.liability')))}` : ''}, and ${v(f('dog-bite.deadline'))} to file a claim. Who pays after a dog attack, with the statute cited.`,
+    fields: ['dog-bite.liability', 'dog-bite.deadline'],
+    lead: 'dog-bite.deadline',
+    answer: ({ s, f }) => {
+      const l = f('dog-bite.liability')
+      const rule = has(l, /^Strict/i) ? `${s.name} holds dog owners strictly liable for bites, even if the dog never bit anyone before${cited(l)}` : has(l, /^One-bite/i) ? `${s.name} follows the "one-bite" rule: an owner is liable if they knew or should have known the dog was dangerous${cited(l)}` : has(l, /^Mixed/i) ? `${s.name}'s dog bite rule is partly strict liability, depending on how the injury happened${cited(l)}` : `In ${s.name}, a dog owner can be liable for a bite`
+      return `${rule}. You generally have ${v(f('dog-bite.deadline'))} to file a lawsuit${cited(f('dog-bite.deadline'))}.`
+    },
+    sections: [
+      {
+        h: ({ s }) => `Who is liable for a dog bite in ${s.name}?`,
+        body: ({ s, f }) => [
+          f('dog-bite.liability') && `${s.name}: ${lc(v(f('dog-bite.liability')))}${cited(f('dog-bite.liability'))}. ${f('dog-bite.liability')!.detail ?? ''}`,
+          'Under strict liability, the victim doesn’t have to prove the owner did anything wrong. Under the one-bite rule, the victim must show the owner knew the dog had dangerous tendencies, for example an earlier bite, growling and lunging, or a warning sign. In every state, an owner who was negligent (such as breaking a leash law) can also be liable.',
+          'Defenses usually include provoking the dog and trespassing. Most dog bite claims are paid by the owner’s homeowner’s or renter’s insurance, not out of pocket.',
+        ],
+      },
+      {
+        h: () => 'What to do after a dog bite',
+        body: ({ s, f }) => [
+          'Get medical care right away; bites infect easily and rabies exposure must be ruled out. Identify the dog and owner, photograph the injuries and the scene, get witness names, and report the bite to animal control or the local health department.',
+          f('dog-bite.deadline') && `The deadline to sue in ${s.name} is ${v(f('dog-bite.deadline'))}${cited(f('dog-bite.deadline'))}. ${f('dog-bite.deadline')!.detail ?? ''}`,
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`Is ${s.name} a strict liability state for dog bites?`, f('dog-bite.liability') && `${v(f('dog-bite.liability'))}${cited(f('dog-bite.liability'))}. ${f('dog-bite.liability')!.detail ?? ''}`.trim()),
+      ...faq(`How long do you have to sue for a dog bite in ${s.name}?`, f('dog-bite.deadline') && `${v(f('dog-bite.deadline'))}${cited(f('dog-bite.deadline'))}. ${f('dog-bite.deadline')!.detail ?? ''}`.trim()),
+      { q: 'Does homeowner’s insurance cover dog bites?', a: 'Usually, yes. Most homeowner’s and renter’s policies include liability coverage that pays for injuries caused by the policyholder’s dog, up to the policy limit, though some exclude certain breeds or dogs with a bite history.' },
+    ],
+    practices: ['personal-injury'],
+    photo: 'justice',
+  },
+  {
     slug: 'dui-laws',
     name: 'DUI Laws',
     heading: (s) => `${s.name} DUI Laws`,

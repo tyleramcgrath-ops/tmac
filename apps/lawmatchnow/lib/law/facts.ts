@@ -3,6 +3,8 @@
 
 import carAccident from './data/car-accident.json'
 import custody from './data/custody.json'
+import dogBite from './data/dog-bite.json'
+import recording from './data/recording.json'
 import damagesBar from './data/damages-bar.json'
 import divorce from './data/divorce.json'
 import dui from './data/dui.json'
@@ -35,6 +37,8 @@ const DATA: Record<string, Dataset> = {
   employment: employment as Dataset,
   'damages-bar': damagesBar as Dataset,
   custody: custody as Dataset,
+  recording: recording as Dataset,
+  'dog-bite': dogBite as Dataset,
 }
 
 /** What each fact is, for table labels and FAQ wording. */
@@ -62,6 +66,10 @@ export const FIELDS = {
   'divorce.legalSeparation': { label: 'Legal separation', ask: 'availability of legal separation' },
   'custody.childPreference': { label: 'Child’s preference', ask: 'age when a child’s custody preference counts' },
   'custody.supportEndAge': { label: 'Child support ends at', ask: 'age when child support ends' },
+  'recording.consent': { label: 'Consent to record', ask: 'rule on recording conversations' },
+  'recording.penalty': { label: 'Penalty for illegal recording', ask: 'penalty for recording without consent' },
+  'dog-bite.liability': { label: 'Owner liability', ask: 'dog bite liability rule' },
+  'dog-bite.deadline': { label: 'Deadline to sue', ask: 'deadline to sue for a dog bite' },
   'custody.custodyFactorsCite': { label: 'Best-interest factors', ask: 'factors courts weigh in custody cases' },
   'dui.name': { label: 'Name of the offense', ask: 'name for drunk driving' },
   'dui.bacLimit': { label: 'Legal limit (21+)', ask: 'legal blood alcohol limit' },
