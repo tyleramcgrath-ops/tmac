@@ -1192,3 +1192,4 @@ a.lf-c:hover { text-decoration: underline; }
 .ad-start li.on .ad-check { background: var(--ok); border-color: var(--ok); }
 .ad-start li .muted { font-size: .85rem; }
 .ad-start-why { font-size: .9rem; color: var(--navy-2); }
+.ad-err { white-space: pre-wrap; background: var(--stone); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 14px; font-size: .85rem; color: var(--oxblood); overflow-x: auto; }
