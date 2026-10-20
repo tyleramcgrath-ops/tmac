@@ -15,6 +15,7 @@ jobs:
           - .
           - apps/citation-gap
           - apps/girls-around-the-globe
+          - apps/lawmatchnow
           - apps/north-star-hq
           - apps/reloop
           - apps/saysites
