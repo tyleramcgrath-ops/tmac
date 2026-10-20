@@ -29,6 +29,7 @@ export type Topic = {
 const lc = (v: string) => v.charAt(0).toLowerCase() + v.slice(1)
 const cited = (f: Fact | null) => (f?.cite ? ` (${f.cite})` : '')
 const v = (f: Fact | null) => f?.value ?? ''
+const lookback = (f: Fact | null) => (/^lifetime$/i.test(v(f)) ? 'life' : lc(v(f)))
 const has = (f: Fact | null, re: RegExp) => !!f && re.test(f.value ?? '')
 const faq = (q: string, a: string | null | false | undefined) => (a ? [{ q, a }] : [])
 
@@ -283,7 +284,7 @@ export const TOPICS: Topic[] = [
     description: ({ s, f }) => `${s.name} ${v(f('dui.name')) || 'DUI'} law: ${v(f('dui.bacLimit'))} legal limit${f('dui.under21') ? `, ${v(f('dui.under21'))} under 21` : ''}, test refusal, ignition interlock and repeat-offense rules.`,
     fields: ['dui.name', 'dui.bacLimit', 'dui.under21', 'dui.commercial', 'dui.refusalSuspension', 'dui.interlockFirstOffense', 'dui.lookback'],
     lead: 'dui.bacLimit',
-    answer: ({ s, f }) => `In ${s.name}, it is illegal to drive with a blood alcohol concentration of ${v(f('dui.bacLimit'))} or higher if you are 21 or older${cited(f('dui.bacLimit'))}${f('dui.under21') ? `; for drivers under 21 the limit is ${v(f('dui.under21'))}` : ''}.`,
+    answer: ({ s, f }) => `In ${s.name}, it is illegal to drive with a blood alcohol concentration of ${v(f('dui.bacLimit'))} or higher if you are 21 or older${cited(f('dui.bacLimit'))}${f('dui.under21') ? `; for drivers under 21 the limit is ${lc(v(f('dui.under21')))}` : ''}.`,
     sections: [
       {
         h: ({ s, f }) => `How ${v(f('dui.name')) || 'DUI'} works in ${s.name}`,
@@ -304,16 +305,16 @@ export const TOPICS: Topic[] = [
         h: () => 'Ignition interlock and repeat offenses',
         body: ({ f }) => [
           f('dui.interlockFirstOffense') && `Ignition interlock for a first offense: ${lc(v(f('dui.interlockFirstOffense')))}${cited(f('dui.interlockFirstOffense'))}. ${f('dui.interlockFirstOffense')!.detail ?? ''}`,
-          f('dui.lookback') && `Prior offenses count toward harsher repeat-offense penalties for ${lc(v(f('dui.lookback')))}${cited(f('dui.lookback'))}.`,
+          f('dui.lookback') && `Prior offenses count toward harsher repeat-offense penalties for ${lookback(f('dui.lookback'))}${cited(f('dui.lookback'))}.`,
           'Penalties rise sharply with a high BAC, a crash with injuries, a child in the car or prior convictions. A DUI defense lawyer can review the stop, the testing and deadlines in your case.',
         ],
       },
     ],
     faqs: ({ s, f }) => [
-      ...faq(`What is the legal alcohol limit in ${s.name}?`, `${v(f('dui.bacLimit'))} for drivers 21 and older${cited(f('dui.bacLimit'))}${f('dui.under21') ? `, ${v(f('dui.under21'))} for drivers under 21` : ''}${f('dui.commercial') ? `, and ${v(f('dui.commercial'))} for commercial drivers` : ''}.`),
-      ...faq(`What happens if you refuse a breathalyzer in ${s.name}?`, f('dui.refusalSuspension') && `A first refusal brings a license suspension of ${lc(v(f('dui.refusalSuspension')))}${cited(f('dui.refusalSuspension'))}. ${f('dui.refusalSuspension')!.detail ?? ''}`.trim()),
+      ...faq(`What is the legal alcohol limit in ${s.name}?`, `${v(f('dui.bacLimit'))} for drivers 21 and older${cited(f('dui.bacLimit'))}${f('dui.under21') ? `, ${lc(v(f('dui.under21')))} for drivers under 21` : ''}${f('dui.commercial') ? `, and ${v(f('dui.commercial'))} for commercial drivers` : ''}.`),
+      ...faq(`What happens if you refuse a breathalyzer in ${s.name}?`, f('dui.refusalSuspension') && `A first refusal brings a license suspension: ${lc(v(f('dui.refusalSuspension')))}${cited(f('dui.refusalSuspension'))}. ${f('dui.refusalSuspension')!.detail ?? ''}`.trim()),
       ...faq(`Is an ignition interlock required for a first DUI in ${s.name}?`, f('dui.interlockFirstOffense') && `${v(f('dui.interlockFirstOffense'))}${cited(f('dui.interlockFirstOffense'))}. ${f('dui.interlockFirstOffense')!.detail ?? ''}`.trim()),
-      ...faq(`How long does a DUI stay on your record in ${s.name}?`, f('dui.lookback') && `For sentencing repeat offenses, prior DUIs count for ${lc(v(f('dui.lookback')))}${cited(f('dui.lookback'))}. How long it appears on your criminal or driving record can differ; ask a local lawyer about sealing or expungement.`),
+      ...faq(`How long does a DUI stay on your record in ${s.name}?`, f('dui.lookback') && `For sentencing repeat offenses, prior DUIs count for ${lookback(f('dui.lookback'))}${cited(f('dui.lookback'))}. How long it appears on your criminal or driving record can differ; ask a local lawyer about sealing or expungement.`),
     ],
     practices: ['dui-dwi', 'criminal-defense'],
     photo: 'justice',
