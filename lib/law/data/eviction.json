@@ -1,0 +1,975 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"nonpaymentNotice": {
+"value": "7 business days",
+"detail": "If rent is unpaid, the landlord must give written notice stating the rent and late fees owed; the lease terminates if the tenant does not pay within seven business days after receiving it.",
+"cite": "Ala. Code § 35-9A-421(b)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=35-9A-421",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice given at least 30 days before the periodic rental date named in the notice.",
+"cite": "Ala. Code § 35-9A-441(b)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=35-9A-441",
+"verified": true
+}
+},
+"AK": {
+"nonpaymentNotice": {
+"value": "7 days",
+"detail": "If rent is unpaid, the landlord may give written notice; if the tenant does not pay in full within seven days, the tenancy terminates.",
+"cite": "Alaska Stat. § 34.03.220(b)",
+"source": "https://law.justia.com/codes/alaska/title-34/chapter-03/article-6/section-34-03-220",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy by written notice at least 30 days before the rental due date named in the notice.",
+"cite": "Alaska Stat. § 34.03.290(b)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secEnd=34.03.290&secStart=34.03.290",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No statutory cap",
+"detail": "The Landlord and Tenant Act does not address late charges; a fee must be agreed to in advance and should reasonably approximate the landlord's actual costs.",
+"cite": "Alaska Uniform Residential Landlord and Tenant Act (AS 34.03) — no late-fee provision",
+"source": "https://law.alaska.gov/pdf/consumer/LandlordTenant_web.pdf",
+"verified": true
+}
+},
+"AZ": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "After written notice of nonpayment, the tenant has five days to pay before the landlord may terminate and file a special detainer action.",
+"cite": "Ariz. Rev. Stat. § 33-1368(B)",
+"source": "https://azleg.gov/ars/33/01368.htm",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy by written notice at least 30 days before the periodic rental date named in the notice.",
+"cite": "Ariz. Rev. Stat. § 33-1375(B)",
+"source": "https://azleg.gov/ars/33/01375.htm",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No statutory cap (must be reasonable)",
+"detail": "The statute refers only to a 'reasonable late fee set forth in a written rental agreement'; it sets no dollar or percentage limit.",
+"cite": "Ariz. Rev. Stat. § 33-1368(B)",
+"source": "https://azleg.gov/ars/33/01368.htm",
+"verified": true
+}
+},
+"AR": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "A tenant who fails to pay rent when due and does not leave after a three-day written notice to quit commits unlawful detainer.",
+"cite": "Ark. Code § 18-60-304(3)",
+"source": "https://law.justia.com/codes/arkansas/title-18/subtitle-5/chapter-60/subchapter-3/section-18-60-304",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy by written notice at least 30 days before the termination date named in the notice.",
+"cite": "Ark. Code § 18-17-704(b)",
+"source": "https://law.justia.com/codes/arkansas/title-18/subtitle-2/chapter-17/subchapter-7/section-18-17-704",
+"verified": true
+}
+},
+"CA": {
+"nonpaymentNotice": {
+"value": "3 days (excluding weekends and court holidays)",
+"detail": "The landlord must serve a written three-day notice to pay rent or quit; Saturdays, Sundays and judicial holidays are not counted.",
+"cite": "Cal. Civ. Proc. Code § 1161(2)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=1161",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days (60 days after 1 year)",
+"detail": "A landlord must give 30 days' written notice if the tenant has lived there less than one year and 60 days if one year or more; tenants covered by the Tenant Protection Act (Civ. Code § 1946.2) or local ordinances also need just cause.",
+"cite": "Cal. Civ. Code § 1946.1",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1946.1",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No statutory cap (must be reasonable)",
+"detail": "No statute sets a dollar limit, but courts strike late fees that are unreasonable penalties rather than a fair estimate of the landlord's damages.",
+"cite": "Cal. Civ. Code § 1671; Orozco v. Casimiro (2004) 121 Cal.App.4th Supp. 7",
+"source": "https://dre.ca.gov/files/pdf/2025_Landlord_Tenant_Guide.pdf",
+"verified": true
+}
+},
+"CO": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "The landlord must serve a written 10-day demand to pay rent or give up possession (5 days for certain exempt residential agreements); the notice cannot be waived in the lease.",
+"cite": "Colo. Rev. Stat. § 13-40-104(1)(d)",
+"source": "https://law.justia.com/codes/colorado/title-13/forcible-entry-and-detainer/article-40/section-13-40-104",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "21 days",
+"detail": "A tenancy of one month up to six months is ended with at least 21 days' written notice (28 days for 6-12 month tenancies, 91 days for 1 year or more); since 2024 most tenants who have lived in a unit 12 months or more cannot be removed without cause.",
+"cite": "Colo. Rev. Stat. § 13-40-107; § 38-12-1303 (HB24-1098)",
+"source": "https://leg.colorado.gov/bills/hb24-1098",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Greater of $50 or 5% of past-due rent",
+"detail": "A late fee can be charged only after rent is at least 7 days late, must be disclosed in the lease, and cannot exceed the greater of $50 or 5% of the past-due rent.",
+"cite": "Colo. Rev. Stat. § 38-12-105(1)",
+"source": "https://law.justia.com/codes/colorado/title-38/tenants-and-landlords/article-12/part-1/section-38-12-105",
+"verified": true
+}
+},
+"CT": {
+"nonpaymentNotice": {
+"value": "3 days (after 9-day grace period)",
+"detail": "Once rent is unpaid past the 9-day grace period, the landlord may serve a notice to quit giving at least three days before the quit date.",
+"cite": "Conn. Gen. Stat. §§ 47a-23(a), 47a-15a",
+"source": "https://www.cga.ct.gov/current/pub/chap_832.htm",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "3 days (to end of rental period)",
+"detail": "A month-to-month tenancy ends by lapse of time; the notice to quit must give at least three full days and at least until the end of the current rental month. Tenants 62+ or with disabilities in buildings of 5+ units need good cause.",
+"cite": "Conn. Gen. Stat. §§ 47a-23, 47a-23c",
+"source": "https://jud.ct.gov/Publications/hm014.pdf",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Lesser of $5/day (max $50) or 5% of the late rent",
+"detail": "A late charge can be assessed only after the grace period, only once per late payment, and cannot exceed the lesser of $5 per day up to $50 or 5% of the delinquent rent.",
+"cite": "Conn. Gen. Stat. § 47a-15a(b)",
+"source": "https://law.justia.com/codes/connecticut/title-47a/chapter-830/section-47a-15a",
+"verified": true
+}
+},
+"DE": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "After rent is due, the landlord may give written notice that the lease will end unless the tenant pays within at least 5 days.",
+"cite": "25 Del. C. § 5502(a)",
+"source": "https://delcode.delaware.gov/title25/c055/index.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "60 days",
+"detail": "Either party may end a month-to-month agreement with at least 60 days' written notice, counted from the first day of the month after notice is given.",
+"cite": "25 Del. C. § 5106(d)",
+"source": "https://delcode.delaware.gov/title25/c051/sc01/index.html",
+"verified": true
+},
+"lateFeeCap": {
+"value": "5% of monthly rent",
+"detail": "A late charge may not exceed 5% of the monthly rent and cannot be imposed until rent is more than 5 days late.",
+"cite": "25 Del. C. § 5501(d)",
+"source": "https://delcode.delaware.gov/title25/c055/index.html",
+"verified": true
+}
+},
+"DC": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "Before filing for nonpayment, the housing provider must give a written notice of intent to file at least 10 days in advance, and cannot file at all if less than $600 is owed.",
+"cite": "D.C. Code § 42-3505.01(a-1)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/42-3505.01",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "No termination without cause",
+"detail": "D.C. tenants cannot be evicted, even after a lease or month-to-month term expires, as long as they keep paying rent, except for specific causes listed in the statute.",
+"cite": "D.C. Code § 42-3505.01(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/42-3505.01",
+"verified": true
+},
+"lateFeeCap": {
+"value": "5% of monthly rent",
+"detail": "A late fee may not exceed 5% of the rent due, may be charged only once per late payment after a 5-day grace period, and must be disclosed in the lease.",
+"cite": "D.C. Code § 42-3505.31",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/42-3505.31",
+"verified": true
+}
+},
+"FL": {
+"nonpaymentNotice": {
+"value": "3 days (excluding weekends and legal holidays)",
+"detail": "The landlord must deliver a written 3-day notice demanding rent or possession; weekends and court-observed holidays are not counted.",
+"cite": "Fla. Stat. § 83.56(3)",
+"source": "https://flsenate.gov/Laws/Statutes/2025/83.56",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the end of a monthly period.",
+"cite": "Fla. Stat. § 83.57(3)",
+"source": "https://flsenate.gov/Laws/Statutes/2025/83.57",
+"verified": true
+}
+},
+"GA": {
+"nonpaymentNotice": {
+"value": "3 business days",
+"detail": "Before filing a dispossessory affidavit for unpaid rent, the landlord must give a notice to vacate or pay all amounts owed within three business days, posted on the door in a sealed envelope.",
+"cite": "O.C.G.A. § 44-7-50(c)-(d)",
+"source": "https://law.justia.com/codes/georgia/title-44/chapter-7/article-3/section-44-7-50",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "60 days",
+"detail": "A landlord must give a tenant-at-will 60 days' notice to end the tenancy; a tenant must give 30 days.",
+"cite": "O.C.G.A. § 44-7-7",
+"source": "https://dca.georgia.gov/document/manuals/georgia-landlord-tenant-handbook/download",
+"verified": true
+}
+},
+"HI": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "Since Feb. 5, 2026, the landlord must give a written 10-calendar-day notice to pay; if the tenant schedules state-funded mediation, filing generally must wait until 20 days after notice.",
+"cite": "Haw. Rev. Stat. § 521-68 (as amended by 2025 Act 278)",
+"source": "https://cca.hawaii.gov/ocp/landlord-tenant-residential-code",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "45 days",
+"detail": "A landlord must give at least 45 days' written notice to end a month-to-month tenancy; a tenant must give 28 days.",
+"cite": "Haw. Rev. Stat. § 521-71(a)-(b)",
+"source": "https://law.justia.com/codes/hawaii/title-28/chapter-521/section-521-71",
+"verified": true
+},
+"lateFeeCap": {
+"value": "8% of rent due",
+"detail": "If the rental agreement provides for a late charge, it may not exceed 8% of the rent due.",
+"cite": "Haw. Rev. Stat. § 521-21(f)",
+"source": "https://codes.findlaw.com/hi/division-3-property-family/hi-rev-st-sect-521-21",
+"verified": true
+}
+},
+"ID": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "The landlord must serve a written 3-day notice demanding the rent due or possession before the tenant is in unlawful detainer.",
+"cite": "Idaho Code § 6-303(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title6/t6ch3/sect6-303",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 month",
+"detail": "A tenancy at will (including month-to-month) is ended by written notice of at least one month; landlords must also give 30 days' notice of non-renewal or rent increases.",
+"cite": "Idaho Code §§ 55-208, 55-304(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title55/t55ch2/sect55-208",
+"verified": true
+}
+},
+"IL": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "The landlord must serve a written demand giving the tenant at least 5 days to pay before ending the lease and filing an eviction.",
+"cite": "735 ILCS 5/9-209",
+"source": "https://ilga.gov/documents/legislation/ilcs/documents/073500050K9-209.htm",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "A landlord ends a month-to-month (or other under-one-year) tenancy with 30 days' written notice.",
+"cite": "735 ILCS 5/9-207(b)",
+"source": "https://ilga.gov/legislation/ilcs/documents/073500050K9-207.htm",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No statewide cap (must be reasonable)",
+"detail": "State law sets no dollar limit; the Attorney General says landlords may charge a reasonable late fee. Chicago and suburban Cook County ordinances set their own caps.",
+"cite": "Ill. Attorney General, Landlord and Tenant Rights",
+"source": "https://illinoisattorneygeneral.gov/Page-Attachments/LandlordAndTenantRightsLaws.pdf",
+"verified": true
+}
+},
+"IN": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "A landlord may end the lease for unpaid rent with at least 10 days' notice unless the tenant pays in full first or the parties agreed otherwise.",
+"cite": "Ind. Code § 32-31-1-6",
+"source": "https://iga.in.gov/ic/2026/Title_32/Article_31/Chapter_1.pdf",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 month",
+"detail": "A tenancy at will, including a month-to-month tenancy, is ended by one month's written notice delivered to the tenant.",
+"cite": "Ind. Code §§ 32-31-1-1, 32-31-1-2",
+"source": "https://iga.in.gov/ic/2026/Title_32/Article_31.pdf",
+"verified": true
+}
+},
+"IA": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "If the tenant does not pay within three days after written notice of nonpayment, the landlord may end the rental agreement.",
+"cite": "Iowa Code § 562A.27(2)",
+"source": "https://legis.iowa.gov/docs/code/562A.27.pdf",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the periodic rental date.",
+"cite": "Iowa Code § 562A.34",
+"source": "https://legis.iowa.gov/docs/code/2026/562A.34.pdf",
+"verified": true
+},
+"lateFeeCap": {
+"value": "$12/day up to $60/month (rent ≤ $700); $20/day up to $100/month (rent > $700)",
+"detail": "Late fees are capped based on rent level: $12 per day and $60 per month when rent is $700 or less, and $20 per day and $100 per month when rent is higher.",
+"cite": "Iowa Code § 562A.9(4)",
+"source": "https://legis.iowa.gov/docs/code/562A.pdf",
+"verified": true
+}
+},
+"KS": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "If rent is unpaid, the landlord may end the agreement if the tenant does not pay within three days (three 24-hour periods) after written notice; two days are added if mailed.",
+"cite": "Kan. Stat. § 58-2564(b)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch58/058_025_0064.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice ending it on a rent-paying date at least 30 days after the notice is received.",
+"cite": "Kan. Stat. § 58-2570(b)",
+"source": "https://kslegislature.gov/b2025_26/laws/058_000_0000_chapter/058_025_0000_article/058_025_0070_section/058_025_0070_k",
+"verified": true
+}
+},
+"KY": {
+"nonpaymentNotice": {
+"value": "7 days (in URLTA localities)",
+"detail": "Where a city or county has adopted Kentucky's Uniform Residential Landlord and Tenant Act, the tenant has 7 days after written notice to pay before the landlord may end the lease; elsewhere no specific statutory pay-or-quit period applies.",
+"cite": "KRS 383.660(2); KRS 383.500",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=35749",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "In URLTA localities either party gives 30 days' written notice before a rental date; elsewhere a landlord gives one month's written notice.",
+"cite": "KRS 383.695(2); KRS 383.195",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=35756",
+"verified": true
+}
+},
+"LA": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "The landlord must deliver a written notice to vacate giving at least 5 days, but a lease may waive this notice.",
+"cite": "La. Code Civ. Proc. art. 4701",
+"source": "https://legis.la.gov/legis/Law.aspx?d=112073",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "10 days",
+"detail": "A month-to-month lease ends with notice given at least 10 calendar days before the end of the month.",
+"cite": "La. Civ. Code art. 2728(2)",
+"source": "https://legis.la.gov/legis/Law.aspx?d=109792",
+"verified": true
+}
+},
+"ME": {
+"nonpaymentNotice": {
+"value": "7 days",
+"detail": "Once rent is at least 7 days late, the landlord may serve a 7-day notice to quit; paying the full amount due before it expires voids the notice.",
+"cite": "14 M.R.S. § 6002(1)",
+"source": "https://courts.maine.gov/help/eviction/evict-tenant.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "A tenancy at will must be ended by at least 30 days' written notice from either party.",
+"cite": "14 M.R.S. § 6002",
+"source": "https://legislature.maine.gov/statutes/14/title14sec6002.html",
+"verified": true
+},
+"lateFeeCap": {
+"value": "4% of one month's rent",
+"detail": "Rent is late only after 15 days, and the penalty may not exceed 4% of one month's rent; the tenant must be told in writing at the start of the tenancy.",
+"cite": "14 M.R.S. § 6028",
+"source": "https://legislature.maine.gov/statutes/14/title14sec6028.html",
+"verified": true
+}
+},
+"MD": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "Before filing a failure-to-pay-rent case, the landlord must give a written notice of intent to file (on the Judiciary's form) and wait 10 days.",
+"cite": "Md. Code, Real Prop. § 8-401(c)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=8-401",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "60 days",
+"detail": "A landlord must give written notice 60 days before the end of a month-to-month tenancy (local laws may differ).",
+"cite": "Md. Code, Real Prop. § 8-402(c)(2)(i)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=8-402",
+"verified": true
+},
+"lateFeeCap": {
+"value": "5% of rent due",
+"detail": "A lease cannot impose a late penalty above 5% of the unpaid rent for that period (weekly leases: $3/week, $12/month).",
+"cite": "Md. Code, Real Prop. § 8-208(d)(3)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=8-208",
+"verified": true
+}
+},
+"MA": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "For unpaid rent, a 14-day written notice to quit ends a lease or tenancy at will; the tenant can generally cure by paying all rent due, with interest and costs, by the answer date.",
+"cite": "Mass. Gen. Laws ch. 186, §§ 11, 12",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter186/Section11",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days or one rental period, whichever is longer",
+"detail": "A tenancy at will is ended by written notice equal to the interval between rent payments or 30 days, whichever is longer (for monthly rent, a full rental period).",
+"cite": "Mass. Gen. Laws ch. 186, § 12",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter186/Section12",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No late fee until rent is 30 days late",
+"detail": "A lease may not impose any interest or penalty for late rent until 30 days after the rent was due; the statute sets no specific dollar cap.",
+"cite": "Mass. Gen. Laws ch. 186, § 15B(1)(c)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter186/Section15b",
+"verified": true
+}
+},
+"MI": {
+"nonpaymentNotice": {
+"value": "7 days",
+"detail": "The landlord must serve a written 7-day demand for possession (or 7-day notice to quit) for nonpayment before filing.",
+"cite": "Mich. Comp. Laws §§ 600.5714(1)(a), 554.134(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5714",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 month (one rental period)",
+"detail": "Either party may end a tenancy at will with one month's notice; when rent is paid more often than every 3 months, notice equal to the rental interval is enough.",
+"cite": "Mich. Comp. Laws § 554.134(1)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=MCL-554-134",
+"verified": true
+}
+},
+"MN": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "Before filing for nonpayment, the landlord must give a written notice itemizing the amount owed; the tenant has 14 days (or longer if local law requires) to pay.",
+"cite": "Minn. Stat. § 504B.321, subd. 1a",
+"source": "https://revisor.mn.gov/statutes/cite/504B.321",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "One full rental period (1 month)",
+"detail": "A tenancy at will is ended by written notice at least as long as the interval between rent due dates or three months, whichever is less.",
+"cite": "Minn. Stat. § 504B.135",
+"source": "https://revisor.mn.gov/statutes/cite/504B.135",
+"verified": true
+},
+"lateFeeCap": {
+"value": "8% of the overdue rent",
+"detail": "A late fee must be agreed to in writing and cannot exceed 8% of the overdue rent payment.",
+"cite": "Minn. Stat. § 504B.177(a)",
+"source": "https://revisor.mn.gov/statutes/cite/504B.177",
+"verified": true
+}
+},
+"MS": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "The landlord may give written notice (or email/text if agreed) that the rental agreement will end if rent is not paid within 3 days.",
+"cite": "Miss. Code § 89-8-13(5)(a)",
+"source": "https://law.justia.com/codes/mississippi/title-89/chapter-8/section-89-8-13",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the termination date.",
+"cite": "Miss. Code § 89-8-19(3)",
+"source": "https://law.justia.com/codes/mississippi/title-89/chapter-8/section-89-8-19",
+"verified": true
+}
+},
+"MO": {
+"nonpaymentNotice": {
+"value": "No set notice period (demand required)",
+"detail": "Missouri sets no pay-or-quit period; the landlord must demand the rent and may file a rent-and-possession case once it goes unpaid.",
+"cite": "Mo. Rev. Stat. §§ 535.010, 535.020",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=535.020",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 month",
+"detail": "A tenancy at will or for less than a year, including month-to-month, may be ended by one month's written notice to vacate.",
+"cite": "Mo. Rev. Stat. § 441.060",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=441.060",
+"verified": true
+}
+},
+"MT": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "If the tenant does not pay within 3 days after written notice of nonpayment, the landlord may end the rental agreement.",
+"cite": "Mont. Code Ann. § 70-24-422(2)",
+"source": "https://law.justia.com/codes/montana/title-70/chapter-24/part-4/section-70-24-422",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with at least 30 days' written notice.",
+"cite": "Mont. Code Ann. § 70-24-441(2)",
+"source": "https://mca.legmt.gov/bills/mca/title_0700/chapter_0240/part_0040/section_0410/0700-0240-0040-0410.html",
+"verified": true
+}
+},
+"NE": {
+"nonpaymentNotice": {
+"value": "7 days",
+"detail": "If rent is not paid within 7 calendar days after written notice of nonpayment, the landlord may end the rental agreement.",
+"cite": "Neb. Rev. Stat. § 76-1431(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=76-1431",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the periodic rental date.",
+"cite": "Neb. Rev. Stat. § 76-1437(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=76-1437",
+"verified": true
+}
+},
+"NV": {
+"nonpaymentNotice": {
+"value": "7 judicial days",
+"detail": "The landlord serves a written notice to pay rent or surrender by the close of business on the 7th judicial day (court days) after service.",
+"cite": "Nev. Rev. Stat. §§ 40.2512, 40.253",
+"source": "https://leg.state.nv.us/NRS/NRS-040.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "A month-to-month tenant must receive at least 30 days' notice; tenants 60 or older or with disabilities may request extra time.",
+"cite": "Nev. Rev. Stat. § 40.251(1)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-040.html",
+"verified": true
+},
+"lateFeeCap": {
+"value": "5% of periodic rent",
+"detail": "A reasonable late fee may be charged only after rent is at least 3 calendar days late and may not exceed 5% of the periodic rent.",
+"cite": "Nev. Rev. Stat. § 118A.210(4)",
+"source": "https://leg.state.nv.us/NRS/NRS-118A.html",
+"verified": true
+}
+},
+"NH": {
+"nonpaymentNotice": {
+"value": "7 days",
+"detail": "For unpaid rent, the landlord gives a written demand for rent and a 7-day eviction notice stating the reason and the tenant's right to cure by paying arrears.",
+"cite": "N.H. Rev. Stat. §§ 540:2(II)(a), 540:3(II)",
+"source": "https://gc.nh.gov/rsa/html/LV/540/540-3.htm",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Residential tenancies are ended with a 30-day eviction notice, but most rentals ('restricted property') may be ended only for a listed reason, which includes 'other good cause.'",
+"cite": "N.H. Rev. Stat. §§ 540:2, 540:3(II)",
+"source": "https://gc.nh.gov/rsa/html/LV/540/540-2.htm",
+"verified": true
+}
+},
+"NJ": {
+"nonpaymentNotice": {
+"value": "None required",
+"detail": "No notice to quit is required before filing an eviction for nonpayment of rent; other grounds need notices of 3 days to months.",
+"cite": "N.J. Stat. § 2A:18-61.2",
+"source": "https://law.justia.com/codes/new-jersey/title-2a/section-2a-18-61-2",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "No termination without good cause",
+"detail": "Under the Anti-Eviction Act, a landlord covered by the law cannot evict or refuse to renew a written or oral tenancy without a statutory good cause proved in court.",
+"cite": "N.J. Stat. § 2A:18-61.1",
+"source": "https://nj.gov/dca/codes/publications/pdf_lti/t_i_r.pdf",
+"verified": true
+}
+},
+"NM": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "If rent is not paid within 3 days after written notice of nonpayment and intent to terminate, the owner may end the agreement; paying in full within the 3 days bars the case.",
+"cite": "N.M. Stat. § 47-8-33(D)",
+"source": "https://law.justia.com/codes/new-mexico/chapter-47/article-8/section-47-8-33",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month residency with written notice at least 30 days before the periodic rental date.",
+"cite": "N.M. Stat. § 47-8-37(B)",
+"source": "https://luxpropertiesnm.com/_files/ugd/c7882f_91815e5ace4547bf921b608c0f81e0fc.pdf",
+"verified": true
+},
+"lateFeeCap": {
+"value": "5% of rent per rental period",
+"detail": "A late fee may not exceed 5% of the rent for each rental period in default, calculated on rent only.",
+"cite": "N.M. Stat. § 47-8-15(D)",
+"source": "https://law.justia.com/codes/new-mexico/chapter-47/article-8/section-47-8-15",
+"verified": true
+}
+},
+"NY": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "The landlord must serve a written rent demand giving at least 14 days to pay or surrender possession before starting a nonpayment case (plus a 5-day late-rent notice by certified mail under RPL § 235-e).",
+"cite": "N.Y. RPAPL § 711(2)",
+"source": "https://nysenate.gov/legislation/laws/RPA/711",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30, 60 or 90 days (by length of occupancy)",
+"detail": "A landlord ending a tenancy must give 30 days' notice if the tenant has lived there under 1 year, 60 days for 1-2 years, and 90 days for 2+ years; units covered by the Good Cause Eviction Law also need a lawful reason.",
+"cite": "N.Y. Real Prop. Law § 226-c",
+"source": "https://law.justia.com/codes/new-york/rpp/article-7/226-c",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Lesser of $50 or 5% of monthly rent",
+"detail": "No late fee may be charged until rent is more than 5 days late, and it may not exceed $50 or 5% of the monthly rent, whichever is less.",
+"cite": "N.Y. Real Prop. Law § 238-a(2)",
+"source": "https://www.nysenate.gov/legislation/laws/RPP/238-A",
+"verified": true
+}
+},
+"NC": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "The lease is forfeited if the tenant fails to pay within 10 days after the landlord demands all past-due rent.",
+"cite": "N.C. Gen. Stat. § 42-3",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-3.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "7 days",
+"detail": "A month-to-month tenancy may be ended with a notice to quit given at least 7 days before the end of the current month (a lease may require more).",
+"cite": "N.C. Gen. Stat. § 42-14",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-14.html",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Greater of $15 or 5% of monthly rent",
+"detail": "A late fee can be charged only once rent is 5 days late, only once per late payment, and cannot exceed $15 or 5% of the monthly rent, whichever is greater.",
+"cite": "N.C. Gen. Stat. § 42-46(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-46.html",
+"verified": true
+}
+},
+"ND": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "Once rent is 3 days overdue, the landlord must serve a written 3-day notice of intention to evict before filing.",
+"cite": "N.D. Cent. Code §§ 47-32-01(4), 47-32-02",
+"source": "https://ndlegis.gov/cencode/t47c32.pdf",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 calendar month",
+"detail": "Either party may end a month-to-month tenancy with at least one calendar month's written notice given at any time, unless they agreed in writing to longer notice.",
+"cite": "N.D. Cent. Code § 47-16-15(2)",
+"source": "https://ndlegis.gov/cencode/t47c16.pdf",
+"verified": true
+}
+},
+"OH": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "Before filing an eviction, the landlord must serve a written notice to leave the premises at least three days before filing.",
+"cite": "Ohio Rev. Code § 1923.04(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1923.04",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with notice at least 30 days before the periodic rental date.",
+"cite": "Ohio Rev. Code § 5321.17(B)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-5321.17",
+"verified": true
+}
+},
+"OK": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "The landlord may end the rental agreement if the tenant does not pay within 5 days after a written demand for rent; the demand also serves as the demand for possession.",
+"cite": "Okla. Stat. tit. 41, § 131(B)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os41.pdf",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the termination date, counted from service.",
+"cite": "Okla. Stat. tit. 41, § 111(A)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os41.pdf",
+"verified": true
+}
+},
+"OR": {
+"nonpaymentNotice": {
+"value": "10 days (or 13 days)",
+"detail": "For monthly tenancies, the landlord may give a 10-day notice on or after the 8th day of the rental period, or a 13-day notice on or after the 5th day; the notice must state the amount due and the deadline to pay.",
+"cite": "Or. Rev. Stat. § 90.394(2)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days (first year only)",
+"detail": "During the first year of occupancy a landlord may end a month-to-month tenancy with 30 days' written notice; after the first year it may end only for tenant cause or a qualifying landlord reason (generally with 90 days' notice and relocation payment).",
+"cite": "Or. Rev. Stat. § 90.427(3)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Reasonable flat fee, or 5% of rent per 5-day period",
+"detail": "Late fees require a written agreement and rent unpaid by the 4th day; the fee may be a reasonable flat amount once per period, a daily fee up to 6% of that flat amount, or 5% of the rent for each 5 days late.",
+"cite": "Or. Rev. Stat. § 90.260",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html",
+"verified": true
+}
+},
+"PA": {
+"nonpaymentNotice": {
+"value": "10 days",
+"detail": "When the tenant fails to pay rent on demand, the notice to quit must give the tenant 10 days to leave (leases may waive this notice).",
+"cite": "68 P.S. § 250.501(b)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/US/HTM/1951/0/0020..HTM",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "15 days",
+"detail": "For leases of one year or less or of indefinite term (including month-to-month), the notice to quit must give 15 days; leases over one year require 30 days.",
+"cite": "68 P.S. § 250.501(b)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/US/HTM/1951/0/0020..HTM",
+"verified": true
+}
+},
+"RI": {
+"nonpaymentNotice": {
+"value": "5 days (after rent is 15 days late)",
+"detail": "Once rent is 15 days in arrears, the landlord must mail a written demand; if the tenant does not pay within 5 days of mailing, the landlord may file (no earlier than the 6th day).",
+"cite": "R.I. Gen. Laws § 34-18-35",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-35.htm",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice delivered at least 30 days before the termination date.",
+"cite": "R.I. Gen. Laws § 34-18-37(b)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-37.htm",
+"verified": true
+}
+},
+"SC": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "If rent is not paid within 5 days of the due date, the landlord may end the lease after written notice; the notice can be satisfied once per lease term or by conspicuous language in the written lease.",
+"cite": "S.C. Code § 27-40-710(B)",
+"source": "https://www.scstatehouse.gov/code/t27c040.php",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the termination date.",
+"cite": "S.C. Code § 27-40-770(b)",
+"source": "https://www.scstatehouse.gov/code/t27c040.php",
+"verified": true
+}
+},
+"SD": {
+"nonpaymentNotice": {
+"value": "No notice required (rent 3+ days late)",
+"detail": "Since 2024 South Dakota no longer requires a 3-day notice to quit; a landlord may file an eviction once rent is unpaid for 3 days after it is due.",
+"cite": "S.D. Codified Laws § 21-16-1(4); § 21-16-2 repealed by 2024 S.D. Sess. Laws ch. 75",
+"source": "https://sdlegislature.gov/api/Statutes/21-16-2.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "15 days",
+"detail": "A residential tenancy at will may be ended by the landlord with at least 15 days' notice (two months for active-duty military households, with exceptions).",
+"cite": "S.D. Codified Laws § 43-8-8",
+"source": "https://sdlegislature.gov/api/Statutes/43-8-8.html",
+"verified": true
+}
+},
+"TN": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "The landlord must give written notice; the tenant has 14 days after receiving it to pay before the lease ends (the notice may be waived in the lease in bold 12-point type).",
+"cite": "Tenn. Code Ann. § 66-28-505",
+"source": "https://law.justia.com/codes/tennessee/title-66/chapter-28/part-5/section-66-28-505/",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the periodic rental date.",
+"cite": "Tenn. Code Ann. § 66-28-512",
+"source": "https://law.justia.com/codes/tennessee/title-66/chapter-28/part-5/section-66-28-512/",
+"verified": true
+},
+"lateFeeCap": {
+"value": "10% of past-due rent",
+"detail": "A late fee may be charged only after a 5-day grace period and cannot exceed 10% of the past-due rent.",
+"cite": "Tenn. Code Ann. § 66-28-201(d)",
+"source": "https://law.justia.com/codes/tennessee/title-66/chapter-28/part-2/section-66-28-201/",
+"verified": true
+}
+},
+"TX": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "The landlord must give at least 3 days' written notice to vacate before filing, unless the lease sets a different period; for suits filed since Jan. 1, 2026, a tenant who was not previously late must get a notice to pay rent or vacate.",
+"cite": "Tex. Prop. Code § 24.005(a) (as amended by SB 38, 2025)",
+"source": "https://capitol.texas.gov/tlodocs/89R/billtext/pdf/SB00038F.pdf",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "1 month",
+"detail": "Either party may end a month-to-month tenancy; it ends on the later of the date in the notice or one month after notice is given, unless the parties agreed otherwise in writing.",
+"cite": "Tex. Prop. Code § 91.001",
+"source": "https://texas.public.law/statutes/tex._prop._code_section_91.001",
+"verified": true
+},
+"lateFeeCap": {
+"value": "12% of rent (≤4 units) or 10% (5+ units)",
+"detail": "A late fee requires notice in the written lease and can be charged once rent is unpaid two full days after it was due; it is presumed reasonable if no more than 12% of monthly rent in buildings with up to four units or 10% in larger buildings (higher only if it reflects actual damages).",
+"cite": "Tex. Prop. Code § 92.019",
+"source": "https://texas.public.law/statutes/tex._prop._code_section_92.019",
+"verified": true
+}
+},
+"UT": {
+"nonpaymentNotice": {
+"value": "3 business days",
+"detail": "The landlord serves a written notice to pay rent and other amounts due or surrender the premises; the tenant has three business days to comply.",
+"cite": "Utah Code § 78B-6-802(1)(c)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter6/78B-6-S802.html",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "15 days",
+"detail": "For a month-to-month tenancy, the landlord must serve a notice to quit at least 15 calendar days before the end of the rental period.",
+"cite": "Utah Code § 78B-6-802(1)(b)(i)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter6/78B-6-S802.html",
+"verified": true
+}
+},
+"VT": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "The landlord may end a tenancy for nonpayment with actual notice of a termination date at least 14 days away; paying all rent due through the end of the rental period before then stops the termination.",
+"cite": "9 V.S.A. § 4467(a)",
+"source": "https://legislature.vermont.gov/statutes/section/09/137/04467",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "60 days (90 days after 2 years)",
+"detail": "Without a written lease, a no-cause termination of a monthly tenancy needs at least 60 days' notice if the tenant has lived there 2 years or less and 90 days if longer.",
+"cite": "9 V.S.A. § 4467(c)(1)",
+"source": "https://legislature.vermont.gov/statutes/section/09/137/04467",
+"verified": true
+}
+},
+"VA": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "If the tenant does not pay within 14 days after written notice of nonpayment and intent to terminate, the landlord may end the rental agreement and seek possession.",
+"cite": "Va. Code § 55.1-1245(F)",
+"source": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1245/",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "30 days",
+"detail": "Either party may end a month-to-month tenancy with written notice at least 30 days before the next rent due date, unless the rental agreement sets a different period.",
+"cite": "Va. Code § 55.1-1253(A)",
+"source": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1253/",
+"verified": true
+},
+"lateFeeCap": {
+"value": "Lesser of 10% of periodic rent or 10% of remaining balance",
+"detail": "A late charge must be in the written lease and cannot exceed the lesser of 10% of the periodic rent or 10% of the remaining balance owed.",
+"cite": "Va. Code § 55.1-1204(E)",
+"source": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1204/",
+"verified": true
+}
+},
+"WA": {
+"nonpaymentNotice": {
+"value": "14 days",
+"detail": "Residential landlords must serve a 14-day notice to pay rent or vacate before filing an unlawful detainer.",
+"cite": "Rev. Code Wash. § 59.12.030(3)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=59.12.030",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "No termination without cause",
+"detail": "A landlord may not end a month-to-month or other periodic tenancy except for causes listed in the statute (such as nonpayment, owner move-in, or sale).",
+"cite": "Rev. Code Wash. § 59.18.650(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.650",
+"verified": true
+},
+"lateFeeCap": {
+"value": "No statutory cap (none within 5 days of due date)",
+"detail": "Washington sets no dollar or percentage limit, but a landlord may not charge a late fee on rent paid within 5 days after it is due; in eviction cases tenants can reinstate by paying late fees only up to $75 total.",
+"cite": "Rev. Code Wash. §§ 59.18.170(2), 59.18.410",
+"source": "https://app.leg.wa.gov/rcw/default.aspx?cite=59.18&full=true",
+"verified": true
+}
+},
+"WV": {
+"nonpaymentNotice": {
+"value": "No notice required",
+"detail": "West Virginia does not require a written notice before a landlord files a petition to evict for unpaid rent; the tenant can still pay all rent, interest and costs before trial to end the case.",
+"cite": "W. Va. Code § 55-3A-1; § 37-6-23",
+"source": "https://legalaidwv.org/legal-information/eviction-process-before-a-court-case-is-filed/",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "One full rental period (1 month)",
+"detail": "A periodic tenancy of less than a year may be ended by notice for one full period before the end of a period.",
+"cite": "W. Va. Code § 37-6-5",
+"source": "https://code.wvlegislature.gov/37-6-5/",
+"verified": true
+}
+},
+"WI": {
+"nonpaymentNotice": {
+"value": "5 days",
+"detail": "For month-to-month tenants and leases of one year or less, the landlord may give a 5-day notice to pay rent or vacate (or a 14-day notice to vacate in some cases).",
+"cite": "Wis. Stat. § 704.17(1p)(a), (2)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/704/17",
+"verified": true
+},
+"monthToMonthNotice": {
+"value": "28 days",
+"detail": "A periodic tenancy is ended by written notice of at least 28 days (shorter only for tenancies paid more often than monthly).",
+"cite": "Wis. Stat. § 704.19(3)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/704/19",
+"verified": true
+}
+},
+"WY": {
+"nonpaymentNotice": {
+"value": "3 days",
+"detail": "After rent is 3 days late, the landlord must serve a written notice to quit at least 3 days before filing a forcible entry and detainer action.",
+"cite": "Wyo. Stat. §§ 1-21-1002(a)(i), 1-21-1003",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}
