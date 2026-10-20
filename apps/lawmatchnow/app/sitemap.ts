@@ -5,6 +5,7 @@ import { attorneySlugs, listPosts } from '@/lib/directory'
 import { CITIES, STATES, stateByCode } from '@/lib/geo'
 import { researchedOn } from '@/lib/law/facts'
 import { TOPICS, ctxFor, topicsFor, topicsForPractice } from '@/lib/law/topics'
+import { TOOLS, statesFor } from '@/lib/law/tools'
 import { CONTENT_REVIEWED, abs } from '@/lib/site'
 
 export const revalidate = 86400
@@ -22,6 +23,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...STATES.map((s) => page(`/state/${s.slug}`, 0.7)),
     ...CITIES.map((c) => page(`/${c.slug}`, 0.8)),
     page('/laws', 0.8),
+    page('/calculators', 0.9),
+    ...TOOLS.map((t) => page(`/calculators/${t.slug}`, 0.8)),
+    ...TOOLS.flatMap((t) => statesFor(t).map((s) => page(`/calculators/${t.slug}/${s.slug}`, 0.7))),
     ...TOPICS.map((t) => page(`/laws/${t.slug}`, 0.8, new Date(researchedOn(t.lead)))),
     ...STATES.flatMap((s) => topicsFor(s.code).map((t) => page(`/state/${s.slug}/${t.slug}`, 0.8, new Date(researchedOn(t.lead))))),
     // City + issue pages that carry verified state law (the rest are noindex until listings arrive).
