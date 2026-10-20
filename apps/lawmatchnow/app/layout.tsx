@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, Public_Sans } from 'next/font/google'
+import { Jost, Playfair_Display } from 'next/font/google'
 import { Footer, Header } from '@/components/Shell'
 import { JsonLd } from '@/components/ui'
 import { SITE, orgLd, websiteLd } from '@/lib/site'
 import './globals.css'
 
-const display = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '600', '700'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
-const sans = Public_Sans({ subsets: ['latin'], variable: '--font-sans', display: 'swap' })
+const display = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '900'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
+const sans = Jost({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' })
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
@@ -21,11 +21,17 @@ export const metadata: Metadata = {
   verification: { google: 'kZSMEKVl7GoLWoAtaMm9-2vGWnxDadxDMYCIktC03NE' },
 }
 
-export const viewport: Viewport = { themeColor: '#0e1726', width: 'device-width', initialScale: 1 }
+export const viewport: Viewport = { themeColor: '#ffffff', width: 'device-width', initialScale: 1 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-US" className={`${display.variable} ${sans.variable}`}>
+    <html lang="en-US" className={`${display.variable} ${sans.variable}`} suppressHydrationWarning>
+      <head>
+        {/* Motion classes before first paint, so animated sections never flash.
+            If the page's scripts don't start within 4s, fall back to static. */}
+        <script dangerouslySetInnerHTML={{ __html: "(function(d){var h=d.documentElement;h.classList.add('js');if(!matchMedia('(prefers-reduced-motion: reduce)').matches){h.classList.add('fx');setTimeout(function(){if(d.querySelector('.jr')&&!h.classList.contains('jr-live'))h.classList.remove('fx')},4000)}})(document)" }} />
+        <link rel="preconnect" href="https://images.unsplash.com" />
+      </head>
       <body>
         <JsonLd data={[orgLd, websiteLd]} />
         <Header />
