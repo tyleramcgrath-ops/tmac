@@ -54,3 +54,10 @@ jobs:
       - name: Test
         if: matrix.project == 'apps/girls-around-the-globe'
         run: pnpm test
+
+      - name: Bar importer tests
+        if: matrix.project == 'apps/lawmatchnow'
+        working-directory: apps/lawmatchnow/tools/bar-import
+        run: |
+          npm ci --no-audit --no-fund
+          npm test
