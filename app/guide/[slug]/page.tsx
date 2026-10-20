@@ -1,9 +1,15 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { CaseReviewCard, CtaBand, Faqs, JsonLd, PageHero } from '@/components/ui'
+import { CopyLink } from '@/components/CopyLink'
+import { ReadingProgress } from '@/components/fx/ReadingProgress'
+import { RevealOnScroll } from '@/components/fx/Reveal'
+import { TocSpy } from '@/components/fx/TocSpy'
+import { Photo } from '@/components/Photo'
+import { Breadcrumbs, CaseReviewCard, CtaBand, Faqs, JsonLd } from '@/components/ui'
 import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
+import { CATEGORY_PHOTO } from '@/lib/photos'
 import { CONTENT_REVIEWED, SITE, abs, fmtDate } from '@/lib/site'
 
 type Props = { params: Promise<{ slug: string }> }
@@ -30,53 +36,77 @@ export default async function GuidePage({ params }: Props) {
   if (!g) notFound()
   const related = PRACTICE_AREAS.filter((p) => g.related.includes(p.slug))
   const more = GUIDES.filter((x) => x.slug !== g.slug && x.category === g.category).concat(GUIDES.filter((x) => x.slug !== g.slug && x.category !== g.category)).slice(0, 3)
+  const toc = [...g.sections.map((s) => ({ id: anchor(s.heading), label: s.heading })), { id: 'faq', label: 'Questions' }]
   return (
     <>
+      <RevealOnScroll />
+      <ReadingProgress target=".art-body" />
       <JsonLd data={{
         '@context': 'https://schema.org', '@type': 'Article', headline: g.title, description: g.description,
         url: abs(`/guide/${g.slug}`), mainEntityOfPage: abs(`/guide/${g.slug}`), dateModified: CONTENT_REVIEWED, datePublished: CONTENT_REVIEWED,
         author: { '@type': 'Organization', name: `${SITE.name} Editorial Team`, url: abs('/about') },
         publisher: { '@id': `${SITE.url}/#organization` }, articleSection: g.category,
-        speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.answer-box p'] },
+        speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.art-answer p'] },
       }} />
-      <PageHero crumbs={[{ name: 'Legal Guides', path: '/guides' }, { name: g.title, path: `/guide/${g.slug}` }]} eyebrow={g.category} title={g.title} lede={g.description}>
-        <div className="byline"><span>By the {SITE.name} editorial team</span><span>Reviewed {fmtDate(CONTENT_REVIEWED)}</span><span>{g.readMinutes} min read</span></div>
-      </PageHero>
-      <section className="section">
-        <div className="wrap layout">
-          <article className="prose">
-            <div className="answer-box"><span className="label">The short answer</span><p>{g.answer}</p></div>
-            {g.sections.map((s) => (
-              <section key={s.heading}>
-                <h2 id={anchor(s.heading)}>{s.heading}</h2>
-                {s.paragraphs.map((p) => <p key={p}>{p}</p>)}
+
+      <header className="art-hero">
+        <div className="wrap">
+          <Breadcrumbs crumbs={[{ name: 'Legal Guides', path: '/guides' }, { name: g.title, path: `/guide/${g.slug}` }]} light />
+          <div className="art-hero-in rise">
+            <span className="kicker">{g.category}</span>
+            <h1>{g.title}</h1>
+            <p className="lede">{g.description}</p>
+            <div className="art-by">
+              <span className="art-mark" aria-hidden="true">L</span>
+              <span><b>{SITE.name} editorial team</b><br />Reviewed {fmtDate(CONTENT_REVIEWED)} · {g.readMinutes} min read</span>
+              <CopyLink />
+            </div>
+          </div>
+        </div>
+        <div className="wrap"><div className="art-photo rise"><Photo name={CATEGORY_PHOTO[g.category] ?? 'signing'} priority sizes="(min-width: 1240px) 1180px, 100vw" /></div></div>
+      </header>
+
+      <section className="section art-section">
+        <div className="wrap art-layout">
+          <aside className="art-toc"><TocSpy items={toc} /></aside>
+          <article className="art-body prose">
+            <div className="art-answer"><span className="label">The short answer</span><p>{g.answer}</p></div>
+            {g.sections.map((s, i) => (
+              <section key={s.heading} id={anchor(s.heading)} className="art-sec">
+                <h2><span className="art-n">{String(i + 1).padStart(2, '0')}</span>{s.heading}</h2>
+                {s.paragraphs.map((p, j) => <p key={j} className={i === 0 && j === 0 ? 'dropcap' : undefined}>{p}</p>)}
                 {s.bullets && <ul>{s.bullets.map((b) => <li key={b}>{b}</li>)}</ul>}
               </section>
             ))}
-            <h2 id="faq">Frequently asked questions</h2>
-            <Faqs faqs={g.faqs} />
-            <p className="muted" style={{ fontSize: '0.88rem', marginTop: 24 }}>This guide is general legal information, not legal advice. Laws differ by state and change over time; talk to a licensed attorney about your situation.</p>
+            <section id="faq" className="art-sec">
+              <h2><span className="art-n">?</span>Frequently asked questions</h2>
+              <Faqs faqs={g.faqs} />
+            </section>
+            <p className="art-note">This guide is general legal information, not legal advice. Laws differ by state and change over time; talk to a licensed attorney about your situation.</p>
           </article>
-          <aside className="sidebar">
-            <nav className="card toc" aria-label="On this page">
-              <h3>On this page</h3>
-              <ol>{g.sections.map((s) => <li key={s.heading}><a href={`#${anchor(s.heading)}`}>{s.heading}</a></li>)}<li><a href="#faq">FAQ</a></li></ol>
-            </nav>
+          <aside className="art-side">
             <CaseReviewCard practice={related[0]?.slug} />
             {related.length > 0 && (
-              <div className="card">
-                <h3>Find a lawyer</h3>
-                <ul style={{ paddingLeft: 18, margin: 0 }}>{related.map((p) => <li key={p.slug} style={{ padding: '3px 0' }}><Link href={`/practice-area/${p.slug}`}>{p.lawyerTitle}</Link></li>)}</ul>
+              <div className="card art-related">
+                <div className="kicker">Find a lawyer</div>
+                {related.map((p) => <Link key={p.slug} href={`/practice-area/${p.slug}`}>{p.lawyerTitle} <span aria-hidden="true">→</span></Link>)}
               </div>
             )}
           </aside>
         </div>
       </section>
+
       <section className="section alt">
         <div className="wrap">
-          <h2 style={{ fontSize: '1.9rem' }}>Keep reading</h2>
-          <div className="grid c3">
-            {more.map((x) => <Link key={x.slug} href={`/guide/${x.slug}`} className="card"><h3>{x.title}</h3><p>{x.description}</p></Link>)}
+          <div className="section-head reveal"><div><div className="eyebrow">Keep reading</div><h2>More from the <em>legal library</em></h2></div></div>
+          <div className="more-grid reveal">
+            {more.map((x) => (
+              <Link key={x.slug} href={`/guide/${x.slug}`} className="more-card">
+                <div className="more-photo"><Photo name={CATEGORY_PHOTO[x.category] ?? 'signing'} sizes="(min-width: 900px) 33vw, 100vw" /></div>
+                <span className="kicker">{x.category} · {x.readMinutes} min</span>
+                <span className="more-t">{x.title}</span>
+              </Link>
+            ))}
           </div>
         </div>
       </section>
