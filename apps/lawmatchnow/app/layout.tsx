@@ -1,16 +1,13 @@
 import type { Metadata, Viewport } from 'next'
 import { Jost, Playfair_Display } from 'next/font/google'
-import Script from 'next/script'
 import { Footer, Header } from '@/components/Shell'
+import { Analytics } from '@/components/Analytics'
 import { Tracker } from '@/components/Tracker'
 import { JsonLd } from '@/components/ui'
 import { SITE, orgLd, websiteLd } from '@/lib/site'
 import './globals.css'
 
 const display = Playfair_Display({ subsets: ['latin'], weight: ['400', '500', '600', '900'], style: ['normal', 'italic'], variable: '--font-display', display: 'swap' })
-// Google Analytics 4 property for lawmatchnow.com.
-const GA_ID = 'G-BB1PLHVBT0'
-
 const sans = Jost({ subsets: ['latin'], weight: ['300', '400', '500', '600'], variable: '--font-sans', display: 'swap' })
 
 export const metadata: Metadata = {
@@ -43,10 +40,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <main id="main">{children}</main>
         <Footer />
         <Tracker />
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
-        <Script id="ga4" strategy="afterInteractive">
-          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-        </Script>
+        <Analytics />
       </body>
     </html>
   )

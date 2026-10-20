@@ -100,9 +100,9 @@ export const TOPICS: Topic[] = [
               `${s.name} is one of the few places that still uses contributory negligence. Under this rule, if you were even slightly at fault for your own injury, you can be barred from recovering anything. Insurers know this, and they often argue that the injured person was partly to blame. That makes evidence about what happened especially important here.`,
             nr?.value?.startsWith('Pure') &&
               `${s.name} uses pure comparative negligence. You can recover damages even if you were mostly at fault, but your award is reduced by your share of the blame. If a jury finds your damages are $100,000 and you were 30% at fault, you would receive $70,000.`,
-            has(nr, /51%/) &&
+            has(nr, /^Modified.*51%/) &&
               `${s.name} uses modified comparative negligence with a 51% bar. You can recover if you were 50% or less at fault, reduced by your share. If you were more at fault than the other side combined, you recover nothing.`,
-            has(nr, /50%/) &&
+            has(nr, /^Modified.*50%/) &&
               `${s.name} uses modified comparative negligence with a 50% bar. You can recover only if you were less at fault than the other side (49% or less), and your award is reduced by your share.`,
             nr?.detail,
           ]

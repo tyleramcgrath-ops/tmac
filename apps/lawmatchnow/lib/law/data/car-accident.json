@@ -1,1 +1,2102 @@
-{"researchedOn":"2026-10-20","states":{}}
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Alaska reduces damages by the injured person's share of fault but never bars recovery outright.",
+"cite": "Alaska Stat. §§ 09.17.060, 09.17.080",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "50/100/25",
+"detail": "Alaska requires $50,000 per person and $100,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "Alaska Stat. § 28.22.101(d)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=28.22.101&secEnd=28.22.101",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Alaska does not require personal injury protection; medical payments coverage is optional.",
+"cite": "Alaska Stat. § 28.22.101",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=28.22.101&secEnd=28.22.101",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM/UIM coverage is part of Alaska auto policies but may be rejected by the insured in writing.",
+"cite": "Alaska Stat. § 28.20.445(e)(3)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=28.20.445&secEnd=28.20.445",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $2,000+ damage: police immediately; DMV report in 10 days",
+"detail": "Crashes causing injury, death, or $2,000+ total property damage must be reported to police immediately and in writing to the state within 10 days unless an officer investigates.",
+"cite": "Alaska Stat. § 28.35.080",
+"source": "https://dmv.alaska.gov/vehicle-services/vehicle-services/vehicle-services/report-a-crash/",
+"verified": true
+}
+},
+"AL": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Contributory negligence",
+"detail": "Alabama bars any recovery if the injured person was even slightly at fault (pure contributory negligence).",
+"cite": "John Cowley & Bros. v. Brown, 569 So. 2d 375 (Ala. 1990)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Alabama requires $25,000 per person and $50,000 per accident for bodily injury plus $25,000 property damage; PIP and UM are not compulsory.",
+"cite": "Ala. Code § 32-7-6; § 32-7A-4",
+"source": "https://www.revenue.alabama.gov/tax-types/mandatory-liability-insurance/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Alabama has no personal injury protection requirement; medical payments coverage is optional.",
+"cite": "Ala. Code § 32-7-6",
+"source": "https://www.revenue.alabama.gov/tax-types/mandatory-liability-insurance/",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage is included in every auto liability policy unless the named insured rejects it in writing.",
+"cite": "Ala. Code § 32-7-23",
+"source": "https://media.ca11.uscourts.gov/opinions/unpub/files/200811766.pdf",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$250 damage: SR-13 within 30 days",
+"detail": "A driver in a crash causing injury, death, or over $250 property damage to any one person must file a written SR-13 report with the state within 30 days.",
+"cite": "Ala. Code § 32-7-5",
+"source": "https://www.alea.gov/sites/default/files/2018-10/ALDPSPrivHighSchDLTestWaiver-TrafficSafeEdOrgProcedure_0.pdf",
+"verified": true
+}
+},
+"AR": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Arkansas bars recovery if the plaintiff is 50% or more at fault; otherwise damages are reduced by the plaintiff's share.",
+"cite": "Ark. Code Ann. § 16-64-122",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Arkansas requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "Ark. Code Ann. § 27-22-104",
+"source": "https://www2.insurance.arkansas.gov/pages/consumer-services/consumer-services/consumers-faq/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Insurers must offer PIP (Ark. Code § 23-89-202), but the named insured may reject it in writing, so it is not mandatory.",
+"cite": "Ark. Code Ann. §§ 23-89-202, 23-89-203",
+"source": "https://www2.insurance.arkansas.gov/pages/consumer-services/consumer-services/consumers-faq/",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Insurers must offer UM (bodily injury and property damage) and UIM coverage; the named insured may reject it in writing.",
+"cite": "Ark. Code Ann. §§ 23-89-403, 23-89-209",
+"source": "https://www2.insurance.arkansas.gov/pages/consumer-services/consumer-services/consumers-faq/",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: SR-1 within 30 days",
+"detail": "Drivers must file an SR-1 report with the Office of Driver Services within 30 days if a crash causes injury, death, or over $1,000 damage to any one person's property.",
+"cite": "Ark. Code Ann. § 27-19-501",
+"source": "https://www.dfa.arkansas.gov/wp-content/uploads/SR121_1.pdf",
+"verified": true
+}
+},
+"AZ": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Arizona reduces damages by the plaintiff's percentage of fault, even if the plaintiff was mostly at fault.",
+"cite": "Ariz. Rev. Stat. § 12-2505",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/15",
+"detail": "Arizona requires $25,000 per person and $50,000 per accident bodily injury plus $15,000 property damage (policies issued/renewed since July 1, 2020).",
+"cite": "Ariz. Rev. Stat. § 28-4009(A)(2)(b)",
+"source": "https://www.azleg.gov/ars/28/04009.htm",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Arizona does not require personal injury protection; medical payments coverage is optional.",
+"cite": "Ariz. Rev. Stat. § 28-4009",
+"source": "https://www.azleg.gov/ars/28/04009.htm",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Insurers must offer UM and UIM coverage by written notice on a state-approved form; the named insured may decline it.",
+"cite": "Ariz. Rev. Stat. § 20-259.01",
+"source": "https://www.azleg.gov/ars/20/00259-01.htm",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or death: notify police immediately",
+"detail": "A driver in a crash that injures or kills someone must immediately notify local police, the county sheriff, or the highway patrol; no separate DMV report is required.",
+"cite": "Ariz. Rev. Stat. § 28-666",
+"source": "https://www.azleg.gov/ars/28/00666.htm",
+"verified": true
+}
+},
+"CA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "California reduces damages by the plaintiff's percentage of fault but does not bar recovery.",
+"cite": "Li v. Yellow Cab Co., 13 Cal. 3d 804 (1975)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "30/60/15",
+"detail": "Since Jan. 1, 2025, California requires $30,000 per person and $60,000 per accident bodily injury plus $15,000 property damage liability.",
+"cite": "Cal. Ins. Code § 11580.1b; Cal. Veh. Code § 16056",
+"source": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/01-auto/auto101.cfm",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "California has no PIP requirement; medical payments coverage is optional.",
+"cite": "Cal. Ins. Code § 11580.1b",
+"source": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/01-auto/auto101.cfm",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Insurers must offer UM/UIM coverage; a driver who declines must sign a written waiver.",
+"cite": "Cal. Ins. Code § 11580.2",
+"source": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/01-auto/auto101.cfm",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: SR-1 to DMV within 10 days",
+"detail": "Each driver must file an SR-1 with the DMV within 10 days if anyone is injured or killed or property damage exceeds $1,000, whoever was at fault.",
+"cite": "Cal. Veh. Code § 16000",
+"source": "https://www.dmv.ca.gov/portal/handbook/california-driver-handbook/financial-responsibility-insurance-requirements-and-collisions/",
+"verified": true
+}
+},
+"CO": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Colorado bars recovery if the plaintiff's fault equals or exceeds the defendants' combined fault (50% or more).",
+"cite": "Colo. Rev. Stat. § 13-21-111",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/15",
+"detail": "Colorado requires $25,000 per person and $50,000 per accident bodily injury plus $15,000 property damage liability.",
+"cite": "Colo. Rev. Stat. § 10-4-620",
+"source": "https://doi.colorado.gov/insurance-products/auto-insurance",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Colorado repealed no-fault PIP in 2003; medical payments coverage must be offered but is not mandatory.",
+"cite": "Colo. Rev. Stat. § 10-4-635",
+"source": "https://doi.colorado.gov/insurance-products/auto-insurance",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM/UIM coverage is included in Colorado policies unless the named insured rejects it in writing.",
+"cite": "Colo. Rev. Stat. § 10-4-609",
+"source": "https://doi.colorado.gov/insurance-products/auto-insurance",
+"verified": true
+}
+},
+"CT": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Connecticut bars recovery only if the plaintiff is more at fault than the defendants combined (51% or more).",
+"cite": "Conn. Gen. Stat. § 52-572h",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Connecticut requires $25,000/$50,000 bodily injury and $25,000 property damage (or a $50,000 single limit), plus 25/50 UM/UIM.",
+"cite": "Conn. Gen. Stat. §§ 14-112, 38a-335",
+"source": "https://portal.ct.gov/cid/consumer-information-center/auto-insurance",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Connecticut is an at-fault state with no PIP requirement.",
+"cite": "Conn. Gen. Stat. § 38a-335",
+"source": "https://portal.ct.gov/cid/consumer-information-center/auto-insurance",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Connecticut law requires at least $25,000 per person / $50,000 per accident of uninsured/underinsured motorist coverage.",
+"cite": "Conn. Gen. Stat. § 38a-336",
+"source": "https://portal.ct.gov/cid/consumer-information-center/auto-insurance",
+"verified": true
+}
+},
+"DC": {
+"faultSystem": {
+"value": "Choice no-fault",
+"detail": "D.C. is at-fault by default; drivers with optional PIP elect within 60 days to take PIP benefits (which limits suits to serious injuries) or sue the at-fault driver.",
+"cite": "D.C. Code § 31-2405",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/31-2405",
+"verified": true
+},
+"negligenceRule": {
+"value": "Contributory negligence",
+"detail": "D.C. bars recovery by an at-fault driver, but pedestrians, cyclists and other non-motorized users recover unless more at fault than defendants.",
+"cite": "Wingfield v. Peoples Drug Store, 379 A.2d 685 (D.C. 1977); Motor Vehicle Collision Recovery Act of 2016",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "D.C. requires $25,000 per person and $50,000 per accident bodily injury plus $10,000 property damage liability, plus uninsured motorist coverage.",
+"cite": "D.C. Code § 31-2406(b), (c)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/31-2406",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Insurers must offer optional PIP; a victim who has it chooses within 60 days whether to take PIP benefits or pursue a liability claim.",
+"cite": "D.C. Code §§ 31-2404, 31-2405",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/31-2405",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Uninsured motorist protection is mandatory in every D.C. auto policy; underinsured coverage must be offered and is optional.",
+"cite": "D.C. Code § 31-2406(f)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/31-2406",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury: call 911 and stay for police; unattended property damage: notify police",
+"detail": "After a crash causing injury, drivers must call 911 and remain until police arrive; if damaged property's owner is absent, they must notify police or 911.",
+"cite": "D.C. Code § 50-2201.05c",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2201.05c",
+"verified": true
+}
+},
+"DE": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver's liability insurance pays for injuries and damage; your own required PIP pays some medical costs first, with no limit on suing.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Delaware bars recovery if the plaintiff is more than 50% at fault; otherwise damages are reduced.",
+"cite": "10 Del. C. § 8132",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "Delaware requires $25,000 per person and $50,000 per accident bodily injury plus $10,000 property damage liability, along with PIP.",
+"cite": "21 Del. C. §§ 2118, 2902",
+"source": "https://delcode.delaware.gov/title21/c029/sc01/index.html",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($15,000 per person / $30,000 per accident)",
+"detail": "Every Delaware policy must include PIP of at least $15,000 per person and $30,000 per accident, though Delaware remains an at-fault state.",
+"cite": "21 Del. C. § 2118(a)(2)",
+"source": "https://delcode.delaware.gov/title21/c021/sc01/index.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage must be included unless a named insured rejects it in writing on the insurer's form.",
+"cite": "18 Del. C. § 3902(a)(1)",
+"source": "https://delcode.delaware.gov/title18/c039/index.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, $2,000+ damage on a public road, or impaired driver: notify police immediately",
+"detail": "Drivers must immediately report to police any crash causing injury or death, $2,000+ apparent property damage on a public highway, or involving an impaired driver.",
+"cite": "21 Del. C. § 4203(a)",
+"source": "https://delcode.delaware.gov/title21/c042/index.html",
+"verified": true
+}
+},
+"FL": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays your own injury costs first; you can sue for pain and suffering only for permanent injury, significant scarring, or death.",
+"cite": "Fla. Stat. §§ 627.736, 627.737",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0627/Sections/0627.737.html",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Since HB 837 (Mar. 24, 2023), a plaintiff found more than 50% at fault recovers nothing; Florida was previously pure comparative.",
+"cite": "Fla. Stat. § 768.81(6)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0768/Sections/0768.81.html",
+"verified": true
+},
+"minimumLiability": {
+"value": "0/0/10 (plus $10,000 PIP)",
+"detail": "Florida requires $10,000 property damage liability and $10,000 PIP; bodily injury liability is not required for most drivers.",
+"cite": "Fla. Stat. §§ 324.022, 627.736",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0627/Sections/0627.736.html",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($10,000 minimum)",
+"detail": "PIP pays 80% of reasonable medical costs and 60% of lost income up to $10,000, plus a $5,000 death benefit, regardless of fault.",
+"cite": "Fla. Stat. § 627.736(1)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0627/Sections/0627.736.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage equal to bodily injury limits must be included unless the insured rejects it or selects lower limits in writing on a state-approved form.",
+"cite": "Fla. Stat. § 627.727",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0600-0699/0627/Sections/0627.727.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $2,000+ damage: notify police immediately",
+"detail": "Drivers must immediately notify police of crashes causing injury, death, or apparent property damage of at least $2,000; other damage crashes need a driver report within 10 days.",
+"cite": "Fla. Stat. §§ 316.065(1), 316.066(1)(e)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0300-0399/0316/Sections/0316.065.html",
+"verified": true
+}
+},
+"GA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Georgia bars recovery if the plaintiff is 50% or more at fault; otherwise damages are reduced.",
+"cite": "O.C.G.A. § 51-12-33(g)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Georgia requires $25,000 per person and $50,000 per incident bodily injury plus $25,000 property damage liability.",
+"cite": "O.C.G.A. § 33-7-11; § 40-9-37",
+"source": "https://oci.georgia.gov/insurance-resources/auto",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Georgia is a tort (at-fault) state with no PIP requirement.",
+"cite": "O.C.G.A. § 33-34-4",
+"source": "https://oci.georgia.gov/insurance-resources/auto",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $500+ damage: notify police immediately",
+"detail": "Drivers must immediately notify the nearest law enforcement agency if anyone is injured or killed or property damage is $500 or more.",
+"cite": "O.C.G.A. § 40-6-273",
+"source": "https://dds.georgia.gov/drivers-manual",
+"verified": true
+}
+},
+"HI": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays your own medical costs first; lawsuits for pain and suffering are limited unless the injury meets Hawaii's statutory tort threshold.",
+"cite": "Haw. Rev. Stat. §§ 431:10C-103.5, 431:10C-306",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Hawaii allows recovery if the plaintiff's fault is not greater than the defendants' combined fault, reduced by the plaintiff's share.",
+"cite": "Haw. Rev. Stat. § 663-31",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "40/80/20",
+"detail": "For policies issued or renewed on or after Jan. 1, 2026, Hawaii requires $40,000/$80,000 bodily injury and $20,000 property damage liability, plus $10,000 PIP.",
+"cite": "Haw. Rev. Stat. § 431:10C-301 (as amended by Act 138, 2025 per secondary sources)",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/Auto-Minimum-Limits-FAQs.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($10,000 minimum)",
+"detail": "Hawaii requires at least $10,000 of PIP for your own medical and rehabilitation costs regardless of fault.",
+"cite": "Haw. Rev. Stat. § 431:10C-103.5",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/Auto-Minimum-Limits-FAQs.pdf",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM and UIM coverage are included at liability limits unless the policyholder declines them in writing.",
+"cite": "Haw. Rev. Stat. § 431:10C-301(b)(3)",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/5.-2026-MV-Prem-Pub.pdf",
+"verified": true
+}
+},
+"IA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Iowa bars recovery if the plaintiff bears a greater percentage of fault than the defendants combined.",
+"cite": "Iowa Code § 668.3(1)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "20/40/15",
+"detail": "Iowa's financial responsibility minimum is $20,000 per person and $40,000 per accident bodily injury plus $15,000 property damage.",
+"cite": "Iowa Code §§ 321A.1(11), 321.20B",
+"source": "https://www.legis.iowa.gov/docs/code/321A.1.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Iowa is an at-fault state with no PIP requirement.",
+"cite": "Iowa Code § 321A.1",
+"source": "https://www.legis.iowa.gov/docs/code/321A.1.pdf",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM, hit-and-run, and UIM coverage must be included in every policy unless the named insured rejects it in a signed writing.",
+"cite": "Iowa Code § 516A.1",
+"source": "https://www.legis.iowa.gov/docs/code/516A.1.pdf",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,500+ damage: police immediately; DOT report in 72 hours",
+"detail": "Drivers must notify police immediately and send a written report to Iowa DOT within 72 hours for crashes with injury, death, or $1,500+ damage, unless police investigate.",
+"cite": "Iowa Code § 321.266",
+"source": "https://www.legis.iowa.gov/docs/code/321.266.pdf",
+"verified": true
+}
+},
+"ID": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Idaho bars recovery unless the plaintiff's fault is less than the defendant's (50% or more bars recovery).",
+"cite": "Idaho Code § 6-801",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/15",
+"detail": "Idaho requires $25,000 per person and $50,000 per accident bodily injury plus $15,000 property damage liability.",
+"cite": "Idaho Code §§ 49-117(20), 49-1229",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title49/T49CH1/SECT49-117/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Idaho does not require personal injury protection; medical payments coverage is optional.",
+"cite": "Idaho Code § 49-1229",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title49/T49CH1/SECT49-117/",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM and UIM coverage must be provided unless the named insured rejects either or both in writing or by electronic record.",
+"cite": "Idaho Code § 41-2502(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title41/T41CH25/SECT41-2502/",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,500 damage: notify police immediately",
+"detail": "Drivers must immediately notify police or the sheriff of crashes causing injury, death, or over $1,500 damage to any one person's property.",
+"cite": "Idaho Code § 49-1305(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title49/T49CH13/SECT49-1305/",
+"verified": true
+}
+},
+"IL": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Illinois bars recovery if the plaintiff is more than 50% at fault; otherwise damages are reduced proportionally.",
+"cite": "735 ILCS 5/2-1116",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/20",
+"detail": "Illinois requires $25,000 per person and $50,000 per accident bodily injury plus $20,000 property damage, plus UM at 25/50.",
+"cite": "625 ILCS 5/7-203; 215 ILCS 5/143a",
+"source": "https://idoi.illinois.gov/consumers/consumerinsurance/auto/auto-insurance-shopping-guide.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Illinois is an at-fault state with no PIP requirement; medical payments coverage is optional.",
+"cite": "625 ILCS 5/7-601",
+"source": "https://idoi.illinois.gov/consumers/consumerinsurance/auto/auto-insurance-shopping-guide.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "UM bodily injury coverage of at least $25,000/$50,000 is a required coverage; UIM is required when UM limits above the minimum are bought.",
+"cite": "215 ILCS 5/143a, 143a-2",
+"source": "https://idoi.illinois.gov/consumers/consumerinsurance/auto/auto-insurance-shopping-guide.html",
+"verified": true
+}
+},
+"IN": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Indiana bars recovery if the plaintiff is more than 50% at fault; claims against government defendants use contributory negligence.",
+"cite": "Ind. Code §§ 34-51-2-6, 34-51-2-2",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Indiana requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "Ind. Code § 9-25-4-5",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Indiana is an at-fault state with no PIP requirement; medical payments coverage is optional.",
+"cite": "Ind. Code § 9-25-4-5",
+"source": "https://www.in.gov/idoi/consumer-services/types-of-insurance/auto-insurance",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Every new Indiana auto policy must include UM and UIM coverage unless the insured rejects it in writing.",
+"cite": "Ind. Code § 27-7-5-2",
+"source": "https://www.in.gov/idoi/consumer-services/types-of-insurance/auto-insurance",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or death: notify police immediately; unattended property: notify owner or police",
+"detail": "Drivers in crashes with injury or death must make sure police are notified; if an unattended vehicle or property is hit and the owner can't be found, call police.",
+"cite": "Ind. Code § 9-26-1-1.1",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+}
+},
+"KS": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays first; you can sue for pain and suffering only if medical treatment reaches $2,000 or you suffer a listed serious injury (e.g., fracture, permanent injury).",
+"cite": "K.S.A. 40-3117",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch40/040_031_0017.html",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Kansas allows recovery only if the plaintiff's negligence is less than the defendants' (50% or more bars recovery).",
+"cite": "K.S.A. 60-258a(a)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Kansas requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage, plus PIP and UM coverage.",
+"cite": "K.S.A. 40-3107(e)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch40/040_031_0007.html",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($4,500 medical minimum)",
+"detail": "Kansas PIP must include at least $4,500 medical, $900/month disability for one year, $4,500 rehabilitation, $2,000 funeral, and $900/month survivor benefits.",
+"cite": "K.S.A. 40-3103, 40-3107(f)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch40/040_031_0003.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "UM/UIM coverage at least equal to the 25/50 minimum is mandatory; an insured may reject only coverage above the minimum, in writing.",
+"cite": "K.S.A. 40-284",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch40/040_002_0084.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: notify police immediately",
+"detail": "If no officer is present, a driver must immediately report a crash to police when someone is injured or killed or apparent property damage is $1,000 or more.",
+"cite": "K.S.A. 8-1604(b)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_016_0004.html",
+"verified": true
+}
+},
+"KY": {
+"faultSystem": {
+"value": "Choice no-fault",
+"detail": "PIP applies unless you reject the tort limitation in writing; otherwise you can sue for pain and suffering only after $1,000 in medical bills or a listed serious injury.",
+"cite": "KRS 304.39-060",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=30030",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Kentucky reduces damages by the plaintiff's share of fault without barring recovery.",
+"cite": "KRS 411.182",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Kentucky requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage (or a $60,000 single limit), plus PIP.",
+"cite": "KRS 304.39-110; KRS 304.39-080",
+"source": "https://drive.ky.gov/Vehicles/Pages/Mandatory-Insurance.aspx",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($10,000 minimum)",
+"detail": "Policies must include basic reparation benefits (PIP) paying up to $10,000 per person for economic loss, regardless of fault.",
+"cite": "KRS 304.39-020(2), 304.39-080",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=57854",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage must be provided in Kentucky policies, but the named insured has the right to reject it in writing.",
+"cite": "KRS 304.20-020",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=45815",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or disabled vehicle: notify police immediately; >$500 damage with no police report: written report in 10 days",
+"detail": "Drivers must immediately notify police of crashes with injury, death, or a disabled vehicle, and file a state report within 10 days for $500+ damage crashes police don't investigate.",
+"cite": "KRS 189.635(3), (5)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=54793",
+"verified": true
+}
+},
+"LA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "For crashes on or after Jan. 1, 2026, a plaintiff 51% or more at fault recovers nothing; earlier crashes remain under pure comparative fault.",
+"cite": "La. Civ. Code art. 2323 (as amended 2025)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+}
+},
+"MA": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays first; you can sue for pain and suffering only if medical expenses exceed $2,000 or the injury is death, loss of a body member, permanent disfigurement, or similar.",
+"cite": "M.G.L. c. 231, § 6D",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleII/Chapter231/Section6D",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Massachusetts bars recovery if the plaintiff's negligence is greater than the defendants' combined negligence.",
+"cite": "M.G.L. c. 231, § 85",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/30",
+"detail": "Massachusetts requires $25,000/$50,000 bodily injury and $30,000 property damage liability, plus $8,000 PIP and UM coverage.",
+"cite": "M.G.L. c. 90, §§ 34A, 34O",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section34O",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($8,000 minimum)",
+"detail": "Every policy includes at least $8,000 of PIP per person for medical bills and lost wages regardless of fault.",
+"cite": "M.G.L. c. 90, § 34A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section34A",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Massachusetts policy must include uninsured motorist coverage at no less than the compulsory bodily injury limits.",
+"cite": "M.G.L. c. 175, § 113L",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXII/Chapter175/Section113L",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: written report within 5 days",
+"detail": "Drivers must file a written crash report with the RMV within five days, with copies to local police and their insurer, if anyone is hurt or killed or damage exceeds $1,000.",
+"cite": "M.G.L. c. 90, § 26",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section26",
+"verified": true
+}
+},
+"MD": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver's liability insurance pays for injuries and damage; your own required PIP pays some medical costs first, with no limit on suing.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Contributory negligence",
+"detail": "Maryland bars any recovery if the injured person contributed to the crash at all (pure contributory negligence).",
+"cite": "Coleman v. Soccer Ass'n of Columbia, 432 Md. 679 (2013)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "30/60/15",
+"detail": "Maryland requires $30,000 per person and $60,000 per accident bodily injury plus $15,000 property damage, plus PIP and UM.",
+"cite": "Md. Code, Transp. § 17-103(b)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=17-103&enactments=false",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($2,500 minimum, waivable)",
+"detail": "Policies must include at least $2,500 of PIP, but the first named insured may waive full PIP in writing (Ins. § 19-506).",
+"cite": "Md. Code, Ins. §§ 19-505, 19-506",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gin&section=19-505&enactments=false",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "UM coverage at least equal to the 30/60/15 minimums is mandatory; enhanced UM must be offered and higher-equal limits may be waived under § 19-510.",
+"cite": "Md. Code, Ins. § 19-509",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gin&section=19-509&enactments=false",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or death: written report to MVA within 15 days (unless police reported)",
+"detail": "Drivers in injury or fatal crashes must report in writing to the MVA with proof of insurance within 15 days unless an officer investigated and filed a report.",
+"cite": "Md. Code, Transp. §§ 20-104(d), 20-107",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=20-107&enactments=false",
+"verified": true
+}
+},
+"ME": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Maine bars recovery if the plaintiff is found equally or more at fault; otherwise damages are reduced.",
+"cite": "14 M.R.S. § 156",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "50/100/25",
+"detail": "Maine requires $50,000/$100,000 bodily injury and $25,000 property damage liability, plus $2,000 medical payments and matching UM coverage.",
+"cite": "29-A M.R.S. § 1605(1)(C)",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec1605.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Maine has no PIP, but every policy must include at least $2,000 of medical payments coverage.",
+"cite": "29-A M.R.S. §§ 1605(1)(C)(4), 1605-A",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec1605.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "UM/UIM coverage is mandatory at no less than the state minimums; buyers may only reject in writing UM limits higher than the minimum.",
+"cite": "24-A M.R.S. § 2902",
+"source": "https://legislature.maine.gov/statutes/24-A/title24-Asec2902.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $2,000+ damage: notify police immediately",
+"detail": "Crashes on public ways causing injury, death, or apparent property damage of $2,000 or more must be reported immediately to state, county, or local police.",
+"cite": "29-A M.R.S. § 2251",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2251.html",
+"verified": true
+}
+},
+"MI": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays medical bills and wage loss; you can sue for noneconomic damages only for death, serious impairment of body function, or permanent serious disfigurement.",
+"cite": "MCL 500.3135",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-500-3135",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "If the plaintiff is more than 50% at fault, noneconomic damages are barred and economic damages are reduced.",
+"cite": "MCL 600.2959",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "50/100/10 (default 250/500/10)",
+"detail": "Michigan's default bodily injury limits are $250,000/$500,000; drivers may elect in writing to buy as low as $50,000/$100,000. Property damage (out-of-state) minimum is $10,000.",
+"cite": "MCL 500.3009(1), (5)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-500-3009",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes (choice of levels; unlimited default)",
+"detail": "PIP is required; since July 2020 drivers choose unlimited, $500,000, $250,000, or $50,000 (Medicaid only) medical coverage, or opt out with qualifying health coverage.",
+"cite": "MCL 500.3107c",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-500-3107c",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Optional",
+"detail": "UM and UIM bodily injury coverage are optional coverages in Michigan; insurers are not required to include them.",
+"cite": "No statutory mandate (MCL ch. 31)",
+"source": "https://www.michigan.gov/difs/-/media/Project/Websites/difs/Publication/Auto/Auto_Insurance_Guide.pdf?rev=fc722f6da32641af82c9c2dc04365eb5&hash=C491AAF60ED0BDB1CF5ED322D8FA922A",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: notify police immediately",
+"detail": "Drivers must immediately report to police any crash that injures or kills someone or causes apparent property damage totaling $1,000 or more.",
+"cite": "MCL 257.622",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-622",
+"verified": true
+}
+},
+"MN": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays first; you can sue for pain and suffering only with over $4,000 in medical expenses, permanent injury or disfigurement, death, or 60+ days of disability.",
+"cite": "Minn. Stat. § 65B.51",
+"source": "https://www.revisor.mn.gov/statutes/cite/65B.51",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Minnesota allows recovery only if the plaintiff's fault is not greater than that of the party sued.",
+"cite": "Minn. Stat. § 604.01, subd. 1",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "30/60/10",
+"detail": "Minnesota requires $30,000/$60,000 bodily injury and $10,000 property damage liability, plus $40,000 PIP and 25/50 UM and UIM.",
+"cite": "Minn. Stat. § 65B.49, subd. 3, 3a",
+"source": "https://www.revisor.mn.gov/statutes/cite/65B.49",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($40,000 minimum)",
+"detail": "Minnesota PIP must provide at least $40,000 per person: $20,000 medical and $20,000 for income loss and other economic losses.",
+"cite": "Minn. Stat. § 65B.44",
+"source": "https://www.revisor.mn.gov/statutes/cite/65B.44",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Minnesota policy must include separate UM and UIM coverage of at least $25,000 per person and $50,000 per accident.",
+"cite": "Minn. Stat. § 65B.49, subd. 3a",
+"source": "https://www.revisor.mn.gov/statutes/cite/65B.49",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or death: notify police immediately",
+"detail": "Drivers in a crash causing injury or death must notify local police, the State Patrol, or the sheriff by the quickest means; the former driver-report rule (subd. 7) was repealed in 2021.",
+"cite": "Minn. Stat. § 169.09, subd. 6",
+"source": "https://www.revisor.mn.gov/statutes/cite/169.09",
+"verified": true
+}
+},
+"MO": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Missouri reduces damages by the plaintiff's percentage of fault without barring recovery.",
+"cite": "Gustafson v. Benda, 661 S.W.2d 11 (Mo. 1983)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Missouri requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage, plus 25/50 UM coverage.",
+"cite": "Mo. Rev. Stat. §§ 303.190, 303.025",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=303.190",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Missouri is an at-fault state with no PIP requirement.",
+"cite": "Mo. Rev. Stat. § 303.190",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=303.190",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Missouri auto liability policy must include uninsured motorist coverage at no less than the 25/50 bodily injury minimums.",
+"cite": "Mo. Rev. Stat. § 379.203",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=379.203",
+"verified": true
+},
+"accidentReport": {
+"value": "Crash with an uninsured driver causing injury, death, or >$500 damage: report to DOR within 30 days",
+"detail": "Drivers must file a written report with the Director of Revenue within 30 days of a crash involving an uninsured motorist that causes injury, death, or over $500 damage to one person's property.",
+"cite": "Mo. Rev. Stat. § 303.040",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=303.040",
+"verified": true
+}
+},
+"MS": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Mississippi reduces damages by the plaintiff's share of fault but never bars recovery.",
+"cite": "Miss. Code Ann. § 11-7-15",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Mississippi requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage liability (since Jan. 1, 2006).",
+"cite": "Miss. Code Ann. §§ 63-15-3(j), 63-15-4",
+"source": "https://www.mid.ms.gov/mississippi-insurance-department/consumers/auto-insurance/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Mississippi is an at-fault state with no PIP requirement.",
+"cite": "Miss. Code Ann. § 63-15-4",
+"source": "https://www.mid.ms.gov/mississippi-insurance-department/consumers/auto-insurance/",
+"verified": true
+}
+},
+"MT": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Montana bars recovery if the plaintiff's negligence is greater than the defendants' combined negligence.",
+"cite": "Mont. Code Ann. § 27-1-702",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/20",
+"detail": "Montana requires $25,000 per person and $50,000 per accident bodily injury plus $20,000 property damage liability.",
+"cite": "Mont. Code Ann. § 61-6-103",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0060/part_0010/section_0030/0610-0060-0010-0030.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Montana is an at-fault state with no PIP requirement.",
+"cite": "Mont. Code Ann. § 61-6-103",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0060/part_0010/section_0030/0610-0060-0010-0030.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Montana policies must include UM coverage unless the named insured rejects it in writing.",
+"cite": "Mont. Code Ann. § 33-23-201",
+"source": "https://leg.mt.gov/bills/mca/title_0330/chapter_0230/part_0020/section_0010/0330-0230-0020-0010.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: notify police immediately",
+"detail": "Drivers must immediately notify police, the sheriff, or the highway patrol of crashes causing injury, death, or apparent property damage of $1,000 or more.",
+"cite": "Mont. Code Ann. § 61-7-108",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0070/part_0010/section_0080/0610-0070-0010-0080.html",
+"verified": true
+}
+},
+"NC": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Contributory negligence",
+"detail": "North Carolina bars any recovery if the injured person's own negligence contributed to the crash.",
+"cite": "Smith v. Fiber Controls Corp., 300 N.C. 669 (1980)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "50/100/50",
+"detail": "North Carolina now requires $50,000 per person and $100,000 per accident bodily injury plus $50,000 property damage, plus UM and UIM coverage.",
+"cite": "N.C. Gen. Stat. §§ 20-279.1(11), 20-309",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-279.1.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "North Carolina is an at-fault state with no PIP requirement.",
+"cite": "N.C. Gen. Stat. § 20-279.21",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-279.21.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Named insureds are required to buy UM bodily injury, UM property damage, and UIM bodily injury coverage.",
+"cite": "N.C. Gen. Stat. § 20-279.21(b)(3), (b)(4), (m)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-279.21.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: notify police immediately",
+"detail": "Drivers must immediately notify police of any 'reportable crash' — one causing death, injury, or total property damage of $1,000 or more.",
+"cite": "N.C. Gen. Stat. §§ 20-166.1(a), 20-4.01(33b)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-166.1.html",
+"verified": true
+}
+},
+"ND": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays first; you can sue for noneconomic loss only for a \"serious injury\" — over $2,500 in medical bills, death, dismemberment, serious permanent disfigurement, or 60+ days' disability.",
+"cite": "N.D. Cent. Code §§ 26.1-41-01(21), 26.1-41-08",
+"source": "https://ndlegis.gov/cencode/t26-1c41.pdf",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "North Dakota bars recovery if the plaintiff's fault is as great as the combined fault of those sued.",
+"cite": "N.D. Cent. Code § 32-03.2-02",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "North Dakota requires $25,000/$50,000 bodily injury and $25,000 property damage liability, plus $30,000 no-fault PIP and UM/UIM.",
+"cite": "N.D. Cent. Code §§ 39-16.1-11, 26.1-41-02",
+"source": "https://ndlegis.gov/cencode/t39c16-1.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($30,000 minimum)",
+"detail": "Basic no-fault benefits pay up to $30,000 per person for economic loss (wage loss capped at $150/week) regardless of fault.",
+"cite": "N.D. Cent. Code §§ 26.1-41-01, 26.1-41-06",
+"source": "https://ndlegis.gov/cencode/t26-1c41.pdf",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "No North Dakota auto liability policy may be issued or renewed without uninsured motorist coverage; UIM is also mandatory.",
+"cite": "N.D. Cent. Code §§ 26.1-40-15.2, 26.1-40-15.3",
+"source": "https://ndlegis.gov/cencode/t26-1c40.pdf",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $4,000+ damage: notify police immediately",
+"detail": "Drivers must immediately notify local police, the sheriff, or the highway patrol of crashes causing injury, death, or apparent property damage of at least $4,000.",
+"cite": "N.D. Cent. Code § 39-08-09",
+"source": "https://ndlegis.gov/cencode/t39c08.pdf",
+"verified": true
+}
+},
+"NE": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Nebraska bars recovery if the plaintiff's negligence equals or exceeds the defendants' total negligence.",
+"cite": "Neb. Rev. Stat. § 25-21,185.09",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Nebraska requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage, plus 25/50 UM and UIM.",
+"cite": "Neb. Rev. Stat. § 60-310",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-310",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Nebraska is an at-fault state with no PIP requirement.",
+"cite": "Neb. Rev. Stat. § 60-310",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-310",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Nebraska policy must include UM and UIM coverage of at least $25,000 per person and $50,000 per accident.",
+"cite": "Neb. Rev. Stat. § 44-6408",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=44-6408",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $2,000+ damage: report to NDOT within 10 days",
+"detail": "Drivers must send a crash report to the Nebraska Department of Transportation within 10 days for crashes with injury, death, or $2,000+ damage to one person's property, unless police investigate.",
+"cite": "Neb. Rev. Stat. § 60-699",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-699",
+"verified": true
+}
+},
+"NH": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "New Hampshire bars recovery if the plaintiff's fault is greater than the defendants' fault.",
+"cite": "RSA 507:7-d",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "None required (25/50/25 if insured)",
+"detail": "New Hampshire does not require auto insurance for most drivers, but policies sold must carry at least 25/50/25, $1,000 medical payments, and UM coverage.",
+"cite": "RSA 259:61; RSA 264:16",
+"source": "https://gc.nh.gov/rsa/html/XXI/259/259-61.htm",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "There is no PIP, but every New Hampshire auto policy must include at least $1,000 of medical payments coverage.",
+"cite": "RSA 264:16",
+"source": "https://gc.nh.gov/rsa/html/XXI/264/264-16.htm",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Any auto liability policy issued in New Hampshire must include UM coverage at least equal to its bodily injury limits (only umbrella/excess UM may be rejected).",
+"cite": "RSA 264:15",
+"source": "https://gc.nh.gov/rsa/html/XXI/264/264-15.htm",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: written report within 15 days",
+"detail": "Drivers must file a written crash report with the DMV within 15 days if anyone is injured or killed or property damage exceeds $1,000; a police report may satisfy this.",
+"cite": "RSA 264:25",
+"source": "https://gc.nh.gov/rsa/html/XXI/264/264-25.htm",
+"verified": true
+}
+},
+"NJ": {
+"faultSystem": {
+"value": "Choice no-fault",
+"detail": "PIP pays first; drivers choose the Limitation on Lawsuit option (suits for pain and suffering only for listed permanent injuries) or the No Limitation option.",
+"cite": "N.J.S.A. 39:6A-8",
+"source": "https://www.state.nj.us/dobi/division_consumers/pdf/autoguide2026.pdf",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "New Jersey allows recovery if the plaintiff's negligence is not greater than the defendants', reduced by the plaintiff's share.",
+"cite": "N.J.S.A. 2A:15-5.1",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "35/70/25 (standard policy)",
+"detail": "For standard policies issued or renewed on or after Jan. 1, 2026, New Jersey requires $35,000/$70,000 bodily injury and $25,000 property damage, plus PIP and UM/UIM.",
+"cite": "N.J.S.A. 39:6B-1; N.J.S.A. 39:6A-3",
+"source": "https://www.state.nj.us/dobi/division_consumers/pdf/autoguide2026.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($15,000 minimum)",
+"detail": "PIP is required; the standard policy minimum is $15,000 per person (default $250,000), with up to $250,000 for certain catastrophic injuries.",
+"cite": "N.J.S.A. 39:6A-4, 39:6A-4.3",
+"source": "https://www.state.nj.us/dobi/division_consumers/pdf/autoguide2026.pdf",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "A minimum amount of UM/UIM coverage is required in every New Jersey standard policy; the Basic Policy does not include it.",
+"cite": "N.J.S.A. 17:28-1.1",
+"source": "https://www.state.nj.us/dobi/division_consumers/pdf/autoguide2026.pdf",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or property damage: notify police; >$500 with no police report: written report to MVC in 10 days",
+"detail": "Drivers must notify police of crashes with injury, death, or property damage; if damage exceeds $500 or someone is hurt and police file no report, send a written report to the MVC within 10 days.",
+"cite": "N.J.S.A. 39:4-129, 39:4-130",
+"source": "https://www.nj.gov/mvc/pdf/license/drivermanual.pdf",
+"verified": true
+}
+},
+"NM": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "New Mexico reduces damages by the plaintiff's share of fault but does not bar recovery.",
+"cite": "Scott v. Rizzo, 96 N.M. 682 (1981)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "New Mexico requires $25,000 per person and $50,000 per accident bodily injury plus $10,000 property damage liability.",
+"cite": "N.M. Stat. Ann. § 66-5-215",
+"source": "https://www.mvd.newmexico.gov/vehicles/insurance/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "New Mexico is an at-fault state with no PIP requirement.",
+"cite": "N.M. Stat. Ann. § 66-5-215",
+"source": "https://www.mvd.newmexico.gov/vehicles/insurance/",
+"verified": true
+}
+},
+"NV": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Nevada allows recovery if the plaintiff's negligence is not greater than the defendants' combined negligence.",
+"cite": "Nev. Rev. Stat. § 41.141",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/20",
+"detail": "Nevada requires $25,000 per person and $50,000 per crash bodily injury plus $20,000 property damage liability.",
+"cite": "Nev. Rev. Stat. § 485.185",
+"source": "https://www.leg.state.nv.us/NRS/NRS-485.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Nevada is an at-fault state with no PIP requirement.",
+"cite": "Nev. Rev. Stat. § 485.185",
+"source": "https://www.leg.state.nv.us/NRS/NRS-485.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Insurers must offer UM/UIM coverage equal to the bodily injury limits on a state-approved form; the insured may decline it.",
+"cite": "Nev. Rev. Stat. § 687B.145(2)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-687B.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $750+ damage: report to DMV within 10 days",
+"detail": "Drivers must send a crash report to the DMV within 10 days if anyone is injured or killed or damage to any vehicle or property is $750 or more, with listed exceptions (e.g., police reports).",
+"cite": "Nev. Rev. Stat. § 484E.070",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484E.html",
+"verified": true
+}
+},
+"NY": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "No-fault PIP pays economic losses first; you can sue for pain and suffering only for a \"serious injury\" as defined by statute.",
+"cite": "N.Y. Ins. Law §§ 5102(d), 5104",
+"source": "https://www.dfs.ny.gov/industry-guidance/circular-letters/c32026-01",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence (51% bar for car-crash suits)",
+"detail": "For car-crash injury suits under the no-fault law filed on or after May 26, 2026, a plaintiff more at fault than defendants recovers nothing.",
+"cite": "N.Y. C.P.L.R. § 1411(b) (L. 2026, ch. 58, Part EE)",
+"source": "https://www.dfs.ny.gov/industry-guidance/circular-letters/c32026-01",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "New York requires $25,000/$50,000 bodily injury (rising to $50,000/$100,000 for death) and $10,000 property damage, plus $50,000 no-fault PIP and 25/50 UM.",
+"cite": "N.Y. Veh. & Traf. Law § 311(4); Ins. Law § 3420",
+"source": "https://www.dfs.ny.gov/consumers/auto_insurance",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($50,000 minimum)",
+"detail": "Basic no-fault (PIP) coverage pays up to $50,000 per person for medical bills, lost wages, and other economic losses regardless of fault.",
+"cite": "N.Y. Ins. Law §§ 5102, 5103",
+"source": "https://www.dfs.ny.gov/consumers/auto_insurance",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every New York policy must include UM coverage at the same minimum bodily injury limits as liability insurance (25/50).",
+"cite": "N.Y. Ins. Law § 3420(f)(1)",
+"source": "https://www.dfs.ny.gov/consumers/auto_insurance",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: MV-104 to DMV within 10 days; injury/death: notify police immediately",
+"detail": "Drivers must file an MV-104 with the DMV if anyone is hurt or killed or one person's property damage exceeds $1,000, and must immediately notify police of injury or death crashes.",
+"cite": "N.Y. Veh. & Traf. Law §§ 600, 605",
+"source": "https://dmv.ny.gov/records/file-a-motorist-crash-accident-report",
+"verified": true
+}
+},
+"OH": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Ohio bars recovery if the plaintiff's fault is greater than the combined fault of all defendants.",
+"cite": "Ohio Rev. Code § 2315.33",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Ohio requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "Ohio Rev. Code §§ 4509.01(K), 4509.51",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4509.01",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Ohio is an at-fault state with no PIP requirement.",
+"cite": "Ohio Rev. Code § 4509.51",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4509.01",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Optional",
+"detail": "Ohio auto policies may, but are not required to, include UM/UIM coverage; insurers need not offer it.",
+"cite": "Ohio Rev. Code § 3937.18(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3937.18",
+"verified": true
+},
+"accidentReport": {
+"value": "No general police-report duty; notify police if an injured person can't receive information",
+"detail": "Drivers must stop and exchange information; if an injured person can't receive it, the driver must notify police and stay until an officer arrives.",
+"cite": "Ohio Rev. Code § 4549.02",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4549.02",
+"verified": true
+}
+},
+"OK": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Oklahoma bars recovery if the plaintiff is more than 50% at fault; otherwise damages are reduced.",
+"cite": "23 Okla. Stat. § 13",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Oklahoma requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "47 Okla. Stat. § 7-204",
+"source": "https://www.oid.ok.gov/consumers/auto-insurance/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Oklahoma is an at-fault state with no PIP requirement.",
+"cite": "47 Okla. Stat. § 7-204",
+"source": "https://www.oid.ok.gov/consumers/auto-insurance/",
+"verified": true
+}
+},
+"OR": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver's liability insurance pays for injuries and damage; your own required PIP pays some medical costs first, with no limit on suing.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Oregon allows recovery if the plaintiff's fault is not greater than the combined fault of those sued.",
+"cite": "Or. Rev. Stat. § 31.600",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/20",
+"detail": "Oregon requires $25,000/$50,000 bodily injury and $20,000 property damage liability, plus $15,000 PIP and 25/50 UM.",
+"cite": "Or. Rev. Stat. §§ 806.070, 742.450",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors806.html",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($15,000 minimum)",
+"detail": "Oregon policies must include PIP covering at least $15,000 of medical expenses per person, plus income-loss benefits, regardless of fault.",
+"cite": "Or. Rev. Stat. §§ 742.520, 742.524",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors742.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Oregon auto liability policy must include uninsured motorist coverage (and UIM) at no less than the bodily injury minimums.",
+"cite": "Or. Rev. Stat. § 742.502",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors742.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, >$2,500 damage, or towed vehicle: DMV report within 72 hours",
+"detail": "Drivers must report to the DMV within 72 hours a crash causing injury or death, more than $2,500 damage to their vehicle or other property, or a vehicle that must be towed.",
+"cite": "Or. Rev. Stat. §§ 811.720, 811.725",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors811.html",
+"verified": true
+}
+},
+"PA": {
+"faultSystem": {
+"value": "Choice no-fault",
+"detail": "First-party medical benefits pay first; drivers choose full tort (unrestricted right to sue) or cheaper limited tort (pain-and-suffering suits only for serious injury).",
+"cite": "75 Pa.C.S. § 1705",
+"source": "https://www.pa.gov/content/dam/copapwp-pagov/en/insurance/documents/consumer-help-center/learn-about-insurance/auto-insurance-guide.pdf",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Pennsylvania bars recovery if the plaintiff is more negligent than the defendants combined.",
+"cite": "42 Pa.C.S. § 7102",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "15/30/5",
+"detail": "Pennsylvania requires $15,000/$30,000 bodily injury and $5,000 property damage liability, plus $5,000 first-party medical benefits.",
+"cite": "75 Pa.C.S. §§ 1702, 1711, 1786",
+"source": "https://www.pa.gov/agencies/insurance/consumer-help-center/learn-about-insurance/auto-insurance",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($5,000 minimum)",
+"detail": "Every policy must include at least $5,000 in first-party medical benefits, paid by your own insurer regardless of fault.",
+"cite": "75 Pa.C.S. § 1711",
+"source": "https://www.pa.gov/agencies/insurance/consumer-help-center/learn-about-insurance/auto-insurance",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or towed vehicle: notify police; AA-600 within 5 days if police don't investigate",
+"detail": "Call police if anyone is hurt or killed or a vehicle must be towed; if police don't investigate such a crash, send a Driver's Accident Report (AA-600) to PennDOT within five days.",
+"cite": "75 Pa.C.S. §§ 3746, 3747",
+"source": "https://www.pa.gov/content/dam/copapwp-pagov/en/penndot/documents/public/dvspubsforms/bdl/bdl-manuals/pa-drivers-manual-non-commercial/english/pub%2095.pdf",
+"verified": true
+}
+},
+"RI": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Rhode Island reduces damages by the plaintiff's share of fault but never bars recovery.",
+"cite": "R.I. Gen. Laws § 9-20-4",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "Rhode Island requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage (or a $75,000 combined single limit).",
+"cite": "R.I. Gen. Laws § 31-47-2(13)",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE31/31-47/31-47-2.htm",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Rhode Island is an at-fault state with no PIP requirement.",
+"cite": "R.I. Gen. Laws § 31-47-2",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE31/31-47/31-47-2.htm",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM equal to liability limits is included; a buyer of minimum-limit coverage may reduce it to zero only after signing a state-approved advisory notice.",
+"cite": "R.I. Gen. Laws § 27-7-2.1",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE27/27-7/27-7-2.1.htm",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or >$1,000 damage: written report to DMV within 21 days",
+"detail": "Drivers must send a written crash report to the Division of Motor Vehicles within 21 days if anyone is hurt or killed or one person's property damage exceeds $1,000.",
+"cite": "R.I. Gen. Laws § 31-26-6",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE31/31-26/31-26-6.htm",
+"verified": true
+}
+},
+"SC": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "South Carolina allows recovery only if the plaintiff's negligence is not greater than the defendants'.",
+"cite": "Nelson v. Concrete Supply Co., 303 S.C. 243 (1991)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "South Carolina requires $25,000/$50,000 bodily injury and $25,000 property damage liability, plus matching UM coverage.",
+"cite": "S.C. Code Ann. § 38-77-140",
+"source": "https://www.scstatehouse.gov/code/t38c077.php",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "South Carolina is an at-fault state with no PIP requirement.",
+"cite": "S.C. Code Ann. § 38-77-140",
+"source": "https://www.scstatehouse.gov/code/t38c077.php",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every South Carolina auto policy must include UM coverage of at least 25/50 bodily injury and $25,000 property damage; UIM must be offered.",
+"cite": "S.C. Code Ann. §§ 38-77-150, 38-77-160",
+"source": "https://www.scstatehouse.gov/code/t38c077.php",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or death: notify police immediately; injury, death, or $1,000+ damage not investigated by police: written report to DMV in 15 days",
+"detail": "Drivers must immediately notify police of injury or fatal crashes, and file a report with insurance verification to the DMV within 15 days for $1,000+ damage crashes police didn't investigate.",
+"cite": "S.C. Code Ann. §§ 56-5-1260, 56-5-1270",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+}
+},
+"SD": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Slight/gross (South Dakota)",
+"detail": "A plaintiff can recover only if their negligence was slight compared with the defendant's; damages are then reduced.",
+"cite": "S.D. Codified Laws § 20-9-2",
+"source": "https://sdlegislature.gov/api/Statutes/20-9-2.html",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "South Dakota requires $25,000 per person and $50,000 per accident bodily injury plus $25,000 property damage, plus UM and UIM.",
+"cite": "S.D. Codified Laws § 32-35-70",
+"source": "https://sdlegislature.gov/api/Statutes/32-35-70.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "South Dakota is an at-fault state with no PIP requirement.",
+"cite": "S.D. Codified Laws § 32-35-70",
+"source": "https://sdlegislature.gov/api/Statutes/32-35-70.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every South Dakota policy must include UM coverage at limits equal to its bodily injury liability coverage; UIM is also required.",
+"cite": "S.D. Codified Laws §§ 58-11-9, 58-11-9.4",
+"source": "https://sdlegislature.gov/api/Statutes/58-11-9.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage to one person ($2,000 per crash): notify police immediately",
+"detail": "Drivers must immediately notify law enforcement of crashes causing injury, death, or apparent damage of $1,000 to one person's property or $2,000 per crash.",
+"cite": "S.D. Codified Laws § 32-34-7",
+"source": "https://sdlegislature.gov/api/Statutes/32-34-7.html",
+"verified": true
+}
+},
+"TN": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Tennessee bars recovery if the plaintiff is 50% or more at fault; otherwise damages are reduced.",
+"cite": "McIntyre v. Balentine, 833 S.W.2d 52 (Tenn. 1992)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+}
+},
+"TX": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Texas bars recovery if the plaintiff's responsibility is greater than 50%.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 33.001",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "30/60/25",
+"detail": "Texas requires $30,000 per person and $60,000 per accident bodily injury plus $25,000 property damage liability.",
+"cite": "Tex. Transp. Code § 601.072",
+"source": "https://www.tdi.texas.gov/pubs/consumer/cb020.html",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Every Texas policy includes $2,500 PIP unless the named insured rejects it in writing, so PIP is not strictly mandatory.",
+"cite": "Tex. Ins. Code § 1952.152",
+"source": "https://www.tdi.texas.gov/pubs/consumer/cb020.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "Insurers must offer UM/UIM coverage; a driver who doesn't want it must reject it in writing.",
+"cite": "Tex. Ins. Code § 1952.101",
+"source": "https://www.tdi.texas.gov/pubs/consumer/cb020.html",
+"verified": true
+}
+},
+"UT": {
+"faultSystem": {
+"value": "No-fault",
+"detail": "PIP pays first; you can sue for general damages only for death, dismemberment, a fracture, permanent disability or disfigurement, or medical expenses over $3,000.",
+"cite": "Utah Code § 31A-22-309(1)",
+"source": "https://le.utah.gov/xcode/Title31A/Chapter22/C31A-22-S309_2026050620260506.html",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (50% bar)",
+"detail": "Utah allows recovery only if the defendants' fault exceeds the plaintiff's, so a plaintiff 50% or more at fault recovers nothing.",
+"cite": "Utah Code § 78B-5-818(2)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "30/65/25",
+"detail": "For policies issued or renewed since Jan. 1, 2025, Utah requires $30,000/$65,000 bodily injury and $25,000 property damage (or $90,000 single limit), plus $3,000 PIP.",
+"cite": "Utah Code § 31A-22-304(2)",
+"source": "https://le.utah.gov/xcode/Title31A/Chapter22/C31A-22-S304_2023050320230503.html",
+"verified": true
+},
+"pipRequired": {
+"value": "Yes ($3,000 minimum)",
+"detail": "Utah PIP must cover at least $3,000 per person in medical expenses, plus limited income, funeral ($1,500), and death ($3,000) benefits.",
+"cite": "Utah Code § 31A-22-307",
+"source": "https://le.utah.gov/xcode/Title31A/Chapter22/C31A-22-S307_2023050320230503.html",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage equal to liability limits is included unless a named insured rejects it or buys less by signing a state-filed acknowledgment form.",
+"cite": "Utah Code § 31A-22-305",
+"source": "https://le.utah.gov/xcode/Title31A/Chapter22/C31A-22-S305_2026050620260506.html",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $2,500+ damage: notify police immediately",
+"detail": "Drivers must immediately notify the nearest law enforcement agency of crashes causing injury or death, or property damage of $2,500 or more.",
+"cite": "Utah Code §§ 41-6a-401(4), 41-6a-401.7",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/C41-6a-S401_2026050620260701.html",
+"verified": true
+}
+},
+"VA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Contributory negligence",
+"detail": "Virginia bars any recovery if the injured person was even slightly at fault (pure contributory negligence).",
+"cite": "Baskett v. Banks, 186 Va. 1022 (1947)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "50/100/25",
+"detail": "For policies effective on or after Jan. 1, 2025, Virginia requires $50,000/$100,000 bodily injury and $25,000 property damage, plus matching UM/UIM.",
+"cite": "Va. Code § 46.2-472(B)",
+"source": "https://law.lis.virginia.gov/vacode/title46.2/chapter3/section46.2-472/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Virginia is an at-fault state with no PIP requirement; medical expense coverage is optional.",
+"cite": "Va. Code § 46.2-472",
+"source": "https://law.lis.virginia.gov/vacode/title46.2/chapter3/section46.2-472/",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "UM/UIM coverage at least equal to the minimum liability limits is mandatory; a named insured may reject only coverage above the minimum.",
+"cite": "Va. Code § 38.2-2206(A)",
+"source": "https://law.lis.virginia.gov/vacode/title38.2/chapter22/section38.2-2206/",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or attended-property damage: report to police forthwith",
+"detail": "Drivers in crashes causing injury or death or damaging an attended vehicle or property must stop and report their information forthwith to State Police or local police.",
+"cite": "Va. Code § 46.2-894",
+"source": "https://law.lis.virginia.gov/vacode/title46.2/chapter8/section46.2-894/",
+"verified": true
+}
+},
+"VT": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Vermont bars recovery if the plaintiff's negligence is greater than the defendants' combined negligence.",
+"cite": "12 V.S.A. § 1036",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "Vermont requires $25,000/$50,000 bodily injury and $10,000 property damage liability, plus UM/UIM of at least $50,000/$100,000.",
+"cite": "23 V.S.A. § 800",
+"source": "https://legislature.vermont.gov/statutes/section/23/011/00800",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Vermont is an at-fault state with no PIP requirement.",
+"cite": "23 V.S.A. § 800",
+"source": "https://legislature.vermont.gov/statutes/section/23/011/00800",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Vermont policies must include UM/UIM coverage of at least $50,000 per person and $100,000 per accident, plus UM property damage up to $10,000.",
+"cite": "23 V.S.A. § 941",
+"source": "https://legislature.vermont.gov/statutes/section/23/011/00941",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury or $3,000+ damage: written report to DMV within 72 hours",
+"detail": "Drivers in crashes with injury or total property damage of $3,000 or more must mail a written report to the DMV Commissioner within 72 hours.",
+"cite": "23 V.S.A. § 1129",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01129",
+"verified": true
+}
+},
+"WA": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Pure comparative negligence",
+"detail": "Washington reduces damages by the plaintiff's share of fault but never bars recovery.",
+"cite": "Rev. Code Wash. § 4.22.005",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "Washington requires $25,000 per person and $50,000 per accident bodily injury plus $10,000 property damage liability.",
+"cite": "Rev. Code Wash. §§ 46.29.090, 46.30.020",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.29.090",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Insurers must offer PIP with every policy, but the named insured may reject it in writing.",
+"cite": "Rev. Code Wash. § 48.22.085",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=48.22.085",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM/UIM coverage must be provided unless a named insured or spouse rejects it in writing.",
+"cite": "Rev. Code Wash. § 48.22.030(4)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=48.22.030",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: written report to police within 4 days",
+"detail": "If no officer reports it, drivers must file a written collision report with local police, the sheriff, or the State Patrol within four days for crashes with injury, death, or $1,000+ damage.",
+"cite": "Rev. Code Wash. § 46.52.030; WAC 446-85-010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.52.030",
+"verified": true
+}
+},
+"WI": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Wisconsin bars recovery if the plaintiff's negligence is greater than the defendant's.",
+"cite": "Wis. Stat. § 895.045(1)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/10",
+"detail": "Wisconsin requires $25,000/$50,000 bodily injury and $10,000 property damage liability, plus 25/50 UM and $1,000 medical payments (rejectable).",
+"cite": "Wis. Stat. §§ 344.01(2)(d), 344.62, 632.32(4)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/344.01(2)(d)",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Wisconsin has no PIP, but policies must include $1,000 of medical payments coverage unless the named insured rejects it.",
+"cite": "Wis. Stat. § 632.32(4)(a)2., (bc)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/632.32",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every Wisconsin auto policy must include UM coverage of at least $25,000 per person and $50,000 per accident; UIM must be offered.",
+"cite": "Wis. Stat. § 632.32(4)(a)1., (4m)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/632.32",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage ($200 to government property): notify police immediately",
+"detail": "Drivers must immediately notify police of crashes with injury, death, $1,000+ damage to one person's property, or $200+ damage to government property.",
+"cite": "Wis. Stat. § 346.70(1)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/346.70",
+"verified": true
+}
+},
+"WV": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "West Virginia bars recovery if the plaintiff's fault is greater than the combined fault of all others.",
+"cite": "W. Va. Code § 55-7-13c",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/25",
+"detail": "West Virginia requires $25,000/$50,000 bodily injury and $25,000 property damage liability, plus matching UM coverage.",
+"cite": "W. Va. Code § 17D-4-2",
+"source": "https://code.wvlegislature.gov/17D-4-2/",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "West Virginia is an at-fault state with no PIP requirement.",
+"cite": "W. Va. Code § 17D-4-2",
+"source": "https://code.wvlegislature.gov/17D-4-2/",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Required",
+"detail": "Every West Virginia policy must include UM coverage at least equal to the minimum liability limits; higher UM and UIM are optional.",
+"cite": "W. Va. Code § 33-6-31(b)",
+"source": "https://code.wvlegislature.gov/33-6-31/",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or $1,000+ damage: notify police immediately",
+"detail": "Drivers must immediately notify local police, the sheriff, or State Police of crashes causing injury, death, or total property damage of $1,000 or more.",
+"cite": "W. Va. Code § 17C-4-6",
+"source": "https://code.wvlegislature.gov/17C-4-6/",
+"verified": true
+}
+},
+"WY": {
+"faultSystem": {
+"value": "At-fault (tort)",
+"detail": "The at-fault driver (and their liability insurer) pays for injuries and property damage; there are no limits on suing for pain and suffering.",
+"cite": "No tort-limitation statute; see state compulsory liability insurance law",
+"source": "https://www.iii.org/table-archive/21328",
+"verified": true
+},
+"negligenceRule": {
+"value": "Modified comparative negligence (51% bar)",
+"detail": "Wyoming bars recovery if the plaintiff's fault is greater than the combined fault of the defendants.",
+"cite": "Wyo. Stat. § 1-1-109(b)",
+"source": "https://www.mwl-law.com/wp-content/uploads/2018/02/CONTRIBUTORY-NEGLIGENCE-COMPARATIVE-FAULT-LAWS-CHART-3.pdf",
+"verified": true
+},
+"minimumLiability": {
+"value": "25/50/20",
+"detail": "Wyoming requires $25,000 per person and $50,000 per accident bodily injury plus $20,000 property damage liability.",
+"cite": "Wyo. Stat. §§ 31-9-102(a)(xi), 31-4-103",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"pipRequired": {
+"value": "No",
+"detail": "Wyoming is an at-fault state with no PIP requirement.",
+"cite": "Wyo. Stat. § 31-9-102",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"uninsuredMotorist": {
+"value": "Must be offered (can reject in writing)",
+"detail": "UM coverage must be included in Wyoming policies, but the named insured may reject it.",
+"cite": "Wyo. Stat. § 31-10-101",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"accidentReport": {
+"value": "Injury, death, or disabled vehicle: notify police immediately",
+"detail": "Drivers must immediately notify police, the sheriff, or the highway patrol of crashes causing injury, death, or damage that leaves a vehicle unable to operate normally and safely.",
+"cite": "Wyo. Stat. § 31-5-1105",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+}
+}
+}
+}

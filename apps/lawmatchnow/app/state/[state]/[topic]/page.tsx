@@ -6,7 +6,6 @@ import { ReadingProgress } from '@/components/fx/ReadingProgress'
 import { RevealOnScroll } from '@/components/fx/Reveal'
 import { TocSpy } from '@/components/fx/TocSpy'
 import { FactTable, Sources } from '@/components/LawFacts'
-import { Photo } from '@/components/Photo'
 import { SealMark } from '@/components/Shell'
 import { Breadcrumbs, CaseReviewCard, CtaBand, Faqs, JsonLd } from '@/components/ui'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
@@ -14,6 +13,7 @@ import { STATES, citiesInState, stateBySlug } from '@/lib/geo'
 import { neighborValues, rankSentence, shareSentence } from '@/lib/law/compare'
 import { FIELDS, researchedOn } from '@/lib/law/facts'
 import { ctxFor, paras, topicBySlug, topicsFor } from '@/lib/law/topics'
+import { photoUrl } from '@/lib/photos'
 import { SITE, abs, fmtDate } from '@/lib/site'
 
 type Props = { params: Promise<{ state: string; topic: string }> }
@@ -54,7 +54,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     alternates: { canonical: url },
-    openGraph: { type: 'article', title, description, url: abs(url), modifiedTime: researchedOn(t.lead) },
+    openGraph: { type: 'article', title, description, url: abs(url), modifiedTime: researchedOn(t.lead), images: [{ url: photoUrl(t.photo, 1200), width: 1200, height: 800 }] },
   }
 }
 
@@ -111,7 +111,6 @@ export default async function StateTopicPage({ params }: Props) {
             </div>
           </div>
         </div>
-        <div className="wrap"><div className="art-photo short rise"><Photo name={t.photo} priority sizes="(min-width: 1240px) 1180px, 100vw" /></div></div>
       </header>
 
       <section className="section art-section">

@@ -23,5 +23,5 @@ const CITY_DATA = data as unknown as Record<string, CityLocal>
 
 export const cityLocal = (slug: string): CityLocal | null => CITY_DATA[slug] ?? null
 
-export const unsplash = (id: string, w: number) => `https://images.unsplash.com/photo-${id}?w=${w}&q=72&auto=format&fit=crop`
+export const unsplash = (id: string, w: number) => `https://images.unsplash.com/photo-${id}?w=${w}&q=${w > 1000 ? 62 : 68}&auto=format&fit=crop`
 export const unsplashSet = (id: string, widths = [640, 1080, 1600, 2200]) => widths.map((w) => `${unsplash(id, w)} ${w}w`).join(', ')

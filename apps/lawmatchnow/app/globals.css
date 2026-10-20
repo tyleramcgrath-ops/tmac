@@ -363,7 +363,8 @@ a.card:hover { border-color: var(--brass-2); transform: translateY(-2px); box-sh
   .rise > *:nth-child(4) { animation-delay: 0.24s; }
   .rise > *:nth-child(5) { animation-delay: 0.32s; }
 }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+/* Transform only: text that starts invisible would delay Largest Contentful Paint. */
+@keyframes rise { from { transform: translateY(14px); } to { transform: none; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { transition: none !important; animation: none !important; } }
 
 .center { text-align: center; }

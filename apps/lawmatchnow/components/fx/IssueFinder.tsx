@@ -32,7 +32,7 @@ export function IssueFinder({ issues }: { issues: Issue[] }) {
         ))}
       </div>
       <div className={`pk-panel${out ? ' out' : ''}`} role="tabpanel">
-        <div className="pk-ph pk-swap" style={{ backgroundImage: `url(${it.img})` }} />
+        <div className="pk-ph pk-swap"><img src={it.img} alt="" loading="lazy" decoding="async" /></div>
         <div className="pk-body pk-swap">
           <div className="pk-k">You likely need</div>
           <h3>{it.title}</h3>
