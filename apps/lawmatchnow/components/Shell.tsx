@@ -14,12 +14,7 @@ const NAV = [
 export function Logo() {
   return (
     <Link href="/" className="logo" aria-label={`${SITE.name} home`}>
-      <svg width="34" height="34" viewBox="0 0 64 64" aria-hidden="true">
-        <circle cx="32" cy="32" r="31" fill="#0e1726" />
-        <circle cx="32" cy="32" r="26.5" fill="none" stroke="#c9a76b" strokeWidth="1.2" />
-        <path d="M32 15v32M22 47h20M18 24h28" stroke="#c9a76b" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M18 24l-6 12h12zM46 24l-6 12h12z" fill="none" stroke="#c9a76b" strokeWidth="1.8" strokeLinejoin="round" />
-      </svg>
+      <span className="logo-mark" aria-hidden="true">L</span>
       <span className="logo-word">
         LawMatch<i>Now</i>
       </span>
@@ -45,7 +40,7 @@ export function Header() {
           <Logo />
           <nav className="nav" aria-label="Main">
             {NAV.map((n) => (
-              <Link key={n.href} href={n.href}>{n.label}</Link>
+              <Link key={n.href} href={n.href} className={n.href === '/for-attorneys' ? 'nav-firms' : undefined}>{n.label}</Link>
             ))}
           </nav>
           <Link href="/get-started" className="btn btn-dark btn-sm header-cta">Free case review</Link>
