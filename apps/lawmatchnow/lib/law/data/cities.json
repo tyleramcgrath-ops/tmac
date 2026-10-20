@@ -1,0 +1,3390 @@
+{
+"new-york": {
+"county": "New York City (five counties)",
+"countyNote": "New York City is made up of five boroughs, each a separate county: Manhattan (New York County), Brooklyn (Kings County), Queens (Queens County), the Bronx (Bronx County) and Staten Island (Richmond County). The court details below are for Manhattan.",
+"stateCourt": {
+"name": "Supreme Court of the State of New York, New York County",
+"courthouse": "New York County Courthouse",
+"address": "60 Centre Street, New York, NY 10007",
+"url": "https://www.nycourts.gov/courts/1jd/supctmanh/"
+},
+"smallClaims": {
+"court": "Small Claims Part, Civil Court of the City of New York (New York County)",
+"address": "111 Centre Street, New York, NY 10013",
+"url": "https://www.nycourts.gov/new-york-city-small-claims-court/nyc-small-claims-court-legal-information"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of New York",
+"courthouse": "Daniel Patrick Moynihan United States Courthouse",
+"address": "500 Pearl Street, New York, NY 10007",
+"url": "https://www.nysd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "New York - Federal Plaza Immigration Court",
+"address": "26 Federal Plaza, 12th Floor, Room 1237, New York, NY 10278",
+"url": "https://www.justice.gov/eoir/new-york-federal-plaza-immigration-court"
+},
+"bar": {
+"name": "New York City Bar Association",
+"url": "https://www.nycbar.org/",
+"referral": {
+"name": "New York City Bar Legal Referral Service",
+"phone": "212-626-7373",
+"url": "https://www.nycbar.org/get-legal-help/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Services NYC",
+"url": "https://www.legalservicesnyc.org/",
+"serves": "Low-income New Yorkers in all five boroughs"
+},
+{
+"name": "The Legal Aid Society",
+"url": "https://legalaidnyc.org/",
+"serves": "Low-income New Yorkers needing civil, criminal defense and juvenile rights help"
+},
+{
+"name": "New York Legal Assistance Group (NYLAG)",
+"url": "https://nylag.org/",
+"serves": "Low-income New York City residents"
+}
+],
+"population": {
+"value": 8584629,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "New York City's courts are organized by borough, and each borough is its own county. In Manhattan, the Supreme Court of the State of New York, New York County, is the main trial court for civil cases of any size, with its principal courthouse at 60 Centre Street. The Civil Court of the City of New York hears smaller civil matters, and its Small Claims Part takes claims up to $10,000 without a lawyer; the Manhattan branch is at 111 Centre Street. Federal cases from Manhattan and the Bronx go to the U.S. District Court for the Southern District of New York, while Brooklyn, Queens and Staten Island fall within the Eastern District of New York, based at 225 Cadman Plaza East in Brooklyn. Immigration cases are heard at several EOIR courts in Manhattan, including 26 Federal Plaza. Lawyers' registration status can be checked through the New York State Unified Court System's attorney search.",
+"blurbSources": [
+"https://www.nycourts.gov/courts/new-york-county-supreme-court-civil-term/about-court",
+"https://www.nycourts.gov/new-york-city-small-claims-court/nyc-small-claims-court-legal-information",
+"https://www.nysd.uscourts.gov/",
+"https://www.nyed.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://iapps.courts.state.ny.us/attorneyservices/search"
+],
+"photo": {
+"id": "1499092346589-b9b6be3e94b2",
+"pageUrl": "https://unsplash.com/photos/manhattan-skyline-and-brooklyn-bridge-SVVTZtTGyaU",
+"photographer": "Patrick Tomasso",
+"alt": "The Manhattan skyline and Brooklyn Bridge over the East River"
+}
+},
+"los-angeles": {
+"county": "Los Angeles County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of California, County of Los Angeles",
+"courthouse": "Stanley Mosk Courthouse",
+"address": "111 N. Hill Street, Los Angeles, CA 90012",
+"url": "https://www.lacourt.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of Los Angeles - Small Claims",
+"address": null,
+"url": "https://www.lacourt.org/division/smallclaims/smallclaims.aspx"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Central District of California (Western Division)",
+"courthouse": "Felicitas and Gonzalo Mendez United States Courthouse",
+"address": "350 W. 1st Street, Los Angeles, CA 90012",
+"url": "https://www.cacd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Los Angeles - N. Los Angeles Street Immigration Court",
+"address": "300 North Los Angeles Street, Room 4330, Los Angeles, CA 90012",
+"url": "https://www.justice.gov/eoir/los-angeles-n-los-angeles-street-immigration-court"
+},
+"bar": {
+"name": "Los Angeles County Bar Association",
+"url": "https://lacba.org/",
+"referral": {
+"name": "SmartLaw Lawyer Referral Service",
+"phone": "213-243-1525",
+"url": "https://smartlaw.org/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Foundation of Los Angeles (LAFLA)",
+"url": "https://lafla.org/",
+"serves": "Low-income residents of Greater Los Angeles"
+},
+{
+"name": "Neighborhood Legal Services of Los Angeles County (NLSLA)",
+"url": "https://nlsla.org/",
+"serves": "Low-income residents of Los Angeles County"
+}
+],
+"population": {
+"value": 3869089,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Civil and criminal cases in Los Angeles are heard by the Superior Court of California, County of Los Angeles, which runs courthouses across the county. Downtown, the Stanley Mosk Courthouse at 111 N. Hill Street is a main civil courthouse. The court's Small Claims Division handles civil claims of $12,500 or less, with simplified rules and no lawyers at the hearing. Federal cases go to the U.S. District Court for the Central District of California, whose Los Angeles courthouses include the Felicitas and Gonzalo Mendez United States Courthouse at 350 W. 1st Street and the Edward R. Roybal Federal Building on East Temple Street. The EOIR runs immigration courts in Los Angeles, including the one at 300 North Los Angeles Street. Anyone hiring a lawyer can confirm the lawyer's license and discipline history through the State Bar of California's attorney search.",
+"blurbSources": [
+"https://www.lacourt.ca.gov/",
+"https://www.lacourt.org/division/smallclaims/smallclaims.aspx",
+"https://www.cacd.uscourts.gov/locations",
+"https://www.justice.gov/eoir/los-angeles-n-los-angeles-street-immigration-court",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1757386117831-d4e9bc583076",
+"pageUrl": "https://unsplash.com/photos/downtown-los-angeles-skyline-at-sunrise-y9eP8uxD4Io",
+"photographer": "Venti Views",
+"alt": "Downtown Los Angeles skyline at sunrise"
+}
+},
+"chicago": {
+"county": "Cook County",
+"countyNote": "A small part of Chicago around O'Hare International Airport lies in DuPage County.",
+"stateCourt": {
+"name": "Circuit Court of Cook County",
+"courthouse": "Richard J. Daley Center",
+"address": "50 W. Washington St., Chicago, IL 60602",
+"url": "https://www.cookcountycourtil.gov/"
+},
+"smallClaims": {
+"court": "Circuit Court of Cook County, First Municipal District (Small Claims)",
+"address": "Richard J. Daley Center, 50 W. Washington St., Chicago, IL 60602",
+"url": "https://www.cookcountyclerkofcourt.org/divisions/civil-division"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Illinois (Eastern Division)",
+"courthouse": "Everett McKinley Dirksen United States Courthouse",
+"address": "219 South Dearborn Street, Chicago, IL 60604",
+"url": "https://www.ilnd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Chicago Immigration Court",
+"address": "55 E. Monroe St., Suite 1500, Chicago, IL 60603",
+"url": "https://www.justice.gov/eoir/chicago-immigration-court"
+},
+"bar": {
+"name": "The Chicago Bar Association",
+"url": "https://www.chicagobar.org/",
+"referral": {
+"name": "The Chicago Bar Association Lawyer Referral Service",
+"phone": "(312) 554-2001",
+"url": "https://lrs.chicagobar.org/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Chicago",
+"url": "https://legalaidchicago.org/",
+"serves": "Low-income residents of Cook County"
+},
+{
+"name": "CARPLS Legal Aid",
+"url": "https://carpls.org/",
+"serves": "Low- and moderate-income Cook County residents through a legal aid hotline"
+}
+],
+"population": {
+"value": 2731585,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "The Circuit Court of Cook County is the state trial court for Chicago, handling civil, criminal, family and other cases. Its First Municipal District covers the city, and its main civil courthouse is the Richard J. Daley Center at 50 W. Washington St., which also hosts small claims. Illinois small claims cases cover money claims up to $10,000, and a pro se small claims track at the Daley Center is reserved for self-represented parties with claims up to $3,000. Felony cases in the city are heard at the George N. Leighton Criminal Courthouse. Federal cases go to the U.S. District Court for the Northern District of Illinois, Eastern Division, at the Dirksen United States Courthouse on South Dearborn Street. Immigration cases are heard at the Chicago Immigration Court on East Monroe Street. Illinois lawyers' licenses and discipline records can be checked through the Attorney Registration and Disciplinary Commission (ARDC).",
+"blurbSources": [
+"https://www.cookcountycourtil.gov/",
+"https://www.cookcountycourtil.gov/location/richard-j-daley-center",
+"https://www.illinoislegalaid.org/node/26651",
+"https://www.cookcountyclerkofcourt.org/divisions/civil-division",
+"https://www.ilnd.uscourts.gov/",
+"https://www.justice.gov/eoir/chicago-immigration-court",
+"https://www.iardc.org/Lawyer/Search"
+],
+"photo": {
+"id": "1563718944-758794a56b34",
+"pageUrl": "https://unsplash.com/photos/chicago-skyline-across-lake-michigan-5eARmrl56u0",
+"photographer": "Muzammil Soorma",
+"alt": "The Chicago skyline across Lake Michigan from North Avenue Beach"
+}
+},
+"houston": {
+"county": "Harris County",
+"countyNote": "Parts of Houston extend into Fort Bend County and Montgomery County.",
+"stateCourt": {
+"name": "Harris County District Courts",
+"courthouse": "Harris County Civil Courthouse",
+"address": "201 Caroline Street, Houston, TX 77002",
+"url": "https://www.justex.net/"
+},
+"smallClaims": {
+"court": "Harris County Justice of the Peace Courts",
+"address": null,
+"url": "https://www.jp.hctx.net/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Texas (Houston Division)",
+"courthouse": "Bob Casey United States Courthouse",
+"address": "515 Rusk Street, Houston, TX 77002",
+"url": "https://www.txs.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Houston - Jefferson Street Immigration Court",
+"address": "500 Jefferson Street, Suite 300, Houston, TX 77002",
+"url": "https://www.justice.gov/eoir/houston-jefferson-street-immigration-court"
+},
+"bar": {
+"name": "Houston Bar Association",
+"url": "https://www.hba.org/",
+"referral": {
+"name": "Houston Lawyer Referral Service",
+"phone": "(713) 237-9429",
+"url": "https://hlrs.org/"
+}
+},
+"legalAid": [
+{
+"name": "Lone Star Legal Aid",
+"url": "https://www.lonestarlegal.org/",
+"serves": "Low-income residents of Houston and the Texas Gulf Coast and East Texas region"
+},
+{
+"name": "Houston Volunteer Lawyers",
+"url": "https://legalhelphouston.org/",
+"serves": "Low-income Harris County residents, through volunteer attorneys"
+}
+],
+"population": {
+"value": 2397315,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "In Texas, district courts are the trial courts of general jurisdiction, hearing felony cases, divorces, land title disputes and most larger civil cases. Harris County has many district courts that specialize in civil, criminal, family or juvenile matters. The civil and family district courts sit in the Harris County Civil Courthouse at 201 Caroline Street. Smaller civil disputes and small claims go to the county's Justice of the Peace courts, which also hear Class C misdemeanors. Federal cases go to the U.S. District Court for the Southern District of Texas, Houston Division, at the Bob Casey United States Courthouse on Rusk Street. Houston has more than one EOIR immigration court, including one at 500 Jefferson Street. The Houston Lawyer Referral Service, affiliated with the Houston Bar Association, is certified under Texas law. Lawyers' licenses can be verified through the State Bar of Texas.",
+"blurbSources": [
+"https://www.txcourts.gov/about-texas-courts/trial-courts/",
+"https://texaslawhelp.org/guide/harris-county-district-courts",
+"https://www.jp.hctx.net/",
+"https://www.txs.uscourts.gov/",
+"https://www.justice.gov/eoir/houston-jefferson-street-immigration-court",
+"https://hlrs.org/",
+"https://www.hba.org/",
+"https://www.texasbar.com/"
+],
+"photo": {
+"id": "1585501365481-dce341e1de0c",
+"pageUrl": "https://unsplash.com/photos/kIAFWEcQ9Dw",
+"photographer": "Rome Wilkerson",
+"alt": "Downtown Houston skyline under a blue sky"
+}
+},
+"phoenix": {
+"county": "Maricopa County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of Arizona in Maricopa County",
+"courthouse": "Central Court Building",
+"address": "201 W. Jefferson Street, Phoenix, AZ 85003",
+"url": "https://superiorcourt.maricopa.gov/"
+},
+"smallClaims": {
+"court": "Maricopa County Justice Courts",
+"address": null,
+"url": "https://justicecourts.maricopa.gov/case-types/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Arizona (Phoenix Division)",
+"courthouse": "Sandra Day O'Connor U.S. Courthouse",
+"address": "401 W. Washington St., Phoenix, AZ 85003",
+"url": "https://www.azd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Phoenix Immigration Court",
+"address": "250 N. Seventh Ave., Suite 300, Phoenix, AZ 85007",
+"url": "https://www.justice.gov/eoir/phoenix-immigration-court"
+},
+"bar": {
+"name": "Maricopa County Bar Association",
+"url": "https://maricopabar.org/",
+"referral": {
+"name": "MCBA Lawyer Referral Service",
+"phone": "(602) 257-4434",
+"url": "https://maricopabar.org/?pg=LRSHome"
+}
+},
+"legalAid": [
+{
+"name": "Community Legal Services",
+"url": "https://clsaz.org/",
+"serves": "Low-income residents of Maricopa County and other central and western Arizona counties"
+}
+],
+"population": {
+"value": 1665481,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "The Superior Court of Arizona in Maricopa County is the general-jurisdiction trial court for Phoenix, hearing felony criminal cases, civil lawsuits, family law, probate and juvenile matters. Its downtown Central Court Building is at 201 W. Jefferson Street. Small claims, along with evictions, traffic and misdemeanor cases, are handled by the Maricopa County Justice Courts, which operate from several locations around the county. Federal cases go to the U.S. District Court for the District of Arizona, which sits in Phoenix at the Sandra Day O'Connor U.S. Courthouse, 401 W. Washington Street. The Phoenix Immigration Court is at 250 N. Seventh Avenue. The Maricopa County Bar Association has run a Lawyer Referral Service since 1964. The State Bar of Arizona's online lawyer search shows whether a lawyer is licensed and lists any public discipline.",
+"blurbSources": [
+"https://superiorcourt.maricopa.gov/",
+"https://justicecourts.maricopa.gov/",
+"https://www.azd.uscourts.gov/content/phoenix",
+"https://www.justice.gov/eoir/phoenix-immigration-court",
+"https://maricopabar.org/?pg=clientReferrals",
+"https://www.azbar.org/FindALawyer"
+],
+"photo": {
+"id": "1729041534038-fdc1f9cf3d3a",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-with-tall-buildings-RcDEbNQsjHU",
+"photographer": "Nils Huenerfuerst",
+"alt": "Downtown Phoenix skyline at sunset"
+}
+},
+"philadelphia": {
+"county": "Philadelphia County",
+"countyNote": "Philadelphia is a consolidated city-county; the City and County of Philadelphia share the same boundaries.",
+"stateCourt": {
+"name": "Court of Common Pleas of Philadelphia County (First Judicial District of Pennsylvania)",
+"courthouse": "City Hall",
+"address": "City Hall, Philadelphia, PA 19107",
+"url": "https://www.courts.phila.gov/common-pleas/"
+},
+"smallClaims": {
+"court": "Philadelphia Municipal Court, Civil Division",
+"address": "1339 Chestnut St., Philadelphia, PA 19107",
+"url": "https://www.courts.phila.gov/municipal/civil/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Pennsylvania",
+"courthouse": "James A. Byrne U.S. Courthouse",
+"address": "601 Market Street, Philadelphia, PA 19106",
+"url": "https://www.paed.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Philadelphia Immigration Court",
+"address": "Robert Nix Federal Building and Courthouse, 900 Market Street, Suite 504, Philadelphia, PA 19107",
+"url": "https://www.justice.gov/eoir/philadelphia-pa"
+},
+"bar": {
+"name": "Philadelphia Bar Association",
+"url": "https://philadelphiabar.org/",
+"referral": {
+"name": "Philadelphia Bar Association Lawyer Referral and Information Service (LRIS)",
+"phone": "(215) 238-6333",
+"url": "https://philadelphiabar.org/?pg=LawyerReferralHome"
+}
+},
+"legalAid": [
+{
+"name": "Philadelphia Legal Assistance",
+"url": "https://philalegal.org/",
+"serves": "Low-income residents of Philadelphia"
+},
+{
+"name": "Community Legal Services of Philadelphia",
+"url": "https://clsphila.org/",
+"serves": "Low-income Philadelphians"
+}
+],
+"population": {
+"value": 1574281,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Philadelphia's court system is the First Judicial District of Pennsylvania, made up of two courts: the Court of Common Pleas and the Municipal Court. The Court of Common Pleas is the general-jurisdiction trial court for civil and criminal cases, with courtrooms in City Hall and other locations. The Municipal Court's Civil Division hears landlord-tenant cases, code enforcement cases, and small claims up to $12,000; larger claims go to the Court of Common Pleas. Federal cases go to the U.S. District Court for the Eastern District of Pennsylvania at the James A. Byrne U.S. Courthouse, 601 Market Street. The Philadelphia Immigration Court is in the Robert Nix Federal Building at 900 Market Street. Lawyers' Pennsylvania licenses and any public discipline can be checked through the Disciplinary Board of the Supreme Court of Pennsylvania.",
+"blurbSources": [
+"https://www.courts.phila.gov/",
+"https://www.courts.phila.gov/municipal/civil/",
+"https://www.paed.uscourts.gov/",
+"https://www.justice.gov/eoir/philadelphia-pa",
+"https://philadelphiabar.org/?pg=LawyerReferralHome",
+"https://www.padisciplinaryboard.org/for-the-public/find-attorney"
+],
+"photo": {
+"id": "1761559406862-834b0350b72c",
+"pageUrl": "https://unsplash.com/photos/philadelphia-skyline-at-dusk-with-american-flag-0co1mLzE2_M",
+"photographer": "Leonhard Niederwimmer",
+"alt": "Philadelphia skyline at dusk with an American flag"
+}
+},
+"san-antonio": {
+"county": "Bexar County",
+"countyNote": "",
+"stateCourt": {
+"name": "Bexar County District Courts",
+"courthouse": "Bexar County Courthouse",
+"address": "100 Dolorosa, San Antonio, TX 78205",
+"url": "https://www.bexar.org/1703/Civil-District-Courts"
+},
+"smallClaims": {
+"court": "Bexar County Justice of the Peace Courts",
+"address": null,
+"url": "https://www.bexar.org/3145/Justice-of-the-Peace-Courts"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Texas (San Antonio Division)",
+"courthouse": "United States Courthouse",
+"address": "262 West Nueva Street, San Antonio, TX 78207",
+"url": "https://www.txwd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "San Antonio Immigration Court",
+"address": "800 Dolorosa, Suite 300, San Antonio, TX 78207",
+"url": "https://www.justice.gov/eoir/san-antonio-immigration-court"
+},
+"bar": {
+"name": "San Antonio Bar Association",
+"url": "https://sanantoniobar.org/",
+"referral": {
+"name": "San Antonio Bar Association Lawyer Referral Service",
+"phone": "210-227-8822",
+"url": "https://www.salawhelp.org/hire-a-lawyer"
+}
+},
+"legalAid": [
+{
+"name": "Texas RioGrande Legal Aid (TRLA)",
+"url": "https://www.trla.org/",
+"serves": "Low-income residents of 68 counties in central and southwest Texas, including Bexar County"
+}
+],
+"population": {
+"value": 1548422,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "District courts are Texas's general-jurisdiction trial courts, and Bexar County has district courts that specialize in civil, criminal, family and juvenile cases. The civil district courts are at the Bexar County Courthouse, 100 Dolorosa, in downtown San Antonio. Small claims and other minor civil disputes go to the county's Justice of the Peace courts, which also hear Class C misdemeanors. Federal cases go to the U.S. District Court for the Western District of Texas, San Antonio Division, whose clerk's office is in the federal courthouse at 262 West Nueva Street. The San Antonio Immigration Court is at 800 Dolorosa. The San Antonio Bar Association has run a Lawyer Referral Service since 1966, certified under Chapter 952 of the Texas Occupations Code, and offers it online through SALawHelp.org. Lawyers' licenses can be verified through the State Bar of Texas.",
+"blurbSources": [
+"https://www.txcourts.gov/about-texas-courts/trial-courts/",
+"https://www.bexar.org/1703/Civil-District-Courts",
+"https://www.bexar.org/3145/Justice-of-the-Peace-Courts",
+"https://www.txwd.uscourts.gov/",
+"https://www.justice.gov/eoir/san-antonio-immigration-court",
+"https://www.salawhelp.org/hire-a-lawyer",
+"https://www.texasbar.com/"
+],
+"photo": {
+"id": "1771304421319-3ffb8b579a62",
+"pageUrl": "https://unsplash.com/photos/the-alamo-at-night-with-people-observing-LSYvuoZpF9U",
+"photographer": "Wei Liang",
+"alt": "The Alamo in San Antonio at night with visitors in front"
+}
+},
+"san-diego": {
+"county": "San Diego County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of California, County of San Diego",
+"courthouse": "Central Courthouse",
+"address": "1100 Union Street, San Diego, CA 92101",
+"url": "https://www.sdcourt.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of San Diego - Small Claims (Central Division)",
+"address": "Hall of Justice, 330 W. Broadway, Room 225, San Diego, CA 92101",
+"url": "https://www.sdcourt.ca.gov/sdcourt/smallclaims2"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of California",
+"courthouse": "James M. Carter and Judith N. Keep U.S. Courthouse",
+"address": "333 W. Broadway, San Diego, CA 92101",
+"url": "https://www.casd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "San Diego Immigration Court",
+"address": "880 Front Street, Suite 4240, San Diego, CA 92101",
+"url": "https://www.justice.gov/eoir/san-diego-immigration-court"
+},
+"bar": {
+"name": "San Diego County Bar Association",
+"url": "https://www.sdcba.org/",
+"referral": {
+"name": "San Diego County Bar Association Lawyer Referral & Information Service",
+"phone": "(619) 231-8585",
+"url": "https://www.sdcba.org/?pg=MainLRIS"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society of San Diego",
+"url": "https://www.lassd.org/",
+"serves": "Low-income residents of San Diego County"
+},
+{
+"name": "San Diego Volunteer Lawyer Program",
+"url": "https://sdvlp.org/",
+"serves": "Low-income San Diego County residents, through pro bono attorneys"
+}
+],
+"population": {
+"value": 1406106,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "The Superior Court of California, County of San Diego, hears civil, criminal, family, probate and juvenile cases. Downtown, the Central Courthouse at 1100 Union Street houses criminal and family matters, and the Hall of Justice at 330 West Broadway holds the civil independent calendar courtrooms and the civil and small claims business offices. Small claims cases can be filed in the court's Central Division, and the court's Small Claims Legal Advisory offers free help at the Hall of Justice and by phone. Federal cases go to the U.S. District Court for the Southern District of California, whose clerk's office is in the James M. Carter and Judith N. Keep U.S. Courthouse at 333 West Broadway. The San Diego Immigration Court is at 880 Front Street. A lawyer's California license and discipline record can be checked through the State Bar of California's attorney search.",
+"blurbSources": [
+"https://www.sdcourt.ca.gov/sdcourt/generalinformation/courtlocations",
+"https://www.sdcourt.ca.gov/sdcourt/generalinformation/courtlocations/centralcourthouse2",
+"https://www.sdcourt.ca.gov/sdcourt/generalinformation/courtlocations/hallofjustice%20courthouse",
+"https://www.sdcourt.ca.gov/sdcourt/smallclaims2/smallclaimslocations",
+"https://www.casd.uscourts.gov/",
+"https://www.justice.gov/eoir/san-diego-immigration-court",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1769911976340-f4faf4054de1",
+"pageUrl": "https://unsplash.com/photos/city-skyline-across-a-blue-bay-with-trees-in-foreground-6-yItQXkXRs",
+"photographer": "Jon Matthews",
+"alt": "Downtown San Diego skyline across the bay on a clear day"
+}
+},
+"dallas": {
+"county": "Dallas County",
+"countyNote": "Parts of Dallas extend into Collin, Denton, Kaufman and Rockwall counties.",
+"stateCourt": {
+"name": "Dallas County District Courts",
+"courthouse": "George L. Allen, Sr. Courts Building",
+"address": "600 Commerce Street, Dallas, TX 75202",
+"url": "https://www.dallascounty.org/government/courts/"
+},
+"smallClaims": {
+"court": "Dallas County Justice of the Peace Courts",
+"address": null,
+"url": "https://www.dallascounty.org/government/jpcourts/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Texas (Dallas Division)",
+"courthouse": "Earle Cabell Federal Building and U.S. Courthouse",
+"address": "1100 Commerce Street, Dallas, TX 75242",
+"url": "https://www.txnd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Dallas Immigration Court",
+"address": "1100 Commerce Street, Suite 1060, Dallas, TX 75242",
+"url": "https://www.justice.gov/eoir/dallas-immigration-court"
+},
+"bar": {
+"name": "Dallas Bar Association",
+"url": "https://www.dallasbar.org/",
+"referral": {
+"name": "Dallas Bar Association Lawyer Referral Service",
+"phone": "214-220-7444",
+"url": "https://www.dallasbar.org/?pg=LawyerReferralService"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid of NorthWest Texas",
+"url": "https://legalaidtx.org/",
+"serves": "Low-income residents of 114 North and West Texas counties, including Dallas County"
+},
+{
+"name": "Dallas Volunteer Attorney Program",
+"url": "https://dallasvolunteerattorneyprogram.org/",
+"serves": "Low-income Dallas County residents, through volunteer attorneys"
+}
+],
+"population": {
+"value": 1329491,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "District courts are the general-jurisdiction trial courts in Texas, and Dallas County's district courts specialize in civil, criminal, family and juvenile cases. The civil district courts and the District Clerk's civil, family and juvenile office are in the George L. Allen, Sr. Courts Building at 600 Commerce Street, and criminal cases are heard at the Frank Crowley Courts Building. Small claims and other minor civil disputes go to the county's Justice of the Peace courts. Federal cases go to the U.S. District Court for the Northern District of Texas, Dallas Division, in the Earle Cabell Federal Building at 1100 Commerce Street, which also houses the Dallas Immigration Court. The Dallas Bar Association's Lawyer Referral Service refers callers to Dallas-area attorneys for a $20, 30-minute consultation. Texas lawyers' licenses can be verified through the State Bar of Texas.",
+"blurbSources": [
+"https://www.txcourts.gov/about-texas-courts/trial-courts/",
+"https://www.dallascounty.org/government/district-clerk/civil-location.php",
+"https://www.dallascounty.org/government/courts/",
+"https://www.dallascounty.org/government/jpcourts/",
+"https://www.txnd.uscourts.gov/location/dallas",
+"https://www.justice.gov/eoir/dallas-immigration-court",
+"https://www.dallasbar.org/?pg=LawyerReferralService",
+"https://www.texasbar.com/"
+],
+"photo": {
+"id": "1775717677666-cb0e14a904fe",
+"pageUrl": "https://unsplash.com/photos/dallas-skyline-at-sunset-with-modern-skyscrapers-JliXJH8FJCM",
+"photographer": "CR",
+"alt": "Downtown Dallas skyline at sunset"
+}
+},
+"san-jose": {
+"county": "Santa Clara County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of California, County of Santa Clara",
+"courthouse": "Downtown Superior Court (DTS)",
+"address": "191 North First Street, San Jose, CA 95113",
+"url": "https://santaclara.courts.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of Santa Clara – Small Claims Division (heard at Downtown Superior Court)",
+"address": "191 North First Street, San Jose, CA 95113",
+"url": "https://santaclara.courts.ca.gov/divisions/small-claims-division"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of California (San Jose Division)",
+"courthouse": "Robert F. Peckham Federal Building & United States Courthouse",
+"address": "280 South 1st Street, San Jose, CA 95113",
+"url": "https://cand.uscourts.gov/locations/san-jose"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Santa Clara County Bar Association",
+"url": "https://www.sccba.com/",
+"referral": {
+"name": "SCCBA Lawyer Referral Service",
+"phone": "669-302-7803",
+"url": "https://www.sccba.com/lawyer-referral/"
+}
+},
+"legalAid": [
+{
+"name": "Bay Area Legal Aid",
+"url": "https://baylegal.org/",
+"serves": "Low-income residents of Bay Area counties, including a Santa Clara County regional office"
+},
+{
+"name": "Law Foundation of Silicon Valley",
+"url": "https://www.lawfoundation.org/",
+"serves": "Low-income individuals and families in Silicon Valley (housing, health, children's rights)"
+}
+],
+"population": {
+"value": 989814,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "San Jose is the county seat of Santa Clara County, and most state civil, criminal, family and probate matters for city residents are handled by the Superior Court of California, County of Santa Clara. The court's Downtown Superior Court at 191 North First Street hears civil cases, and the court states that all small claims cases in the county are heard there; other San Jose facilities include the Hall of Justice and the Family Justice Center Courthouse. Federal cases are filed in the U.S. District Court for the Northern District of California, which keeps a San Jose courthouse at 280 South 1st Street, with appeals going to the Ninth Circuit. San Jose has no immigration court of its own; the nearest EOIR courts are in the Bay Area and Sacramento. The Santa Clara County Bar Association runs a lawyer referral service, and any California attorney's license status can be checked through the State Bar of California's attorney search.",
+"blurbSources": [
+"https://santaclara.courts.ca.gov/",
+"https://santaclara.courts.ca.gov/divisions/small-claims-division",
+"https://cand.uscourts.gov/locations/san-jose",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.sccba.com/lawyer-referral/",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1758849015881-881294ff3002",
+"pageUrl": "https://unsplash.com/photos/san-pedro-square-market-building-with-neon-sign-at-dusk-NCo8mVJ8eUQ",
+"photographer": "Karthik Vadlamani",
+"alt": "San Pedro Square Market building with its neon sign at dusk in downtown San Jose"
+}
+},
+"austin": {
+"county": "Travis County",
+"countyNote": "Parts of Austin also extend into Williamson County and Hays County; Travis County is the main county and the city is its county seat.",
+"stateCourt": {
+"name": "Travis County District Courts (Texas state district courts)",
+"courthouse": "Travis County Civil and Family Courts Facility",
+"address": "1700 Guadalupe St, Austin, TX 78701",
+"url": "https://www.traviscountytx.gov/courts/civil"
+},
+"smallClaims": {
+"court": "Travis County Justice of the Peace Courts (Precincts 1–5)",
+"address": null,
+"url": "https://www.traviscountytx.gov/justices-of-peace"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Texas (Austin Division)",
+"courthouse": "United States Courthouse (Austin)",
+"address": "501 West Fifth Street, Suite 1100, Austin, TX 78701",
+"url": "https://www.txwd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Austin Bar Association",
+"url": "https://www.austinbar.org/",
+"referral": {
+"name": "Lawyer Referral Service of Central Texas",
+"phone": "(512) 472-8303",
+"url": "https://austinlrs.com/"
+}
+},
+"legalAid": [
+{
+"name": "Texas RioGrande Legal Aid",
+"url": "https://www.trla.org/",
+"serves": "Low-income residents of 68 counties in central and southwest Texas"
+},
+{
+"name": "Volunteer Legal Services of Central Texas",
+"url": "https://www.vlsoct.org/",
+"serves": "Low-income Central Texans through volunteer attorneys"
+}
+],
+"population": {
+"value": 1002632,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Austin is the seat of Travis County and the state capital. Felony criminal cases and major civil and family cases are heard in the Travis County district courts; the civil and family courts sit in the Civil and Family Courts Facility at 1700 Guadalupe Street. Small claims, debt claims and evictions go to the county's five Justice of the Peace courts, which hear both civil and criminal matters. Austin is also home to the Fifteenth Court of Appeals, a statewide appellate court the Legislature created in 2023, which began operating on September 1, 2024. Federal cases go to the U.S. District Court for the Western District of Texas, Austin Division, at 501 West Fifth Street, with appeals to the Fifth Circuit. Austin has no EOIR immigration court. The Lawyer Referral Service of Central Texas, operating since 1966, takes calls at (512) 472-8303, and a Texas lawyer's license can be checked with the State Bar of Texas.",
+"blurbSources": [
+"https://www.traviscountytx.gov/courts/civil",
+"https://www.traviscountytx.gov/justices-of-peace",
+"https://www.txcourts.gov/15thcoa/",
+"https://www.txwd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://austinlrs.com/",
+"https://www.texasbar.com/"
+],
+"photo": {
+"id": "1530089711124-9ca31fb9e863",
+"pageUrl": "https://unsplash.com/photos/austin-skyline-and-congress-avenue-bridge-AlBgcDfDG_s",
+"photographer": "Carlos Delgado",
+"alt": "Aerial view of the Austin skyline and Congress Avenue Bridge over Lady Bird Lake"
+}
+},
+"jacksonville": {
+"county": "Duval County (consolidated City of Jacksonville)",
+"countyNote": "Jacksonville and Duval County have a consolidated city-county government. The Beaches cities and Baldwin are separate municipalities within Duval County.",
+"stateCourt": {
+"name": "Fourth Judicial Circuit Court of Florida",
+"courthouse": "Duval County Courthouse",
+"address": "501 West Adams Street, Jacksonville, FL 32202",
+"url": "https://www.jud4.org/"
+},
+"smallClaims": {
+"court": "Duval County Court (Small Claims), filed with the Duval County Clerk of Courts",
+"address": "501 West Adams Street, Jacksonville, FL 32202",
+"url": "https://www.duvalclerk.com/departments/civil-court-services/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Middle District of Florida (Jacksonville Division)",
+"courthouse": "Bryan Simpson United States Courthouse",
+"address": "300 North Hogan Street, Jacksonville, FL 32202",
+"url": "https://www.flmd.uscourts.gov/locations/jacksonville"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "The Jacksonville Bar Association",
+"url": "https://www.jaxbar.org/",
+"referral": {
+"name": "JBA Lawyer Referral Service",
+"phone": "904-399-4486",
+"url": "https://www.jaxbar.org/page/LawyerReferralServ"
+}
+},
+"legalAid": [
+{
+"name": "Jacksonville Area Legal Aid",
+"url": "https://www.jaxlegalaid.org/",
+"serves": "Low-income residents of Duval County and surrounding Northeast Florida counties"
+}
+],
+"population": {
+"value": 1017689,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Jacksonville shares a consolidated government with Duval County, and its state trial courts belong to Florida's Fourth Judicial Circuit, which serves Clay, Duval and Nassau counties. Circuit and county court cases for Duval County are heard at the Duval County Courthouse at 501 West Adams Street, where the Clerk of Courts also handles filings. Small claims are county court cases seeking $8,000 or less, excluding costs, interest and attorney fees, and hearings are held at the same courthouse. Federal cases go to the U.S. District Court for the Middle District of Florida, whose Jacksonville Division sits in the Bryan Simpson United States Courthouse at 300 North Hogan Street; appeals go to the Eleventh Circuit. There is no EOIR immigration court in Jacksonville. The Jacksonville Bar Association operates a lawyer referral service, and The Florida Bar's online directory shows whether a Florida lawyer is licensed and in good standing.",
+"blurbSources": [
+"https://www.jud4.org/",
+"https://www.duvalclerk.com/departments/civil-court-services/small-claims",
+"https://www.duvalclerk.com/",
+"https://www.flmd.uscourts.gov/locations/jacksonville",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.jaxdailyrecord.com/news/2023/sep/07/from-the-jba-lawyer-referral-service-connects-clients-with-attorneys/",
+"https://www.floridabar.org/directories/find-mbr/"
+],
+"photo": {
+"id": "1613231365618-5ebf85a8209e",
+"pageUrl": "https://unsplash.com/photos/green-metal-bridge-over-river-during-daytime-KtCtTzXwNHg",
+"photographer": "Lance Asper",
+"alt": "Green steel bridge over the St. Johns River in downtown Jacksonville, seen from a drone"
+}
+},
+"fort-worth": {
+"county": "Tarrant County",
+"countyNote": "Fort Worth also extends into Denton, Parker, Wise and Johnson counties; Tarrant County is the main county and the city is its county seat.",
+"stateCourt": {
+"name": "Tarrant County District Courts (Texas state district courts)",
+"courthouse": "Tom Vandergriff Civil Courts Building",
+"address": "100 N. Calhoun St., Fort Worth, TX 76196",
+"url": "https://www.tarrantcountytx.gov/en/courts.html"
+},
+"smallClaims": {
+"court": "Tarrant County Justice of the Peace Courts (Precincts 1–8)",
+"address": null,
+"url": "https://www.tarrantcountytx.gov/en/justice-of-the-peace-courts.html"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Texas (Fort Worth Division)",
+"courthouse": "Eldon B. Mahon U.S. Courthouse",
+"address": "501 W. 10th St., Fort Worth, TX 76102",
+"url": "https://www.txnd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Tarrant County Bar Association",
+"url": "https://www.tarrantbar.org/",
+"referral": {
+"name": "TCBA Lawyer Referral & Information Service",
+"phone": "817-336-4101",
+"url": "https://www.tarrantbar.org/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid of NorthWest Texas",
+"url": "https://legalaidtx.org/",
+"serves": "Low-income individuals and families in 114 North and West Texas counties, including Tarrant County"
+}
+],
+"population": {
+"value": 1028117,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Fort Worth is the seat of Tarrant County, and most serious civil, family and felony cases for city residents are heard in the Tarrant County district courts. According to the county, its courts are housed in the Tarrant County Courthouse, the Tim Curry Justice Center, the Tom Vandergriff Civil Courts Building and the Family Courts Center, and the District Clerk's office is at 100 N. Calhoun Street. Small claims and other lower-value civil cases go to the county's eight Justice of the Peace precincts. Federal cases are filed in the U.S. District Court for the Northern District of Texas, Fort Worth Division, at the Eldon B. Mahon U.S. Courthouse, 501 W. 10th Street, with appeals to the Fifth Circuit. EOIR runs a Fort Worth Immigration Adjudication Center, but it is not a public immigration court. The Tarrant County Bar Association's ABA-approved Lawyer Referral & Information Service takes calls at 817-336-4101, and the State Bar of Texas confirms whether a lawyer is licensed.",
+"blurbSources": [
+"https://www.tarrantcountytx.gov/en/courts.html",
+"https://www.tarrantcountytx.gov/en/district-clerk.html",
+"https://www.tarrantcountytx.gov/en/justice-of-the-peace-courts.html",
+"https://www.txnd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.tarrantbar.org/",
+"https://www.texasbar.com/"
+],
+"photo": {
+"id": "1608768456290-a666883849e0",
+"pageUrl": "https://unsplash.com/photos/city-skyline-during-night-time-vSc0f1OuIRw",
+"photographer": "Matthew Lancaster",
+"alt": "Downtown Fort Worth skyline at night across the river"
+}
+},
+"columbus": {
+"county": "Franklin County",
+"countyNote": "Small portions of Columbus extend into Delaware County and Fairfield County; Franklin County is the main county and the city is its county seat.",
+"stateCourt": {
+"name": "Franklin County Court of Common Pleas",
+"courthouse": "Franklin County Common Pleas Courthouse",
+"address": "345 S. High Street, Columbus, OH 43215",
+"url": "https://www.fccourts.org/"
+},
+"smallClaims": {
+"court": "Franklin County Municipal Court – Small Claims",
+"address": "375 S. High St., Columbus, OH 43215",
+"url": "https://www.franklincountymunicourt.org/Courts/Small-Claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Ohio (Eastern Division, Columbus)",
+"courthouse": "Joseph P. Kinneary U.S. Courthouse",
+"address": "85 Marconi Boulevard, Columbus, OH 43215",
+"url": "https://www.ohsd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Columbus Bar Association",
+"url": "https://www.cbalaw.org/",
+"referral": {
+"name": "ColumbusLawyers.com (Columbus Bar Association Find a Lawyer service)",
+"phone": "(614) 221-4112",
+"url": "https://www.cbalaw.org/services/find-a-lawyer/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid of Southeast and Central Ohio (LASCO)",
+"url": "https://www.lasco.org/",
+"serves": "Low-income residents, veterans and seniors in 36 Ohio counties, with a main office in Columbus"
+}
+],
+"population": {
+"value": 938396,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Columbus is the seat of Franklin County and Ohio's capital. The Franklin County Court of Common Pleas, at 345 S. High Street, is the main general trial court; its General Division handles felony cases and larger civil disputes. Lower-value civil matters, landlord-tenant cases and misdemeanors go to the Franklin County Municipal Court at 375 S. High Street, and its small claims docket covers claims under $6,000. Federal cases are filed in the U.S. District Court for the Southern District of Ohio, which keeps a clerk's office in the Joseph P. Kinneary U.S. Courthouse at 85 Marconi Boulevard; appeals go to the Sixth Circuit. Columbus has no EOIR immigration court; the nearest one in Ohio is in Cleveland. The Columbus Bar Association runs ColumbusLawyers.com, a lawyer-finding service, and the Supreme Court of Ohio's attorney directory shows whether an Ohio lawyer is registered and in good standing.",
+"blurbSources": [
+"https://www.fccourts.org/",
+"https://www.ohiolegalhelp.org/resource/franklin-county-common-pleas-court",
+"https://www.franklincountymunicourt.org/",
+"https://www.ohsd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.cbalaw.org/services/find-a-lawyer/",
+"https://www.supremecourt.ohio.gov/AttorneySearch/"
+],
+"photo": {
+"id": "1789150276818-c822008ea7c1",
+"pageUrl": "https://unsplash.com/photos/columbus-skyline-and-residential-city-streets-L9Lr3C0b59k",
+"photographer": "Alex Ruth",
+"alt": "Aerial view of the downtown Columbus skyline above surrounding residential streets"
+}
+},
+"charlotte": {
+"county": "Mecklenburg County",
+"countyNote": "",
+"stateCourt": {
+"name": "Mecklenburg County Superior and District Courts (26th Judicial District, North Carolina)",
+"courthouse": "Mecklenburg County Courthouse",
+"address": "832 East Fourth St, Charlotte, NC 28202",
+"url": "https://www.nccourts.gov/locations/mecklenburg-county"
+},
+"smallClaims": {
+"court": "Mecklenburg County District Court – Small Claims (magistrates)",
+"address": "832 East Fourth St, Charlotte, NC 28202",
+"url": "https://www.nccourts.gov/help-topics/lawsuits-and-small-claims/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of North Carolina (Charlotte Division)",
+"courthouse": "Charles R. Jonas Federal Building (United States Courthouse)",
+"address": "401 West Trade Street, Charlotte, NC 28202",
+"url": "https://www.ncwd.uscourts.gov/court-info/court-locations/charlotte"
+},
+"immigrationCourt": {
+"name": "Charlotte Immigration Court",
+"address": "5701 Executive Center Drive, Suite 400, Charlotte, NC 28212",
+"url": "https://www.justice.gov/eoir/charlotte-immigration-court"
+},
+"bar": {
+"name": "Mecklenburg County Bar",
+"url": "https://www.meckbar.org/",
+"referral": {
+"name": "Mecklenburg County Bar Lawyer Referral Service",
+"phone": "(704) 375-8624",
+"url": "https://www.meckbar.org/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid of North Carolina (Charlotte Office)",
+"url": "https://legalaidnc.org/",
+"serves": "Low-income residents of Mecklenburg, Cabarrus, Cleveland, Gaston, Lincoln, Stanly and Union counties"
+},
+{
+"name": "Charlotte Center for Legal Advocacy",
+"url": "https://charlottelegaladvocacy.org/",
+"serves": "Low-income residents of the Charlotte region"
+}
+],
+"population": {
+"value": 964784,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Charlotte is the seat of Mecklenburg County, which makes up North Carolina's 26th judicial district for both superior and district court. Felonies and larger civil cases go to superior court; misdemeanors, family matters and smaller civil cases go to district court. Both courts meet at the Mecklenburg County Courthouse, 832 East Fourth Street. Small claims, part of the district court, are decided by magistrates, and North Carolina counties set limits between $5,000 and $10,000. Charlotte is also one of four locations of the North Carolina Business Court, which handles complex business cases. Federal cases are filed in the U.S. District Court for the Western District of North Carolina at 401 West Trade Street, with appeals to the Fourth Circuit. EOIR's Charlotte Immigration Court is at 5701 Executive Center Drive. The Mecklenburg County Bar runs a lawyer referral service, and the North Carolina State Bar's member directory confirms a lawyer's license.",
+"blurbSources": [
+"https://www.nccourts.gov/locations/mecklenburg-county",
+"https://www.nccourts.gov/locations/mecklenburg-county/mecklenburg-county-courthouse",
+"https://www.nccourts.gov/help-topics/lawsuits-and-small-claims/small-claims",
+"https://www.nccourts.gov/courts/business-court",
+"https://www.ncwd.uscourts.gov/court-info/court-locations/charlotte",
+"https://www.justice.gov/eoir/charlotte-immigration-court",
+"https://www.meckbar.org/",
+"https://www.ncbar.gov/member-directory/"
+],
+"photo": {
+"id": "1582555645330-9fa5f195e1ca",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-wpMULg5iZOU",
+"photographer": "Wes Hicks",
+"alt": "Charlotte, North Carolina skyline at sunset"
+}
+},
+"san-francisco": {
+"county": "City and County of San Francisco",
+"countyNote": "San Francisco is a consolidated city and county.",
+"stateCourt": {
+"name": "Superior Court of California, County of San Francisco",
+"courthouse": "Civic Center Courthouse",
+"address": "400 McAllister Street, San Francisco, CA 94102",
+"url": "https://sf.courts.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of San Francisco – Small Claims Division",
+"address": "400 McAllister St., San Francisco, CA 94102",
+"url": "https://sf.courts.ca.gov/divisions/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of California (San Francisco Division)",
+"courthouse": "Phillip Burton Federal Building & United States Courthouse",
+"address": "450 Golden Gate Avenue, San Francisco, CA 94102",
+"url": "https://cand.uscourts.gov/locations/san-francisco"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "The Bar Association of San Francisco",
+"url": "https://www.sfbar.org/",
+"referral": {
+"name": "SF-Marin Lawyer Referral and Information Service",
+"phone": "(415) 989-1616",
+"url": "https://www.sfbar.org/lris/"
+}
+},
+"legalAid": [
+{
+"name": "Bay Area Legal Aid",
+"url": "https://baylegal.org/",
+"serves": "Low-income residents of Bay Area counties, including San Francisco"
+},
+{
+"name": "Justice & Diversity Center of The Bar Association of San Francisco",
+"url": "https://www.sfbar.org/jdc/",
+"serves": "Low-income San Francisco residents through pro bono volunteers"
+}
+],
+"population": {
+"value": 826079,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "San Francisco is a consolidated city and county, and its state trial court is the Superior Court of California, County of San Francisco. Civil and small claims matters are handled at the Civic Center Courthouse, 400 McAllister Street, while the Hall of Justice at 850 Bryant Street is among the court's other locations. Federal cases go to the U.S. District Court for the Northern District of California, headquartered in the Phillip Burton Federal Building at 450 Golden Gate Avenue, with appeals to the Ninth Circuit, which is also based in San Francisco. The city's EOIR immigration court formally closed in September 2026. Its pending cases are being moved to the Concord Immigration Court or heard remotely, and the remaining courtrooms at 630 Sansome Street became a hearing location under Concord's control. The Bar Association of San Francisco runs the SF-Marin Lawyer Referral and Information Service, and the State Bar of California's attorney search confirms licensure.",
+"blurbSources": [
+"https://sf.courts.ca.gov/",
+"https://sf.courts.ca.gov/divisions/small-claims",
+"https://cand.uscourts.gov/locations/san-francisco",
+"https://cand.uscourts.gov/about-court",
+"https://www.nbcbayarea.com/news/local/san-franciscos-immigration-court-closed/4138166/",
+"https://www.npr.org/2026/01/13/g-s1-105679/san-francisco-immigration-court-closure",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.sfbar.org/lris/",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1782880958487-621cfcf03ef2",
+"pageUrl": "https://unsplash.com/photos/painted-ladies-houses-with-san-francisco-skyline-at-sunset-CuKnXh5pUZ4",
+"photographer": "Gantavya Bhatt",
+"alt": "Painted Ladies Victorian houses with the San Francisco skyline at sunset"
+}
+},
+"indianapolis": {
+"county": "Marion County (consolidated City of Indianapolis)",
+"countyNote": "Indianapolis and Marion County have a consolidated government (Unigov). A few municipalities within Marion County (e.g., Beech Grove, Lawrence, Speedway, Southport) are partly or fully excluded from the 'balance' figure.",
+"stateCourt": {
+"name": "Marion Superior Court",
+"courthouse": "Marion County Courthouse at the Community Justice Campus",
+"address": "675 Justice Way, Indianapolis, IN 46203",
+"url": "https://www.indycourts.org/"
+},
+"smallClaims": {
+"court": "Marion County Small Claims Courts (nine township courts; e.g., Center Township Small Claims Court)",
+"address": "300 E. Fall Creek Parkway N. Drive, Suite 130, Indianapolis, IN 46205 (Center Township)",
+"url": "https://www.in.gov/townships/center49/small-claims-court/about-the-court/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Indiana (Indianapolis Division)",
+"courthouse": "Birch Bayh Federal Building & U.S. Courthouse",
+"address": "46 East Ohio Street, Indianapolis, IN 46204",
+"url": "https://www.insd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Indianapolis Immigration Court",
+"address": "Minton-Capehart Federal Building, 575 N. Pennsylvania Street, Suite 617, Indianapolis, IN 46204",
+"url": "https://www.justice.gov/eoir/indianapolis-immigration-court"
+},
+"bar": {
+"name": "Indianapolis Bar Association",
+"url": "https://www.indybar.org/",
+"referral": {
+"name": "Indy Lawyer Finder Referral Program",
+"phone": "(317) 269-2000",
+"url": "https://www.indybar.org/?pg=LawyerReferralService-HomePage"
+}
+},
+"legalAid": [
+{
+"name": "Indiana Legal Services",
+"url": "https://www.indianalegalservices.org/",
+"serves": "Low-income residents of all 92 Indiana counties, headquartered in Indianapolis"
+},
+{
+"name": "Indianapolis Legal Aid Society",
+"url": "https://www.indylas.org/",
+"serves": "Low-income residents of the Indianapolis area"
+}
+],
+"population": {
+"value": 901116,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Indianapolis shares a consolidated government with Marion County. Most state trial work, including civil, criminal, family and probate cases, is heard by the Marion Superior Court. Since 2022 its main courthouse has been at the Community Justice Campus, 675 Justice Way, on the city's southeast side. Small claims go to a separate system of nine township small claims courts in Marion County, and except for landlord-tenant cases, a claim may be filed in any township. Federal cases are filed in the U.S. District Court for the Southern District of Indiana at the Birch Bayh Federal Building & U.S. Courthouse, 46 East Ohio Street, with appeals to the Seventh Circuit. EOIR's Indianapolis Immigration Court is in the Minton-Capehart Federal Building at 575 N. Pennsylvania Street. The Indianapolis Bar Association runs the Indy Lawyer Finder referral program, and the Indiana Supreme Court's Roll of Attorneys shows whether a lawyer is admitted in Indiana.",
+"blurbSources": [
+"https://www.indycourts.org/",
+"https://www.ibj.com/articles/courts-to-begin-move-to-new-community-justice-campus-next-week",
+"https://www.in.gov/townships/center49/small-claims-court/about-the-court/",
+"https://www.insd.uscourts.gov/",
+"https://www.justice.gov/eoir/indianapolis-immigration-court",
+"https://www.indybar.org/?pg=LawyerReferralService-HomePage",
+"https://courtapps.in.gov/rollofattorneys"
+],
+"photo": {
+"id": "1661286167375-07429c624e2d",
+"pageUrl": "https://unsplash.com/photos/a-group-of-buildings-with-a-statue-on-top-emuFFTCKIOo",
+"photographer": "Bryan Dickerson",
+"alt": "Soldiers' and Sailors' Monument on Monument Circle with the downtown Indianapolis skyline"
+}
+},
+"seattle": {
+"county": "King County",
+"countyNote": "",
+"stateCourt": {
+"name": "King County Superior Court",
+"courthouse": "King County Courthouse",
+"address": "516 Third Avenue, Seattle, WA 98104",
+"url": "https://kingcounty.gov/en/court/superior-court"
+},
+"smallClaims": {
+"court": "King County District Court – Small Claims (Seattle courthouse)",
+"address": "King County Courthouse, 516 Third Avenue, Seattle, WA 98104",
+"url": "https://kingcounty.gov/en/court/district-court/courts-jails-legal-system/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Washington (Seattle)",
+"courthouse": "United States Courthouse (Seattle)",
+"address": "700 Stewart Street, Suite 2310, Seattle, WA 98101",
+"url": "https://www.wawd.uscourts.gov/visitors/seattle-courthouse"
+},
+"immigrationCourt": {
+"name": "Seattle Immigration Court",
+"address": "915 2nd Ave., Suite 613, Seattle, WA 98174",
+"url": "https://www.justice.gov/eoir/seattle-immigration-court"
+},
+"bar": {
+"name": "King County Bar Association",
+"url": "https://www.kcba.org/",
+"referral": {
+"name": "KCBA Lawyer Referral Service",
+"phone": "(206) 267-7100",
+"url": "https://www.kcba.org/?pg=Lawyer-Referral-Service"
+}
+},
+"legalAid": [
+{
+"name": "Northwest Justice Project",
+"url": "https://nwjustice.org/",
+"serves": "Low-income people statewide in Washington, including King County"
+},
+{
+"name": "King County Bar Association Pro Bono Services (Housing Justice Project, Neighborhood Legal Clinics)",
+"url": "https://www.kcba.org/?pg=Free-Legal-Assistance",
+"serves": "Low-income King County residents"
+}
+],
+"population": {
+"value": 784777,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Seattle is the seat of King County, and the state's general-jurisdiction trial court for the city is King County Superior Court, which hears felonies, larger civil cases, family law and probate at the King County Courthouse, 516 Third Avenue. King County District Court handles small claims; the county says individuals may claim up to $10,000 and businesses and other non-individuals up to $5,000, and its Seattle small claims filing area is in the same courthouse. Federal cases go to the U.S. District Court for the Western District of Washington at the U.S. Courthouse, 700 Stewart Street, with appeals to the Ninth Circuit. The Seattle Immigration Court is at 915 2nd Avenue, and EOIR also has a court in nearby Tacoma. The King County Bar Association runs a lawyer referral service and free neighborhood legal clinics, and the Washington State Bar Association's lawyer directory confirms a lawyer's license status.",
+"blurbSources": [
+"https://kingcounty.gov/en/court/superior-court",
+"https://kingcounty.gov/en/court/district-court/courts-jails-legal-system/small-claims",
+"https://kingcounty.gov/en/court/district-court/courts-jails-legal-system/court-calendars-locations-operations/locations",
+"https://www.wawd.uscourts.gov/visitors/seattle-courthouse",
+"https://www.justice.gov/eoir/seattle-immigration-court",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.kcba.org/?pg=Hire-a-Lawyer",
+"https://www.mywsba.org/PersonifyEbusiness/LegalDirectory.aspx"
+],
+"photo": {
+"id": "1502175353174-a7a70e73b362",
+"pageUrl": "https://unsplash.com/photos/space-needle-and-seattle-skyline-skUTVJi8-jc",
+"photographer": "Thom Milkovic",
+"alt": "The Space Needle and Seattle skyline with Mount Rainier in the distance"
+}
+},
+"denver": {
+"county": "City and County of Denver",
+"countyNote": "Denver is a consolidated city and county.",
+"stateCourt": {
+"name": "Denver District Court (Second Judicial District)",
+"courthouse": "Denver City and County Building (civil and domestic matters); criminal matters at Lindsey-Flanigan Courthouse, 520 West Colfax Avenue",
+"address": "1437 Bannock Street, Room 256, Denver, CO 80202",
+"url": "https://www.coloradojudicial.gov/courts/trial-courts/denver-district"
+},
+"smallClaims": {
+"court": "Denver County Court, Civil Division (Small Claims)",
+"address": "Denver City and County Building, 1437 Bannock Street, Denver, CO 80202",
+"url": "https://www.denvercountycourt.org/civil/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Colorado",
+"courthouse": "Alfred A. Arraj U.S. Courthouse",
+"address": "901 19th Street, Denver, CO 80294",
+"url": "http://www.cod.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Denver Immigration Court",
+"address": "1961 Stout Street, Suite 3101, Denver, CO 80294",
+"url": "https://www.justice.gov/eoir/denver-immigration-court"
+},
+"bar": {
+"name": "Denver Bar Association",
+"url": "https://www.denbar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Colorado Legal Services",
+"url": "https://www.coloradolegalservices.org/",
+"serves": "Low-income residents across Colorado, including Denver"
+},
+{
+"name": "Metro Volunteer Lawyers",
+"url": "https://www.denbar.org/Metro-Volunteer-Lawyers/I-Need-Help",
+"serves": "Eligible low-income residents of Denver and surrounding metro counties (intake through Colorado Legal Services)"
+}
+],
+"population": {
+"value": 740613,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Denver's state courts make up Colorado's Second Judicial District, which is unusual in that it is not a combined court: Denver has four constitutionally separate courts, the District Court, County Court, Probate Court and Juvenile Court. Denver District Court hears civil and domestic cases at the City and County Building on Bannock Street and felony criminal cases at the Lindsey-Flanigan Courthouse on West Colfax Avenue. Denver County Court, which functions as both a municipal and a state court, handles misdemeanors, traffic matters, civil claims up to $25,000 and small claims up to $7,500. Federal cases go to the U.S. District Court for the District of Colorado at the Alfred A. Arraj U.S. Courthouse, and the Denver Immigration Court sits on Stout Street. The Colorado Court of Appeals and Colorado Supreme Court are also located in Denver, at the Ralph L. Carr Judicial Center. Anyone hiring a lawyer can confirm the attorney's license and disciplinary history through the Colorado Supreme Court's attorney registration search.",
+"blurbSources": [
+"https://www.coloradojudicial.gov/courts/trial-courts/denver-district",
+"https://www.denvercountycourt.org/",
+"https://www.denvercountycourt.org/civil/",
+"http://www.cod.uscourts.gov/Home.aspx",
+"https://www.justice.gov/eoir/denver-immigration-court",
+"https://www.coloradosupremecourt.com/Search/AttSearch.asp"
+],
+"photo": {
+"id": "1648441095877-90406e6ba04d",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-with-mountains-in-the-background-Q9X_p5dDq_8",
+"photographer": "Bill Griepenstroh",
+"alt": "Downtown Denver skyline on a clear day with the Rocky Mountains in the distance"
+}
+},
+"nashville": {
+"county": "Davidson County",
+"countyNote": "Nashville and Davidson County have a consolidated government (Metropolitan Government of Nashville and Davidson County).",
+"stateCourt": {
+"name": "Davidson County Circuit Court (Twentieth Judicial District)",
+"courthouse": "Historic Metropolitan Courthouse (Circuit Court Clerk's office); Criminal Court sits at the Justice A.A. Birch Building, 408 Second Avenue North",
+"address": "1 Public Square, Suite 302, Nashville, TN 37201",
+"url": "https://circuitclerk.nashville.gov/"
+},
+"smallClaims": {
+"court": "Davidson County General Sessions Court, Civil Division (claims up to $25,000; Tennessee has no separate small claims court)",
+"address": "408 Second Avenue North, Suite 2110, Nashville, TN 37201",
+"url": "https://circuitclerk.nashville.gov/general-sessions-clerk-civil/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Middle District of Tennessee (Nashville Division)",
+"courthouse": "Fred D. Thompson U.S. Courthouse and Federal Building",
+"address": "719 Church Street, Nashville, TN 37203",
+"url": "https://www.tnmd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Nashville Bar Association",
+"url": "https://www.nashvillebar.org/",
+"referral": {
+"name": "Nashville Bar Association Lawyer Referral & Information Service (LRIS)",
+"phone": "615-242-9272",
+"url": "https://www.nashvillebar.org/?pg=NeedAnAttorneyContactUs"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society of Middle Tennessee and the Cumberlands",
+"url": "https://las.org/",
+"serves": "Low-income residents of 48 Middle Tennessee counties, including Davidson County"
+}
+],
+"population": {
+"value": 721074,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Nashville's state trial courts belong to Tennessee's Twentieth Judicial District, which covers Davidson County. Civil lawsuits above the General Sessions limit are heard in Circuit Court, with the Circuit Court Clerk's office at the Historic Metropolitan Courthouse on Public Square; criminal felony cases are heard in Davidson County Criminal Court, and Chancery Court handles equity matters. Tennessee has no separate small claims court: civil warrants for money or property up to $25,000, along with landlord-tenant detainer cases, are filed in General Sessions Court's Civil Division at 408 Second Avenue North. Federal cases are heard by the U.S. District Court for the Middle District of Tennessee at the Fred D. Thompson U.S. Courthouse on Church Street. EOIR does not list an immigration court in Nashville. The Nashville Bar Association runs a lawyer referral service, and a Tennessee attorney's license status can be checked with the Board of Professional Responsibility.",
+"blurbSources": [
+"https://circuitclerk.nashville.gov/",
+"https://circuitclerk.nashville.gov/general-sessions-clerk-civil/",
+"https://www.tnmd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.nashvillebar.org/?pg=NeedAnAttorneyContactUs",
+"https://www.tbpr.org/"
+],
+"photo": {
+"id": "1780906621697-d513649d13d6",
+"pageUrl": "https://unsplash.com/photos/the-iconic-att-building-dominates-nashvilles-downtown-skyline-HxhUDXkWaXY",
+"photographer": "Alexandra Tran",
+"alt": "The AT&T Building rising above downtown Nashville near Broadway"
+}
+},
+"oklahoma-city": {
+"county": "Oklahoma County",
+"countyNote": "Oklahoma City also extends into Canadian, Cleveland and Pottawatomie counties.",
+"stateCourt": {
+"name": "District Court of Oklahoma County (Seventh Judicial District)",
+"courthouse": "Oklahoma County Courthouse",
+"address": "321 Park Avenue, Oklahoma City, OK 73102",
+"url": "https://oklahomacounty.org/elected-offices/court-clerk"
+},
+"smallClaims": {
+"court": "Small Claims Docket, District Court of Oklahoma County",
+"address": "321 Park Avenue, Oklahoma City, OK 73102",
+"url": "https://oklahomacounty.org/elected-offices/court-clerk"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Oklahoma",
+"courthouse": "William J. Holloway Jr. U.S. Courthouse",
+"address": "200 NW 4th Street, Oklahoma City, OK 73102",
+"url": "https://www.okwd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Oklahoma County Bar Association",
+"url": "https://www.okcbar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Aid Services of Oklahoma",
+"url": "https://legalaidok.org/",
+"serves": "Low-income residents and seniors statewide, including Oklahoma City"
+}
+],
+"population": {
+"value": 719849,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Most of Oklahoma City lies in Oklahoma County, where the District Court of Oklahoma County is the general trial court for civil, criminal, family and probate cases; it sits at the Oklahoma County Courthouse at 321 Park Avenue. Oklahoma has no separate small claims court; smaller money claims are heard on the district court's small claims docket, and the Court Clerk's office provides filing information. Residents in the parts of the city that extend into Canadian, Cleveland or Pottawatomie counties file in those counties' district courts. Federal cases go to the U.S. District Court for the Western District of Oklahoma at 200 NW 4th Street. There is no immigration court in Oklahoma City. The Oklahoma County Bar Association does not run a referral service and points the public to the Oklahoma Bar Association's lawyer directory, where an attorney's membership can also be checked.",
+"blurbSources": [
+"https://oklahomacounty.org/elected-offices/court-clerk",
+"https://www.okwd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.okcbar.org/",
+"https://www.okbar.org/findalawyer/",
+"https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+],
+"photo": {
+"id": "1723698882852-24295cd67fcb",
+"pageUrl": "https://unsplash.com/photos/an-aerial-view-of-a-city-at-sunset-AKpH8BfKZyw",
+"photographer": "Braden Jarvis",
+"alt": "Aerial view of Oklahoma City streets and buildings at sunset"
+}
+},
+"el-paso": {
+"county": "El Paso County",
+"countyNote": "",
+"stateCourt": {
+"name": "District Courts of El Paso County (including the 34th District Court and other district courts)",
+"courthouse": "El Paso County Courthouse",
+"address": "500 E. San Antonio Avenue, El Paso, TX 79901",
+"url": "https://www.epcounty.com/598/Courts-Directory"
+},
+"smallClaims": {
+"court": "El Paso County Justice of the Peace Courts (Justice Courts)",
+"address": null,
+"url": "https://www.epcounty.com/225/Justices-of-the-Peace"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Texas (El Paso Division)",
+"courthouse": "Albert Armendariz Sr. U.S. Courthouse",
+"address": "525 Magoffin Avenue, El Paso, TX 79901",
+"url": "https://www.txwd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "El Paso Immigration Court",
+"address": "700 E. San Antonio Avenue, Suite 750, El Paso, TX 79901",
+"url": "https://www.justice.gov/eoir/el-paso-immigration-courts"
+},
+"bar": {
+"name": "El Paso Bar Association",
+"url": "https://elpasobar.com/",
+"referral": {
+"name": "El Paso Bar Association Lawyer Referral and Information Service",
+"phone": "(915) 532-7052",
+"url": "https://elpasobar.com/LawyerReferral"
+}
+},
+"legalAid": [
+{
+"name": "Texas RioGrande Legal Aid",
+"url": "https://www.trla.org/",
+"serves": "Low-income residents of 68 Texas counties, including El Paso County"
+}
+],
+"population": {
+"value": 683012,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "El Paso's state trial courts are the El Paso County district courts, most of which sit at the El Paso County Courthouse at 500 E. San Antonio Avenue. The county's courts directory groups them by docket: some district courts hear both civil and criminal cases, while others are dedicated to civil, criminal or family matters, and the county also lists a Veterans Court. Small claims and other lower-value civil cases are filed with the county's Justice of the Peace courts, which are organized by precinct. Federal cases are heard in the El Paso Division of the U.S. District Court for the Western District of Texas at 525 Magoffin Avenue. EOIR operates two immigration courts in El Paso: the El Paso Immigration Court downtown and the El Paso SPC Immigration Court at 8915 Montana Avenue. The State Bar of Texas lawyer search can be used to confirm that an attorney is licensed in Texas.",
+"blurbSources": [
+"https://www.epcounty.com/598/Courts-Directory",
+"https://www.epcounty.com/225/Justices-of-the-Peace",
+"https://www.txwd.uscourts.gov/",
+"https://www.justice.gov/eoir/el-paso-immigration-courts",
+"https://www.justice.gov/eoir/el-paso-spc-0",
+"https://www.texasbar.com/",
+"https://www.govinfo.gov/content/pkg/PLAW-111publ75/html/PLAW-111publ75.htm"
+],
+"photo": {
+"id": "1707863313405-0a153bef3383",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-at-sunset-from-a-hill-KALWGRa7l0s",
+"photographer": "Raul Miranda",
+"alt": "View over El Paso, Texas, at sunset from a hillside"
+}
+},
+"boston": {
+"county": "Suffolk County",
+"countyNote": "Suffolk County also includes Chelsea, Revere and Winthrop.",
+"stateCourt": {
+"name": "Suffolk County Superior Court",
+"courthouse": "Suffolk County Courthouse",
+"address": "3 Pemberton Square, Boston, MA 02108",
+"url": "https://www.mass.gov/locations/suffolk-county-courthouse"
+},
+"smallClaims": {
+"court": "Boston Municipal Court (Central Division and other divisions)",
+"address": "Edward W. Brooke Courthouse, 24 New Chardon Street, Boston, MA 02114",
+"url": "https://www.mass.gov/how-to/file-a-small-claim-in-the-boston-municipal-court-district-court-or-housing-court"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Massachusetts",
+"courthouse": "John Joseph Moakley U.S. Courthouse",
+"address": "1 Courthouse Way, Boston, MA 02210",
+"url": "https://www.mad.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Boston Immigration Court",
+"address": "JFK Federal Building, 15 New Sudbury Street, Room 320, Boston, MA 02203",
+"url": "https://www.justice.gov/eoir/boston-immigration-court"
+},
+"bar": {
+"name": "Boston Bar Association",
+"url": "https://bostonbar.org/",
+"referral": {
+"name": "Boston Bar Association Lawyer Referral Service",
+"phone": null,
+"url": "https://bostonbar.org/lawyer-referral/"
+}
+},
+"legalAid": [
+{
+"name": "Greater Boston Legal Services",
+"url": "https://www.gbls.org/",
+"serves": "Low-income residents of Boston and surrounding Greater Boston communities"
+},
+{
+"name": "Volunteer Lawyers Project",
+"url": "https://vlpnet.org/",
+"serves": "Low-income residents of Greater Boston through volunteer attorneys"
+}
+],
+"population": {
+"value": 672973,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Boston's major civil and criminal cases are heard in Suffolk County Superior Court at the Suffolk County Courthouse on Pemberton Square, which serves Boston, Chelsea, Revere and Winthrop. Lower-value civil cases, misdemeanors and small claims go to the Boston Municipal Court, whose Central Division sits in the Edward W. Brooke Courthouse on New Chardon Street; small claims may also be filed in the Housing Court for qualifying disputes. Federal cases are heard by the U.S. District Court for the District of Massachusetts at the John Joseph Moakley U.S. Courthouse on Fan Pier, which also houses the First Circuit Court of Appeals. The Boston Immigration Court is in the JFK Federal Building. The Boston Bar Association runs a lawyer referral service through an online request system, with the first 30-minute consultation costing no more than $25. A Massachusetts attorney's status can be checked with the Board of Bar Overseers.",
+"blurbSources": [
+"https://www.mass.gov/locations/suffolk-county-courthouse",
+"https://www.mass.gov/how-to/file-a-small-claim-in-the-boston-municipal-court-district-court-or-housing-court",
+"https://en.wikipedia.org/wiki/Edward_W._Brooke_Courthouse",
+"https://www.mad.uscourts.gov/",
+"https://en.wikipedia.org/wiki/John_Joseph_Moakley_United_States_Courthouse",
+"https://www.justice.gov/eoir/boston-immigration-court",
+"https://bostonbar.org/lawyer-referral/",
+"https://www.massbbo.org/"
+],
+"photo": {
+"id": "1786325161155-05c18de11854",
+"pageUrl": "https://unsplash.com/photos/boston-skyline-across-harbor-at-night-sy2_qzR-a54",
+"photographer": "Gary Lee",
+"alt": "Boston skyline lit up at night across the harbor"
+}
+},
+"portland": {
+"county": "Multnomah County",
+"countyNote": "Portland also extends into small parts of Washington and Clackamas counties.",
+"stateCourt": {
+"name": "Multnomah County Circuit Court (Fourth Judicial District)",
+"courthouse": "Multnomah County Central Courthouse",
+"address": "1200 SW 1st Avenue, Portland, OR 97204",
+"url": "https://www.courts.oregon.gov/courts/multnomah/Pages/default.aspx"
+},
+"smallClaims": {
+"court": "Multnomah County Circuit Court, Small Claims",
+"address": "1200 SW 1st Avenue, Portland, OR 97204",
+"url": "https://www.courts.oregon.gov/courts/multnomah/go/Pages/smallclaims.aspx"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Oregon (Portland Division)",
+"courthouse": "Mark O. Hatfield U.S. Courthouse",
+"address": "1000 SW Third Avenue, Portland, OR 97204",
+"url": "https://www.ord.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Portland Immigration Court",
+"address": "1220 SW 3rd Avenue, Suite 500, Portland, OR 97204",
+"url": "https://www.justice.gov/eoir/portland-immigration-court"
+},
+"bar": {
+"name": "Multnomah Bar Association",
+"url": "https://www.mbabar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Aid Services of Oregon",
+"url": "https://lasoregon.org/",
+"serves": "Low-income residents and seniors; Multnomah County office in Portland"
+},
+{
+"name": "Oregon Law Center",
+"url": "https://oregonlawcenter.org/",
+"serves": "Low-income Oregonians statewide"
+}
+],
+"population": {
+"value": 635109,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Portland's state trial court is the Multnomah County Circuit Court, Oregon's Fourth Judicial District, which hears civil, criminal, family, probate and small claims cases. Its main location is the Multnomah County Central Courthouse at 1200 SW 1st Avenue near the Hawthorne Bridge, and the court also operates an East County Courthouse. Residents in the parts of Portland that extend into Washington or Clackamas counties may need to file in those counties' circuit courts. Federal cases are heard by the U.S. District Court for the District of Oregon at its Portland courthouse at 1000 SW Third Avenue, and the Portland Immigration Court is nearby at 1220 SW 3rd Avenue. The Multnomah Bar Association does not refer clients itself; it directs the public to the Oregon State Bar's Lawyer Referral Service at 503-684-3763. The Oregon State Bar can also confirm whether a lawyer is licensed to practice in Oregon.",
+"blurbSources": [
+"https://www.courts.oregon.gov/courts/multnomah/Pages/default.aspx",
+"https://www.courts.oregon.gov/courts/multnomah/go/Pages/smallclaims.aspx",
+"https://www.ord.uscourts.gov/index.php/court-info/contact-us/portland-division",
+"https://www.ord.uscourts.gov/",
+"https://www.justice.gov/eoir/portland-immigration-court",
+"https://www.mbabar.org/?pg=for-the-public",
+"https://www.osbar.org/"
+],
+"photo": {
+"id": "1715656205207-4dbc595722b2",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-from-across-a-river-vGLe-YmD888",
+"photographer": "Bryan White",
+"alt": "Downtown Portland skyline across the Willamette River, viewed from beneath a bridge"
+}
+},
+"las-vegas": {
+"county": "Clark County",
+"countyNote": "",
+"stateCourt": {
+"name": "Eighth Judicial District Court (Clark County District Court)",
+"courthouse": "Regional Justice Center",
+"address": "200 Lewis Avenue, Las Vegas, NV 89155",
+"url": "https://www.clarkcountycourts.us/"
+},
+"smallClaims": {
+"court": "Las Vegas Justice Court, Civil Division (Small Claims)",
+"address": "Regional Justice Center, 200 Lewis Avenue, Las Vegas, NV 89101",
+"url": "https://www.lasvegasjusticecourt.us/divisions/civil_division/small_claims/index.php"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Nevada",
+"courthouse": "Lloyd D. George Federal Courthouse",
+"address": "333 Las Vegas Blvd. South, Las Vegas, NV 89101",
+"url": "https://www.nvd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Las Vegas Immigration Court",
+"address": "110 North City Parkway, Suite 400, Las Vegas, NV 89106",
+"url": "https://www.justice.gov/eoir/las-vegas-immigration-court"
+},
+"bar": {
+"name": "Clark County Bar Association",
+"url": "https://www.clarkcountybar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Aid Center of Southern Nevada",
+"url": "https://www.lacsn.org/",
+"serves": "Low-income residents of Clark County"
+},
+{
+"name": "Nevada Legal Services",
+"url": "https://nlslaw.net/",
+"serves": "Low-income Nevadans statewide, with an office in Las Vegas"
+}
+],
+"population": {
+"value": 679817,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Las Vegas is in Clark County, where the Eighth Judicial District Court is the general trial court for civil, criminal, family and probate matters. Its main courthouse is the Regional Justice Center at 200 Lewis Avenue downtown, and family cases are heard at the Family Courthouse on North Pecos Road. The district court operates a Business Court and a set of specialty courts, including an Adult Drug Court established in 1992, a Mental Health Court, a Veterans Treatment Court and a Gambling Treatment Diversion Court. Small claims are filed with the Civil Division of the Las Vegas Justice Court, which shares the Regional Justice Center building. Federal cases go to the U.S. District Court for the District of Nevada at the Lloyd D. George Federal Courthouse on Las Vegas Boulevard South, and the Las Vegas Immigration Court is on North City Parkway. The State Bar of Nevada can confirm whether an attorney is licensed in Nevada.",
+"blurbSources": [
+"https://www.clarkcountycourts.us/",
+"https://www.clarkcountycourts.us/general/locations/",
+"https://www.clarkcountycourts.us/departments/specialty-courts/",
+"https://www.clarkcountycourts.us/departments/business-court/",
+"https://www.lasvegasjusticecourt.us/divisions/civil_division/index.php",
+"https://www.nvd.uscourts.gov/",
+"https://www.justice.gov/eoir/las-vegas-immigration-court",
+"https://nvbar.org/"
+],
+"photo": {
+"id": "1787336594993-5c2fbc3fcb50",
+"pageUrl": "https://unsplash.com/photos/las-vegas-skyline-with-palm-trees-4Yy3bq6JsC8",
+"photographer": "Lindsey Sais",
+"alt": "Las Vegas skyline with palm trees in the foreground and mountains in the distance"
+}
+},
+"detroit": {
+"county": "Wayne County",
+"countyNote": "",
+"stateCourt": {
+"name": "Third Judicial Circuit Court of Michigan",
+"courthouse": "Coleman A. Young Municipal Center (Civil and Domestic Relations); Criminal Division at Wayne County Criminal Justice Center, 5301 Russell Street, Detroit, MI 48211",
+"address": "2 Woodward Avenue, Detroit, MI 48226",
+"url": "https://www.3rdcc.org/"
+},
+"smallClaims": {
+"court": "36th District Court, Small Claims Division",
+"address": "421 Madison Street, Detroit, MI 48226",
+"url": "https://www.36thdistrictcourtmi.gov/faq-and-self-help/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Michigan (Southern Division)",
+"courthouse": "Theodore Levin U.S. Courthouse",
+"address": "231 W. Lafayette Blvd., Detroit, MI 48226",
+"url": "https://www.mied.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Detroit Immigration Court",
+"address": "477 Michigan Avenue, Suite 440, Detroit, MI 48226",
+"url": "https://www.justice.gov/eoir/detroit-immigration-court"
+},
+"bar": {
+"name": "Detroit Bar Association",
+"url": "https://www.detroitlawyer.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Lakeshore Legal Aid",
+"url": "https://lakeshorelegalaid.org/",
+"serves": "Low-income residents of southeast Michigan, with offices in Detroit"
+}
+],
+"population": {
+"value": 649095,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Detroit is in Wayne County, where the Third Judicial Circuit Court of Michigan is the general trial court. Its Civil Division and Domestic Relations section sit in the Coleman A. Young Municipal Center at 2 Woodward Avenue, its Criminal Division is at the Wayne County Criminal Justice Center on Russell Street, and juvenile matters are heard at the Lincoln Hall of Justice. Small claims, landlord-tenant cases, misdemeanors and lower-value civil suits are handled by the 36th District Court at 421 Madison Street, which hears small claims in person. Federal cases go to the U.S. District Court for the Eastern District of Michigan at the Theodore Levin U.S. Courthouse on West Lafayette Boulevard, and the Detroit Immigration Court is on Michigan Avenue. The State Bar of Michigan runs a statewide lawyer referral service at (800) 968-0738 and maintains a member directory that can be used to confirm a lawyer's license.",
+"blurbSources": [
+"https://www.3rdcc.org/general-information/hours-and-locations",
+"https://www.36thdistrictcourtmi.gov/",
+"https://www.36thdistrictcourtmi.gov/faq-and-self-help/small-claims",
+"https://www.mied.uscourts.gov/",
+"https://www.justice.gov/eoir/detroit-immigration-court",
+"https://lrs.michbar.org/LRS-Info/Lawyer-Referral-Service"
+],
+"photo": {
+"id": "1766669031794-fbffa6b4f066",
+"pageUrl": "https://unsplash.com/photos/detroit-skyline-reflected-in-the-river-at-dusk-vQMPyY8Ntpw",
+"photographer": "Sam Davis",
+"alt": "Detroit skyline, including the Renaissance Center, reflected in the Detroit River at dusk"
+}
+},
+"memphis": {
+"county": "Shelby County",
+"countyNote": "",
+"stateCourt": {
+"name": "Shelby County Circuit Court (Thirtieth Judicial District)",
+"courthouse": "Shelby County Courthouse",
+"address": "140 Adams Avenue, Memphis, TN 38103",
+"url": "https://circuitcourt.shelbycountytn.gov/"
+},
+"smallClaims": {
+"court": "Shelby County General Sessions Civil Court (claims up to $25,000; Tennessee has no separate small claims court)",
+"address": "140 Adams Avenue, Room 106, Memphis, TN 38103",
+"url": "https://www.shelbygeneralsessions.com/8/Civil-Division"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Tennessee (Western Division)",
+"courthouse": "Odell Horton Federal Building",
+"address": "167 North Main Street, Memphis, TN 38103",
+"url": "https://www.tnwd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Memphis Immigration Court",
+"address": "80 Monroe Avenue, Lower Level Suite G-10, Memphis, TN 38103",
+"url": "https://www.justice.gov/eoir/memphis-immigration-court"
+},
+"bar": {
+"name": "Memphis Bar Association",
+"url": "https://www.memphisbar.org/",
+"referral": {
+"name": "901 Legal Connect",
+"phone": "901-527-3573",
+"url": "https://www.901legalconnect.org/"
+}
+},
+"legalAid": [
+{
+"name": "Memphis Area Legal Services",
+"url": "https://malsi.org/",
+"serves": "Low-income, disabled and elderly residents of Shelby, Fayette, Tipton and Lauderdale counties"
+}
+],
+"population": {
+"value": 609647,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Memphis is in Shelby County, which makes up Tennessee's Thirtieth Judicial District. Larger civil lawsuits are heard in Shelby County Circuit Court, and the Shelby County Courthouse at 140 Adams Avenue houses many of the county's courts. Tennessee has no separate small claims court: civil claims up to $25,000, eviction (forcible entry and detainer) cases and actions to recover personal property are filed in Shelby County General Sessions Civil Court, Room 106 of the same building. Federal cases go to the U.S. District Court for the Western District of Tennessee at the Odell Horton Federal Building on North Main Street, and the Memphis Immigration Court is at 80 Monroe Avenue. The Memphis Bar Association maintains an online lawyer directory, and its 901 Legal Connect program, a service of the Memphis Bar Foundation, routes people to free or low-cost legal aid providers with one form. A Tennessee lawyer's license can be checked with the Board of Professional Responsibility.",
+"blurbSources": [
+"https://www.shelbygeneralsessions.com/8/Civil-Division",
+"https://www.tnwd.uscourts.gov/",
+"https://www.justice.gov/eoir/memphis-immigration-court",
+"https://www.memphisbar.org/?pg=FindaLawyer",
+"https://www.901legalconnect.org/",
+"https://malsi.org/",
+"https://www.tbpr.org/"
+],
+"photo": {
+"id": "1704727783994-5e362227d584",
+"pageUrl": "https://unsplash.com/photos/the-sun-is-setting-over-a-city-in-the-distance-LBkjBVTot_Y",
+"photographer": "Sean Davis",
+"alt": "Sun setting over Memphis, Tennessee, with the city in the distance"
+}
+},
+"louisville": {
+"county": "Louisville/Jefferson County Metro Government (Jefferson County)",
+"countyNote": "Louisville and Jefferson County merged into a consolidated city-county government in 2003. The Census population figure is for the 'balance' (the consolidated government minus semi-independent incorporated cities inside Jefferson County); the full consolidated government had an estimated 795,222 residents in 2025.",
+"stateCourt": {
+"name": "Jefferson Circuit Court (30th Judicial Circuit of Kentucky)",
+"courthouse": "Jefferson County Judicial Center",
+"address": "700 W. Jefferson St., Louisville, KY 40202",
+"url": "https://www.kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx"
+},
+"smallClaims": {
+"court": "Jefferson District Court, Small Claims Division",
+"address": "Louis D. Brandeis Hall of Justice, 600 W. Jefferson St., Louisville, KY 40202",
+"url": "https://kycourts.gov/Legal-Help/Documents/P-6_Small_Claims_Handbook_25.pdf"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Kentucky (Louisville)",
+"courthouse": "Gene Snyder U.S. Courthouse",
+"address": "601 W. Broadway, Louisville, KY 40202",
+"url": "https://www.kywd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Memphis Immigration Court - Louisville Hearing Location",
+"address": "601 W. Broadway, Basement Room 3, Louisville, KY 40202",
+"url": "https://www.justice.gov/eoir/memphis-immigration-court"
+},
+"bar": {
+"name": "Louisville Bar Association",
+"url": "https://www.loubar.org/",
+"referral": {
+"name": "Kentucky Lawyer Referral Service (KLRS)",
+"phone": "(502) 583-1801",
+"url": "https://www.loubar.org/need-a-lawyer/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society",
+"url": "https://yourlegalaid.org/",
+"serves": "Low-income residents of Jefferson County and 14 other Kentucky counties"
+}
+],
+"population": {
+"value": 641962,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Louisville's state courts are part of the Kentucky Court of Justice in Jefferson County. Jefferson Circuit Court, the general-jurisdiction trial court, hears civil cases involving more than $5,000, felonies, divorces, and real property disputes at the Jefferson County Judicial Center, which also houses Family Court. Jefferson District Court, at the Louis D. Brandeis Hall of Justice, handles misdemeanors, traffic offenses, probate, civil cases of $5,000 or less, and a small claims division for disputes of $2,500 or less. Since January 2020, Jefferson Circuit Court has run Kentucky's first Business Court Docket, a pilot for commercial disputes. Federal cases go to the U.S. District Court for the Western District of Kentucky at the Gene Snyder U.S. Courthouse, where the Memphis Immigration Court also keeps a Louisville hearing location. The Louisville Bar Association sponsors the Kentucky Lawyer Referral Service, and the Kentucky Bar Association's Find a Lawyer directory can be used to check a lawyer's membership status.",
+"blurbSources": [
+"https://www.kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx",
+"https://www.kycourts.gov/Courts/Circuit-Court/Pages/default.aspx",
+"https://www.kycourts.gov/Courts/District-Court/Pages/default.aspx",
+"https://www.kycourts.gov/Courts/Business-Court/Pages/default.aspx",
+"https://www.kywd.uscourts.gov/",
+"https://www.justice.gov/eoir/memphis-immigration-court",
+"https://www.loubar.org/need-a-lawyer/",
+"https://www.kybar.org/"
+],
+"photo": {
+"id": "1763326576460-b535bc21e144",
+"pageUrl": "https://unsplash.com/photos/city-skyline-at-dusk-with-water-reflections-VNGVZ6m4WfU",
+"photographer": "Chris Marlin",
+"alt": "Louisville skyline at dusk reflected in the Ohio River, seen from Clarksville, Indiana"
+}
+},
+"baltimore": {
+"county": "Baltimore City (independent city)",
+"countyNote": "Baltimore City is an independent city, separate from Baltimore County, and is its own judicial circuit.",
+"stateCourt": {
+"name": "Circuit Court for Baltimore City (Eighth Judicial Circuit of Maryland)",
+"courthouse": "Clarence M. Mitchell, Jr. Courthouse",
+"address": "100 N. Calvert St., Baltimore, MD 21202",
+"url": "https://www.baltimorecitycourt.org/"
+},
+"smallClaims": {
+"court": "District Court of Maryland for Baltimore City",
+"address": "Hubbard (North Calvert) District Courthouse, 500 N. Calvert St., Baltimore, MD 21202",
+"url": "https://www.mdcourts.gov/legalhelp/smallclaims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Maryland, Northern Division",
+"courthouse": "Edward A. Garmatz U.S. Courthouse",
+"address": "101 W. Lombard St., Baltimore, MD 21201",
+"url": "https://www.mdd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Baltimore Immigration Court",
+"address": "George Fallon Federal Building, 31 Hopkins Plaza, Room 440, Baltimore, MD 21201",
+"url": "https://www.justice.gov/eoir/baltimore-immigration-court"
+},
+"bar": {
+"name": "Bar Association of Baltimore City",
+"url": "https://www.baltimorebar.org/",
+"referral": {
+"name": "Lawyer Referral & Information Service of the Bar Association of Baltimore City",
+"phone": "410-539-5936",
+"url": "https://www.baltimorebar.org/?pg=clientreferrals"
+}
+},
+"legalAid": [
+{
+"name": "Maryland Legal Aid",
+"url": "https://www.mdlab.org/",
+"serves": "Financially eligible Marylanders, including Baltimore City residents"
+},
+{
+"name": "Maryland Volunteer Lawyers Service",
+"url": "https://mvlslaw.org/",
+"serves": "Low-income Marylanders through pro bono volunteer attorneys"
+}
+],
+"population": {
+"value": 569997,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Baltimore is an independent city, so its courts are organized separately from those of Baltimore County. The Circuit Court for Baltimore City is the general-jurisdiction trial court for jury trials, major civil cases, serious criminal cases, and family matters; filings are accepted at the Clarence M. Mitchell, Jr. Courthouse at 100 North Calvert Street. The District Court of Maryland hears landlord-tenant cases, traffic violations, misdemeanors and certain felonies, and civil cases of $30,000 or less, without juries. Claims for money of $5,000 or less can proceed as small claims under simplified rules. The District Court's former Fayette Street operations are now at a courthouse at 500 North Calvert Street. Federal cases go to the U.S. District Court for the District of Maryland, Northern Division, at 101 West Lombard Street, and the Baltimore Immigration Court sits in the George Fallon Federal Building. The Maryland Judiciary's online Attorney Search can be used to check whether a lawyer is admitted in Maryland.",
+"blurbSources": [
+"https://www.baltimorecitycourt.org/",
+"https://www.mdcourts.gov/district/directories/baltimorecityHUBBARD",
+"https://www.mdcourts.gov/legalhelp/smallclaims",
+"https://www.mdd.uscourts.gov/",
+"https://www.justice.gov/eoir/baltimore-immigration-court",
+"https://www.mdcourts.gov/attysearch"
+],
+"photo": {
+"id": "1611316491868-a683302aa917",
+"pageUrl": "https://unsplash.com/photos/city-skyline-across-body-of-water-during-daytime-3LW-MzohI2o",
+"photographer": "Brendan Beale",
+"alt": "Aerial view of Baltimore's Inner Harbor and downtown skyline in daytime"
+}
+},
+"milwaukee": {
+"county": "Milwaukee County",
+"countyNote": "Census data show the City of Milwaukee also has small unpopulated portions in Washington and Waukesha counties; all residents live in Milwaukee County.",
+"stateCourt": {
+"name": "Milwaukee County Circuit Court",
+"courthouse": "Milwaukee County Courthouse",
+"address": "901 N. 9th St., Milwaukee, WI 53233",
+"url": "https://county.milwaukee.gov/EN/Courts"
+},
+"smallClaims": {
+"court": "Milwaukee County Circuit Court, Civil Division (Small Claims)",
+"address": "Milwaukee County Courthouse, 901 N. 9th St., Milwaukee, WI 53233",
+"url": "https://county.milwaukee.gov/EN/Courts/Court-Divisions/Civil-Court"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Wisconsin, Milwaukee Division",
+"courthouse": "United States Federal Building and Courthouse",
+"address": "517 E. Wisconsin Ave., Room 362, Milwaukee, WI 53202",
+"url": "https://www.wied.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Milwaukee Bar Association",
+"url": "https://milwbar.org/",
+"referral": {
+"name": "Milwaukee Bar Association Lawyer Referral & Information Service",
+"phone": "(414) 274-6768",
+"url": "https://findmilwaukeelawyers.org/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Action Wisconsin",
+"url": "https://www.legalaction.org/",
+"serves": "Low-income residents of Milwaukee and much of southern and western Wisconsin"
+},
+{
+"name": "Legal Aid Society of Milwaukee",
+"url": "https://lasmilwaukee.com/",
+"serves": "Low-income residents of Milwaukee County"
+}
+],
+"population": {
+"value": 562407,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Milwaukee residents use the Milwaukee County Circuit Court, Wisconsin's state trial court for the county, which hears civil, criminal, family, probate, juvenile, and small claims cases. Its main courthouse is at 901 North 9th Street. The court's Civil Division processes civil and family filings, and the county lists small claims as cases involving less than $10,000; people can begin a small claims case using resources from the Milwaukee Justice Center. Federal cases are heard by the U.S. District Court for the Eastern District of Wisconsin, whose Milwaukee clerk's office is in the federal courthouse at 517 East Wisconsin Avenue. The Executive Office for Immigration Review does not list an immigration court in Milwaukee. The Milwaukee Bar Association runs a Lawyer Referral & Information Service that refers callers to private attorneys or other resources. To confirm that a lawyer is licensed in Wisconsin, the State Bar of Wisconsin's Lawyer Search lists members and their status.",
+"blurbSources": [
+"https://county.milwaukee.gov/EN/Courts/Court-Divisions/Civil-Court",
+"https://county.milwaukee.gov/EN/Courts",
+"https://www.wied.uscourts.gov/court-locations/milwaukee",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.wislawhelp.org/node/86",
+"https://www.wisbar.org/"
+],
+"photo": {
+"id": "1786631586832-45bed9dd0c9e",
+"pageUrl": "https://unsplash.com/photos/milwaukee-skyline-along-lake-michigan-wOHFne9H7TM",
+"photographer": "William Hadley",
+"alt": "Aerial view of the downtown Milwaukee skyline along the Lake Michigan shore"
+}
+},
+"albuquerque": {
+"county": "Bernalillo County",
+"countyNote": "",
+"stateCourt": {
+"name": "Second Judicial District Court of New Mexico",
+"courthouse": "Bernalillo County District Court - Downtown",
+"address": "400 Lomas Blvd. NW, Albuquerque, NM 87102",
+"url": "https://seconddistrictcourt.nmcourts.gov/"
+},
+"smallClaims": {
+"court": "Bernalillo County Metropolitan Court (civil cases under $10,000)",
+"address": "401 Lomas Blvd. NW, Albuquerque, NM 87102",
+"url": "https://metrocourt.nmcourts.gov/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of New Mexico",
+"courthouse": "Pete V. Domenici U.S. Courthouse",
+"address": "333 Lomas Blvd. NW, Albuquerque, NM 87102",
+"url": "https://www.nmd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Albuquerque Bar Association",
+"url": "https://www.abqbar.org/",
+"referral": {
+"name": "Albuquerque Bar Association Lawyer Referral Service",
+"phone": null,
+"url": null
+}
+},
+"legalAid": [
+{
+"name": "New Mexico Legal Aid",
+"url": "https://www.newmexicolegalaid.org/",
+"serves": "Low-income New Mexicans statewide, including Albuquerque"
+}
+],
+"population": {
+"value": 556588,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Albuquerque is in Bernalillo County, which makes up New Mexico's Second Judicial District. The Second Judicial District Court, at 400 Lomas Boulevard NW, is the general-jurisdiction trial court for felonies, domestic relations, name changes, foreclosures, and civil cases over $10,000; children's court matters are heard at the John E. Brown Juvenile Justice Center. The court's programs include a Mental Health Court and a Juvenile Treatment Court. The Bernalillo County Metropolitan Court, at 401 Lomas Boulevard NW, handles civil cases under $10,000, landlord-tenant disputes, misdemeanors, DWI and traffic cases, and felony first appearances, and it runs a self-help center for people without lawyers. Federal cases go to the U.S. District Court for the District of New Mexico at the Pete V. Domenici U.S. Courthouse, 333 Lomas Boulevard NW. The Executive Office for Immigration Review does not list an immigration court in Albuquerque. The State Bar of New Mexico's online member directory can be used to confirm that a lawyer is licensed in the state.",
+"blurbSources": [
+"https://selfrepresentation.nmcourts.gov/wp-content/uploads/sites/62/2026/08/NM-COURTS-MASTER-LIST.pdf",
+"https://seconddistrictcourt.nmcourts.gov/",
+"https://www.nmd.uscourts.gov/content/albuquerque",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.sbnm.org/"
+],
+"photo": {
+"id": "1612225468547-80ec4aa6b98c",
+"pageUrl": "https://unsplash.com/photos/aerial-view-of-city-during-daytime-a1Mrycbix-w",
+"photographer": "Gabriel Griego",
+"alt": "Aerial view of the downtown Albuquerque skyline in daytime"
+}
+},
+"tucson": {
+"county": "Pima County",
+"countyNote": "",
+"stateCourt": {
+"name": "Arizona Superior Court in Pima County",
+"courthouse": "Pima County Superior Court",
+"address": "110 W. Congress St., Tucson, AZ 85701",
+"url": "https://www.sc.pima.gov/"
+},
+"smallClaims": {
+"court": "Pima County Consolidated Justice Court",
+"address": "240 N. Stone Ave., Tucson, AZ 85701",
+"url": "https://www.jp.pima.gov/Info/CaseTypes/SmallClaims.html"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Arizona (Tucson)",
+"courthouse": "Evo A. DeConcini U.S. Courthouse",
+"address": "405 W. Congress St., Suite 1500, Tucson, AZ 85701-5010",
+"url": "https://www.azd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Tucson Immigration Court",
+"address": "300 West Congress Street, Suite 300, Tucson, AZ 85701",
+"url": "https://www.justice.gov/eoir/tucson-immigration-court"
+},
+"bar": {
+"name": "Pima County Bar Association",
+"url": "https://www.pimacountybar.org/",
+"referral": {
+"name": "Pima County Bar Association Lawyer Referral Service",
+"phone": "(520) 623-4625",
+"url": "https://www.pimacountybar.org/?pg=lawyer-referral-services"
+}
+},
+"legalAid": [
+{
+"name": "Southern Arizona Legal Aid",
+"url": "https://sazlegalaid.org/",
+"serves": "People with limited means in Tucson and southern Arizona"
+}
+],
+"population": {
+"value": 548371,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Tucson is in Pima County, where the Arizona Superior Court in Pima County is the general-jurisdiction trial court. Located at 110 West Congress Street, it hears civil, criminal, family, probate, and juvenile cases, and its directory of judges and courts lists a Drug Court and a criminal Mental Health Court. Small claims of up to $5,000 are filed with the Pima County Consolidated Justice Court at 240 North Stone Avenue, which also handles evictions and civil traffic matters. Federal cases go to the U.S. District Court for the District of Arizona, whose Tucson courthouse is the Evo A. DeConcini U.S. Courthouse at 405 West Congress Street. The Tucson Immigration Court is at 300 West Congress Street. The Pima County Bar Association operates a Lawyer Referral Service that can refer callers to attorneys in most areas of law. The State Bar of Arizona's member directory can be used to confirm that a lawyer is licensed and in good standing.",
+"blurbSources": [
+"https://www.sc.pima.gov/",
+"https://www.sc.pima.gov/judges-courts",
+"https://www.jp.pima.gov/Info/CaseTypes/SmallClaims.html",
+"https://www.jp.pima.gov/Info/CaseTypes/Evictions.html",
+"https://www.azd.uscourts.gov/content/tucson",
+"https://www.justice.gov/eoir/tucson-immigration-court",
+"https://www.pimacountybar.org/?pg=lawyer-referral-services",
+"https://www.azbar.org/"
+],
+"photo": {
+"id": "1698273191536-0577ff2b94cc",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-with-mountains-in-the-background-ZMnsqtGkOho",
+"photographer": "JC Cervantes",
+"alt": "Tucson city view with desert mountains in the background"
+}
+},
+"fresno": {
+"county": "Fresno County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of California, County of Fresno",
+"courthouse": "B. F. Sisk Courthouse (civil); Fresno Superior Courthouse Downtown, 1100 Van Ness Avenue",
+"address": "1130 O Street, Fresno, CA 93721",
+"url": "https://www.fresno.courts.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of Fresno - Small Claims",
+"address": "B. F. Sisk Courthouse, 1130 O Street, Fresno, CA 93721-2220",
+"url": "https://www.fresno.courts.ca.gov/divisions/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of California, Fresno Division",
+"courthouse": "Robert E. Coyle U.S. Courthouse",
+"address": "2500 Tulare Street, Room 1500, Fresno, CA 93721",
+"url": "https://www.caed.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Fresno County Bar Association",
+"url": "https://www.fresnocountybar.org/",
+"referral": {
+"name": "Fresno County Bar Association Attorney Referral Service",
+"phone": null,
+"url": "https://www.fresnocountybar.org/?pg=ClientReferrals"
+}
+},
+"legalAid": [
+{
+"name": "Central California Legal Services",
+"url": "https://www.centralcallegal.org/",
+"serves": "Low-income residents of Fresno, Merced, Tulare and nearby Central Valley counties"
+}
+],
+"population": {
+"value": 555549,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Fresno is served by the Superior Court of California, County of Fresno, the single trial court that hears all state civil, criminal, family, probate, juvenile, and small claims cases in the county. Civil and small claims matters are handled at the B. F. Sisk Courthouse, 1130 O Street, while the Fresno Superior Courthouse at 1100 Van Ness Avenue and the M Street Courthouse at 2317 Tuolumne Street are the court's other downtown locations. Federal cases go to the U.S. District Court for the Eastern District of California, whose Fresno courthouse is at 2500 Tulare Street. The Executive Office for Immigration Review does not list an immigration court in Fresno. The Fresno County Bar Association's Attorney Referral Service, certified by the State Bar of California, arranges an initial consultation of up to 30 minutes with a private attorney for a $50 fee; it does not provide free or low-income help. The State Bar of California's online licensee search shows whether a lawyer is licensed and any public discipline.",
+"blurbSources": [
+"https://www.fresno.courts.ca.gov/",
+"https://www.fresno.courts.ca.gov/divisions/small-claims",
+"https://www.fresno.courts.ca.gov/divisions/civil",
+"https://www.caed.uscourts.gov/caednew/index.cfm/clerks-office/court-directions/fresno-courthouse-and-directions/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.fresnocountybar.org/?pg=ClientReferrals",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1715553585992-3b2a710492f8",
+"pageUrl": "https://unsplash.com/photos/an-aerial-view-of-a-city-at-sunset-SmzmhrRFIMU",
+"photographer": "Kellen Riggin",
+"alt": "Aerial view of Fresno, California, at sunset"
+}
+},
+"sacramento": {
+"county": "Sacramento County",
+"countyNote": "",
+"stateCourt": {
+"name": "Superior Court of California, County of Sacramento",
+"courthouse": null,
+"address": null,
+"url": "https://www.saccourt.ca.gov/"
+},
+"smallClaims": {
+"court": "Superior Court of California, County of Sacramento - Small Claims",
+"address": null,
+"url": "https://www.saccourt.ca.gov/small-claims/small-claims.aspx"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of California, Sacramento Division",
+"courthouse": "Robert T. Matsui U.S. Courthouse",
+"address": "501 I Street, Room 4-200, Sacramento, CA 95814",
+"url": "https://www.caed.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Sacramento Immigration Court",
+"address": "John Moss Federal Building, 650 Capitol Mall, Suite 4-200, Sacramento, CA 95814",
+"url": "https://www.justice.gov/eoir/sacramento-immigration-court"
+},
+"bar": {
+"name": "Sacramento County Bar Association",
+"url": "https://www.sacbar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Services of Northern California",
+"url": "https://lsnc.net/",
+"serves": "Low-income residents of Sacramento and other Northern California counties"
+}
+],
+"population": {
+"value": 536449,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Sacramento is served by the Superior Court of California, County of Sacramento, the county's single trial court for civil, criminal, family, probate, juvenile, and small claims cases. The court operates several courthouses, including downtown facilities and separate locations such as the William R. Ridgway Family Relations Courthouse for family law and probate matters and the Carol Miller Justice Center. Sacramento's small claims court requires cases and documents to be filed through its online electronic filing system, and the court offers a Small Claims Advisory Clinic. Federal cases go to the U.S. District Court for the Eastern District of California at its Sacramento courthouse, 501 I Street. The Sacramento Immigration Court is in the John Moss Federal Building at 650 Capitol Mall. The Sacramento County Bar Association states that it does not provide legal referrals and points the public to other resources. The State Bar of California's online licensee search shows whether a lawyer is licensed and any public discipline.",
+"blurbSources": [
+"https://en.wikipedia.org/wiki/Superior_Court_of_Sacramento_County",
+"https://saclaw.org/wp-content/uploads/2023/05/Small-Claim-Resources.docx",
+"https://saclaw.org/articles/small-claims/",
+"https://www.caed.uscourts.gov/caednew/index.cfm/clerks-office/court-directions/sacramento-courthouse-and-directions/",
+"https://www.justice.gov/eoir/sacramento-immigration-court",
+"https://www.sacbar.org/legalassist",
+"https://apps.calbar.ca.gov/attorney/LicenseeSearch/QuickSearch"
+],
+"photo": {
+"id": "1761002066835-c4902f842345",
+"pageUrl": "https://unsplash.com/photos/california-state-capitol-building-with-city-skyline-at-sunrise-87v58DTQT6A",
+"photographer": "Leo_Visions",
+"alt": "California State Capitol with the downtown Sacramento skyline at sunrise"
+}
+},
+"kansas-city": {
+"county": "Jackson County",
+"countyNote": "Kansas City, Missouri, spans four counties: most of the city is in Jackson County, with portions in Clay, Platte, and Cass counties. Residents of the Clay and Platte County portions use those counties' circuit courts.",
+"stateCourt": {
+"name": "Circuit Court of Jackson County (16th Judicial Circuit of Missouri)",
+"courthouse": "Kansas City Courthouse",
+"address": "415 E. 12th St., Kansas City, MO 64106",
+"url": "https://www.16thcircuit.org/"
+},
+"smallClaims": {
+"court": "Circuit Court of Jackson County (16th Judicial Circuit), Small Claims",
+"address": "415 E. 12th St., Kansas City, MO 64106",
+"url": "https://www.16thcircuit.org/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Missouri, Western Division",
+"courthouse": "Charles Evans Whittaker U.S. Courthouse",
+"address": "400 E. 9th St., Kansas City, MO 64106",
+"url": "https://www.mow.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Kansas City Immigration Court",
+"address": "2345 Grand Boulevard, Suite 525, Kansas City, MO 64108",
+"url": "https://www.justice.gov/eoir/kansas-city-immigration-court"
+},
+"bar": {
+"name": "Kansas City Metropolitan Bar Association",
+"url": "https://www.kcmba.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Aid of Western Missouri",
+"url": "https://www.lawmo.org/",
+"serves": "Low-income residents of Kansas City and western Missouri"
+}
+],
+"population": {
+"value": 521220,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Most of Kansas City, Missouri, lies in Jackson County, with portions in Clay, Platte, and Cass counties. In Jackson County, state civil, criminal, family, probate, and small claims cases are heard by the Circuit Court of the 16th Judicial Circuit, whose Kansas City Courthouse is at 415 East 12th Street; the circuit also operates a courthouse in eastern Jackson County. People in the Clay or Platte County parts of the city file state cases in those counties' circuit courts. Missouri court records can be searched through Case.net. Federal cases go to the U.S. District Court for the Western District of Missouri, Western Division, at the Charles Evans Whittaker U.S. Courthouse, 400 East 9th Street. The Kansas City Immigration Court is at 2345 Grand Boulevard. The Kansas City Metropolitan Bar Association offers KC Lawyer Finder, a free searchable directory of local attorneys, and The Missouri Bar's lawyer directory can be used to check whether a lawyer is licensed in Missouri.",
+"blurbSources": [
+"https://www.16thcircuit.org/",
+"https://www.16thcircuit.org/small-claims",
+"https://www.mow.uscourts.gov/",
+"https://www.justice.gov/eoir/kansas-city-immigration-court",
+"https://www.kcmba.org/web/Services---Resources/KC-Lawyer-Finder/Default.aspx",
+"https://mobar.org/site/content/For-the-Public/Lawyer_Directory.aspx"
+],
+"photo": {
+"id": "1784398309827-37289dddc83b",
+"pageUrl": "https://unsplash.com/photos/aerial-view-of-kansas-city-skyline-and-union-station-Y4GuTihmswo",
+"photographer": "Far Chinberdiev",
+"alt": "Aerial view of the Kansas City skyline and Union Station"
+}
+},
+"atlanta": {
+"county": "Fulton County",
+"countyNote": "Most of Atlanta is in Fulton County; part of the city's east side is in DeKalb County, whose residents use DeKalb County courts for state matters.",
+"stateCourt": {
+"name": "Fulton County Superior Court (Atlanta Judicial Circuit)",
+"courthouse": "Lewis R. Slaton Courthouse",
+"address": "136 Pryor St. SW, Atlanta, GA 30303",
+"url": "https://www.fultonsuperiorcourtga.gov/"
+},
+"smallClaims": {
+"court": "Magistrate Court of Fulton County",
+"address": "Fulton County Courthouse, 185 Central Avenue SW, Atlanta, GA 30303",
+"url": "https://magistratefulton.org/31/Civil-Matters"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Georgia, Atlanta Division",
+"courthouse": "Richard B. Russell Federal Building and United States Courthouse",
+"address": "75 Ted Turner Drive SW, Atlanta, GA 30303-3309",
+"url": "https://www.gand.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Atlanta - Ted Turner Drive Immigration Court",
+"address": "180 Ted Turner Drive SW, Suite 241, Atlanta, GA 30303",
+"url": "https://www.justice.gov/eoir/atlanta-ted-turner-drive"
+},
+"bar": {
+"name": "Atlanta Bar Association",
+"url": "https://www.atlantabar.org/",
+"referral": {
+"name": "Atlanta Bar Association Lawyer Referral and Information Service",
+"phone": "(404) 521-0777",
+"url": "https://www.atlantabar.org/?pg=lrishome"
+}
+},
+"legalAid": [
+{
+"name": "Atlanta Legal Aid Society",
+"url": "https://atlantalegalaid.org/",
+"serves": "Low-income residents of Fulton, DeKalb, Cobb, Clayton and Gwinnett counties"
+}
+],
+"population": {
+"value": 529110,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Most of Atlanta lies in Fulton County, with part of the city in DeKalb County. In Fulton County, the Superior Court of the Atlanta Judicial Circuit is the general-jurisdiction trial court for felony, major civil, and domestic relations cases; its clerk's office is in the Lewis R. Slaton Courthouse at 136 Pryor Street SW. The Magistrate Court of Fulton County hears small claims, dispossessory (landlord-tenant), garnishment, abandoned vehicle, and personal property foreclosure cases at the Fulton County Courthouse, 185 Central Avenue SW. Residents of the DeKalb County portion of the city use DeKalb County courts. Federal cases go to the U.S. District Court for the Northern District of Georgia at the Richard B. Russell Federal Building and U.S. Courthouse, 75 Ted Turner Drive SW. Atlanta has two immigration courts, one on Ted Turner Drive and one on West Peachtree Street. The Atlanta Bar Association runs a Lawyer Referral and Information Service, and the State Bar of Georgia's member directory confirms whether a lawyer is licensed in Georgia.",
+"blurbSources": [
+"https://www.fultonclerk.org/",
+"https://magistratefulton.org/",
+"https://magistratefulton.org/31/Civil-Matters",
+"https://www.gand.uscourts.gov/",
+"https://www.justice.gov/eoir/atlanta-ted-turner-drive",
+"https://www.justice.gov/eoir/atlanta-w-peachtree-street",
+"https://www.atlantabar.org/?pg=lrishome",
+"https://www.gabar.org/member-directory/"
+],
+"photo": {
+"id": "1663601460253-aba72eea6edf",
+"pageUrl": "https://unsplash.com/photos/a-city-with-tall-buildings-9fxD3UW_C1I",
+"photographer": "Lance Asper",
+"alt": "Drone view of downtown Atlanta skyscrapers at sunset"
+}
+},
+"omaha": {
+"county": "Douglas County",
+"countyNote": "",
+"stateCourt": {
+"name": "Douglas County District Court (Fourth Judicial District of Nebraska)",
+"courthouse": "Hall of Justice",
+"address": "1701 Farnam Street, Omaha, NE 68183",
+"url": "https://supremecourt.nebraska.gov/courts/districts/4"
+},
+"smallClaims": {
+"court": "Douglas County Court (Small Claims)",
+"address": "1701 Farnam Street, Omaha, NE 68183",
+"url": "https://supremecourt.nebraska.gov/self-help/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Nebraska (Omaha)",
+"courthouse": "Roman L. Hruska Federal Courthouse",
+"address": "111 South 18th Plaza, Suite 1152, Omaha, NE 68102",
+"url": "https://www.ned.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Omaha Immigration Court",
+"address": "1717 Avenue H, Suite 100, Omaha, NE 68110",
+"url": "https://www.justice.gov/eoir/omaha-immigration-court"
+},
+"bar": {
+"name": "Omaha Bar Association",
+"url": "https://www.omahabarassociation.com/",
+"referral": {
+"name": "Omaha Bar Association Lawyer Referral Service",
+"phone": "(402) 280-3603",
+"url": "https://www.omahalawyerreferral.com/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid of Nebraska",
+"url": "https://legalaidofnebraska.org/",
+"serves": "Low-income residents across Nebraska, including Omaha"
+}
+],
+"population": {
+"value": 488797,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Omaha lies in Douglas County, which by itself makes up Nebraska's Fourth Judicial District. The Douglas County District Court hears felony cases, divorces and larger civil lawsuits at the Hall of Justice, 1701 Farnam Street. The Douglas County Court, whose clerk shares that address, handles misdemeanors, smaller civil claims and the small claims docket, where people can present their own cases. Douglas County also has a Separate Juvenile Court at 1717 Harney Street. The Douglas County Veterans Treatment Court, which began in 2016, was the state's first problem-solving court for veterans. Federal cases go to the U.S. District Court for the District of Nebraska at the Roman L. Hruska Federal Courthouse, and the Omaha Immigration Court sits on Avenue H. Before hiring a lawyer, residents can confirm that the lawyer is licensed through the Nebraska Judicial Branch's public attorney search.",
+"blurbSources": [
+"https://supremecourt.nebraska.gov/courts/districts/4",
+"https://nebraskajudicial.gov/inaugural-graduation-ceremony-douglas-county-veterans-treatment-court-set-wednesday-june-27th-2018",
+"https://www.ned.uscourts.gov/",
+"https://www.justice.gov/eoir/omaha-immigration-court",
+"https://nebraskajudicial.gov/administration/attorneys",
+"https://attorneys.nejudicial.gov/member-search"
+],
+"photo": {
+"id": "1601780998888-0bfe1f4ca675",
+"pageUrl": "https://unsplash.com/photos/a-city-skyline-is-reflected-in-a-body-of-water-rtk3UhhCJEE",
+"photographer": "Tim Umphreys",
+"alt": "Downtown Omaha skyline reflected in water at dusk"
+}
+},
+"raleigh": {
+"county": "Wake County",
+"countyNote": "A small part of Raleigh (about 1,660 residents in 2025) lies in Durham County.",
+"stateCourt": {
+"name": "Wake County Superior Court (Superior Court District 10, North Carolina)",
+"courthouse": "Wake County Courthouse (civil); Wake County Justice Center (criminal)",
+"address": "316 Fayetteville St. Mall, Raleigh, NC 27601",
+"url": "https://www.nccourts.gov/locations/wake-county"
+},
+"smallClaims": {
+"court": "Wake County District Court, Small Claims (magistrates)",
+"address": "316 Fayetteville St. Mall, Raleigh, NC 27601",
+"url": "https://www.nccourts.gov/help-topics/lawsuits-and-small-claims/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of North Carolina (Raleigh)",
+"courthouse": "United States Courthouse (Raleigh)",
+"address": "310 New Bern Avenue, Raleigh, NC 27601",
+"url": "https://www.nced.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Wake County Bar Association / Tenth Judicial District Bar",
+"url": "https://www.wakecountybar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Legal Aid of North Carolina",
+"url": "https://legalaidnc.org/",
+"serves": "Low-income residents across North Carolina, including Wake County"
+}
+],
+"population": {
+"value": 506306,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Raleigh is the seat of Wake County, which is Superior Court District 10 and District Court District 10 in North Carolina's court system. Superior Court hears felonies and larger civil cases, and District Court hears misdemeanors, family matters and smaller civil cases. In Wake County, civil matters are handled at the Wake County Courthouse at 316 Fayetteville St. Mall. Criminal matters are handled at the Wake County Justice Center at 300 S. Salisbury Street. Small claims cases are part of the District Court and are decided by magistrates. The North Carolina Business Court, which handles complex business disputes, has one of its four locations in Raleigh. Federal cases are heard by the U.S. District Court for the Eastern District of North Carolina, which has a courthouse at 310 New Bern Avenue. The North Carolina State Bar's online member directory shows whether a lawyer is licensed in the state.",
+"blurbSources": [
+"https://www.nccourts.gov/locations/wake-county",
+"https://www.nccourts.gov/locations/wake-county/wake-county-courthouse",
+"https://www.nccourts.gov/locations/wake-county/wake-county-justice-center",
+"https://www.nccourts.gov/help-topics/lawsuits-and-small-claims/small-claims",
+"https://www.nccourts.gov/courts/business-court",
+"https://www.nced.uscourts.gov/courtlocations/default.aspx?loc=ral",
+"https://portal.ncbar.gov/Verification/search.aspx"
+],
+"photo": {
+"id": "1676934556859-624fa21e2588",
+"pageUrl": "https://unsplash.com/photos/a-view-of-a-city-skyline-at-sunset-ICOLTTjYgaA",
+"photographer": "Reba Spike",
+"alt": "Downtown Raleigh, North Carolina skyline at sunset"
+}
+},
+"miami": {
+"county": "Miami-Dade County",
+"countyNote": "",
+"stateCourt": {
+"name": "Eleventh Judicial Circuit Court of Florida",
+"courthouse": "Lawson E. Thomas Courthouse Center",
+"address": "175 N.W. 1st Avenue, Miami, FL 33128",
+"url": "https://www.jud11.flcourts.org/"
+},
+"smallClaims": {
+"court": "Miami-Dade County Court, County Civil Division (Small Claims)",
+"address": "175 N.W. 1st Avenue, Miami, FL 33128",
+"url": "https://www.jud11.flcourts.org/Resource-Center/Small-Claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Florida (Miami)",
+"courthouse": "Wilkie D. Ferguson, Jr. U.S. Courthouse",
+"address": "400 North Miami Avenue, Miami, FL 33128",
+"url": "https://www.flsd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Miami Immigration Court",
+"address": "One Riverview Square, 333 S. Miami Avenue, Suite 700, Miami, FL 33130",
+"url": "https://www.justice.gov/eoir/miami-immigration-court"
+},
+"bar": {
+"name": "Miami-Dade Bar (formerly Dade County Bar Association)",
+"url": "https://miamidadebar.org/",
+"referral": {
+"name": "Miami-Dade Bar Lawyer Referral Service",
+"phone": "1-888-305-LAW1 (5291)",
+"url": "https://miamidadebar.org/lawyer-referral-service/"
+}
+},
+"legalAid": [
+{
+"name": "Legal Services of Greater Miami",
+"url": "https://www.legalservicesmiami.org/",
+"serves": "Low-income residents of Miami-Dade and Monroe Counties"
+},
+{
+"name": "Dade Legal Aid",
+"url": "https://www.dadelegalaid.org/",
+"serves": "Qualifying low-income residents of Miami-Dade County"
+}
+],
+"population": {
+"value": 489812,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Miami is in Miami-Dade County, which makes up Florida's Eleventh Judicial Circuit. The circuit court hears felonies, family cases, probate and civil cases over $50,000. Miami-Dade County Court hears misdemeanors and civil cases up to $50,000. Its small claims cases, for amounts up to $8,000, are part of the County Civil Division. The court works from many sites. These include the Lawson E. Thomas Courthouse Center at 175 N.W. 1st Avenue, the Richard E. Gerstein Justice Building for criminal matters, and branch courthouses around the county. Federal cases go to the U.S. District Court for the Southern District of Florida, whose Miami complex includes the Wilkie D. Ferguson, Jr. U.S. Courthouse. The Miami Immigration Court is at 333 S. Miami Avenue. A separate detained court operates at the Krome North Processing Center. The Florida Bar's online member search confirms whether a lawyer is licensed in Florida.",
+"blurbSources": [
+"https://www.jud11.flcourts.org/About-the-Court/Courthouse-Locations",
+"https://www.jud11.flcourts.org/About-the-Court/Court-Divisions/County-Civil",
+"https://www.jud11.flcourts.org/Resource-Center/Small-Claims",
+"https://www.flsd.uscourts.gov/miami-courthouses",
+"https://www.justice.gov/eoir/miami-immigration-court",
+"https://www.justice.gov/eoir/miami-krome-immigration-court",
+"https://www.floridabar.org/directories/find-mbr/"
+],
+"photo": {
+"id": "1535498730771-e735b998cd64",
+"pageUrl": "https://unsplash.com/photos/body-of-water-near-of-city-high-rise-buildings-KTdzeb28jyo",
+"photographer": "Muzammil Soorma",
+"alt": "Downtown Miami skyline across Biscayne Bay at dusk, seen from the Rickenbacker Causeway"
+}
+},
+"minneapolis": {
+"county": "Hennepin County",
+"countyNote": "",
+"stateCourt": {
+"name": "Hennepin County District Court (Fourth Judicial District of Minnesota)",
+"courthouse": "Hennepin County Government Center",
+"address": "300 South Sixth Street, Minneapolis, MN 55487",
+"url": "https://mncourts.gov/find-courts/hennepin"
+},
+"smallClaims": {
+"court": "Hennepin County Conciliation Court",
+"address": "300 S. 6th Street, 3rd Floor Court Tower, Minneapolis, MN 55487",
+"url": "https://mncourts.gov/find-courts/hennepin/hennepinconciliationcourt"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Minnesota (Minneapolis)",
+"courthouse": "Diana E. Murphy United States Courthouse",
+"address": "300 South Fourth Street, Minneapolis, MN 55415",
+"url": "https://www.mnd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Hennepin County Bar Association",
+"url": "https://www.hcba.org/",
+"referral": {
+"name": "Minnesota Lawyer Referral & Information Service (MNLRIS)",
+"phone": "612-752-6699",
+"url": "https://www.mnlawyerreferral.org/"
+}
+},
+"legalAid": [
+{
+"name": "Mid-Minnesota Legal Aid",
+"url": "https://mylegalaid.org/",
+"serves": "Low-income residents of Minneapolis and central Minnesota"
+},
+{
+"name": "Volunteer Lawyers Network",
+"url": "https://www.vlnmn.org/",
+"serves": "Low-income residents in the Minneapolis area through volunteer attorneys"
+}
+],
+"population": {
+"value": 430324,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Minneapolis is in Hennepin County. Hennepin County District Court, Minnesota's Fourth Judicial District, hears the county's civil, criminal, family and probate cases. Its main courthouse is the Hennepin County Government Center at 300 South Sixth Street. Conciliation Court, Minnesota's small claims court, handles most money claims of up to $20,000 and is on the third floor of the Government Center's Court Tower. The criminal division runs treatment courts: Drug Court, Mental Health Court, DWI Court and Veterans Court. Federal cases are heard in the U.S. District Court for the District of Minnesota at the Diana E. Murphy United States Courthouse on South Fourth Street. The nearest immigration court is just outside the city at Fort Snelling. Residents can check a lawyer's license status with the Minnesota Lawyer Registration Office's public attorney search.",
+"blurbSources": [
+"https://mncourts.gov/find-courts/hennepin",
+"https://mncourts.gov/find-courts/hennepin/hennepinconciliationcourt",
+"https://mncourts.gov/find-courts/hennepin/hennepinconciliationcourt/contact-us",
+"https://minnlawyer.com/2025/07/28/twin-cities-mental-health-treatment-courts/",
+"https://mncourts.gov/about-the-courts/newsandannouncements/hennepin-veterans-court-marks-100th-graduate",
+"https://www.mnd.uscourts.gov/",
+"https://www.justice.gov/eoir/fort-snelling-immigration-court",
+"https://mars.courts.state.mn.us/"
+],
+"photo": {
+"id": "1535082049017-5a7b43f3bcef",
+"pageUrl": "https://unsplash.com/photos/aerial-shot-of-concrete-structures-near-body-of-water-ohK_uJJm2G8",
+"photographer": "Nicole Geri",
+"alt": "Aerial drone view of downtown Minneapolis at sunset"
+}
+},
+"tulsa": {
+"county": "Tulsa County",
+"countyNote": "Small parts of Tulsa extend into Osage, Wagoner and Rogers Counties (about 5,900 residents combined in 2025).",
+"stateCourt": {
+"name": "Tulsa County District Court",
+"courthouse": "Tulsa County Courthouse",
+"address": "500 South Denver Avenue, Tulsa, OK 74103",
+"url": "https://www.tulsacountydistrictcourt.org/"
+},
+"smallClaims": {
+"court": "Tulsa County District Court, Small Claims Division",
+"address": "500 South Denver Avenue, Tulsa, OK 74103",
+"url": "https://www.tulsacountydistrictcourt.org/smallclaims.html"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Oklahoma",
+"courthouse": "Page Belcher Federal Building",
+"address": "333 W. 4th Street, Room 411, Tulsa, OK 74103",
+"url": "https://www.oknd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Tulsa County Bar Association",
+"url": "https://www.tulsabar.com/",
+"referral": {
+"name": "Tulsa County Bar Association Lawyer Referral & Information Service",
+"phone": "918-587-6014",
+"url": "https://www.tulsabar.com/?pg=clientreferrals"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Services of Oklahoma",
+"url": "https://legalaidok.org/",
+"serves": "Low-income residents across Oklahoma, including Tulsa County"
+}
+],
+"population": {
+"value": 416209,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Most of Tulsa is in Tulsa County, and state cases for the city are heard by the Tulsa County District Court at the Tulsa County Courthouse, 500 South Denver Avenue. Oklahoma's district courts are general-jurisdiction courts. The Tulsa County court has civil, criminal, family, probate, juvenile and small claims divisions, so most disputes, from lawsuits and divorces to criminal charges, begin there. The court also runs a Tulsa County Domestic Violence Court with misdemeanor and felony dockets for intimate-partner violence, protective-order violations and stalking. Federal cases go to the U.S. District Court for the Northern District of Oklahoma at the Page Belcher Federal Building on West 4th Street. Tulsa has no immigration court. The Tulsa County Bar Association runs a lawyer referral service, and the Oklahoma Bar Association's online search lets residents look up a lawyer's bar membership.",
+"blurbSources": [
+"https://www.tulsacountydistrictcourt.org/",
+"https://www.tulsacountydistrictcourt.org/accountability_courts.html",
+"https://www.tulsacountydistrictcourt.org/smallclaims.html",
+"https://www.oknd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.tulsabar.com/",
+"https://www.okbar.org/findalawyer/"
+],
+"photo": {
+"id": "1474573892045-721452c3d98c",
+"pageUrl": "https://unsplash.com/photos/birds-eye-view-of-city-buildings-mB_yu9FBVeo",
+"photographer": "Jon Grogan",
+"alt": "High-rise office towers in downtown Tulsa, Oklahoma"
+}
+},
+"wichita": {
+"county": "Sedgwick County",
+"countyNote": "",
+"stateCourt": {
+"name": "Eighteenth Judicial District Court of Kansas (Sedgwick County District Court)",
+"courthouse": "Sedgwick County Courthouse",
+"address": "525 N. Main St., Wichita, KS 67203",
+"url": "https://www.dc18.org/"
+},
+"smallClaims": {
+"court": "18th Judicial District Court, Small Claims",
+"address": "525 N. Main St., 5th Floor, Wichita, KS 67203",
+"url": "https://www.dc18.org/small-claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Kansas (Wichita)",
+"courthouse": "Wichita U.S. Federal Court",
+"address": "401 N. Market, Wichita, KS 67202",
+"url": "https://www.ksd.uscourts.gov/"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Wichita Bar Association",
+"url": "https://www.wichitabar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Kansas Legal Services",
+"url": "https://www.kansaslegalservices.org/",
+"serves": "Low-income residents across Kansas, including Sedgwick County"
+}
+],
+"population": {
+"value": 400987,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Wichita is the seat of Sedgwick County, which forms Kansas's 18th Judicial District. The 18th Judicial District Court is the state's general-jurisdiction trial court for the county. Its divisions cover civil, criminal, family law, juvenile, probate, traffic and small claims cases, most of them at the main courthouse at 525 N. Main Street. Small claims hearings are held there on the fifth floor. The district also runs a Veterans Treatment Court and an Eviction Resolution Program. Federal cases go to the U.S. District Court for the District of Kansas, which has a Wichita courthouse at 401 N. Market. Wichita has no immigration court. People looking for a lawyer can contact the Kansas Bar Association's statewide Lawyer Referral Service. The Kansas Judicial Branch keeps the official registration records for attorneys licensed in Kansas.",
+"blurbSources": [
+"https://www.dc18.org/",
+"https://www.dc18.org/small-claims",
+"https://www.dc18.org/veterans-treatment-court",
+"https://www.ksd.uscourts.gov/",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://ksbar.org/?pg=lrs_public"
+],
+"photo": {
+"id": "1661570185414-4ef2b3a3f1ea",
+"pageUrl": "https://unsplash.com/photos/a-statue-of-a-person-holding-a-torch-Qo4f6skGTw0",
+"photographer": "Andrew Cruz",
+"alt": "The Keeper of the Plains sculpture in Wichita, Kansas"
+}
+},
+"new-orleans": {
+"county": "Orleans Parish",
+"countyNote": "Louisiana uses parishes rather than counties; the City of New Orleans and Orleans Parish share the same boundaries.",
+"stateCourt": {
+"name": "Civil District Court for the Parish of Orleans",
+"courthouse": "Civil District Court Building",
+"address": "421 Loyola Avenue, New Orleans, LA 70112",
+"url": "https://www.orleanscdc.com/"
+},
+"smallClaims": {
+"court": "First City Court of the City of New Orleans (Second City Court serves Algiers)",
+"address": null,
+"url": "https://www.lsba.org/Public/CourtStructure.aspx"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Louisiana",
+"courthouse": "U.S. Courthouse (Hale Boggs Federal Building)",
+"address": "500 Poydras Street, New Orleans, LA 70130",
+"url": "https://www.laed.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "New Orleans Immigration Court",
+"address": "One Canal Place, 365 Canal Street, Suite 500, New Orleans, LA 70130",
+"url": "https://www.justice.gov/eoir/new-orleans-immigration-court"
+},
+"bar": {
+"name": "New Orleans Bar Association",
+"url": "https://www.neworleansbar.org/",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Southeast Louisiana Legal Services",
+"url": "https://slls.org/en/",
+"serves": "Low-income people throughout southeast Louisiana, including New Orleans"
+}
+],
+"population": {
+"value": 362154,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "New Orleans and Orleans Parish share the same boundaries. Unlike other Louisiana parishes, Orleans divides its district court into two courts. The Civil District Court has 14 elected judges and hears civil lawsuits, successions and domestic cases. Its clerk is at 421 Loyola Avenue. The Criminal District Court has 10 judges and a magistrate judge and hears state criminal cases. Smaller civil matters, including small claims, go to the First and Second City Courts. Municipal and traffic offenses go to separate municipal and traffic courts. Federal cases are heard by the U.S. District Court for the Eastern District of Louisiana at 500 Poydras Street. The New Orleans Immigration Court is at One Canal Place, 365 Canal Street. The Louisiana State Bar Association's online membership directory can be used to confirm that a lawyer is licensed to practice in Louisiana.",
+"blurbSources": [
+"https://www.lsba.org/Public/CourtStructure.aspx",
+"https://www.orleanscivilclerk.com/",
+"https://www.orleanscivilclerk.com/hours.html",
+"https://www.laed.uscourts.gov/court-information/court-location",
+"https://www.justice.gov/eoir/new-orleans-immigration-court",
+"https://www.lsba.org/MD321654/MembershipDirectory.aspx"
+],
+"photo": {
+"id": "1775227970630-9c03b7406132",
+"pageUrl": "https://unsplash.com/photos/historic-st-louis-cathedral-in-new-orleans-cityscape-XU2TA82lEJY",
+"photographer": "Emanuel Odadjiev",
+"alt": "St. Louis Cathedral and Jackson Square in the French Quarter of New Orleans"
+}
+},
+"cleveland": {
+"county": "Cuyahoga County",
+"countyNote": "",
+"stateCourt": {
+"name": "Cuyahoga County Court of Common Pleas, General Division",
+"courthouse": "Justice Center",
+"address": "1200 Ontario Street, Cleveland, OH 44113",
+"url": "https://cp.cuyahogacounty.gov/"
+},
+"smallClaims": {
+"court": "Cleveland Municipal Court, Small Claims",
+"address": "1200 Ontario Street, Cleveland, OH 44113",
+"url": "https://clevelandmunicipalcourt.org/clerk-of-courts/civil-division/how-to-file-a-small-claim"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Northern District of Ohio (Cleveland)",
+"courthouse": "Carl B. Stokes U.S. Court House",
+"address": "801 West Superior Avenue, Cleveland, OH 44113",
+"url": "https://www.ohnd.uscourts.gov/"
+},
+"immigrationCourt": {
+"name": "Cleveland Immigration Court",
+"address": "801 W. Superior Avenue, Suite 13-100, Cleveland, OH 44113",
+"url": "https://www.justice.gov/eoir/cleveland-immigration-court"
+},
+"bar": {
+"name": "Cleveland Metropolitan Bar Association",
+"url": "https://www.clemetrobar.org/",
+"referral": {
+"name": "CMBA Lawyer Referral & Information Service (ClevelandLawyers.com)",
+"phone": "(216) 696-3532",
+"url": "https://clevelandlawyers.com/"
+}
+},
+"legalAid": [
+{
+"name": "The Legal Aid Society of Cleveland",
+"url": "https://lasclev.org/",
+"serves": "Low-income residents of Cleveland and Northeast Ohio"
+}
+],
+"population": {
+"value": 363608,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Cleveland is the seat of Cuyahoga County. Felony cases and larger civil lawsuits go to the Cuyahoga County Court of Common Pleas, General Division, at the Justice Center, 1200 Ontario Street. Cleveland Municipal Court, in the same complex, handles misdemeanors, traffic cases and smaller civil claims. Its small claims docket covers disputes up to $6,000 when the defendant lives or does business in Cleveland or Bratenahl, or the claim arose there. The Municipal Court also has a Housing Division and specialized dockets, including a Veterans Treatment Docket, a Mental Health Docket and the Judge Larry A. Jones Recovery Court. Federal cases go to the U.S. District Court for the Northern District of Ohio at the Carl B. Stokes U.S. Court House. The Cleveland Immigration Court is in the same building. The Supreme Court of Ohio's online attorney directory shows whether a lawyer is registered to practice in Ohio.",
+"blurbSources": [
+"https://cp.cuyahogacounty.gov/",
+"https://clevelandmunicipalcourt.org/",
+"https://clevelandmunicipalcourt.org/clerk-of-courts/civil-division/how-to-file-a-small-claim",
+"https://www.ohnd.uscourts.gov/",
+"https://www.justice.gov/eoir/cleveland-immigration-court",
+"https://www.supremecourt.ohio.gov/AttorneySearch/"
+],
+"photo": {
+"id": "1779119885053-8c4668288e65",
+"pageUrl": "https://unsplash.com/photos/cleveland-sign-by-waterfront-with-city-skyline-and-drawbridge-w0uI3IV6W9o",
+"photographer": "Chris Bischoff",
+"alt": "Cleveland script sign at North Coast Harbor with the downtown skyline behind it"
+}
+},
+"tampa": {
+"county": "Hillsborough County",
+"countyNote": "",
+"stateCourt": {
+"name": "Thirteenth Judicial Circuit Court of Florida",
+"courthouse": "George E. Edgecomb Courthouse",
+"address": "800 E. Twiggs Street, Tampa, FL 33602",
+"url": "https://www.fljud13.org/"
+},
+"smallClaims": {
+"court": "Hillsborough County Court (County Civil, Small Claims)",
+"address": "800 E. Twiggs Street, Tampa, FL 33602",
+"url": "https://www.hillsclerk.com/court-services/county-civil"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Middle District of Florida, Tampa Division",
+"courthouse": "Sam M. Gibbons United States Courthouse",
+"address": "801 North Florida Avenue, Tampa, FL 33602",
+"url": "https://www.flmd.uscourts.gov/locations/tampa"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Hillsborough County Bar Association",
+"url": "https://www.hillsbar.com/",
+"referral": {
+"name": "Hillsborough County Bar Association Lawyer Referral Service",
+"phone": "813-221-7780",
+"url": "https://www.floridabar.org/public/lrs/coverage-areas/"
+}
+},
+"legalAid": [
+{
+"name": "Bay Area Legal Services",
+"url": "https://bals.org/",
+"serves": "Low-income residents of Hillsborough County and the Tampa Bay area"
+}
+],
+"population": {
+"value": 413554,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Tampa is the seat of Hillsborough County, which forms Florida's Thirteenth Judicial Circuit. The circuit court hears felonies, family law, probate and civil cases above the county court limit. Its main courthouse is the George E. Edgecomb Courthouse at 800 E. Twiggs Street. Hillsborough County Court hears misdemeanors, evictions and civil suits up to $50,000. Claims under $8,000 are handled as small claims cases and begin with a pretrial hearing. The circuit runs several problem-solving courts, including Adult Drug Treatment Court, Adult Mental Health Treatment Court and Veterans Treatment Court. Federal cases go to the Tampa Division of the U.S. District Court for the Middle District of Florida at the Sam M. Gibbons United States Courthouse. Tampa has no immigration court. The Florida Bar's online member search shows whether a lawyer is licensed in Florida.",
+"blurbSources": [
+"https://www.fljud13.org/",
+"https://www.fljud13.org/About/Contact-Us",
+"https://www.hillsclerk.com/court-services/county-civil",
+"https://www.flmd.uscourts.gov/locations/tampa",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.floridabar.org/directories/find-mbr/"
+],
+"photo": {
+"id": "1561063139-e183e66909c4",
+"pageUrl": "https://unsplash.com/photos/buildings-near-body-of-water-VHFBDTwiIy4",
+"photographer": "Kody Cheyne",
+"alt": "Downtown Tampa skyline and waterfront seen from Davis Islands"
+}
+},
+"orlando": {
+"county": "Orange County",
+"countyNote": "",
+"stateCourt": {
+"name": "Ninth Judicial Circuit Court of Florida",
+"courthouse": "Orange County Courthouse",
+"address": "425 N. Orange Avenue, Orlando, FL 32801",
+"url": "https://ninthcircuit.org"
+},
+"smallClaims": {
+"court": "Orange County Court (Small Claims), filed with the Orange County Clerk of Courts",
+"address": "425 N. Orange Avenue, Orlando, FL 32801",
+"url": "https://myorangeclerk.com/Divisions/Civil/Small-Claims-FAQs"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Middle District of Florida (Orlando Division)",
+"courthouse": "George C. Young Federal Annex Courthouse",
+"address": "401 West Central Boulevard, Orlando, FL 32801",
+"url": "https://www.flmd.uscourts.gov/locations/orlando"
+},
+"immigrationCourt": {
+"name": "Orlando Immigration Court",
+"address": "500 N. Orange Ave, Suite 1100, Orlando, FL 32801",
+"url": "https://www.justice.gov/eoir/orlando-immigration-court"
+},
+"bar": {
+"name": "Orange County Bar Association",
+"url": "https://orangecountybar.org",
+"referral": {
+"name": "OCBA Lawyer Referral and Information Service",
+"phone": "407-422-4537",
+"url": "https://orangecountybar.org/page/lawyerreferralservice"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society of the Orange County Bar Association",
+"url": "https://www.legalaidocba.org",
+"serves": "Low-income residents of Orange County"
+},
+{
+"name": "Community Legal Services (formerly Community Legal Services of Mid-Florida)",
+"url": "https://www.legalaccessforall.org",
+"serves": "Low- and moderate-income residents of Central Florida, including Orange County"
+}
+],
+"population": {
+"value": 333888,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Orlando sits in Orange County, which together with Osceola County makes up Florida's Ninth Judicial Circuit. Felony cases, family matters, probate and civil suits above the county court limit are heard by the circuit court, largely at the Orange County Courthouse on North Orange Avenue. Orange County Court handles misdemeanors, traffic cases and civil disputes up to $50,000, including small claims of $8,000 or less, which residents file through the Orange County Clerk of Courts. The Ninth Circuit runs problem-solving courts that include adult drug court, mental health court and a Veterans Treatment Court. Federal cases go to the Orlando Division of the U.S. District Court for the Middle District of Florida, and the city also has an EOIR immigration court on North Orange Avenue. Before hiring a lawyer, residents can confirm that the lawyer is licensed and in good standing through The Florida Bar's online member search.",
+"blurbSources": [
+"https://ninthcircuit.org/divisions/veterans-treatment-court",
+"https://ninthcircuit.org/administrative-orders-categories/problem-solving-court",
+"https://www.flmd.uscourts.gov/locations/orlando",
+"https://www.justice.gov/eoir/orlando-immigration-court",
+"https://myorangeclerk.com/Divisions/Civil/Small-Claims-FAQs",
+"https://www.browardclerk.org/Divisions/CountyCivil",
+"https://www.floridabar.org/directories/find-mbr/"
+],
+"photo": {
+"id": "1609184889233-eff6dd93def4",
+"pageUrl": "https://unsplash.com/photos/city-skyline-across-body-of-water-during-daytime-Tyn3-Cljx-A",
+"photographer": "Mick Haupt",
+"alt": "Downtown Orlando skyline reflected in Lake Eola at sunrise"
+}
+},
+"honolulu": {
+"county": "City and County of Honolulu",
+"countyNote": "Honolulu is a consolidated city-county covering all of O'ahu.",
+"stateCourt": {
+"name": "Circuit Court of the First Circuit, State of Hawai'i",
+"courthouse": "Ka'ahumanu Hale",
+"address": "777 Punchbowl Street, Honolulu, HI 96813",
+"url": "https://www.courts.state.hi.us/general_information/contact/oahu"
+},
+"smallClaims": {
+"court": "District Court of the First Circuit, Small Claims Division",
+"address": "Kauikeaouli Hale, 1111 Alakea Street, Honolulu, HI 96813",
+"url": "https://www.courts.state.hi.us/self-help/small_claims/small_claims"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Hawaii",
+"courthouse": "Prince Kuhio Federal Building",
+"address": "300 Ala Moana Boulevard, Room C-338, Honolulu, HI 96850",
+"url": "https://www.hid.uscourts.gov"
+},
+"immigrationCourt": {
+"name": "Honolulu Immigration Court",
+"address": "PJKK Federal Building, 300 Ala Moana Blvd., Rm. 8-112, Honolulu, HI 96850",
+"url": "https://www.justice.gov/eoir/honolulu-immigration-court"
+},
+"bar": {
+"name": "Hawai'i State Bar Association",
+"url": "https://hsba.org",
+"referral": {
+"name": "HSBA Lawyer Referral and Information Service",
+"phone": "(808) 537-9140",
+"url": "https://hsba.org/get-involved/lris"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society of Hawai'i",
+"url": "https://www.legalaidhawaii.org",
+"serves": "Low-income residents statewide, with a main office in Honolulu"
+},
+{
+"name": "Volunteer Legal Services Hawai'i",
+"url": "https://www.vlsh.org",
+"serves": "Low- and moderate-income residents of Hawai'i, including O'ahu"
+}
+],
+"population": {
+"value": 341868,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Honolulu is a consolidated city and county covering the island of O'ahu, which forms Hawai'i's First Judicial Circuit. The Circuit Court of the First Circuit hears felony cases, jury trials and larger civil cases at Ka'ahumanu Hale on Punchbowl Street. The District Court of the First Circuit, at Kauikeaouli Hale on Alakea Street, handles misdemeanors, traffic, landlord-tenant cases and small claims, where the amount in dispute generally cannot exceed $5,000. The First Circuit operates a Mental Health Court and a Veterans Treatment Court. Federal cases are heard by the U.S. District Court for the District of Hawaii in the Prince Kuhio Federal Building, which also houses the Honolulu Immigration Court. The Hawai'i State Bar Association runs a lawyer referral service, and residents can check that a lawyer is licensed and in good standing through the HSBA's member directory.",
+"blurbSources": [
+"https://www.courts.state.hi.us/general_information/contact/oahu",
+"https://www.courts.state.hi.us/self-help/small_claims/small_claims",
+"https://www.courts.state.hi.us/special_projects/mental_health_court_oahu",
+"https://courts.ehawaii.gov/special_projects/veterans_court",
+"https://www.justice.gov/eoir/honolulu-immigration-court",
+"https://hsba.org/get-involved/lris"
+],
+"photo": {
+"id": "1529653323121-e4731c50e7ac",
+"pageUrl": "https://unsplash.com/photos/aerial-photography-of-city-during-golden-hour-4Ivgt24SSeI",
+"photographer": "Claudio Schwarz",
+"alt": "Aerial view of the Honolulu skyline at sunset"
+}
+},
+"pittsburgh": {
+"county": "Allegheny County",
+"countyNote": "",
+"stateCourt": {
+"name": "Court of Common Pleas of Allegheny County (Fifth Judicial District of Pennsylvania)",
+"courthouse": "Allegheny County Courthouse",
+"address": "436 Grant Street, Pittsburgh, PA 15219",
+"url": "https://www.alleghenycourts.us"
+},
+"smallClaims": {
+"court": "Magisterial District Courts of Allegheny County (civil claims up to $12,000)",
+"address": null,
+"url": "https://www.alleghenycourts.us/magisterial-district-courts/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Western District of Pennsylvania",
+"courthouse": "Joseph F. Weis, Jr. U.S. Courthouse",
+"address": "700 Grant Street, Pittsburgh, PA 15219",
+"url": "https://www.pawd.uscourts.gov"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Allegheny County Bar Association",
+"url": "https://www.acba.org",
+"referral": {
+"name": "ACBA Lawyer Referral Service",
+"phone": "412-261-5555",
+"url": "https://www.getapittsburghlawyer.com"
+}
+},
+"legalAid": [
+{
+"name": "Neighborhood Legal Services",
+"url": "https://nlsa.us",
+"serves": "Low-income and vulnerable residents of Allegheny, Beaver, Butler and Lawrence Counties"
+},
+{
+"name": "Allegheny County Bar Foundation Pro Bono Center",
+"url": "https://www.acba.org",
+"serves": "Low-income Allegheny County residents with non-criminal legal problems"
+}
+],
+"population": {
+"value": 307632,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Pittsburgh is the seat of Allegheny County, which makes up Pennsylvania's Fifth Judicial District. The Court of Common Pleas of Allegheny County hears felony cases, family and orphans' court matters, and civil cases, and its civil division includes a Commerce and Complex Litigation docket. The court's Criminal Division runs problem-solving courts, including Drug Court, DUI Court, Mental Health Court, Domestic Violence Court and Veterans Court. Smaller civil disputes, including contract, tort and landlord-tenant claims of $12,000 or less, are filed with the county's magisterial district courts, which play the role of small claims courts. Federal cases go to the U.S. District Court for the Western District of Pennsylvania at the Joseph F. Weis, Jr. U.S. Courthouse on Grant Street. There is no immigration court in Pittsburgh. Residents can confirm that a lawyer is licensed in Pennsylvania through the Disciplinary Board of the Supreme Court of Pennsylvania's attorney search.",
+"blurbSources": [
+"https://www.alleghenycourts.us",
+"https://www.alleghenycourts.us/criminal/departments/problem-solving-courts/",
+"https://www.alleghenycourts.us/magisterial-district-courts/about/",
+"https://www.pawd.uscourts.gov",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.padisciplinaryboard.org"
+],
+"photo": {
+"id": "1788316286613-787d97eb7755",
+"pageUrl": "https://unsplash.com/photos/roberto-clemente-bridge-and-pittsburgh-skyline-KFzsXZZ5OBw",
+"photographer": "Lucas Bucht",
+"alt": "Roberto Clemente Bridge over the Allegheny River and the Pittsburgh skyline at golden hour"
+}
+},
+"cincinnati": {
+"county": "Hamilton County",
+"countyNote": "",
+"stateCourt": {
+"name": "Hamilton County Court of Common Pleas",
+"courthouse": "Hamilton County Courthouse",
+"address": "1000 Main Street, Cincinnati, OH 45202",
+"url": "https://hamiltoncountycourts.org"
+},
+"smallClaims": {
+"court": "Hamilton County Municipal Court, Small Claims Division",
+"address": "Hamilton County Courthouse, 1000 Main Street, Cincinnati, OH 45202",
+"url": "https://www.courtclerk.org/self-help-resources/file-a-claim-in-small-claims-court/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Ohio (Western Division at Cincinnati)",
+"courthouse": "Potter Stewart U.S. Courthouse",
+"address": "100 East Fifth Street, Room 103, Cincinnati, OH 45202",
+"url": "https://www.ohsd.uscourts.gov"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Cincinnati Bar Association",
+"url": "https://www.cincybar.org",
+"referral": {
+"name": "Cincinnati Bar Association Lawyer Referral Service",
+"phone": "(513) 381-8359",
+"url": "https://www.cincybar.org/LRS/Request-Form"
+}
+},
+"legalAid": [
+{
+"name": "Legal Aid Society of Southwest Ohio",
+"url": "https://lasswo.org",
+"serves": "Low-income residents of Cincinnati and southwest Ohio"
+},
+{
+"name": "Volunteer Lawyers Project (Legal Aid Society of Southwest Ohio)",
+"url": "https://lasswo.org",
+"serves": "Low-income residents of greater Cincinnati, through volunteer attorneys"
+}
+],
+"population": {
+"value": 314367,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Cincinnati is the seat of Hamilton County, and most of its trial courts sit in the Hamilton County Courthouse at 1000 Main Street. The Hamilton County Court of Common Pleas hears felony cases and larger civil disputes. Its specialized dockets, which must be certified by the Supreme Court of Ohio, include a Drug Court, a Mental Health Court and a Veterans Treatment Court. The Hamilton County Municipal Court handles misdemeanors, traffic cases and civil claims up to $15,000, and its small claims division takes cases of up to $6,000. Federal cases are heard by the U.S. District Court for the Southern District of Ohio at the Potter Stewart U.S. Courthouse on East Fifth Street. There is no immigration court in Cincinnati; the nearest Ohio immigration court is in Cleveland. Residents can confirm that a lawyer is licensed in Ohio through the Supreme Court of Ohio's attorney directory.",
+"blurbSources": [
+"https://hamiltoncountycourts.org",
+"https://hamiltoncountycourts.org/index.php/specialized-dockets-common-pleas/",
+"https://www.courtclerk.org/self-help-resources/file-a-claim-in-small-claims-court/",
+"https://www.ohsd.uscourts.gov",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.supremecourt.ohio.gov/attorney-search/"
+],
+"photo": {
+"id": "1600186203774-769f73209d00",
+"pageUrl": "https://unsplash.com/photos/bridge-over-water-near-city-buildings-during-daytime-_W8p_1OBkAw",
+"photographer": "Matt Koffel",
+"alt": "Roebling Suspension Bridge and the Cincinnati skyline on the Ohio River"
+}
+},
+"st-louis": {
+"county": "City of St. Louis (independent city)",
+"countyNote": "St. Louis is an independent city and is not part of St. Louis County.",
+"stateCourt": {
+"name": "Circuit Court of the City of St. Louis (22nd Judicial Circuit of Missouri)",
+"courthouse": "Clyde S. Cahill Courts Building",
+"address": "10 North Tucker Boulevard, St. Louis, MO 63101",
+"url": "https://www.stlcitycircuitcourt.com"
+},
+"smallClaims": {
+"court": "Small Claims Court, Associate Circuit Division, 22nd Judicial Circuit",
+"address": "Clyde S. Cahill Courts Building, 10 North Tucker Boulevard, St. Louis, MO 63101",
+"url": "https://www.stlcitycircuitcourt.com"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Missouri (Eastern Division)",
+"courthouse": "Thomas F. Eagleton U.S. Courthouse",
+"address": "111 South 10th Street, St. Louis, MO 63102",
+"url": "https://www.moed.uscourts.gov"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Bar Association of Metropolitan St. Louis (BAMSL)",
+"url": "https://www.bamsl.org",
+"referral": {
+"name": "BAMSL Lawyer Referral and Information Service",
+"phone": "314-621-6681",
+"url": "https://www.bamsl.org/?pg=clientReferrals"
+}
+},
+"legalAid": [
+{
+"name": "Legal Services of Eastern Missouri",
+"url": "https://lsem.org",
+"serves": "Low-income residents of the City of St. Louis and eastern Missouri"
+}
+],
+"population": {
+"value": 278144,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "St. Louis is an independent city, separate from St. Louis County, and forms Missouri's 22nd Judicial Circuit. The Circuit Court of the City of St. Louis hears felony and civil cases at the Clyde S. Cahill Courts Building on Tucker Boulevard and the Mel Carnahan Courthouse next door. Small claims of up to $5,000 are heard in the court's associate circuit division. The 22nd Circuit runs Treatment Courts, including Adult, Veterans and Family Treatment Court, which combine substance use treatment with judicial supervision. Federal cases go to the U.S. District Court for the Eastern District of Missouri at the Thomas F. Eagleton U.S. Courthouse, which also houses the Eighth Circuit Court of Appeals. There is no immigration court in St. Louis; Missouri's immigration court is in Kansas City. Residents can confirm that a lawyer is licensed in Missouri through the Missouri Bar's lawyer directory or Missouri Courts' attorney search.",
+"blurbSources": [
+"https://www.stlcitycircuitcourt.com",
+"https://www.stlcitycircuitcourt.com/courts_services/treatment_court.php",
+"https://www.moed.uscourts.gov",
+"https://en.wikipedia.org/wiki/Thomas_F._Eagleton_United_States_Courthouse",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing"
+],
+"photo": {
+"id": "1675906798393-89cbae461520",
+"pageUrl": "https://unsplash.com/photos/a-view-of-the-st-louis-skyline-from-across-the-st-louis-river-JSBFK4DR7qU",
+"photographer": "Kenny Nguyễn",
+"alt": "St. Louis skyline and the Gateway Arch at blue hour"
+}
+},
+"salt-lake-city": {
+"county": "Salt Lake County",
+"countyNote": "",
+"stateCourt": {
+"name": "Third Judicial District Court of Utah",
+"courthouse": "Scott M. Matheson Courthouse",
+"address": "450 South State Street, Salt Lake City, UT 84111",
+"url": "https://www.utcourts.gov"
+},
+"smallClaims": {
+"court": "Salt Lake City Justice Court (Small Claims)",
+"address": "John L. Baxter Courthouse, 333 South 200 East, Salt Lake City, UT 84111",
+"url": "https://www.slc.gov/courts/small-claims/"
+},
+"federalCourt": {
+"name": "U.S. District Court for the District of Utah",
+"courthouse": "Orrin G. Hatch United States Courthouse",
+"address": "351 South West Temple, Room 1.100, Salt Lake City, UT 84101",
+"url": "https://www.utd.uscourts.gov"
+},
+"immigrationCourt": {
+"name": "Salt Lake City Immigration Court",
+"address": "2975 South Decker Lake Drive, #200, West Valley City, UT 84119-6094",
+"url": "https://www.justice.gov/eoir/salt-lake-city-immigration-court"
+},
+"bar": {
+"name": "Salt Lake County Bar Association",
+"url": "https://www.slcba.net",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Utah Legal Services",
+"url": "https://www.utahlegalservices.org",
+"serves": "Low-income Utahns statewide, with an office in Salt Lake City"
+},
+{
+"name": "Legal Aid Society of Salt Lake",
+"url": "https://www.legalaidsocietyofsaltlake.org",
+"serves": "Low-income residents of Salt Lake County (family law and protective orders)"
+}
+],
+"population": {
+"value": 218428,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Salt Lake City is the seat of Salt Lake County and part of Utah's Third Judicial District. The Third District Court hears felony cases, divorce and custody matters, and most civil lawsuits, with its main Salt Lake courthouse at the Scott M. Matheson Courthouse on State Street. Utah's first drug court was established in Third District Court in 1996, and the district also runs mental health and other problem-solving courts. Small claims cases arising in the city are handled by the Salt Lake City Justice Court at the John L. Baxter Courthouse, which uses Utah's Online Dispute Resolution program and holds most hearings online. Federal cases go to the U.S. District Court for the District of Utah at the Orrin G. Hatch U.S. Courthouse. The Salt Lake City Immigration Court is in nearby West Valley City. Residents can check a lawyer's license through the Utah State Bar's attorney directory.",
+"blurbSources": [
+"https://www.utcourts.gov/en/courts/court-types/problem-solving-courts.html",
+"https://www.slc.gov/courts/small-claims/",
+"https://www.utd.uscourts.gov",
+"https://www.justice.gov/eoir/salt-lake-city-immigration-court",
+"https://www.utahbar.org/get-legal-help/",
+"https://kutv.com/news/utahs-state-of-mind/utah-steps-up-with-personal-approaches-to-mental-health-in-criminal-justice-system"
+],
+"photo": {
+"id": "1621603933126-6c216db10045",
+"pageUrl": "https://unsplash.com/photos/city-skyline-across-green-mountain-during-daytime-iGpIf75390Q",
+"photographer": "Brent Pace",
+"alt": "Downtown Salt Lake City skyline at golden hour, seen from Virginia Street"
+}
+},
+"richmond": {
+"county": "City of Richmond (independent city)",
+"countyNote": "Richmond is an independent city and is not part of Henrico or Chesterfield County.",
+"stateCourt": {
+"name": "Circuit Court of the City of Richmond (13th Judicial Circuit of Virginia)",
+"courthouse": "John Marshall Courts Building",
+"address": "400 North Ninth Street, Richmond, VA 23219",
+"url": "https://www.vacourts.gov/courts/circuit/richmond/home"
+},
+"smallClaims": {
+"court": "Richmond General District Court, Civil Division (Small Claims docket)",
+"address": "John Marshall Courts Building, 400 North 9th Street, Room 203, Richmond, VA 23219",
+"url": "https://www.vacourts.gov/courts/gd/richmond_city/home"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Eastern District of Virginia (Richmond Division)",
+"courthouse": "Spottswood W. Robinson III and Robert R. Merhige, Jr. Federal Courthouse",
+"address": "701 East Broad Street, Richmond, VA 23219",
+"url": "https://www.vaed.uscourts.gov"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Richmond Bar Association",
+"url": "https://richmondbar.org",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Central Virginia Legal Aid Society",
+"url": "https://cvlas.org",
+"serves": "Low-income residents of Richmond and central Virginia"
+}
+],
+"population": {
+"value": 237257,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Richmond is an independent city, separate from the surrounding counties, and forms Virginia's 13th Judicial Circuit. The Richmond Circuit Court, at the John Marshall Courts Building on North Ninth Street, hears felony cases, divorces and civil suits above the general district court's limits, and its programs include a drug court. The Richmond General District Court hears misdemeanors, traffic cases and smaller civil claims at the John Marshall and Marsh Manchester courts buildings, and holds a weekly small claims docket in its civil division. Federal cases go to the Richmond Division of the U.S. District Court for the Eastern District of Virginia on East Broad Street. EOIR's Richmond Immigration Adjudication Center is not a public courthouse; the Annandale and Sterling immigration courts serve Virginia. The Richmond Bar Association directs the public to the Virginia State Bar's Lawyer Referral Service, and lawyer licenses can be checked through the Virginia State Bar.",
+"blurbSources": [
+"https://www.vacourts.gov/courts/circuit/richmond/home",
+"https://www.vacourts.gov/courts/gd/richmond_city/home",
+"https://www.vaed.uscourts.gov",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://richmondbar.org/pro-bono-public-resources/",
+"https://www.vsb.org"
+],
+"photo": {
+"id": "1527042212737-6a4127d36fb2",
+"pageUrl": "https://unsplash.com/photos/landscape-photography-of-buildings-during-daytime-TZUAQH7ACe4",
+"photographer": "STEPHEN POORE",
+"alt": "Downtown Richmond skyline seen from East Grace Street in Church Hill"
+}
+},
+"fort-lauderdale": {
+"county": "Broward County",
+"countyNote": "",
+"stateCourt": {
+"name": "Seventeenth Judicial Circuit Court of Florida",
+"courthouse": "Broward County Judicial Complex (Main Courthouse)",
+"address": "201 SE 6th Street, Fort Lauderdale, FL 33301",
+"url": "https://www.17th.flcourts.org"
+},
+"smallClaims": {
+"court": "Broward County Court (County Civil/Small Claims), filed with the Broward County Clerk of Courts",
+"address": "201 SE 6th Street, Fort Lauderdale, FL 33301",
+"url": "https://www.browardclerk.org/Divisions/CountyCivil"
+},
+"federalCourt": {
+"name": "U.S. District Court for the Southern District of Florida (Fort Lauderdale Division)",
+"courthouse": "U.S. Federal Building and Courthouse",
+"address": "299 East Broward Boulevard, Fort Lauderdale, FL 33301",
+"url": "https://www.flsd.uscourts.gov/fort-lauderdale"
+},
+"immigrationCourt": null,
+"bar": {
+"name": "Broward County Bar Association",
+"url": "https://www.browardbar.org",
+"referral": {
+"name": "Broward County Bar Association Lawyer Referral and Information Service",
+"phone": "954-764-8310",
+"url": "https://www.browardbar.org/lrs-language-select/"
+}
+},
+"legalAid": [
+{
+"name": "Coast to Coast Legal Aid of South Florida",
+"url": "https://www.coasttocoastlegalaid.org",
+"serves": "Low-income residents of Broward and Collier Counties"
+}
+],
+"population": {
+"value": 188677,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Fort Lauderdale is the seat of Broward County, which forms Florida's Seventeenth Judicial Circuit. The circuit court hears felonies, family cases, probate and civil suits over $50,000 at the main courthouse at 201 SE 6th Street, and the circuit also has regional courthouses elsewhere in the county. Broward County Court handles misdemeanors, traffic and civil cases up to $50,000. Its small claims cases cover disputes of $8,000 or less, which are filed through the Broward County Clerk of Courts. The circuit's court programs include a drug court pretrial intervention program and a mental health court. Federal cases go to the Fort Lauderdale Division of the U.S. District Court for the Southern District of Florida on East Broward Boulevard. There is no immigration court in Fort Lauderdale; South Florida's immigration courts are in Miami. Lawyer licenses can be verified through The Florida Bar's member search.",
+"blurbSources": [
+"https://www.17th.flcourts.org",
+"https://www.17th.flcourts.org/court-programs/",
+"https://www.browardclerk.org/Divisions/CountyCivil",
+"https://www.flsd.uscourts.gov/fort-lauderdale",
+"https://www.justice.gov/eoir/eoir-immigration-court-listing",
+"https://www.floridabar.org/directories/find-mbr/"
+],
+"photo": {
+"id": "1766373165231-8807829cd12b",
+"pageUrl": "https://unsplash.com/photos/city-skyline-over-a-canal-with-boats-and-boats-lj4KbgcOkWY",
+"photographer": "MARTLEY U",
+"alt": "Aerial view of downtown Fort Lauderdale above a canal lined with boats"
+}
+},
+"baton-rouge": {
+"county": "East Baton Rouge Parish",
+"countyNote": "Louisiana has parishes, not counties. Baton Rouge and East Baton Rouge Parish share a consolidated city-parish government.",
+"stateCourt": {
+"name": "19th Judicial District Court",
+"courthouse": "19th Judicial District Courthouse",
+"address": "300 North Boulevard, Baton Rouge, LA 70802",
+"url": "https://www.19thjdc.org"
+},
+"smallClaims": {
+"court": "Baton Rouge City Court (Small Claims)",
+"address": null,
+"url": null
+},
+"federalCourt": {
+"name": "U.S. District Court for the Middle District of Louisiana",
+"courthouse": "Russell B. Long Federal Building and U.S. Courthouse",
+"address": "777 Florida Street, Suite 139, Baton Rouge, LA 70801",
+"url": "https://www.lamd.uscourts.gov"
+},
+"immigrationCourt": {
+"name": "Baton Rouge Immigration Court",
+"address": "451 Florida Street, Suite 500, Baton Rouge, LA 70801",
+"url": "https://www.justice.gov/eoir/baton-rouge-immigration-court"
+},
+"bar": {
+"name": "Baton Rouge Bar Association",
+"url": "https://brba.org",
+"referral": null
+},
+"legalAid": [
+{
+"name": "Southeast Louisiana Legal Services",
+"url": "https://slls.org",
+"serves": "Low-income residents of 22 southeast Louisiana parishes, with an office in Baton Rouge"
+},
+{
+"name": "Baton Rouge Bar Association Pro Bono Project",
+"url": "https://brba.org/public-resources/",
+"serves": "Low-income residents of the Baton Rouge area needing civil legal help"
+}
+],
+"population": {
+"value": 222795,
+"year": 2025,
+"source": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/cities/totals/sub-est2025.csv"
+},
+"blurb": "Baton Rouge is the seat of East Baton Rouge Parish, which has a consolidated city-parish government. The 19th Judicial District Court on North Boulevard hears felony cases, family matters, successions and most civil lawsuits in the parish. Its specialty programs include a Recovery Court, a Re-Entry Court, a Veterans' Treatment Court and a Domestic Violence Intervention Court. Smaller civil disputes and small claims within city limits are generally handled by Baton Rouge City Court. Federal cases go to the U.S. District Court for the Middle District of Louisiana on Florida Street. The Baton Rouge Immigration Court is also on Florida Street, at 451 Florida Street. Louisiana uses a civil law tradition, so it helps to hire a lawyer licensed in Louisiana. Licenses can be checked through the Louisiana State Bar Association's membership directory or the Louisiana Attorney Disciplinary Board.",
+"blurbSources": [
+"https://www.19thjdc.org",
+"https://www.lamd.uscourts.gov",
+"https://www.justice.gov/eoir/baton-rouge-immigration-court",
+"https://slls.org/en/",
+"https://brba.org/public-resources/"
+],
+"photo": {
+"id": "1655184292418-9fa8b3a15f96",
+"pageUrl": "https://unsplash.com/photos/a-bridge-over-a-river-with-a-city-in-the-background-tOPgTeZ53cM",
+"photographer": "Gower Brown",
+"alt": "Bridge over the Mississippi River with downtown Baton Rouge in the background"
+}
+}
+}

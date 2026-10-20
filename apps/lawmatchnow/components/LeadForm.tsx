@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, type FormEvent } from 'react'
+import { leadSource } from '@/components/Tracker'
 
 type Kind = 'evaluation' | 'contact-attorney' | 'claim' | 'general'
 type Option = { value: string; label: string }
@@ -10,10 +11,11 @@ async function send(form: HTMLFormElement, kind: Kind, extra: Record<string, str
   const res = await fetch('/api/lead', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ ...data, ...extra, kind, page: location.pathname }),
+    body: JSON.stringify({ ...data, ...extra, kind, page: location.pathname, source: leadSource() }),
   })
   const body = await res.json().catch(() => ({}))
   if (!res.ok) throw new Error(body.error || 'Something went wrong. Please try again.')
+  ;(window as unknown as { gtag?: (...a: unknown[]) => void }).gtag?.('event', 'generate_lead', { lead_type: kind, practice: data.practice ?? '' })
 }
 
 function Status({ state, error, done }: { state: string; error: string; done: string }) {

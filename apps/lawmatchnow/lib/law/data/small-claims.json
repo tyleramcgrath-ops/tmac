@@ -1,0 +1,1166 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"smallClaimsLimit": {
+"value": "$6,000",
+"detail": "The District Court small claims division hears claims up to $6,000.",
+"cite": "Ala. Code § 12-12-31(a)",
+"source": "https://cherokee.alacourt.gov/small-claims",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims division)",
+"detail": "Small claims are a division of the district court in each county.",
+"cite": "Ala. Code § 12-12-31",
+"source": "https://cherokee.alacourt.gov/small-claims",
+"verified": true
+}
+},
+"AK": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims cover money or personal property worth $10,000 or less; larger claims must waive the excess.",
+"cite": "Alaska Stat. § 22.15.040(a)",
+"source": "https://public.courts.alaska.gov/web/forms/docs/sc-100.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court",
+"detail": "Small claims are heard by a district court judge or magistrate.",
+"cite": "Alaska Stat. § 22.15.040; Alaska R. Sm. Cl. P.",
+"source": "https://public.courts.alaska.gov/web/forms/docs/sc-100.pdf",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "Small claims are designed to be handled without a lawyer, but a party may be represented by one.",
+"cite": "Alaska R. Sm. Cl. P. 15",
+"source": "https://public.courts.alaska.gov/web/forms/docs/sc-100.pdf",
+"verified": true
+}
+},
+"AZ": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "Justice court small claims division hears claims up to $5,000 (raised from $3,500 by SB 1022, 2025, effective Sept. 26, 2025).",
+"cite": "A.R.S. § 22-503(A)",
+"source": "https://www.azleg.gov/ars/22/00503.htm",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Justice Court (small claims division)",
+"detail": "Small claims are filed in the small claims division of the justice court for the precinct.",
+"cite": "A.R.S. § 22-501 et seq.",
+"source": "https://www.azleg.gov/ars/22/00503.htm",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (unless both sides agree)",
+"detail": "Attorneys may not appear unless all parties agree in writing before the hearing; an attorney may represent himself or herself.",
+"cite": "A.R.S. § 22-512(B)(7), (D)",
+"source": "https://www.azleg.gov/ars/22/00512.htm",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "14 business days",
+"detail": "Landlord must give an itemized list of deductions and refund the balance within 14 days, excluding weekends and holidays, after the tenancy ends and the tenant demands it.",
+"cite": "A.R.S. § 33-1321(D)",
+"source": "https://www.azleg.gov/ars/33/01321.htm",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1.5 months' rent",
+"detail": "Security, including prepaid rent, may not exceed one and one-half months' rent.",
+"cite": "A.R.S. § 33-1321(A)",
+"source": "https://www.azleg.gov/ars/33/01321.htm",
+"verified": true
+}
+},
+"CA": {
+"smallClaimsLimit": {
+"value": "$12,500",
+"detail": "Individuals may sue for up to $12,500; businesses and other entities are limited to $6,250.",
+"cite": "Cal. Civ. Proc. Code §§ 116.220, 116.221",
+"source": "https://selfhelp.courts.ca.gov/small-claims-california",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Superior Court (small claims division)",
+"detail": "Small claims are heard by the small claims division of the county superior court.",
+"cite": "Cal. Civ. Proc. Code § 116.210",
+"source": "https://selfhelp.courts.ca.gov/small-claims-california",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No",
+"detail": "Lawyers may advise parties before the hearing but generally cannot represent them in small claims court.",
+"cite": "Cal. Civ. Proc. Code § 116.530",
+"source": "https://selfhelp.courts.ca.gov/small-claims-california",
+"verified": true
+}
+},
+"CO": {
+"smallClaimsLimit": {
+"value": "$7,500",
+"detail": "Small claims court hears claims up to $7,500; amounts above that must be waived to stay in small claims.",
+"cite": "C.R.S. § 13-6-403(1)(a)",
+"source": "https://coloradojudicial.gov/sites/default/files/2023-07/JDF248.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "County Court (small claims division)",
+"detail": "Small claims are heard by the small claims division of the county court.",
+"cite": "C.R.S. § 13-6-401 et seq.",
+"source": "https://coloradojudicial.gov/sites/default/files/2023-07/JDF248.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "1 month (up to 60 days)",
+"detail": "One month after the lease ends or keys are returned, unless the lease sets a longer period of no more than 60 days.",
+"cite": "C.R.S. § 38-12-103(1)",
+"source": "https://leg.colorado.gov/sites/default/files/renters_rights_-_colorado_law_summary.pdf",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent",
+"detail": "A deposit may not exceed two months' rent; a separate refundable pet deposit is capped at $300.",
+"cite": "C.R.S. §§ 38-12-102.5, 38-12-106",
+"source": "https://leg.colorado.gov/sites/default/files/renters_rights_-_colorado_law_summary.pdf",
+"verified": true
+}
+},
+"DE": {
+"smallClaimsLimit": {
+"value": "$25,000",
+"detail": "The Justice of the Peace Court hears civil debt, trespass and replevin cases where the amount in controversy does not exceed $25,000.",
+"cite": "10 Del. C. § 9301",
+"source": "https://courts.delaware.gov/JPCourt/jurisdiction.aspx",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Justice of the Peace Court",
+"detail": "Delaware has no separately named small claims court; the Justice of the Peace Court handles these civil cases.",
+"cite": "10 Del. C. ch. 93",
+"source": "https://courts.delaware.gov/JPCourt/jurisdiction.aspx",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "20 days",
+"detail": "Landlord must return the deposit, or send an itemized list of damages with any balance, within 20 days after the lease ends.",
+"cite": "25 Del. C. § 5514(e)-(f)",
+"source": "https://delcode.delaware.gov/title25/c055/index.html",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent (most leases)",
+"detail": "One month's rent for leases of one year or more, and for month-to-month tenancies after the first year; no statutory cap for shorter fixed terms.",
+"cite": "25 Del. C. § 5514(a)",
+"source": "https://delcode.delaware.gov/title25/c055/index.html",
+"verified": true
+}
+},
+"DC": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "The Small Claims and Conciliation Branch hears money-only cases up to $10,000, excluding interest, attorney fees and costs.",
+"cite": "D.C. Code § 11-1321",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/11-1321",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Superior Court (Small Claims and Conciliation Branch)",
+"detail": "Small claims are heard in the Small Claims and Conciliation Branch of D.C. Superior Court.",
+"cite": "D.C. Code § 11-1321",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/11-1321",
+"verified": true
+}
+},
+"FL": {
+"smallClaimsLimit": {
+"value": "$8,000",
+"detail": "Small claims rules cover county court civil actions for money or property up to $8,000, excluding costs, interest and attorney fees; in effect since Jan. 1, 2020.",
+"cite": "Fla. Sm. Cl. R. 7.010(b)",
+"source": "https://www-media.floridabar.org/uploads/2026/08/2026_01-JUL-Small-Claims-Rules-7-1-2026-1.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "County Court (small claims)",
+"detail": "Small claims cases are heard in the county court of the county where the claim arose or the defendant lives.",
+"cite": "Fla. Sm. Cl. R. 7.010; Fla. Stat. § 34.01",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/34.01",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes",
+"detail": "Parties may appear on their own or be represented by an attorney; the rules provide for attorney-fee awards where authorized.",
+"cite": "Fla. Sm. Cl. R. 7.050, 7.175",
+"source": "https://www-media.floridabar.org/uploads/2026/08/2026_01-JUL-Small-Claims-Rules-7-1-2026-1.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "15 days (30 if claiming)",
+"detail": "15 days if no deductions; if the landlord intends to keep any part, written notice of the claim must be sent within 30 days of move-out.",
+"cite": "Fla. Stat. § 83.49(3)(a)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/83.49",
+"verified": true
+}
+},
+"GA": {
+"smallClaimsLimit": {
+"value": "$15,000",
+"detail": "Magistrate Court hears civil claims up to $15,000; HB 999 (Act 707, 2026) raises the limit to $25,000 for actions filed on or after Jan. 1, 2027.",
+"cite": "O.C.G.A. § 15-10-2(a)(5); 2026 Ga. Laws Act 707 (HB 999) § 3",
+"source": "https://www.legis.ga.gov/api/legislation/document/20252026/249095",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magistrate Court",
+"detail": "Small claims are handled by the Magistrate Court in each county.",
+"cite": "O.C.G.A. § 15-10-2",
+"source": "https://www.legis.ga.gov/api/legislation/document/20252026/249095",
+"verified": true
+}
+},
+"ID": {
+"smallClaimsLimit": {
+"value": "$15,000",
+"detail": "Small claims department hears claims for money or personal property up to $15,000 (raised from $5,000 by 2026 S1330, Ch. 196, effective July 1, 2026).",
+"cite": "Idaho Code § 1-2301",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title1/T1CH23/SECT1-2301/",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magistrate Division (small claims department)",
+"detail": "Small claims are heard by the small claims department of the magistrate division of district court.",
+"cite": "Idaho Code § 1-2301",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title1/T1CH23/SECT1-2301/",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No",
+"detail": "No attorney may appear for a party at trial or hearings in small claims, though attorneys may give advice and help prepare.",
+"cite": "Idaho Code § 1-2307",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title1/T1CH23/SECT1-2307/",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "21 days (max 30)",
+"detail": "21 days if the lease sets no deadline; in any event no more than 30 days after the tenant surrenders the premises.",
+"cite": "Idaho Code § 6-321(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title6/T6CH3/SECT6-321/",
+"verified": true
+}
+},
+"IL": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "A small claim is a tort or contract action for money not over $10,000, excluding interest and costs.",
+"cite": "Ill. S. Ct. R. 281",
+"source": "https://www.illinoiscourts.gov/resources/7e33f8da-3efb-48b2-8c20-1257037e97ec/file",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit Court (small claims)",
+"detail": "Small claims are filed in the circuit court of the county.",
+"cite": "Ill. S. Ct. R. 281-288",
+"source": "https://www.illinoiscourts.gov/resources/7e33f8da-3efb-48b2-8c20-1257037e97ec/file",
+"verified": true
+}
+},
+"IN": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims dockets hear claims up to $10,000 for cases filed on or after July 1, 2021.",
+"cite": "Ind. Code § 33-29-2-4",
+"source": "https://www.in.gov/counties/madison-courts/files/Small-Claims-Summary-Handout-3.pdf",
+"verified": true
+}
+},
+"IA": {
+"smallClaimsLimit": {
+"value": "$6,500",
+"detail": "Small claims are civil actions for a money judgment of $6,500 or less, excluding interest and costs (for actions filed on or after July 1, 2018).",
+"cite": "Iowa Code § 631.1(1)(b)",
+"source": "https://www.legis.iowa.gov/docs/code/631.1.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims)",
+"detail": "Small claims are heard by the district court sitting in small claims, usually before a magistrate.",
+"cite": "Iowa Code § 631.1",
+"source": "https://www.legis.iowa.gov/docs/code/631.1.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must return the deposit or give a written statement of reasons for withholding within 30 days after the tenancy ends and the tenant provides a mailing address.",
+"cite": "Iowa Code § 562A.12(3)(a)",
+"source": "https://www.legis.iowa.gov/docs/code/562A.12.pdf",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent",
+"detail": "A landlord may not demand or receive a security deposit greater than two months' rent.",
+"cite": "Iowa Code § 562A.12(1)",
+"source": "https://www.legis.iowa.gov/docs/code/562A.12.pdf",
+"verified": true
+}
+},
+"KS": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "A small claim is a claim for money or personal property up to $10,000, excluding interest and costs (raised from $4,000 by 2024 Kan. Sess. Laws ch. 22, effective July 1, 2024).",
+"cite": "K.S.A. 61-2703(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch61/061_027_0003.html",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims)",
+"detail": "Small claims are heard by the district court under the Small Claims Procedure Act.",
+"cite": "K.S.A. 61-2701 et seq.",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch61/061_027_0003.html",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (before judgment)",
+"detail": "No party may be represented by an attorney before judgment; a non-attorney employee or officer may appear for an entity.",
+"cite": "K.S.A. 61-2707(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch61/061_027_0007.html",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Balance due within 14 days after deductions are determined, but no later than 30 days after the tenancy ends, possession is delivered and the tenant demands it.",
+"cite": "K.S.A. 58-2550(b)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch58/058_025_0050.html",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "One month's rent for unfurnished units, 1.5 months' if furnished, plus up to half a month's rent extra for pets.",
+"cite": "K.S.A. 58-2550(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch58/058_025_0050.html",
+"verified": true
+}
+},
+"KY": {
+"smallClaimsLimit": {
+"value": "$2,500",
+"detail": "The small claims division hears civil claims for money or personal property up to $2,500, excluding interest and costs.",
+"cite": "KRS 24A.230(1)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=39856",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims division)",
+"detail": "Small claims are heard by the small claims division of the district court.",
+"cite": "KRS 24A.230",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=39856",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "The appearance of an attorney on behalf of any party is permitted but not required.",
+"cite": "KRS 24A.240(1)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=20712",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "No fixed deadline",
+"detail": "Kentucky sets no specific return deadline; the landlord must list damage charges at move-out and may keep an unclaimed refund 60 days after notifying the tenant.",
+"cite": "KRS 383.580(3)-(7)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=35733",
+"verified": true
+}
+},
+"ME": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "A small claim is a claim up to $10,000, excluding interest and costs; raised from $6,000 effective Jan. 1, 2026 (P.L. 2025, c. 261).",
+"cite": "14 M.R.S. § 7482",
+"source": "https://legislature.maine.gov/statutes/14/title14sec7482.html",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "30 days (or less, as the written lease states) for a written lease; 21 days for a tenancy at will.",
+"cite": "14 M.R.S. § 6033(2)",
+"source": "https://legislature.maine.gov/statutes/14/title14sec6033.html",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent",
+"detail": "A lease or tenancy at will may not require a security deposit greater than two months' rent.",
+"cite": "14 M.R.S. § 6032",
+"source": "https://legislature.maine.gov/statutes/14/title14sec6032.html",
+"verified": true
+}
+},
+"MD": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "Small claims are civil money actions up to $5,000, excluding interest, costs and attorney fees.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 4-405",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=4-405&enactments=false",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court",
+"detail": "The District Court of Maryland has exclusive jurisdiction over small claims.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 4-405",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=4-405&enactments=false",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "45 days",
+"detail": "Landlord must return the deposit with interest, less itemized deductions, within 45 days after the tenancy ends.",
+"cite": "Md. Code, Real Prop. § 8-203(e)(1)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=8-203&enactments=false",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "Capped at one month's rent (leases from Oct. 1, 2024); up to two months' only for tenants qualifying for certain utility assistance.",
+"cite": "Md. Code, Real Prop. § 8-203(b)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=8-203&enactments=false",
+"verified": true
+}
+},
+"MA": {
+"smallClaimsLimit": {
+"value": "$7,000",
+"detail": "Small claims cover contract or tort claims (other than slander or libel) of $7,000 or less; property damage from a motor vehicle is not capped.",
+"cite": "Mass. Gen. Laws ch. 218, § 21",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleI/Chapter218/Section21",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court, Boston Municipal Court or Housing Court",
+"detail": "Small claims are filed in a District Court, the Boston Municipal Court, or the Housing Court.",
+"cite": "Mass. Gen. Laws ch. 218, § 21; Uniform Small Claims Rules",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleI/Chapter218/Section21",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must return the deposit, or the balance after allowed deductions, within 30 days after the tenancy ends.",
+"cite": "Mass. Gen. Laws ch. 186, § 15B(4)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter186/Section15B",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "A deposit may not exceed one month's rent; landlords may also collect first and last month's rent and a lock-change fee.",
+"cite": "Mass. Gen. Laws ch. 186, § 15B(1)(b)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleI/Chapter186/Section15B",
+"verified": true
+}
+},
+"MI": {
+"smallClaimsLimit": {
+"value": "$7,000",
+"detail": "District court small claims division hears claims up to $7,000, effective Jan. 1, 2024; no later increase is scheduled in the statute.",
+"cite": "MCL 600.8401(e)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-8401",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims division)",
+"detail": "Small claims are heard by the small claims division of the district court (or a municipal court where one exists).",
+"cite": "MCL 600.8401",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-8401",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No",
+"detail": "Attorneys may not represent parties in small claims, except an attorney acting on his or her own behalf.",
+"cite": "MCL 600.8408(1)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-8408",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must mail an itemized notice of damages within 30 days after the tenant moves out and return any balance; without a timely notice the full deposit is owed.",
+"cite": "MCL 554.609, 554.611",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-554-609",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1.5 months' rent",
+"detail": "A security deposit may not exceed one and one-half months' rent.",
+"cite": "MCL 554.602",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-554-602",
+"verified": true
+}
+},
+"MN": {
+"smallClaimsLimit": {
+"value": "$20,000",
+"detail": "Conciliation court hears claims up to $20,000, or $4,000 for claims involving a consumer credit transaction.",
+"cite": "Minn. Stat. § 491A.01, subd. 3a",
+"source": "https://www.revisor.mn.gov/statutes/cite/491A.01",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Conciliation Court (District Court)",
+"detail": "Minnesota's small claims court is the conciliation court division of the district court.",
+"cite": "Minn. Stat. ch. 491A",
+"source": "https://www.revisor.mn.gov/statutes/cite/491A.01",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "21 days",
+"detail": "Landlord must return the deposit with interest, or give a written statement of reasons for withholding, within three weeks after the tenancy ends.",
+"cite": "Minn. Stat. § 504B.178, subd. 3",
+"source": "https://www.revisor.mn.gov/statutes/cite/504B.178",
+"verified": true
+}
+},
+"MS": {
+"smallClaimsCourt": {
+"value": "Justice Court",
+"detail": "Small claims are heard in county justice courts.",
+"cite": "Miss. Code § 9-11-9",
+"source": "https://www.courts.ms.gov/trialcourts/justicecourt/justicecourt.php",
+"verified": true
+}
+},
+"MO": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "Small claims court hears civil cases where the amount in controversy is $5,000 or less, excluding interest and costs.",
+"cite": "Mo. Rev. Stat. § 482.305",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=482.305",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Associate Circuit Court (small claims)",
+"detail": "An associate circuit judge sits as the small claims court in each county.",
+"cite": "Mo. Rev. Stat. § 482.300-.305",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=482.305",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "Parties may present their claims and defenses without an attorney, but representation by a lawyer is permitted.",
+"cite": "Mo. Rev. Stat. § 482.310(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=482.310",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Within 30 days after the tenancy ends, landlord must return the deposit or give an itemized list of damages with any balance.",
+"cite": "Mo. Rev. Stat. § 535.300(3)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=535.300",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent",
+"detail": "A landlord may not demand or receive a security deposit greater than two months' rent.",
+"cite": "Mo. Rev. Stat. § 535.300(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=535.300",
+"verified": true
+}
+},
+"MT": {
+"smallClaimsLimit": {
+"value": "$7,000",
+"detail": "Small claims court hears claims for money or personal property up to $7,000, excluding costs.",
+"cite": "Mont. Code Ann. § 25-35-502(1)",
+"source": "https://archive.legmt.gov/bills/mca/title_0250/chapter_0350/part_0050/section_0020/0250-0350-0050-0020.html",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Justice Court (small claims)",
+"detail": "Small claims are heard in the justice court's small claims division or a separate small claims court.",
+"cite": "Mont. Code Ann. § 25-35-501 et seq.",
+"source": "https://archive.legmt.gov/bills/mca/title_0250/chapter_0350/part_0050/section_0020/0250-0350-0050-0020.html",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (unless all parties have one)",
+"detail": "A party may not be represented by an attorney unless all parties are represented by attorneys.",
+"cite": "Mont. Code Ann. § 25-35-505(2)",
+"source": "https://archive.legmt.gov/bills/mca/title_0250/chapter_0350/part_0050/section_0050/0250-0350-0050-0050.html",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "30 days to provide an itemized list of damages and refund the balance; 10 days if no deductions are made.",
+"cite": "Mont. Code Ann. § 70-25-202",
+"source": "https://archive.legmt.gov/bills/mca/title_0700/chapter_0250/part_0020/section_0020/0700-0250-0020-0020.html",
+"verified": true
+}
+},
+"NE": {
+"smallClaimsLimit": {
+"value": "$7,500",
+"detail": "Small Claims Court hears claims up to $7,500, excluding interest and costs; the limit rose from $6,000 on July 1, 2025.",
+"cite": "Neb. Rev. Stat. § 25-2802(4)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-2802",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "County Court (Small Claims Court)",
+"detail": "The Small Claims Court is a division of the county court.",
+"cite": "Neb. Rev. Stat. § 25-2801",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-2802",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No",
+"detail": "No party may be represented by an attorney in Small Claims Court; individuals must represent themselves.",
+"cite": "Neb. Rev. Stat. § 25-2803(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-2803",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "14 days",
+"detail": "Landlord must deliver or mail the balance and a written itemization within 14 days after the tenancy ends.",
+"cite": "Neb. Rev. Stat. § 76-1416(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=76-1416",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "Deposit may not exceed one month's rent, plus a pet deposit of up to one-quarter month's rent.",
+"cite": "Neb. Rev. Stat. § 76-1416(1)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=76-1416",
+"verified": true
+}
+},
+"NV": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Justice court small claims cases are limited to the recovery of money only, up to $10,000.",
+"cite": "NRS 73.010(1)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-073.html",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Justice Court",
+"detail": "Small claims are heard by a justice of the peace in the justice court for the proper township.",
+"cite": "NRS 73.010",
+"source": "https://www.leg.state.nv.us/NRS/NRS-073.html",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must provide an itemized accounting and return any remaining deposit within 30 days after the tenancy ends.",
+"cite": "NRS 118A.242(4)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-118A.html",
+"verified": true
+},
+"securityDepositCap": {
+"value": "3 months' rent",
+"detail": "Deposit and/or surety bond, including last month's rent, may not exceed three months' rent.",
+"cite": "NRS 118A.242(1)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-118A.html",
+"verified": true
+}
+},
+"NH": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "A small claim is one where the debt or damages, excluding interest and costs, do not exceed $10,000.",
+"cite": "RSA 503:1",
+"source": "https://gc.nh.gov/rsa/html/LI/503/503-1.htm",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit Court (District Division)",
+"detail": "Small claims are filed in the District Division of the New Hampshire Circuit Court (the statute refers to municipal or district court).",
+"cite": "RSA 503:1",
+"source": "https://gc.nh.gov/rsa/html/LI/503/503-1.htm",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must return the deposit, with any interest owed and an itemized list of deductions, within 30 days after the tenancy ends.",
+"cite": "RSA 540-A:7, I",
+"source": "https://gc.nh.gov/rsa/html/LV/540-A/540-A-7.htm",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent or $100",
+"detail": "Deposit may not exceed one month's rent or $100, whichever is greater.",
+"cite": "RSA 540-A:6, I(a)",
+"source": "https://gc.nh.gov/rsa/html/LV/540-A/540-A-6.htm",
+"verified": true
+}
+},
+"NJ": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "Small Claims section of the Special Civil Part hears money claims of $5,000 or less (Special Civil Part up to $20,000).",
+"cite": "N.J. Ct. R. 6:1-2(a)(2)",
+"source": "https://www.njcourts.gov/self-help/small-claims-court",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Superior Court, Special Civil Part (Small Claims)",
+"detail": "Small claims are heard by the Small Claims section of the Special Civil Part, Law Division, Superior Court.",
+"cite": "N.J. Ct. R. 6:1-2",
+"source": "https://www.nj.gov/dca/codes/publications/pdf_lti/t_i_r.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must return the deposit plus interest, less itemized deductions, within 30 days after the tenancy ends.",
+"cite": "N.J.S.A. 46:8-21.1",
+"source": "https://www.nj.gov/dca/codes/publications/pdf_lti/t_i_r.pdf",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1.5 months' rent",
+"detail": "The deposit may not exceed one and one-half months' rent; yearly increases are limited to 10% of the current deposit.",
+"cite": "N.J.S.A. 46:8-21.2",
+"source": "https://www.nj.gov/dca/codes/publications/pdf_lti/t_i_r.pdf",
+"verified": true
+}
+},
+"NM": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Magistrate courts and the Bernalillo County Metropolitan Court hear civil cases up to $10,000.",
+"cite": "N.M. Stat. §§ 35-3-3, 34-8A-3",
+"source": "https://metro.nmcourts.gov/civil-division/",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magistrate Court (Metropolitan Court in Bernalillo County)",
+"detail": "New Mexico has no separate small claims court; magistrate courts and the Bernalillo County Metropolitan Court hear these cases.",
+"cite": "N.M. Stat. § 35-3-3",
+"source": "https://metro.nmcourts.gov/civil-division/",
+"verified": true
+}
+},
+"NY": {
+"securityDepositReturn": {
+"value": "14 days",
+"detail": "Landlord must return the deposit, with an itemized statement of any deductions, within 14 days after the tenant moves out.",
+"cite": "N.Y. Gen. Oblig. Law § 7-108(1-a)(e)",
+"source": "https://ag.ny.gov/publications/residential-tenants-rights-guide",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "A security deposit may not exceed one month's rent.",
+"cite": "N.Y. Gen. Oblig. Law § 7-108(1-a)(a)",
+"source": "https://ag.ny.gov/publications/residential-tenants-rights-guide",
+"verified": true
+}
+},
+"NC": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims actions are those where the amount in controversy does not exceed $10,000.",
+"cite": "N.C. Gen. Stat. § 7A-210(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-210.html",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (magistrate)",
+"detail": "Small claims are assigned to a magistrate of the district court.",
+"cite": "N.C. Gen. Stat. § 7A-210 to -211",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_7A/GS_7A-210.html",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "Many people represent themselves, but a party may hire an attorney; businesses may appear through a non-attorney representative.",
+"cite": "N.C. Gen. Stat. § 7A-210 et seq.",
+"source": "https://www.nccourts.gov/help-topics/lawsuits-and-small-claims/small-claims",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must itemize damages and refund the balance within 30 days; if damages can't be determined, an interim accounting is due then and a final one within 60 days.",
+"cite": "N.C. Gen. Stat. § 42-52",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-52.html",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent (varies)",
+"detail": "Two weeks' rent for week-to-week, 1.5 months' for month-to-month, and two months' rent for longer tenancies.",
+"cite": "N.C. Gen. Stat. § 42-51(b)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_42/GS_42-51.html",
+"verified": true
+}
+},
+"ND": {
+"smallClaimsLimit": {
+"value": "$15,000",
+"detail": "Small claims court hears claims up to $15,000.",
+"cite": "N.D. Cent. Code § 27-08.1-01",
+"source": "https://ndlegis.gov/cencode/t27c08-1.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims)",
+"detail": "Small claims are heard by the district court sitting as a small claims court.",
+"cite": "N.D. Cent. Code ch. 27-08.1",
+"source": "https://ndlegis.gov/cencode/t27c08-1.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must mail the itemized deductions and any refund within 30 days after the lease ends and the tenant gives up possession.",
+"cite": "N.D. Cent. Code § 47-16-07.1",
+"source": "https://ndlegis.gov/cencode/t47c16.pdf",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "Generally one month's rent; up to two months' for tenants with certain felony convictions or prior lease-violation judgments, plus a separate capped pet deposit.",
+"cite": "N.D. Cent. Code § 47-16-07.1(1)-(2)",
+"source": "https://ndlegis.gov/cencode/t47c16.pdf",
+"verified": true
+}
+},
+"OH": {
+"smallClaimsLimit": {
+"value": "$6,000",
+"detail": "Small claims divisions hear actions for money only up to $6,000, excluding interest and costs; no later increase has been enacted.",
+"cite": "Ohio Rev. Code § 1925.02(A)(1)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1925.02",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Municipal or County Court (small claims division)",
+"detail": "Each municipal court and county court has a small claims division.",
+"cite": "Ohio Rev. Code § 1925.01",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1925.01",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "An attorney may appear for any party but is not required.",
+"cite": "Ohio Rev. Code § 1925.01(D)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1925.01",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must return the deposit, with an itemized list of deductions, within 30 days after the lease ends and possession is delivered.",
+"cite": "Ohio Rev. Code § 5321.16(B)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-5321.16",
+"verified": true
+}
+},
+"OR": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Circuit court small claims department hears claims for money or personal property up to $10,000.",
+"cite": "ORS 46.405(3)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors046.html",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit Court (small claims department)",
+"detail": "Small claims are heard in the small claims department of the circuit court; some justice courts also hear them.",
+"cite": "ORS 46.405",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors046.html",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (unless judge consents)",
+"detail": "No attorney may appear for a party in the small claims department without the judge's consent.",
+"cite": "ORS 46.415(4)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors046.html",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "31 days",
+"detail": "Landlord must return the deposit, or give a written accounting of claims against it, within 31 days after the tenancy ends and the tenant delivers possession.",
+"cite": "ORS 90.300(12)-(13)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors090.html",
+"verified": true
+}
+},
+"PA": {
+"smallClaimsLimit": {
+"value": "$12,000",
+"detail": "Magisterial district judges hear civil claims up to $12,000; Philadelphia Municipal Court's small claims limit is also $12,000.",
+"cite": "42 Pa.C.S. §§ 1515(a)(3), 1123(a)(4)",
+"source": "https://www.courts.phila.gov/municipal/civil/",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magisterial District Court (Philadelphia Municipal Court)",
+"detail": "Small claims are heard by magisterial district judges, or by Philadelphia Municipal Court in Philadelphia.",
+"cite": "42 Pa.C.S. § 1515",
+"source": "https://www.courts.phila.gov/municipal/civil/",
+"verified": true
+}
+},
+"RI": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "Small claims procedure covers contract and certain consumer actions for money only up to $5,000, excluding interest and costs.",
+"cite": "R.I. Gen. Laws § 10-16-1",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE10/10-16/10-16-1.htm",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "20 days",
+"detail": "Landlord must return the deposit with an itemized notice within 20 days after the later of tenancy end, delivery of possession, or receiving a forwarding address.",
+"cite": "R.I. Gen. Laws § 34-18-19(b)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-19.htm",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "A landlord may not demand or receive a security deposit greater than one month's rent.",
+"cite": "R.I. Gen. Laws § 34-18-19(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-18/34-18-19.htm",
+"verified": true
+}
+},
+"SC": {
+"smallClaimsLimit": {
+"value": "$7,500",
+"detail": "Magistrates have civil jurisdiction over contract, damage, and penalty actions where the amount claimed does not exceed $7,500.",
+"cite": "S.C. Code § 22-3-10",
+"source": "https://www.scstatehouse.gov/code/t22c003.php",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magistrate Court",
+"detail": "Small claims are heard in the county magistrate (summary) court.",
+"cite": "S.C. Code § 22-3-10",
+"source": "https://www.scstatehouse.gov/code/t22c003.php",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must give a written itemized notice of deductions with any refund within 30 days after the tenancy ends and possession is delivered.",
+"cite": "S.C. Code § 27-40-410(a)",
+"source": "https://www.scstatehouse.gov/code/t27c040.php",
+"verified": true
+}
+},
+"SD": {
+"smallClaimsLimit": {
+"value": "$12,000",
+"detail": "No small claim may exceed $12,000, not including allowable costs or attorney fees.",
+"cite": "S.D. Codified Laws § 15-39-45.1",
+"source": "https://sdlegislature.gov/Statutes/15-39-45.1",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit or Magistrate Court (small claims)",
+"detail": "Small claims are an alternative procedure in circuit court or magistrate court.",
+"cite": "S.D. Codified Laws ch. 15-39",
+"source": "https://sdlegislature.gov/Statutes/15-39-57",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "21 days",
+"detail": "Landlord must return the deposit or give a written statement of reasons for withholding within 21 days after the tenancy ends and the tenant gives a mailing address; itemized accounting within 45 days on request.",
+"cite": "S.D. Codified Laws § 43-32-24",
+"source": "https://sdlegislature.gov/Statutes/43-32-24",
+"verified": true
+},
+"securityDepositCap": {
+"value": "1 month's rent",
+"detail": "Deposit may not exceed one month's rent unless both parties agree to more because special conditions pose a danger to the premises.",
+"cite": "S.D. Codified Laws § 43-32-6.1",
+"source": "https://sdlegislature.gov/Statutes/43-32-6.1",
+"verified": true
+}
+},
+"TX": {
+"smallClaimsLimit": {
+"value": "$20,000",
+"detail": "Justice courts hear small claims up to $20,000, excluding interest and court costs (raised from $10,000 for cases filed on or after Sept. 1, 2020).",
+"cite": "Tex. Gov't Code § 27.031(a)(1); Tex. R. Civ. P. 500.3(a)",
+"source": "https://jp.hctx.net/suits/about.htm",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Justice Court",
+"detail": "Small claims cases are filed in the justice court (justice of the peace) for the precinct.",
+"cite": "Tex. Gov't Code ch. 27; Tex. R. Civ. P. 500-507",
+"source": "https://jp.hctx.net/suits/about.htm",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "Yes (not required)",
+"detail": "Individuals may represent themselves or be represented by an attorney; entities may appear through a non-attorney employee or officer.",
+"cite": "Tex. R. Civ. P. 500.4",
+"source": "https://jp.hctx.net/suits/about.htm",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must refund the deposit, less itemized deductions, within 30 days after the tenant surrenders the premises (tenant must give a forwarding address).",
+"cite": "Tex. Prop. Code § 92.103(a)",
+"source": "https://www.texasattorneygeneral.gov/consumer-protection/home-real-estate-and-travel/renters-rights",
+"verified": true
+}
+},
+"UT": {
+"smallClaimsLimit": {
+"value": "$20,000",
+"detail": "Small claims cover money claims up to $20,000 including attorney fees (Jan. 1, 2025 through 2029); the limit rises to $25,000 on Jan. 1, 2030.",
+"cite": "Utah Code § 78A-8-102(1)(a)",
+"source": "https://le.utah.gov/~2022/bills/hbillenr/HB0107.htm",
+"verified": true
+}
+},
+"VT": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims procedure covers civil actions (other than slander or libel) claiming $10,000 or less.",
+"cite": "12 V.S.A. § 5531",
+"source": "https://legislature.vermont.gov/statutes/section/12/187/05531",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "14 days",
+"detail": "Landlord must return the deposit with an itemized statement within 14 days after the tenant vacates (60 days for seasonal rentals).",
+"cite": "9 V.S.A. § 4461(c)",
+"source": "https://legislature.vermont.gov/statutes/section/09/137/04461",
+"verified": true
+}
+},
+"VA": {
+"smallClaimsLimit": {
+"value": "$5,000",
+"detail": "The small claims court may hear civil money claims up to $5,000, excluding interest; general district court has concurrent jurisdiction.",
+"cite": "Va. Code § 16.1-122.2",
+"source": "https://law.lis.virginia.gov/vacode/title16.1/chapter4.1/section16.1-122.2/",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "General District Court (small claims division)",
+"detail": "Small claims are heard in the small claims division of the general district court.",
+"cite": "Va. Code § 16.1-122.1 et seq.",
+"source": "https://law.lis.virginia.gov/vacode/title16.1/chapter4.1/section16.1-122.2/",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (with exceptions)",
+"detail": "Attorneys may not appear in a representative capacity; an attorney may appear only on his or her own behalf, with narrow exceptions.",
+"cite": "Va. Code § 16.1-122.4",
+"source": "https://law.lis.virginia.gov/vacode/title16.1/chapter4.1/section16.1-122.4/",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "45 days",
+"detail": "Landlord must give itemized deductions and return any balance within 45 days after the tenancy ends or the tenant vacates, whichever is later.",
+"cite": "Va. Code § 55.1-1226(A)",
+"source": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1226/",
+"verified": true
+},
+"securityDepositCap": {
+"value": "2 months' rent",
+"detail": "A landlord may not demand or receive a security deposit greater than two months' periodic rent.",
+"cite": "Va. Code § 55.1-1226(A)",
+"source": "https://law.lis.virginia.gov/vacode/title55.1/chapter12/section55.1-1226/",
+"verified": true
+}
+},
+"WA": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims department hears claims up to $10,000 when brought by an individual, or $5,000 for all other plaintiffs such as businesses.",
+"cite": "RCW 12.40.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=12.40.010",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "District Court (small claims department)",
+"detail": "Small claims are heard in the small claims department of the district court.",
+"cite": "RCW 12.40.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=12.40.010",
+"verified": true
+},
+"lawyersAllowed": {
+"value": "No (unless judge consents)",
+"detail": "No attorney may appear or participate without the consent of the judicial officer hearing the case.",
+"cite": "RCW 12.40.080(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=12.40.080",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "Landlord must refund the deposit or give a full, specific statement of the basis for keeping any part within 30 days after the tenant vacates.",
+"cite": "RCW 59.18.280(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=59.18.280",
+"verified": true
+}
+},
+"WV": {
+"smallClaimsLimit": {
+"value": "$20,000",
+"detail": "Magistrate courts hear civil actions where the amount in controversy is not more than $20,000, excluding interest and costs (amended by 2025 HB 2761).",
+"cite": "W. Va. Code § 50-2-1",
+"source": "https://code.wvlegislature.gov/50-2-1/",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Magistrate Court",
+"detail": "West Virginia has no separate small claims court; magistrate court handles these civil cases.",
+"cite": "W. Va. Code § 50-2-1",
+"source": "https://code.wvlegislature.gov/50-2-1/",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "60 days",
+"detail": "Deposit must be returned within 60 days after the tenancy ends, or within 45 days after a new tenant moves in, whichever is shorter.",
+"cite": "W. Va. Code §§ 37-6A-1(7), 37-6A-2(a)",
+"source": "https://code.wvlegislature.gov/37-6A-1/",
+"verified": true
+}
+},
+"WI": {
+"smallClaimsLimit": {
+"value": "$10,000",
+"detail": "Small claims cover most money claims of $10,000 or less; 2025 Wis. Act 105 raises this to $15,000 effective Jan. 1, 2027.",
+"cite": "Wis. Stat. § 799.01(1)(d)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/799/01",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit Court (small claims)",
+"detail": "Small claims are heard in the circuit court under ch. 799 procedures.",
+"cite": "Wis. Stat. ch. 799",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/799/01",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "21 days",
+"detail": "Landlord must return the deposit, less lawful deductions with an itemized statement, within 21 days after the tenant vacates or the lease ends.",
+"cite": "Wis. Stat. § 704.28(4); Wis. Admin. Code ATCP 134.06(2)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/704/28",
+"verified": true
+}
+},
+"WY": {
+"smallClaimsLimit": {
+"value": "$6,000",
+"detail": "Circuit court small claims procedure applies to cases where the amount claimed, excluding costs, does not exceed $6,000.",
+"cite": "Wyo. Stat. § 1-21-201",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"smallClaimsCourt": {
+"value": "Circuit Court (small claims)",
+"detail": "Small claims are heard in the circuit court.",
+"cite": "Wyo. Stat. § 1-21-201",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"securityDepositReturn": {
+"value": "30 days",
+"detail": "30 days after the lease ends or 15 days after receiving the tenant's new address, whichever is later; extended 30 more days if there is damage.",
+"cite": "Wyo. Stat. § 1-21-1208(a)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}

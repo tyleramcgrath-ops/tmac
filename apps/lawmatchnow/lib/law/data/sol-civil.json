@@ -1,0 +1,2042 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Suits on written promises not under seal must be filed within 6 years.",
+"cite": "Ala. Code § 6-2-34(4)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_6-2-34",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Suits on simple (unwritten) contracts not otherwise listed fall under the 6-year catch-all for contracts.",
+"cite": "Ala. Code § 6-2-34(9)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_6-2-34",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "All libel and slander actions must be brought within 2 years.",
+"cite": "Ala. Code § 6-2-38(k)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_6-2-38",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud is a 2-year tort claim, but the clock does not start until the victim discovers the facts constituting the fraud; then 2 years to sue.",
+"cite": "Ala. Code §§ 6-2-38(l), 6-2-3",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_6-2-3",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years (open account) / 6 years (stated account, loan, written)",
+"detail": "Open or unliquidated accounts: 3 years from the last item. Stated/liquidated accounts, loans and written promises: 6 years.",
+"cite": "Ala. Code §§ 6-2-37(1), 6-2-34(4)-(5)",
+"source": "https://www.lawserver.com/law/state/alabama/al-code/alabama_code_6-2-37",
+"verified": true
+}
+},
+"AK": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Any action on a contract, express or implied, must be filed within 3 years.",
+"cite": "Alaska Stat. § 09.10.053",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=09.10.053&secEnd=09.10.070",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts share the same 3-year contract deadline as written ones.",
+"cite": "Alaska Stat. § 09.10.053",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=09.10.053&secEnd=09.10.070",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander suits must be filed within 2 years of accrual.",
+"cite": "Alaska Stat. § 09.10.070(a)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=09.10.053&secEnd=09.10.070",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Creditors suing on contracts, accounts or credit card debt must file within the 3-year contract period.",
+"cite": "Alaska Stat. § 09.10.053",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=09.10.053&secEnd=09.10.070",
+"verified": true
+}
+},
+"AZ": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Debt actions founded on a written contract executed in Arizona must be filed within 6 years.",
+"cite": "Ariz. Rev. Stat. § 12-548(A)(1)",
+"source": "https://www.azleg.gov/ars/12/00548.htm",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Debts not evidenced by a written contract must be sued on within 3 years.",
+"cite": "Ariz. Rev. Stat. § 12-543(1)",
+"source": "https://www.azleg.gov/ars/12/00543.htm",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year after accrual.",
+"cite": "Ariz. Rev. Stat. § 12-541(1)",
+"source": "https://www.azleg.gov/ars/12/00541.htm",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims have 3 years, but the claim does not accrue until the victim discovers the facts constituting the fraud.",
+"cite": "Ariz. Rev. Stat. § 12-543(3)",
+"source": "https://www.azleg.gov/ars/12/00543.htm",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (credit card/written) / 3 years (open account)",
+"detail": "Credit card debt is expressly given 6 years; stated or open accounts and unwritten debts get 3 years.",
+"cite": "Ariz. Rev. Stat. §§ 12-548(A)(2), 12-543(2)",
+"source": "https://www.azleg.gov/ars/12/00548.htm",
+"verified": true
+}
+},
+"AR": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions to enforce written obligations, duties or rights must be filed within 5 years.",
+"cite": "Ark. Code Ann. § 16-56-111(a)",
+"source": "https://codes.findlaw.com/ar/title-16-practice-procedure-and-courts/ar-code-sect-16-56-111.html",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Contracts not under seal and not in writing must be sued on within 3 years.",
+"cite": "Ark. Code Ann. § 16-56-105(1)",
+"source": "https://codes.findlaw.com/ar/title-16-practice-procedure-and-courts/ar-code-sect-16-56-105.html",
+"verified": true
+},
+"defamation": {
+"value": "3 years (libel), 1 year (slander)",
+"detail": "Libel claims have 3 years; slander (spoken words) claims have only 1 year.",
+"cite": "Ark. Code Ann. §§ 16-56-105(5), 16-56-104(3)-(4)",
+"source": "https://codes.findlaw.com/ar/title-16-practice-procedure-and-courts/ar-code-sect-16-56-105.html",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 3 years (unwritten/open account)",
+"detail": "Debts based on a written agreement get 5 years; oral or open-account debts get 3 years.",
+"cite": "Ark. Code Ann. §§ 16-56-111, 16-56-105(1)",
+"source": "https://codes.findlaw.com/ar/title-16-practice-procedure-and-courts/ar-code-sect-16-56-111.html",
+"verified": true
+}
+},
+"CA": {
+"writtenContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Actions on a contract founded on a written instrument must be filed within 4 years.",
+"cite": "Cal. Civ. Proc. Code § 337(a)",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_337",
+"verified": true
+},
+"oralContract": {
+"value": "2 years",
+"years": 2,
+"detail": "Contracts not founded on a written instrument must be sued on within 2 years.",
+"cite": "Cal. Civ. Proc. Code § 339(1)",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_339",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Cal. Civ. Proc. Code § 340(c)",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_340",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims have 3 years, running from the victim's discovery of the facts constituting the fraud.",
+"cite": "Cal. Civ. Proc. Code § 338(d)",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_338",
+"verified": true
+},
+"debtCollection": {
+"value": "4 years",
+"years": 4,
+"detail": "Book accounts, accounts stated and open accounts, plus written credit agreements, all get 4 years.",
+"cite": "Cal. Civ. Proc. Code § 337(a)-(b)",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_337",
+"verified": true
+}
+},
+"CO": {
+"writtenContract": {
+"value": "3 years (6 years for a liquidated debt)",
+"years": 3,
+"detail": "Most contract actions get 3 years; actions to recover a liquidated or determinable sum of money get 6 years.",
+"cite": "Colo. Rev. Stat. §§ 13-80-101(1)(a), 13-80-103.5(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_13-80-101",
+"verified": true
+},
+"oralContract": {
+"value": "3 years (6 years for a liquidated debt)",
+"years": 3,
+"detail": "Oral contracts follow the same rules as written ones: 3 years generally, 6 years for a liquidated debt.",
+"cite": "Colo. Rev. Stat. §§ 13-80-101(1)(a), 13-80-103.5(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_13-80-101",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander suits must be filed within 1 year.",
+"cite": "Colo. Rev. Stat. § 13-80-103(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_13-80-103",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud, misrepresentation and deceit claims have 3 years, accruing when the fraud is discovered or should have been discovered with reasonable diligence.",
+"cite": "Colo. Rev. Stat. §§ 13-80-101(1)(c), 13-80-108(3)",
+"source": "https://colorado.public.law/statutes/crs_13-80-108",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions to recover a liquidated debt or determinable amount of money (e.g. credit card balances) get 6 years from when payment was due.",
+"cite": "Colo. Rev. Stat. § 13-80-103.5(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_13-80-103.5",
+"verified": true
+}
+},
+"CT": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on any contract in writing must be filed within 6 years.",
+"cite": "Conn. Gen. Stat. § 52-576(a)",
+"source": "https://www.lawserver.com/law/state/connecticut/ct-laws/connecticut_statutes_52-576",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Express contracts not reduced to writing must be sued on within 3 years.",
+"cite": "Conn. Gen. Stat. § 52-581(a)",
+"source": "https://www.lawserver.com/law/state/connecticut/ct-laws/connecticut_statutes_52-581",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years of the act complained of.",
+"cite": "Conn. Gen. Stat. § 52-597",
+"source": "https://www.lawserver.com/law/state/connecticut/ct-laws/connecticut_statutes_52-597",
+"verified": true
+},
+"fraud": {
+"value": "3 years from the act",
+"years": 3,
+"detail": "Fraud is a tort with 3 years from the act itself (no general discovery rule); fraudulent concealment can toll the period.",
+"cite": "Conn. Gen. Stat. §§ 52-577, 52-595",
+"source": "https://www.lawserver.com/law/state/connecticut/ct-laws/connecticut_statutes_52-577",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on an account or on any written, simple or implied contract get 6 years.",
+"cite": "Conn. Gen. Stat. § 52-576(a)",
+"source": "https://www.lawserver.com/law/state/connecticut/ct-laws/connecticut_statutes_52-576",
+"verified": true
+}
+},
+"DE": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Actions based on a promise must be filed within 3 years; written contracts of $100,000+ may set a period up to 20 years.",
+"cite": "Del. Code tit. 10, § 8106(a), (c)",
+"source": "https://delcode.delaware.gov/title10/c081/index.html",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts also fall under the 3-year limit for actions based on a promise.",
+"cite": "Del. Code tit. 10, § 8106(a)",
+"source": "https://delcode.delaware.gov/title10/c081/index.html",
+"verified": true
+},
+"fraud": {
+"value": "3 years",
+"years": 3,
+"detail": "Fraud gets 3 years; the period may be tolled if the injury was inherently unknowable or fraudulently concealed.",
+"cite": "Del. Code tit. 10, § 8106(a)",
+"source": "https://delcode.delaware.gov/title10/c081/index.html",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Debts not evidenced by a record or sealed instrument and actions on account must be filed within 3 years.",
+"cite": "Del. Code tit. 10, § 8106(a)",
+"source": "https://delcode.delaware.gov/title10/c081/index.html",
+"verified": true
+}
+},
+"DC": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Actions on a simple contract, express or implied, must be filed within 3 years (12 years for instruments under seal).",
+"cite": "D.C. Code § 12-301(7)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts are simple contracts with the same 3-year deadline.",
+"cite": "D.C. Code § 12-301(7)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "D.C. Code § 12-301(4)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"fraud": {
+"value": "3 years (discovery rule)",
+"years": 3,
+"detail": "Fraud falls under the 3-year residual period; D.C. courts start the clock when the victim knew or should have known of the injury and wrongdoing.",
+"cite": "D.C. Code § 12-301(8)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Credit card and other consumer debts on simple contracts must be sued on within 3 years.",
+"cite": "D.C. Code § 12-301(7)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+}
+},
+"FL": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions on a contract, obligation or liability founded on a written instrument must be filed within 5 years.",
+"cite": "Fla. Stat. § 95.11(2)(b)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.11.html",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not founded on a written instrument must be sued on within 4 years.",
+"cite": "Fla. Stat. § 95.11(3)(j)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.11.html",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Fla. Stat. § 95.11(5)(h)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.11.html",
+"verified": true
+},
+"fraud": {
+"value": "4 years from discovery (12-year cap)",
+"years": 4,
+"detail": "Fraud has 4 years from when the facts were or should have been discovered, but no suit may be brought more than 12 years after the fraud.",
+"cite": "Fla. Stat. §§ 95.11(3)(i), 95.031(2)(a)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.031.html",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 4 years (open or store account)",
+"detail": "Debts on a written agreement (e.g. a signed credit agreement) get 5 years; store accounts and unwritten debts get 4 years.",
+"cite": "Fla. Stat. §§ 95.11(2)(b), 95.11(3)(j)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.11.html",
+"verified": true
+}
+},
+"GA": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Simple contracts in writing must be sued on within 6 years after they become due and payable.",
+"cite": "O.C.G.A. § 9-3-24",
+"source": "https://codes.findlaw.com/ga/title-9-civil-practice/ga-code-sect-9-3-24.html",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not under the hand of the party charged, and implied promises, must be sued on within 4 years.",
+"cite": "O.C.G.A. § 9-3-25",
+"source": "https://codes.findlaw.com/ga/title-9-civil-practice/ga-code-sect-9-3-25.html",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Claims for injury to reputation, including libel and slander, must be brought within 1 year.",
+"cite": "O.C.G.A. § 9-3-33",
+"source": "https://codes.findlaw.com/ga/title-9-civil-practice/ga-code-sect-9-3-33.html",
+"verified": true
+},
+"debtCollection": {
+"value": "4 years (open account) / 6 years (written)",
+"detail": "Open accounts get 4 years; debts on a signed written contract get 6 years. Georgia courts have treated credit card agreements as written contracts.",
+"cite": "O.C.G.A. §§ 9-3-25, 9-3-24",
+"source": "https://codes.findlaw.com/ga/title-9-civil-practice/ga-code-sect-9-3-25.html",
+"verified": true
+}
+},
+"HI": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions to recover a debt founded on any contract, obligation or liability must be filed within 6 years.",
+"cite": "Haw. Rev. Stat. § 657-1(1)",
+"source": "https://www.lawserver.com/law/state/hawaii/hi-statutes/hawaii_statutes_657-1",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract deadline.",
+"cite": "Haw. Rev. Stat. § 657-1(1)",
+"source": "https://www.lawserver.com/law/state/hawaii/hi-statutes/hawaii_statutes_657-1",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Haw. Rev. Stat. § 657-4",
+"source": "https://www.lawserver.com/law/state/hawaii/hi-statutes/hawaii_statutes_657-4",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Debts founded on any contract, including credit card accounts, get 6 years.",
+"cite": "Haw. Rev. Stat. § 657-1(1)",
+"source": "https://www.lawserver.com/law/state/hawaii/hi-statutes/hawaii_statutes_657-1",
+"verified": true
+}
+},
+"ID": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions on a contract founded on an instrument in writing must be filed within 5 years.",
+"cite": "Idaho Code § 5-216",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title5/t5ch2/sect5-216/",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not founded on a written instrument must be sued on within 4 years.",
+"cite": "Idaho Code § 5-217",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title5/t5ch2/sect5-217/",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Idaho Code § 5-219(5)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title5/t5ch2/sect5-219/",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims have 3 years, accruing when the victim discovers the facts constituting the fraud.",
+"cite": "Idaho Code § 5-218(4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title5/t5ch2/sect5-218/",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 4 years (unwritten)",
+"detail": "Debts on a written agreement get 5 years; open accounts and unwritten debts get 4 years.",
+"cite": "Idaho Code §§ 5-216, 5-217",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title5/t5ch2/sect5-216/",
+"verified": true
+}
+},
+"IL": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Actions on written contracts, notes and other written evidences of indebtedness must be filed within 10 years.",
+"cite": "735 ILCS 5/13-206",
+"source": "https://www.lawserver.com/law/state/illinois/il-statutes/735_ilcs_5_13-206",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Unwritten contracts, express or implied, must be sued on within 5 years.",
+"cite": "735 ILCS 5/13-205",
+"source": "https://www.lawserver.com/law/state/illinois/il-statutes/735_ilcs_5_13-205",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Slander, libel and false-light privacy claims must be filed within 1 year.",
+"cite": "735 ILCS 5/13-201",
+"source": "https://www.lawserver.com/law/state/illinois/il-statutes/735_ilcs_5_13-201",
+"verified": true
+},
+"fraud": {
+"value": "5 years (discovery rule)",
+"years": 5,
+"detail": "Fraud falls under the 5-year catch-all; courts apply a discovery rule, and concealed claims get 5 years from discovery.",
+"cite": "735 ILCS 5/13-205, 5/13-215",
+"source": "https://www.lawserver.com/law/state/illinois/il-statutes/735_ilcs_5_13-215",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (credit card/open account) / 10 years (written)",
+"detail": "Courts often apply 5 years to credit card debt because the full terms are not in one signed writing; a complete written contract gets 10 years.",
+"cite": "735 ILCS 5/13-205, 5/13-206",
+"source": "https://www.lawserver.com/law/state/illinois/il-statutes/735_ilcs_5_13-205",
+"verified": true
+}
+},
+"IN": {
+"writtenContract": {
+"value": "10 years (6 years for written promises to pay money)",
+"years": 10,
+"detail": "Written contracts generally get 10 years; written contracts for payment of money (notes, credit agreements) executed after Aug. 31, 1982 get 6 years.",
+"cite": "Ind. Code §§ 34-11-2-11, 34-11-2-9",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_34-11-2-11",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on accounts and contracts not in writing must be filed within 6 years.",
+"cite": "Ind. Code § 34-11-2-7(1)",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_34-11-2-7",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Actions for injury to character (libel and slander) must be filed within 2 years.",
+"cite": "Ind. Code § 34-11-2-4(a)(1)",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_34-11-2-4",
+"verified": true
+},
+"fraud": {
+"value": "6 years (discovery rule)",
+"years": 6,
+"detail": "Actions for relief against fraud get 6 years; Indiana applies a discovery rule and tolls for concealment.",
+"cite": "Ind. Code § 34-11-2-7(4)",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_34-11-2-7",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Written contracts for payment of money and open accounts both get 6 years.",
+"cite": "Ind. Code §§ 34-11-2-9, 34-11-2-7(1)",
+"source": "https://www.lawserver.com/law/state/indiana/in-code/indiana_code_34-11-2-9",
+"verified": true
+}
+},
+"IA": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Actions founded on written contracts must be filed within 10 years (rent claims: 5 years).",
+"cite": "Iowa Code § 614.1(5)",
+"source": "https://www.legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions founded on unwritten contracts must be filed within 5 years.",
+"cite": "Iowa Code § 614.1(4)",
+"source": "https://www.legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Claims for injury to reputation must be filed within 2 years.",
+"cite": "Iowa Code § 614.1(2)",
+"source": "https://www.legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"fraud": {
+"value": "5 years from discovery",
+"years": 5,
+"detail": "Fraud claims get 5 years, and the claim does not accrue until the fraud is discovered.",
+"cite": "Iowa Code §§ 614.1(4), 614.4",
+"source": "https://www.legis.iowa.gov/docs/code/614.4.pdf",
+"verified": true
+},
+"debtCollection": {
+"value": "10 years (written) / 5 years (unwritten)",
+"detail": "Debts on a written contract get 10 years; open accounts and unwritten debts get 5 years.",
+"cite": "Iowa Code § 614.1(4)-(5)",
+"source": "https://www.legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+}
+},
+"KS": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions on any agreement, contract or promise in writing must be filed within 5 years.",
+"cite": "Kan. Stat. Ann. § 60-511(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0011.html",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Contracts not in writing, express or implied, must be sued on within 3 years.",
+"cite": "Kan. Stat. Ann. § 60-512(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0012.html",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Kan. Stat. Ann. § 60-514(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0014.html",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud claims get 2 years, and the claim is not deemed to accrue until the fraud is discovered.",
+"cite": "Kan. Stat. Ann. § 60-513(a)(3)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 3 years (unwritten)",
+"detail": "Debts on a written agreement get 5 years; open accounts and unwritten debts get 3 years.",
+"cite": "Kan. Stat. Ann. §§ 60-511(1), 60-512(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0011.html",
+"verified": true
+}
+},
+"KY": {
+"writtenContract": {
+"value": "10 years (15 if signed before July 15, 2014)",
+"years": 10,
+"detail": "Written contracts executed after July 15, 2014 get 10 years; older written contracts get 15 years.",
+"cite": "Ky. Rev. Stat. §§ 413.160, 413.090(2)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_413-160",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Contracts not in writing, express or implied, must be sued on within 5 years.",
+"cite": "Ky. Rev. Stat. § 413.120(1)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_413-120",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Ky. Rev. Stat. § 413.140(1)(d)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_413-140",
+"verified": true
+},
+"fraud": {
+"value": "5 years from discovery (10-year cap)",
+"years": 5,
+"detail": "Fraud gets 5 years from discovery, but no suit may be filed more than 10 years after the fraud was committed.",
+"cite": "Ky. Rev. Stat. §§ 413.120(11), 413.130(3)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_413-130",
+"verified": true
+},
+"debtCollection": {
+"value": "10 years (written) / 5 years (unwritten or merchant account)",
+"detail": "Written credit agreements get 10 years (15 if pre-July 15, 2014); unwritten contracts and merchants' store accounts get 5 years.",
+"cite": "Ky. Rev. Stat. §§ 413.160, 413.120(1), (9)",
+"source": "https://www.lawserver.com/law/state/kentucky/ky-statutes/kentucky_statutes_413-120",
+"verified": true
+}
+},
+"LA": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Personal actions, including breach of contract, are subject to 10-year liberative prescription.",
+"cite": "La. Civ. Code art. 3499",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_3499",
+"verified": true
+},
+"oralContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Oral contracts are personal actions with the same 10-year prescription.",
+"cite": "La. Civ. Code art. 3499",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_3499",
+"verified": true
+},
+"defamation": {
+"value": "2 years (1 year for claims before July 1, 2024)",
+"years": 2,
+"detail": "Defamation is a delictual action; delictual actions arising on or after July 1, 2024 get 2 years, earlier ones 1 year.",
+"cite": "La. Civ. Code art. 3493.1",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_3493-1",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years (open account) / 10 years (other contract)",
+"detail": "Open accounts, money lent and similar actions prescribe in 3 years from the last charge or payment; other contract debts get 10 years.",
+"cite": "La. Civ. Code arts. 3494(3)-(4), 3499",
+"source": "https://www.lawserver.com/law/state/louisiana/la-codes/louisiana_civil_code_3494",
+"verified": true
+}
+},
+"ME": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "All civil actions not otherwise specified, including contract claims, must be filed within 6 years.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts fall under the same 6-year general limit.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Slander and libel actions must be commenced within 2 years.",
+"cite": "Me. Rev. Stat. tit. 14, § 753",
+"source": "https://legislature.maine.gov/statutes/14/title14sec753.html",
+"verified": true
+},
+"fraud": {
+"value": "6 years from discovery",
+"years": 6,
+"detail": "Fraud claims get 6 years, running from when the victim discovers there is a cause of action.",
+"cite": "Me. Rev. Stat. tit. 14, §§ 752, 859",
+"source": "https://legislature.maine.gov/statutes/14/title14sec859.html",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors generally have 6 years to sue on contract and account debts.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+}
+},
+"MD": {
+"writtenContract": {
+"value": "3 years (12 for specialties)",
+"years": 3,
+"detail": "Civil actions at law, including written contracts, must be filed within 3 years; contracts under seal and other specialties get 12 years.",
+"cite": "Md. Code, Cts. & Jud. Proc. §§ 5-101, 5-102",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-101",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts fall under the general 3-year limit.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-101",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-101",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-105",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-105",
+"verified": true
+},
+"fraud": {
+"value": "3 years (discovery rule)",
+"years": 3,
+"detail": "Fraud gets 3 years; if the fraud kept the victim from knowing of the claim, it accrues when discovered or should have been discovered.",
+"cite": "Md. Code, Cts. & Jud. Proc. §§ 5-101, 5-203",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-203",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Consumer debts get the 3-year general period; creditors may not sue after it expires, and payments do not revive the debt.",
+"cite": "Md. Code, Cts. & Jud. Proc. §§ 5-101, 5-1202",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-1202",
+"verified": true
+}
+},
+"MA": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Contract actions, express or implied, must be commenced within 6 years.",
+"cite": "Mass. Gen. Laws ch. 260, § 2",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the same 6-year deadline.",
+"cite": "Mass. Gen. Laws ch. 260, § 2",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2",
+"verified": true
+},
+"defamation": {
+"value": "3 years",
+"years": 3,
+"detail": "Slander and libel actions must be filed within 3 years.",
+"cite": "Mass. Gen. Laws ch. 260, § 4",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section4",
+"verified": true
+},
+"fraud": {
+"value": "3 years (discovery rule)",
+"years": 3,
+"detail": "Fraud is a tort with 3 years; Massachusetts courts start the clock when the victim knew or should have known of the harm.",
+"cite": "Mass. Gen. Laws ch. 260, §§ 2A, 12",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2A",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contracts or accounts generally have 6 years.",
+"cite": "Mass. Gen. Laws ch. 260, § 2",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2",
+"verified": true
+}
+},
+"MI": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions for breach of contract not otherwise specified must be filed within 6 years.",
+"cite": "Mich. Comp. Laws § 600.5807(9)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-5807",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year breach-of-contract period.",
+"cite": "Mich. Comp. Laws § 600.5807(9)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-5807",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Mich. Comp. Laws § 600.5805(11)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-5805",
+"verified": true
+},
+"fraud": {
+"value": "6 years",
+"years": 6,
+"detail": "Fraud falls under the 6-year catch-all; if the claim was fraudulently concealed, suit may be filed within 2 years after discovery.",
+"cite": "Mich. Comp. Laws §§ 600.5813, 600.5855",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-5813",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on credit card or other contract debts have 6 years.",
+"cite": "Mich. Comp. Laws § 600.5807(9)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-600-5807",
+"verified": true
+}
+},
+"MN": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract or other obligation, express or implied, must be filed within 6 years.",
+"cite": "Minn. Stat. § 541.05, subd. 1(1)",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract deadline.",
+"cite": "Minn. Stat. § 541.05, subd. 1(1)",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Minn. Stat. § 541.07(1)",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.07",
+"verified": true
+},
+"fraud": {
+"value": "6 years from discovery",
+"years": 6,
+"detail": "Fraud claims get 6 years, accruing when the victim discovers the facts constituting the fraud.",
+"cite": "Minn. Stat. § 541.05, subd. 1(6)",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Consumer debt actions must be filed within 6 years; afterward, payments or reaffirmations do not revive the debt.",
+"cite": "Minn. Stat. § 541.053",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.053",
+"verified": true
+}
+},
+"MS": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Written contracts fall under the 3-year catch-all for actions with no other prescribed period.",
+"cite": "Miss. Code Ann. § 15-1-49(1)",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-49.html",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Unwritten contracts, express or implied, must be sued on within 3 years (1 year for unwritten employment contracts).",
+"cite": "Miss. Code Ann. § 15-1-29",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-29.html",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Miss. Code Ann. § 15-1-35",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-35.html",
+"verified": true
+},
+"fraud": {
+"value": "3 years (discovery rule)",
+"years": 3,
+"detail": "Fraud falls under the 3-year catch-all; latent injuries accrue on discovery, and fraudulent concealment tolls the period.",
+"cite": "Miss. Code Ann. §§ 15-1-49, 15-1-67",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-49.html",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Open accounts, accounts stated not acknowledged in a signed writing, and other contract debts get 3 years.",
+"cite": "Miss. Code Ann. §§ 15-1-29, 15-1-49",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-29.html",
+"verified": true
+}
+},
+"MO": {
+"writtenContract": {
+"value": "10 years (written promise to pay money) / 5 years (other)",
+"detail": "Writings for the payment of money or property get 10 years; other contract actions get 5 years.",
+"cite": "Mo. Rev. Stat. §§ 516.110(1), 516.120(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.110",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Contracts, obligations or liabilities not covered by the 10-year rule, including oral contracts, get 5 years.",
+"cite": "Mo. Rev. Stat. § 516.120(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel, slander and injurious falsehood actions must be filed within 2 years.",
+"cite": "Mo. Rev. Stat. § 516.140",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.140",
+"verified": true
+},
+"fraud": {
+"value": "5 years from discovery (up to 15 years)",
+"years": 5,
+"detail": "Fraud gets 5 years from discovery; if not discovered within 10 years, the clock starts at year 10.",
+"cite": "Mo. Rev. Stat. § 516.120(5)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (most consumer debt) / 10 years (written promise to pay)",
+"detail": "Open accounts and credit card debt are usually 5 years; a writing that itself promises payment of money can get 10 years.",
+"cite": "Mo. Rev. Stat. §§ 516.120(1), 516.110(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+}
+},
+"MT": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract or obligation founded on a written instrument must be filed within 6 years.",
+"cite": "Mont. Code Ann. § 27-2-202(1)",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0020/0270-0020-0020-0020.html",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Contracts, accounts or promises not founded on a written instrument must be sued on within 5 years.",
+"cite": "Mont. Code Ann. § 27-2-202(2)",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0020/0270-0020-0020-0020.html",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Mont. Code Ann. § 27-2-204(3)",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0040/0270-0020-0020-0040.html",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud claims get 2 years, accruing when the victim discovers the facts constituting the fraud.",
+"cite": "Mont. Code Ann. § 27-2-203",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0030/0270-0020-0020-0030.html",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (written) / 5 years (account)",
+"detail": "Debts on a written instrument get 6 years; accounts and unwritten promises get 5 years.",
+"cite": "Mont. Code Ann. § 27-2-202(1)-(2)",
+"source": "https://archive.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0020/0270-0020-0020-0020.html",
+"verified": true
+}
+},
+"NE": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions on a written agreement, contract or promise must be filed within 5 years.",
+"cite": "Neb. Rev. Stat. § 25-205(1)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-205",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not in writing, express or implied, must be sued on within 4 years.",
+"cite": "Neb. Rev. Stat. § 25-206",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-206",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Neb. Rev. Stat. § 25-208",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-208",
+"verified": true
+},
+"fraud": {
+"value": "4 years from discovery",
+"years": 4,
+"detail": "Fraud claims get 4 years, and the claim does not accrue until the fraud is discovered.",
+"cite": "Neb. Rev. Stat. § 25-207(4)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-207",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 4 years (unwritten)",
+"detail": "Debts on a written agreement get 5 years; open accounts and unwritten debts get 4 years.",
+"cite": "Neb. Rev. Stat. §§ 25-205, 25-206",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-205",
+"verified": true
+}
+},
+"NV": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract founded on a written instrument must be filed within 6 years.",
+"cite": "Nev. Rev. Stat. § 11.190(1)(b)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not founded on a written instrument must be sued on within 4 years.",
+"cite": "Nev. Rev. Stat. § 11.190(2)(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Nev. Rev. Stat. § 11.190(4)(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the victim discovers the facts constituting the fraud.",
+"cite": "Nev. Rev. Stat. § 11.190(3)(d)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (written) / 4 years (open or store account)",
+"detail": "Debts on a written instrument get 6 years; open accounts for goods and store accounts get 4 years.",
+"cite": "Nev. Rev. Stat. § 11.190(1)(b), (2)(a)-(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+}
+},
+"NH": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Personal actions, including written contract claims, must be brought within 3 years (20 years for notes/instruments under seal).",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-4.htm",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts share the 3-year personal-action deadline.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-4.htm",
+"verified": true
+},
+"defamation": {
+"value": "3 years",
+"years": 3,
+"detail": "Slander and libel actions must be brought within 3 years of accrual.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(II)",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-4.htm",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud gets 3 years; if the injury was not reasonably discoverable, the 3 years run from when it was or should have been discovered.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-4.htm",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Creditors suing on consumer accounts or contracts have 3 years.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-4.htm",
+"verified": true
+}
+},
+"NJ": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contractual claim or liability, express or implied, not under seal, must be filed within 6 years.",
+"cite": "N.J. Stat. Ann. § 2A:14-1(a)",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_14-1",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year deadline.",
+"cite": "N.J. Stat. Ann. § 2A:14-1(a)",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_14-1",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year of publication.",
+"cite": "N.J. Stat. Ann. § 2A:14-3",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_14-3",
+"verified": true
+},
+"fraud": {
+"value": "6 years (discovery rule)",
+"years": 6,
+"detail": "Fraud is a tortious injury with 6 years; New Jersey's discovery rule delays accrual until the victim knew or should have known.",
+"cite": "N.J. Stat. Ann. § 2A:14-1(a)",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_14-1",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on an account or contract debt must be filed within 6 years.",
+"cite": "N.J. Stat. Ann. § 2A:14-1(a)",
+"source": "https://www.lawserver.com/law/state/new-jersey/nj-laws/new_jersey_laws_2a_14-1",
+"verified": true
+}
+},
+"NM": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a bond, note or other contract in writing must be brought within 6 years.",
+"cite": "N.M. Stat. Ann. § 37-1-3(A)",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_37-1-3",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Accounts and unwritten contracts must be sued on within 4 years.",
+"cite": "N.M. Stat. Ann. § 37-1-4",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_37-1-4",
+"verified": true
+},
+"defamation": {
+"value": "3 years",
+"years": 3,
+"detail": "Actions for injury to a person's reputation must be brought within 3 years.",
+"cite": "N.M. Stat. Ann. § 37-1-8",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_37-1-8",
+"verified": true
+},
+"fraud": {
+"value": "4 years from discovery",
+"years": 4,
+"detail": "Fraud claims get 4 years, accruing when the aggrieved party discovers the fraud.",
+"cite": "N.M. Stat. Ann. §§ 37-1-4, 37-1-7",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_37-1-7",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (written) / 4 years (account)",
+"detail": "Debts on a written contract get 6 years; accounts and unwritten contracts get 4 years.",
+"cite": "N.M. Stat. Ann. §§ 37-1-3, 37-1-4",
+"source": "https://www.lawserver.com/law/state/new-mexico/nm-statutes/new_mexico_statutes_37-1-4",
+"verified": true
+}
+},
+"NY": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contractual obligation, express or implied, must be filed within 6 years.",
+"cite": "N.Y. C.P.L.R. § 213(2)",
+"source": "https://newyork.public.law/laws/n.y._civil_practice_law_and_rules_section_213",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "N.Y. C.P.L.R. § 213(2)",
+"source": "https://newyork.public.law/laws/n.y._civil_practice_law_and_rules_section_213",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "N.Y. C.P.L.R. § 215(3)",
+"source": "https://newyork.public.law/laws/n.y._civil_practice_law_and_rules_section_215",
+"verified": true
+},
+"fraud": {
+"value": "6 years, or 2 years from discovery if later",
+"years": 6,
+"detail": "Fraud must be filed within the later of 6 years from the fraud or 2 years after it was or reasonably could have been discovered.",
+"cite": "N.Y. C.P.L.R. § 213(8)",
+"source": "https://newyork.public.law/laws/n.y._civil_practice_law_and_rules_section_213",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years (consumer credit)",
+"years": 3,
+"detail": "Suits against consumers on consumer credit transactions must be filed within 3 years; later payments do not revive the debt.",
+"cite": "N.Y. C.P.L.R. § 214-i",
+"source": "https://newyork.public.law/laws/n.y._civil_practice_law_and_rules_section_214-i",
+"verified": true
+}
+},
+"NC": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Actions on a contract, obligation or liability, express or implied, must be filed within 3 years (sealed instruments: 10 years).",
+"cite": "N.C. Gen. Stat. § 1-52(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts share the 3-year contract period.",
+"cite": "N.C. Gen. Stat. § 1-52(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "N.C. Gen. Stat. § 1-54(3)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-54.html",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "N.C. Gen. Stat. § 1-52(9)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Credit card and other consumer contract debts must be sued on within 3 years.",
+"cite": "N.C. Gen. Stat. § 1-52(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+}
+},
+"ND": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract, obligation or liability, express or implied, must be filed within 6 years.",
+"cite": "N.D. Cent. Code § 28-01-16(1)",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "N.D. Cent. Code § 28-01-16(1)",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "N.D. Cent. Code § 28-01-18(1)",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+},
+"fraud": {
+"value": "6 years from discovery",
+"years": 6,
+"detail": "Fraud claims get 6 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "N.D. Cent. Code § 28-01-16(6)",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contract or account debts have 6 years.",
+"cite": "N.D. Cent. Code § 28-01-16(1)",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+}
+},
+"OH": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a written agreement, contract or promise must be filed within 6 years.",
+"cite": "Ohio Rev. Code § 2305.06",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.06",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not in writing, express or implied, must be sued on within 4 years.",
+"cite": "Ohio Rev. Code § 2305.07(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.07",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Ohio Rev. Code § 2305.11(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.11",
+"verified": true
+},
+"fraud": {
+"value": "4 years from discovery",
+"years": 4,
+"detail": "Fraud claims get 4 years, but the claim does not accrue until the fraud is discovered.",
+"cite": "Ohio Rev. Code § 2305.09(C)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.09",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (written) / 4 years (unwritten/open account)",
+"detail": "Credit agreements proved by a writing get 6 years; open accounts and unwritten debts get 4 years.",
+"cite": "Ohio Rev. Code §§ 2305.06, 2305.07",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.06",
+"verified": true
+}
+},
+"OK": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Actions on any contract, agreement or promise in writing must be filed within 5 years.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(1)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Contracts not in writing, express or implied, must be sued on within 3 years.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(2)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(4)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud claims get 2 years, and the claim does not accrue until the fraud is discovered.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(3)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+},
+"debtCollection": {
+"value": "5 years (written) / 3 years (unwritten)",
+"detail": "Debts on a written agreement get 5 years; open accounts and unwritten debts get 3 years.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(1)-(2)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+}
+},
+"OR": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract or liability, express or implied, must be filed within 6 years.",
+"cite": "Or. Rev. Stat. § 12.080(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "Or. Rev. Stat. § 12.080(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Or. Rev. Stat. § 12.120(2)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud or deceit claims get 2 years, running from the discovery of the fraud.",
+"cite": "Or. Rev. Stat. § 12.110(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contract and account debts have 6 years.",
+"cite": "Or. Rev. Stat. § 12.080(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+}
+},
+"PA": {
+"writtenContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Actions on a contract founded on a writing must be filed within 4 years (negotiable instruments and sealed instruments may differ).",
+"cite": "42 Pa. Cons. Stat. § 5525(a)(8)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55&sctn=25&subsctn=0",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Express contracts not founded on a writing must be sued on within 4 years.",
+"cite": "42 Pa. Cons. Stat. § 5525(a)(3)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55&sctn=25&subsctn=0",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel, slander and invasion-of-privacy actions must be filed within 1 year.",
+"cite": "42 Pa. Cons. Stat. § 5523(1)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55&sctn=23&subsctn=0",
+"verified": true
+},
+"fraud": {
+"value": "2 years (discovery rule)",
+"years": 2,
+"detail": "Actions sounding in deceit or fraud get 2 years; Pennsylvania's discovery rule and fraudulent-concealment doctrine can delay the start.",
+"cite": "42 Pa. Cons. Stat. § 5524(7)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55&sctn=24&subsctn=0",
+"verified": true
+},
+"debtCollection": {
+"value": "4 years",
+"years": 4,
+"detail": "Credit card and other contract debts must be sued on within 4 years.",
+"cite": "42 Pa. Cons. Stat. § 5525(a)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=42&div=00.&chpt=55&sctn=25&subsctn=0",
+"verified": true
+}
+},
+"RI": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Civil actions not otherwise provided for, including contract claims, must be filed within 10 years.",
+"cite": "R.I. Gen. Laws § 9-1-13(a)",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-13.htm",
+"verified": true
+},
+"oralContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Oral contracts share the 10-year general period.",
+"cite": "R.I. Gen. Laws § 9-1-13(a)",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-13.htm",
+"verified": true
+},
+"fraud": {
+"value": "10 years",
+"years": 10,
+"detail": "Fraud falls under the 10-year catch-all; if the defendant concealed the claim, it accrues when discovered.",
+"cite": "R.I. Gen. Laws §§ 9-1-13(a), 9-1-20",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-20.htm",
+"verified": true
+},
+"debtCollection": {
+"value": "10 years",
+"years": 10,
+"detail": "Creditors generally have 10 years to sue on contract and account debts.",
+"cite": "R.I. Gen. Laws § 9-1-13(a)",
+"source": "http://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-13.htm",
+"verified": true
+}
+},
+"SC": {
+"writtenContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Actions on a contract, obligation or liability, express or implied, must be filed within 3 years (sealed instruments: 20 years).",
+"cite": "S.C. Code Ann. § 15-3-530(1)",
+"source": "https://www.scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Oral contracts share the 3-year contract period.",
+"cite": "S.C. Code Ann. § 15-3-530(1)",
+"source": "https://www.scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "S.C. Code Ann. § 15-3-550(1)",
+"source": "https://www.scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "S.C. Code Ann. § 15-3-530(7)",
+"source": "https://www.scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years",
+"years": 3,
+"detail": "Credit card and other consumer contract debts must be sued on within 3 years.",
+"cite": "S.C. Code Ann. § 15-3-530(1)",
+"source": "https://www.scstatehouse.gov/code/t15c003.php",
+"verified": true
+}
+},
+"SD": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract, obligation or liability, express or implied, must be filed within 6 years.",
+"cite": "S.D. Codified Laws § 15-2-13(1)",
+"source": "https://sdlegislature.gov/Statutes/15-2-13",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "S.D. Codified Laws § 15-2-13(1)",
+"source": "https://sdlegislature.gov/Statutes/15-2-13",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "S.D. Codified Laws § 15-2-15(1)",
+"source": "https://sdlegislature.gov/Statutes/15-2-15",
+"verified": true
+},
+"fraud": {
+"value": "6 years from discovery",
+"years": 6,
+"detail": "Fraud claims get 6 years, accruing when the victim discovers or has actual or constructive notice of the fraud.",
+"cite": "S.D. Codified Laws §§ 15-2-13(6), 15-2-3",
+"source": "https://sdlegislature.gov/Statutes/15-2-3",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contract and account debts have 6 years.",
+"cite": "S.D. Codified Laws § 15-2-13(1)",
+"source": "https://sdlegislature.gov/Statutes/15-2-13",
+"verified": true
+}
+},
+"TN": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on contracts not otherwise expressly provided for must be filed within 6 years.",
+"cite": "Tenn. Code Ann. § 28-3-109(a)(3)",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_28-3-109",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "Tenn. Code Ann. § 28-3-109(a)(3)",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_28-3-109",
+"verified": true
+},
+"defamation": {
+"value": "1 year (libel), 6 months (slander)",
+"detail": "Libel actions must be filed within 1 year; slander actions within 6 months after the words are spoken.",
+"cite": "Tenn. Code Ann. §§ 28-3-104(a)(1)(A), 28-3-103",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_28-3-103",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Credit card and other contract debts must be sued on within 6 years.",
+"cite": "Tenn. Code Ann. § 28-3-109(a)(3)",
+"source": "https://www.lawserver.com/law/state/tennessee/tn-code/tennessee_code_28-3-109",
+"verified": true
+}
+},
+"TX": {
+"writtenContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contract claims get 4 years under the debt provision or the residual 4-year statute.",
+"cite": "Tex. Civ. Prac. & Rem. Code §§ 16.004(a)(3), 16.051",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_16.004",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Oral contracts also get 4 years.",
+"cite": "Tex. Civ. Prac. & Rem. Code §§ 16.004(a)(3), 16.051",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_16.004",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander suits must be filed within 1 year after accrual.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.002(a)",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_16.002",
+"verified": true
+},
+"fraud": {
+"value": "4 years (discovery rule)",
+"years": 4,
+"detail": "Fraud suits must be filed within 4 years; for fraud, the clock starts when the fraud was or reasonably should have been discovered.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.004(a)(4)",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_16.004",
+"verified": true
+},
+"debtCollection": {
+"value": "4 years",
+"years": 4,
+"detail": "Debt and open-account suits must be filed within 4 years; debt buyers may not sue after that, and payments do not revive the debt.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.004(a)(3), (c); Tex. Fin. Code § 392.307",
+"source": "https://texas.public.law/statutes/tex._civ._practice_and_remedies_code_section_16.004",
+"verified": true
+}
+},
+"UT": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a contract, obligation or liability founded on a written instrument must be filed within 6 years.",
+"cite": "Utah Code Ann. § 78B-2-309(1)(b)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-2-309",
+"verified": true
+},
+"oralContract": {
+"value": "4 years",
+"years": 4,
+"detail": "Contracts not founded on a written instrument must be sued on within 4 years after the last charge or payment.",
+"cite": "Utah Code Ann. § 78B-2-307(1)(a)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-2-307",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Utah Code Ann. § 78B-2-302(4)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-2-302",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "Utah Code Ann. § 78B-2-305(3)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-2-305",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years (written credit agreement) / 4 years (open account)",
+"detail": "Written credit agreements get 6 years from the latest of the debt, a written acknowledgment, or a payment; open accounts get 4 years.",
+"cite": "Utah Code Ann. §§ 78B-2-309(2), 78B-2-307(1)",
+"source": "https://www.lawserver.com/law/state/utah/ut-code/utah_code_78b-2-309",
+"verified": true
+}
+},
+"VT": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Civil actions, including contract claims, must be commenced within 6 years after accrual.",
+"cite": "Vt. Stat. Ann. tit. 12, § 511",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00511",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year general period.",
+"cite": "Vt. Stat. Ann. tit. 12, § 511",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00511",
+"verified": true
+},
+"defamation": {
+"value": "3 years",
+"years": 3,
+"detail": "Slander and libel actions must be commenced within 3 years.",
+"cite": "Vt. Stat. Ann. tit. 12, § 512(3)",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00512",
+"verified": true
+},
+"fraud": {
+"value": "6 years (discovery rule)",
+"years": 6,
+"detail": "Fraud falls under the 6-year general period; Vermont applies a discovery rule to accrual.",
+"cite": "Vt. Stat. Ann. tit. 12, § 511",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00511",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contract and account debts have 6 years.",
+"cite": "Vt. Stat. Ann. tit. 12, § 511",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00511",
+"verified": true
+}
+},
+"VA": {
+"writtenContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Written contracts signed by the party charged must be sued on within 5 years.",
+"cite": "Va. Code Ann. § 8.01-246(A)(2)",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-246/",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Unwritten contracts, and written ones not signed by the party charged, must be sued on within 3 years.",
+"cite": "Va. Code Ann. § 8.01-246(A)(4)",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-246/",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel, slander, insulting words and defamation actions must be filed within 1 year.",
+"cite": "Va. Code Ann. § 8.01-247.1",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-247.1/",
+"verified": true
+},
+"fraud": {
+"value": "2 years from discovery",
+"years": 2,
+"detail": "Fraud claims get 2 years, accruing when the fraud is discovered or should have been discovered with due diligence.",
+"cite": "Va. Code Ann. §§ 8.01-243(A), 8.01-249(1)",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-243/",
+"verified": true
+},
+"debtCollection": {
+"value": "3 years (open account/unsigned) / 5 years (signed writing)",
+"detail": "Open accounts get 3 years from the last payment or charge; debts on a signed written contract get 5 years; medical debt is 3 years.",
+"cite": "Va. Code Ann. §§ 8.01-246(A)(2), (A)(4), (B), 8.01-249(8)",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-246/",
+"verified": true
+}
+},
+"WA": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on a written contract or liability arising out of a written agreement must be filed within 6 years.",
+"cite": "Wash. Rev. Code § 4.16.040(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.040",
+"verified": true
+},
+"oralContract": {
+"value": "3 years",
+"years": 3,
+"detail": "Contracts not in writing and not arising from a written instrument must be sued on within 3 years.",
+"cite": "Wash. Rev. Code § 4.16.080(3)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+},
+"defamation": {
+"value": "2 years",
+"years": 2,
+"detail": "Libel and slander actions must be filed within 2 years.",
+"cite": "Wash. Rev. Code § 4.16.100(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.100",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "Wash. Rev. Code § 4.16.080(4)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Written agreements and accounts receivable incurred in the ordinary course of the creditor's business both get 6 years.",
+"cite": "Wash. Rev. Code § 4.16.040(1)-(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.040",
+"verified": true
+}
+},
+"WV": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Actions on a contract in writing signed by the party charged must be filed within 10 years.",
+"cite": "W. Va. Code § 55-2-6",
+"source": "https://code.wvlegislature.gov/55-2-6/",
+"verified": true
+},
+"oralContract": {
+"value": "5 years",
+"years": 5,
+"detail": "Other contracts, express or implied, must be sued on within 5 years.",
+"cite": "W. Va. Code § 55-2-6",
+"source": "https://code.wvlegislature.gov/55-2-6/",
+"verified": true
+},
+"debtCollection": {
+"value": "10 years (signed writing) / 5 years (other)",
+"detail": "Debts on a signed written contract get 10 years; open accounts and other contracts get 5 years.",
+"cite": "W. Va. Code § 55-2-6",
+"source": "https://code.wvlegislature.gov/55-2-6/",
+"verified": true
+}
+},
+"WI": {
+"writtenContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Actions on any contract, obligation or liability, express or implied, must be filed within 6 years.",
+"cite": "Wis. Stat. § 893.43(1)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/893.43",
+"verified": true
+},
+"oralContract": {
+"value": "6 years",
+"years": 6,
+"detail": "Oral contracts share the 6-year contract period.",
+"cite": "Wis. Stat. § 893.43(1)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/893.43",
+"verified": true
+},
+"defamation": {
+"value": "3 years",
+"years": 3,
+"detail": "Libel, slander and other intentional torts to the person must be filed within 3 years.",
+"cite": "Wis. Stat. § 893.57",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/893.57",
+"verified": true
+},
+"fraud": {
+"value": "3 years from discovery",
+"years": 3,
+"detail": "Fraud claims get 3 years, accruing when the aggrieved party discovers the facts constituting the fraud.",
+"cite": "Wis. Stat. § 893.93(1m)(b)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/893.93",
+"verified": true
+},
+"debtCollection": {
+"value": "6 years",
+"years": 6,
+"detail": "Creditors suing on contract and account debts have 6 years.",
+"cite": "Wis. Stat. § 893.43(1)",
+"source": "https://docs.legis.wisconsin.gov/document/statutes/893.43",
+"verified": true
+}
+},
+"WY": {
+"writtenContract": {
+"value": "10 years",
+"years": 10,
+"detail": "Actions on a specialty or any written contract, agreement or promise must be filed within 10 years.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(i)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"oralContract": {
+"value": "8 years",
+"years": 8,
+"detail": "Contracts not in writing, express or implied, must be sued on within 8 years.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(ii)(A)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"defamation": {
+"value": "1 year",
+"years": 1,
+"detail": "Libel and slander actions must be filed within 1 year.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(v)(A)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"fraud": {
+"value": "4 years from discovery",
+"years": 4,
+"detail": "Fraud claims get 4 years, and the claim does not accrue until the fraud is discovered.",
+"cite": "Wyo. Stat. Ann. §§ 1-3-105(a)(iv)(D), 1-3-106",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"debtCollection": {
+"value": "10 years (written) / 8 years (unwritten)",
+"detail": "Debts on a written agreement get 10 years; unwritten debts get 8 years.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(i)-(ii)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}

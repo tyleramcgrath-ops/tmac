@@ -1,0 +1,2543 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"minimumWage": {
+"value": "$14.00/hour",
+"detail": "Rose to $14.00 on July 1, 2026 under 2024 Ballot Measure 1; next step is $15.00 on July 1, 2027 (no Jan 1, 2027 change).",
+"cite": "AS 23.10.065",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$14.00/hour (no tip credit)",
+"detail": "Alaska does not allow a tip credit; tipped workers must get the full state minimum wage before tips.",
+"cite": "AS 23.10.065",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Alaska State Commission for Human Rights",
+"detail": "Investigates employment discrimination complaints under the Alaska Human Rights Law.",
+"cite": "AS 18.80.100",
+"source": "https://humanrights.alaska.gov/services/complaints/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "Contact the Commission within 300 days of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "6 AAC 30.230(b); AS 18.80.100",
+"source": "https://humanrights.alaska.gov/services/complaints/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "15 days",
+"detail": "Notice of injury must be given to the employer within 15 days; late notice may be excused if the employer knew and was not prejudiced.",
+"cite": "AS 23.30.100(a)",
+"source": "https://codes.findlaw.com/ak/title-23-labor-and-workers-compensation/ak-st-sect-23-30-100/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years",
+"detail": "A claim must be filed within 2 years after the worker knows of the disability and its work connection, and no later than 4 years from injury.",
+"cite": "AS 23.30.105(a)",
+"source": "https://codes.findlaw.com/ak/title-23-labor-and-workers-compensation/ak-st-sect-23-30-105/",
+"verified": true
+},
+"wcAgency": {
+"value": "Alaska Division of Workers' Compensation (Workers' Compensation Board)",
+"detail": "Administers workers' comp claims; the Board hears disputed claims.",
+"cite": "AS 23.30.005",
+"source": "https://labor.alaska.gov/wc/",
+"verified": true
+}
+},
+"AL": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "No state minimum wage law; the federal $7.25 applies. No increase is scheduled for Jan 1, 2027.",
+"cite": "Ala. (no state law); 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "None (file with EEOC)",
+"detail": "Alabama has no state fair employment agency for private-sector job discrimination; charges go to the U.S. EEOC.",
+"cite": "U.S. EEOC field office timeliness guidance",
+"source": "https://www.eeoc.gov/field-office/birmingham/timeliness",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days (EEOC)",
+"detail": "With no state agency, the EEOC charge deadline in Alabama is 180 days from the discriminatory act.",
+"cite": "42 U.S.C. § 2000e-5(e)(1)",
+"source": "https://www.eeoc.gov/field-office/birmingham/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "5 days",
+"detail": "Give written notice within 5 days of the accident; no compensation is payable unless written notice is given within 90 days.",
+"cite": "Ala. Code § 25-5-78",
+"source": "https://adol.alabama.gov/divisions/workers-compensation/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A verified complaint must be filed in circuit court within 2 years of the accident or of the last compensation payment.",
+"cite": "Ala. Code § 25-5-80",
+"source": "https://adol.alabama.gov/divisions/workers-compensation/",
+"verified": true
+},
+"wcAgency": {
+"value": "Alabama Department of Labor, Workers' Compensation Division",
+"detail": "Oversees the Alabama workers' comp system; disputed claims are decided by state circuit courts.",
+"cite": "Ala. Code § 25-5-1 et seq.",
+"source": "https://adol.alabama.gov/divisions/workers-compensation/",
+"verified": true
+}
+},
+"AR": {
+"minimumWage": {
+"value": "$11.00/hour",
+"detail": "Applies to employers with 4 or more employees; no increase is scheduled for Jan 1, 2027.",
+"cite": "Ark. Code § 11-4-210",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.63/hour",
+"detail": "Employers may take up to an $8.37/hour tip credit against the $11.00 state minimum wage.",
+"cite": "Ark. Code § 11-4-212",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "None (file with EEOC)",
+"detail": "Arkansas has no state fair employment agency for private-sector job discrimination; charges go to the U.S. EEOC.",
+"cite": "U.S. EEOC field office timeliness guidance",
+"source": "https://www.eeoc.gov/field-office/memphis/timeliness",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days (EEOC)",
+"detail": "With no state agency, the EEOC charge deadline in Arkansas is 180 days. State-law (ACRA) lawsuits have separate court deadlines.",
+"cite": "42 U.S.C. § 2000e-5(e)(1)",
+"source": "https://www.eeoc.gov/field-office/memphis/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "Promptly (no fixed days)",
+"detail": "Report the injury to the employer on a Commission-approved form; the employer owes no benefits until it receives the report.",
+"cite": "Ark. Code § 11-9-701(a)",
+"source": "https://codes.findlaw.com/ar/title-11-labor-and-industrial-relations/ar-code-sect-11-9-701/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim for compensation must be filed with the Commission within 2 years of the compensable injury.",
+"cite": "Ark. Code § 11-9-702(a)(1)",
+"source": "https://codes.findlaw.com/ar/title-11-labor-and-industrial-relations/ar-code-sect-11-9-702/",
+"verified": true
+},
+"wcAgency": {
+"value": "Arkansas Workers' Compensation Commission",
+"detail": "State commission that receives claims and decides workers' comp disputes.",
+"cite": "Ark. Code § 11-9-201",
+"source": "https://codes.findlaw.com/ar/title-11-labor-and-industrial-relations/ar-code-sect-11-9-702/",
+"verified": true
+}
+},
+"AZ": {
+"minimumWage": {
+"value": "$15.15/hour",
+"detail": "Indexed to inflation each Jan 1; the 2027 rate is expected to be $15.65 but was not yet officially posted as of mid-October 2026.",
+"cite": "A.R.S. § 23-363",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$12.15/hour",
+"detail": "Employers may take up to a $3.00/hour tip credit against the $15.15 minimum wage.",
+"cite": "A.R.S. § 23-363(C)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Arizona Attorney General's Office, Civil Rights Division",
+"detail": "Enforces the Arizona Civil Rights Act, including employment discrimination.",
+"cite": "A.R.S. § 41-1401 et seq.",
+"source": "https://www.azag.gov/civil-rights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A charge must be filed with the Civil Rights Division within 180 days of the unlawful practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "A.R.S. § 41-1481(A)",
+"source": "https://www.azleg.gov/ars/41/01481.htm",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "Promptly (\"forthwith\")",
+"detail": "The worker must report the accident and injury to the employer forthwith; the statute sets no specific number of days.",
+"cite": "A.R.S. § 23-908(E)",
+"source": "https://www.azleg.gov/ars/23/00908.htm",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim must be filed in writing with the Industrial Commission within 1 year after the injury or after the right accrues.",
+"cite": "A.R.S. § 23-1061(A)",
+"source": "https://www.azleg.gov/ars/23/01061.htm",
+"verified": true
+},
+"wcAgency": {
+"value": "Industrial Commission of Arizona",
+"detail": "State agency that receives workers' comp claims and resolves disputes.",
+"cite": "A.R.S. § 23-101 et seq.",
+"source": "https://www.azleg.gov/ars/23/01061.htm",
+"verified": true
+}
+},
+"CA": {
+"minimumWage": {
+"value": "$16.90/hour",
+"detail": "Rises to $17.40 on Jan 1, 2027 (DIR announcement). Many cities and some industries (e.g., fast food, health care) have higher minimums.",
+"cite": "Cal. Lab. Code § 1182.12",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$16.90/hour (no tip credit)",
+"detail": "California bans tip credits; tipped workers must receive the full minimum wage before tips.",
+"cite": "Cal. Lab. Code § 351",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "California Civil Rights Department",
+"detail": "Formerly DFEH; takes employment discrimination complaints under FEHA.",
+"cite": "Cal. Gov. Code § 12960",
+"source": "https://calcivilrights.ca.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "3 years",
+"detail": "A complaint must be filed with CRD within 3 years of the unlawful practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Cal. Gov. Code § 12960(e)",
+"source": "https://codes.findlaw.com/ca/government-code/gov-sect-12960/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Give the employer written notice of the injury within 30 days.",
+"cite": "Cal. Lab. Code § 5400",
+"source": "https://california.public.law/codes/labor_code_section_5400",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "Proceedings must begin within 1 year of the injury date, the last benefit payment, or the last medical treatment provided.",
+"cite": "Cal. Lab. Code § 5405",
+"source": "https://california.public.law/codes/labor_code_section_5405",
+"verified": true
+},
+"wcAgency": {
+"value": "Division of Workers' Compensation (DWC), Dept. of Industrial Relations",
+"detail": "Administers claims; disputes go to the Workers' Compensation Appeals Board (WCAB).",
+"cite": "Cal. Lab. Code § 110 et seq.",
+"source": "https://www.dir.ca.gov/dwc/",
+"verified": true
+}
+},
+"CO": {
+"minimumWage": {
+"value": "$15.16/hour",
+"detail": "Indexed annually; rises to $15.71 on Jan 1, 2027. Denver and some localities set higher rates.",
+"cite": "Colo. Const. art. XVIII, § 15; C.R.S. § 8-6-109",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$12.14/hour",
+"detail": "Employers may take up to a $3.02/hour tip credit; the cash wage rises to $12.69 on Jan 1, 2027.",
+"cite": "Colo. Const. art. XVIII, § 15",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Colorado Civil Rights Division",
+"detail": "Takes employment discrimination charges under the Colorado Anti-Discrimination Act.",
+"cite": "C.R.S. § 24-34-306",
+"source": "https://ccrd.colorado.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A charge must be filed within 300 days after the discriminatory employment practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "C.R.S. § 24-34-403",
+"source": "https://colorado.public.law/statutes/crs_24-34-403",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "10 days",
+"detail": "Notify the employer in writing within 10 days of the injury; late notice can cost one day's pay per day of delay.",
+"cite": "C.R.S. § 8-43-102(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_8-43-102",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "File a claim with the Division within 2 years; up to 3 years with a reasonable excuse if the employer is not prejudiced.",
+"cite": "C.R.S. § 8-43-103(2)",
+"source": "https://colorado.public.law/statutes/crs_8-43-103",
+"verified": true
+},
+"wcAgency": {
+"value": "Colorado Division of Workers' Compensation (CDLE)",
+"detail": "Part of the Colorado Department of Labor and Employment; receives claims and oversees benefits.",
+"cite": "C.R.S. § 8-47-101",
+"source": "https://cdle.colorado.gov/dwc",
+"verified": true
+}
+},
+"CT": {
+"minimumWage": {
+"value": "$16.94/hour",
+"detail": "Indexed to the employment cost index; rises to $17.48 on Jan 1, 2027.",
+"cite": "Conn. Gen. Stat. § 31-58(i)",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$6.38/hour (servers); $8.23 (bartenders)",
+"detail": "Hotel and restaurant servers get a $6.38 cash wage and bartenders $8.23; tips must bring pay to the $16.94 minimum.",
+"cite": "Conn. Gen. Stat. § 31-60(b)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Connecticut Commission on Human Rights and Opportunities (CHRO)",
+"detail": "Takes employment discrimination complaints under the CT Fair Employment Practices Act.",
+"cite": "Conn. Gen. Stat. § 46a-82",
+"source": "https://portal.ct.gov/chro",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "For acts on or after Oct 1, 2021, a complaint must be filed within 300 days. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Conn. Gen. Stat. § 46a-82(f)",
+"source": "https://codes.findlaw.com/ct/title-46a-human-rights/ct-gen-st-sect-46a-82/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "Immediately",
+"detail": "Report the injury to the employer immediately; a delay can reduce benefits if it prejudices the employer.",
+"cite": "Conn. Gen. Stat. § 31-294b",
+"source": "https://codes.findlaw.com/ct/title-31-labor/ct-gen-st-sect-31-294b/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "Written notice of claim is due within 1 year of the accident (3 years from first symptom for occupational disease).",
+"cite": "Conn. Gen. Stat. § 31-294c(a)",
+"source": "https://codes.findlaw.com/ct/title-31-labor/ct-gen-st-sect-31-294c/",
+"verified": true
+},
+"wcAgency": {
+"value": "Connecticut Workers' Compensation Commission",
+"detail": "State commission that receives claims and hears disputes.",
+"cite": "Conn. Gen. Stat. § 31-276",
+"source": "https://portal.ct.gov/wcc",
+"verified": true
+}
+},
+"DC": {
+"minimumWage": {
+"value": "$18.40/hour",
+"detail": "Rose from $17.95 on July 1, 2026; adjusted each July 1, so no Jan 1, 2027 change.",
+"cite": "D.C. Code § 32-1003",
+"source": "https://does.dc.gov/sites/default/files/dc/sites/does/publication/attachments/2026%20Minimum%20Wage%20Increase%20Notice.pdf",
+"verified": true
+},
+"tippedWage": {
+"value": "$10.30/hour",
+"detail": "Base tipped wage rose from $10.00 on July 1, 2026 under the 2025 law that slowed Initiative 82; employer must cover any shortfall.",
+"cite": "D.C. Code § 32-1003(f)",
+"source": "https://does.dc.gov/sites/default/files/dc/sites/does/publication/attachments/2026%20Minimum%20Wage%20Increase%20Notice.pdf",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "D.C. Office of Human Rights",
+"detail": "Investigates employment discrimination under the D.C. Human Rights Act.",
+"cite": "D.C. Code § 2-1403.04",
+"source": "https://ohr.dc.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "1 year",
+"detail": "A complaint must be filed with OHR within 1 year of the discriminatory act or its discovery. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "D.C. Code § 2-1403.04(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/2-1403.04",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice must be given to the employer within 30 days after the injury (or after learning it is work-related).",
+"cite": "D.C. Code § 32-1513(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/32-1513",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim must be filed within 1 year after the injury, or within 1 year of the last voluntary payment.",
+"cite": "D.C. Code § 32-1514(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/32-1514",
+"verified": true
+},
+"wcAgency": {
+"value": "D.C. Department of Employment Services, Office of Workers' Compensation",
+"detail": "DOES administers private-sector workers' comp claims in the District.",
+"cite": "D.C. Code § 32-1501 et seq.",
+"source": "https://does.dc.gov/page/workers-compensation-does",
+"verified": true
+}
+},
+"DE": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "No increase scheduled for Jan 1, 2027; the federal rate applies if it ever becomes higher.",
+"cite": "19 Del. C. § 902",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.23/hour",
+"detail": "Tips must bring total pay to at least the $15.00 state minimum wage.",
+"cite": "19 Del. C. § 902(c)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Delaware Department of Labor, Office of Anti-Discrimination",
+"detail": "Investigates employment discrimination charges under the Delaware Discrimination in Employment Act.",
+"cite": "19 Del. C. § 712",
+"source": "https://labor.delaware.gov/divisions/industrial-affairs/discrimination/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A charge must be filed within 300 days of the unlawful practice or its discovery. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "19 Del. C. § 712(c)(1)",
+"source": "https://codes.findlaw.com/de/title-19-labor/de-code-sect-19-712/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "90 days",
+"detail": "Notice of the injury must be given to the employer within 90 days after the accident.",
+"cite": "19 Del. C. § 2341",
+"source": "https://codes.findlaw.com/de/title-19-labor/de-code-sect-19-2341/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim is barred unless an agreement is reached or a petition is filed with the Board within 2 years of the accident.",
+"cite": "19 Del. C. § 2361(a)",
+"source": "https://codes.findlaw.com/de/title-19-labor/de-code-sect-19-2361/",
+"verified": true
+},
+"wcAgency": {
+"value": "Delaware Department of Labor, Office of Workers' Compensation (Industrial Accident Board)",
+"detail": "The Office administers claims; the Industrial Accident Board hears disputed petitions.",
+"cite": "19 Del. C. § 2301A",
+"source": "https://labor.delaware.gov/divisions/industrial-affairs/workers-compensation/",
+"verified": true
+}
+},
+"FL": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "Rose from $14.00 on Sept 30, 2026, the final $1 annual step. From Sept 30, 2027, the rate is indexed, with adjusted rates taking effect each Jan 1.",
+"cite": "Fla. Const. art. X, § 24; Fla. Stat. § 448.110",
+"source": "https://www.lowndes-law.com/newsroom/insights/floridas-minimum-wage-reaches-15-00-on-september-30-2026",
+"verified": true
+},
+"tippedWage": {
+"value": "$11.98/hour",
+"detail": "Rose from $10.98 on Sept 30, 2026; employers take a fixed $3.02/hour tip credit.",
+"cite": "Fla. Const. art. X, § 24(c)",
+"source": "https://www.lowndes-law.com/newsroom/insights/floridas-minimum-wage-reaches-15-00-on-september-30-2026",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Florida Commission on Human Relations",
+"detail": "Investigates employment discrimination under the Florida Civil Rights Act.",
+"cite": "Fla. Stat. § 760.11",
+"source": "https://fchr.myflorida.com/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "365 days",
+"detail": "A complaint must be filed within 365 days of the alleged violation. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Fla. Stat. § 760.11(1)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0760/Sections/0760.11.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Advise the employer of the injury within 30 days after the injury or its initial manifestation.",
+"cite": "Fla. Stat. § 440.185(1)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0400-0499/0440/Sections/0440.185.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years",
+"detail": "A petition for benefits must be filed within 2 years of when the worker knew or should have known the injury was work-related.",
+"cite": "Fla. Stat. § 440.19(1)",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0400-0499/0440/Sections/0440.19.html",
+"verified": true
+},
+"wcAgency": {
+"value": "Florida Division of Workers' Compensation (Dept. of Financial Services)",
+"detail": "Oversees the system; petitions for benefits are decided by the Office of the Judges of Compensation Claims.",
+"cite": "Fla. Stat. ch. 440",
+"source": "https://www.myfloridacfo.com/division/wc",
+"verified": true
+}
+},
+"GA": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "Georgia's own minimum is $5.15 (employers with 6+ workers), but the federal $7.25 applies to FLSA-covered employers. No Jan 1, 2027 change.",
+"cite": "O.C.G.A. § 34-4-3; 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Georgia Commission on Equal Opportunity (public employees only)",
+"detail": "GCEO enforces the Fair Employment Practices Act for public employers; private-sector workers file with the EEOC.",
+"cite": "O.C.G.A. § 45-19-36",
+"source": "https://gceo.georgia.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "GCEO complaints are barred unless filed within 180 days; the EEOC lists a 300-day charge window for Georgia.",
+"cite": "O.C.G.A. § 45-19-36(b)",
+"source": "https://codes.findlaw.com/ga/title-45-public-officers-and-employees/ga-code-sect-45-19-36/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice of the accident must be given to the employer within 30 days.",
+"cite": "O.C.G.A. § 34-9-80",
+"source": "https://codes.findlaw.com/ga/title-34-labor-and-industrial-relations/ga-code-sect-34-9-80/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "File within 1 year of injury; extended to 1 year after last employer-paid medical care or 2 years after last weekly benefit.",
+"cite": "O.C.G.A. § 34-9-82(a)",
+"source": "https://codes.findlaw.com/ga/title-34-labor-and-industrial-relations/ga-code-sect-34-9-82/",
+"verified": true
+},
+"wcAgency": {
+"value": "Georgia State Board of Workers' Compensation",
+"detail": "State board that receives claims and decides disputes.",
+"cite": "O.C.G.A. § 34-9-40",
+"source": "https://sbwc.georgia.gov/",
+"verified": true
+}
+},
+"HI": {
+"minimumWage": {
+"value": "$16.00/hour",
+"detail": "Rose to $16.00 on Jan 1, 2026; no change on Jan 1, 2027; next step is $18.00 on Jan 1, 2028.",
+"cite": "HRS § 387-2",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$14.75/hour",
+"detail": "A $1.25 tip credit is allowed only if wages plus tips are at least $7.00 above the minimum wage.",
+"cite": "HRS § 387-2",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Hawaii Civil Rights Commission",
+"detail": "Investigates employment discrimination complaints under HRS ch. 378.",
+"cite": "HRS § 368-11",
+"source": "https://labor.hawaii.gov/hcrc/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "No complaint may be filed more than 180 days after the discriminatory act or last occurrence. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "HRS § 368-11(c)",
+"source": "https://codes.findlaw.com/hi/division-1-government/hi-rev-st-sect-368-11/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "As soon as practicable",
+"detail": "Notify the employer as soon as practicable; late notice is excused if the employer knew or was not prejudiced.",
+"cite": "HRS § 386-81",
+"source": "https://codes.findlaw.com/hi/division-1-government/hi-rev-st-sect-386-81/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years",
+"detail": "A written claim must be filed with the director within 2 years after the effects of the injury become apparent.",
+"cite": "HRS § 386-82",
+"source": "https://codes.findlaw.com/hi/division-1-government/hi-rev-st-sect-386-82/",
+"verified": true
+},
+"wcAgency": {
+"value": "Hawaii DLIR Disability Compensation Division",
+"detail": "Part of the Department of Labor and Industrial Relations; administers workers' comp claims.",
+"cite": "HRS ch. 386",
+"source": "https://labor.hawaii.gov/dcd/",
+"verified": true
+}
+},
+"IA": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Iowa's minimum equals the federal rate; no Jan 1, 2027 increase scheduled.",
+"cite": "Iowa Code § 91D.1",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$4.35/hour",
+"detail": "Employers may count tips for up to 40% of the minimum wage ($2.90/hour).",
+"cite": "Iowa Code § 91D.1(1)(c)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Iowa Office of Civil Rights (Iowa Civil Rights Commission)",
+"detail": "Handles complaints under the Iowa Civil Rights Act (Iowa Code ch. 216).",
+"cite": "Iowa Code § 216.15",
+"source": "https://icrc.iowa.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint must be filed with the agency within 300 days of the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Iowa Code § 216.15(13)",
+"source": "https://www.legis.iowa.gov/docs/code/216.15.pdf",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "90 days",
+"detail": "Unless the employer had actual knowledge, the worker must give notice within 90 days of the injury.",
+"cite": "Iowa Code § 85.23",
+"source": "https://www.legis.iowa.gov/docs/code/85.23.pdf",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "Start proceedings within 2 years of the injury, or 3 years after the last weekly benefit payment.",
+"cite": "Iowa Code § 85.26(1)",
+"source": "https://www.legis.iowa.gov/docs/code/85.26.pdf",
+"verified": true
+},
+"wcAgency": {
+"value": "Iowa Division of Workers' Compensation (Dept. of Inspections, Appeals & Licensing)",
+"detail": "Administers claims and contested cases; now a division of DIAL.",
+"cite": "Iowa Code ch. 10A, subch. III; ch. 85",
+"source": "https://dial.iowa.gov/",
+"verified": true
+}
+},
+"ID": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Idaho's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "Idaho Code § 44-1502",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$3.35/hour",
+"detail": "Employers may take up to a $3.90/hour tip credit against the $7.25 minimum.",
+"cite": "Idaho Code § 44-1502",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Idaho Human Rights Commission",
+"detail": "Investigates employment discrimination under the Idaho Human Rights Act.",
+"cite": "Idaho Code § 67-5907",
+"source": "https://humanrights.idaho.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "1 year",
+"detail": "A complaint must be filed within 1 year of the alleged discrimination. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Idaho Code § 67-5907(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH59/SECT67-5907/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "60 days",
+"detail": "Notice is due as soon as practicable but no later than 60 days after the accident.",
+"cite": "Idaho Code § 72-701",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title72/T72CH7/SECT72-701/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim must be made within 1 year after the date of the accident.",
+"cite": "Idaho Code § 72-701",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title72/T72CH7/SECT72-701/",
+"verified": true
+},
+"wcAgency": {
+"value": "Idaho Industrial Commission",
+"detail": "State commission that oversees workers' comp claims and hears disputes.",
+"cite": "Idaho Code § 72-501",
+"source": "https://iic.idaho.gov/",
+"verified": true
+}
+},
+"IL": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "Applies to employers with 4+ employees; no increase scheduled for Jan 1, 2027. Chicago and Cook County set higher local rates.",
+"cite": "820 ILCS 105/4",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$9.00/hour",
+"detail": "Employers may count tips for up to 40% of the minimum wage ($6.00/hour).",
+"cite": "820 ILCS 105/4(c)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Illinois Department of Human Rights",
+"detail": "Takes employment discrimination charges under the Illinois Human Rights Act.",
+"cite": "775 ILCS 5/7A-102",
+"source": "https://dhr.illinois.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "2 years",
+"detail": "Since Jan 1, 2025, charges may be filed within 2 years (was 300 days). File with EEOC within 300 days to keep federal claims.",
+"cite": "775 ILCS 5/7A-102(A)(1); P.A. 103-0973",
+"source": "https://illinois.gov/news/press-release.30775.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "45 days",
+"detail": "Notify the employer orally or in writing within 45 days of the accident.",
+"cite": "820 ILCS 305/6(c)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/082003050K6.htm",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "3 years from injury",
+"detail": "File with the Commission within 3 years of the accident, or 2 years after the last compensation payment, whichever is later.",
+"cite": "820 ILCS 305/6(d)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/082003050K6.htm",
+"verified": true
+},
+"wcAgency": {
+"value": "Illinois Workers' Compensation Commission",
+"detail": "State commission that receives Applications for Adjustment of Claim and decides disputes.",
+"cite": "820 ILCS 305/13",
+"source": "https://iwcc.illinois.gov/",
+"verified": true
+}
+},
+"IN": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Applies to employers with 2+ employees; matches the federal rate. No Jan 1, 2027 increase scheduled.",
+"cite": "Ind. Code § 22-2-2-4",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "Ind. Code § 22-2-2-4(k)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Indiana Civil Rights Commission",
+"detail": "Investigates employment discrimination under the Indiana Civil Rights Law.",
+"cite": "Ind. Code § 22-9-1-3",
+"source": "https://www.in.gov/icrc/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint is not valid unless filed within 180 days of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Ind. Code § 22-9-1-3(p)",
+"source": "https://codes.findlaw.com/in/title-22-labor-and-safety/in-code-sect-22-9-1-3/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Give the employer notice within 30 days; benefits before notice may be withheld, but late notice only bars the claim if it prejudices the employer.",
+"cite": "Ind. Code § 22-3-3-1",
+"source": "https://codes.findlaw.com/in/title-22-labor-and-safety/in-code-sect-22-3-3-1/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "The right to compensation is forever barred unless a claim is filed with the Board within 2 years of the accident.",
+"cite": "Ind. Code § 22-3-3-3",
+"source": "https://codes.findlaw.com/in/title-22-labor-and-safety/in-code-sect-22-3-3-3/",
+"verified": true
+},
+"wcAgency": {
+"value": "Worker's Compensation Board of Indiana",
+"detail": "State board that oversees workers' comp claims and hears disputes.",
+"cite": "Ind. Code § 22-3-1-1",
+"source": "https://www.in.gov/wcb/",
+"verified": true
+}
+},
+"KS": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Kansas's minimum equals the federal rate; no Jan 1, 2027 increase scheduled.",
+"cite": "K.S.A. 44-1203",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "K.S.A. 44-1203",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Kansas Human Rights Commission",
+"detail": "Investigates employment discrimination under the Kansas Act Against Discrimination.",
+"cite": "K.S.A. 44-1005",
+"source": "https://www.khrc.net/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "6 months",
+"detail": "A complaint must be filed within 6 months of the discriminatory act (or last act of a continuing pattern). Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "K.S.A. 44-1005(i)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_010_0005.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice is due within 30 calendar days of the accident, or 20 days after your last day of work if you have left that employer.",
+"cite": "K.S.A. 44-520(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_005_0020.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "3 years from injury",
+"detail": "An application for hearing must be filed within 3 years of the accident or 2 years after the last compensation payment, whichever is later.",
+"cite": "K.S.A. 44-534(b)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_005_0034.html",
+"verified": true
+},
+"wcAgency": {
+"value": "Kansas Division of Workers Compensation (Kansas Dept. of Labor)",
+"detail": "Administers claims; the director hears disputes.",
+"cite": "K.S.A. 44-501 et seq.",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_005_0034.html",
+"verified": true
+}
+},
+"KY": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Kentucky's minimum equals the federal rate; no Jan 1, 2027 increase scheduled.",
+"cite": "KRS 337.275",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "KRS 337.275(2)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Kentucky Commission on Human Rights",
+"detail": "Investigates employment discrimination under the Kentucky Civil Rights Act.",
+"cite": "KRS 344.200",
+"source": "https://kchr.ky.gov/Pages/index.aspx",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days after the unlawful practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "KRS 344.200(1)",
+"source": "https://codes.findlaw.com/ky/title-xxvii-labor-and-human-rights/ky-rev-st-sect-344-200/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "As soon as practicable",
+"detail": "Notice must be given to the employer as soon as practicable after the accident.",
+"cite": "KRS 342.185(1)",
+"source": "https://codes.findlaw.com/ky/title-xxvii-labor-and-human-rights/ky-rev-st-sect-342-185/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "An application must be filed with the department within 2 years of the accident (special rules for cumulative trauma).",
+"cite": "KRS 342.185(1)",
+"source": "https://codes.findlaw.com/ky/title-xxvii-labor-and-human-rights/ky-rev-st-sect-342-185/",
+"verified": true
+}
+},
+"LA": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "No state minimum wage law; the federal $7.25 applies. No increase is scheduled for Jan 1, 2027.",
+"cite": "La. (no state law); 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Louisiana Commission on Human Rights",
+"detail": "Investigates employment discrimination under the Louisiana Employment Discrimination Law.",
+"cite": "La. R.S. 51:2257",
+"source": "https://gov.louisiana.gov/page/lchr",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days of the unlawful practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "La. R.S. 51:2257",
+"source": "https://codes.findlaw.com/la/revised-statutes/la-rev-stat-tit-51-sect-2257/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice must be given to the employer within 30 days of the injury or death.",
+"cite": "La. R.S. 23:1301",
+"source": "https://codes.findlaw.com/la/revised-statutes/la-rev-stat-tit-23-sect-1301/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "Claims are barred unless benefits are agreed or a formal claim is filed within 1 year of the accident.",
+"cite": "La. R.S. 23:1209(A)",
+"source": "https://codes.findlaw.com/la/revised-statutes/la-rev-stat-tit-23-sect-1209/",
+"verified": true
+},
+"wcAgency": {
+"value": "Louisiana Workforce Commission, Office of Workers' Compensation Administration",
+"detail": "OWCA administers claims; disputed claims go to workers' comp judges.",
+"cite": "La. R.S. 23:1291",
+"source": "https://www.laworks.net/WorkersComp/OWC_MainMenu.asp",
+"verified": true
+}
+},
+"MA": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "No increase scheduled for Jan 1, 2027.",
+"cite": "M.G.L. c. 151, § 1",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$6.75/hour",
+"detail": "Employers may take up to an $8.25/hour tip credit against the $15.00 minimum.",
+"cite": "M.G.L. c. 151, § 7",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Massachusetts Commission Against Discrimination (MCAD)",
+"detail": "Investigates employment discrimination under M.G.L. c. 151B.",
+"cite": "M.G.L. c. 151B, § 5",
+"source": "https://www.mass.gov/orgs/massachusetts-commission-against-discrimination",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint must be filed within 300 days of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "M.G.L. c. 151B, § 5",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter151B/Section5",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "As soon as practicable",
+"detail": "Notice must be given to the insurer or employer as soon as practicable after the injury.",
+"cite": "M.G.L. c. 152, § 41",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter152/Section41",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "4 years",
+"detail": "A claim must be filed within 4 years of when the worker first became aware the disability was work-related.",
+"cite": "M.G.L. c. 152, § 41",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter152/Section41",
+"verified": true
+},
+"wcAgency": {
+"value": "Massachusetts Department of Industrial Accidents",
+"detail": "State agency that oversees workers' comp claims and dispute resolution.",
+"cite": "M.G.L. c. 23E",
+"source": "https://www.mass.gov/orgs/department-of-industrial-accidents",
+"verified": true
+}
+},
+"MD": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "No increase scheduled for Jan 1, 2027. Montgomery and Howard counties set higher local rates.",
+"cite": "Md. Code, Lab. & Empl. § 3-413",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$3.63/hour",
+"detail": "Employers may take up to an $11.37/hour tip credit against the $15.00 minimum.",
+"cite": "Md. Code, Lab. & Empl. § 3-419",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Maryland Commission on Civil Rights",
+"detail": "Investigates employment discrimination under Maryland's anti-discrimination law.",
+"cite": "Md. Code, State Gov't § 20-1004",
+"source": "https://mccr.maryland.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "Employment complaints are due within 300 days; harassment complaints within 2 years. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Md. Code, State Gov't § 20-1004(c)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gsg&section=20-1004&enactments=false",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "10 days",
+"detail": "Oral or written notice must be given to the employer within 10 days of the injury (30 days for death).",
+"cite": "Md. Code, Lab. & Empl. § 9-704",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=9-704&enactments=false",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "60 days (barred after 2 years)",
+"detail": "File a claim with the Commission within 60 days; late filing may be excused, but claims are completely barred after 2 years.",
+"cite": "Md. Code, Lab. & Empl. § 9-709",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=9-709&enactments=false",
+"verified": true
+},
+"wcAgency": {
+"value": "Maryland Workers' Compensation Commission",
+"detail": "State commission that receives claims and decides disputes.",
+"cite": "Md. Code, Lab. & Empl. § 9-301",
+"source": "https://www.wcc.state.md.us/",
+"verified": true
+}
+},
+"ME": {
+"minimumWage": {
+"value": "$15.10/hour",
+"detail": "Indexed each Jan 1; rises to $15.70 on Jan 1, 2027. Portland sets a higher local rate.",
+"cite": "26 M.R.S. § 664",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$7.55/hour",
+"detail": "Employers may take a tip credit of up to 50% of the minimum; the cash wage rises to $7.85 on Jan 1, 2027.",
+"cite": "26 M.R.S. § 664(2-A)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Maine Human Rights Commission",
+"detail": "Investigates employment discrimination under the Maine Human Rights Act.",
+"cite": "5 M.R.S. § 4611",
+"source": "https://www.maine.gov/mhrc/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint must be filed within 300 days of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "5 M.R.S. § 4611",
+"source": "https://legislature.maine.gov/statutes/5/title5sec4611.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "60 days",
+"detail": "For injuries on or after Jan 1, 2020, notice must be given to the employer within 60 days.",
+"cite": "39-A M.R.S. § 301",
+"source": "https://legislature.maine.gov/statutes/39-A/title39-Asec301.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A petition is barred unless filed within 2 years of injury (6 years from last payment if benefits were paid).",
+"cite": "39-A M.R.S. § 306",
+"source": "https://legislature.maine.gov/statutes/39-A/title39-Asec306.html",
+"verified": true
+},
+"wcAgency": {
+"value": "Maine Workers' Compensation Board",
+"detail": "State board that oversees claims and resolves disputes.",
+"cite": "39-A M.R.S. § 151",
+"source": "https://legislature.maine.gov/statutes/39-A/title39-Asec306.html",
+"verified": true
+}
+},
+"MI": {
+"minimumWage": {
+"value": "$13.73/hour",
+"detail": "Set by 2025 law; rises to $15.00 on Jan 1, 2027, then indexed annually.",
+"cite": "MCL 408.934",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$5.49/hour",
+"detail": "Equal to 40% of the minimum wage in 2026; rises to $6.30 (42%) on Jan 1, 2027, stepping up to 50% by 2031.",
+"cite": "MCL 408.934d",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Michigan Department of Civil Rights",
+"detail": "Investigates employment discrimination under the Elliott-Larsen Civil Rights Act.",
+"cite": "MCL 37.2601 et seq.",
+"source": "https://www.michigan.gov/mdcr",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "Complaints to the Department are due within 180 days of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Mich. Admin. Code R 37.4",
+"source": "https://www.eeoc.gov/field-office/detroit/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "90 days",
+"detail": "The employee must give the employer notice of injury within 90 days after it happens.",
+"cite": "MCL 418.381(1)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-418-381",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim must be made within 2 years after the injury; benefits generally cannot reach back more than 2 years before filing.",
+"cite": "MCL 418.381(1)-(2)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-418-381",
+"verified": true
+},
+"wcAgency": {
+"value": "Michigan Workers' Disability Compensation Agency",
+"detail": "Part of the Department of Labor and Economic Opportunity; administers claims and hearings.",
+"cite": "MCL 418.201",
+"source": "https://www.michigan.gov/leo/bureaus-agencies/wdca",
+"verified": true
+}
+},
+"MN": {
+"minimumWage": {
+"value": "$11.41/hour",
+"detail": "Single statewide rate for all employer sizes; indexed each Jan 1 and rises to $11.87 on Jan 1, 2027. Minneapolis and St. Paul set higher rates.",
+"cite": "Minn. Stat. § 177.24",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$11.41/hour (no tip credit)",
+"detail": "Minnesota bans tip credits; tipped workers get the full minimum wage before tips.",
+"cite": "Minn. Stat. § 177.24, subd. 2",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Minnesota Department of Human Rights",
+"detail": "Investigates employment discrimination under the Minnesota Human Rights Act.",
+"cite": "Minn. Stat. § 363A.28",
+"source": "https://mn.gov/mdhr/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "1 year",
+"detail": "A charge must be filed within 1 year of the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Minn. Stat. § 363A.28, subd. 3",
+"source": "https://www.revisor.mn.gov/statutes/cite/363A.28",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "14 days (up to 180)",
+"detail": "Written notice is due within 14 days; notice within 30 days is not a bar absent prejudice, and up to 180 days if delay was excusable.",
+"cite": "Minn. Stat. § 176.141",
+"source": "https://www.revisor.mn.gov/statutes/cite/176.141",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "3 years after report (max 6 years)",
+"detail": "File within 3 years after the employer's injury report is filed with DLI, but no more than 6 years after the accident.",
+"cite": "Minn. Stat. § 176.151(a)",
+"source": "https://www.revisor.mn.gov/statutes/cite/176.151",
+"verified": true
+},
+"wcAgency": {
+"value": "Minnesota Department of Labor and Industry, Workers' Compensation Division",
+"detail": "Administers claims; disputes are heard by the Office of Administrative Hearings.",
+"cite": "Minn. Stat. ch. 176",
+"source": "https://www.dli.mn.gov/business/workers-compensation",
+"verified": true
+}
+},
+"MO": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "Reached $15.00 on Jan 1, 2026 under Prop A; annual inflation increases were repealed in 2025 (HB 567), so no Jan 1, 2027 change.",
+"cite": "RSMo § 290.502",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$7.50/hour",
+"detail": "Employers may take a tip credit of up to 50% of the minimum wage.",
+"cite": "RSMo § 290.512",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Missouri Commission on Human Rights",
+"detail": "Investigates employment discrimination under the Missouri Human Rights Act.",
+"cite": "RSMo § 213.075",
+"source": "https://labor.mo.gov/mohumanrights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days of the discriminatory act; it is a precondition to suing. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "RSMo § 213.075(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=213.075",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Written notice must be given to the employer within 30 days after the accident (or diagnosis, for occupational disease).",
+"cite": "RSMo § 287.420",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=287.420",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "File a claim within 2 years of the injury or last payment; 3 years if the employer failed to file its injury report.",
+"cite": "RSMo § 287.430",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=287.430",
+"verified": true
+},
+"wcAgency": {
+"value": "Missouri Division of Workers' Compensation",
+"detail": "Part of the Department of Labor and Industrial Relations; receives claims and hears disputes.",
+"cite": "RSMo § 287.610",
+"source": "https://labor.mo.gov/dwc",
+"verified": true
+}
+},
+"MS": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "No state minimum wage law; the federal $7.25 applies. No increase is scheduled for Jan 1, 2027.",
+"cite": "Miss. (no state law); 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "None (file with EEOC)",
+"detail": "Mississippi has no state fair employment agency for private-sector job discrimination; charges go to the U.S. EEOC.",
+"cite": "U.S. EEOC field office timeliness guidance",
+"source": "https://www.eeoc.gov/field-office/jackson/timeliness",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days (EEOC)",
+"detail": "With no state agency, the EEOC charge deadline in Mississippi is 180 days from the discriminatory act.",
+"cite": "42 U.S.C. § 2000e-5(e)(1)",
+"source": "https://www.eeoc.gov/field-office/jackson/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice must reach the employer within 30 days after the injury.",
+"cite": "Miss. Code § 71-3-35(1)",
+"source": "https://codes.findlaw.com/ms/title-71-labor-and-industry/ms-code-sect-71-3-35/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "If no compensation was paid, an application must be filed with the Commission within 2 years of the injury.",
+"cite": "Miss. Code § 71-3-35(1)",
+"source": "https://codes.findlaw.com/ms/title-71-labor-and-industry/ms-code-sect-71-3-35/",
+"verified": true
+},
+"wcAgency": {
+"value": "Mississippi Workers' Compensation Commission",
+"detail": "State commission that receives claims and decides disputes.",
+"cite": "Miss. Code § 71-3-85",
+"source": "https://mwcc.ms.gov/",
+"verified": true
+}
+},
+"MT": {
+"minimumWage": {
+"value": "$10.85/hour",
+"detail": "Indexed each Jan 1; rises to $11.20 on Jan 1, 2027. Small non-FLSA businesses (sales of $110,000 or less) may pay $4.00.",
+"cite": "MCA 39-3-409",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$10.85/hour (no tip credit)",
+"detail": "Montana does not allow a tip credit for covered employers.",
+"cite": "MCA 39-3-409",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Montana Human Rights Bureau (Dept. of Labor & Industry)",
+"detail": "Investigates employment discrimination under the Montana Human Rights Act.",
+"cite": "MCA 49-2-501",
+"source": "https://erd.dli.mt.gov/human-rights/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days (up to 300 days if a timely grievance was pursued). Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "MCA 49-2-501(4)",
+"source": "https://leg.mt.gov/bills/mca/title_0490/chapter_0020/part_0050/section_0010/0490-0020-0050-0010.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice of an injury other than death must be given within 30 days.",
+"cite": "MCA 39-71-603",
+"source": "https://leg.mt.gov/bills/mca/title_0390/chapter_0710/part_0060/section_0030/0390-0710-0060-0030.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A signed written claim is due within 12 months of the accident; the insurer may extend it up to 24 more months for good reason.",
+"cite": "MCA 39-71-601",
+"source": "https://leg.mt.gov/bills/mca/title_0390/chapter_0710/part_0060/section_0010/0390-0710-0060-0010.html",
+"verified": true
+},
+"wcAgency": {
+"value": "Montana Dept. of Labor & Industry, Employment Relations Division",
+"detail": "Oversees workers' comp claims; the Workers' Compensation Court decides disputes.",
+"cite": "MCA 39-71-201",
+"source": "https://erd.dli.mt.gov/work-comp-claims/",
+"verified": true
+}
+},
+"NC": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "North Carolina's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "N.C.G.S. § 95-25.3",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "N.C.G.S. § 95-25.3(f)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days (EEOC)",
+"detail": "The EEOC Charlotte office lists a 300-day charge deadline for North Carolina.",
+"cite": "42 U.S.C. § 2000e-5(e)(1)",
+"source": "https://www.eeoc.gov/field-office/charlotte/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Written notice must be given within 30 days of the accident unless the Commission accepts a reasonable excuse.",
+"cite": "N.C.G.S. § 97-22",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_97/GS_97-22.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim must be filed with the Industrial Commission within 2 years of the accident (or 2 years after last medical payment).",
+"cite": "N.C.G.S. § 97-24(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_97/GS_97-24.html",
+"verified": true
+},
+"wcAgency": {
+"value": "North Carolina Industrial Commission",
+"detail": "State agency that administers workers' comp claims and hears disputes.",
+"cite": "N.C.G.S. § 97-77",
+"source": "https://www.ic.nc.gov/",
+"verified": true
+}
+},
+"ND": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "North Dakota's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "N.D. Admin. Code § 46-02-07-01",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$4.86/hour",
+"detail": "Employers may count tips for up to 33% of the minimum wage ($2.39/hour).",
+"cite": "N.D. Admin. Code § 46-02-07-02",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "North Dakota Department of Labor and Human Rights",
+"detail": "Investigates employment discrimination under the ND Human Rights Act.",
+"cite": "N.D.C.C. § 14-02.4-19",
+"source": "https://www.nd.gov/labor/human-rights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint of employment discrimination must be filed within 300 days of the alleged act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "N.D.C.C. § 14-02.4-19(2)",
+"source": "https://ndlegis.gov/cencode/t14c02-4.pdf",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "7 days",
+"detail": "Notify the employer immediately; absent good cause, no later than 7 days after the accident or the injury became apparent.",
+"cite": "N.D.C.C. § 65-05-01.2",
+"source": "https://ndlegis.gov/cencode/t65c05.pdf",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "An original claim must be filed with WSI within 1 year after the injury (2 years after death).",
+"cite": "N.D.C.C. § 65-05-01",
+"source": "https://ndlegis.gov/cencode/t65c05.pdf",
+"verified": true
+},
+"wcAgency": {
+"value": "North Dakota Workforce Safety & Insurance (WSI)",
+"detail": "The state's exclusive workers' comp insurer and claims agency.",
+"cite": "N.D.C.C. ch. 65-02",
+"source": "https://www.workforcesafety.com/",
+"verified": true
+}
+},
+"NE": {
+"minimumWage": {
+"value": "$15.00/hour",
+"detail": "Applies to employers with 4+ employees; rises to $15.26 on Jan 1, 2027 under the 1.75% annual adjustment set by LB 258.",
+"cite": "Neb. Rev. Stat. § 48-1203",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour",
+"detail": "Tips must bring total pay to at least the state minimum wage.",
+"cite": "Neb. Rev. Stat. § 48-1203(2)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Nebraska Equal Opportunity Commission",
+"detail": "Investigates employment discrimination under the Nebraska Fair Employment Practice Act.",
+"cite": "Neb. Rev. Stat. § 48-1118",
+"source": "https://neoc.nebraska.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A written charge must be filed within 300 days of the unlawful practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Neb. Rev. Stat. § 48-1118(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-1118",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "As soon as practicable",
+"detail": "Written notice of the injury must be given to the employer as soon as practicable.",
+"cite": "Neb. Rev. Stat. § 48-133",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-133",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "Claims are barred unless agreed or a petition is filed within 2 years of the accident (or last payment).",
+"cite": "Neb. Rev. Stat. § 48-137",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-137",
+"verified": true
+},
+"wcAgency": {
+"value": "Nebraska Workers' Compensation Court",
+"detail": "Disputed claims must first be submitted to this court, which also administers the system.",
+"cite": "Neb. Rev. Stat. § 48-152",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-133",
+"verified": true
+}
+},
+"NH": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "New Hampshire uses the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "RSA 279:21",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$3.27/hour",
+"detail": "Tipped employees get 45% of the minimum wage as cash wage; tips must make up the rest.",
+"cite": "RSA 279:21, VIII",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "New Hampshire Commission for Human Rights",
+"detail": "Investigates employment discrimination under RSA 354-A.",
+"cite": "RSA 354-A:21",
+"source": "https://www.nh.gov/hrc/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days after the alleged discrimination. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "RSA 354-A:21, III",
+"source": "https://gc.nh.gov/rsa/html/XXXI/354-A/354-A-21.htm",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "2 years",
+"detail": "Notice must be given to the employer within 2 years of the injury (or of learning its nature and work connection).",
+"cite": "RSA 281-A:19",
+"source": "https://gc.nh.gov/rsa/html/XXIII/281-A/281-A-19.htm",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "3 years from injury",
+"detail": "A claim must be filed within 3 years after the date of injury (or discovery).",
+"cite": "RSA 281-A:21-a",
+"source": "https://gc.nh.gov/rsa/html/XXIII/281-A/281-A-21-a.htm",
+"verified": true
+},
+"wcAgency": {
+"value": "New Hampshire Department of Labor, Workers' Compensation Division",
+"detail": "Administers claims and hearings under RSA 281-A.",
+"cite": "RSA 281-A",
+"source": "https://www.nh.gov/labor/workers-comp/",
+"verified": true
+}
+},
+"NJ": {
+"minimumWage": {
+"value": "$15.92/hour",
+"detail": "For most employers; $15.23 for seasonal/small (under 6) employers. Rises to $16.48 on Jan 1, 2027.",
+"cite": "N.J.S.A. 34:11-56a4",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$6.05/hour",
+"detail": "Employers may take up to a $9.87/hour tip credit; if tips fall short, the employer pays the difference.",
+"cite": "N.J.S.A. 34:11-56a4",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "New Jersey Division on Civil Rights",
+"detail": "Investigates employment discrimination under the NJ Law Against Discrimination.",
+"cite": "N.J.S.A. 10:5-18",
+"source": "https://www.njoag.gov/about/divisions-and-offices/division-on-civil-rights-home/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A DCR complaint must be filed within 180 days; LAD lawsuits in court have a 2-year limit. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "N.J.S.A. 10:5-18",
+"source": "https://codes.findlaw.com/nj/title-10-civil-rights/nj-st-sect-10-5-18/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "14 days (90 at most)",
+"detail": "Notify the employer within 14 days; no compensation is allowed without notice or knowledge within 90 days.",
+"cite": "N.J.S.A. 34:15-17",
+"source": "https://codes.findlaw.com/nj/title-34-labor-and-workmens-compensation/nj-st-sect-34-15-17/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim petition must be filed with the Division within 2 years of the accident or last payment.",
+"cite": "N.J.S.A. 34:15-51",
+"source": "https://codes.findlaw.com/nj/title-34-labor-and-workmens-compensation/nj-st-sect-34-15-51/",
+"verified": true
+},
+"wcAgency": {
+"value": "New Jersey Division of Workers' Compensation",
+"detail": "Part of the NJ Department of Labor; hears claim petitions.",
+"cite": "N.J.S.A. 34:15-49",
+"source": "https://www.nj.gov/labor/workerscompensation/",
+"verified": true
+}
+},
+"NM": {
+"minimumWage": {
+"value": "$12.00/hour",
+"detail": "No increase scheduled for Jan 1, 2027. Some cities and counties (e.g., Santa Fe) set higher rates.",
+"cite": "NMSA § 50-4-22",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$3.00/hour",
+"detail": "Employers may take up to a $9.00/hour tip credit against the $12.00 minimum.",
+"cite": "NMSA § 50-4-22(C)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "New Mexico Human Rights Bureau (Dept. of Workforce Solutions)",
+"detail": "Investigates employment discrimination under the NM Human Rights Act.",
+"cite": "NMSA § 28-1-10",
+"source": "https://www.dws.state.nm.us/en-us/Human-Rights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint must be filed within 300 days after the alleged act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "NMSA § 28-1-10(A)",
+"source": "https://codes.findlaw.com/nm/chapter-28-human-rights/nm-st-sect-28-1-10/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "15 days (60 at most)",
+"detail": "Written notice is due within 15 days of knowing of the accident; if prevented, as soon as possible but no later than 60 days.",
+"cite": "NMSA § 52-1-29",
+"source": "https://codes.findlaw.com/nm/chapter-52-workers-compensation/nm-st-sect-52-1-29/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year after denial",
+"detail": "A claim must be filed within 1 year after the employer or insurer fails or refuses to pay compensation.",
+"cite": "NMSA § 52-1-31(A)",
+"source": "https://codes.findlaw.com/nm/chapter-52-workers-compensation/nm-st-sect-52-1-31/",
+"verified": true
+},
+"wcAgency": {
+"value": "New Mexico Workers' Compensation Administration",
+"detail": "State agency that administers claims and hears disputes.",
+"cite": "NMSA § 52-5-1 et seq.",
+"source": "https://www.workerscomp.nm.gov/",
+"verified": true
+}
+},
+"NV": {
+"minimumWage": {
+"value": "$12.00/hour",
+"detail": "Single rate regardless of health benefits; no increase scheduled for Jan 1, 2027.",
+"cite": "Nev. Const. art. 15, § 16; NRS 608.250",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$12.00/hour (no tip credit)",
+"detail": "Nevada bans tip credits; tipped workers get the full minimum wage before tips.",
+"cite": "Nev. Const. art. 15, § 16(A)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Nevada Equal Rights Commission",
+"detail": "Investigates employment discrimination under NRS ch. 613.",
+"cite": "NRS 233.160",
+"source": "https://detr.nv.gov/Page/Nevada_Equal_Rights_Commission",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "An employment complaint must be filed with NERC within 300 days of the alleged practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "NRS 233.160(1)(b)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-233.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "7 days",
+"detail": "Written notice must be given to the employer as soon as practicable, but within 7 days after the accident.",
+"cite": "NRS 616C.015",
+"source": "https://www.leg.state.nv.us/NRS/NRS-616C.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "90 days",
+"detail": "A claim for compensation must be filed with the insurer within 90 days after the accident.",
+"cite": "NRS 616C.020",
+"source": "https://www.leg.state.nv.us/NRS/NRS-616C.html",
+"verified": true
+},
+"wcAgency": {
+"value": "Nevada Division of Industrial Relations, Workers' Compensation Section",
+"detail": "Regulates insurers and claims; appeals go to the Department of Administration hearings division.",
+"cite": "NRS 616A.400",
+"source": "https://dir.nv.gov/WCS/Home_-_WCS/",
+"verified": true
+}
+},
+"NY": {
+"minimumWage": {
+"value": "$17.00/hour (NYC, LI, Westchester); $16.00 elsewhere",
+"detail": "No change on Jan 1, 2027: the state's inflation off-ramp was triggered, per NYDOL as reported by trackers.",
+"cite": "N.Y. Lab. Law § 652",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$11.35/hour (NYC, LI, Westchester); $10.70 elsewhere",
+"detail": "Cash wage for tipped food service workers in 2026, with tip credits of $5.65 and $5.30.",
+"cite": "12 NYCRR Part 146",
+"source": "https://dol.ny.gov/minimum-wage-tipped-workers",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "New York State Division of Human Rights",
+"detail": "Investigates employment discrimination under the NY Human Rights Law.",
+"cite": "N.Y. Exec. Law § 297",
+"source": "https://dhr.ny.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "3 years",
+"detail": "A complaint must be filed within 3 years of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "N.Y. Exec. Law § 297(5)",
+"source": "https://newyork.public.law/laws/n.y._executive_law_section_297",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Written notice must be given to the employer within 30 days after the accident.",
+"cite": "N.Y. Workers' Comp. Law § 18",
+"source": "https://codes.findlaw.com/ny/workers-compensation-law/wkc-sect-18/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim must be filed within 2 years after the accident (or date of disablement for occupational disease).",
+"cite": "N.Y. Workers' Comp. Law § 28",
+"source": "https://codes.findlaw.com/ny/workers-compensation-law/wkc-sect-28/",
+"verified": true
+},
+"wcAgency": {
+"value": "New York State Workers' Compensation Board",
+"detail": "State board that receives claims and decides disputes.",
+"cite": "N.Y. Workers' Comp. Law § 140",
+"source": "https://www.wcb.ny.gov/",
+"verified": true
+}
+},
+"OH": {
+"minimumWage": {
+"value": "$11.00/hour",
+"detail": "For employers with gross receipts over $405,000; rises to $11.40 on Jan 1, 2027 (small-employer threshold rises to $419,000).",
+"cite": "Ohio Const. art. II, § 34a; R.C. 4111.02",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$5.50/hour",
+"detail": "Cash wage for larger employers; rises to $5.70 on Jan 1, 2027.",
+"cite": "Ohio Const. art. II, § 34a",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Ohio Civil Rights Commission",
+"detail": "Investigates employment discrimination under R.C. ch. 4112.",
+"cite": "R.C. 4112.051",
+"source": "https://civ.ohio.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "2 years",
+"detail": "A charge must be filed with the Commission within 2 years of the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "R.C. 4112.051(B)(2)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4112.051",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "Claims are barred unless notice of the injured body parts reaches BWC or the Industrial Commission within 1 year of injury.",
+"cite": "R.C. 4123.84(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4123.84",
+"verified": true
+},
+"wcAgency": {
+"value": "Ohio Bureau of Workers' Compensation (and Industrial Commission of Ohio)",
+"detail": "BWC handles claims; the Industrial Commission hears disputed claims.",
+"cite": "R.C. 4121.121",
+"source": "https://www.ic.ohio.gov/",
+"verified": true
+}
+},
+"OK": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Applies to employers with 10+ full-time workers or over $100,000 in sales; others may pay $2.00 if not FLSA-covered. No 2027 change.",
+"cite": "40 O.S. § 197.2",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour",
+"detail": "DOL lists the federal $2.13 cash wage; non-FLSA employers may take up to a 50% tip credit under state law.",
+"cite": "40 O.S. § 197.4",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Oklahoma Attorney General, Office of Civil Rights Enforcement",
+"detail": "Takes employment discrimination complaints under the Oklahoma Anti-Discrimination Act.",
+"cite": "25 O.S. § 1350",
+"source": "https://oklahoma.gov/oag/about/divisions/civil-rights-enforcement/complaints.html",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "Complaints must be filed within 180 days of the last unlawful employment practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "25 O.S. § 1350(B)",
+"source": "https://oklahoma.gov/oag/about/divisions/civil-rights-enforcement/complaints.html",
+"verified": true
+}
+},
+"OR": {
+"minimumWage": {
+"value": "$15.55/hour (standard)",
+"detail": "$16.80 Portland metro, $14.55 nonurban counties, July 1, 2026 to June 30, 2027; next adjustment is July 1, 2027.",
+"cite": "ORS 653.025",
+"source": "https://www.oregon.gov/boli/workers/pages/minimum-wage.aspx",
+"verified": true
+},
+"tippedWage": {
+"value": "$15.55/hour (no tip credit)",
+"detail": "Oregon bans tip credits; tipped workers get the full regional minimum wage before tips.",
+"cite": "ORS 653.035(3)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Oregon Bureau of Labor and Industries (BOLI), Civil Rights Division",
+"detail": "Takes employment discrimination complaints under ORS ch. 659A.",
+"cite": "ORS 659A.820",
+"source": "https://www.oregon.gov/boli/civil-rights/pages/default.aspx",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "5 years",
+"detail": "Complaints under ORS 659A.030, .082 and .112 may be filed up to 5 years after the act; most other complaints within 1 year. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "ORS 659A.820(2)-(3)",
+"source": "https://oregon.public.law/statutes/ors_659A.820",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "90 days",
+"detail": "Notify the employer immediately, and no later than 90 days after the accident (up to 1 year with good cause or employer knowledge).",
+"cite": "ORS 656.265",
+"source": "https://oregon.public.law/statutes/ors_656.265",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "90 days (up to 1 year)",
+"detail": "In Oregon the notice of accident is the claim; a late claim may be accepted up to 1 year after the accident in limited cases.",
+"cite": "ORS 656.265(4)",
+"source": "https://oregon.public.law/statutes/ors_656.265",
+"verified": true
+},
+"wcAgency": {
+"value": "Oregon Workers' Compensation Division (Dept. of Consumer and Business Services)",
+"detail": "Oversees claims; disputes go to the Workers' Compensation Board.",
+"cite": "ORS 656.726",
+"source": "https://wcd.oregon.gov/Pages/index.aspx",
+"verified": true
+}
+},
+"PA": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Pennsylvania's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "43 P.S. § 333.104",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.83/hour",
+"detail": "Employers may take up to a $4.42/hour tip credit against the $7.25 minimum.",
+"cite": "43 P.S. § 333.103(d)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Pennsylvania Human Relations Commission",
+"detail": "Investigates employment discrimination under the PA Human Relations Act.",
+"cite": "43 P.S. § 959",
+"source": "https://www.pa.gov/agencies/phrc",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A PHRC complaint must be filed within 180 days of the alleged discrimination. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "43 P.S. § 959(h)",
+"source": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=PDF&SessYr=1955&ActNum=0222.&SessInd=0",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "21 days (120 at most)",
+"detail": "Benefits start only after notice; notice within 21 days preserves full benefits, and no compensation is due without notice within 120 days.",
+"cite": "77 P.S. § 631",
+"source": "https://www.pa.gov/agencies/dli/programs-services/workers-compensation",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "3 years from injury",
+"detail": "Claims are barred unless compensation is agreed or a claim petition is filed within 3 years of the injury.",
+"cite": "77 P.S. § 602",
+"source": "https://www.pa.gov/agencies/dli/programs-services/workers-compensation",
+"verified": true
+},
+"wcAgency": {
+"value": "Pennsylvania Bureau of Workers' Compensation (Dept. of Labor & Industry)",
+"detail": "Administers the system; workers' comp judges decide claim petitions.",
+"cite": "77 P.S. § 1 et seq.",
+"source": "https://www.pa.gov/agencies/dli/programs-services/workers-compensation",
+"verified": true
+}
+},
+"RI": {
+"minimumWage": {
+"value": "$16.00/hour",
+"detail": "Rises to $17.00 on Jan 1, 2027 under state law.",
+"cite": "R.I. Gen. Laws § 28-12-3",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$3.89/hour",
+"detail": "Employers may take up to a $12.11/hour tip credit; the employer must make up any shortfall.",
+"cite": "R.I. Gen. Laws § 28-12-5",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Rhode Island Commission for Human Rights",
+"detail": "Investigates employment discrimination under the RI Fair Employment Practices Act.",
+"cite": "R.I. Gen. Laws § 28-5-17",
+"source": "https://richr.ri.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "1 year",
+"detail": "A charge must be filed within 1 year of the unlawful employment practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "R.I. Gen. Laws § 28-5-17(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-5/28-5-17.htm",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notice of injury must be given to the employer within 30 days after it happens or appears.",
+"cite": "R.I. Gen. Laws § 28-33-30",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-33/28-33-30.HTM",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim is barred unless weekly payments started or a petition was filed within 2 years of the injury.",
+"cite": "R.I. Gen. Laws § 28-35-57(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-35/28-35-57.htm",
+"verified": true
+},
+"wcAgency": {
+"value": "RI Dept. of Labor and Training, Division of Workers' Compensation (and Workers' Compensation Court)",
+"detail": "DLT administers the system; petitions are decided by the RI Workers' Compensation Court.",
+"cite": "R.I. Gen. Laws § 28-29-1 et seq.",
+"source": "https://dlt.ri.gov/regulation-and-safety/workers-compensation",
+"verified": true
+}
+},
+"SC": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "No state minimum wage law; the federal $7.25 applies. No increase is scheduled for Jan 1, 2027.",
+"cite": "S.C. (no state law); 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "South Carolina Human Affairs Commission",
+"detail": "Investigates employment discrimination under the SC Human Affairs Law.",
+"cite": "S.C. Code § 1-13-90",
+"source": "https://schac.sc.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days of the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "S.C. Code § 1-13-90(a)",
+"source": "https://www.scstatehouse.gov/code/t01c013.php",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "90 days",
+"detail": "Notify the employer immediately; no compensation is payable unless notice is given within 90 days of the accident.",
+"cite": "S.C. Code § 42-15-20",
+"source": "https://www.scstatehouse.gov/code/t42c015.php",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "A claim must be filed with the Commission within 2 years of the accident.",
+"cite": "S.C. Code § 42-15-40",
+"source": "https://www.scstatehouse.gov/code/t42c015.php",
+"verified": true
+},
+"wcAgency": {
+"value": "South Carolina Workers' Compensation Commission",
+"detail": "State commission that receives claims and decides disputes.",
+"cite": "S.C. Code § 42-3-10",
+"source": "https://wcc.sc.gov/",
+"verified": true
+}
+},
+"SD": {
+"minimumWage": {
+"value": "$11.85/hour",
+"detail": "Indexed each Jan 1; rises to $12.30 on Jan 1, 2027.",
+"cite": "SDCL 60-11-3",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$5.93/hour",
+"detail": "Tipped cash wage is half the minimum; rises to $6.15 on Jan 1, 2027.",
+"cite": "SDCL 60-11-3.1",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "South Dakota Division of Human Rights",
+"detail": "Part of the Dept. of Labor & Regulation; investigates employment discrimination.",
+"cite": "SDCL 20-13-31",
+"source": "https://dlr.sd.gov/human_rights/default.aspx",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A charge must be filed within 180 days after the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "SDCL 20-13-31",
+"source": "https://sdlegislature.gov/api/Statutes/20-13-31.html",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "3 business days",
+"detail": "Written notice must be given to the employer no later than 3 business days after the injury.",
+"cite": "SDCL 62-7-10",
+"source": "https://sdlegislature.gov/api/Statutes/62-7-10.html",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years after denial",
+"detail": "A petition for hearing must be filed within 2 years after the insurer notifies the worker in writing that it is denying the claim.",
+"cite": "SDCL 62-7-35",
+"source": "https://sdlegislature.gov/api/Statutes/62-7-35.html",
+"verified": true
+},
+"wcAgency": {
+"value": "South Dakota Dept. of Labor & Regulation, Division of Labor and Management",
+"detail": "Administers workers' comp claims and hearings.",
+"cite": "SDCL 62-2-1",
+"source": "https://dlr.sd.gov/workers_compensation/default.aspx",
+"verified": true
+}
+},
+"TN": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "No state minimum wage law; the federal $7.25 applies. No increase is scheduled for Jan 1, 2027.",
+"cite": "Tenn. (no state law); 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "29 U.S.C. § 203(m); U.S. DOL tipped wage table",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "The EEOC lists a 180-day state agency deadline in Tennessee. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Tenn. Code § 4-21-302",
+"source": "https://www.eeoc.gov/field-office/memphis/timeliness",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "15 days",
+"detail": "Written notice must be given to the employer within 15 days of the accident unless the delay is excused.",
+"cite": "Tenn. Code § 50-6-201(a)",
+"source": "https://codes.findlaw.com/tn/title-50-employer-and-employee/tn-code-sect-50-6-201/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A petition for benefit determination must be filed within 1 year of the accident (if no benefits were paid).",
+"cite": "Tenn. Code § 50-6-203(b)(1)",
+"source": "https://codes.findlaw.com/tn/title-50-employer-and-employee/tn-code-sect-50-6-203/",
+"verified": true
+},
+"wcAgency": {
+"value": "Tennessee Bureau of Workers' Compensation",
+"detail": "Part of the Dept. of Labor and Workforce Development; administers claims and the Court of Workers' Compensation Claims.",
+"cite": "Tenn. Code § 50-6-233",
+"source": "https://www.tn.gov/workforce/injuries-at-work.html",
+"verified": true
+}
+},
+"TX": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Texas adopts the federal rate by reference; no increase scheduled for Jan 1, 2027.",
+"cite": "Tex. Lab. Code § 62.051",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "Tex. Lab. Code § 62.052",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Texas Workforce Commission, Civil Rights Division",
+"detail": "Takes employment discrimination complaints under Texas Labor Code ch. 21.",
+"cite": "Tex. Lab. Code § 21.202",
+"source": "https://www.twc.texas.gov/programs/civil-rights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A complaint must be filed within 180 days (300 days for sexual harassment). Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Tex. Lab. Code § 21.202",
+"source": "https://codes.findlaw.com/tx/labor-code/lab-sect-21-202/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Notify the employer no later than the 30th day after the injury (or after learning an occupational disease may be work-related).",
+"cite": "Tex. Lab. Code § 409.001",
+"source": "https://codes.findlaw.com/tx/labor-code/lab-sect-409-001/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim must be filed with the Division no later than 1 year after the injury.",
+"cite": "Tex. Lab. Code § 409.003",
+"source": "https://codes.findlaw.com/tx/labor-code/lab-sect-409-003/",
+"verified": true
+},
+"wcAgency": {
+"value": "Texas Department of Insurance, Division of Workers' Compensation",
+"detail": "Regulates the system and resolves disputes.",
+"cite": "Tex. Lab. Code § 402.001",
+"source": "https://www.tdi.texas.gov/wc/index.html",
+"verified": true
+}
+},
+"UT": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Utah's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "Utah Code § 34-40-103",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "Utah Admin. Code R610-1-4",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Utah Antidiscrimination and Labor Division (Labor Commission)",
+"detail": "Takes employment discrimination complaints under the Utah Antidiscrimination Act.",
+"cite": "Utah Code § 34A-5-107",
+"source": "https://laborcommission.utah.gov/divisions/antidiscrimination-and-labor/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "180 days",
+"detail": "A request for agency action must be filed within 180 days of the discriminatory practice. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Utah Code § 34A-5-107(1)(c)",
+"source": "https://codes.findlaw.com/ut/title-34a-utah-labor-code/ut-code-sect-34a-5-107/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "180 days",
+"detail": "Notify the employer (or division) within 180 days of the injury or the claim is barred.",
+"cite": "Utah Code § 34A-2-407(3)",
+"source": "https://codes.findlaw.com/ut/title-34a-utah-labor-code/ut-code-sect-34a-2-407/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "6 years (application for hearing)",
+"detail": "An application for hearing must be filed with the Adjudication Division within 6 years of the accident.",
+"cite": "Utah Code § 34A-2-417(2)",
+"source": "https://codes.findlaw.com/ut/title-34a-utah-labor-code/ut-code-sect-34a-2-417/",
+"verified": true
+},
+"wcAgency": {
+"value": "Utah Labor Commission, Industrial Accidents Division",
+"detail": "Oversees claims; the Adjudication Division hears disputes.",
+"cite": "Utah Code § 34A-2-201 et seq.",
+"source": "https://laborcommission.utah.gov/divisions/industrial-accidents/",
+"verified": true
+}
+},
+"VA": {
+"minimumWage": {
+"value": "$12.77/hour",
+"detail": "Under 2026 HB1/SB1, rises to $13.75 on Jan 1, 2027 and $15.00 on Jan 1, 2028, then indexed from 2029.",
+"cite": "Va. Code § 40.1-28.10",
+"source": "https://www.governor.virginia.gov/newsroom/news-releases/2026/april-releases/name-1116004-en.html",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour",
+"detail": "Employers may take up to a $10.64/hour tip credit against the $12.77 minimum.",
+"cite": "Va. Code § 40.1-28.9",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Virginia Office of the Attorney General, Office of Civil Rights",
+"detail": "Takes discrimination complaints under the Virginia Human Rights Act.",
+"cite": "Va. Code § 2.2-3907",
+"source": "https://www.oag.state.va.us/citizen-resources/civil-rights",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "2 years",
+"detail": "A complaint must be filed with the Office of Civil Rights within 2 years. File with EEOC within 300 days to keep federal claims.",
+"cite": "Va. Code § 2.2-3907(A)",
+"source": "https://law.lis.virginia.gov/vacode/title2.2/chapter39/section2.2-3907/",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "Written notice must be given to the employer within 30 days of the accident unless reasonably excused.",
+"cite": "Va. Code § 65.2-600(D)",
+"source": "https://law.lis.virginia.gov/vacode/title65.2/chapter6/section65.2-600/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years from injury",
+"detail": "The right to compensation is barred unless a claim is filed with the Commission within 2 years of the accident.",
+"cite": "Va. Code § 65.2-601",
+"source": "https://law.lis.virginia.gov/vacode/title65.2/chapter6/section65.2-601/",
+"verified": true
+},
+"wcAgency": {
+"value": "Virginia Workers' Compensation Commission",
+"detail": "State commission that receives claims and decides disputes.",
+"cite": "Va. Code § 65.2-200",
+"source": "https://workcomp.virginia.gov/",
+"verified": true
+}
+},
+"VT": {
+"minimumWage": {
+"value": "$14.42/hour",
+"detail": "Indexed each Jan 1; the 2027 rate had not been announced as of mid-October 2026.",
+"cite": "21 V.S.A. § 384",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$7.21/hour",
+"detail": "Service or tipped employees get half the minimum wage as a cash wage.",
+"cite": "21 V.S.A. § 384(a)(2)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Vermont Attorney General's Office, Civil Rights Unit",
+"detail": "Enforces Vermont's Fair Employment Practices Act for private employers.",
+"cite": "21 V.S.A. § 495b",
+"source": "https://ago.vermont.gov/divisions/civil-rights",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "As soon as practicable",
+"detail": "Notice of the injury must be given to the employer as soon as practicable.",
+"cite": "21 V.S.A. § 656(a)",
+"source": "https://legislature.vermont.gov/statutes/section/21/009/00656",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "6 months (3-year outer limit)",
+"detail": "A claim should be made within 6 months of injury; late claims are excused in some cases, but no claim may start after 3 years.",
+"cite": "21 V.S.A. §§ 656, 660",
+"source": "https://legislature.vermont.gov/statutes/section/21/009/00660",
+"verified": true
+},
+"wcAgency": {
+"value": "Vermont Department of Labor, Workers' Compensation Division",
+"detail": "Administers claims and hearings.",
+"cite": "21 V.S.A. § 601 et seq.",
+"source": "https://labor.vermont.gov/workers-compensation",
+"verified": true
+}
+},
+"WA": {
+"minimumWage": {
+"value": "$17.13/hour",
+"detail": "Indexed each Jan 1; rises to $17.73 on Jan 1, 2027. Seattle and other cities set higher rates.",
+"cite": "RCW 49.46.020",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$17.13/hour (no tip credit)",
+"detail": "Washington bans tip credits; tipped workers get the full minimum wage before tips.",
+"cite": "RCW 49.46.020",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Washington State Human Rights Commission",
+"detail": "Investigates employment discrimination under the Washington Law Against Discrimination.",
+"cite": "RCW 49.60.230",
+"source": "https://www.hum.wa.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "6 months",
+"detail": "An employment complaint must be filed within 6 months of the discriminatory act. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "RCW 49.60.230(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=49.60.230",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "Immediately (\"forthwith\")",
+"detail": "Report the accident to your employer or supervisor right away; the statute sets no number of days.",
+"cite": "RCW 51.28.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=51.28.010",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim must be filed within 1 year after the injury (2 years for occupational disease under RCW 51.28.055).",
+"cite": "RCW 51.28.050",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=51.28.050",
+"verified": true
+},
+"wcAgency": {
+"value": "Washington Department of Labor & Industries (L&I)",
+"detail": "Runs the state workers' comp fund and handles claims.",
+"cite": "RCW Title 51",
+"source": "https://lni.wa.gov/claims/",
+"verified": true
+}
+},
+"WI": {
+"minimumWage": {
+"value": "$7.25/hour",
+"detail": "Wisconsin's minimum equals the federal rate; no increase scheduled for Jan 1, 2027.",
+"cite": "Wis. Stat. § 104.035; Wis. Admin. Code DWD § 272.03",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.33/hour",
+"detail": "Employers may take up to a $4.92/hour tip credit against the $7.25 minimum.",
+"cite": "Wis. Admin. Code DWD § 272.03",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Wisconsin Equal Rights Division (Dept. of Workforce Development)",
+"detail": "Investigates employment discrimination under the Wisconsin Fair Employment Act.",
+"cite": "Wis. Stat. § 111.39",
+"source": "https://dwd.wisconsin.gov/er/civilrights/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "300 days",
+"detail": "A complaint must be filed with the department within 300 days of the alleged discrimination. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Wis. Stat. § 111.39(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/111/ii/39",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "30 days",
+"detail": "The employer must receive actual notice within 30 days of the injury (or of learning it is work-related).",
+"cite": "Wis. Stat. § 102.12",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/102/12",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "2 years (if no benefits paid)",
+"detail": "If no compensation was paid, an application must be filed within 2 years; otherwise a 6-year limit applies to traumatic injuries.",
+"cite": "Wis. Stat. §§ 102.12, 102.17(4)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/102/12",
+"verified": true
+},
+"wcAgency": {
+"value": "Wisconsin Dept. of Workforce Development, Worker's Compensation Division",
+"detail": "Administers claims and hearings.",
+"cite": "Wis. Stat. ch. 102",
+"source": "https://dwd.wisconsin.gov/wc/",
+"verified": true
+}
+},
+"WV": {
+"minimumWage": {
+"value": "$8.75/hour",
+"detail": "Applies to employers with 6+ employees at one location; no increase scheduled for Jan 1, 2027.",
+"cite": "W. Va. Code § 21-5C-2",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.62/hour",
+"detail": "Employers may count tips for up to 70% of the minimum wage ($6.13/hour).",
+"cite": "W. Va. Code § 21-5C-4",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "West Virginia Human Rights Commission",
+"detail": "Now housed in the Office of Inspector General; investigates employment discrimination.",
+"cite": "W. Va. Human Rights Act",
+"source": "https://hrc.wv.gov/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "365 days",
+"detail": "A complaint must be filed within 365 days of the most recent act of discrimination. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "W. Va. Human Rights Act (as amended 2024)",
+"source": "https://hrc.wv.gov/",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "6 months from injury",
+"detail": "The claim application must be filed within 6 months of the injury, or the right to compensation is forever barred.",
+"cite": "W. Va. Code § 23-4-15(a)",
+"source": "https://code.wvlegislature.gov/23-4-15/",
+"verified": true
+},
+"wcAgency": {
+"value": "West Virginia Offices of the Insurance Commissioner (Workers' Compensation)",
+"detail": "Regulates the private workers' comp market; claims go to the employer's carrier.",
+"cite": "W. Va. Code § 23-1-1",
+"source": "https://www.wvinsurance.gov/Workers-Compensation",
+"verified": true
+}
+},
+"WY": {
+"minimumWage": {
+"value": "$7.25/hour (federal)",
+"detail": "Wyoming's own minimum is $5.15, but the federal $7.25 applies to FLSA-covered employers. No Jan 1, 2027 change.",
+"cite": "Wyo. Stat. § 27-4-202; 29 U.S.C. § 206",
+"source": "https://www.dol.gov/agencies/whd/minimum-wage/state",
+"verified": true
+},
+"tippedWage": {
+"value": "$2.13/hour (federal)",
+"detail": "Employers may count up to $5.12/hour in tips toward the $7.25 federal minimum; if tips fall short, the employer must make up the difference.",
+"cite": "Wyo. Stat. § 27-4-202(b)",
+"source": "https://www.dol.gov/agencies/whd/state/minimum-wage/tipped",
+"verified": true
+},
+"fairEmploymentAgency": {
+"value": "Wyoming Dept. of Workforce Services, Labor Standards Office (Fair Employment Program)",
+"detail": "Investigates employment discrimination under the Wyoming Fair Employment Practices Act.",
+"cite": "Wyo. Stat. § 27-9-106",
+"source": "https://dws.wyo.gov/dws-division/labor-standards/",
+"verified": true
+},
+"discriminationDeadline": {
+"value": "6 months",
+"detail": "A verified complaint must be filed with the department within 6 months of the violation. Dual-filing with the state agency extends the federal EEOC deadline to 300 days.",
+"cite": "Wyo. Stat. § 27-9-106(a)",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+},
+"wcInjuryNotice": {
+"value": "72 hours",
+"detail": "Report the injury to the employer as soon as practical, no later than 72 hours; a formal injury report is due within 10 days.",
+"cite": "Wyo. Stat. § 27-14-502(a)",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+},
+"wcClaimDeadline": {
+"value": "1 year from injury",
+"detail": "A claim for benefits must be filed within 1 year after the injury (or its discovery).",
+"cite": "Wyo. Stat. § 27-14-503(a)",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+},
+"wcAgency": {
+"value": "Wyoming Dept. of Workforce Services, Workers' Compensation Division",
+"detail": "Runs Wyoming's exclusive state workers' comp fund and handles claims.",
+"cite": "Wyo. Stat. § 27-14-101 et seq.",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+}
+}
+}
+}

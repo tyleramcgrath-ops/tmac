@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Jost, Playfair_Display } from 'next/font/google'
 import Script from 'next/script'
 import { Footer, Header } from '@/components/Shell'
+import { Tracker } from '@/components/Tracker'
 import { JsonLd } from '@/components/ui'
 import { SITE, orgLd, websiteLd } from '@/lib/site'
 import './globals.css'
@@ -41,6 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main">{children}</main>
         <Footer />
+        <Tracker />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="ga4" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}

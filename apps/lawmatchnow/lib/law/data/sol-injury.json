@@ -1,0 +1,1715 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "Alaska Stat. § 09.10.070(a)(2)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=09.10.070&secEnd=09.10.070",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Alaska Stat. § 09.55.580(a)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=09.55.580&secEnd=09.55.580",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual; the general 10-year statute of repose applies, with exceptions (e.g., concealment, undiscovered foreign body).",
+"cite": "Alaska Stat. §§ 09.10.070, 09.10.055",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=09.10.055&secEnd=09.10.055",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Alaska Stat. § 09.10.070(a)(3)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=09.10.070&secEnd=09.10.070",
+"verified": true
+}
+},
+"AL": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the injury.",
+"cite": "Ala. Code § 6-2-38(l)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=6-2-38",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Ala. Code § 6-5-410(d)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=6-5-410",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act or omission; 6 months from discovery if not discoverable sooner; 4-year statute of repose (minors under 4 have until age 8).",
+"cite": "Ala. Code § 6-5-482(a)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=6-5-482",
+"verified": true
+}
+},
+"AR": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of the injury.",
+"cite": "Ark. Code Ann. § 16-56-105",
+"source": "https://law.justia.com/codes/arkansas/title-16/subtitle-5/chapter-56/subchapter-1/section-16-56-105",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death.",
+"cite": "Ark. Code Ann. § 16-62-102(c)(1)",
+"source": "https://law.justia.com/codes/arkansas/title-16/subtitle-5/chapter-62/section-16-62-102",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the wrongful act (no general discovery rule); 1 year from discovery for foreign objects; special rules for minors.",
+"cite": "Ark. Code Ann. § 16-114-203",
+"source": "https://law.justia.com/codes/arkansas/title-16/subtitle-7/chapter-114/subchapter-2/section-16-114-203",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking or injuring goods or chattels.",
+"cite": "Ark. Code Ann. § 16-56-105(6)",
+"source": "https://law.justia.com/codes/arkansas/title-16/subtitle-5/chapter-56/subchapter-1/section-16-56-105",
+"verified": true
+}
+},
+"AZ": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date the cause of action accrues.",
+"cite": "Ariz. Rev. Stat. § 12-542(1)",
+"source": "https://azleg.gov/ars/12/00542.htm",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Ariz. Rev. Stat. § 12-542(2)",
+"source": "https://azleg.gov/ars/12/00542.htm",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule applies); Arizona has no general malpractice statute of repose.",
+"cite": "Ariz. Rev. Stat. § 12-542(1)",
+"source": "https://azleg.gov/ars/12/00542.htm",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for trespass for injury to property.",
+"cite": "Ariz. Rev. Stat. § 12-542(3)",
+"source": "https://azleg.gov/ars/12/00542.htm",
+"verified": true
+}
+},
+"CA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the injury.",
+"cite": "Cal. Civ. Proc. Code § 335.1",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=335.1",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Cal. Civ. Proc. Code § 335.1",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=335.1",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "3 years from injury or 1 year from discovery, whichever comes first; 3-year cap tolled only for fraud, concealment, or a foreign body.",
+"cite": "Cal. Civ. Proc. Code § 340.5",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=340.5",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "Cal. Civ. Proc. Code § 338(c)(1)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=338",
+"verified": true
+}
+},
+"CO": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual for most negligence claims; 3 years for injuries arising from use or operation of a motor vehicle.",
+"cite": "Colo. Rev. Stat. §§ 13-80-102(1)(a), 13-80-101(1)(n)",
+"source": "https://law.justia.com/codes/colorado/title-13/limitation-of-actions/article-80/section-13-80-102",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of death), with limited exceptions in subsection (2).",
+"cite": "Colo. Rev. Stat. § 13-80-102(1)(d)",
+"source": "https://law.justia.com/codes/colorado/title-13/limitation-of-actions/article-80/section-13-80-102",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule); 3-year statute of repose from the act or omission, with exceptions.",
+"cite": "Colo. Rev. Stat. § 13-80-102.5(1)",
+"source": "https://law.justia.com/codes/colorado/title-13/limitation-of-actions/article-80/section-13-80-102-5",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "General tort period; property damage arising from use or operation of a motor vehicle is 3 years.",
+"cite": "Colo. Rev. Stat. §§ 13-80-102(1)(a), 13-80-101(1)(n)",
+"source": "https://law.justia.com/codes/colorado/title-13/limitation-of-actions/article-80/section-13-80-102",
+"verified": true
+}
+},
+"CT": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the injury is sustained or discovered; no action more than 3 years after the act or omission.",
+"cite": "Conn. Gen. Stat. § 52-584",
+"source": "https://law.justia.com/codes/connecticut/title-52/chapter-926/section-52-584",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death; no action more than 5 years after the act or omission (exception for certain homicide convictions).",
+"cite": "Conn. Gen. Stat. § 52-555(a)",
+"source": "https://law.justia.com/codes/connecticut/title-52/chapter-925/section-52-555",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the injury is sustained or discovered; 3-year statute of repose from the act or omission.",
+"cite": "Conn. Gen. Stat. § 52-584",
+"source": "https://law.justia.com/codes/connecticut/title-52/chapter-926/section-52-584",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "For negligent damage to real or personal property; 3-year outer limit from the act or omission.",
+"cite": "Conn. Gen. Stat. § 52-584",
+"source": "https://law.justia.com/codes/connecticut/title-52/chapter-926/section-52-584",
+"verified": true
+}
+},
+"DC": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual; D.C. applies the residual 3-year period to negligence claims.",
+"cite": "D.C. Code § 12-301(8)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "D.C. Code § 16-2702",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-2702",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule); no statute of repose. A 90-day notice of intent is required before suing (D.C. Code § 16-2802).",
+"cite": "D.C. Code § 12-301(8)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for injury to real or personal property.",
+"cite": "D.C. Code § 12-301(3)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+}
+},
+"DE": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date the injury was sustained.",
+"cite": "Del. Code Ann. tit. 10, § 8119",
+"source": "https://delcode.delaware.gov/title10/c081",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual of the cause of action.",
+"cite": "Del. Code Ann. tit. 10, § 8107",
+"source": "https://delcode.delaware.gov/title10/c081",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of injury; up to 3 years if the injury could not reasonably have been discovered sooner; minors under 6 have until age 6.",
+"cite": "Del. Code Ann. tit. 18, § 6856",
+"source": "https://delcode.delaware.gov/title18/c068/sc06",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for injury to personal property.",
+"cite": "Del. Code Ann. tit. 10, § 8107",
+"source": "https://delcode.delaware.gov/title10/c081",
+"verified": true
+}
+},
+"FL": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of injury, for negligence claims accruing after March 24, 2023 (4 years before, under HB 837).",
+"cite": "Fla. Stat. § 95.11(5)(a)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/95.11",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Fla. Stat. § 95.11(5)(e)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/95.11",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the incident or discovery; 4-year repose (minors excepted); up to 7 years if fraud or concealment prevented discovery.",
+"cite": "Fla. Stat. § 95.11(5)(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/95.11",
+"verified": true
+}
+},
+"GA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the injury.",
+"cite": "O.C.G.A. § 9-3-33",
+"source": "https://law.justia.com/codes/georgia/title-9/chapter-3/article-2/section-9-3-33",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "O.C.G.A. § 9-3-33",
+"source": "https://law.justia.com/codes/georgia/title-9/chapter-3/article-2/section-9-3-33",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of injury or death; 5-year statute of repose from the negligent act.",
+"cite": "O.C.G.A. § 9-3-71",
+"source": "https://law.justia.com/codes/georgia/title-9/chapter-3/article-4/section-9-3-71",
+"verified": true
+},
+"propertyDamage": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for damage to or destruction of personal property.",
+"cite": "O.C.G.A. § 9-3-32",
+"source": "https://law.justia.com/codes/georgia/title-9/chapter-3/article-2/section-9-3-32",
+"verified": true
+}
+},
+"HI": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule applies).",
+"cite": "Haw. Rev. Stat. § 657-7",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol13_Ch0601-0676/HRS0657/HRS_0657-0007.htm",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Haw. Rev. Stat. § 663-3",
+"source": "https://law.justia.com/codes/hawaii/title-36/chapter-663/section-663-3",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From discovery of the injury; 6-year statute of repose, tolled while a known error is not disclosed.",
+"cite": "Haw. Rev. Stat. § 657-7.3",
+"source": "https://law.justia.com/codes/hawaii/title-36/chapter-657/section-657-7-3",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for damage to property.",
+"cite": "Haw. Rev. Stat. § 657-7",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol13_Ch0601-0676/HRS0657/HRS_0657-0007.htm",
+"verified": true
+}
+},
+"IA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "Iowa Code § 614.1(2)",
+"source": "https://legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, generally the date of death.",
+"cite": "Iowa Code § 614.1(2)",
+"source": "https://legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the injury or death was or should have been discovered; 6-year statute of repose with limited exceptions.",
+"cite": "Iowa Code § 614.1(9)",
+"source": "https://legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"propertyDamage": {
+"value": "5 years",
+"years": 5,
+"detail": "From accrual, for injuries to property.",
+"cite": "Iowa Code § 614.1(4)",
+"source": "https://legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+}
+},
+"ID": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the injury.",
+"cite": "Idaho Code § 5-219(4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-219",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Idaho Code § 5-219(4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-219",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act or omission; for foreign objects or fraudulent concealment, 1 year from discovery or 2 years from the act, whichever is later.",
+"cite": "Idaho Code § 5-219(4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-219",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "Idaho Code § 5-218(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-218",
+"verified": true
+}
+},
+"IL": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "735 ILCS 5/13-202",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/073500050K13-202.htm",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death; up to 5 years if death resulted from violent intentional conduct.",
+"cite": "740 ILCS 180/2(d)-(e)",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/074001800K2.htm",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From discovery of the injury; 4-year statute of repose from the act (8 years for minors, but no later than age 22).",
+"cite": "735 ILCS 5/13-212(a)",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/073500050K13-212.htm",
+"verified": true
+},
+"propertyDamage": {
+"value": "5 years",
+"years": 5,
+"detail": "From accrual, for injury to real or personal property.",
+"cite": "735 ILCS 5/13-205",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/073500050K13-205.htm",
+"verified": true
+}
+},
+"IN": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "Ind. Code § 34-11-2-4(a)(1)",
+"source": "https://law.justia.com/codes/indiana/title-34/article-11/chapter-2/section-34-11-2-4",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Ind. Code § 34-23-1-1",
+"source": "https://law.justia.com/codes/indiana/title-34/article-23/chapter-1/section-34-23-1-1",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of the act or omission (occurrence-based); children under 6 have until age 8.",
+"cite": "Ind. Code § 34-18-7-1(b)",
+"source": "https://law.justia.com/codes/indiana/title-34/article-18/chapter-7/section-34-18-7-1",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for injury to personal property.",
+"cite": "Ind. Code § 34-11-2-4(a)(2)",
+"source": "https://law.justia.com/codes/indiana/title-34/article-11/chapter-2/section-34-11-2-4",
+"verified": true
+}
+},
+"KS": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From substantial injury or when injury becomes reasonably ascertainable; 10-year outer limit from the act.",
+"cite": "Kan. Stat. Ann. § 60-513(a)(4), (b)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of death).",
+"cite": "Kan. Stat. Ann. § 60-513(a)(5)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act, or when injury becomes reasonably ascertainable; 4-year statute of repose from the act.",
+"cite": "Kan. Stat. Ann. § 60-513(a)(7), (c)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Kan. Stat. Ann. § 60-513(a)(2)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+}
+},
+"KY": {
+"personalInjury": {
+"value": "1 year",
+"years": 1,
+"detail": "From the date of injury; motor-vehicle accident claims get 2 years from injury or last no-fault (PIP) payment under KRS 304.39-230(6).",
+"cite": "KRS 413.140(1)(a)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58050",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "1 year",
+"years": 1,
+"detail": "1 year from appointment of the personal representative, who is deemed appointed no later than 1 year after death (so up to 2 years); car-crash deaths: 2 years.",
+"cite": "KRS 413.140(1)(a), 413.180",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=17874",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "1 year",
+"years": 1,
+"detail": "From when the injury is or should have been discovered; 5-year statute of repose from the negligent act.",
+"cite": "KRS 413.140(1)(e), (2)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58050",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "KRS 413.125",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=17867",
+"verified": true
+}
+},
+"LA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the day injury is sustained, for injuries on or after July 1, 2024 (1 year before, under Act 423 of 2024).",
+"cite": "La. Civ. Code art. 3493.1",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=1386443",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "1 year",
+"years": 1,
+"detail": "1 year from death or 2 years from the day the injury was sustained, whichever is longer (per 2025 amendments).",
+"cite": "La. Civ. Code art. 2315.2(B)",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=109371",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "1 year",
+"years": 1,
+"detail": "From the act or from discovery; 3-year outer limit from the act, applying even to minors.",
+"cite": "La. Rev. Stat. § 9:5628(A)",
+"source": "https://law.justia.com/codes/louisiana/revised-statutes/title-9/rs-9-5628",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From the day damage is sustained, for damage on or after July 1, 2024 (1 year before).",
+"cite": "La. Civ. Code art. 3493.1",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=1386443",
+"verified": true
+}
+},
+"MA": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule applies).",
+"cite": "Mass. Gen. Laws ch. 260, § 2A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2A",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death, or 3 years from when the executor knew or should have known of the claim.",
+"cite": "Mass. Gen. Laws ch. 229, § 2",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleII/Chapter229/Section2",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule); 7-year statute of repose except foreign-object cases.",
+"cite": "Mass. Gen. Laws ch. 260, § 4",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section4",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, as an action of tort.",
+"cite": "Mass. Gen. Laws ch. 260, § 2A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2A",
+"verified": true
+}
+},
+"MD": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule applies).",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-101",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=5-101",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death; special rules for occupational disease and concealed homicide.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 3-904(g)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=3-904",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "5 years",
+"years": 5,
+"detail": "5 years from injury or 3 years from discovery, whichever is earlier; for children injured before 11, the clock starts at age 11.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-109(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=5-109",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, under the general civil period.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-101",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=5-101",
+"verified": true
+}
+},
+"ME": {
+"personalInjury": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, under Maine's general civil limitations period.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death; up to 6 years from discovery if the death was a homicide.",
+"cite": "Me. Rev. Stat. tit. 18-C, § 2-807(2)",
+"source": "https://legislature.maine.gov/statutes/18-C/title18-Csec2-807.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From the act or omission (not discovery), except foreign-object cases accrue at discovery; special minor rules.",
+"cite": "Me. Rev. Stat. tit. 24, § 2902",
+"source": "https://legislature.maine.gov/statutes/24/title24sec2902-2.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, under Maine's general civil limitations period.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+}
+},
+"MI": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of injury. Auto-accident injury suits are also subject to no-fault thresholds.",
+"cite": "Mich. Comp. Laws § 600.5805(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5805",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "Follows the underlying claim; an estate may sue within 2 years of letters of authority, but no later than 3 years after the period ran.",
+"cite": "Mich. Comp. Laws §§ 600.5805(2), 600.5852",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5852",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act, or 6 months after discovery if later; 6-year statute of repose (exceptions apply).",
+"cite": "Mich. Comp. Laws §§ 600.5805(8), 600.5838a",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5838a",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of injury to property; no-fault law limits auto property-damage suits (e.g., mini-tort).",
+"cite": "Mich. Comp. Laws § 600.5805(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5805",
+"verified": true
+}
+},
+"MN": {
+"personalInjury": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for negligence causing injury (intentional torts are shorter).",
+"cite": "Minn. Stat. § 541.05, subd. 1(5)",
+"source": "https://revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death, but no more than 6 years after the act; malpractice deaths are also capped by § 541.076.",
+"cite": "Minn. Stat. § 573.02, subd. 1",
+"source": "https://revisor.mn.gov/statutes/cite/573.02",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual; no separate statute of repose.",
+"cite": "Minn. Stat. § 541.076(b)",
+"source": "https://revisor.mn.gov/statutes/cite/541.076",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Minn. Stat. § 541.05, subd. 1(4)",
+"source": "https://revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+}
+},
+"MO": {
+"personalInjury": {
+"value": "5 years",
+"years": 5,
+"detail": "From accrual (when damage is sustained and ascertainable).",
+"cite": "Mo. Rev. Stat. § 516.120(4)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death.",
+"cite": "Mo. Rev. Stat. § 537.100",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=537.100",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act of neglect; foreign-object cases run from discovery; 10-year statute of repose (minors: 2 years after 18th birthday if later).",
+"cite": "Mo. Rev. Stat. § 516.105",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.105",
+"verified": true
+},
+"propertyDamage": {
+"value": "5 years",
+"years": 5,
+"detail": "From accrual, for taking, detaining, or injuring goods.",
+"cite": "Mo. Rev. Stat. § 516.120(4)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+}
+},
+"MS": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual; latent injuries accrue on discovery.",
+"cite": "Miss. Code Ann. § 15-1-49",
+"source": "https://law.justia.com/codes/mississippi/title-15/chapter-1/section-15-1-49",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "Generally from the date of death; malpractice deaths follow § 15-1-36.",
+"cite": "Miss. Code Ann. § 15-1-49",
+"source": "https://law.justia.com/codes/mississippi/title-15/chapter-1/section-15-1-49",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the act was or should have been discovered; 7-year statute of repose (exceptions for concealment and foreign objects).",
+"cite": "Miss. Code Ann. § 15-1-36(2)",
+"source": "https://law.justia.com/codes/mississippi/title-15/chapter-1/section-15-1-36",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, under the residual period.",
+"cite": "Miss. Code Ann. § 15-1-49",
+"source": "https://law.justia.com/codes/mississippi/title-15/chapter-1/section-15-1-49",
+"verified": true
+}
+},
+"MT": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual of the claim.",
+"cite": "Mont. Code Ann. § 27-2-204(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0040/0270-0020-0020-0040.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual; 10 years if the death resulted from a homicide.",
+"cite": "Mont. Code Ann. § 27-2-204(2)",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0040/0270-0020-0020-0040.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From injury or discovery, whichever is later; 5-year statute of repose from the injury, tolled for nondisclosure.",
+"cite": "Mont. Code Ann. § 27-2-205(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0050/0270-0020-0020-0050.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "Mont. Code Ann. § 27-2-207",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0070/0270-0020-0020-0070.html",
+"verified": true
+}
+},
+"NC": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From when bodily harm becomes apparent; 10-year outer limit from the defendant's last act.",
+"cite": "N.C. Gen. Stat. § 1-52(5), (16)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death; barred if the decedent's own claim would have been barred.",
+"cite": "N.C. Gen. Stat. § 1-53(4)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-53.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From the last act; if discovered later, 1 year from discovery; 4-year repose (10 years for foreign objects).",
+"cite": "N.C. Gen. Stat. §§ 1-15(c), 1-52(5)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-15.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From when physical damage becomes apparent, for injuring goods or chattels.",
+"cite": "N.C. Gen. Stat. § 1-52(4), (16)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+}
+},
+"ND": {
+"personalInjury": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for injury to the person not otherwise provided for.",
+"cite": "N.D. Cent. Code § 28-01-16(5)",
+"source": "https://ndlegis.gov/cencode/T28C01.pdf",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death (malpractice deaths run from discovery, capped at 6 years).",
+"cite": "N.D. Cent. Code § 28-01-18(4)",
+"source": "https://ndlegis.gov/cencode/T28C01.pdf",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual; discovery cannot extend claims against physicians or hospitals beyond 6 years unless prevented by fraud.",
+"cite": "N.D. Cent. Code § 28-01-18(3)",
+"source": "https://ndlegis.gov/cencode/T28C01.pdf",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "N.D. Cent. Code § 28-01-16(4)",
+"source": "https://ndlegis.gov/cencode/T28C01.pdf",
+"verified": true
+}
+},
+"NE": {
+"personalInjury": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for injury to the rights of the plaintiff not arising on contract.",
+"cite": "Neb. Rev. Stat. § 25-207(3)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-207",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Neb. Rev. Stat. § 30-810",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=30-810",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act; 1 year from discovery if not discoverable sooner; 10-year statute of repose.",
+"cite": "Neb. Rev. Stat. § 44-2828",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=44-2828",
+"verified": true
+},
+"propertyDamage": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Neb. Rev. Stat. § 25-207(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-207",
+"verified": true
+}
+},
+"NH": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From the act or omission, or from discovery of the injury and its cause if not discoverable sooner.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://law.justia.com/codes/new-hampshire/title-lii/chapter-508/section-508-4",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "Generally 3 years under RSA 508:4, with the action brought by the estate; RSA 556:11 allows up to 6 years after death subject to RSA 508.",
+"cite": "N.H. Rev. Stat. Ann. §§ 508:4, 556:11",
+"source": "https://gc.nh.gov/rsa/html/LVI/556/556-11.htm",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From the act, or from discovery if not discoverable sooner; no statute of repose.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://law.justia.com/codes/new-hampshire/title-lii/chapter-508/section-508-4",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From the act or omission (discovery rule applies).",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://law.justia.com/codes/new-hampshire/title-lii/chapter-508/section-508-4",
+"verified": true
+}
+},
+"NJ": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule applies).",
+"cite": "N.J. Stat. Ann. § 2A:14-2(a)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/112/308",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death; no limit if death resulted from murder or manslaughter with a conviction.",
+"cite": "N.J. Stat. Ann. § 2A:31-3",
+"source": "https://law.justia.com/codes/new-jersey/title-2a/section-2a-31-3",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule); birth injuries to minors may be brought until the 13th birthday.",
+"cite": "N.J. Stat. Ann. § 2A:14-2",
+"source": "https://law.justia.com/codes/new-jersey/title-2a/section-2a-14-2",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for tortious injury to real or personal property.",
+"cite": "N.J. Stat. Ann. § 2A:14-1",
+"source": "https://law.justia.com/codes/new-jersey/title-2a/section-2a-14-1",
+"verified": true
+}
+},
+"NM": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (generally the date of injury).",
+"cite": "N.M. Stat. Ann. § 37-1-8",
+"source": "https://law.justia.com/codes/new-mexico/chapter-37/article-1/section-37-1-8",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (generally the date of death).",
+"cite": "N.M. Stat. Ann. § 41-2-2",
+"source": "https://law.justia.com/codes/new-mexico/chapter-41/article-2/section-41-2-2",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of the act of malpractice (occurrence-based) for providers covered by the Medical Malpractice Act; minors under 6 have until age 9.",
+"cite": "N.M. Stat. Ann. § 41-5-13",
+"source": "https://law.justia.com/codes/new-mexico/chapter-41/article-5/section-41-5-13",
+"verified": true
+},
+"propertyDamage": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for injuries to property.",
+"cite": "N.M. Stat. Ann. § 37-1-4",
+"source": "https://law.justia.com/codes/new-mexico/chapter-37/article-1/section-37-1-4",
+"verified": true
+}
+},
+"NV": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "Nev. Rev. Stat. § 11.190(4)(e)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of death).",
+"cite": "Nev. Rev. Stat. § 11.190(4)(e)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "3 years from injury or 2 years from discovery, whichever is first, for injuries on/after Oct. 1, 2023 (discovery period was 1 year before).",
+"cite": "Nev. Rev. Stat. § 41A.097(3)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-041A.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Nev. Rev. Stat. § 11.190(3)(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+}
+},
+"NY": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (generally the date of injury).",
+"cite": "N.Y. C.P.L.R. 214(5)",
+"source": "https://nysenate.gov/legislation/laws/CVP/214",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death; extra time after a related criminal case ends.",
+"cite": "N.Y. Est. Powers & Trusts Law § 5-4.1",
+"source": "https://nysenate.gov/legislation/laws/EPT/5-4.1",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2.5 years",
+"years": 2.5,
+"detail": "From the act or end of continuous treatment; foreign objects 1 year from discovery; missed cancer runs from discovery, capped at 7 years.",
+"cite": "N.Y. C.P.L.R. 214-a",
+"source": "https://nysenate.gov/legislation/laws/CVP/214-A",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for injury to property.",
+"cite": "N.Y. C.P.L.R. 214(4)",
+"source": "https://nysenate.gov/legislation/laws/CVP/214",
+"verified": true
+}
+},
+"OH": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date the injury occurs (special accrual rules for exposure claims).",
+"cite": "Ohio Rev. Code § 2305.10(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.10",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death (special rules for certain product claims).",
+"cite": "Ohio Rev. Code § 2125.02(F)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2125.02",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "1 year",
+"years": 1,
+"detail": "From accrual (can be extended 180 days by a notice letter); 4-year statute of repose, with a discovery exception.",
+"cite": "Ohio Rev. Code § 2305.113",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.113",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date the loss to property occurs.",
+"cite": "Ohio Rev. Code § 2305.10(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.10",
+"verified": true
+}
+},
+"OK": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for injury to the rights of another not arising on contract.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(3)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os12.pdf?section=12-95",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of death).",
+"cite": "Okla. Stat. tit. 12, § 1053(A)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os12.pdf?section=12-1053",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the plaintiff knew or should have known of the injury; no statute of repose; extended for minors.",
+"cite": "Okla. Stat. tit. 76, § 18",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os76.pdf?section=76-18",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(3)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os12.pdf?section=12-95",
+"verified": true
+}
+},
+"OR": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule applies).",
+"cite": "Or. Rev. Stat. § 12.110(1)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From discovery of the injury causing death, but never more than 3 years after death or past any applicable repose period.",
+"cite": "Or. Rev. Stat. § 30.020(1)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors030.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From when the injury is or should have been discovered; 5-year statute of repose (extended for fraud or deceit).",
+"cite": "Or. Rev. Stat. § 12.110(4)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Or. Rev. Stat. § 12.080(4)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+}
+},
+"PA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of injury).",
+"cite": "42 Pa. Cons. Stat. § 5524(2)",
+"source": "https://legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?chpt=55&div=0&ttl=42&txtType=HTM",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, generally the date of death.",
+"cite": "42 Pa. Cons. Stat. § 5524(2)",
+"source": "https://legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?chpt=55&div=0&ttl=42&txtType=HTM",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule). MCARE's 7-year repose was struck down in Yanakos v. UPMC (Pa. 2019).",
+"cite": "42 Pa. Cons. Stat. § 5524(2); 40 P.S. § 1303.513",
+"source": "https://law.justia.com/cases/pennsylvania/supreme-court/2019/10-wap-2018.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "42 Pa. Cons. Stat. § 5524(3), (7)",
+"source": "https://legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?chpt=55&div=0&ttl=42&txtType=HTM",
+"verified": true
+}
+},
+"RI": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for injuries to the person.",
+"cite": "R.I. Gen. Laws § 9-1-14(b)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-36.htm",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death, or from discovery if the wrongful act was unknown at death.",
+"cite": "R.I. Gen. Laws § 10-7-2(c)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE10/10-7/10-7-2.HTM",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From the incident, or 3 years from when it should have been discovered; minors until age 21.",
+"cite": "R.I. Gen. Laws § 9-1-14.1",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-14.1.HTM",
+"verified": true
+},
+"propertyDamage": {
+"value": "10 years",
+"years": 10,
+"detail": "From accrual, under the catch-all for civil actions not otherwise limited.",
+"cite": "R.I. Gen. Laws § 9-1-13(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-36.htm",
+"verified": true
+}
+},
+"SC": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule applies).",
+"cite": "S.C. Code Ann. § 15-3-530(5)",
+"source": "https://scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death.",
+"cite": "S.C. Code Ann. § 15-3-530(6)",
+"source": "https://scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "From treatment or discovery; 6-year statute of repose from the occurrence (foreign-object rule differs).",
+"cite": "S.C. Code Ann. § 15-3-545(A)",
+"source": "https://scstatehouse.gov/code/t15c003.php",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "S.C. Code Ann. § 15-3-530(4)",
+"source": "https://scstatehouse.gov/code/t15c003.php",
+"verified": true
+}
+},
+"SD": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for personal injury.",
+"cite": "S.D. Codified Laws § 15-2-14(3)",
+"source": "https://sdlegislature.gov/Statutes/15-2-14",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death.",
+"cite": "S.D. Codified Laws § 21-5-3",
+"source": "https://sdlegislature.gov/Statutes/21-5-3",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date the malpractice occurred (occurrence-based).",
+"cite": "S.D. Codified Laws § 15-2-14.1",
+"source": "https://sdlegislature.gov/Statutes/15-2-14.1",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for taking, detaining, or injuring goods or chattels.",
+"cite": "S.D. Codified Laws § 15-2-13(4)",
+"source": "https://sdlegislature.gov/Statutes/15-2-13",
+"verified": true
+}
+},
+"TN": {
+"personalInjury": {
+"value": "1 year",
+"years": 1,
+"detail": "From accrual; 2 years if criminal charges are brought against the person who caused the injury.",
+"cite": "Tenn. Code Ann. § 28-3-104(a)",
+"source": "https://law.justia.com/codes/tennessee/title-28/chapter-3/part-1/section-28-3-104",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "1 year",
+"years": 1,
+"detail": "From accrual (generally the date of death), under the personal-injury period.",
+"cite": "Tenn. Code Ann. § 28-3-104(a)",
+"source": "https://law.justia.com/codes/tennessee/title-28/chapter-3/part-1/section-28-3-104",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "1 year",
+"years": 1,
+"detail": "From injury or discovery; 3-year statute of repose except for fraudulent concealment or foreign objects.",
+"cite": "Tenn. Code Ann. § 29-26-116(a)",
+"source": "https://law.justia.com/codes/tennessee/title-29/chapter-26/part-1/section-29-26-116",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for injuries to personal or real property.",
+"cite": "Tenn. Code Ann. § 28-3-105(1)",
+"source": "https://law.justia.com/codes/tennessee/title-28/chapter-3/part-1/section-28-3-105",
+"verified": true
+}
+},
+"TX": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From the day the cause of action accrues.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.003(a)",
+"source": "https://statutes.capitol.texas.gov/Docs/CP/html/CP.16.004.0653.htm",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.003(b)",
+"source": "https://statutes.capitol.texas.gov/Docs/CP/html/CP.16.004.0653.htm",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the breach or completion of the treatment; 10-year statute of repose; children under 12 have until age 14.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 74.251",
+"source": "https://law.justia.com/codes/texas/civil-practice-and-remedies-code/title-4/chapter-74/subchapter-f/section-74-251",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for injury to the property of another.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.003(a)",
+"source": "https://statutes.capitol.texas.gov/Docs/CP/html/CP.16.004.0653.htm",
+"verified": true
+}
+},
+"UT": {
+"personalInjury": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, under the catch-all for relief not otherwise provided for.",
+"cite": "Utah Code § 78B-2-307(4)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter2/78B-2-S307.html",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (generally the date of death).",
+"cite": "Utah Code § 78B-2-304(3)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter2/78B-2-S304.html",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From discovery of the injury; 4-year statute of repose; 1 year from discovery for foreign objects or fraudulent concealment.",
+"cite": "Utah Code § 78B-3-404",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter3/78B-3-S404.html",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "Generally 3 years; damage to a motor vehicle or other property in a motor-vehicle accident: 4 years.",
+"cite": "Utah Code §§ 78B-2-305(1)(a)(ii), 78B-2-307(3)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter2/78B-2-S305.html",
+"verified": true
+}
+},
+"VA": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (the date of injury).",
+"cite": "Va. Code Ann. § 8.01-243(A)",
+"source": "https://law.lis.virginia.gov/vacode/8.01-243",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Va. Code Ann. § 8.01-244(B)",
+"source": "https://law.lis.virginia.gov/vacode/8.01-244",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the injury; 1-year extensions for foreign objects or concealment, generally capped at 10 years after the act.",
+"cite": "Va. Code Ann. § 8.01-243(A), (C)",
+"source": "https://law.lis.virginia.gov/vacode/8.01-243",
+"verified": true
+},
+"propertyDamage": {
+"value": "5 years",
+"years": 5,
+"detail": "From accrual, for injury to property.",
+"cite": "Va. Code Ann. § 8.01-243(B)",
+"source": "https://law.lis.virginia.gov/vacode/8.01-243",
+"verified": true
+}
+},
+"VT": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From discovery of the injury.",
+"cite": "Vt. Stat. Ann. tit. 12, § 512(4)",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00512",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From discovery of the death; up to 7 years where probable cause supports a homicide charge.",
+"cite": "Vt. Stat. Ann. tit. 14, § 1492(a)",
+"source": "https://legislature.vermont.gov/statutes/section/14/071/01492",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "3 years from the incident or 2 years from discovery, whichever is later; 7-year repose (none if fraudulent concealment).",
+"cite": "Vt. Stat. Ann. tit. 12, § 521",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00521",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for damage to personal property.",
+"cite": "Vt. Stat. Ann. tit. 12, § 512(5)",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00512",
+"verified": true
+}
+},
+"WA": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual (discovery rule applies).",
+"cite": "Wash. Rev. Code § 4.16.080(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From the date of death, under the general 3-year injury period.",
+"cite": "Wash. Rev. Code § 4.16.080(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+},
+"propertyDamage": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Wash. Rev. Code § 4.16.080(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+}
+},
+"WI": {
+"personalInjury": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual, including injuries from motor-vehicle accidents.",
+"cite": "Wis. Stat. § 893.54(1m)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/893.pdf",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "3 years",
+"years": 3,
+"detail": "From accrual; 2 years if the death arose from a motor-vehicle accident.",
+"cite": "Wis. Stat. § 893.54(1m)(b), (2m)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/893.pdf",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "3 years",
+"years": 3,
+"detail": "3 years from injury or 1 year from discovery, whichever is later, but discovery claims capped at 5 years from the act.",
+"cite": "Wis. Stat. § 893.55(1m)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/893.pdf",
+"verified": true
+},
+"propertyDamage": {
+"value": "6 years",
+"years": 6,
+"detail": "From accrual, for injury to real or personal property.",
+"cite": "Wis. Stat. § 893.52(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/893.pdf",
+"verified": true
+}
+},
+"WV": {
+"personalInjury": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual (discovery rule applies).",
+"cite": "W. Va. Code § 55-2-12(b)",
+"source": "https://code.wvlegislature.gov/55-2-12/",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "W. Va. Code § 55-7-6(d)",
+"source": "https://code.wvlegislature.gov/55-7-6/",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From injury or discovery, whichever is later; 10-year statute of repose (different rules for nursing homes).",
+"cite": "W. Va. Code § 55-7B-4(a)",
+"source": "https://code.wvlegislature.gov/55-7B-4/",
+"verified": true
+},
+"propertyDamage": {
+"value": "2 years",
+"years": 2,
+"detail": "From accrual, for damage to property.",
+"cite": "W. Va. Code § 55-2-12(a)",
+"source": "https://code.wvlegislature.gov/55-2-12/",
+"verified": true
+}
+},
+"WY": {
+"personalInjury": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for injury to rights not arising on contract.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(iv)(C)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"wrongfulDeath": {
+"value": "2 years",
+"years": 2,
+"detail": "From the date of death.",
+"cite": "Wyo. Stat. Ann. § 1-38-102(d)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"medicalMalpractice": {
+"value": "2 years",
+"years": 2,
+"detail": "From the act, or 2 years from discovery if not reasonably discoverable; 6-month extension if discovered in year two.",
+"cite": "Wyo. Stat. Ann. § 1-3-107(a)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"propertyDamage": {
+"value": "4 years",
+"years": 4,
+"detail": "From accrual, for taking, detaining, or injuring personal property.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(iv)(B)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}
