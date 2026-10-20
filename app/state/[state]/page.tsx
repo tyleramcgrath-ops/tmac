@@ -23,7 +23,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!s) return {}
   const pi = fact(s.code, 'sol-injury.personalInjury')
   return {
-    title: `${s.name} Lawyers & ${s.name} Law Guide: Find an Attorney in ${s.code}`,
+    title: `${s.name} Lawyers & ${s.code} Law Guide`,
     description: `Find attorneys licensed in ${s.name} by city and practice area${pi ? `, and know the rules: ${pi.value} to file an injury lawsuit` : ''}, plus divorce, DUI, small claims and more, with statutes cited.`.slice(0, 300),
     alternates: { canonical: `/state/${s.slug}` },
     robots: pageParam((await searchParams).page) > 1 ? { index: false, follow: true } : undefined,

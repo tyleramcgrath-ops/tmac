@@ -36,9 +36,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!r) return {}
   const { t, s, d } = r
   const url = `/calculators/${t.slug}/${s.slug}`
-  const title = `${t.title(s)} (${REVIEWED.slice(0, 4)})`
+  const title = t.heading(s)
   const description = t.description(s, d).slice(0, 300)
-  return { title, description, alternates: { canonical: url }, openGraph: { title, description, url: abs(url) } }
+  return { title, description, alternates: { canonical: url }, openGraph: { title: t.title(s), description, url: abs(url) } }
 }
 
 export default async function StateToolPage({ params }: Props) {

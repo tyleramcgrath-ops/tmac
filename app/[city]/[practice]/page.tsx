@@ -56,7 +56,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const thin = (total < 3 && !topics.length) || pageParam((await searchParams).page) > 1
   const lead = topics[0] ? law.f(topics[0].lead) : null
   return {
-    title: `${c.name} ${p.lawyerTitle}: ${st.name} Law & Local Attorneys`,
+    title: `${c.name} ${p.lawyerTitle} & ${st.code} Law`,
     description: (lead && topics[0]
       ? `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${topics[0].answer(law)} Compare local attorneys and get a free case review.`
       : `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${p.short}`).slice(0, 300),

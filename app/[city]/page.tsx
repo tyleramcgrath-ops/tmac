@@ -26,7 +26,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const st = stateByCode(c.state)!
   const loc = cityLocal(c.slug)
   return {
-    title: `${c.name} Lawyers: Find an Attorney in ${c.name}, ${c.state}`,
+    title: `${c.name}, ${c.state} Lawyers: Find an Attorney`,
     description: `Find ${c.name}, ${st.name} attorneys by legal issue. Local courts${loc?.county ? ` in ${loc.county}` : ''}, free legal aid, the bar referral service and the ${st.name} laws that apply to your case.`.slice(0, 300),
     alternates: { canonical: `/${c.slug}` },
     robots: pageParam((await searchParams).page) > 1 ? { index: false, follow: true } : undefined,
