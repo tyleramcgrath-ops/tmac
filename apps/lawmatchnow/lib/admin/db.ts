@@ -5,9 +5,9 @@
 // though SEO results are kept in a local file (see kvGet).
 
 import { mkdirSync, readFileSync, renameSync, writeFileSync } from 'node:fs'
-import { homedir } from 'node:os'
 import { join } from 'node:path'
 import { Pool, types } from 'pg'
+import { dataDir } from './localconf'
 
 // Return timestamps and dates as ISO strings, as the rest of the site expects.
 types.setTypeParser(1184, (v) => new Date(v).toISOString())
@@ -78,7 +78,7 @@ export async function q<T = Record<string, unknown>>(sql: string, params: unknow
 // go to a JSON file in the home folder, outside SiteGround's release folders
 // so it survives deploys. LMN_DATA_DIR overrides the location.
 type KvFile = Record<string, { value: unknown; updated_at: string }>
-const kvPath = () => join(process.env.LMN_DATA_DIR || join(homedir(), 'lmn-data'), 'kv.json')
+const kvPath = () => join(dataDir(), 'kv.json')
 function readKvFile(): KvFile {
   try { return JSON.parse(readFileSync(kvPath(), 'utf8')) as KvFile } catch { return {} }
 }
