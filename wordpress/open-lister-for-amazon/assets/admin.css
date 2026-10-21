@@ -1,0 +1,61 @@
+.ola-badge {
+	display: inline-block;
+	padding: 2px 8px;
+	border-radius: 10px;
+	font-size: 12px;
+	line-height: 1.6;
+	background: #dcdcde;
+	color: #1d2327;
+}
+.ola-badge.ola-active { background: #d1f0d8; color: #0a5c1d; }
+.ola-badge.ola-submitted,
+.ola-badge.ola-queued { background: #dbe9fb; color: #0b4a8f; }
+.ola-badge.ola-inactive { background: #fcf0d0; color: #7a5300; }
+.ola-badge.ola-error { background: #fbdcdc; color: #8a1414; }
+.ola-badge.ola-ended { background: #ececec; color: #50575e; }
+
+.ola-muted { color: #646970; font-size: 12px; }
+.ola-error-text { color: #b32d2e; }
+.ola-danger { color: #b32d2e !important; }
+
+.ola-issues { margin: 6px 0 0 18px; list-style: disc; font-size: 12px; }
+.ola-sev-error { color: #8a1414; }
+.ola-sev-warning { color: #7a5300; }
+
+#ola_amazon_panel .ola-status-bar { padding: 12px; border-bottom: 1px solid #eee; }
+#ola_amazon_panel .ola-actions { margin-left: 8px; }
+#ola_amazon_panel .ola-actions .button { margin: 2px; }
+#ola_amazon_panel .ola-asin-results,
+#ola_amazon_panel .ola-type-results { padding: 0 12px 0 162px; }
+#ola_amazon_panel textarea { min-height: 70px; }
+.ola-pick-list li { display: flex; align-items: center; gap: 8px; }
+
+.ola-variation-fields { clear: both; padding-top: 8px; border-top: 1px dashed #ddd; }
+
+.ola-thumb { width: 48px; height: 48px; object-fit: contain; background: #fff; }
+.ola-inline-form { display: inline-block; margin: 0 4px 0 0; }
+.ola-row-actions { white-space: nowrap; }
+.ola-help { margin: 8px 0 16px; max-width: 760px; }
+.ola-help summary { cursor: pointer; font-weight: 600; }
+
+.ola-research-table td { vertical-align: middle; }
+.ola-score {
+	display: inline-block;
+	min-width: 36px;
+	padding: 2px 6px;
+	border-radius: 4px;
+	text-align: center;
+	font-weight: 600;
+	color: #fff;
+	background: hsl(calc(var(--score) * 1.2), 60%, 40%);
+}
+
+.ola-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.ola-chip { background: #fff; border: 1px solid #dcdcde; border-radius: 16px; padding: 4px 12px; }
+.ola-chip strong { margin-left: 6px; color: #0a5c1d; font-weight: 600; }
+.ola-chip em { margin-left: 6px; color: #646970; font-style: normal; font-size: 12px; }
+
+.ola-ideas { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 12px; }
+.ola-idea { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 12px; }
+.ola-idea h3 { margin: 0 0 8px; font-size: 14px; }
+.ola-idea-item { display: flex; gap: 8px; margin-bottom: 8px; }
