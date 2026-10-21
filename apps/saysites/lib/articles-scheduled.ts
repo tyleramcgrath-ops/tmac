@@ -287,6 +287,335 @@ const CENSUS_HILLS = 'https://www.census.gov/quickfacts/fact/table/hillsboroughc
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'denver-law-firm-website-design',
+    title: "Denver Law Firm Website Design: Colorado Ad Rules",
+    description: "Plan a Denver law firm website under Colorado RPC 7.1 to 7.3: fee and cost warnings, results, specialist claims, the 30-day rule and 2026 price disclosure.",
+    kind: 'guide',
+    summary: [
+      "Colorado’s advertising rules were rewritten on September 10, 2020: Rules 7.1 to 7.3 now do the work, and 7.4 and 7.5 are reserved.",
+      "Any “no fee unless we win” line must add that the client may owe costs, or the other side’s fees if a court orders them (Rule 7.1, Comment 3A).",
+      "Certification claims need the certifier’s name and the sentence “Colorado does not certify lawyers as specialists in any field” (Rule 7.2(c), Comment 11A).",
+      "Injury and wrongful death solicitations must wait 30 days (Rule 7.3(d) and C.R.S. 13-93-111); your website isn’t solicitation, but your follow-up can be.",
+      "Denver County Court sits outside the state court system, and Denver has its own probate and juvenile courts: say which court handles your clients’ cases.",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1706646482722-332af498c1ab?auto=format&fit=crop&w=1600&q=75', alt: "The Colorado State Capitol’s gold dome and columned front in Denver, seen across a snowy lawn on a clear winter day" },
+    body: `A Denver law firm website answers to the Colorado Rules of Professional Conduct, and since the Colorado Supreme Court rewrote its advertising rules on September 10, 2020, the whole framework fits in three rules: 7.1, 7.2 and 7.3. Nothing in them requires you to file your site with a regulator. What they do require is specific. If you say clients pay no fee unless they win, add that they may still owe costs, or the other side’s fees if a court orders it. If you call anyone a certified specialist, name the certifying body and add the sentence “Colorado does not certify lawyers as specialists in any field.” Name at least one responsible lawyer or firm with contact information. And keep anything that targets a specific accident victim out of the first 30 days.
+
+This guide takes each of those rules as it applies to a website, with the rule text linked, then covers what is particular to practicing in Denver: a county court that sits outside the state system, a large Spanish-speaking population, a new kind of licensed family law provider, and a 2026 pricing law worth knowing about before you publish a flat fee. It is practical guidance for planning a site, not an ethics opinion, so take close calls to Colorado ethics counsel.
+
+![The Colorado State Capitol in Denver, with its gold dome and columned front, seen across a snow-covered lawn under a blue winter sky](https://images.unsplash.com/photo-1706646482722-332af498c1ab?auto=format&fit=crop&w=1200&q=75)
+
+## Which Colorado rules apply to a law firm website?
+
+Colorado’s advertising rules were amended and adopted by the Colorado Supreme Court, sitting en banc, on September 10, 2020, effective immediately ([Rule Change 2020(29)](https://www.coloradojudicial.gov/sites/default/files/2023-06/Rule_Change_2020-29.pdf)). The rewrite left three working rules and marked Rules 7.4 and 7.5 as “Reserved.” If a marketing checklist your firm inherited cites Colorado Rule 7.4 for practice areas or Rule 7.5 for firm names, it predates the change. Those topics now live in the comments to Rules 7.1 and 7.2.
+
+Here is how the three rules divide the work for a website:
+
+- **Rule 7.1** is the core standard. A lawyer may not make a false or misleading communication about the lawyer or the lawyer’s services, and a truthful statement can still be misleading if it leaves out a fact needed to keep the whole from misleading. Its comments cover past results, fee claims and firm names.
+- **Rule 7.2** covers specific situations: paying anyone for recommendations, claiming certification as a specialist, and the name and contact information every communication must carry ([Colorado Bar Association: Rule 7.2](https://cobar.org/Portals/COBAR/Repository/RPC/Information%20about%20Legal%20Services/Rule%207.2%20-%20Communications%20Concerning%20a%20Lawyer%27s%20Services%20Specific%20Rules.pdf)).
+- **Rule 7.3** covers solicitation, meaning a targeted offer to a specific person known to need legal help. A website people find on their own generally isn’t solicitation, but the follow-up your firm sends can be.
+
+Read together, they give a Denver firm a short list of things to get right on the page, which the rest of this guide works through.
+
+## How should a Denver firm word “no fee unless we win”?
+
+With a cost warning attached. Comment 3A to Rule 7.1 says a communication that states or implies the client won’t owe a fee without a recovery must also disclose that the client may be liable for costs, or for the opposing party’s attorney fees if a court orders them. The comment carves out two simpler statements: saying that contingent fees are available, and saying the first consultation is free. Neither of those needs the warning.
+
+So “Free consultation” on a car accident page is fine on its own. “You don’t pay unless we win” is not. A version that fits Colorado might read:
+
+> We work on a contingency fee: if we don’t recover money for you, you owe no attorney’s fee. You may still be responsible for case costs, and a court can order a losing party to pay the other side’s attorney fees.
+
+Place that sentence next to the promise itself, wherever it appears: the hero banner, the practice area page, the landing page for paid ads and the Spanish version of each. A link to a separate disclaimers page that nobody opens leaves the promise standing alone, which is the misleading impression the comment exists to prevent.
+
+## Can a Colorado law firm post verdicts and settlements?
+
+Yes. Colorado has no rule that lists conditions for publishing results. The test is Rule 7.1, and Comment 3 explains how results go wrong: a truthful report of past results can mislead if it leads a reasonable person to expect similar results for themselves without regard to the specific facts and law of each case. The same comment says an unsubstantiated claim about your services or fees, or an unsubstantiated comparison with other lawyers, can mislead too, and that a qualifying disclaimer may help.
+
+In practice, a results page built for Colorado does four things:
+
+1. **Gives context with each figure.** The type of matter, what was at stake and what the client actually received. “Settlement, rear-end collision with a commercial truck, client had a fractured wrist” tells a reader far more than a dollar amount floating on a banner.
+2. **States plainly that each case is different** and that past results don’t predict future outcomes, in a font a reader will actually notice.
+3. **Avoids superlatives you can’t back up.** “Denver’s top injury firm” is a comparison. If you can’t substantiate it, Comment 3 is describing your headline.
+4. **Keeps the record straight.** Remove a verdict that was reversed or reduced, and say “settlement” when a case settled.
+
+If your current site leans on big numbers without context, it is worth fixing before anything else. SaySites will rebuild your current pages around Colorado’s rules and show you the result before you decide anything: [request a free redesign](/redesign).
+
+## Can a Colorado lawyer say “specialist” or “expert”?
+
+Saying what you do is fine. Comment 1 to Rule 7.2 lists “the kinds of services the lawyer will undertake” among the information a lawyer may publish, so a page titled “Workers’ Compensation” or a line saying “our practice is focused on family law” raises no issue as long as it is true.
+
+Claiming certification is regulated. Rule 7.2(c) says a lawyer may not state or imply certification as a specialist unless the lawyer has been certified by an organization approved by an appropriate authority of a state, the District of Columbia or a U.S. territory, or accredited by the American Bar Association, and the certifying organization is clearly identified in the communication. Comment 11A then requires advertising that mentions certification to say: “Colorado does not certify lawyers as specialists in any field.” The ABA’s summary of state certification confirms that Colorado runs no state plan of its own ([ABA: Colorado](https://www.americanbar.org/groups/specialization/state-sources-of-certification/colorado/)).
+
+On a website, put the certification on the attorney’s profile in full: the field, the certifying organization’s name and the Colorado sentence directly beneath it. Treat “expert” the same way. It reads to most people like a credential, and Rule 7.1 asks how a reasonable reader would take it. “Has handled construction defect claims since 2009” is a fact you can prove. “Construction defect expert” invites a question you would rather not answer.
+
+## What contact information does every page need?
+
+Rule 7.2(d) says any communication made under the rule must include the name and contact information of at least one lawyer or law firm responsible for its content. Comment 12 says contact information includes a website address, a telephone number, an email address or a physical office location.
+
+The simplest way to meet it on a website is a footer that appears on every page with the firm’s name, a phone number and the office address. Two places firms often miss: landing pages built for ads, which sometimes strip the footer to “reduce distractions,” and PDF guides offered as downloads. Put the firm name and a phone number on both.
+
+## Can you pay for leads, directories or reviews?
+
+Rule 7.2(b) says a lawyer may not give anything of value to a person for recommending the lawyer’s services, then lists exceptions: the reasonable cost of advertising, the usual charges of a legal service plan or qualified lawyer referral service, buying a practice, non-exclusive reciprocal referral arrangements the client is told about, and nominal gifts given as thanks that are neither intended nor reasonably expected to be payment for a recommendation.
+
+Comment 5 is the one that matters most for online marketing. It allows paying a lead generator, but only if the lead generator does not recommend the lawyer, and it rules out any arrangement that gives the impression the service is recommending you, is making referrals without being paid, or has analyzed the person’s legal problem before matching them with a lawyer. Before you sign with a “find a lawyer” site, read its consumer-facing pages the way a client would. If they say “we’ve matched you with the right attorney for your case,” that is the impression Comment 5 describes.
+
+Reviews have a second rulebook. Google’s policies for reviews prohibit offering incentives in exchange for reviews ([Maps user contributed content policy](https://support.google.com/contributionpolicy/answer/7400114)). So a gift card for a five-star review is a problem with Google regardless of how Colorado’s nominal-gift exception reads. Ask every client the same way, after the matter closes, and let the reviews be whatever they are.
+
+![Denver Union Station’s restored stone facade and red sign, framed by the white canopy over the train platforms](https://images.unsplash.com/photo-1566036604088-319bcef67086?auto=format&fit=crop&w=1200&q=75)
+
+## Firm names, domains and social handles
+
+Comment 5 to Rule 7.1 covers how a firm presents itself. A firm may practice under the names of current members, deceased members where there is a succession, or a trade name that isn’t misleading, and it may use a distinctive website address or social media username if it isn’t misleading. A name is misleading if it implies a connection with a government agency, a public or charitable legal services organization, a nonlawyer, or lawyers who aren’t in the firm.
+
+Apply that to a domain the way you would to a sign on the door. “denvertenantrightscenter” on a private firm’s site sounds like a nonprofit. “coloradoinjuryboard” sounds like an agency. Comment 6 adds that a firm with offices in more than one jurisdiction may use the same name in each, but must indicate the jurisdictional limits of lawyers who aren’t licensed where an office is located. If a lawyer in your Denver office is admitted only in Wyoming, the profile should say so. Comment 7 adds that lawyers who share space but are not a firm may not imply they are one, so a shared-office website listing four solo practitioners under one brand needs care.
+
+## Does Colorado’s 30-day rule affect your website?
+
+It affects what happens after someone finds you. Rule 7.3(d) bars soliciting anyone about a personal injury or wrongful death matter through any media, with exceptions that include communications made more than 30 days after the incident ([Rule Change 2020(29)](https://www.coloradojudicial.gov/sites/default/files/2023-06/Rule_Change_2020-29.pdf)). The rule cites a Colorado statute, section 13-93-111, which applies the same 30-day wait to anyone, not just lawyers, and makes an agreement signed in violation voidable at the injured person’s option ([C.R.S. 13-93-111](https://colorado.public.law/statutes/crs_13-93-111)). Rule 7.3(d) also bars contacting someone you know is represented in the matter, and requires disclosure if another lawyer or firm will handle the case. Under Rule 7.3(f), a targeted written or electronic solicitation must carry the words “Advertising Material” and the firm must keep a copy for five years.
+
+The website itself is not the issue, because a person who fills in your form came to you. The risk sits in what the intake team does next. Set a written rule: reply only to the person who reached out, never to relatives or witnesses you learned about from them, and never to names pulled from crash reports. If your firm sends follow-up email sequences to people who downloaded a guide, make sure none of them reads as an offer about a specific accident within the first 30 days.
+
+## Do Colorado’s 2026 pricing rules reach a law firm’s price page?
+
+Possibly, and Colorado’s ethics rule committee is watching. House Bill 25-1090, effective January 1, 2026, requires anyone who offers, displays or advertises a price to clearly and conspicuously disclose the total price, with a safe harbor when the total can’t be known in advance: you then disclose the factors that determine the price, any mandatory fees and that the total may vary ([HB25-1090](https://leg.colorado.gov/bills/HB25-1090)). Violations are treated as deceptive trade practices under the Colorado Consumer Protection Act.
+
+At its September 26, 2025 meeting, the Colorado Supreme Court’s Standing Committee on the Rules of Professional Conduct discussed the law’s price-display provision and formed a subcommittee to consider possible amendments to Rule 1.5, the fee rule ([committee minutes](https://www.coloradojudicial.gov/sites/default/files/2026-02/9.26.2025%20Colo.%20RPC%20Committee%20Meeting%20Minutes.pdf)). One Colorado business lawyer’s analysis argues there is no express exception for lawyers and points to engagement letters and invoices as well as advertising ([memo on legal fees and the 2026 law](https://cosea.starchapter.com/images/Memo_on_legal_fees_and_the_new_2026_law.pdf)).
+
+For the website, the cautious approach is simple. If you publish a flat fee, show one total that includes any mandatory charges, and say what is excluded, such as court filing fees. If you bill hourly or on contingency, don’t publish a teaser number. Describe what drives the cost and say the total varies. Then have your fee language reviewed by counsel who follows this issue, because guidance may change.
+
+## What do people looking for a lawyer in Denver need from your site?
+
+The rules set the limits. The city sets the questions.
+
+### Which court, and why it matters
+
+Denver’s court system has a feature that surprises people. The Colorado Judicial Branch explains that Denver County Court functions as both a municipal and a county court and is separate from the state court system, funded by Denver taxes, with judges appointed by the mayor ([Colorado Courts At A Glance](https://coloradojudicial.gov/media/4306)). The same guide says county courts handle traffic cases, minor criminal matters and smaller civil claims, while district courts hear divorce, civil claims of any amount and criminal matters, and that Denver alone has a separate probate court and a separate juvenile court. So a person with a Denver traffic ticket, an estate to settle and a teenager in trouble could deal with three different courthouses. A criminal defense, traffic, estate or family page that explains, in plain words, which court handles which kind of case answers a question many visitors arrive with, and it shows you practice here.
+
+### Spanish-speaking clients
+
+Census QuickFacts reports that 29.8% of Denver County residents are Hispanic or Latino and 14.5% were born outside the United States ([QuickFacts: Denver County](https://www.census.gov/quickfacts/denvercountycolorado)). For an injury, employment, family or criminal practice, Spanish pages are often what puts you on the shortlist. Write them as real pages, reviewed by someone fluent, and translate the cost warning, the certification sentence and every other required statement along with the marketing copy. Offer Spanish only if someone at the firm can talk to the client in Spanish, or say clearly that an interpreter will join the call.
+
+### Family law has a new kind of provider
+
+Colorado now licenses legal paraprofessionals. The Office of Attorney Regulation Counsel says the program began in 2024 and lets licensed paraprofessionals help clients directly in less complex dissolution, parentage and allocation of parental responsibility cases ([OARC: LLP overview](https://www.coloradolegalregulation.com/future-lawyers/llpgeneraloverview/)). A Denver family law firm now competes with them for some clients and refers to them for others. Explain on your site, truthfully and without disparaging anyone, what kinds of cases need a lawyer: contested custody, significant property or business interests, or a case already headed to a hearing. A page that helps people sort themselves is more useful than one that pretends the option doesn’t exist.
+
+![A small team of professionals in suits talks over a laptop and notes at a meeting table in a bright office](https://images.unsplash.com/photo-1758518729706-b1810dd39cc6?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Denver firm handle its Google Business Profile?
+
+Your Business Profile often reaches a person before your website does, so it should match the site exactly. Google’s guidelines for Business Profiles set the ground rules ([Business Profile guidelines](https://support.google.com/business/answer/3038177)), and Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). For a Denver firm, that becomes:
+
+- **One profile per office where clients are actually seen.** A downtown office and a Denver Tech Center office with staff can each have one. A conference room you book by the hour cannot.
+- **The firm’s real name.** No practice areas or neighborhoods tacked on to the name field.
+- **Each profile linked to its own office page,** with the same address, phone number and hours as on the site.
+- **Categories that match what you do,** chosen once and kept consistent with your practice area pages.
+
+Distance is the factor you can’t change, which is why the other two deserve the effort. Relevance comes from clear practice pages and an accurate profile. Prominence grows from real reviews and from being cited around the web for work you actually did.
+
+## Which pages should a Denver law firm website have?
+
+A plan that serves clients and keeps you inside Colorado’s rules:
+
+1. **Home page** stating who you help and where, with the firm name, phone and address in a footer on every page.
+2. **A page for each practice area,** each with its own fee language and the Comment 3A cost warning anywhere contingency fees are promised.
+3. **Attorney profiles** listing admissions, courts and any certification in full, with the Colorado disclaimer beneath it.
+4. **A results page** only if every entry has context and the page says past results don’t predict future ones.
+5. **A courts page** for criminal, traffic, family and estate practices, explaining in plain words which Denver court hears which kind of case.
+6. **Office pages** for each staffed location, with directions, parking and transit.
+7. **Spanish pages** for the practice areas your Spanish-speaking clients need, with every required statement translated.
+8. **A consultation form** that asks only for what a conflict check and a callback require.
+
+Skip the template trick of a near-identical page for every suburb, such as “Aurora divorce lawyer” and “Lakewood divorce lawyer” with only the city name swapped. Google’s spam policies describe pages built to rank for similar queries that funnel visitors to the same place as doorway abuse ([spam policies](https://developers.google.com/search/docs/essentials/spam-policies)). Write about a place only when you have something true and specific to say about it.
+
+## A pre-launch checklist for Colorado
+
+- Every “no fee unless we win” line carries the costs and opposing-fees warning.
+- Free consultation offers are stated plainly, without extra conditions hidden elsewhere.
+- Results appear with context and a clear statement that outcomes vary.
+- No unsupported superlatives or comparisons with other firms.
+- “Specialist” or “certified” appears only with the certifier’s name and the Colorado sentence.
+- Firm name and contact information appear on every page, including ad landing pages.
+- Domains and social handles don’t suggest a government or nonprofit connection.
+- Out-of-state lawyers’ admissions are shown on their profiles.
+- Lead generation services don’t present themselves as recommending you.
+- Intake follow-up respects the 30-day rule for injury and wrongful death matters.
+- Published flat fees show the total, with exclusions stated.
+- Structured data describes only what visitors can see on the page ([structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Denver law firm website
+
+SaySites law firm sites start with the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose intake questions include the other party’s name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), with each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live. Sites can be written in English or Spanish. You make changes by typing them in plain words, such as “put the costs warning under the no-fee line on the truck accident page,” and each change waits as a draft until you approve it. Results, credentials and reviews come only from you; nothing is invented.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Colorado site yourself, or [request a free redesign](/redesign) to see your current pages rebuilt first. For more, read [what we found testing 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites), [what Google AI Overviews mean for law firms](/blog/google-ai-overviews-for-law-firms) and how another Western state handles the same questions in our [Las Vegas law firm website guide](/blog/las-vegas-law-firm-website-design).`,
+    faq: [
+      { q: "Does a Colorado law firm have to file its website with a regulator?", a: "No. Colorado Rules of Professional Conduct 7.1 to 7.3 set standards for what a website says, but they don’t create a filing or pre-approval system for websites or ads. The firm is responsible for getting the content right: nothing false or misleading, a responsible lawyer or firm named with contact information, and the required statements about fees and certification." },
+      { q: "Can a Denver lawyer advertise “no fee unless we win”?", a: "Yes, with a warning beside it. Comment 3A to Colorado Rule 7.1 says a statement that no fee is owed without a recovery must also disclose that the client may be liable for costs, or for the opposing party’s attorney fees if a court orders them. Saying only that contingent fees are available, or that the first consultation is free, doesn’t need the warning." },
+      { q: "What must a Colorado lawyer include to claim board certification?", a: "Rule 7.2(c) allows a certification claim only if the certifying organization is approved by a state, the District of Columbia or a U.S. territory, or accredited by the ABA, and the organization is named clearly. Comment 11A adds the sentence “Colorado does not certify lawyers as specialists in any field” to advertising that mentions certification." },
+      { q: "Can a Colorado law firm pay for online leads?", a: "Yes, within limits. Comment 5 to Rule 7.2 allows paying a lead generator only if it doesn’t recommend the lawyer, and rules out services that create the impression they are recommending you, referring without being paid, or analyzing the person’s legal problem before choosing a lawyer. Read the service’s consumer pages as a client would before you sign." },
+      { q: "When can a Colorado lawyer contact an accident victim?", a: "Rule 7.3(d) bars soliciting a specific person about a personal injury or wrongful death matter until more than 30 days after the incident, with narrow exceptions such as family or prior professional relationships. Colorado statute section 13-93-111 sets the same 30-day wait and makes an agreement made in violation voidable by the injured person." },
+      { q: "Does Colorado’s 2026 pricing law apply to law firm websites?", a: "It may. HB25-1090, effective January 1, 2026, requires anyone advertising a price to show the total price, or, when the total can’t be known in advance, to disclose what determines it, any mandatory fees and that it may vary. Colorado’s ethics rules committee is studying possible Rule 1.5 changes, so have published fee language reviewed by counsel." },
+      { q: "What does a SaySites website for a Denver law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign to see your current site rebuilt before you decide anything." },
+    ],
+    about: ["Colorado Rules of Professional Conduct", "Attorney advertising", "Law firm websites", "Denver, Colorado"],
+    published: '2026-10-21',
+    status: 'published',
+  },
+  {
+    slug: 'philadelphia-roofing-website-design',
+    title: "Philadelphia Roofing Websites: PA HICPA Rules",
+    description: "What a Philadelphia roofing website must show under Pennsylvania HICPA, how L&I licenses and re-roofing permits work, and pages that fit rowhouse roofs.",
+    kind: 'guide',
+    summary: [
+      "Pennsylvania’s HICPA requires your registration number, written like PA123456, in all advertisements: put it on every page of your site.",
+      "Philadelphia requires a city contractor license for commercial and multifamily work; roofers who only work on one- and two-family homes work as registered PA contractors.",
+      "Roof coverings go through the city’s EZ re-roofing permit, with a licensed contractor’s certification and a final inspection.",
+      "Contracts over $500 must be written, carry a three-day right to cancel, and deposits over one third of the price are barred on jobs above $1,000.",
+      "Most rowhouse roofs are low-slope: build pages for flat roof repair, replacement, coatings and drainage, with your own job photos.",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?auto=format&fit=crop&w=1600&q=75', alt: "Philadelphia at sunrise from above, with Center City towers in front and low rooftops spreading out to the river" },
+    body: `A Philadelphia roofing website has one legal job before any marketing job: show your Pennsylvania home improvement contractor registration number, written as “PA” followed by your number, because the state’s Home Improvement Consumer Protection Act requires it in all advertisements. After that, the site should prove you know the city’s roofs. Most Philadelphia rowhouses have low-slope roofs that drain to a scupper or gutter, roof coverings go through the city’s EZ re-roofing permit with a licensed contractor’s certification, and homeowners arrive with specific questions about deposits, permits and leaks they’ve been patching for years. A site that answers those questions plainly, with your own photos and a phone number one tap away, earns the call.
+
+This guide covers what Pennsylvania law requires a roofer’s advertising and contracts to show, what Philadelphia’s Department of Licenses and Inspections asks of contractors, how the city’s roofs shape the pages you need, and how to set up Google for a service business. It is general information for planning a website, not legal advice. For questions about your own registration or contracts, ask a Pennsylvania attorney or the Attorney General’s Bureau of Consumer Protection.
+
+![Early morning aerial view over Center City Philadelphia, with high-rises in the foreground and the city’s low rooftops stretching toward the river](https://images.unsplash.com/photo-1569761316261-9a8696fa2ca3?auto=format&fit=crop&w=1200&q=75)
+
+## Does a Pennsylvania roofer have to show a registration number on the website?
+
+Treat the answer as yes. Section 6 of the Home Improvement Consumer Protection Act, Act 132 of 2008, says: “A contractor shall include its registration number in all advertisements distributed within this Commonwealth” ([HICPA, Act 132 of 2008](https://www.attorneygeneral.gov/wp-content/uploads/2018/01/Act_132_Home_Improvement.pdf)). A website that offers your services to Pennsylvania homeowners does the job of an advertisement, and leaving the number off saves you nothing.
+
+The Attorney General’s office explains the format. You include the abbreviation “PA” and the number assigned to you, written like PA123456 ([HIC registration FAQ](https://www.attorneygeneral.gov/businesses-and-organizations/home-improvement-contractor-registration/frequently-asked-questions/)). The same page says registration lasts two years and must be renewed, and that two groups are exempt: contractors who do less than $5,000 of home improvement work in a calendar year, and retailers with a net worth over $50 million who don’t perform or subcontract the work themselves.
+
+Where the number belongs on a roofing site:
+
+- **In the site header or footer,** so it appears on every page, next to your phone number.
+- **On your estimate request page and any page with a quote form,** since that is where homeowners decide whether to trust you.
+- **In your ads and social profiles,** including paid search ads that send people to the site, yard signs and truck lettering.
+- **On every contract, estimate and proposal.** The Attorney General’s contractor brochure lists all three alongside advertisements ([home improvement contractor brochure](https://www.attorneygeneral.gov/wp-content/uploads/home_improvement_contractor_brochure.pdf)).
+
+Homeowners can check a number through the Attorney General’s online search, and many careful ones do. Add a short line under the number, such as “Look us up on the Attorney General’s contractor search,” and link to the FAQ page above. It tells the visitor you have nothing to hide, which is the whole point of a trust signal.
+
+## What does Philadelphia require of roofing contractors?
+
+The city adds its own layer, and it depends on the buildings you work on. The Department of Licenses and Inspections says a contractor license is needed for construction, demolition or repair work that doesn’t require a specialized license, but businesses that only work on existing one- and two-family dwellings are exempt and instead work as registered Pennsylvania home improvement contractors ([Philadelphia contractor license](https://www.phila.gov/services/permits-violations-licenses/get-a-license/trade-licenses/get-a-contractor-license)).
+
+So a roofer who does rowhouses and twins can run on state registration, while one who also roofs apartment buildings, mixed-use corner properties or commercial space needs the city license too. That license, according to the same L&I page, requires:
+
+- General liability insurance of $500,000 per occurrence, automobile liability of $300,000 and workers’ compensation coverage.
+- A supervisor with an approved OSHA 30 course completed within five years of applying.
+- A Business Income and Receipts Tax account number, a Commercial Activity License and current city taxes.
+- A $126 license fee, renewed every year.
+
+L&I’s operating requirements add that everyone working on a construction or demolition site needs an OSHA 10 course or an approved alternative, and that this applies to registered Pennsylvania home improvement contractors as well ([contractor requirements](https://www.phila.gov/departments/department-of-licenses-and-inspections/inspections/contractor-requirements/)).
+
+On the website, say exactly which of these you hold. “Registered PA home improvement contractor PA123456. Philadelphia contractor license for commercial and multifamily work. Crew trained to OSHA standards.” Then link a page with the details. A homeowner choosing between three roofers rarely knows these rules, but they notice which company explains them without being asked.
+
+## Does a roof replacement in Philadelphia need a permit?
+
+Roof covering work goes through the city’s permit process, and the EZ re-roofing permit standard lets most straightforward jobs proceed without drawings, as long as the work meets every condition in the standard ([EZ re-roofing permit standard](https://www.phila.gov/media/20260806124639/PB_012_F-EZ-Re-Roofing-Permit-Standard-2021-Code.pdf)). The standard warns that any deviation results in revocation of the permit, and it sets conditions a homeowner may not know:
+
+- Existing layers come off first if the roof is water-damaged or deteriorated, if it is slate, wood shake, clay, cement or asbestos-cement tile, or if it already has two or more coverings.
+- Jobs that replace more than 10% of the sheathing, add significant weight, or cut new openings such as skylights fall outside the standard.
+- Buildings listed by the Philadelphia Historical Commission need its approval first.
+- A licensed contractor certifies that the work followed the manufacturer’s instructions, and a final inspection is required.
+- If insulation in the roof is altered, it has to meet the 2021 energy code, which the standard lists as R-49 or greater.
+
+The city’s Rowhouse Manual tells homeowners the same thing more simply: roof coverings can be permitted online without drawings, and only licensed contractors may work on projects that need a building permit ([Philadelphia Rowhouse Manual](https://www.phila.gov/media/20190521124726/Philadelphia_Rowhouse_Manual.pdf)).
+
+Your website should make the permit part of the service. A sentence on your replacement page such as “We pull the permit, handle the certification and meet the inspector, and you get a copy of the final inspection” answers a question homeowners have been told to ask. If you work in historic districts, say how you handle Historical Commission review, because that is exactly the kind of local knowledge an out-of-town crew can’t claim.
+
+![A worker in a white protective suit sprays a pale reflective coating across a flat roof under a blue sky](https://images.unsplash.com/photo-1674485169641-bcb2bf6f1df9?auto=format&fit=crop&w=1200&q=75)
+
+## How do Philadelphia rowhouse roofs shape your service pages?
+
+The city’s own manual is the best brief you’ll find for a Philadelphia roofing site, because it is what homeowners are told. It says rowhouses outnumber all other housing types in the city, that most rowhouse roofs look flat but are gently sloped toward a drain, and that the minimum slope is a quarter inch of rise per foot. It describes the two common low-slope systems: modified bitumen, which it calls a low-tech, lower-cost, reliable system whose leaks are easy for a professional to find, and EPDM rubber, whose leaks are harder to detect. It names sunlight as the main threat to roofing materials and says a silver or white coating helps.
+
+That gives you a page plan built on how people actually describe their problem:
+
+- **Flat roof repair** for leaks, blisters and failed seams, explaining how you find the source on a low-slope roof.
+- **Flat roof replacement** that names the systems you install and why you’d recommend one over another for a given house.
+- **Roof coatings** that explain what a reflective coating does and doesn’t do, and when a coating is a patch on a roof that needs replacing.
+- **Drains, scuppers, gutters and downspouts.** The manual stresses that a roof must slope to the downspout and that it is illegal to divert storm water onto sidewalks, streets or adjoining properties. A downspout pointed at the neighbor’s wall is a real problem you can fix.
+- **Pitched and mansard roofs** for the houses that have them, with shingle, slate or metal work described separately.
+- **Roof decks,** with the manual’s warning in mind: a deck doesn’t waterproof the house, so the roof beneath has to be in very good condition first.
+
+Each page should carry photos of your own jobs on Philadelphia houses, before and after, with a sentence on what was wrong. Stock photos of suburban shingle roofs tell a South Philly homeowner you might not know their roof.
+
+## What should your contract and deposit pages say?
+
+Pennsylvania spells out what a home improvement contract must contain, so explaining it on your site is easy and persuasive. Under HICPA, a contract for more than $500 must be in writing, legible and signed by both the homeowner and the contractor, and it must include your registration number, the total price, the estimated start and completion dates and a description of the work ([HIC registration FAQ](https://www.attorneygeneral.gov/businesses-and-organizations/home-improvement-contractor-registration/frequently-asked-questions/)). The Act also requires the contract to state that you carry at least $50,000 each of personal injury and property damage liability insurance and to show your current coverage amount, and it gives the homeowner three business days after signing to rescind without penalty ([Act 132, section 7](https://www.attorneygeneral.gov/wp-content/uploads/2018/01/Act_132_Home_Improvement.pdf)).
+
+Deposits get the most questions. Section 9 of the Act bars taking a deposit of more than one third of the contract price on contracts over $1,000, plus the cost of any special-order materials. The city’s Rowhouse Manual goes further in its advice to homeowners: keep the deposit under 20% and hold back at least 5% until the work is complete to your satisfaction. Homeowners who read either one will compare your terms against it.
+
+A short “How our contracts work” section on the site can cover:
+
+1. What your written estimate includes and how long the price holds.
+2. Your deposit, stated as a percentage, and when the balance is due.
+3. The three-day right to cancel after signing.
+4. Your insurance, with an offer to send the certificate.
+5. Who pulls the permit and when the final inspection happens.
+
+None of that needs legal language. It needs to be true and match the contract you actually sign.
+
+## What can a Pennsylvania roofer say in ads?
+
+HICPA has teeth on advertising. Section 8 makes it a crime to directly or indirectly publish a false or deceptive advertisement in violation of the state’s advertising laws, graded as a felony of the third degree when the amount involved exceeds $2,000. Section 9 prohibits advertising or offering home improvement work when you don’t intend to accept the contract, perform the work or charge the price advertised, and section 10 treats violations of the Act as violations of Pennsylvania’s Unfair Trade Practices and Consumer Protection Law ([Act 132](https://www.attorneygeneral.gov/wp-content/uploads/2018/01/Act_132_Home_Improvement.pdf)).
+
+For a website, that rules out the classic bait: a “$99 roof repair special” that no one ever gets, a “lifetime warranty” that turns out to cover materials only, or “lowest prices in Philly” that you can’t back up. If you publish a starting price, say exactly what it covers. If you offer a warranty, name what it covers and for how long, and keep a copy of the terms on the page. Specific, checkable claims also give search engines and AI answers something concrete to quote, which vague superlatives never do ([how to write pages AI answers can quote](/blog/write-pages-ai-answers-can-quote)).
+
+![A roofer stands on a partly stripped shingle roof of a brick house, with a ladder leaning against the wall below](https://images.unsplash.com/photo-1632759145351-1d592919f522?auto=format&fit=crop&w=1200&q=75)
+
+## Who is searching for a roofer in Philadelphia?
+
+Census QuickFacts puts Philadelphia County’s 2025 population at 1,574,281, with an owner-occupied housing rate of 51.8% and a median owner-occupied home value of $243,100 ([QuickFacts: Philadelphia County](https://www.census.gov/quickfacts/philadelphiacountypennsylvania)). Two audiences follow from that. Owners living in their homes want to know a leak will be fixed properly at a fair price. With nearly half of occupied homes rented, landlords and property managers are the other audience. They want quick scheduling, photos of the problem, clear invoices and a crew that can handle several addresses. Give the second group its own page with how you work with property managers.
+
+Language matters too. The same QuickFacts table reports that 24.4% of residents age 5 and older speak a language other than English at home. If someone on your team can talk a homeowner through an estimate in Spanish or another language your customers use, build pages in that language and say who will answer the phone.
+
+Some homeowners who reach your site can’t afford a new roof. The city’s Basic Systems Repair Program provides free emergency repairs to roofing, electrical, plumbing and heating systems for eligible owner-occupied homes, based on household income ([Basic Systems Repair Program](https://www.phila.gov/services/property-lots-housing/get-home-improvement-help/get-emergency-home-repairs/)). Mentioning it on a page about emergency leaks costs you nothing and is the kind of help people remember when a neighbor asks who to call.
+
+## How should a Philadelphia roofer set up Google Business Profile?
+
+Most roofers go to the customer, so Google treats them as service-area businesses. Google’s help page says a service-area business specifies its area by city, postal code or another type of area, allows up to 20 service areas, and says the overall area shouldn’t be more than about two hours of driving time from where the business is based ([manage your service areas](https://support.google.com/business/answer/9157481)). A few points specific to a city roofer:
+
+- **List the areas you actually work,** by ZIP code or by the city and the nearby townships you serve, not every place within reach.
+- **Use your real business name.** Google’s guidelines don’t allow extra keywords in the name field ([Business Profile guidelines](https://support.google.com/business/answer/3038177)). “Smith Roofing” stays “Smith Roofing,” not “Smith Roofing Philadelphia Flat Roof Repair.”
+- **Post your own job photos,** the same ones on your site.
+- **Ask every customer for a review the same way,** after the job, without incentives ([asking for reviews the right way](/blog/ask-for-google-reviews-the-right-way)).
+
+On the website, match the name and phone number exactly, list the neighborhoods you serve on one clear service-area page, and resist building forty near-identical “roofer in [neighborhood]” pages. Google’s spam policies describe pages made to rank for similar queries that funnel visitors to the same place as doorway abuse ([spam policies](https://developers.google.com/search/docs/essentials/spam-policies)). One honest page about Fishtown rowhouse roofs, with photos of six jobs you did there, beats forty pages that only swap the name. Our guide to [service-area businesses on Google](/blog/service-area-business-google) covers the setup step by step.
+
+## A launch checklist for a Philadelphia roofing website
+
+1. PA registration number in the header or footer of every page, next to the phone number.
+2. City contractor license shown if you do commercial or multifamily work, with insurance and OSHA training stated.
+3. Separate pages for flat roof repair, flat roof replacement, coatings, drains and gutters, and pitched roofs.
+4. A permit section on the replacement page: who pulls it, the certification and the final inspection.
+5. A plain-language contract section covering the estimate, deposit, three-day cancellation and insurance.
+6. Every price and warranty claim specific enough to check.
+7. Your own before-and-after photos from Philadelphia jobs, with alt text that describes the work.
+8. A property manager page if landlords are part of your business.
+9. A tap-to-call number and a short request form on every page.
+10. A Business Profile with the same name and phone number, the right service area and real job photos.
+
+## How SaySites helps Philadelphia roofers
+
+SaySites builds roofing sites with this structure in place from day one: a page for each service, each with its own title and heading, a tap-to-call number on every page, a job request form that asks how soon the homeowner needs you, the job’s ZIP code and whether they own or rent, and structured data that describes your company as a [RoofingContractor](https://schema.org/RoofingContractor). Your photos are resized automatically, and every page has to pass a 95+ speed check before it can go live. Registration numbers, licenses, warranties and reviews come only from you; nothing is invented. You change the site by saying what you want in plain words, like “put PA123456 next to our phone number on every page” or “add a section about the three-day cancellation right,” and you approve each change as a draft before it publishes.
+
+Requests land in a simple leads pipeline where you can call, text or email each homeowner back. The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your registration number and flat roof pages live this week, or [request a free redesign](/redesign) and see your current site rebuilt first. Working in another climate too? Our [Denver roofing website guide](/blog/denver-roofing-website-design) shows how a hail market changes the same plan.`,
+    faq: [
+      { q: "Does a Pennsylvania roofer need to register with the Attorney General?", a: "Yes, if you do $5,000 or more of home improvement work in a calendar year. The Home Improvement Consumer Protection Act requires registration with the Attorney General’s office, renewed every two years. Retailers with a net worth above $50 million are exempt unless they perform or subcontract the work. Homeowners can look up any registration number online." },
+      { q: "Where should a Philadelphia roofer show the PA registration number?", a: "HICPA requires the number in all advertisements, so show it on every page of your website, usually beside the phone number in the header or footer. Write it as the Attorney General directs, with “PA” before the number. Put it on estimates, proposals, contracts, yard signs, trucks and paid ads too, so it matches everywhere homeowners see you." },
+      { q: "Do roofers need a Philadelphia contractor license?", a: "It depends on the buildings. Philadelphia’s Department of Licenses and Inspections exempts businesses that only work on existing one- and two-family homes, which work as registered Pennsylvania home improvement contractors instead. Roofing apartment buildings or commercial property takes the city license, with insurance minimums, an OSHA 30 trained supervisor, city tax accounts and a $126 yearly fee." },
+      { q: "Does a roof replacement in Philadelphia need a permit?", a: "Yes. Roof coverings are permitted through the city, and the EZ re-roofing permit standard lets most straightforward jobs proceed without drawings if they meet its conditions. A licensed contractor certifies the work followed the manufacturer’s instructions, and a final inspection is required. Historic properties need Historical Commission approval first, and jobs with bigger structural changes fall outside the EZ standard." },
+      { q: "How much deposit can a Pennsylvania roofer take?", a: "On contracts over $1,000, HICPA bars a deposit of more than one third of the contract price, plus the cost of special-order materials. Philadelphia’s Rowhouse Manual advises homeowners to keep deposits under 20% and hold back at least 5% until the work is done, so many homeowners will compare your terms with that advice." },
+      { q: "Can a homeowner cancel a roofing contract in Pennsylvania?", a: "Yes. HICPA gives the homeowner three business days after signing to rescind a home improvement contract without penalty, and the contract itself must explain that right. Contracts over $500 must be written, signed by both parties and include your registration number, the total price, the start and completion dates, the work and your insurance." },
+      { q: "What does a SaySites roofing website cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes a page for each roofing service, a tap-to-call number, a job request form, RoofingContractor structured data, a leads pipeline and hosting. You can also request a free redesign and see your current site rebuilt before you decide anything." },
+    ],
+    about: ["Pennsylvania Home Improvement Consumer Protection Act", "Roofing contractor websites", "Philadelphia rowhouses", "Philadelphia, Pennsylvania"],
+    published: '2026-10-21',
+    status: 'published',
+  },
+  {
     slug: 'las-vegas-law-firm-website-design',
     title: 'Las Vegas Law Firm Website Design: Nevada Ad Rules',
     description: 'Plan a Las Vegas law firm website under Nevada RPC 7.1 to 7.5: fee warnings, past results, specialist claims, Spanish pages and which ads need filing.',
