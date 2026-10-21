@@ -345,6 +345,20 @@ line in robots.txt. The robots line only lands if WordPress is generating
 robots.txt; an SEO plugin writing its own takes over and the link element
 carries the signal by itself.
 
+Since 3.5.2 both are served by reading the request path at init rather than
+through rewrite rules. On a live host the rules went wrong two ways at once:
+/llms.txt answered 301 to /llms.txt/ before serving, and
+/.well-known/ai-catalog.json answered a flat 404, because hosts commonly
+serve /.well-known/ off disk for certificate validation so the request never
+reaches PHP. Reading the path directly has nothing to flush and no host slash
+habit to argue with. The catalog is therefore advertised at /ai-catalog.json,
+with /.well-known/ai-catalog.json still answered for hosts that pass it
+through.
+
+That distinction matters more than it looks: advertising a catalog is what
+makes Lighthouse score the ard-schema audit at all, so pointing at a URL the
+host 404s turns a skipped check into a failed one.
+
 One caution if you edit the manifest. Lighthouse skips its ard-schema audit
 entirely when a site advertises no catalog, and starts scoring it the moment one
 appears, so a broken manifest is worse than none. The shipped one validates

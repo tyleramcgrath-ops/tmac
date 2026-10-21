@@ -27,7 +27,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /** Bumped whenever the rules below change, so they re-flush once on upgrade. */
-define( 'MCG_AGENT_RULES_VERSION', '1' );
+define( 'MCG_AGENT_RULES_VERSION', '2' );
 
 /**
  * The business address, in parts, so the schema, the contact page and
@@ -67,52 +67,63 @@ function mcg_address_line() {
  * Routing. Both documents are virtual: there is no file on disk, so
  * nothing to keep in sync with the options and nothing left behind when
  * the theme is switched away.
+ *
+ * These were routed through add_rewrite_rule() until 3.5.2, and on a real
+ * host that went wrong in two different ways at once:
+ *
+ *   /llms.txt answered 301 to /llms.txt/ before serving, because something
+ *   between the browser and WordPress appends a trailing slash to a path
+ *   that has not matched a rule yet.
+ *
+ *   /.well-known/ai-catalog.json answered a flat 404, because hosts commonly
+ *   serve /.well-known/ off disk for certificate validation and the request
+ *   never reaches PHP at all.
+ *
+ * So the path is read off REQUEST_URI at init instead. Nothing to flush,
+ * nothing a permalink setting can undo, and no host's slash habit to argue
+ * with. The catalog is also served from the site root, which is the copy
+ * advertised, because that is a path PHP is certain to see.
  * ===================================================================== */
 
-/** Teach WordPress the two paths. */
-function mcg_agent_rewrites() {
-	add_rewrite_rule( '^llms\.txt$', 'index.php?mcg_agent=llms', 'top' );
-	add_rewrite_rule( '^\.well-known/ai-catalog\.json$', 'index.php?mcg_agent=catalog', 'top' );
-}
-add_action( 'init', 'mcg_agent_rewrites' );
-
-/** Let the rule above survive the query parsing. */
-function mcg_agent_query_var( $vars ) {
-	$vars[] = 'mcg_agent';
-	return $vars;
-}
-add_filter( 'query_vars', 'mcg_agent_query_var' );
-
 /**
- * Flush once after an upgrade adds or changes a rule.
+ * The virtual documents, by request path.
  *
- * Theme activation already flushes; this covers the case where the theme is
- * updated in place and never re-activated, which would otherwise leave both
- * URLs 404ing until somebody saved the permalink settings by hand.
+ * @return array<string,string> path without slashes => which document.
  */
-function mcg_agent_maybe_flush() {
-	if ( get_option( 'mcg_agent_rules' ) === MCG_AGENT_RULES_VERSION ) {
-		return;
-	}
-	mcg_agent_rewrites();
-	flush_rewrite_rules( false );
-	update_option( 'mcg_agent_rules', MCG_AGENT_RULES_VERSION );
+function mcg_agent_routes() {
+	return array(
+		'llms.txt'                     => 'llms',
+		'ai-catalog.json'              => 'catalog',
+		// Kept for hosts that do pass it through, since it is the path the
+		// ARD spec names by default. Where the host swallows it, the link
+		// element and the robots directive both point at the root copy.
+		'.well-known/ai-catalog.json'  => 'catalog',
+	);
 }
-add_action( 'wp_loaded', 'mcg_agent_maybe_flush' );
 
 /**
- * Serve whichever document was asked for.
+ * Serve whichever document was asked for, before WordPress routes anything.
  *
  * Status, content type and length are set explicitly: Lighthouse fails
  * llms-txt outright on a 5xx, and treats a 404 as "no llms.txt here", so a
  * soft 404 carrying 27 KB of theme HTML is the one outcome worth avoiding.
  */
 function mcg_agent_serve() {
-	$which = get_query_var( 'mcg_agent' );
-
-	if ( 'llms' !== $which && 'catalog' !== $which ) {
+	if ( empty( $_SERVER['REQUEST_URI'] ) ) {
 		return;
 	}
+
+	// Path only: the query string and any trailing slash are not part of the
+	// match, so /llms.txt, /llms.txt/ and /llms.txt?v=2 all land here.
+	$path = wp_parse_url( wp_unslash( $_SERVER['REQUEST_URI'] ), PHP_URL_PATH ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- compared against a fixed list, never echoed.
+	$path = trim( (string) $path, '/' );
+
+	$routes = mcg_agent_routes();
+	if ( ! isset( $routes[ $path ] ) ) {
+		return;
+	}
+
+	$which = $routes[ $path ];
 
 	if ( 'llms' === $which ) {
 		$body = mcg_llms_txt();
@@ -131,7 +142,26 @@ function mcg_agent_serve() {
 	echo $body; // phpcs:ignore WordPress.Security.EscapeOutput -- plain text and JSON, not HTML.
 	exit;
 }
-add_action( 'template_redirect', 'mcg_agent_serve' );
+// Priority 1 on init: ahead of the canonical redirect, ahead of routing, and
+// late enough that the theme's own helpers and the options are all loaded.
+add_action( 'init', 'mcg_agent_serve', 1 );
+
+/**
+ * Drop the rewrite rules 3.4.0 added.
+ *
+ * They are no longer consulted — mcg_agent_serve() has already answered and
+ * exited by the time WordPress parses a request — but leaving them in the
+ * stored rules would keep pointing /llms.txt at a query variable nothing
+ * reads any more. One flush on upgrade clears them.
+ */
+function mcg_agent_maybe_flush() {
+	if ( get_option( 'mcg_agent_rules' ) === MCG_AGENT_RULES_VERSION ) {
+		return;
+	}
+	update_option( 'mcg_agent_rules', MCG_AGENT_RULES_VERSION );
+	flush_rewrite_rules( false );
+}
+add_action( 'wp_loaded', 'mcg_agent_maybe_flush' );
 
 /**
  * WordPress sends no-cache headers on anything it considers uncacheable.
@@ -263,11 +293,18 @@ function mcg_ai_catalog() {
  * theme can supply are a link element and a robots.txt directive.
  * ===================================================================== */
 
-/** <link rel="ai-catalog"> in the head of every page. */
+/**
+ * <link rel="ai-catalog"> in the head of every page.
+ *
+ * Points at the root copy rather than the /.well-known/ one. Advertising a
+ * catalog is what makes Lighthouse score the ard-schema audit at all, so
+ * advertising one the host answers 404 for turns a skipped check into a
+ * failed one — which is exactly what happened on the live site.
+ */
 function mcg_agent_link_tag() {
 	printf(
 		'<link rel="ai-catalog" href="%s">' . "\n",
-		esc_url( home_url( '/.well-known/ai-catalog.json' ) )
+		esc_url( home_url( '/ai-catalog.json' ) )
 	);
 }
 add_action( 'wp_head', 'mcg_agent_link_tag', 4 );
@@ -281,6 +318,6 @@ add_action( 'wp_head', 'mcg_agent_link_tag', 4 );
  * the link element above is signal enough on its own.
  */
 function mcg_agent_robots( $output ) {
-	return $output . "\nAgentmap: " . esc_url_raw( home_url( '/.well-known/ai-catalog.json' ) ) . "\n";
+	return $output . "\nAgentmap: " . esc_url_raw( home_url( '/ai-catalog.json' ) ) . "\n";
 }
 add_filter( 'robots_txt', 'mcg_agent_robots' );
