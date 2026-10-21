@@ -253,6 +253,28 @@ record of inquiries, use a form plugin instead and drop its shortcode into the
 page content, which still renders below the form.
 
 
+UPGRADING IN PLACE
+------------------
+The theme builds its own pages on activation. WordPress only fires that on a
+theme *switch*, so uploading a new version over the running one used not to
+create anything a release had added — 3.5.0 shipped the Works template, the
+menu label and the link while the page itself was never made, and the menu
+pointed at a 404.
+
+Since 3.5.1 the setup runs once per version instead of once per switch, on
+the first page load after an upload, so a release that adds a page now
+creates it by itself. Nothing is duplicated and nothing you have edited is
+overwritten: it looks a page up before creating it, only sets a template
+where there is none, and never repoints a front page or posts page you have
+already chosen.
+
+The menu also leaves out any page that is not there, rather than linking to
+a guessed address, so a missing page can no longer show up as a broken link.
+
+If you ever want to force it, change MCG_VERSION in functions.php, or delete
+the mcg_setup_version option.
+
+
 WORKS, THE PORTFOLIO (template-works.php + inc/works.php)
 ---------------------------------------------------------
 A page at /works/ showing twelve live sites. The list lives in one array in

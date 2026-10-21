@@ -188,6 +188,11 @@ function mcg_llms_txt() {
 		if ( 'vault' === $key || empty( $map[ $slug ] ) ) {
 			continue; // the vault is password protected; nothing there to read.
 		}
+		// A key with no page behind it would be listed at a guessed /slug/
+		// that returns a 404, which is worse than leaving it out.
+		if ( ! mcg_page_id( $key ) ) {
+			continue;
+		}
 		$line = '- [' . $map[ $slug ]['title'] . '](' . mcg_url( $key ) . ')';
 		if ( ! empty( $map[ $slug ]['excerpt'] ) ) {
 			$line .= ': ' . $map[ $slug ]['excerpt'];

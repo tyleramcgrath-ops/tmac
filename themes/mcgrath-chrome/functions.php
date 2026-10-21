@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '3.5.0' );
+define( 'MCG_VERSION', '3.5.1' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -132,9 +132,20 @@ function mcg_nav() {
 
 	echo '<ul>';
 	foreach ( array( 'seo', 'webdesign', 'aeo', 'works', 'about', 'contact' ) as $key ) {
+		$id = mcg_page_id( $key );
+
+		// No page behind the key means no link. mcg_url() would otherwise
+		// fall back to a guessed /slug/, which is how a menu ends up
+		// advertising a 404: mcg_page_id() already tries the template, the
+		// current slug and every slug the theme has used before, so a zero
+		// here means the page genuinely is not there.
+		if ( ! $id ) {
+			continue;
+		}
+
 		printf(
 			'<li%s><a href="%s">%s</a></li>',
-			mcg_page_id( $key ) && is_page( mcg_page_id( $key ) ) ? ' class="current"' : '',
+			is_page( $id ) ? ' class="current"' : '',
 			esc_url( mcg_url( $key ) ),
 			esc_html( $labels[ $slugs[ $key ] ] )
 		);
@@ -148,6 +159,11 @@ function mcg_fallback_menu() {
 	$pages  = array();
 
 	foreach ( array( 'seo', 'webdesign', 'aeo', 'works', 'about', 'contact' ) as $key ) {
+		// Same rule as mcg_nav(): a key with no page behind it is left out
+		// rather than linked to an address that does not resolve.
+		if ( ! mcg_page_id( $key ) ) {
+			continue;
+		}
 		$pages[ $s[ $key ] ] = $labels[ $s[ $key ] ];
 	}
 	echo '<ul>';
@@ -809,6 +825,34 @@ function mcg_activate() {
 	set_transient( 'mcg_activated', 1, 60 );
 }
 add_action( 'after_switch_theme', 'mcg_activate' );
+
+/**
+ * Run the setup again after the theme is updated in place.
+ *
+ * after_switch_theme only fires when somebody switches themes. Uploading a
+ * new version of a theme that is already active does not fire it, so a
+ * release that adds a page shipped the template, the menu label and the link
+ * while the page itself was never created — and because mcg_url() falls back
+ * to a guessed /slug/ when there is no page behind it, the menu pointed at a
+ * 404 rather than at nothing. That is how /works/ 404'd on 3.5.0.
+ *
+ * mcg_activate() is written to be safe to repeat: it looks a page up before
+ * creating it, only sets a template where there is none, and will not repoint
+ * a front page or a posts page that is already chosen. So the cure is simply
+ * to run it once per version rather than once per switch.
+ *
+ * The stamp is written before the work, not after, so a second request
+ * arriving in the same moment sees the new version and does not run it twice.
+ */
+function mcg_maybe_setup() {
+	if ( get_option( 'mcg_setup_version' ) === MCG_VERSION ) {
+		return;
+	}
+
+	update_option( 'mcg_setup_version', MCG_VERSION );
+	mcg_activate();
+}
+add_action( 'wp_loaded', 'mcg_maybe_setup', 5 );
 
 /** Tell the user what just happened, once. */
 function mcg_activated_notice() {
