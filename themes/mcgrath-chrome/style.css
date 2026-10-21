@@ -4,7 +4,7 @@ Theme URI: https://mcgrathmarketinggroup.com
 Author: Tyler McGrath
 Author URI: https://mcgrathmarketinggroup.com
 Description: Custom theme for McGrath Marketing Group, an SEO, AI search and web design company in Jupiter, Florida. Monolith: a black and white design drawn from the MG mark, with a colossal hero, a citation constellation of the surfaces a brand can be cited on, service rows that invert to white, a scroll-driven dissolve that shatters a page of blue links into pixels and reassembles them as the question a buyer asks an AI model, a crawler-view toggle, a reveal lens and a password protected vault for client work.
-Version: 3.4.0
+Version: 3.5.0
 Requires at least: 6.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -1560,3 +1560,118 @@ img{filter:grayscale(1) contrast(1.06);}
   .phero.bedded{min-height:clamp(280px,52vw,420px);}
   .phero.bedded::before{background:linear-gradient(180deg,rgba(0,0,0,.52),rgba(0,0,0,.86));}
 }
+
+/* =====================================================================
+   24. WORKS
+   The portfolio. The whole theme is monochrome, so this page earns its
+   effect by withholding colour rather than adding any: every screenshot
+   sits in greyscale until you point at it, and the header mosaic gives
+   its colour back only under the cursor light.
+
+   Sits after section 23 on purpose: .worksHero has to overrule the
+   .phero.bedded dimming to grey the bed rather than only darken it.
+   ===================================================================== */
+
+/* ---- the header mosaic ---------------------------------------------- */
+/* twelve screenshots as one picture. Grey and pushed back, so the title
+   reads; the lit copy inside .bedSpot keeps its colour and its strength. */
+.worksHero .bed > .ph{filter:grayscale(1) contrast(.9) brightness(.5);opacity:.5;}
+.worksHero .bedSpot .ph{filter:none;opacity:1;}
+.worksHero::before{
+  background:linear-gradient(90deg,#000 2%,rgba(0,0,0,.52) 48%,rgba(0,0,0,.72) 100%);}
+
+/* ---- the section ---------------------------------------------------- */
+.worksSec{background:var(--paper);border-block:1px solid var(--line-2);
+  padding-block:clamp(34px,5vw,76px);}
+
+/* ---- the ledger: all twelve at a glance, before any picture loads ---- */
+/* three columns at most: a name like "Elite Electrical Concepts" needs the
+   room, and five columns across a wide screen cut every long one short. */
+.wkLedger{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+  gap:0 clamp(18px,3vw,44px);border-top:1px solid var(--line);
+  margin-bottom:clamp(30px,4.6vw,64px);}
+.wkLedgerRow{display:grid;grid-template-columns:26px minmax(0,1fr) auto;
+  gap:10px;align-items:baseline;padding:11px 0;border-bottom:1px solid var(--line-2);
+  font-family:var(--mono);font-size:11px;letter-spacing:.07em;color:var(--ink-70);}
+.wkLedgerRow span:first-child{color:var(--ink-45);}
+.wkLedgerRow span:nth-child(2){color:var(--ink);letter-spacing:-.01em;
+  font-family:var(--body);font-size:13.5px;}
+.wkLedgerRow span:last-child{font-size:9.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-70);text-align:right;}
+
+/* ---- the grid ------------------------------------------------------- */
+.wkGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(28px,4.4vw,78px) clamp(20px,3.2vw,52px);}
+/* the second column drops, so the page reads as two staggered runs rather
+   than twelve boxes on a shelf */
+.wkGrid > .wkCard:nth-child(even){margin-top:clamp(0px,5vw,96px);}
+
+.wkCard{display:block;color:inherit;transition:opacity .4s ease;}
+/* point at one and the rest step back */
+.wkGrid:hover > .wkCard{opacity:.32;}
+.wkGrid > .wkCard:hover,.wkGrid > .wkCard:focus-visible{opacity:1;}
+
+/* ---- the browser frame ---------------------------------------------- */
+.wkFrame{display:block;border:1px solid var(--line);border-radius:9px;
+  overflow:hidden;background:var(--cream-2);
+  transition:border-color .35s ease,transform .5s cubic-bezier(.2,.7,.3,1);}
+.wkCard:hover .wkFrame,.wkCard:focus-visible .wkFrame{
+  border-color:rgba(255,255,255,.44);transform:translateY(-5px);}
+
+.wkBar{display:flex;align-items:center;gap:6px;padding:0 13px;height:31px;
+  border-bottom:1px solid var(--line-2);background:var(--cream-3);}
+.wkBar i{width:7px;height:7px;border-radius:50%;background:var(--ink-25);flex:none;}
+.wkBar em{margin-left:10px;font-family:var(--mono);font-style:normal;font-size:10px;
+  letter-spacing:.07em;color:var(--ink-45);overflow:hidden;text-overflow:ellipsis;
+  white-space:nowrap;}
+
+.wkShot{display:block;position:relative;aspect-ratio:12/7;overflow:hidden;
+  background:var(--cream-3);}
+.wkShot img{width:100%;height:100%;object-fit:cover;object-position:50% 0;display:block;
+  filter:grayscale(1) contrast(1.04) brightness(.82);
+  transition:filter .55s ease,transform .7s cubic-bezier(.2,.7,.3,1);}
+.wkCard:hover .wkShot img,.wkCard:focus-visible .wkShot img{
+  filter:none;transform:scale(1.035);}
+
+/* ---- the type under the frame --------------------------------------- */
+.wkMeta{display:grid;grid-template-columns:34px minmax(0,1fr);
+  column-gap:clamp(10px,1.4vw,18px);row-gap:3px;padding-top:clamp(14px,1.8vw,22px);}
+.wkN{grid-row:1/span 2;font-family:var(--mono);font-size:11px;letter-spacing:.12em;
+  color:var(--ink-45);padding-top:7px;}
+.wkName{font-family:var(--display);font-weight:600;letter-spacing:-.035em;
+  line-height:1.05;font-size:clamp(20px,2.5vw,32px);}
+.wkTag{font-family:var(--mono);font-size:9.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-70);padding-top:2px;}
+.wkLine{grid-column:2;font-size:14px;line-height:1.6;color:var(--ink-70);
+  font-weight:300;max-width:48ch;padding-top:9px;}
+.wkGo{grid-column:2;font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink);padding-top:13px;display:inline-flex;
+  align-items:center;gap:7px;}
+.wkGo .arw{transition:transform .35s cubic-bezier(.2,.7,.3,1);}
+.wkCard:hover .wkGo .arw,.wkCard:focus-visible .wkGo .arw{transform:translate(3px,-3px);}
+
+/* ---- narrow ---------------------------------------------------------- */
+@media(max-width:860px){
+  .wkGrid{grid-template-columns:minmax(0,1fr);gap:clamp(26px,7vw,44px);}
+  .wkGrid > .wkCard:nth-child(even){margin-top:0;}
+  /* dimming the siblings needs a pointer to aim with; on a touch screen it
+     would just leave whatever was tapped last looking broken */
+  .wkGrid:hover > .wkCard{opacity:1;}
+}
+@media(hover:none){
+  .wkGrid:hover > .wkCard{opacity:1;}
+  /* nothing to hover with, so the work shows its own colour outright */
+  .wkShot img{filter:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  .wkFrame,.wkShot img,.wkCard,.wkGo .arw{transition:none;}
+  .wkCard:hover .wkFrame{transform:none;}
+  .wkCard:hover .wkShot img{transform:none;}
+}
+
+/* ---- crawler view ---------------------------------------------------- */
+body.crawl .wkShot img{
+  filter:grayscale(1) brightness(.42) sepia(1) hue-rotate(75deg) saturate(3.2);}
+body.crawl .worksSec{background:#04100A;border-color:rgba(159,243,184,.16);}
+body.crawl .wkFrame,body.crawl .wkBar{background:#06140A;border-color:rgba(159,243,184,.3);}
+body.crawl .wkGrid:hover > .wkCard{opacity:1;}

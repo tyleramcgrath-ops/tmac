@@ -25,6 +25,7 @@ function mcg_slugs() {
 		'seo'       => 'seo-jupiter-fl',
 		'webdesign' => 'web-design-jupiter',
 		'aeo'       => 'ai-search-optimization',
+		'works'     => 'works',
 		'about'     => 'about-tyler-mcgrath',
 		'contact'   => 'free-seo-audit',
 		'vault'     => 'vault',

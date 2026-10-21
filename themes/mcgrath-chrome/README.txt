@@ -253,6 +253,34 @@ record of inquiries, use a form plugin instead and drop its shortcode into the
 page content, which still renders below the form.
 
 
+WORKS, THE PORTFOLIO (template-works.php + inc/works.php)
+---------------------------------------------------------
+A page at /works/ showing twelve live sites. The list lives in one array in
+inc/works.php; add, reorder or drop an entry there and the page follows. Each
+entry needs a screenshot at assets/img/work-{slug}.webp, and an entry whose
+file is missing renders its type without a picture rather than a grey box.
+
+The screenshots were captured from each site at 1440x900 and are stored at
+1200x700 WebP, about 50 KB each. To refresh one, take a new shot at that size
+and overwrite the file; nothing else needs touching.
+
+On the copy: every 'line' in the array is the site's own description of
+itself, lifted from its meta description or its opening paragraph. There are
+no dates, budgets, roles or results anywhere on the page, because none of that
+can be read off a website. If you want "SEO + build, 2024" or a result under a
+card, write it into 'line' yourself.
+
+How the page looks is the point. The rest of the theme is black and white, so
+this page withholds colour rather than adding any: every screenshot sits in
+greyscale until you point at it, pointing at one card dims the other eleven,
+and the header is all twelve screenshots laid out as a single picture that
+gives its colour back only under the cursor light. On a touch screen there is
+nothing to hover with, so the pictures show their colour outright.
+
+The page is not in the LocalBusiness schema and makes no machine-readable
+authorship claim. Say the word if you want one added.
+
+
 ADDRESS
 -------
 The business address lives in five Customizer fields under Homepage & brand:

@@ -7,7 +7,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
-define( 'MCG_VERSION', '3.4.0' );
+define( 'MCG_VERSION', '3.5.0' );
 
 require_once get_template_directory() . '/inc/icons.php';
 require_once get_template_directory() . '/inc/content.php';
@@ -16,6 +16,7 @@ require_once get_template_directory() . '/inc/page-depth.php';
 require_once get_template_directory() . '/inc/contact-form.php';
 require_once get_template_directory() . '/inc/diagnostics.php';
 require_once get_template_directory() . '/inc/agentic.php';
+require_once get_template_directory() . '/inc/works.php';
 
 function mcg_setup() {
 	add_theme_support( 'title-tag' );
@@ -130,7 +131,7 @@ function mcg_nav() {
 	$slugs  = mcg_slugs();
 
 	echo '<ul>';
-	foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+	foreach ( array( 'seo', 'webdesign', 'aeo', 'works', 'about', 'contact' ) as $key ) {
 		printf(
 			'<li%s><a href="%s">%s</a></li>',
 			mcg_page_id( $key ) && is_page( mcg_page_id( $key ) ) ? ' class="current"' : '',
@@ -146,7 +147,7 @@ function mcg_fallback_menu() {
 	$labels = mcg_nav_labels();
 	$pages  = array();
 
-	foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+	foreach ( array( 'seo', 'webdesign', 'aeo', 'works', 'about', 'contact' ) as $key ) {
 		$pages[ $s[ $key ] ] = $labels[ $s[ $key ] ];
 	}
 	echo '<ul>';
@@ -169,9 +170,10 @@ function mcg_nav_labels() {
 		$s['seo']       => __( 'SEO', 'mcgrath-chrome' ),
 		$s['webdesign'] => __( 'Web Design', 'mcgrath-chrome' ),
 		$s['aeo']       => __( 'AI Visibility', 'mcgrath-chrome' ),
+		$s['works']     => __( 'Works', 'mcgrath-chrome' ),
 		$s['about']     => __( 'About', 'mcgrath-chrome' ),
 		$s['contact']   => __( 'Contact', 'mcgrath-chrome' ),
-		$s['vault']     => __( 'Work', 'mcgrath-chrome' ),
+		$s['vault']     => __( 'The Vault', 'mcgrath-chrome' ),
 		$s['blog']      => __( 'Insights', 'mcgrath-chrome' ),
 	);
 }
@@ -618,6 +620,12 @@ function mcg_pages_map() {
 			'excerpt'  => mcg_page_terms()['aeo']['meta'],
 			'content'  => '',
 		),
+		$s['works'] => array(
+			'title'    => 'Works',
+			'template' => 'template-works.php',
+			'excerpt'  => mcg_page_terms()['works']['meta'],
+			'content'  => '',
+		),
 		$s['about'] => array(
 			'title'    => 'About Tyler McGrath',
 			'template' => 'template-about.php',
@@ -754,7 +762,7 @@ function mcg_activate() {
 			$labels  = mcg_nav_labels();
 			$in_menu = array();
 
-			foreach ( array( 'seo', 'webdesign', 'aeo', 'about', 'contact' ) as $key ) {
+			foreach ( array( 'seo', 'webdesign', 'aeo', 'works', 'about', 'contact' ) as $key ) {
 				$in_menu[ $slugs[ $key ] ] = $labels[ $slugs[ $key ] ];
 			}
 

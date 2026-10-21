@@ -42,6 +42,10 @@ function mcg_page_terms() {
 			'term' => 'AI search optimization',
 			'meta' => 'AI search optimization for Jupiter businesses: get named when buyers ask ChatGPT, Gemini, Perplexity or a Google AI Overview who to call. Tracked monthly.',
 		),
+		'works'     => array(
+			'term' => 'web design portfolio',
+			'meta' => 'A web design portfolio: twelve live sites across restaurants, trades, retail, travel and software, each one linked so you can judge it yourself.',
+		),
 		'about'     => array(
 			'term' => 'SEO consultant in Jupiter, FL',
 			'meta' => 'Tyler McGrath, an SEO consultant in Jupiter, FL. One person, not an agency: who you are hiring, how the work runs, and who this does and does not suit.',
