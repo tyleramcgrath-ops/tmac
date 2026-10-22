@@ -1,0 +1,1150 @@
+{
+"researchedOn": "2026-10-22",
+"states": {
+"AZ": {
+"misdemeanorWait": {
+"value": "2-3 years after sentence completed",
+"detail": "Arizona lets you petition to seal a misdemeanor record 3 years (class 1) or 2 years (class 2 or 3) after completing your sentence; a set-aside under A.R.S. § 13-905 is also available once the sentence is done.",
+"cite": "Ariz. Rev. Stat. § 13-911(E)",
+"source": "https://www.azleg.gov/ars/13/00911.htm",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years after sentence completed",
+"detail": "Class 4, 5 and 6 felonies can be sealed 5 years after completing the sentence (10 years for class 2 or 3 felonies).",
+"cite": "Ariz. Rev. Stat. § 13-911(E)",
+"source": "https://www.azleg.gov/ars/13/00911.htm",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Arizona record sealing requires a petition to the court; there is no automatic Clean Slate process for convictions.",
+"cite": "Ariz. Rev. Stat. § 13-911",
+"source": "https://www.azleg.gov/ars/13/00911.htm",
+"verified": true
+}
+},
+"CA": {
+"misdemeanorWait": {
+"value": "After probation ends (or 1 year after judgment if no probation)",
+"detail": "California lets you petition to dismiss (set aside) a misdemeanor conviction once probation is completed, or one year after judgment if you didn't get probation.",
+"cite": "Cal. Penal Code §§ 1203.4, 1203.4a",
+"source": "https://california.public.law/codes/penal_code_section_1203.4a",
+"verified": true
+},
+"felonyWait": {
+"value": "After probation ends (no fixed wait)",
+"detail": "Most felonies that resulted in probation can be dismissed under Penal Code § 1203.4 once probation is successfully completed; prison sentences generally don't qualify, and county-jail felonies use § 1203.41.",
+"cite": "Cal. Penal Code § 1203.4",
+"source": "https://california.public.law/codes/penal_code_section_1203.4",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "California automatically grants relief for many convictions once the sentence is complete, including many felonies after four years without a new felony.",
+"cite": "Cal. Penal Code §§ 1203.425, 851.93",
+"source": "https://california.public.law/codes/penal_code_section_1203.425",
+"verified": true
+}
+},
+"CO": {
+"misdemeanorWait": {
+"value": "2-3 years after case closed or supervision ends",
+"detail": "Colorado lets you move to seal a class 2 or 3 misdemeanor 2 years (class 1 misdemeanor: 3 years) after the case ends or supervision is completed.",
+"cite": "Colo. Rev. Stat. § 24-72-706(1)(b)",
+"source": "https://colorado.public.law/statutes/crs_24-72-706",
+"verified": true
+},
+"felonyWait": {
+"value": "3 years after case closed or supervision ends",
+"detail": "Class 4, 5 and 6 felonies (and level 3-4 drug felonies) can be sealed by motion after 3 years; most other felonies after 5 years.",
+"cite": "Colo. Rev. Stat. § 24-72-706(1)(b)(III)-(IV)",
+"source": "https://colorado.public.law/statutes/crs_24-72-706",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Colorado automatically seals eligible misdemeanor convictions after 7 years and eligible felony convictions after 10 years without a new conviction.",
+"cite": "Colo. Rev. Stat. § 13-3-117",
+"source": "https://colorado.public.law/statutes/crs_13-3-117",
+"verified": true
+}
+},
+"DE": {
+"misdemeanorWait": {
+"value": "5 years after conviction (automatic); 3 years by court petition",
+"detail": "Most single-case misdemeanors qualify for mandatory expungement 5 years after conviction, and a court may grant discretionary expungement after 3 years if you have no other convictions.",
+"cite": "11 Del. C. §§ 4373, 4374",
+"source": "https://delcode.delaware.gov/title11/c043/sc07/index.html",
+"verified": true
+},
+"felonyWait": {
+"value": "7 years after conviction or release",
+"detail": "Delaware courts may grant discretionary expungement of a felony 7 years after conviction or release, whichever is later, if you have no other convictions; some lower-level felonies become mandatory-eligible after 10 years.",
+"cite": "11 Del. C. §§ 4373, 4374",
+"source": "https://delcode.delaware.gov/title11/c043/sc07/index.html",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Since August 1, 2024, the State Bureau of Identification automatically expunges cases that qualify for mandatory expungement.",
+"cite": "11 Del. C. § 4373A",
+"source": "https://delcode.delaware.gov/title11/c043/sc07/index.html",
+"verified": true
+}
+},
+"DC": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "D.C. lets you move to seal a misdemeanor conviction 5 years after you complete your sentence.",
+"cite": "D.C. Code § 16-806(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-806",
+"verified": true
+},
+"felonyWait": {
+"value": "8 years after sentence completed",
+"detail": "Most felonies (except the most serious severity groups) can be sealed by motion 8 years after the sentence is completed.",
+"cite": "D.C. Code § 16-806(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-806",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "D.C. law provides automatic sealing of eligible misdemeanor convictions 10 years after the sentence is completed.",
+"cite": "D.C. Code § 16-805",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-805",
+"verified": true
+}
+},
+"FL": {
+"misdemeanorWait": {
+"value": "Not eligible (convictions can't be sealed or expunged)",
+"detail": "Florida only allows sealing when adjudication was withheld; a person adjudicated guilty of the offense cannot seal or expunge it.",
+"cite": "Fla. Stat. § 943.059(2)(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/943.059",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (convictions can't be sealed or expunged)",
+"detail": "Felony convictions where guilt was adjudicated cannot be sealed or expunged in Florida; relief is limited to withheld adjudications and non-convictions.",
+"cite": "Fla. Stat. § 943.059(2)(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/943.059",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Florida has no automatic clearing of conviction records; sealing requires a certificate of eligibility and a court petition.",
+"cite": "Fla. Stat. § 943.059",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/943.059",
+"verified": true
+}
+},
+"ID": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Idaho lets you petition to shield records of most non-violent misdemeanor convictions 5 years after completing your sentence, including probation, fines and restitution.",
+"cite": "Idaho Code § 67-3004(11)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH30/SECT67-3004/",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (most felonies); 5 years for felony drug possession",
+"detail": "Idaho's shielding law covers only felony drug possession among felonies (5 years after sentence); other felonies can only be addressed through a withheld judgment dismissal or reduction.",
+"cite": "Idaho Code § 67-3004(11)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH30/SECT67-3004/",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Idaho's record shielding requires a court petition and hearing; there is no automatic clearing of convictions.",
+"cite": "Idaho Code § 67-3004(11)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title67/T67CH30/SECT67-3004/",
+"verified": true
+}
+},
+"IA": {
+"misdemeanorWait": {
+"value": "8 years after conviction",
+"detail": "Iowa courts must expunge most misdemeanor convictions on application once more than 8 years have passed since conviction and all fines and costs are paid.",
+"cite": "Iowa Code § 901C.3(1)",
+"source": "https://www.legis.iowa.gov/docs/code/901C.3.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible",
+"detail": "Iowa's expungement chapter covers only misdemeanor convictions and non-convictions; felony convictions cannot be expunged.",
+"cite": "Iowa Code ch. 901C",
+"source": "https://www.legis.iowa.gov/docs/code/901C.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Iowa misdemeanor expungement requires an application to the court; there is no automatic clearing of convictions.",
+"cite": "Iowa Code § 901C.3",
+"source": "https://www.legis.iowa.gov/docs/code/901C.3.pdf",
+"verified": true
+}
+},
+"KS": {
+"misdemeanorWait": {
+"value": "3 years after sentence completed",
+"detail": "Kansas lets you petition to expunge most misdemeanor convictions 3 years after you satisfied the sentence or were discharged from probation or parole.",
+"cite": "Kan. Stat. Ann. § 21-6614(a)(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch21/021_066_0014.html",
+"verified": true
+},
+"felonyWait": {
+"value": "3 years after sentence completed",
+"detail": "Lower-level felonies (nondrug severity levels 6-10, drug level 5, class D/E) can be expunged 3 years after the sentence or supervision ends; more serious felonies wait 5 years or are excluded.",
+"cite": "Kan. Stat. Ann. § 21-6614(a)(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch21/021_066_0014.html",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Kansas expungement requires a petition to the convicting court; there is no automatic clearing of convictions.",
+"cite": "Kan. Stat. Ann. § 21-6614",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch21/021_066_0014.html",
+"verified": true
+}
+},
+"KY": {
+"misdemeanorWait": {
+"value": "5 years after sentence or probation completed",
+"detail": "Kentucky lets you petition to expunge a misdemeanor conviction 5 years after completing your sentence or probation, whichever is later.",
+"cite": "Ky. Rev. Stat. § 431.078(2)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=45221",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years after sentence, probation or parole completed",
+"detail": "Most Class D felonies can be vacated and expunged 5 years after completing the sentence, probation or parole.",
+"cite": "Ky. Rev. Stat. § 431.073(2)(a)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=53904",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Kentucky conviction expungement requires a petition or application; automatic expungement applies only to acquittals and dismissals.",
+"cite": "Ky. Rev. Stat. §§ 431.073, 431.076, 431.078",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=50191",
+"verified": true
+}
+},
+"LA": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Louisiana lets you move to expunge a misdemeanor conviction once more than 5 years have passed since you finished your sentence, probation or parole with no felony conviction (or sooner if the conviction was set aside under Art. 894).",
+"cite": "La. Code Crim. Proc. art. 977(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=919669",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after sentence completed",
+"detail": "Most felony convictions can be expunged by motion once more than 10 years have passed since the sentence was completed with no other conviction (or sooner if set aside under Art. 893).",
+"cite": "La. Code Crim. Proc. art. 978(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=919670",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Louisiana expungement requires a motion filed with the court; there is no automatic clearing of convictions.",
+"cite": "La. Code Crim. Proc. arts. 977-978",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=919669",
+"verified": true
+}
+},
+"ME": {
+"misdemeanorWait": {
+"value": "4 years after sentence completed",
+"detail": "Maine lets you ask a court to seal records of a Class E crime (its lowest-level crimes, roughly misdemeanors) 4 years after fully completing the sentence.",
+"cite": "15 M.R.S. §§ 2261(6), 2262(2)",
+"source": "https://legislature.maine.gov/statutes/15/title15sec2262.html",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (most Class A-D crimes)",
+"detail": "Maine's sealing law covers only Class E crimes plus certain pre-2017 drug offenses; Class D and higher crimes generally can only be addressed by a governor's pardon.",
+"cite": "15 M.R.S. § 2261(6)",
+"source": "https://legislature.maine.gov/statutes/15/title15sec2261.html",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Maine sealing requires a court motion; the 2026 Clean Slate bill (LD 1911) was vetoed and the veto was sustained.",
+"cite": "15 M.R.S. §§ 2263-2264",
+"source": "https://legislature.maine.gov/statutes/15/title15sec2264.html",
+"verified": true
+}
+},
+"MD": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Maryland lets you petition to expunge most eligible misdemeanor convictions 5 years after completing the sentence (7 years for second-degree assault, 15 for domestically related crimes).",
+"cite": "Md. Code, Crim. Proc. § 10-110(c)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcp&section=10-110",
+"verified": true
+},
+"felonyWait": {
+"value": "7 years after sentence completed",
+"detail": "Eligible felonies (such as burglary, theft and certain drug felonies) can be expunged 7 years after the sentence is completed (10 years for some).",
+"cite": "Md. Code, Crim. Proc. § 10-110(c)(4)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcp&section=10-110",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Maryland conviction expungement requires a petition; it has no general automatic Clean Slate law for convictions.",
+"cite": "Md. Code, Crim. Proc. § 10-110",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcp&section=10-110",
+"verified": true
+}
+},
+"MA": {
+"misdemeanorWait": {
+"value": "3 years after disposition or release",
+"detail": "Massachusetts lets you ask the Commissioner of Probation to seal a misdemeanor record 3 years after the court disposition or any incarceration, if you have no new convictions in that time.",
+"cite": "Mass. Gen. Laws ch. 276, § 100A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleII/Chapter276/Section100A",
+"verified": true
+},
+"felonyWait": {
+"value": "7 years after disposition or release",
+"detail": "Felony records can be sealed administratively 7 years after the court disposition or any incarceration, with no new convictions.",
+"cite": "Mass. Gen. Laws ch. 276, § 100A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleII/Chapter276/Section100A",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Massachusetts sealing requires a request to the Commissioner of Probation or a court petition; there is no automatic Clean Slate law.",
+"cite": "Mass. Gen. Laws ch. 276, §§ 100A, 100C",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleII/Chapter276/Section100A",
+"verified": true
+}
+},
+"MI": {
+"misdemeanorWait": {
+"value": "3 years after sentence, probation or jail completed",
+"detail": "Michigan lets you apply to set aside most misdemeanor convictions 3 years after sentencing, probation or jail time ends, whichever is last (5 years for serious misdemeanors or a first OWI).",
+"cite": "Mich. Comp. Laws § 780.621d(2)-(3)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-780-621d",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years after sentence completed (one felony)",
+"detail": "One felony conviction can be set aside 5 years after sentencing, probation, parole or prison ends, whichever is last; more than one felony requires 7 years.",
+"cite": "Mich. Comp. Laws § 780.621d(1)-(2)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-780-621d",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Michigan automatically sets aside eligible misdemeanors after 7 years and eligible felonies after 10 years, up to lifetime limits.",
+"cite": "Mich. Comp. Laws § 780.621g",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-780-621g",
+"verified": true
+}
+},
+"MN": {
+"misdemeanorWait": {
+"value": "2 years after sentence discharged",
+"detail": "Minnesota lets you petition to expunge a misdemeanor 2 years after discharge of the sentence with no new conviction (gross misdemeanors: 3 years).",
+"cite": "Minn. Stat. § 609A.02, subd. 3(a)(3)-(4)",
+"source": "https://www.revisor.mn.gov/statutes/cite/609A.02",
+"verified": true
+},
+"felonyWait": {
+"value": "4 years after sentence discharged",
+"detail": "Listed lower-level felonies can be expunged by petition 4 years after discharge of the sentence with no new conviction.",
+"cite": "Minn. Stat. § 609A.02, subd. 3(a)(8)",
+"source": "https://www.revisor.mn.gov/statutes/cite/609A.02",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Since January 1, 2025, Minnesota automatically grants expungement for eligible offenses after a crime-free waiting period (2 years for misdemeanors, 5 years for eligible felonies).",
+"cite": "Minn. Stat. § 609A.015",
+"source": "https://www.revisor.mn.gov/statutes/cite/609A.015",
+"verified": true
+}
+},
+"MS": {
+"autoClear": {
+"value": "No",
+"detail": "Mississippi has no automatic Clean Slate law; expungement requires a petition to the court of conviction.",
+"cite": "Miss. Code Ann. § 99-19-71",
+"source": "https://www.cleanslateinitiative.org/states",
+"verified": true
+}
+},
+"MO": {
+"misdemeanorWait": {
+"value": "1 year after sentence completed",
+"detail": "Missouri lets you petition to expunge an eligible misdemeanor at least 1 year after completing the sentence or other disposition.",
+"cite": "Mo. Rev. Stat. § 610.140",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=610.140",
+"verified": true
+},
+"felonyWait": {
+"value": "3 years after sentence completed",
+"detail": "Eligible felonies can be expunged by petition at least 3 years after the sentence or other disposition is completed.",
+"cite": "Mo. Rev. Stat. § 610.140",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=610.140",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Missouri's 2026 Clean Slate law (SB 1421, signed July 2026) automatically expunges eligible misdemeanors 1 year and eligible nonviolent felonies 3 years after final disposition, with the Highway Patrol running the process.",
+"cite": "Mo. SB 1421 (2026)",
+"source": "https://www.krcu.org/2026-07-09/kehoe-signs-19-bills-into-missouri-law-including-automatic-expungement-of-some-crimes",
+"verified": true
+}
+},
+"MT": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed (presumed eligible)",
+"detail": "Montana lets you petition once in your life to expunge all your misdemeanor records, and expungement is presumed if you've had no new conviction for 5 years after completing your sentence.",
+"cite": "Mont. Code Ann. §§ 46-18-1104, 46-18-1107",
+"source": "https://mca.legmt.gov/bills/mca/title_0460/chapter_0180/part_0110/section_0070/0460-0180-0110-0070.html",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (pardon only, except deferred sentences)",
+"detail": "Montana's expungement law covers only misdemeanors; a felony conviction can be cleared only by pardon, or dismissed if the court deferred imposition of sentence.",
+"cite": "Mont. Code Ann. § 46-18-1104",
+"source": "https://mca.legmt.gov/bills/mca/title_0460/chapter_0180/part_0110/section_0040/0460-0180-0110-0040.html",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Montana misdemeanor expungement requires a petition to district court; there is no automatic clearing of convictions.",
+"cite": "Mont. Code Ann. § 46-18-1104",
+"source": "https://mca.legmt.gov/bills/mca/title_0460/chapter_0180/part_0110/section_0040/0460-0180-0110-0040.html",
+"verified": true
+}
+},
+"NE": {
+"misdemeanorWait": {
+"value": "No wait (after sentence completed)",
+"detail": "Nebraska lets you petition to set aside a conviction once you complete probation, pay a fine-only sentence, or finish a sentence of a year or less; a set-aside also seals the record.",
+"cite": "Neb. Rev. Stat. § 29-2264(2)-(3)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=29-2264",
+"verified": true
+},
+"felonyWait": {
+"value": "No wait if sentenced to probation, fine, or 1 year or less; otherwise not eligible (pardon)",
+"detail": "Felonies resulting in probation, a fine, or a sentence of a year or less can be set aside after the sentence is completed; longer prison sentences require a pardon.",
+"cite": "Neb. Rev. Stat. § 29-2264(2)-(3)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=29-2264",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Nebraska set-asides require a petition to the sentencing court; there is no automatic clearing of convictions.",
+"cite": "Neb. Rev. Stat. § 29-2264",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=29-2264",
+"verified": true
+}
+},
+"NV": {
+"misdemeanorWait": {
+"value": "1 year after release or end of suspended sentence",
+"detail": "Nevada lets you petition to seal most misdemeanor convictions 1 year after release from custody or the end of a suspended sentence (2 years for battery, harassment and similar; 7 years for DUI or domestic battery).",
+"cite": "Nev. Rev. Stat. § 179.245(1)(f)-(g)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-179.html#NRS179Sec245",
+"verified": true
+},
+"felonyWait": {
+"value": "2 years (category E) to 5 years (categories B-D)",
+"detail": "Category E felonies can be sealed 2 years after release or discharge from parole/probation; category B, C and D felonies after 5 years; category A and violent felonies after 10 years.",
+"cite": "Nev. Rev. Stat. § 179.245(1)(a)-(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-179.html#NRS179Sec245",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Nevada record sealing requires a petition to the court (with a rebuttable presumption in favor of sealing); there is no automatic Clean Slate law for convictions.",
+"cite": "Nev. Rev. Stat. §§ 179.245, 179.2445",
+"source": "https://www.leg.state.nv.us/NRS/NRS-179.html#NRS179Sec245",
+"verified": true
+}
+},
+"NH": {
+"misdemeanorWait": {
+"value": "2-3 years after sentence completed",
+"detail": "New Hampshire lets you petition to annul a class B misdemeanor after 2 years and a class A misdemeanor after 3 years (10 years for domestic violence).",
+"cite": "N.H. Rev. Stat. § 651:5, III",
+"source": "https://gc.nh.gov/rsa/html/LXII/651/651-5.htm",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years (class B felony)",
+"detail": "Class B felonies can be annulled after 5 years and class A felonies after 10 years; violent crimes are excluded.",
+"cite": "N.H. Rev. Stat. § 651:5, III, V",
+"source": "https://gc.nh.gov/rsa/html/LXII/651/651-5.htm",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "New Hampshire annulment requires a petition to the court; there is no automatic clearing of convictions.",
+"cite": "N.H. Rev. Stat. § 651:5",
+"source": "https://gc.nh.gov/rsa/html/LXII/651/651-5.htm",
+"verified": true
+}
+},
+"NJ": {
+"misdemeanorWait": {
+"value": "5 years (3 years in compelling cases)",
+"detail": "New Jersey lets you apply to expunge a disorderly persons offense (its misdemeanor equivalent) 5 years after the latest of conviction, payment, probation or release, or after 3 years if the court finds it in the public interest.",
+"cite": "N.J.S.A. 2C:52-3",
+"source": "https://www.njcourts.gov/sites/default/files/courts/municipal/legislation/fornjcourtspl2019c269expungement.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years (4 years in compelling cases)",
+"detail": "An indictable (felony-level) conviction can be expunged 5 years after the latest of conviction, payment of assessments, probation/parole or release, or after 4 years in compelling circumstances.",
+"cite": "N.J.S.A. 2C:52-2",
+"source": "https://www.njcourts.gov/sites/default/files/courts/municipal/legislation/fornjcourtspl2019c269expungement.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "New Jersey law directs the State to build an automated 'clean slate' process that renders convictions inaccessible 10 years after the latest conviction or release; a petition-based clean slate expungement after 10 years is also available.",
+"cite": "N.J.S.A. 2C:52-5.3, 2C:52-5.4",
+"source": "https://www.njcourts.gov/sites/default/files/courts/municipal/legislation/fornjcourtspl2019c269expungement.pdf",
+"verified": true
+}
+},
+"NY": {
+"misdemeanorWait": {
+"value": "3 years after release or sentencing (automatic sealing)",
+"detail": "Under New York's Clean Slate Act, most misdemeanor convictions are sealed automatically 3 years after release from incarceration or sentencing; petition sealing under CPL 160.59 requires 10 years.",
+"cite": "N.Y. Crim. Proc. Law §§ 160.57, 160.59",
+"source": "https://newyork.public.law/laws/n.y._criminal_procedure_law_section_160.57",
+"verified": true
+},
+"felonyWait": {
+"value": "8 years after release or sentencing (automatic sealing)",
+"detail": "Most felony convictions (excluding sex offenses and Class A felonies other than drug offenses) are sealed automatically 8 years after release or sentencing; petition sealing requires 10 years.",
+"cite": "N.Y. Crim. Proc. Law §§ 160.57, 160.59",
+"source": "https://newyork.public.law/laws/n.y._criminal_procedure_law_section_160.57",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "New York's Clean Slate Act automatically seals eligible misdemeanors after 3 years and eligible felonies after 8 years without a new conviction.",
+"cite": "N.Y. Crim. Proc. Law § 160.57",
+"source": "https://newyork.public.law/laws/n.y._criminal_procedure_law_section_160.57",
+"verified": true
+}
+},
+"NC": {
+"misdemeanorWait": {
+"value": "3 years after conviction or sentence completed",
+"detail": "North Carolina lets you petition to expunge one nonviolent misdemeanor 3 years after conviction or completion of any sentence or probation, whichever is later (7 years for more than one).",
+"cite": "N.C. Gen. Stat. § 15A-145.5(c)(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-145.5.html",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after conviction or sentence completed",
+"detail": "One nonviolent felony can be expunged 10 years after conviction or completion of the sentence, whichever is later (15 years for felony breaking and entering; 20 years for two or three felonies).",
+"cite": "N.C. Gen. Stat. § 15A-145.5(c)(2)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-145.5.html",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "North Carolina expunges dismissals and not-guilty verdicts automatically, but conviction expunction requires a petition.",
+"cite": "N.C. Gen. Stat. §§ 15A-145.5, 15A-146",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-145.5.html",
+"verified": true
+}
+},
+"ND": {
+"misdemeanorWait": {
+"value": "3 years without a new conviction",
+"detail": "North Dakota lets you petition to seal a misdemeanor record if you have had no new conviction for at least 3 years.",
+"cite": "N.D. Cent. Code § 12-60.1-02",
+"source": "https://ndlegis.gov/cencode/t12c60-1.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years without a new conviction",
+"detail": "A felony record can be sealed by petition if you have had no new conviction for at least 5 years.",
+"cite": "N.D. Cent. Code § 12-60.1-02",
+"source": "https://ndlegis.gov/cencode/t12c60-1.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "North Dakota seals conviction records only by petition; its automatic provisions cover non-conviction records.",
+"cite": "N.D. Cent. Code §§ 12-60.1-02, 12-60.1-05",
+"source": "https://ndlegis.gov/cencode/t12c60-1.pdf",
+"verified": true
+}
+},
+"OH": {
+"misdemeanorWait": {
+"value": "1 year after final discharge (sealing)",
+"detail": "Ohio lets you apply to seal a misdemeanor conviction 1 year after final discharge (6 months for a minor misdemeanor); expungement is available on the same timeline for misdemeanors.",
+"cite": "Ohio Rev. Code § 2953.32(B)(1)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2953.32",
+"verified": true
+},
+"felonyWait": {
+"value": "1 year after final discharge (4th or 5th degree felony)",
+"detail": "Fourth- and fifth-degree felonies can be sealed 1 year after final discharge and third-degree felonies after 3 years; full expungement of a felony requires waiting another 10 years.",
+"cite": "Ohio Rev. Code § 2953.32(B)(1)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2953.32",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Ohio sealing and expungement require an application to the court; there is no automatic Clean Slate law for convictions.",
+"cite": "Ohio Rev. Code § 2953.32",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2953.32",
+"verified": true
+}
+},
+"OK": {
+"misdemeanorWait": {
+"value": "5 years after sentence ends (no wait if fine-only under $501)",
+"detail": "Oklahoma lets you petition to expunge a misdemeanor 5 years after the sentence ends, or right away if you were only fined under $501 and paid it, provided you have no felony conviction.",
+"cite": "22 Okla. Stat. § 18(A)(10)-(11)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os22.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years after sentence completed (one nonviolent felony)",
+"detail": "One nonviolent felony can be expunged 5 years after completing the sentence; up to two non-excluded felonies after 10 years.",
+"cite": "22 Okla. Stat. § 18(A)(12)-(13)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os22.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Oklahoma's Clean Slate law automatically seals 'clean slate eligible' records, including qualifying misdemeanor convictions (but not felonies), identified monthly by the State Bureau of Investigation.",
+"cite": "22 Okla. Stat. §§ 18(C), 19(B)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os22.pdf",
+"verified": true
+}
+},
+"OR": {
+"misdemeanorWait": {
+"value": "1-3 years after conviction or release",
+"detail": "Oregon lets you move to set aside a Class B or C misdemeanor 1 year, and a Class A misdemeanor 3 years, after conviction or release from imprisonment, whichever is later.",
+"cite": "Or. Rev. Stat. § 137.225(1)(b)",
+"source": "https://oregon.public.law/statutes/ors_137.225",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years (Class C felony)",
+"detail": "A Class C felony can be set aside 5 years after conviction or release, and a Class B felony after 7 years; Class A and certain other felonies are excluded.",
+"cite": "Or. Rev. Stat. § 137.225(1)(b)",
+"source": "https://oregon.public.law/statutes/ors_137.225",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Oregon set-asides require a motion to the court; there is no general automatic clearing of convictions.",
+"cite": "Or. Rev. Stat. § 137.225",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors137.html",
+"verified": true
+}
+},
+"PA": {
+"misdemeanorWait": {
+"value": "7 years conviction-free (limited access)",
+"detail": "Pennsylvania seals (limits access to) second- and third-degree misdemeanors automatically after 7 years without a conviction for a serious offense, and lets you petition for limited access to first-degree misdemeanors after 7 years.",
+"cite": "18 Pa.C.S. §§ 9122.1(a), 9122.2(a)(1)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18&div=0&chapter=91&section=22&subsctn=1",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years conviction-free (certain felonies, limited access)",
+"detail": "Certain lower-level felonies (e.g., most drug felonies and some property felonies) can be sealed by petition after 10 years conviction-free, and some qualify for automatic Clean Slate sealing after 10 years.",
+"cite": "18 Pa.C.S. §§ 9122.1(a.1), 9122.2(a)(1.1)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18&div=0&chapter=91&section=22&subsctn=1",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Pennsylvania's Clean Slate law automatically seals eligible misdemeanors after 7 years, qualifying felonies after 10 years, non-convictions, and summary offenses after 5 years.",
+"cite": "18 Pa.C.S. § 9122.2",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=PDF&ttl=18&div=0&chapter=91&section=22&subsctn=2",
+"verified": true
+}
+},
+"RI": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Rhode Island lets a first offender move to expunge a misdemeanor conviction 5 years after completing the sentence (10 years for people with multiple misdemeanors).",
+"cite": "R.I. Gen. Laws § 12-1.3-2(c), (f)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE12/12-1.3/12-1.3-2.htm",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after sentence completed",
+"detail": "A first offender can move to expunge a non-violent felony conviction 10 years after completing the sentence.",
+"cite": "R.I. Gen. Laws § 12-1.3-2(d)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE12/12-1.3/12-1.3-2.htm",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Rhode Island expungement requires a motion to the court; there is no automatic Clean Slate law.",
+"cite": "R.I. Gen. Laws § 12-1.3-2",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE12/12-1.3/12-1.3-2.htm",
+"verified": true
+}
+},
+"SC": {
+"misdemeanorWait": {
+"value": "3 years after conviction",
+"detail": "South Carolina lets you apply to expunge a first conviction for a minor offense (up to 30 days in jail or a $1,000 fine) 3 years after conviction (5 years for third-degree domestic violence).",
+"cite": "S.C. Code § 22-5-910(A)-(B)",
+"source": "https://www.scstatehouse.gov/code/t22c005.php",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (most felonies)",
+"detail": "South Carolina does not offer general felony expungement; only specific first offenses (such as certain drug possession charges or youthful offender convictions) qualify under individual statutes.",
+"cite": "S.C. Code § 17-22-910",
+"source": "https://www.scstatehouse.gov/code/t17c022.php",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "South Carolina conviction expungement requires an application to the solicitor and court; automatic expungement applies only to dismissals and acquittals.",
+"cite": "S.C. Code §§ 17-22-910, 17-1-40",
+"source": "https://www.scstatehouse.gov/code/t17c022.php",
+"verified": true
+}
+},
+"SD": {
+"misdemeanorWait": {
+"value": "5 years (Class 2 misdemeanors removed automatically); Class 1 not eligible",
+"detail": "South Dakota automatically removes Class 2 misdemeanor and petty offense cases from the public record after 5 years with no new conviction; other convictions can only be sealed through a suspended imposition of sentence.",
+"cite": "S.D. Codified Laws § 23A-3-34",
+"source": "https://sdlegislature.gov/api/Statutes/23A-3-34.html",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (except suspended imposition of sentence)",
+"detail": "South Dakota has no expungement for felony convictions; records are sealed only if the court granted a suspended imposition of sentence and the person completed probation.",
+"cite": "S.D. Codified Laws § 23A-27-17",
+"source": "https://sdlegislature.gov/api/Statutes/23A-27-17.html",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "South Dakota has no Clean Slate law, though it automatically removes the lowest-level misdemeanor and petty offense cases from the public record after 5 years.",
+"cite": "S.D. Codified Laws § 23A-3-34",
+"source": "https://sdlegislature.gov/api/Statutes/23A-3-34.html",
+"verified": true
+}
+},
+"TX": {
+"misdemeanorWait": {
+"value": "2 years after sentence completed (nondisclosure, first offense)",
+"detail": "Texas doesn't expunge convictions, but a first-time misdemeanor offender can petition for an order of nondisclosure (sealing from the public) 2 years after completing the sentence, or immediately for a fine-only misdemeanor.",
+"cite": "Tex. Gov't Code § 411.0735",
+"source": "https://texas.public.law/statutes/tex._gov%27t_code_section_411.0735",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (convictions); deferred adjudication only",
+"detail": "Texas felony convictions cannot be expunged or sealed; nondisclosure is available for felonies only if the person received and completed deferred adjudication (generally after a 5-year wait).",
+"cite": "Tex. Gov't Code §§ 411.0725, 411.0735",
+"source": "https://texas.public.law/statutes/tex._gov%27t_code_section_411.0735",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Texas has no automatic clearing of convictions; nondisclosure and expunction require a petition.",
+"cite": "Tex. Gov't Code § 411.0735; Tex. Code Crim. Proc. art. 55A",
+"source": "https://texas.public.law/statutes/tex._gov%27t_code_section_411.0735",
+"verified": true
+}
+},
+"UT": {
+"misdemeanorWait": {
+"value": "3-5 years after release from jail, parole or probation",
+"detail": "Utah lets you petition to expunge a class C misdemeanor after 3 years, class B after 4 years, and class A after 5 years from conviction or release, whichever is last.",
+"cite": "Utah Code § 77-40a-303(1)",
+"source": "https://le.utah.gov/xcode/Title77/Chapter40A/77-40a-S303.html",
+"verified": true
+},
+"felonyWait": {
+"value": "7 years after release (5 years for felony drug possession)",
+"detail": "Most felonies can be expunged by petition 7 years after conviction or release from incarceration, parole or probation; felony drug possession after 5 years.",
+"cite": "Utah Code § 77-40a-303(1)",
+"source": "https://le.utah.gov/xcode/Title77/Chapter40A/77-40a-S303.html",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Utah automatically expunges eligible 'clean slate' misdemeanor cases after 5 to 7 years (depending on class) without a new conviction.",
+"cite": "Utah Code § 77-40a-205",
+"source": "https://le.utah.gov/xcode/Title77/Chapter40A/77-40a-S205.html",
+"verified": true
+}
+},
+"VT": {
+"misdemeanorWait": {
+"value": "3 years after sentence completed (sealing)",
+"detail": "Vermont courts must seal a qualifying misdemeanor record 3 years after the person completes the sentence, if restitution is paid and there are no new convictions (DUI misdemeanors: 10 years).",
+"cite": "13 V.S.A. § 7602",
+"source": "https://legislature.vermont.gov/statutes/section/13/230/07602",
+"verified": true
+},
+"felonyWait": {
+"value": "7 years after sentence completed (qualifying felonies)",
+"detail": "Qualifying felonies (listed lower-level property and drug felonies) can be sealed 7 years after the sentence is completed.",
+"cite": "13 V.S.A. § 7602",
+"source": "https://legislature.vermont.gov/statutes/section/13/230/07602",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Vermont conviction sealing requires a petition; its automatic provisions cover non-convictions and certain minor violations.",
+"cite": "13 V.S.A. §§ 7602, 7603",
+"source": "https://legislature.vermont.gov/statutes/section/13/230/07602",
+"verified": true
+}
+},
+"VA": {
+"misdemeanorWait": {
+"value": "7 years after conviction or release",
+"detail": "Virginia lets you petition to seal an eligible misdemeanor conviction after a 7-year conviction-free period following conviction or release, and many misdemeanors are sealed automatically after 7 years.",
+"cite": "Va. Code §§ 19.2-392.12, 19.2-392.6",
+"source": "https://law.lis.virginia.gov/vacode/title19.2/chapter23.2/section19.2-392.12/",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after conviction or release",
+"detail": "Eligible felony convictions (generally Class 5 and 6 and unclassified lower-level felonies) can be sealed by petition after a 10-year conviction-free period.",
+"cite": "Va. Code § 19.2-392.12",
+"source": "https://law.lis.virginia.gov/vacode/title19.2/chapter23.2/section19.2-392.12/",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Virginia automatically seals listed misdemeanor convictions (such as petit larceny, trespass and simple possession) 7 years after conviction if there is no new reportable conviction.",
+"cite": "Va. Code §§ 19.2-392.6, 19.2-392.7",
+"source": "https://law.lis.virginia.gov/vacode/title19.2/chapter23.2/section19.2-392.6/",
+"verified": true
+}
+},
+"WA": {
+"misdemeanorWait": {
+"value": "3 years after release from supervision or confinement",
+"detail": "Washington lets you apply to vacate most misdemeanor convictions 3 years after the later of release from probation or confinement or sentencing (5 years for domestic violence offenses).",
+"cite": "Rev. Code Wash. § 9.96.060(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=9.96.060",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years (class C felony)",
+"detail": "Class C felonies can be vacated 5 years after release from community custody or confinement or sentencing, whichever is later, and class B felonies after 10 years; class A and violent felonies are excluded.",
+"cite": "Rev. Code Wash. § 9.94A.640(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=9.94A.640",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Washington conviction vacation requires an application to the sentencing court; there is no general automatic clearing of convictions.",
+"cite": "Rev. Code Wash. §§ 9.96.060, 9.94A.640",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=9.96.060",
+"verified": true
+}
+},
+"WV": {
+"misdemeanorWait": {
+"value": "1 year after conviction or sentence completed",
+"detail": "West Virginia lets you petition to expunge a misdemeanor 1 year after conviction, incarceration or supervision ends, whichever is later (2 years for multiple misdemeanors).",
+"cite": "W. Va. Code § 61-11-26(b)(1)-(2)",
+"source": "https://code.wvlegislature.gov/61-11-26/",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years after conviction or sentence completed",
+"detail": "A nonviolent felony can be expunged 5 years after conviction, incarceration or supervision ends, whichever is later.",
+"cite": "W. Va. Code § 61-11-26(b)(3)",
+"source": "https://code.wvlegislature.gov/61-11-26/",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "West Virginia expungement requires a petition to the circuit court; there is no automatic clearing of convictions.",
+"cite": "W. Va. Code § 61-11-26",
+"source": "https://code.wvlegislature.gov/61-11-26/",
+"verified": true
+}
+},
+"WI": {
+"misdemeanorWait": {
+"value": "Not eligible after sentencing (must be ordered at sentencing)",
+"detail": "Wisconsin only allows expungement if the judge orders it at sentencing for an offense committed before age 25 (maximum penalty of 6 years or less); the record is cleared once the sentence is successfully completed.",
+"cite": "Wis. Stat. § 973.015(1m)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/973/015",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible after sentencing (lower-level felonies only if ordered at sentencing)",
+"detail": "Felonies with a maximum of 6 years or less committed before age 25 can be expunged only if the judge orders it at sentencing; violent felonies and some others are excluded.",
+"cite": "Wis. Stat. § 973.015(1m)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/973/015",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Wisconsin has no automatic clearing of convictions; expungement exists only by court order at sentencing.",
+"cite": "Wis. Stat. § 973.015",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/973/015",
+"verified": true
+}
+},
+"WY": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Wyoming lets you petition to expunge a misdemeanor conviction 5 years after your sentence and probation expire (1 year for status offenses).",
+"cite": "Wyo. Stat. § 7-13-1501",
+"source": "https://wyoleg.gov/statutes/compress/title07.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after sentence completed",
+"detail": "Certain nonviolent felonies can be expunged 10 years after the sentence, probation and any treatment program are completed.",
+"cite": "Wyo. Stat. § 7-13-1502",
+"source": "https://wyoleg.gov/statutes/compress/title07.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Wyoming expungement requires a petition to the convicting court; there is no automatic clearing of convictions.",
+"cite": "Wyo. Stat. §§ 7-13-1501, 7-13-1502",
+"source": "https://wyoleg.gov/statutes/compress/title07.pdf",
+"verified": true
+}
+},
+"AL": {
+"misdemeanorWait": {
+"value": "3 years after conviction",
+"detail": "Alabama lets you petition to expunge a misdemeanor conviction 3 years after the date of conviction, once probation and all fines, costs and restitution are completed.",
+"cite": "Ala. Code § 15-27-1(b)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=15-27-1",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (pardon required)",
+"detail": "Alabama allows expungement of a felony conviction only after the person receives a certificate of pardon with restoration of civil and political rights (and for certain trafficking victims).",
+"cite": "Ala. Code § 15-27-2(c)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=15-27-2",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Alabama expungement requires a petition to the circuit court; there is no automatic clearing of convictions.",
+"cite": "Ala. Code §§ 15-27-1, 15-27-2",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=15-27-1",
+"verified": true
+}
+},
+"AK": {
+"misdemeanorWait": {
+"value": "Not eligible (set-aside only after a suspended imposition of sentence)",
+"detail": "Alaska doesn't expunge convictions; a conviction can be set aside only if the court suspended imposition of sentence and you completed probation.",
+"cite": "Alaska Stat. § 12.55.085; Alaska R. Crim. P. 35.2",
+"source": "https://courts.alaska.gov/sco/docs/sco901.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (set-aside only after a suspended imposition of sentence)",
+"detail": "Felony convictions likewise can only be set aside at the end of probation following a suspended imposition of sentence; otherwise only a pardon is available.",
+"cite": "Alaska Stat. § 12.55.085; Alaska R. Crim. P. 35.2",
+"source": "https://courts.alaska.gov/sco/docs/sco901.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Alaska has no automatic clearing of conviction records.",
+"cite": "Alaska Stat. § 12.55.085",
+"source": "https://courts.alaska.gov/sco/docs/sco901.pdf",
+"verified": true
+}
+},
+"HI": {
+"misdemeanorWait": {
+"value": "Not eligible (narrow exceptions)",
+"detail": "Hawaii's expungement law covers arrests that did not result in conviction (including completed deferred pleas); misdemeanor convictions generally cannot be expunged.",
+"cite": "Haw. Rev. Stat. § 831-3.2(a)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0831/HRS_0831-0003_0002.htm",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible (narrow exceptions)",
+"detail": "Felony convictions generally cannot be expunged in Hawaii; relief is limited to non-convictions, deferred pleas, certain first-time drug offenses, and pardons.",
+"cite": "Haw. Rev. Stat. § 831-3.2(a)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0831/HRS_0831-0003_0002.htm",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Hawaii has no automatic clearing of conviction records; expungement orders are issued by the Attorney General on application.",
+"cite": "Haw. Rev. Stat. § 831-3.2",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0831/HRS_0831-0003_0002.htm",
+"verified": true
+}
+},
+"IL": {
+"misdemeanorWait": {
+"value": "2 years after last sentence completed (sealing)",
+"detail": "Illinois lets you petition to seal most misdemeanor convictions 2 years after you complete your last sentence; convictions generally can be sealed but not expunged.",
+"cite": "20 ILCS 2630/5.2(c)",
+"source": "https://ilcourtsaudio.blob.core.windows.net/antilles-resources/resources/94c3721e-428b-405e-a7f1-d71237998bad/EXP-AD%20Instructions.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "3 years after last sentence completed (2 years if probation not revoked)",
+"detail": "Most felony convictions can be sealed 3 years after completing your last sentence, or 2 years if you were sentenced to probation or conditional discharge that was not revoked.",
+"cite": "20 ILCS 2630/5.2(c)",
+"source": "https://ilcourtsaudio.blob.core.windows.net/antilles-resources/resources/94c3721e-428b-405e-a7f1-d71237998bad/EXP-AD%20Instructions.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Illinois's Clean Slate Act (HB 1836, signed January 16, 2026) will automatically seal eligible misdemeanor convictions 2 years and eligible felony convictions 3 years after the sentence ends.",
+"cite": "Ill. HB 1836 (2026), Clean Slate Act",
+"source": "https://gov-pritzker-newsroom.prezly.com/gov-pritzker-signs-bipartisan-clean-slate-act",
+"verified": true
+}
+},
+"IN": {
+"misdemeanorWait": {
+"value": "5 years after conviction",
+"detail": "Indiana lets you petition to expunge a misdemeanor conviction 5 years after the date of conviction, or sooner with the prosecutor's written consent.",
+"cite": "Ind. Code § 35-38-9-2",
+"source": "https://secure.in.gov/courts/iocs/files/pubs-trial-court-courtmgmt-expungement-digest-for-courtstaffandclerks.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "8 years after conviction (Level 6 / Class D)",
+"detail": "Level 6 and Class D felonies without bodily injury can be expunged 8 years after conviction (sooner with prosecutor consent); more serious felonies require longer waits.",
+"cite": "Ind. Code § 35-38-9-3",
+"source": "https://secure.in.gov/courts/iocs/files/pubs-trial-court-courtmgmt-expungement-digest-for-courtstaffandclerks.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Indiana automatically expunges certain arrests and dismissed charges, but conviction expungement requires a petition.",
+"cite": "Ind. Code §§ 35-38-9-1, 35-38-9-2",
+"source": "https://secure.in.gov/courts/iocs/files/pubs-trial-court-courtmgmt-expungement-digest-for-courtstaffandclerks.pdf",
+"verified": true
+}
+},
+"TN": {
+"misdemeanorWait": {
+"value": "5 years after sentence completed",
+"detail": "Tennessee lets you petition to expunge an eligible misdemeanor 5 years after completing the sentence, if it is your only conviction and all fines and costs are paid.",
+"cite": "Tenn. Code Ann. § 40-32-101(g)",
+"source": "https://ccc.nashville.gov/wp-content/uploads/2024/05/cc-g.pdf",
+"verified": true
+},
+"felonyWait": {
+"value": "5 years (Class E felony); 10 years (Class C or D)",
+"detail": "Eligible Class E felonies can be expunged 5 years after the sentence is completed, and eligible Class C or D felonies after 10 years; violent, DUI and sex offenses are excluded.",
+"cite": "Tenn. Code Ann. § 40-32-101(g)",
+"source": "https://ccc.nashville.gov/wp-content/uploads/2024/05/cc-g.pdf",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Tennessee conviction expungement requires a petition to the court; there is no automatic Clean Slate law.",
+"cite": "Tenn. Code Ann. § 40-32-101(g)",
+"source": "https://ccc.nashville.gov/wp-content/uploads/2024/05/cc-g.pdf",
+"verified": true
+}
+},
+"GA": {
+"misdemeanorWait": {
+"value": "4 years conviction-free after sentence completed",
+"detail": "Georgia lets you petition to restrict (seal) up to two misdemeanor convictions once you've completed the sentence and gone at least 4 years without a new conviction.",
+"cite": "O.C.G.A. § 35-3-37(j)(4)",
+"source": "https://gov.georgia.gov/document/2020-signed-legislation/sb-288/download",
+"verified": true
+},
+"felonyWait": {
+"value": "Not eligible without a pardon",
+"detail": "Georgia allows record restriction for a felony conviction only after a pardon from the State Board of Pardons and Paroles (serious violent and sex offenses excluded).",
+"cite": "O.C.G.A. § 35-3-37(j)(6)",
+"source": "https://gov.georgia.gov/document/2020-signed-legislation/sb-288/download",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "Georgia conviction record restriction requires a petition to the sentencing court; automatic restriction applies only to certain non-conviction records.",
+"cite": "O.C.G.A. § 35-3-37",
+"source": "https://gov.georgia.gov/document/2020-signed-legislation/sb-288/download",
+"verified": true
+}
+},
+"CT": {
+"misdemeanorWait": {
+"value": "7 years after last conviction (Clean Slate erasure)",
+"detail": "Connecticut erases eligible misdemeanor convictions automatically, or by petition, 7 years after your most recent conviction if the sentence is complete; earlier relief requires a pardon.",
+"cite": "Conn. Gen. Stat. § 54-142a(e)",
+"source": "https://portal.ct.gov/cleanslate/clean-slate-eligibility",
+"verified": true
+},
+"felonyWait": {
+"value": "10 years after last conviction (Class D, E and unclassified felonies)",
+"detail": "Lower-level felonies (Class D, E and unclassified felonies) are erased 10 years after the most recent conviction; more serious felonies require a pardon.",
+"cite": "Conn. Gen. Stat. § 54-142a(e)",
+"source": "https://portal.ct.gov/cleanslate/clean-slate-eligibility",
+"verified": true
+},
+"autoClear": {
+"value": "Yes (Clean Slate law)",
+"detail": "Connecticut's Clean Slate law automatically erases eligible misdemeanors after 7 years and Class D/E felonies after 10 years without a new conviction.",
+"cite": "Conn. Gen. Stat. § 54-142a(e)",
+"source": "https://portal.ct.gov/cleanslate/clean-slate-eligibility",
+"verified": true
+}
+},
+"NM": {
+"misdemeanorWait": {
+"value": "2 years conviction-free after sentence completed",
+"detail": "New Mexico lets you petition to expunge a misdemeanor once you've completed the sentence, paid fines and restitution, and had no other conviction for 2 years (4 years for aggravated battery; 10 for domestic offenses).",
+"cite": "N.M. Stat. Ann. § 29-3A-5(C)(4)",
+"source": "https://www.nmlegis.gov/Sessions/25%20Regular/bills/senate/SB0467.HTML",
+"verified": true
+},
+"felonyWait": {
+"value": "4 years (fourth-degree felony)",
+"detail": "Fourth-degree felonies can be expunged after 4 conviction-free years, third-degree after 6, second-degree after 8, and first-degree after 10.",
+"cite": "N.M. Stat. Ann. § 29-3A-5(C)(4)",
+"source": "https://www.nmlegis.gov/Sessions/25%20Regular/bills/senate/SB0467.HTML",
+"verified": true
+},
+"autoClear": {
+"value": "No",
+"detail": "New Mexico conviction expungement requires a petition to the district court; there is no automatic Clean Slate law.",
+"cite": "N.M. Stat. Ann. § 29-3A-5",
+"source": "https://www.nmlegis.gov/Sessions/25%20Regular/bills/senate/SB0467.HTML",
+"verified": true
+}
+},
+"AR": {
+"autoClear": {
+"value": "No",
+"detail": "Arkansas record sealing requires a petition to the court of conviction; there is no automatic Clean Slate law for convictions.",
+"cite": "Ark. Code Ann. § 16-90-1401 et seq.",
+"source": "https://www.cleanslateinitiative.org/states",
+"verified": true
+}
+}
+}
+}
