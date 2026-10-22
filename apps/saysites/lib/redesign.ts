@@ -594,6 +594,7 @@ function dress(site: Site, pages: Page[], x: DressInput): Page[] {
     // Their name isn't a headline ("Law Offices of Christopher P. Taylor").
     headline: sentence(x.headline && !nameLike(x.headline, d.name) ? x.headline : `${kind}${x.place?.city ? ` in ${x.place.city}` : ''}`),
     ...(lede ? { lede } : {}),
+    ...(assets.slogan ? { slogan: assets.slogan } : {}),
     ...(x.phone ? { phone: x.phone } : {}),
     ...(d.email ? { email: d.email } : {}),
     ...(d.street ? { street: d.street } : {}),

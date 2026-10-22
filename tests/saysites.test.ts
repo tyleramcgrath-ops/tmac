@@ -2673,6 +2673,13 @@ describe('SaySites: the redesign’s own designs, from their real photos, result
     expect(measured.photos.some((p) => /Partner-Edward/.test(p.src))).toBe(false)
   })
 
+  it('reads their slogan from their banner, never a review, an announcement or a call to action', () => {
+    const page = (banner: string) => readAssets([{ url: 'https://elk.example/', html: `<html><head><title>Ohio Injury Lawyers | Elk + Elk, Every Client. Every Day.</title></head><body>${banner}</body></html>` }]).slogan
+    expect(page('<div class="banner"><p class="banner-top">Ohio Personal Injury Attorneys</p><p class="banner-bottom">Every Client.<br> Every Da<span>y</span>.<i>&reg;</i></p></div>')).toBe('Every Client. Every Day.')
+    expect(page('<div class="hero-slider"><div class="review"><p class="hero-name">-Paul W.</p></div><p class="hero-cta">Call for a free consultation</p></div>')).toBeUndefined()
+    expect(page('<div class="top-banner"><p>LOCAL TO TACOMA. SERVING ALL OF WASHINGTON.</p></div><video class="hero-video">Your browser does not support the video tag.</video>')).toBeUndefined()
+  })
+
   it('calms their brand colour and never mistakes a firm’s “P.A.” for Pennsylvania', () => {
     const { accent } = accentFor('atelier', '#ff0000')
     expect(accent).not.toBe('#ff0000')

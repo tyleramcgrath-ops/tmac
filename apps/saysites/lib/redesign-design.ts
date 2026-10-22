@@ -30,6 +30,9 @@ export interface ShowcaseFirm {
   // "Personal injury lawyers", for the eyebrow.
   kind: string
   headline: string
+  // Their own slogan, set large when they have one (the headline then
+  // stays the page's H1, small above it).
+  slogan?: string
   lede?: string
   phone?: string
   email?: string
@@ -226,8 +229,7 @@ function noirHome(f: ShowcaseFirm): string {
 <section class="hero${hero ? (isWide(hero) ? '' : ' side') : ' plain'}">
 ${hero ? `<div class="hero-img" style="--pos:${pos}">${img(hero, 'cover', true)}</div>` : ''}
 <div class="wrap hero-in">
-<p class="eyebrow">${esc(f.kind)}${place(f) ? ` <span>${esc(place(f))}</span>` : ''}</p>
-<h1 class="${sizeClass(f.headline)}">${esc(f.headline)}</h1>
+${titleBlock(f, `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` <span>${esc(place(f))}</span>` : ''}</p>`)}
 ${f.lede ? `<p class="lede">${esc(cut(f.lede, 230))}</p>` : ''}
 <div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}Call ${esc(f.phone)}</a>` : ''}<a class="btn line" href="#talk">${f.freeConsult ? 'Free consultation' : 'Tell us what happened'}${ARROW}</a></div>
 ${r.length ? `<dl class="hero-facts">${r.slice(0, 3).map((x) => `<div><dt>${esc(x.amount)}</dt><dd>${esc(cut(x.label, 60))}</dd></div>`).join('')}</dl>` : ''}
@@ -251,23 +253,28 @@ function gazetteHome(f: ShowcaseFirm): string {
   const pic = wide ? undefined : f.hero?.people ? f.hero : f.portrait?.people ? f.portrait : undefined
   const lead = v[0]
   const quoteHero = !wide && !pic && lead
-  return `${header(f, '/')}
-<main id="main">
-<section class="hero">
-<div class="wrap hero-g${pic || quoteHero ? '' : ' solo'}">
-<div class="hero-t">
-<p class="eyebrow">${esc(f.kind)}${place(f) ? ` — ${esc(place(f))}` : ''}</p>
-<h1 class="${sizeClass(f.headline)}">${esc(f.headline)}</h1>
+  const words = `${titleBlock(f, `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` — ${esc(place(f))}` : ''}</p>`)}
 ${f.lede ? `<p class="lede">${esc(cut(f.lede, 240))}</p>` : ''}
-<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}${esc(f.phone)}</a>` : ''}<a class="btn text" href="#talk">${f.freeConsult ? 'Book a free consultation' : 'Send us a message'}${ARROW}</a></div>
-</div>
+<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}${esc(f.phone)}</a>` : ''}<a class="btn text" href="#talk">${f.freeConsult ? 'Book a free consultation' : 'Send us a message'}${ARROW}</a></div>`
+  // Their banner photo is the cover, edge to edge, with their words over
+  // it and their record right beneath.
+  const hero = wide
+    ? `<section class="hero cover"><div class="cover-img" style="--pos:${focus(wide)}">${img(wide, 'cover', true)}</div>
+<div class="wrap cover-t hero-t">${words}</div></section>
+${r.length || lead ? `<section class="record"><div class="wrap record-g">${r.slice(0, 3).map((x) => `<div><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 70))}</span></div>`).join('')}${lead && r.length < 3 ? `<figure><blockquote>“${esc(cut(lead.quote, 170))}”</blockquote><figcaption>${reviewName(lead.name)}</figcaption></figure>` : ''}</div>${r.length ? `<div class="wrap">${DISCLAIMER}</div>` : ''}</section>` : ''}`
+    : `<section class="hero">
+<div class="wrap hero-g${pic || quoteHero ? '' : ' solo'}">
+<div class="hero-t">${words}</div>
 ${pic ? `<figure class="hero-p" style="--pos:${focus(pic)}">${img(pic, 'cover', true, '(max-width: 900px) 100vw, 45vw')}${/^[A-Z][a-z]+ [A-Z]/.test(pic.alt) && pic.alt.length < 70 ? `<figcaption>${esc(pic.alt)}</figcaption>` : ''}</figure>` : quoteHero ? `<figure class="hero-q">${QUOTE}<blockquote>${esc(cut(lead.quote, 260))}</blockquote><figcaption>${reviewName(lead.name)}</figcaption></figure>` : ''}
 </div>
-${wide ? `<figure class="wrap pano" style="--pos:${focus(wide)}">${img(wide, 'cover', true)}</figure>` : ''}
-</section>
+</section>`
+  const rest = wide ? r.slice(3) : r
+  return `${header(f, '/')}
+<main id="main">
+${hero}
 ${badges(f, 'Recognition')}
 ${practiceList(f, 'The practice', 'Index')}
-${r.length >= 2 ? `<section class="results" id="results"><div class="wrap ledger"><div class="sec-h"><p class="eyebrow">The record</p><h2>Results for our clients</h2>${DISCLAIMER}</div><ol>${r.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><i></i><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ol></div></section>` : ''}
+${rest.length >= 2 ? `<section class="results" id="results"><div class="wrap ledger"><div class="sec-h"><p class="eyebrow">The record</p><h2>${wide ? 'More results for our clients' : 'Results for our clients'}</h2>${DISCLAIMER}</div><ol>${rest.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><i></i><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ol></div></section>` : ''}
 ${firm(f)}
 ${v.length > (quoteHero ? 1 : 0) ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">Letters</p><h2>From the people we’ve represented</h2></div><div class="rv-cols">${v.slice(quoteHero ? 1 : 0, (quoteHero ? 1 : 0) + 3).map((x) => `<figure><blockquote>“${esc(cut(x.quote, 300))}”</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
 ${team(f)}
@@ -283,8 +290,7 @@ function atelierHome(f: ShowcaseFirm): string {
   const pic = wide ? undefined : f.hero ?? (f.portrait?.people ? f.portrait : undefined)
   // The review already quoted in the opening isn't repeated below.
   const shownRv = wide && r.length ? 0 : 1
-  const words = `<p class="pill">${esc(f.kind)}${place(f) ? ` · ${esc(place(f))}` : ''}</p>
-<h1 class="${sizeClass(f.headline)}">${esc(f.headline)}</h1>
+  const words = `${titleBlock(f, `<p class="pill">${esc(f.kind)}${place(f) ? ` · ${esc(place(f))}` : ''}</p>`)}
 ${f.lede ? `<p class="lede">${esc(cut(f.lede, 220))}</p>` : ''}
 <div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}Call ${esc(f.phone)}</a>` : ''}<a class="btn line" href="#talk">${f.freeConsult ? 'Free consultation' : 'Get in touch'}${ARROW}</a></div>`
   const hero = wide
@@ -308,6 +314,13 @@ ${v.length > shownRv ? `<section class="reviews" id="reviews"><div class="wrap">
 ${talk(f)}
 </main>
 ${footer(f)}`
+}
+
+// The opening words: their slogan set large with their headline (the H1,
+// for search) small above it; without a slogan, the headline itself.
+function titleBlock(f: ShowcaseFirm, eyebrow: string): string {
+  if (f.slogan) return `<h1 class="kick">${esc(f.headline)}</h1>\n<p class="slogan${sizeClass(f.slogan)}">${esc(f.slogan)}</p>`
+  return `${eyebrow}\n<h1 class="${sizeClass(f.headline)}">${esc(f.headline)}</h1>`
 }
 
 // A banner-shaped photo (much wider than tall) is shown full width.
@@ -511,6 +524,10 @@ section{position:relative}
 .awards li.dk{background:#1b1f26}
 .awards img{max-height:56px;max-width:130px;width:auto;object-fit:contain}
 .disc{font-size:13px;color:var(--muted);margin-top:22px}
+html .hero h1.kick{font:600 13px/1.3 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);max-width:none}
+.slogan{font:var(--dw,500) clamp(54px,8.4vw,132px)/.92 var(--display);letter-spacing:-.03em;text-wrap:balance;max-width:12ch}
+.slogan.mid{font-size:clamp(48px,7vw,108px)}
+.slogan.long{font-size:clamp(42px,5.6vw,86px);max-width:15ch}
 /* practice list */
 .pr-g{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
 .sticky{position:sticky;top:32px}
@@ -706,6 +723,27 @@ body{font-size:16.5px}
 .gazette .hero-g.solo h1{max-width:16ch}
 .gazette .hero h1.mid{font-size:clamp(44px,6vw,90px)}
 .gazette .hero h1.long{font-size:clamp(40px,5vw,74px);max-width:18ch}
+.gazette .hero.cover{position:relative;min-height:clamp(600px,88vh,880px);display:flex;align-items:flex-end;padding:0;color:#fff;overflow:hidden;background:#15181d}
+.gazette .cover-img{position:absolute;inset:0}
+.gazette .cover-img img{width:100%;height:100%;object-fit:cover;object-position:var(--pos)}
+.gazette .cover-img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(12,14,18,.92) 0%,rgba(12,14,18,.6) 34%,rgba(12,14,18,0) 62%),linear-gradient(90deg,rgba(12,14,18,.55) 0%,rgba(12,14,18,0) 55%)}
+.gazette .cover-t{position:relative;padding-block:0 clamp(44px,6vw,80px);gap:22px}
+html .gazette .hero.cover .eyebrow,html .gazette .hero.cover h1.kick{color:rgba(255,255,255,.86)}
+.gazette .cover .slogan,.gazette .cover h1:not(.kick){color:#fff}
+.noir .hero .slogan{font-weight:400}
+.atelier .banner-t .slogan{font-size:clamp(46px,6vw,88px)}
+.gazette .hero.cover .lede{color:rgba(255,255,255,.88);max-width:560px}
+.gazette .cover .btn.solid{background:#fff;color:#15181d}
+.gazette .cover .btn.solid:hover{background:var(--accent-soft)}
+.gazette .cover .btn.text{color:#fff}
+.gazette .record{background:#15181d;color:#e9e9e4;padding-block:34px 30px;--muted:#a3a6a0}
+.gazette .record-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0}
+.gazette .record-g>*{padding:6px 28px 6px 0;display:grid;gap:8px;align-content:start}
+.gazette .record-g>*+*{padding-left:28px;border-left:1px solid #3a3e45}
+.gazette .record strong{font:400 clamp(38px,4.2vw,58px)/1 var(--display);letter-spacing:-.02em}
+.gazette .record span{color:var(--muted);font-size:15px}
+.gazette .record blockquote{font:italic 400 19px/1.45 var(--quote)}
+.gazette .record .disc{margin-top:18px}
 .gazette .pano{margin-top:clamp(40px,5vw,64px);aspect-ratio:21/8;max-height:560px}
 .gazette .pano img{width:100%;height:100%;object-fit:cover;object-position:var(--pos)}
 .gazette .hero .lede{font:400 clamp(20px,1.9vw,25px)/1.45 var(--quote);color:#33373d;max-width:600px}
@@ -742,7 +780,7 @@ body{font-size:16.5px}
 .gazette .phero{border-bottom:3px double var(--ink)}
 .gazette .phero h1{letter-spacing:-.025em}
 .gazette .side .big{color:var(--accent)}
-@media (max-width:900px){.gazette .hero-g,.gazette .ledger{grid-template-columns:1fr}.gazette .hero-p img{aspect-ratio:4/3}}
+@media (max-width:900px){.gazette .hero.cover{min-height:0;padding-top:280px}.gazette .record-g>*+*{padding-left:0;border-left:0;border-top:1px solid #3a3e45;padding-top:18px}.gazette .record-g{gap:18px}.gazette .hero-g,.gazette .ledger{grid-template-columns:1fr}.gazette .hero-p img{aspect-ratio:4/3}}
 `,
   atelier: `
 .atelier{--bg:#ffffff;--ink:#0e1421;--muted:#566070;--line:#e4e7ec;--line-strong:#c4c9d2;--hover:#f3f5f8;--form-bg:#fff;--field:#f6f7f9;--ft-bg:#0b101b;--ft-ink:#cfd5df;--dw:700;--dls:-.035em;--r-btn:999px;--r-card:22px;--r-img:20px;--r-field:12px;--quote:"Newsreader",Georgia,serif}

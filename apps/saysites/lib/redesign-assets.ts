@@ -27,6 +27,9 @@ export interface SiteAssets {
   results: { amount: string; label: string }[]
   reviews: { quote: string; name: string }[]
   badges: { src: string; alt: string }[]
+  // Their own slogan ("Every Client. Every Day."), from their home page's
+  // banner or their title.
+  slogan?: string
 }
 
 const NOT_PHOTO = /logo|icon|sprite|avatar-default|placeholder|blank|spacer|pixel|loader|arrow|emoji|gravatar|badge|seal|award|rating|bbb|avvo|super-?lawyers|martindale|best-?lawyers|expertise|justia|lawyers?-com|million-dollar|national-trial|fb\.|facebook|twitter|linkedin|instagram|youtube|google|yelp|flag|map|marker|\.svg(\?|$)|\.gif(\?|$)/i
@@ -72,6 +75,26 @@ function spelled(fileName: string, alt: string): string {
 
 const people0 = (src: string) => PEOPLE.test(src)
 
+// A slogan is short, reads as a line ("Every Client. Every Day."), and is
+// what their banner says or their title repeats. Never a call to action, a
+// phone number or a list of keywords.
+function sloganOf(root: El, body: El): string | undefined {
+  const tidy = (t: string) => t.replace(/[®™©]/g, '').replace(/\s+/g, ' ').replace(/\s+([.!,])/g, '$1').trim()
+  const title = tidy(decode(textOf(findAll(root, (e) => e.tag === 'title')[0] ?? '')))
+  const ok = (t: string) =>
+    /^[A-Z]/.test(t) && t !== t.toUpperCase() && t.length >= 8 && t.length <= 48 && t.split(' ').length >= 2 && t.split(' ').length <= 8 && !/\d{3}|@|https?:/.test(t) &&
+    !/\b(call|contact|request|schedule|free|consult\w*|click|learn|read|menu|search|attorneys?|lawyers?|law firm|injury|accident|near|browser|support|video|javascript|cookies?|loading|enable)\b/i.test(t)
+  // Not a review's signature in a slider, nor an announcement bar.
+  const aside = (e: El) => [e, ...ancestors(e)].some((a) => /^(video|audio|noscript|iframe|object)$/.test(a.tag) || /review|testimonial|quote|top-?bar|announce|notice|alert|ribbon|promo/i.test(`${a.attrs.class ?? ''} ${a.attrs.id ?? ''}`))
+  const inBanner = findAll(body, (e) => /^(p|h1|h2|h3|div|span|strong)$/.test(e.tag) && /(^|[\s_-])(hero|banner|slogan|tagline|masthead|motto)/i.test(`${e.attrs.class ?? ''} ${e.attrs.id ?? ''}`) && !aside(e))
+    .map((e) => tidy(textOf(e)))
+    .filter(ok)
+  const fromTitle = title.split(/\s[|–—-]\s|,\s(?=[A-Z])/).map(tidy).filter(ok)
+  const both = inBanner.find((t) => fromTitle.some((x) => x.toLowerCase() === t.toLowerCase()))
+  const said = (t: string) => tidy(textOf(body)).toLowerCase().includes(t.toLowerCase())
+  return both ?? inBanner.find((t) => /[.!]$/.test(t)) ?? fromTitle.find((t) => /[.!]$/.test(t) && said(t))
+}
+
 const words = (e: El | string) => textOf(e).replace(/\s+/g, ' ').trim()
 const where = (e: El) => [e, ...ancestors(e).slice(0, 4)].map((a) => `${a.attrs.class ?? ''} ${a.attrs.id ?? ''}`).join(' ')
 
@@ -82,10 +105,12 @@ export function readAssets(pages: { html: string; url: string }[]): SiteAssets {
   const results: { amount: string; label: string }[] = []
   const reviews: { quote: string; name: string }[] = []
   let logo: string | undefined
+  let slogan: string | undefined
   for (const [i, page] of pages.entries()) {
     const root = parseHtml(page.html)
     const body = findAll(root, (e) => e.tag === 'body')[0] ?? root
     const teamPage = /attorney|lawyer|team|people|about|staff/i.test(new URL(page.url).pathname)
+    if (i === 0) slogan = sloganOf(root, body)
     for (const img of findAll(body, (e) => e.tag === 'img')) {
       const s = srcOf(img, page.url)
       if (!s) continue
@@ -186,12 +211,13 @@ export function readAssets(pages: { html: string; url: string }[]): SiteAssets {
   }
   return {
     ...(logo ? { logo } : {}),
+    ...(slogan ? { slogan } : {}),
     photos: [...photos.values()].sort((a, b) => b.score - a.score).slice(0, 24),
     portraits: [...portraits.values()].filter((p, i, all) => all.findIndex((x) => x.name === p.name) === i).slice(0, 24),
     // The largest first.
     results: (results as { amount: string; label: string; value: number }[])
       .sort((a, b) => b.value - a.value)
-      .filter((r, i, all) => all.findIndex((x) => x.label === r.label || x.amount === r.amount) === i)
+      .filter((r, i, all) => all.findIndex((x) => x.label === r.label || Math.round(x.value / 1e5) === Math.round(r.value / 1e5)) === i)
       // "$19M Settlement" beside "$19M Settlement for…" is the same one.
       .filter((r, _, all) => r.label.split(' ').length > 2 || !all.some((x) => x !== r && x.amount === r.amount))
       .slice(0, 6)
