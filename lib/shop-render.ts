@@ -27,6 +27,7 @@ import {
 import type { Page, Product, ShopSettings, Site, Widget } from './schema'
 import type { SiteWords } from './site-words'
 import { esc } from './render'
+import { amazonUrl, priceFresh } from './amazon'
 
 export interface ShopCtx {
   settings: ShopSettings | undefined
@@ -48,6 +49,8 @@ const img = (src: string, alt: string, w: number, sizes: string, eager = false) 
 const sized = (src: string, w: number) => (/^https:\/\/images\.unsplash\.com\//.test(src) ? src.replace(/([?&])w=\d+/, `$1w=${w}`) + (/[?&]w=/.test(src) ? '' : `${src.includes('?') ? '&' : '?'}w=${w}`) : src)
 
 function priceHtml(p: Product, cur: string, t: SiteWords): string {
+  // Amazon's price shows only while it's under 24 hours old (lib/amazon).
+  if (p.amazon) return priceFresh(p) ? `<span class="pr-now">${esc(formatPrice(p.price, cur))}</span> <span class="pr-src">${esc(t.shop.onAmazon)}</span>` : `<span class="pr-src">${esc(t.shop.seePriceOnAmazon)}</span>`
   const { min, max } = priceRange(p)
   if (hasVariants(p) && min !== max) return `<span class="pr-now">${esc(t.shop.from)} ${esc(formatPrice(min, cur))}</span>`
   const was = compareAtOf(p, hasVariants(p) ? p.variants![0] : undefined)
@@ -59,8 +62,14 @@ const addForm = (p: Product, label: string, extra = '') =>
 
 // The button under a product: add to cart, choose options, the owner's own
 // Stripe payment link, or get in touch, depending on how the shop sells.
+// The owner's Associates link to the product on Amazon (opens Amazon).
+const amazonButton = (p: Product, ctx: ShopCtx, cls: string) =>
+  `<a class="btn btn-primary ${cls}" href="${esc(amazonUrl(p.amazon!, ctx.settings?.amazon?.tag))}" rel="sponsored nofollow noopener" target="_blank">${esc(ctx.t.shop.buyOnAmazon)}</a>`
+const amazonNote = (ctx: ShopCtx) => `<p class="pr-note">${esc(ctx.t.shop.amazonNote)}</p>`
+
 function cardAction(p: Product, href: string, ctx: ShopCtx): string {
   const t = ctx.t
+  if (p.amazon) return amazonButton(p, ctx, 'pr-buy')
   if (!inStock(p, ctx.stock)) return `<span class="pr-out">${esc(t.soldOut)}</span>`
   if (checkoutOpen(ctx.settings)) {
     if (hasVariants(p)) return `<a class="btn btn-outline pr-buy" href="${esc(href)}">${esc(t.shop.chooseOptions)}</a>`
@@ -79,10 +88,11 @@ export function renderProductsGrid(w: Extract<Widget, { type: 'products' }>, ctx
   const cards = list.map((p) => {
     const href = productPath(slugs.get(p.id)!)
     const pic = p.image ? `<a class="pr-pic" href="${esc(href)}" tabindex="-1" aria-hidden="true">${img(p.image.src, '', 800, '(max-width: 640px) 100vw, 33vw')}</a>` : `<a class="pr-pic pr-none" href="${esc(href)}" tabindex="-1" aria-hidden="true">${esc(p.name.charAt(0))}</a>`
-    const badge = !inStock(p, ctx.stock) ? `<span class="pr-tag">${esc(ctx.t.soldOut)}</span>` : compareAtOf(p, hasVariants(p) ? p.variants![0] : undefined) ? `<span class="pr-tag pr-tag-sale">Sale</span>` : ''
+    const badge = p.amazon ? '' : !inStock(p, ctx.stock) ? `<span class="pr-tag">${esc(ctx.t.soldOut)}</span>` : compareAtOf(p, hasVariants(p) ? p.variants![0] : undefined) ? `<span class="pr-tag pr-tag-sale">Sale</span>` : ''
     return `<article class="pr">${badge}${pic}<div class="pr-body"><h3 class="pr-name"><a href="${esc(href)}">${esc(p.name)}</a></h3>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}<div class="pr-foot"><p class="pr-price">${priceHtml(p, cur, ctx.t)}</p>${cardAction(p, href, ctx)}</div></div></article>`
   })
-  return `<div class="prs ${cls}">${cards.join('')}</div>`
+  // Amazon's required disclosure, wherever its items are shown.
+  return `<div class="prs ${cls}">${cards.join('')}</div>${list.some((p) => p.amazon) ? amazonNote(ctx) : ''}`
 }
 
 const paras = (text: string) =>
@@ -112,7 +122,8 @@ export function renderProductBlock(productId: string, ctx: ShopCtx, cls: string,
   const open = checkoutOpen(s)
   const variants = hasVariants(p) ? p.variants! : []
   let buy: string
-  if (!inStock(p, ctx.stock)) buy = `<p class="pr-out pd-out">${esc(t.soldOut)}</p>`
+  if (p.amazon) buy = amazonButton(p, ctx, 'pd-buy') + amazonNote(ctx)
+  else if (!inStock(p, ctx.stock)) buy = `<p class="pr-out pd-out">${esc(t.soldOut)}</p>`
   else if (open) {
     const max = variants.length ? 99 : Math.min(99, availableQty(p, undefined, ctx.stock))
     const optionLabel = p.options!.length === 1 ? p.options![0].name : p.options!.map((o) => o.name).join(' / ')
@@ -130,9 +141,10 @@ export function renderProductBlock(productId: string, ctx: ShopCtx, cls: string,
   } else if (p.buyUrl) buy = `<a class="btn btn-primary pd-buy" href="${esc(p.buyUrl)}" rel="noopener">${esc(t.buyNow)}</a>`
   else buy = `<a class="btn btn-outline pd-buy" href="/contact">${esc(t.askAboutThis)}</a>`
 
-  const left = !variants.length && p.track && !p.oversell ? (ctx.stock[stockKey(p.id)] ?? 0) : null
+  const left = !variants.length && p.track && !p.oversell && !p.amazon ? (ctx.stock[stockKey(p.id)] ?? 0) : null
   const few = left !== null && left > 0 && left <= Math.max(3, s!.lowStock ?? 3) ? `<p class="pd-left">${esc(t.shop.onlyLeft(left))}</p>` : ''
-  const info = [
+  // Delivery and returns are the owner's; Amazon picks follow Amazon's.
+  const info = p.amazon ? [] : [
     ...(p.noShipping ? [] : deliveryLines(s!, t)),
     s!.returns ? `<a href="/returns">${esc(s!.returns.days ? t.shop.returnsDays(s!.returns.days, !!s!.returns.free) : t.shop.returnsNone)}</a>` : '',
   ].filter(Boolean)
@@ -359,6 +371,7 @@ export const SHOP_CSS =
   `.pr-tag{position:absolute;top:10px;left:10px;z-index:1;padding:.3em .7em;font-size:.75em;font-weight:700;letter-spacing:.04em;text-transform:uppercase;border-radius:99px;background:var(--c-background);color:var(--c-text)}.pr-tag-sale{background:var(--c-primary);color:var(--c-background)}` +
   `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1}.pr-name{font-size:1.08em;margin:0}.pr-name a{color:inherit;text-decoration:none}.pr-desc{margin:0;color:var(--c-muted);font-size:.92em}` +
   `.pr-foot{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-top:auto;padding-top:10px}.pr-price{margin:0;font-weight:700;color:var(--c-text)}.pr-sale{color:var(--c-primary)}.pr-was{color:var(--c-muted);font-weight:400;font-size:.9em}` +
+  `.pr-src{font-size:.82em;font-weight:500;color:var(--c-muted)}.pr-note{margin:1.2em 0 0;font-size:.78em;color:var(--c-muted)}.pd .pr-note{margin:.8em 0 0}` +
   `.pr-add{margin:0}.pr-buy{padding:.55em 1.1em;font-size:.9em;white-space:nowrap}.pr-out{padding:.5em 1em;font-size:.88em;font-weight:600;color:var(--c-muted);border:1.5px solid color-mix(in srgb,var(--c-muted) 45%,transparent);border-radius:var(--rb)}` +
   `.pd{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}` +
   `.pd-pics{display:flex;flex-direction:column;gap:12px}.pd-main{border-radius:var(--r);overflow:hidden;background:var(--c-surface);aspect-ratio:1}.pd-main img{width:100%;height:100%;object-fit:cover}.pd-none{width:100%;height:100%;font-size:6em}` +

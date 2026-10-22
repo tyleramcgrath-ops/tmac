@@ -53,6 +53,11 @@ export interface SiteWords {
 export interface ShopWords {
   shop: string
   addToCart: string
+  // Amazon picks (lib/amazon).
+  buyOnAmazon: string
+  seePriceOnAmazon: string
+  onAmazon: string
+  amazonNote: string
   chooseOptions: string
   from: string
   was: string
@@ -143,6 +148,10 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     shop: {
       shop: 'Shop',
       addToCart: 'Add to cart',
+      buyOnAmazon: 'Buy on Amazon',
+      seePriceOnAmazon: 'See price on Amazon',
+      onAmazon: 'on Amazon',
+      amazonNote: 'As an Amazon Associate, we earn from qualifying purchases.',
       chooseOptions: 'Choose options',
       from: 'From',
       was: 'Was',
@@ -234,6 +243,10 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     shop: {
       shop: 'Tienda',
       addToCart: 'Añadir al carrito',
+      buyOnAmazon: 'Comprar en Amazon',
+      seePriceOnAmazon: 'Ver precio en Amazon',
+      onAmazon: 'en Amazon',
+      amazonNote: 'En calidad de Afiliado de Amazon, obtenemos ingresos por las compras adscritas que cumplen los requisitos aplicables.',
       chooseOptions: 'Elegir opciones',
       from: 'Desde',
       was: 'Antes',

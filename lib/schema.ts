@@ -444,6 +444,10 @@ const productImageSrc = z.string().regex(/^(\/[^\s]*|https:\/\/[^\s]+)$/)
 const ProductImage = z.object({ src: productImageSrc, alt: z.string().trim().min(1).max(250) }).strict()
 const optionValue = z.string().trim().min(1).max(40)
 
+// Amazon marketplaces a shop can show Amazon picks from (lib/amazon).
+export const AMAZON_MARKETS = ['www.amazon.com', 'www.amazon.ca', 'www.amazon.co.uk', 'www.amazon.de', 'www.amazon.fr', 'www.amazon.it', 'www.amazon.es', 'www.amazon.com.au'] as const
+export type AmazonMarket = (typeof AMAZON_MARKETS)[number]
+
 // One choice a shopper makes, e.g. Size: Small, Medium, Large.
 export const ProductOptionSchema = z.object({ name: z.string().trim().min(1).max(30), values: z.array(optionValue).min(1).max(30) }).strict()
 
@@ -498,6 +502,13 @@ export const ProductSchema = z
     category: z.string().trim().max(40).optional(),
     // Gift cards, classes and downloads: no address or delivery needed.
     noShipping: z.boolean().optional(),
+    // An Amazon pick (lib/amazon): bought on Amazon through the owner's
+    // Associates link, never in the cart. checkedAt is when price and photos
+    // last came from Amazon; the price shows only while that's under 24h.
+    amazon: z
+      .object({ asin: z.string().regex(/^[A-Z0-9]{10}$/), market: z.enum(AMAZON_MARKETS), checkedAt: z.string().datetime().optional() })
+      .strict()
+      .optional(),
   })
   .strict()
 export type Product = z.infer<typeof ProductSchema>
@@ -561,6 +572,12 @@ export const StoreSchema = z
     notifyEmail: z.string().email().max(200).optional(),
     // Warn when tracked stock falls to this or below.
     lowStock: z.number().int().min(0).max(10_000).optional(),
+    // Amazon picks: the owner's Associates tag and marketplace. Public (they're
+    // in every link); the API credentials live in ss_amazon instead.
+    amazon: z
+      .object({ tag: z.string().regex(/^[A-Za-z0-9][A-Za-z0-9-]{1,38}-\d{2}$/, 'an Associates tag looks like mystore-20'), market: z.enum(AMAZON_MARKETS) })
+      .strict()
+      .optional(),
   })
   .strict()
 export type ShopSettings = z.infer<typeof StoreSchema>

@@ -104,7 +104,8 @@ export function structuredData(site: Site, page: Page, allPages: readonly Page[]
     for (const el of els) {
       if (el.type !== 'product') continue
       const p = shop.products.find((x) => x.id === el.productId)
-      if (p && isLive(p)) out.push(productData(site, p, origin + productPath(slugs.get(p.id)!), stock))
+      // Amazon picks are sold by Amazon, not this business: no Offer for them.
+      if (p && isLive(p) && !p.amazon) out.push(productData(site, p, origin + productPath(slugs.get(p.id)!), stock))
     }
     const grid = els.find((el) => el.type === 'products')
     if (grid && grid.type === 'products') {

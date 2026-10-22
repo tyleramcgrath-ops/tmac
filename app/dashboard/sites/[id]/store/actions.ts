@@ -8,7 +8,9 @@ import { redirect } from 'next/navigation'
 import { canSell, loadAccess } from '@/lib/billing'
 import { CARRIERS, parsePrice, productSlugs, stockKey, trackingUrl, type Fulfillment } from '@/lib/commerce'
 import { addNote, refundOrder, setFulfillment } from '@/lib/orders'
-import { DiscountSchema, type Discount } from '@/lib/schema'
+import { AmazonError, TAG, checkKeys } from '@/lib/amazon'
+import { importAmazon } from '@/lib/amazon-sync'
+import { AMAZON_MARKETS, DiscountSchema, type Discount } from '@/lib/schema'
 import { ownShop, productPhotos, readProductForm, saveShop } from '@/lib/shop-admin'
 
 const str = (f: FormData, k: string, max = 200) => String(f.get(k) ?? '').trim().slice(0, max)
@@ -127,6 +129,56 @@ export async function saveDelivery(siteId: string, form: FormData) {
     return back(url, { e: 'Those delivery settings don’t fit. Check the codes and prices.' })
   }
   back(`${url}#delivery`, { m: 'saved' })
+}
+
+// ---------------------------------------------------------------------------
+// Amazon picks (lib/amazon)
+// ---------------------------------------------------------------------------
+
+export async function saveAmazon(siteId: string, form: FormData) {
+  const { user, store, site } = await ownShop(siteId)
+  const url = `/dashboard/sites/${siteId}/store/settings#amazon`
+  if (!canSell(await loadAccess(store, user))) return back(url, { e: 'Amazon picks are on the Store plan. Switch plans on your Account page.' })
+  const tag = str(form, 'tag', 40)
+  const market = AMAZON_MARKETS.find((m) => m === str(form, 'market', 30))
+  if (!TAG.test(tag)) return back(url, { e: 'Your Associates tag looks like mystore-20. Find it at the top of Associates Central.' })
+  if (!market) return back(url, { e: 'Choose the Amazon store your Associates account is for.' })
+  const old = await store.amazonKeys(site.id)
+  const credentialId = str(form, 'credentialId', 200) || old?.credentialId || ''
+  const credentialSecret = str(form, 'credentialSecret', 400) || old?.credentialSecret || ''
+  if (!credentialId || !credentialSecret) return back(url, { e: 'Paste your Creators API Credential ID and Secret (Associates Central, Tools, then Creators API).' })
+  const keys = { credentialId, credentialSecret }
+  try {
+    await checkKeys(keys, market)
+  } catch (e) {
+    return back(url, { e: e instanceof AmazonError ? e.message : 'Couldn’t reach Amazon. Try again in a minute.' })
+  }
+  await store.saveAmazonKeys(site.id, keys)
+  await saveShop(store, site, (s) => ({ ...s, amazon: { tag, market } }))
+  back(url, { m: 'amazon' })
+}
+
+export async function disconnectAmazon(siteId: string) {
+  const { store, site } = await ownShop(siteId)
+  await store.saveAmazonKeys(site.id, null)
+  // Amazon picks stay on the site, linking with the tag, until removed.
+  back(`/dashboard/sites/${siteId}/store/settings#amazon`, { m: 'amazon-off' })
+}
+
+export async function addFromAmazon(siteId: string, form: FormData) {
+  const { user, store, site } = await ownShop(siteId)
+  const base = `/dashboard/sites/${siteId}/store/products`
+  if (!canSell(await loadAccess(store, user))) return back(base, { e: 'Amazon picks are on the Store plan. Switch plans on your Account page.' })
+  let r
+  try {
+    r = await importAmazon(store, site, String(form.get('links') ?? '').slice(0, 5000))
+  } catch (e) {
+    return back(base, { e: e instanceof AmazonError ? e.message : 'Couldn’t reach Amazon. Try again in a minute.' })
+  }
+  const done = r.added.length + r.updated.length
+  if (!done) return back(base, { e: r.problems[0] ?? 'Nothing was added.' })
+  const words = [r.added.length ? `Added ${r.added.length} from Amazon` : '', r.updated.length ? `refreshed ${r.updated.length}` : ''].filter(Boolean).join(', ')
+  back(base, { m: `amazon:${words}.${r.problems.length ? ` ${r.problems[0]}` : ''}`.slice(0, 300) })
 }
 
 export async function saveShopRules(siteId: string, form: FormData) {

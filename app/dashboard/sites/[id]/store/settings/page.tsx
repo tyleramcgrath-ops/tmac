@@ -5,7 +5,9 @@ import { connectReady } from '@/lib/checkout'
 import { mailReady } from '@/lib/mail'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
-import { saveCurrency, saveDelivery, saveShopRules, setShopOpen } from '../actions'
+import { MARKET_LABEL } from '@/lib/amazon'
+import { AMAZON_MARKETS } from '@/lib/schema'
+import { disconnectAmazon, saveAmazon, saveCurrency, saveDelivery, saveShopRules, setShopOpen } from '../actions'
 
 const CURRENCIES = ['USD', 'CAD', 'GBP', 'EUR', 'AUD'] as const
 
@@ -22,6 +24,9 @@ export default async function StoreSettings({ params, searchParams }: { params: 
   const delivery = s?.shipping?.delivery
   const connected = s?.checkout
   const p = (c?: number) => (c === undefined ? '' : priceText(c))
+  const amazon = s?.amazon
+  const amazonKeys = await store.amazonKeys(site.id)
+  const amazonErr = (await store.cacheGet(`amazon-error:${site.id}`, 3 * 86_400_000)) as { at: string; message: string } | null
 
   return (
     <section className="stack store">
@@ -69,6 +74,34 @@ export default async function StoreSettings({ params, searchParams }: { params: 
           <button className="btn btn-ghost btn-sm" type="submit">Set</button>
         </form>
       </div>
+
+
+      <form action={saveAmazon.bind(null, site.id)} className="card stack" id="amazon">
+        <div className="card-head"><h3>Amazon picks</h3>{amazon && amazonKeys ? <span className="pill ok">Connected</span> : <span className="pill">Not connected</span>}</div>
+        <p style={{ margin: 0 }}>Show products from Amazon on your site with a <strong>Buy on Amazon</strong> button. Shoppers buy on Amazon and you earn the Amazon Associates commission. Then paste any Amazon product link on the Products page (or ask Sofie) and its name, photos, features and price fill in by themselves, and stay up to date every day.</p>
+        {amazonErr && <p className="notice bad">The last daily update didn’t work ({new Date(amazonErr.at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}): {amazonErr.message}</p>}
+        {!amazonKeys && (
+          <ol className="steps-sm">
+            <li>Join Amazon Associates (free) at <a href="https://affiliate-program.amazon.com" target="_blank" rel="noopener">affiliate-program.amazon.com ↗</a>, for the country you sell in.</li>
+            <li>Copy your <strong>tracking ID</strong> (it looks like mystore-20) from the top of Associates Central.</li>
+            <li>In Associates Central, open <strong>Tools</strong>, then <strong>Creators API</strong>, and create credentials. Copy the <strong>Credential ID</strong> and <strong>Credential Secret</strong>.</li>
+            <li>Paste all three below and press <strong>Connect Amazon</strong>.</li>
+          </ol>
+        )}
+        <div className="field-row">
+          <label className="field"><span>Associates tracking ID</span><input className="input" name="tag" defaultValue={amazon?.tag} placeholder="mystore-20" maxLength={40} required /></label>
+          <label className="field"><span>Amazon store</span><select className="input" name="market" defaultValue={amazon?.market ?? 'www.amazon.com'}>{AMAZON_MARKETS.map((m) => <option key={m} value={m}>{MARKET_LABEL[m]}</option>)}</select></label>
+        </div>
+        <div className="field-row">
+          <label className="field"><span>Credential ID</span><input className="input" name="credentialId" autoComplete="off" placeholder={amazonKeys ? `Saved (${amazonKeys.credentialId.slice(0, 4)}…)` : ''} maxLength={200} /></label>
+          <label className="field"><span>Credential Secret</span><input className="input" name="credentialSecret" type="password" autoComplete="off" placeholder={amazonKeys ? 'Saved. Leave blank to keep it.' : ''} maxLength={400} /></label>
+        </div>
+        <p className="muted small" style={{ margin: 0 }}>Your credentials stay private: they’re only used to look up products, never shown on your site or to Sofie. Prices show only while they’re under a day old, as Amazon requires, and your site says “As an Amazon Associate, we earn from qualifying purchases” wherever Amazon picks appear.</p>
+        <div className="btn-row">
+          <button className="btn btn-primary" type="submit">{amazonKeys ? 'Save' : 'Connect Amazon'}</button>
+          {amazonKeys && <button className="btn btn-ghost btn-sm" type="submit" formAction={disconnectAmazon.bind(null, site.id)} formNoValidate>Disconnect</button>}
+        </div>
+      </form>
 
       <form action={saveDelivery.bind(null, site.id)} className="card stack" id="delivery">
         <div className="card-head"><h3>Getting orders to customers</h3></div>

@@ -71,6 +71,8 @@ export const productPath = (slug: string) => `/shop/${slug}`
 // products are reachable only by their own address).
 export const isLive = (p: Product) => p.status !== 'draft'
 export const isListed = (p: Product) => !p.status || p.status === 'active'
+// An Amazon pick (lib/amazon): shown with a "Buy on Amazon" link, not sold here.
+export const isAmazon = (p: Product) => !!p.amazon
 
 export const hasVariants = (p: Product) => !!(p.options?.length && p.variants?.length)
 export const variantLabel = (v: Pick<Variant, 'values'>) => v.values.join(' / ')
@@ -380,7 +382,8 @@ export function priceCart(settings: ShopSettings, cart: Cart, stock: Stock, opts
   const lines: QuoteLine[] = []
   for (const item of cart.items) {
     const p = products.get(item.p)
-    if (!p || !isLive(p)) {
+    // Amazon picks are bought on Amazon, never here.
+    if (!p || !isLive(p) || p.amazon) {
       notices.push('An item in your cart is no longer available, so it was taken out.')
       continue
     }
