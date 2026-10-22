@@ -58,6 +58,10 @@ export default async function GuidesPage() {
               )
             })}
           </ul>
+          <a className="gl-banner" href="/guides/glossary">
+            <span><strong>The website and SEO glossary</strong> Plain-English definitions of the terms Google, designers and marketers use, each linked to its source.</span>
+            <span aria-hidden="true">→</span>
+          </a>
         </div>
       </section>
     </MarketingShell>

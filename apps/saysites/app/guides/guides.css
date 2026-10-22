@@ -38,3 +38,25 @@
 .gd-hub p{margin:0;color:var(--muted,#555);font-size:15px;line-height:1.5}
 .gd-hub .n{font-size:13px;font-weight:600;color:#0f766e}
 @media (max-width:900px){.gd-grid{grid-template-columns:1fr}.gd-side{position:static}.gd-photo{aspect-ratio:16/9}}
+/* Glossary (/guides/glossary) */
+.gl-jump{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.gl-jump a{font-size:14px;padding:7px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.22);text-decoration:none;color:#e2e8f0;background:rgba(255,255,255,.06);transition:border-color .2s,color .2s}
+.gl-jump a:hover{border-color:#34d399;color:#34d399}
+.gl-body{padding-block:clamp(32px,5vw,64px)}
+.gl-group{padding-block:clamp(28px,4vw,48px);border-top:1px solid rgba(0,0,0,.08);scroll-margin-top:24px}
+.gl-group:first-child{border-top:0;padding-top:0}
+.gl-group h2{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:#0f766e;margin:0 0 18px}
+.gl-group dl{margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr));gap:16px}
+.gl-term{padding:22px;border:1px solid rgba(0,0,0,.1);border-radius:16px;background:#fff;scroll-margin-top:24px;display:grid;gap:8px;align-content:start}
+.gl-term:target{border-color:#0f766e;box-shadow:0 0 0 3px rgba(15,118,110,.15)}
+.gl-term dt{font-size:19px;font-weight:700;line-height:1.3}
+.gl-term dt a{color:inherit;text-decoration:none}
+.gl-term dd{margin:0;display:grid;gap:10px}
+.gl-term dd p{margin:0;font-size:15.5px;line-height:1.55;color:var(--muted,#444)}
+.gl-links{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px}
+.gl-links a{color:#0f766e;font-weight:600}
+.gl-cta .btn{background:#34d399;color:#0f172a;padding:12px 20px;border-radius:999px;font-weight:700;text-decoration:none}
+.gl-banner{margin-top:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:22px 26px;border-radius:18px;background:#0f172a;color:#cbd5e1;text-decoration:none;font-size:15.5px;line-height:1.5}
+.gl-banner strong{display:block;color:#fff;font-size:20px;margin-bottom:2px}
+.gl-banner>span:last-child{font-size:26px;color:#34d399;transition:transform .25s}
+.gl-banner:hover>span:last-child{transform:translateX(4px)}

@@ -130,3 +130,27 @@ describe('SaySites: evergreen guides (/guides) and richer articles', async () =>
     expect(html).toContain('<aside class="post-tip post-tip-warn"><p><strong>Watch out:</strong> Rules change.</p></aside>')
   })
 })
+
+describe('SaySites: website and SEO glossary (/guides/glossary)', async () => {
+  const { GLOSSARY, GLOSSARY_GROUPS } = await import('../apps/saysites/lib/glossary')
+  const { TOPICS } = await import('../apps/saysites/lib/topics')
+  const pages = new Set(['/connect', '/connect/google-business-profile', '/redesign', '/pricing', ...TOPICS.map((t) => `/guides/${t.slug}`), ...LAUNCH_ARTICLES.map((a) => `/blog/${a.slug}`)])
+
+  it('has unique, anchor-safe slugs and fills every group', () => {
+    expect(new Set(GLOSSARY.map((t) => t.slug)).size).toBe(GLOSSARY.length)
+    for (const t of GLOSSARY) expect(t.slug, t.slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+    for (const g of GLOSSARY_GROUPS) expect(GLOSSARY.filter((t) => t.group === g).length, g).toBeGreaterThanOrEqual(3)
+  })
+
+  it('keeps definitions short and plain, with official sources and real internal links', () => {
+    for (const t of GLOSSARY) {
+      const words = t.def.split(/\s+/).length
+      expect(words, t.slug).toBeGreaterThanOrEqual(15)
+      expect(words, t.slug).toBeLessThanOrEqual(60)
+      expect(t.def + t.term, t.slug).not.toMatch(/—/)
+      expect(t.def.toLowerCase(), t.slug).not.toMatch(/(?<!not )guarantee|#1 ranking|rank first/)
+      if (t.source) expect(t.source[1], t.slug).toMatch(/^https:\/\/(developers\.google\.com|support\.google\.com|developers\.openai\.com|www\.ada\.gov|www\.w3\.org|www\.hhs\.gov|www\.ftc\.gov|www\.americanbar\.org)\//)
+      if (t.more) expect(pages.has(t.more[1]), `${t.slug} → ${t.more[1]}`).toBe(true)
+    }
+  })
+})

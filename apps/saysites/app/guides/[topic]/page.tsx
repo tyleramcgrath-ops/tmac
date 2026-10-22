@@ -87,6 +87,10 @@ export default async function TopicPage({ params }: { params: Promise<{ topic: s
             </div>
           )}
           <div className="gd-card">
+            <h2>New to the jargon?</h2>
+            <p style={{ margin: 0, fontSize: 15 }}>Every term in this guide, explained in plain English, is in our <a href="/guides/glossary">website and SEO glossary</a>.</p>
+          </div>
+          <div className="gd-card">
             <h2>Free redesign</h2>
             <p style={{ margin: '0 0 12px', fontSize: 15 }}>Send us your website and see it rebuilt to this guide, free.</p>
             <a className="b b-dark" href="/redesign">Get a free redesign</a>

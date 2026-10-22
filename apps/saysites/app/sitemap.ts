@@ -26,6 +26,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://saysites.com/websites-for', changeFrequency: 'monthly', priority: 0.8 },
     ...INDUSTRIES.map((i) => ({ url: `https://saysites.com/websites-for/${i.slug}`, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { url: 'https://saysites.com/guides', changeFrequency: 'weekly', priority: 0.8 },
+    { url: 'https://saysites.com/guides/glossary', changeFrequency: 'monthly', priority: 0.7 },
     ...TOPICS.map((t) => ({ url: `https://saysites.com/guides/${t.slug}`, changeFrequency: 'monthly' as const, priority: 0.8 })),
     { url: 'https://saysites.com/blog', changeFrequency: 'weekly', priority: 0.8 },
     ...articles.map((a) => ({ url: `https://saysites.com/blog/${a.slug}`, lastModified: a.updated ?? a.published, changeFrequency: 'monthly' as const, priority: 0.7 })),
