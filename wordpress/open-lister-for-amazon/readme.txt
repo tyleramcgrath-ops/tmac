@@ -4,7 +4,7 @@ Tags: amazon, woocommerce, marketplace, listing, inventory sync
 Requires at least: 6.2
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,13 +46,15 @@ Open Lister for Amazon connects your WooCommerce store directly to Amazon's Sell
 == Installation ==
 
 1. Upload the `open-lister-for-amazon` folder to `/wp-content/plugins/` and activate it. WooCommerce must be active.
-2. Get free SP-API credentials. You register as a **private developer** because you only use them for your own store. The annual fee Amazon introduced in 2026 applies to third-party developers, not private ones.
+2. Follow the guided setup (Amazon > Setup) to get free SP-API credentials. You register as a **private developer** because you only use them for your own store. The annual fee Amazon introduced in 2026 applies to third-party developers, not private ones.
    1. Seller Central > Apps and Services > Develop Apps. Register as a private developer.
    2. Roles: Product Listing; Pricing; Inventory and Order Tracking; Amazon Fulfillment if you use FBA. Add Direct-to-Consumer Shipping if you want buyer names and full addresses on imported orders.
    3. Add an app client (API type: SP API) and copy the LWA Client ID and Client Secret.
    4. Click Authorize to self-authorize the app, then copy the refresh token.
    5. Find your Seller ID (Merchant Token) under Settings > Account Info.
-3. In WordPress, go to Amazon > Settings, choose your marketplace, paste the credentials, save, and click "Test connection".
+3. Paste everything you copied into the one box on the setup page, in any order, and click "Connect to Amazon". The plugin picks out each value, finds your region, picks a marketplace your account sells on, and tests the connection.
+
+The setup page opens automatically when you activate the plugin, and stays under Amazon > Setup. Its buttons open the exact Seller Central pages for your country.
 
 == Frequently Asked Questions ==
 
@@ -73,6 +75,9 @@ WordPress cron runs when someone visits your site. On quiet sites, add a real se
 WooCommerce > Status > Logs, source `open-lister-amazon`. Turn on "Log every Amazon request" in Settings for full detail.
 
 == Changelog ==
+
+= 1.1.0 =
+* Guided setup: opens on activation, links to the right Seller Central pages for your country, reads all credentials from one paste box, auto-detects region and marketplace, and explains login errors in plain words.
 
 = 1.0.0 =
 * First release: listings, price and stock sync, order import, shipment confirmation, and product research with scheduled runs and similar-category ideas.

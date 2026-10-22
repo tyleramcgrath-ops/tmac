@@ -30,6 +30,7 @@ class OLA_Plugin {
 		OLA_Orders::init();
 		OLA_Research::init();
 		OLA_Admin_Pages::init();
+		OLA_Setup::init();
 
 		add_filter( 'cron_schedules', array( __CLASS__, 'cron_schedules' ) );
 		add_action( 'init', array( __CLASS__, 'schedule_order_import' ) );
@@ -41,7 +42,7 @@ class OLA_Plugin {
 	}
 
 	public function action_links( $links ) {
-		array_unshift( $links, '<a href="' . esc_url( admin_url( 'admin.php?page=ola-settings' ) ) . '">' . esc_html__( 'Settings', 'open-lister-amazon' ) . '</a>' );
+		array_unshift( $links, '<a href="' . esc_url( OLA_Settings::is_connected() ? admin_url( 'admin.php?page=ola-settings' ) : OLA_Setup::url() ) . '">' . esc_html__( 'Settings', 'open-lister-amazon' ) . '</a>' );
 		return $links;
 	}
 
@@ -66,6 +67,7 @@ class OLA_Plugin {
 
 	public static function activate() {
 		add_filter( 'cron_schedules', array( __CLASS__, 'cron_schedules' ) );
+		update_option( OLA_Setup::REDIRECT_OPTION, 1, false );
 	}
 
 	public static function deactivate() {

@@ -49,8 +49,8 @@ class OLA_Admin_Pages {
 			$type = ! empty( $_GET['ola_err'] ) ? 'error' : 'success';
 			echo '<div class="notice notice-' . esc_attr( $type ) . ' is-dismissible"><p>' . esc_html( sanitize_text_field( wp_unslash( $_GET['ola_msg'] ) ) ) . '</p></div>';
 		}
-		if ( 'ola-settings' !== $_GET['page'] && ! OLA_Settings::get( 'refresh_token' ) ) {
-			echo '<div class="notice notice-warning"><p>' . wp_kses_post( sprintf( __( 'Connect your Amazon seller account on the <a href="%s">Settings</a> page to get started.', 'open-lister-amazon' ), esc_url( admin_url( 'admin.php?page=ola-settings' ) ) ) ) . '</p></div>';
+		if ( ! in_array( $_GET['page'], array( 'ola-settings', 'ola-setup' ), true ) && ! OLA_Settings::get( 'refresh_token' ) ) {
+			echo '<div class="notice notice-warning"><p>' . wp_kses_post( sprintf( __( 'Connect your Amazon seller account to get started: <a href="%s" class="button button-primary">Connect to Amazon</a>', 'open-lister-amazon' ), esc_url( OLA_Setup::url() ) ) ) . '</p></div>';
 		}
 		// phpcs:enable
 	}
@@ -566,6 +566,7 @@ class OLA_Admin_Pages {
 				<?php settings_fields( 'ola_settings_group' ); ?>
 
 				<h2><?php esc_html_e( '1. Connect your Amazon seller account', 'open-lister-amazon' ); ?></h2>
+				<p><a class="button button-primary" href="<?php echo esc_url( OLA_Setup::url() ); ?>"><?php esc_html_e( 'Use the guided setup', 'open-lister-amazon' ); ?></a> <?php esc_html_e( 'or enter the values by hand below.', 'open-lister-amazon' ); ?></p>
 				<details class="ola-help">
 					<summary><?php esc_html_e( 'How to get these (free, about 10 minutes)', 'open-lister-amazon' ); ?></summary>
 					<ol>
