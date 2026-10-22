@@ -287,6 +287,348 @@ const CENSUS_HILLS = 'https://www.census.gov/quickfacts/fact/table/hillsboroughc
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'seattle-law-firm-website-design',
+    title: 'Seattle Law Firm Website Design: Washington Ad Rules',
+    description: 'Plan a Seattle law firm website under Washington RPC 7.1 and 7.3: specialist claims, LLLTs, lead generators, CEMA email rules and King County courts.',
+    kind: 'guide',
+    summary: [
+      'Washington regulates lawyer advertising with just two working rules since January 26, 2021: RPC 7.1 (no false or misleading communications) and RPC 7.3 (solicitation and paying for referrals). Rules 7.2, 7.4 and 7.5 are reserved.',
+      'You may call yourself a specialist if it is true, but a claim of certification must name the certifying organization (RPC 7.1, Comment 8).',
+      'A website is not solicitation in Washington (RPC 7.3, Comment 1), and there is no fixed waiting period after an accident, but follow-up to a person in distress can still break the rule.',
+      'Washington’s email law bars false or misleading subject lines on commercial email to Washington residents, which reaches the follow-up your intake team sends.',
+      'Seattle clients may be heading to the King County Courthouse, the Maleng Regional Justice Center in Kent, Seattle Municipal Court or one of King County District Court’s locations: say which.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1535581652167-3a26c90bbf86?auto=format&fit=crop&w=1600&q=75', alt: 'Seattle’s skyline and the Space Needle at sunset, with snow-capped Mount Rainier behind the towers and evergreen trees in the foreground' },
+    body: `A Seattle law firm website answers to the Washington Rules of Professional Conduct, and Washington keeps its advertising rules shorter than almost any state. Since January 26, 2021, two rules do the work: RPC 7.1 says a lawyer may not make a false or misleading communication about the lawyer or the lawyer’s services, and RPC 7.3 covers solicitation and paying anyone to recommend you. Rules 7.2, 7.4 and 7.5 now read “Reserved.” There is no filing requirement, no list of mandatory disclaimers and no fixed waiting period after an accident. That freedom puts the weight on judgment: a truthful page can still mislead, a specialist claim needs a named certifier, and the emails and texts your intake team sends after a form comes in are governed by Washington’s own commercial email law.
+
+This guide walks through what those rules mean for each part of a website, with the rule text linked, and then covers what is particular to Seattle: King County’s three superior court locations, a municipal court that handles every misdemeanor inside city limits, a licensed legal technician program that has closed to new applicants, and a client base that speaks many languages. It is planning guidance, not an ethics opinion, so take close calls to Washington ethics counsel.
+
+![Seattle’s skyline at sunset from a hillside, with the Space Needle on the left and Mount Rainier rising behind the downtown towers](https://images.unsplash.com/photo-1535581652167-3a26c90bbf86?auto=format&fit=crop&w=1200&q=75)
+
+## Which Washington rules apply to a law firm website?
+
+Open the Washington Courts’ copy of each rule and you will see the structure at once. [RPC 7.1](https://www.courts.wa.gov/court_rules/pdf/RPC/GA_RPC_07_01_00.pdf) holds the general standard and a long set of Washington comments on practice areas, specialization, firm names and multi-office firms. [RPC 7.2](https://www.courts.wa.gov/court_rules/pdf/RPC/GA_RPC_07_02_00.pdf), [RPC 7.4](https://www.courts.wa.gov/court_rules/pdf/RPC/GA_RPC_07_04_00.pdf) and [RPC 7.5](https://www.courts.wa.gov/court_rules/pdf/RPC/GA_RPC_07_05_00.pdf) are reserved, each amended to that state in January 2021. [RPC 7.3](https://www.courts.wa.gov/court_rules/pdf/RPC/GA_RPC_07_03_00.pdf) covers solicitation and, in its paragraph (b), the rules on paying for recommendations that used to sit in 7.2(b).
+
+That matters if you are moving a site from another state or working from an old checklist. A template written for a state with a 30-day solicitation ban, a required “advertising material” label or a mandatory results disclaimer will have you adding text Washington never asked for, while missing the questions Washington does care about. Start from the two rules that exist:
+
+- **RPC 7.1** applies to every page, ad, profile, directory listing and social post. The test is whether a statement is false, or true but misleading.
+- **RPC 7.3** applies to targeted outreach and to money. It decides when you may contact a specific person, and whom you may pay in connection with getting clients.
+
+## What makes a truthful page misleading in Washington?
+
+Comment 2 to RPC 7.1 gives two tests. A truthful statement is misleading if it leaves out a fact needed to keep the communication as a whole from misleading. It is also misleading if there is a substantial likelihood it will lead a reasonable person to a specific conclusion about the lawyer or the lawyer’s services that has no reasonable factual foundation.
+
+Comment 3 applies those tests to the two things firms most like to publish. Reporting real results for clients “may be misleading if presented so as to lead a reasonable person to form an unjustified expectation” that other clients will get the same, without reference to the facts and law of each case. And a comparison of your services or fees with other lawyers’ may mislead if it is so specific that a reasonable person would think it can be proved. The same comment adds that an appropriate disclaimer or qualifying language may prevent a finding that a statement creates unjustified expectations.
+
+On a website, that gives you practical choices:
+
+- **Results pages.** Report a verdict or settlement with what made it possible: the type of case, the injuries or issues involved, whether liability was disputed. Put a plain statement next to it, not in a footer, that every case turns on its own facts and that past results don’t predict future ones.
+- **Rankings and awards.** Name who gave the honor and the year. A badge with no source invites the reader to assume more than the award means.
+- **“Lowest fees in Seattle” or “the city’s top DUI defense.”** Unless you can prove the comparison, cut it. Describe what you do instead: “Flat fee for a first DUI in Seattle Municipal Court, stated in writing before we start.”
+- **Stock photos.** A photo of a stranger captioned as your client, or a courtroom staged to look like your trial, suggests facts that aren’t true. Use real photos of your team and office or plain images that claim nothing.
+
+Comment 6 is the other half of the picture. It confirms that you may publish your name, address, email, website and phone number, the kinds of services you take, how fees are set (including prices for specific services and payment arrangements), the languages you speak, and, with their consent, the names of clients you regularly represent. A Washington site can be specific about fees. It just can’t be misleading about them.
+
+## Can a Seattle lawyer say “specialist” on a website?
+
+Yes, within the misleading standard. Comment 8 to RPC 7.1 says a lawyer may list practice areas, may say the practice is limited to certain fields, and “is generally permitted to state that the lawyer is a ‘specialist,’ practices a ‘specialty,’ or ‘specializes in’ particular fields,” subject to the false-and-misleading test. That is more permissive than states that ban the word without certification.
+
+Certification is a separate claim with a separate condition. A lawyer may say they are certified as a specialist only if the certification comes from an organization approved by an appropriate state authority or accredited by the ABA or another approved accreditor, and “the name of the certifying organization must be included in any communication regarding the certification.” On an attorney profile, that looks like this:
+
+> Board certified in civil trial law by the National Board of Trial Advocacy.
+
+Two habits keep specialist language honest. Use it only for fields where the lawyer’s practice is in fact concentrated, so the claim has a factual foundation. And keep it consistent: if a profile says “specializes in employment law” while the practice area list shows eleven unrelated fields, a reader can fairly ask which is true.
+
+![Aerial view down a straight downtown street at dusk, with high-rise towers on either side and city lights coming on toward the water](https://images.unsplash.com/photo-1608341944160-9b947500243e?auto=format&fit=crop&w=1200&q=75)
+
+## How should a firm present LLLTs and lawyers licensed elsewhere?
+
+Washington is the state that created limited license legal technicians, and some Seattle firms still employ them. The Washington Supreme Court entered an order on July 1, 2021 sunsetting the LLLT program effective July 31, 2022, and the bar association stopped admitting new LLLTs after July 31, 2023, according to the [LLLT Board’s suggested rule amendments](https://www.courts.wa.gov/court_rule_related_orders/orders/25700-A-1495.pdf). LLLTs already licensed can keep practicing within their license.
+
+If your firm includes one, Comment 9 to RPC 7.1 applies. Advertising about an LLLT’s services must say the LLLT holds a limited license in the specific fields for which they are licensed, and must not state or imply broader authority. Lawyers with managerial authority must make sure the firm’s communications get this right. On a profile page, list the license type and field in plain words (“Limited License Legal Technician, licensed in family law”) and avoid titles like “legal counsel” that blur the line. Comment 12 allows a firm to use an LLLT’s name in the firm name if it is otherwise not misleading.
+
+Out-of-state lawyers raise a similar question. Comment 14 lets a firm with offices in several jurisdictions use one name everywhere, but when lawyers are identified as practicing in a particular office, the firm should show the jurisdictional limits of anyone not licensed where that office sits. A Seattle firm may well have a lawyer admitted only in Oregon or Idaho. Put each lawyer’s admissions on their profile, and for anyone not admitted in Washington, say so.
+
+## What should a Washington firm name and domain avoid?
+
+Comment 10 covers trade names and web addresses together. A firm may be identified “by a distinctive website address or comparable professional designation,” and trade names are allowed if they aren’t misleading. The comment’s own example is a geographic trade name like “Springfield Legal Clinic,” which may need a disclaimer that it isn’t a public legal aid agency. A private firm calling itself “Seattle Tenant Defense Center” on a domain like that faces the same risk: readers may assume a nonprofit or government program.
+
+Comments 11 and 13 add that lawyers who share space but don’t practice together may not present themselves as a firm. An office-sharing arrangement with a joint logo, one “our attorneys” page and a shared phone tree creates exactly the impression the comments prohibit. If you share space, give each practice its own site, its own name and its own contact details.
+
+## Is a law firm website “solicitation” in Washington?
+
+No. Comment 1 to RPC 7.3 defines solicitation as a targeted communication, initiated by or for a lawyer, directed to a specific person and offering legal services. It says a communication typically is not solicitation if it is directed to the general public, “such as through a billboard, an Internet banner advertisement, a website, or a television commercial,” or if it responds to a request for information or is automatically generated in response to Internet searches.
+
+Washington then permits solicitation by any means, subject to four exceptions in RPC 7.3(a): the solicitation is false or misleading; the lawyer knows or should know the person’s physical, emotional or mental state prevents reasonable judgment about hiring a lawyer; the person has said they don’t want to be solicited; or it involves coercion, duress or harassment. There is no fixed 30-day ban like the ones some states impose. Comment 10 gives examples of conduct that crosses the line anyway: late-night or repeated calls, contacting an accident victim or family shortly after the accident or while the victim is in medical distress, and approaching people facing incarceration in or near a courthouse.
+
+For a website, the practical point is the follow-up. The page itself is advertising, but the moment your team calls, texts or emails a specific person who filled in a form, you are in RPC 7.3 territory. Set intake rules your staff can follow: answer the request that was made, honor any “don’t contact me” at once, and don’t press someone who is plainly in crisis to sign that day. Comment 11 makes the same restrictions apply to agents and vendors acting for you.
+
+## Can a Seattle firm pay for leads, directories or referrals?
+
+RPC 7.3(b) is the rule. A lawyer may not give anything of value to someone outside the firm for recommending or securing the lawyer’s services, with five exceptions: reasonable advertising costs (including online group advertising), the usual charges of a legal service plan or a not-for-profit lawyer referral service, buying a practice under RPC 1.17, non-exclusive reciprocal referral agreements the client is told about, and nominal gifts not meant as payment for recommendations.
+
+Comment 14 applies this to online marketing. You may pay for directory listings, domain names, sponsored placements and website designers. You may pay a lead generator only if it doesn’t recommend you, the payment fits the fee-division and independence rules, and its communications meet RPC 7.1. You must not pay one that “states, implies, or creates a reasonable impression that it is recommending the lawyer, is making the referral without payment from the lawyer, or has analyzed a person’s legal problems when determining which lawyer should receive the referral.” Before you sign, go through the service as a consumer would. If its pages say “we matched you with the best attorney for your case,” that is the impression the comment forbids.
+
+Washington also allows one arrangement worth knowing: Comment 15 lets a lawyer share a percentage of a fee with a not-for-profit lawyer referral service that qualifies under section 501 of the Internal Revenue Code or Washington’s nonprofit corporation law. That is a referral relationship to mention truthfully, not a reason to call yourself “recommended by” the service.
+
+![A wooden judge’s gavel resting on a laptop keyboard](https://images.unsplash.com/photo-1654588833369-5174f4640cd2?auto=format&fit=crop&w=1200&q=75)
+
+## What do Washington’s email and text laws mean for intake?
+
+Washington’s Commercial Electronic Mail Act is easy to forget because it isn’t a bar rule. [RCW 19.190.020](https://app.leg.wa.gov/RCW/default.aspx?cite=19.190.020) bars sending a commercial email from a computer in Washington, or to an address the sender knows or has reason to know belongs to a Washington resident, that misrepresents its origin or uses a subject line containing false or misleading information. On April 17, 2025, the Washington Supreme Court held in [Brown v. Old Navy](https://www.courts.wa.gov/opinions/pdf/1025921.pdf) that the statute prohibits “any false or misleading information” in commercial email subject lines, not only misleading lines about the email’s commercial purpose. The legislature amended the section in 2026 to add a knowledge standard (the person’s actual knowledge or knowledge fairly implied from objective circumstances), applying to suits started on or after June 11, 2026.
+
+For a law firm, the risk sits in newsletters and automated nurture emails, not in a reply to someone who wrote to you. Subject lines like “Your case review is ready” sent to someone who never requested a review, or “Last chance: free consultation ends tonight” when the offer never ends, are what the statute is aimed at. Write subject lines that say exactly what the email is.
+
+Text messages have their own section. [RCW 19.190.060](https://app.leg.wa.gov/RCW/default.aspx?cite=19.190.060) says no person doing business in Washington may initiate or assist in sending a commercial text message to a Washington resident’s cell phone, and treats a violation as a consumer protection act violation. Whether a text answering a person’s own request counts as “commercial” is a question for counsel. The safe pattern for a website is simple: let the contact form ask how the person wants to be reached, and if they choose text, keep the message to the logistics of the request they made.
+
+## Which Seattle court will your client’s case land in?
+
+Clients search with their problem and their place, and a practice page that tells them where their case will be heard answers a question most sites skip. Three court systems serve Seattle residents:
+
+- **King County Superior Court** hears felonies, civil cases, family law and juvenile cases at three main locations: the King County Courthouse and the Patricia H. Clark Children and Family Justice Center in Seattle, and the Maleng Regional Justice Center in Kent, plus Involuntary Treatment Act Court at Harborview Medical Center ([King County Superior Court](https://kingcounty.gov/en/court/superior-court)). A divorce or felony client may be going to Kent rather than downtown.
+- **Seattle Municipal Court** handles all misdemeanor and gross misdemeanor crimes and civil infractions under the Seattle Municipal Code and certain state statutes, and describes itself as the largest limited jurisdiction court in Washington by case volume ([Seattle Municipal Court](https://www.seattle.gov/courts/about)). A first DUI or a theft charge inside city limits usually starts here.
+- **King County District Court** has 25 elected judges hearing civil and criminal cases at 10 locations around the county ([King County District Court](https://kingcounty.gov/en/court/district-court)), which matters for clients arrested outside Seattle city limits.
+
+A criminal defense page that explains “Seattle Municipal Court or King County District Court, depending on where the arrest happened” is more useful, and more quotable in an AI answer, than one that says only “we fight for you in court.”
+
+## Should a Seattle firm offer pages in other languages?
+
+Washington law treats language access in court as a right: [RCW 2.43.010](https://app.leg.wa.gov/RCW/default.aspx?cite=2.43.010) declares a state policy of securing the rights of people who can’t readily understand or communicate in English by providing interpreters in legal proceedings. The Washington State Bar Association’s [find legal help page](https://www.wsba.org/for-the-public/find-legal-help) points the public to legal forms in Korean, Russian, Spanish, Vietnamese, Tagalog and Chinese. Your own clients may need more than an English site.
+
+If you add translated pages, translate every required element with them: fee terms, the certifying organization next to any certification claim, LLLT license limits and results context. Under RPC 7.1, a statement in another language is judged like one in English. Comment 6 also lets you advertise the languages your lawyers speak, and it helps to say which lawyer speaks which, so a Vietnamese-speaking caller doesn’t reach someone who can’t help. Use a human translator for legal terms, and give each language version its own page so Google can show the right one ([localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)).
+
+## How should a Seattle firm set up its Google Business Profile?
+
+Your Business Profile often reaches a person before your website does. Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)), and its [Business Profile guidelines](https://support.google.com/business/answer/3038177) require that a business have in-person contact with customers during stated hours at its address. In Seattle, that rules out a few common shortcuts:
+
+- **No profile for a shared office you never staff.** A downtown office and a Bellevue office that each see clients can each have one; a mailing address in a coworking space you visit once a month cannot.
+- **The real firm name.** Adding “Best Seattle Injury Lawyer” to the name field breaks the guidelines and invites a suspension.
+- **Matching details.** The address, phone and hours on each profile should match the office page it links to, word for word.
+- **Real reviews only.** Ask satisfied clients the same way every time, and never offer anything in exchange.
+
+Distance is the factor you can’t move. Relevance comes from clear practice pages and accurate categories, and prominence builds over time from real reviews and from being mentioned around the web for work you actually did.
+
+## What pages should a Seattle law firm website have?
+
+A page plan that serves clients and keeps the two Washington rules in view:
+
+1. **Home page** saying who you help and where, with the firm name, phone and address on every page.
+2. **A page per practice area** with fees described honestly: flat fee, hourly or contingent, and what costs the client may still owe.
+3. **Attorney profiles** with admissions, the courts each lawyer appears in, languages spoken and any certification with the certifier named.
+4. **LLLT and paralegal profiles,** if you have them, stating the license type and field.
+5. **A results page** only with context for each entry and a visible note that outcomes vary.
+6. **A courts page** for criminal, family and civil practices that explains which King County court hears what.
+7. **Office pages** for each staffed location with transit, parking and hours.
+8. **Translated pages** for the practice areas your clients need in other languages.
+9. **A contact form** that asks how the person prefers to be contacted and only what a conflict check requires.
+
+Skip the template trick of near-identical pages for every suburb (“Kirkland DUI lawyer,” “Renton DUI lawyer”) with only the city name swapped. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead users to essentially the same place as doorway abuse. A page about a place should exist only when you have something true and specific to say about it, such as the court that serves it.
+
+## A pre-launch checklist for Washington
+
+- No statement that is true but leaves out a fact a reader needs.
+- Results shown with context and a plain note that each case turns on its facts.
+- No comparisons with other lawyers you can’t prove.
+- “Specialist” used only where the practice is concentrated; certification always names the certifier.
+- LLLTs described with their limited license and field.
+- Out-of-state lawyers’ admissions shown, with any limits for Washington offices.
+- Trade names and domains that don’t suggest a public or nonprofit service.
+- Lead generators checked against Comment 14 to RPC 7.3.
+- Intake staff trained on RPC 7.3(a): honor “stop,” no pressure on people in crisis.
+- Email subject lines that say exactly what the email is (RCW 19.190.020).
+- Text messages only as counsel advises under RCW 19.190.060.
+- Structured data that describes only what visitors can see on the page ([structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Seattle law firm website
+
+SaySites law firm sites start with the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose intake questions include the other party’s name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), with each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live. Sites can be written in English or Spanish. You make changes by typing them in plain words, such as “add the National Board of Trial Advocacy next to Maria’s certification,” and each change waits as a draft until you approve it. Results, credentials and reviews come only from you; nothing is invented.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Washington site yourself, or [request a free redesign](/redesign) to see your current pages rebuilt first. For more, read [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses), [how to write pages AI answers can quote](/blog/write-pages-ai-answers-can-quote) and how another state handles the same questions in our [Denver law firm website guide](/blog/denver-law-firm-website-design).`,
+    faq: [
+      { q: 'Does Washington require a disclaimer on a law firm website?', a: 'Not a fixed one. Since January 2021 Washington has relied on RPC 7.1, which bars false or misleading communications, and RPC 7.3 on solicitation. Rules 7.2, 7.4 and 7.5 are reserved. Disclaimers still help: Comment 3 to RPC 7.1 says qualifying language can keep results or comparisons from creating unjustified expectations, so add it where a page reports outcomes.' },
+      { q: 'Can a Seattle lawyer say they specialize in a practice area?', a: 'Generally yes. Comment 8 to Washington RPC 7.1 allows a lawyer to say they are a specialist or specialize in a field, judged by the false-and-misleading standard. A claim to be certified as a specialist is stricter: the certifier must be approved by a state authority or an accredited body, and its name must appear wherever the certification is mentioned.' },
+      { q: 'Is there a waiting period before contacting an accident victim in Washington?', a: 'Washington RPC 7.3 has no fixed number of days. It permits solicitation unless it is misleading, involves coercion or harassment, targets someone who asked not to be contacted, or reaches a person whose physical, emotional or mental state prevents reasonable judgment. Comment 10 names contacting an accident victim shortly after the accident, or while in medical distress, as an example of crossing that line.' },
+      { q: 'Can a Washington law firm pay for online leads?', a: 'Yes, within RPC 7.3(b) and Comment 14. You may pay for advertising, directory listings and lead generation, but not to a service that recommends you, implies the referral is unpaid, or suggests it analyzed the person’s legal problem to choose a lawyer. Its communications must also meet RPC 7.1, so review its consumer pages before you sign.' },
+      { q: 'Does Washington’s email law apply to law firm newsletters?', a: 'It can. RCW 19.190.020 bars commercial email to Washington residents with false or misleading information in the subject line, and the Washington Supreme Court read that broadly in Brown v. Old Navy in April 2025. A 2026 amendment added a knowledge standard. Write subject lines that state exactly what the email contains, and ask counsel about automated sequences.' },
+      { q: 'Can a Washington firm still list a limited license legal technician?', a: 'Yes. The Washington Supreme Court sunset the LLLT program in a July 2021 order, and no new LLLTs are admitted, but those already licensed may continue. Comment 9 to RPC 7.1 requires advertising about an LLLT to state the limited license and the fields it covers, and not to suggest broader authority to practice law.' },
+      { q: 'What does a SaySites website for a Seattle law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign to see your current site rebuilt before you decide anything.' },
+    ],
+    about: ['Washington Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Seattle, Washington'],
+    published: '2026-10-22',
+    status: 'published',
+  },
+  {
+    slug: 'new-york-medical-practice-website-design',
+    title: 'New York Medical Practice Website Design: NY Rules',
+    description: 'Plan a New York medical practice website: the testimonial ban in Education Law 6530, price ads, insurance and hospital disclosure, and federal billing notices.',
+    kind: 'guide',
+    summary: [
+      'New York Education Law section 6530(27) lists advertising that “uses testimonials” as professional misconduct for physicians, so a patient quote on your own site is a real risk, not a style choice.',
+      'The same subdivision rules out guarantees, unprovable superiority claims, and bonuses or inducements other than a discount, and asks you to keep an exact copy of each advertisement for a year.',
+      'Public Health Law section 24 requires practices to tell patients, in writing or through a website, which health plans they participate in and which hospitals they are affiliated with.',
+      'Federal No Surprises Act rules add two website items: the one-page surprise billing notice and information about good faith estimates for uninsured and self-pay patients.',
+      'New York City government designates ten citywide languages, a useful map of the languages your patients may need.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1617211910720-c3f1ae652d3d?auto=format&fit=crop&w=1600&q=75', alt: 'A wide street in Lower Manhattan lined with brick buildings, with One World Trade Center rising in the distance on a bright afternoon' },
+    body: `A New York medical practice website has to clear rules most states don’t have. New York Education Law section 6530 defines professional misconduct for physicians, physician assistants and specialist assistants, and its subdivision 27 treats advertising that is not in the public interest as misconduct: anything false, misleading, sensational or flamboyant, any guarantee, unprovable claims of superiority, inducements other than a discount, and, unusually, advertising that “uses testimonials.” On top of that, Public Health Law section 24 makes your website one of the approved places to tell patients which health plans you participate in and which hospitals you’re affiliated with, and federal surprise billing rules add two notices that belong on the site.
+
+This guide covers each of those rules as it applies to a practice website, with the text linked, then turns to what is specific to practicing in New York City: patients who move between boroughs, a city that works in many languages, and the profile pages patients use to check a doctor before booking. It is planning guidance, not legal advice, so take close calls to a New York health care attorney.
+
+![A doctor in a white coat and glasses takes notes at her desk while talking with a patient across from her in a bright exam office](https://images.unsplash.com/photo-1758691462863-9e1b8a863140?auto=format&fit=crop&w=1200&q=75)
+
+## Which New York rules govern a medical practice website?
+
+The core is subdivision 27 of [Education Law section 6530](https://newyork.public.law/laws/n.y._education_law_section_6530). It makes it professional misconduct to advertise or solicit for patronage in a way that is not in the public interest, and then lists what that includes. Advertising is not in the public interest if it:
+
+- is false, fraudulent, deceptive, misleading, sensational or flamboyant;
+- represents intimidation or undue pressure;
+- uses testimonials;
+- guarantees any service;
+- makes a claim about professional services or products, or their costs or prices, that the licensee can’t substantiate (the licensee carries the burden of proof);
+- makes claims of professional superiority that the licensee can’t substantiate;
+- offers bonuses or inducements in any form other than a discount or reduction in an established fee.
+
+The same subdivision says how a practice may inform the public, sets conditions on advertised prices, requires you to keep an exact copy of each advertisement for one year after its last appearance and make it available to the Department of Health on request, and bars giving anything of value to a media representative in exchange for professional publicity in a news item.
+
+The statute was written with print, radio and television in mind, and it doesn’t carve websites out. Treat every public page, landing page, social post and directory profile you control as advertising under it. That is the conservative reading, and it costs a well-built site very little.
+
+## Can a New York practice post patient testimonials?
+
+This is the rule that most surprises practices that have moved from another state or used a national template. Paragraph (a)(iii) lists advertising that “uses testimonials” as not in the public interest. Many states allow testimonials with conditions; New York’s statute lists them outright.
+
+On a website, testimonials turn up in more places than a page labeled “Testimonials”:
+
+- **A review carousel or widget** that pulls star ratings and quotes onto your home page.
+- **A video story** of a patient describing their care.
+- **“What our patients say” quotes** on service pages or the appointment page.
+- **Before and after photo captions** quoting the patient.
+
+Reviews patients leave on your Google Business Profile or another independent site are written by them, on a platform you don’t control. Copying them onto your own site turns them into your advertising. The cautious approach is to keep patient words off your pages, link to your Business Profile so patients can read reviews there, and ask a New York health care attorney before adding any patient quote. What you can publish freely is your own factual information: who your providers are, what they’re trained in, what you treat, which plans you take and how a first visit works.
+
+## What can a New York practice say about prices and discounts?
+
+New York allows price advertising with conditions. Paragraph (b) of subdivision 27 recognizes advertising fixed prices, or a stated range of prices, for specified routine professional services, if the advertisement says when there will be an additional charge for related services that are an integral part of the overall service, and states the period of time the advertised prices will be in effect.
+
+Applied to a website, a self-pay price page might read:
+
+> New patient visit for adults, self-pay: $225. Lab tests and vaccines, if needed, are billed separately. Prices in effect from January 1 to December 31, 2026.
+
+Three other parts of the statute shape price pages. Any claim about costs must be something you can substantiate, so “affordable care” is fine as a description but “lowest prices in Manhattan” is not, unless you can prove it. Paragraph (a)(vii) bans bonuses or inducements in any form other than a discount or fee reduction, which rules out gift cards for booking, raffles for new patients and “free” add-ons attached to a paid service. A straight discount off your established fee is the form the statute allows. And because advertisements can’t represent undue pressure, skip countdown timers and “only 3 appointments left this week” banners.
+
+## Which words get a New York medical site in trouble?
+
+The statute’s adjectives are broad: false, deceptive, misleading, sensational, flamboyant. In practice, the risky phrases are predictable:
+
+- **Guarantees.** “Pain-free, guaranteed,” “satisfaction guaranteed” or “seen within 10 minutes, guaranteed” all run into paragraph (a)(iv).
+- **Superiority.** “The best cardiologist in New York” or “Brooklyn’s leading pediatric practice” are claims of professional superiority that need proof. A dated honor from a named organization is a fact; a superlative you wrote yourself is a claim.
+- **Sensational copy.** Dramatic before and after language, miracle cures and fear-based headlines are what “sensational or flamboyant” describes.
+- **Credentials.** State board certification accurately: the board’s full name and the specialty. Don’t let a section heading imply every provider holds a certification only one does.
+
+A useful test is to read each claim aloud and ask what a skeptical patient would need to see to believe it. If the answer is a document you don’t have, change the sentence.
+
+## Must your website list the insurance plans and hospitals you work with?
+
+Your website is one of the two ways to meet the requirement. [Public Health Law section 24](https://newyork.public.law/laws/n.y._public_health_law_section_24) requires health care professionals and group practices to disclose to patients and prospective patients, in writing or through a website, the health care plans in which they are a participating provider and the hospitals with which they are affiliated, before providing non-emergency services, and verbally when an appointment is scheduled.
+
+The same section adds more that a well-planned site can carry:
+
+- **Out-of-network estimates.** If you don’t participate in a patient’s plan, you must tell the patient, before non-emergency services, that the amount or estimated amount they will be billed is available on request, and provide it in writing on request.
+- **Other providers in the patient’s care.** A physician must give the name, practice name, mailing address and phone number of any anesthesiology, laboratory, pathology, radiology or assistant surgeon provider scheduled to work in the physician’s office or to whom the physician refers the patient.
+
+For the website, that means an insurance page that lists each plan by its real name (including the specific product, since a carrier may have several networks), a hospital affiliations section on each provider profile, and a sentence on the insurance page explaining how out-of-network patients can request an estimate. Assign someone to update the plan list whenever a contract changes; a stale plan list is the kind of error that sends a patient to the wrong office with the wrong expectations.
+
+![Three red waiting room chairs on a metal bench below a tall window in a quiet clinic hallway](https://images.unsplash.com/photo-1771574204208-b47e2d863bc5?auto=format&fit=crop&w=1200&q=75)
+
+## Which federal billing notices belong on the site?
+
+Two come from the federal No Surprises Act. First, CMS says health care providers and facilities must make publicly available, post on a public website of the provider or facility (if applicable), and provide a one-page notice in clear language about patient protections against surprise billing, and it publishes a model notice providers may use ([CMS provider FAQ](https://cms.hhs.gov/files/document/faq-providers-no-surprises-rules-april-2022.pdf), [model notice](https://www.cms.gov/files/document/model-disclosure-notice-patient-protections-against-surprise-billing-providers-facilities-health.pdf)). New York’s own surprise bill protections are explained by the state’s Department of Financial Services ([surprise medical bills](https://www.dfs.ny.gov/consumers/health_insurance/surprise_medical_bills)); link to it from the notice page so patients know where to turn.
+
+Second, uninsured and self-pay patients have a right to a good faith estimate. CMS says information about that right must be written so consumers can understand it and “displayed in a way that is easy to see (and easily searchable from a public search engine) on the provider’s or facility’s website,” as well as in the office and wherever scheduling or cost questions happen, provided orally when someone schedules or asks about cost, and offered in accessible formats and in the languages spoken by the people scheduling ([CMS key responsibilities for providers](https://www.cms.gov/files/document/nsa-key-responsibilities-providers.pdf)).
+
+“Easily searchable from a public search engine” is a website instruction. Put the notice on a normal, indexable page with a plain title such as “Good faith estimates for uninsured and self-pay patients,” link it from the footer and your price page, and don’t bury it in a PDF behind a login. Check with counsel on which of these duties apply to your practice’s setting.
+
+## How long should you keep copies of your website?
+
+Subdivision 27 requires an exact copy of each advertisement to be kept for one year after its last appearance and made available to the Department of Health on request. A website changes constantly, so build the record keeping into how you edit:
+
+1. Save a dated copy of each page whenever its claims, prices or provider details change.
+2. Keep copies of landing pages for paid ads for a year after each campaign ends.
+3. Record when a price was published and when it was withdrawn, since price advertising must state the period it’s in effect anyway.
+4. Keep the copies where someone other than your web vendor can find them.
+
+This is also good discipline for accuracy. A practice that can show what its site said on a given date can answer a patient complaint quickly.
+
+## What does New York health privacy law mean for your site?
+
+The biggest proposed change did not become law. The New York Health Information Privacy Act passed the legislature, but Governor Kathy Hochul vetoed it on December 19, 2025 ([Healthcare Brew](https://www.healthcare-brew.com/stories/2026/01/12/new-york-governor-vetoes-health-data-privacy-bill)), and a revised bill was introduced in 2026 ([Morrison Foerster summary](https://www.mofo.com/resources/insights/260316-nyhipa-returns-in-2026-revised-bill)). Watch for it, because it would reach health information collected through websites.
+
+Until then, the most protective design choice is also the simplest: keep clinical details out of the website altogether. An appointment request form should ask for a name, a phone number or email, a preferred time and the reason for the visit in general terms, with a note asking patients not to send medical details through it. Clinical questions belong in your patient portal or on the phone.
+
+## Should a New York City practice site be in more than one language?
+
+Often, yes. New York City’s own government designates ten citywide languages for translating its most common documents: Spanish, Chinese, Russian, Bengali, Haitian Creole, Korean, Arabic, Urdu, French and Polish ([NYC Local Law 30 report](https://www.nyc.gov/assets/immigrants/downloads/pdf/FY2023-local-law-30-reports.pdf)). That law governs city agencies, not private practices, but it is a reliable map of the languages New Yorkers use. And the federal good faith estimate information, as noted above, must be available in the languages spoken by the people scheduling with you.
+
+Start with the languages your front desk actually hears. Translate the pages patients need before a first visit: new patients, insurance, prices, the billing notices and contact. List which providers speak which languages on their profiles, because patients choose a person as much as a practice. Every rule in this guide applies in every language: a testimonial or guarantee in Spanish is still a testimonial or guarantee. Give each language its own page so Google can show the right one ([localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)).
+
+## How should New York practices handle Google Business Profiles?
+
+Google’s rules for medical practices are specific. Its [Business Profile guidelines](https://support.google.com/business/answer/3038177) say public-facing practitioners such as doctors may have their own profiles, support staff should not, and a practitioner shouldn’t have several profiles for different specialties. When several practitioners work at one location, the practice gets one profile for the location and each practitioner’s profile uses only their name. When a practitioner is the only public-facing one at a branded location, the guidelines call for one shared profile named in the form “brand: practitioner name.”
+
+For a group with offices in Manhattan and Brooklyn, that means one profile per staffed office, provider profiles that link to the right office page, hours that match the site, and categories chosen to match your service pages. Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). In a city where patients may travel by subway past a dozen practices, relevance is the factor you control most: a clear page for each service you offer, at each location where you offer it.
+
+Patients also check doctors outside Google. New York’s [physician profile site](https://www.nydoctorprofile.com/) lets the public look up physicians licensed in the state. Linking each physician’s profile page there is an easy way to show you have nothing to hide.
+
+![A Manhattan crosswalk at a wide intersection, with storefronts, traffic lights and a long avenue of buildings stretching into the distance](https://images.unsplash.com/photo-1528044085473-73c9d232288d?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a New York medical practice website have?
+
+A plan that answers patients’ questions and keeps the New York rules in view:
+
+1. **Home page** saying who you care for, where, and whether you are accepting new patients, with a plain note that the site isn’t for emergencies.
+2. **A page per service,** described factually, without guarantees or superlatives.
+3. **Provider profiles** with training, board certification stated accurately, languages, hospital affiliations and a link to the state physician profile.
+4. **Insurance and billing,** listing participating plans by name, explaining out-of-network estimates and linking the billing notices.
+5. **Prices for self-pay patients,** if you publish them, with extra charges and the period the prices are in effect.
+6. **Surprise billing and good faith estimate notices** on their own indexable pages.
+7. **Location pages** for each staffed office, with subway lines, accessibility details and hours.
+8. **Translated pages** for the languages your patients use.
+9. **An appointment request form** that asks for nothing clinical.
+
+Skip the shortcut of one page per neighborhood (“Upper West Side primary care,” “Park Slope primary care”) with only the place name changed. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages built to rank for similar searches that funnel to the same place as doorway abuse. Write a location page only where you actually see patients.
+
+## A checklist before your New York site goes live
+
+- No patient testimonials, review widgets or patient quotes on your own pages without legal sign-off.
+- No guarantees of any service or result.
+- No superiority claims you can’t prove; honors named with the source and year.
+- No bonuses or gifts for booking; discounts stated as a reduction in an established fee.
+- Prices for routine services list extra charges and the dates they apply.
+- Participating plans and hospital affiliations listed and kept current (Public Health Law section 24).
+- Out-of-network estimate process explained.
+- Surprise billing notice and good faith estimate information on indexable pages.
+- Dated copies of every advertising page kept for a year after it last appears.
+- An appointment form that asks for no medical details.
+- Structured data that describes only what visitors can see ([structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a New York medical practice website
+
+A SaySites medical practice site starts with the pages patients look for: home, a page per service, provider profiles, new patients and insurance, locations and an appointment request form. The form asks patients not to send medical details through it, every page carries a plain emergency note, the practice is described to Google as a MedicalClinic, and every page has to pass a 95+ speed check before it goes live. Sites can be written in English or Spanish.
+
+You change the site by typing what you want, such as “add our new Medicaid managed care plan to the insurance list” or “end the self-pay price list on December 31,” and each change waits as a draft until you approve it. SaySites never invents reviews, credentials or results; provider details come only from you. Plans start at $15 a month ([websites for medical practices](/websites-for/medical-practices), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your New York site yourself, or [request a free redesign](/redesign) to see your current site rebuilt first. For more, read [structured data for local businesses](/blog/structured-data-for-local-businesses), [what to put on your home page](/blog/what-to-put-on-your-home-page) and how Florida handles the same questions in our [Miami medical practice website guide](/blog/miami-medical-practice-website-design).`,
+    faq: [
+      { q: 'Can a New York doctor put patient testimonials on a practice website?', a: 'It is risky. Education Law section 6530(27) lists advertising that “uses testimonials” as not in the public interest, which is professional misconduct for physicians, physician assistants and specialist assistants. Reviews patients post on Google are theirs, but copying them onto your own site makes them your advertising. Ask a New York health care attorney before publishing any patient quote.' },
+      { q: 'Can a New York medical practice advertise prices on its website?', a: 'Yes, with conditions. Section 6530(27)(b) recognizes advertising fixed prices or a range of prices for specified routine services, if the advertisement notes any additional charge for related services that are an integral part of the service and states the period during which the prices are in effect. Any price claim must also be one you can substantiate.' },
+      { q: 'Does a New York practice have to list its insurance plans online?', a: 'It has to disclose them, and a website is one approved way. Public Health Law section 24 requires health care professionals to tell patients, in writing or through a website, which plans they participate in and which hospitals they are affiliated with before non-emergency services, and to tell them verbally when an appointment is scheduled. Keep the list current.' },
+      { q: 'Can a New York practice offer a gift card or free service to new patients?', a: 'Not as a bonus. Section 6530(27)(a)(vii) lists advertising that offers bonuses or inducements in any form other than a discount or reduction in an established fee as not in the public interest. A straightforward discount off your normal fee is the form the statute allows, stated clearly with any conditions and the period it applies.' },
+      { q: 'How long must a New York practice keep copies of its ads?', a: 'Section 6530(27)(c) requires an exact copy of each advertisement to be kept for one year after its last appearance and made available to the Department of Health on request. For a website, save a dated copy of a page whenever its claims, prices or provider details change, and keep paid ad landing pages for a year after each campaign ends.' },
+      { q: 'What federal notices should a medical practice website show?', a: 'Two from the No Surprises Act. CMS says providers must post a one-page notice about surprise billing protections on their public website if they have one, and information about good faith estimates for uninsured and self-pay patients must be easy to see and easily searchable from a public search engine on the website. Confirm with counsel which duties apply to your setting.' },
+      { q: 'What does a SaySites website for a New York medical practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes hosting, a page per service, provider profiles, a new patients and insurance page, location pages, MedicalClinic structured data and an appointment request form that asks for no medical details. You can also request a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['New York Education Law section 6530', 'Medical advertising', 'Medical practice websites', 'New York City'],
+    published: '2026-10-22',
+    status: 'published',
+  },
+  {
     slug: 'denver-law-firm-website-design',
     title: "Denver Law Firm Website Design: Colorado Ad Rules",
     description: "Plan a Denver law firm website under Colorado RPC 7.1 to 7.3: fee and cost warnings, results, specialist claims, the 30-day rule and 2026 price disclosure.",
