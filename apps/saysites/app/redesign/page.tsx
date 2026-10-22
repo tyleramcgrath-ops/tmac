@@ -19,7 +19,9 @@ const FAQ: [string, string][] = [
   ['What if my current site is built on a website builder or by an agency?', 'It works the same way. We read the public pages, whatever built them, and rebuild your words, photos and structure so you can compare them side by side.'],
 ]
 
-export default function RedesignPage() {
+   export default async function RedesignPage({ searchParams }: { searchParams: Promise<{ site?: string | string[] }> }) {
+     const raw = (await searchParams).site
+     const site = (Array.isArray(raw) ? raw[0] : raw ?? '').trim().slice(0, 300)
   const jsonLd = { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) }
   return (
     <MarketingShell>
@@ -29,7 +31,7 @@ export default function RedesignPage() {
           <p className="kicker">Free redesign preview</p>
           <h1>Paying too much for your website? See it rebuilt, free.</h1>
           <p>Paste your current website’s address. In about twenty seconds you’ll see your own site on SaySites, looking the way it does now, with every page, word and photo kept. Then see a fresh redesign of the same content, and a side-by-side of what changes: how heavy it is, what Google can read, and whether it passes a 95+ speed check.</p>
-          <div className="redesign-form"><RedesignForm /></div>
+          <div className="redesign-form"><RedesignForm defaultUrl={site} /></div>
           <p className="fine">No account needed. We only read public pages, and nothing changes on your current site.</p>
         </div>
       </section>
