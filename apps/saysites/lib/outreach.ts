@@ -126,6 +126,9 @@ export async function buildProspect(store: Store, p: Prospect, get: Fetcher = sa
   }
   try {
     const preview = await buildPreview(p.url, reading)
+    // Only a preview that shows them something good is worth an email: the
+    // redesign needs enough of their own services (lib/redesign).
+    if (preview.freshReady === false) throw new ImportError('Their site doesn’t list enough of their services to redesign it well.')
     await store.savePreview(preview, 'outreach')
     const email = p.email ?? preview.detected.email?.toLowerCase()
     const next: Prospect = {

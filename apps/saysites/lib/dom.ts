@@ -118,3 +118,18 @@ export function textOf(el: El | Node, skip: (e: El) => boolean = () => false): s
     .replace(/\n{3,}/g, '\n\n')
     .trim()
 }
+
+// ---------------------------------------------------------------------------
+// Regions: a page's header, footers and the body they sit in
+// ---------------------------------------------------------------------------
+
+const HEADER = /(^|[\s_-])(site-header|main-header|header-wrap|masthead|elementor-location-header|fusion-header-wrapper|et-l--header|top-header|header_main)([\s_-]|$)|^header$/i
+const FOOTER = /(^|[\s_-])(site-footer|footer-wrap|colophon|socket|elementor-location-footer|fusion-footer|et-l--footer|main-footer)([\s_-]|$)|^footer$/i
+const matchKey = (re: RegExp, el: El) => re.test(el.tag) || re.test(el.attrs.id ?? '') || classes(el).some((c) => re.test(c)) || (re === HEADER && el.attrs.role === 'banner') || (re === FOOTER && el.attrs.role === 'contentinfo')
+
+export function regions(root: El): { body: El; header?: El; footers: El[] } {
+  const body = find(root, (e) => e.tag === 'body') ?? root
+  const header = find(body, (e) => matchKey(HEADER, e) && !ancestors(e).some((a) => matchKey(HEADER, a)) && !!find(e, (d) => d.tag === 'img' || d.tag === 'a'))
+  const footers = findAll(body, (e) => matchKey(FOOTER, e) && !ancestors(e).some((a) => matchKey(FOOTER, a)) && e !== body)
+  return { body, header, footers }
+}

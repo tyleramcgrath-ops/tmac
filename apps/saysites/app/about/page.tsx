@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import { SwitchDemo } from '@/components/SwitchDemo'
 import { TalkForm } from '@/components/TalkForm'
+import { JsonLd, ORG, breadcrumbs } from '@/components/JsonLd'
 import '../home.css'
 
 // Why SaySites, and why businesses switch to it from an agency. Written as
@@ -9,7 +10,7 @@ import '../home.css'
 // competitor is named and nothing is claimed about anyone but us.
 
 export const metadata: Metadata = {
-  title: 'Why SaySites',
+  title: 'Why Businesses Switch Their Website to SaySites',
   description: 'Why law firms, medical practices, med spas and home service companies switch their website to SaySites: ownership, no long contract and real speed.',
   alternates: { canonical: '/about' },
 }
@@ -42,6 +43,7 @@ export default async function About({ searchParams }: { searchParams: Promise<{ 
   const sp = await searchParams
   return (
     <MarketingShell>
+      <JsonLd data={[{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Why SaySites', url: 'https://saysites.com/about', about: ORG }, breadcrumbs([['Home', '/'], ['Why SaySites', '/about']])]} />
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Why SaySites</p>

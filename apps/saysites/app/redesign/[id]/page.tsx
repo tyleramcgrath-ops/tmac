@@ -1,6 +1,9 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { MarketingShell } from '@/components/MarketingShell'
+import { after } from 'next/server'
+import { audit } from '@/lib/audit'
+import { offersCopy, rebuildPreview } from '@/lib/redesign'
 import { typeLabel } from '@/lib/detect'
 import { getStore } from '@/lib/store'
 import '../../home.css'
@@ -16,15 +19,34 @@ export default async function RedesignReport({ params, searchParams }: { params:
   if (!p) notFound()
   // A preview from our outreach: claiming it starts with a free first month.
   const fromOutreach = !p.claimed && !!(await store.prospectByPreview(id))
-  // Two versions: their site as it is (the default), or a fresh redesign.
-  const fresh = (await searchParams).v === 'fresh' && !!p.fresh
+  // Previews made before the exact copy existed are rebuilt in place (same
+  // address, same links); meanwhile they show nothing of the old versions.
+  const legacy = p.asIs === undefined && !p.claimed
+  if (legacy) after(() => rebuildPreview(id, p.url).catch((e) => console.error('[redesign] rebuild failed', e)))
+  // Two versions, each shown only when it's right: their site exactly as it
+  // is (once a browser check has confirmed it matches their site), and a
+  // redesign with enough of their own substance to be better than it.
+  const asIs = !legacy && offersCopy(p)
+  const freshOk = !legacy && !!p.fresh && p.freshReady !== false
+  const fresh = freshOk && (!asIs || (await searchParams).v === 'fresh')
+  const showing = asIs || freshOk
   const src = `/redesign/${id}/${fresh ? 'fresh' : 'site'}`
-  const claim = `/redesign/${id}/claim${fresh ? '?v=fresh' : ''}`
+  const claim = `/redesign/${id}/claim${fresh && asIs ? '?v=fresh' : ''}`
   const { before: b, after: a, detected: d } = p
+  const kept = !fresh ? p.pages.find((pg) => pg.slug === '')?.classic : undefined
+  const copy = kept ? audit(kept.html) : undefined
   const host = p.url.replace(/^https?:\/\//, '')
-  const imported = p.pages.filter((pg) => pg.source).length
-  const kept = p.pages.filter((pg) => pg.source && new URL(pg.source).pathname.replace(/\/+$/, '') === `/${pg.slug}`).length
-  const rows: [string, string, string, boolean][] = [
+  const shownPages = fresh && p.fresh ? p.fresh.pages : p.pages
+  const shownRedirects = fresh && p.fresh ? p.fresh.redirects : p.redirects
+  const imported = shownPages.filter((pg) => pg.source).length
+  const same = shownPages.filter((pg) => pg.source && new URL(pg.source).pathname.replace(/\/+$/, '') === `/${pg.slug}`).length
+  // Their site as it is keeps their own design and code, minus the scripts
+  // and separate stylesheet files; only those are claimed for it.
+  const rows: [string, string, string, boolean][] = copy ? [
+    ['Scripts loaded', String(b.scripts), String(copy.scripts), copy.scripts < b.scripts],
+    ['Stylesheet files loaded', String(b.stylesheets), 'Built in', b.stylesheets > 0],
+    ['Images missing a description', `${b.imagesNoAlt} of ${b.images}`, `${copy.imagesNoAlt} of ${copy.images}`, copy.imagesNoAlt < b.imagesNoAlt],
+  ] : [
     ['Home page weight', `${b.kb} KB`, `${a.kb} KB`, a.kb < b.kb],
     ['Scripts loaded', String(b.scripts), String(a.scripts), a.scripts < b.scripts],
     ['Stylesheets loaded', String(b.stylesheets), 'Built in', b.stylesheets > 0],
@@ -46,21 +68,34 @@ export default async function RedesignReport({ params, searchParams }: { params:
         <div className="wrap">
           <p className="kicker">Your free redesign, {host}</p>
           <h1>Here’s {d.name} on SaySites.</h1>
-          <p>{fresh ? 'A fresh design made from your own words and photos' : 'Your site as it is: the same pages, words, photos and colours, rebuilt to load fast'}: {imported} page{imported === 1 ? '' : 's'} carried over{kept ? `, ${kept} at exactly the same address` : ''}{p.redirects.length ? `, and ${p.redirects.length} redirect${p.redirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>
+          {showing && <p>{fresh ? 'A fresh design, made from your own pages and words' : 'Your site exactly as it looks today: the same pages, words, photos and design, without the scripts that slow it down'}: {imported} page{imported === 1 ? '' : 's'} carried over{same ? `, ${same} at exactly the same address` : ''}{shownRedirects.length ? `, and ${shownRedirects.length} redirect${shownRedirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>}
+          {legacy ? (
+            <p className="rd-note">We’ve improved free previews since this one was made, and it’s being rebuilt now. Refresh in a minute to see the new version.</p>
+          ) : !showing ? (
+            <p className="rd-note">We read your site, but we couldn’t find enough of your services on it to redesign it well, and we only show a redesign that’s better than your site. You can build yours from your business details in about two minutes instead.</p>
+          ) : !asIs ? (
+            <p className="rd-note">{p.asIs === false ? 'Parts of your current site are drawn by scripts, so a copy of it wouldn’t look exactly the same, and we only show exact copies. Here’s the redesign, made from your own pages and words.' : 'An exact copy of your current site appears here once our check confirms it looks the same as your site. Here’s the redesign, made from your own pages and words.'}</p>
+          ) : null}
           <div className="ind-actions">
-            <a className="b b-dark" href={claim}>{fromOutreach ? 'Claim it, first month free' : 'Claim this site free'}</a>
-            <a className="tplrow-link" href={src} target="_blank" rel="noopener">Open the full preview ↗</a>
+            {showing ? (
+              <>
+                <a className="b b-dark" href={claim}>{fromOutreach ? 'Claim it, first month free' : 'Claim this site free'}</a>
+                <a className="tplrow-link" href={src} target="_blank" rel="noopener">Open the full preview ↗</a>
+              </>
+            ) : !legacy ? (
+              <a className="b b-dark" href="/signup">Build it from your details</a>
+            ) : null}
           </div>
         </div>
       </section>
 
-      <section className="ind-sec" style={{ paddingTop: 0 }}>
+      {showing && <section className="ind-sec" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          {p.fresh && (
+          {freshOk && asIs && (
             <nav className="rd-switch" aria-label="Choose a version">
               <a href={`/redesign/${id}`} aria-current={fresh ? undefined : 'page'}>
                 <strong>Your site, as it is</strong>
-                <span>Same look and content, faster</span>
+                <span>Exactly as it looks today</span>
               </a>
               <a href={`/redesign/${id}?v=fresh`} aria-current={fresh ? 'page' : undefined}>
                 <strong>A fresh redesign</strong>
@@ -73,9 +108,9 @@ export default async function RedesignReport({ params, searchParams }: { params:
             <iframe src={src} title={`${d.name} rebuilt on SaySites`} loading="lazy" />
           </div>
         </div>
-      </section>
+      </section>}
 
-      <section className="ind-sec ind-alt">
+      {showing && <section className="ind-sec ind-alt">
         <div className="wrap">
           <div className="head split">
             <div>
@@ -99,7 +134,7 @@ export default async function RedesignReport({ params, searchParams }: { params:
             </table>
           </div>
         </div>
-      </section>
+      </section>}
 
       <section className="ind-sec">
         <div className="wrap ind-two">
@@ -114,7 +149,7 @@ export default async function RedesignReport({ params, searchParams }: { params:
             <div><h3>Claim it free</h3><p>It’s saved to your account with every page. Imported pages wait as drafts until you point your domain here, so nothing changes on your current site until you’re ready.</p></div>
             <div><h3>Make it yours by asking</h3><p>Sofie can fix anything we read wrong, add your photos, write new pages and polish the imported ones. You see every change before it goes live.</p></div>
             <div><h3>Want us to finish it?</h3><p>We build it out with you, you approve every page from one private link, and it goes live on your own domain. No setup fee, no long contract, and your words and domain stay yours. <a href="/#talk">Let’s talk</a>.</p></div>
-            <div><a className="b b-dark" href={claim}>Claim this site free</a></div>
+            {showing && <div><a className="b b-dark" href={claim}>Claim this site free</a></div>}
           </div>
         </div>
       </section>

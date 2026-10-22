@@ -61,3 +61,29 @@
   .post-body { font-size: 17px; }
   .post-cta { padding: 24px; }
 }
+
+/* Guides by subject (blog index) and the "part of a guide" box (articles). */
+.blog-topics { margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(0,0,0,.08); }
+.blog-topics h2 { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; margin: 0 0 14px; }
+.blog-topics ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.blog-topics a { display: inline-block; padding: 9px 16px; border: 1px solid rgba(0,0,0,.14); border-radius: 999px; text-decoration: none; color: inherit; font-weight: 500; }
+.blog-topics a:hover { border-color: currentColor; }
+.post-guide { margin: 48px 0 0; padding: 26px 28px; border-radius: 16px; background: #f1f5f4; border: 1px solid rgba(0,0,0,.06); }
+.post-guide .kicker { margin: 0 0 6px; font-size: 12px; letter-spacing: .14em; text-transform: uppercase; }
+.post-guide h2 { margin: 0 0 8px; font-size: 22px; }
+.post-guide h2 a { color: inherit; }
+.post-guide p:last-child { margin: 0; color: #555; }
+
+/* Visual blocks inside articles and guides (renderBody). */
+.post-body .post-table { overflow-x: auto; margin: 28px 0; border: 1px solid rgba(0,0,0,.1); border-radius: 14px; }
+.post-body table { width: 100%; border-collapse: collapse; font-size: 15.5px; line-height: 1.45; }
+.post-body th { text-align: left; background: #0f172a; color: #f1f5f9; font-weight: 600; padding: 12px 16px; white-space: nowrap; }
+.post-body td { padding: 12px 16px; border-top: 1px solid rgba(0,0,0,.08); vertical-align: top; }
+.post-body tbody tr:nth-child(even) td { background: #f7f8f7; }
+.post-body .post-check { list-style: none; padding: 18px 22px; margin: 24px 0; border-radius: 14px; background: #f1f5f4; display: grid; gap: 10px; }
+.post-body .post-check li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+.post-body .post-check li::before { content: ""; width: 18px; height: 18px; margin-top: 4px; border-radius: 5px; border: 1.5px solid #64748b; background: #fff; }
+.post-body .post-check li.done::before { background: #0f766e linear-gradient(135deg, transparent 45%, #fff 45%, #fff 58%, transparent 58%); border-color: #0f766e; }
+.post-body .post-tip { margin: 28px 0; padding: 18px 22px 18px 20px; border-radius: 14px; border-left: 4px solid #0f766e; background: #ecfdf5; }
+.post-body .post-tip p { margin: 0; }
+.post-body .post-tip-warn { border-left-color: #b45309; background: #fffbeb; }

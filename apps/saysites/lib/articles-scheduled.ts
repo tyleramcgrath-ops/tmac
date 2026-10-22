@@ -5,6 +5,7 @@
 // no competitors named. Byline "SaySites".
 
 import type { Article } from './articles'
+import { PILLAR_ARTICLES } from './articles-pillars'
 
 const LOCAL_RANKING = 'https://support.google.com/business/answer/7091'
 const REVIEW_TIPS = 'https://support.google.com/business/answer/3474122'
@@ -5095,4 +5096,6 @@ SaySites puts your business name, phone number and area into your site’s detai
     published: '2026-10-15',
     status: 'published',
   },
+  // The pillar guides, one a day after these (lib/articles-pillars).
+  ...PILLAR_ARTICLES,
 ]

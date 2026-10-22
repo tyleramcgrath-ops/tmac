@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import { INDUSTRIES } from '@/lib/industries'
+import { JsonLd, breadcrumbs, itemList } from '@/components/JsonLd'
 import '../home.css'
 
 export const metadata: Metadata = {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
 export default function IndustriesHub() {
   return (
     <MarketingShell>
+      <JsonLd data={[itemList('Websites for local businesses, by trade', '/websites-for', INDUSTRIES.map((i) => [i.title, `/websites-for/${i.slug}`])), breadcrumbs([['Home', '/'], ['Who it’s for', '/websites-for']])]} />
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">By business</p>

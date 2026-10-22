@@ -6,7 +6,7 @@ import '../../home.css'
 import '../connect.css'
 
 const TITLE = 'Build a website from your Google Business Profile'
-const DESCRIPTION = 'Search for your business, tap your Google listing, and your new website starts with your real name, address, phone number and opening hours. Change anything before it goes live.'
+const DESCRIPTION = 'Find your business, tap your Google listing, and your new website starts with your real name, address, phone number and hours. Change anything first.'
 
 // Kept out of search until the Google lookup is switched on, so the page
 // never promises something visitors can’t use yet.

@@ -9,6 +9,7 @@ import { privacyPage } from './privacy'
 import { productPage, returnsPage } from './shop-render'
 import { isLive, productSlugs } from './commerce'
 import { wordsFor } from './site-words'
+import { withSeo } from './classic'
 import { renderPage, withBasePath } from './render'
 import { pagePath, walk, type Page } from './schema'
 import { SHOWCASE_ORG } from './showcase'
@@ -23,6 +24,9 @@ export interface ServeOptions {
   // Path prefix for internal links, e.g. "/preview/rivertown-plumbing".
   basePath?: string
 }
+
+// No script of any kind runs on a kept page; forms only send to us.
+export const CLASSIC_CSP = "script-src 'none'; object-src 'none'; base-uri 'none'; form-action 'self'"
 
 export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOptions): Response {
   const { site, pages, redirects } = bundle
@@ -54,6 +58,21 @@ export function serveSitePath(bundle: SiteBundle, slug: string[], opts: ServeOpt
     return siteNotFound(bundle, opts)
   }
 
+  if (page.classic) {
+    // A page kept exactly as it was on their old site: their own markup and
+    // styles, and no scripts, which the browser enforces too.
+    let html = withSeo(page.classic.html, page.seo)
+    if (opts.basePath) html = withBasePath(html, opts.basePath)
+    if (!opts.preview) html = /<\/body\s*>/i.test(html) ? html.replace(/<\/body\s*>/i, `${visitBeacon(path)}${callTracker(path)}</body>`) : html + visitBeacon(path) + callTracker(path)
+    return new Response(html, {
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+        'cache-control': opts.preview ? 'private, no-store' : 'public, max-age=0, s-maxage=60, stale-while-revalidate=86400',
+        'content-security-policy': CLASSIC_CSP,
+        ...noindex,
+      },
+    })
+  }
   let { html } = renderPage(site, page, pages, { stock: bundle.stock })
   if (opts.basePath) html = withBasePath(html, opts.basePath)
   if (!opts.preview) html = html.replace('</body>', `${visitBeacon(path)}${callTracker(path)}</body>`).replace('<body', '<body ontouchstart=""')
@@ -193,26 +212,42 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
   }
   const field = (k: string, max: number) => String(data.get(k) ?? '').trim().slice(0, max)
   const formId = field('form', 64)
-  const homes = bundle.pages.filter((p) => p.status === 'published' && [...walk(p.body)].some((el) => el.type === 'form' && el.id === formId))
-  const form = homes.length ? [...walk(homes[0].body)].find((el) => el.type === 'form' && el.id === formId) : undefined
-  if (!form || form.type !== 'form') return new Response('Not found', { status: 404 })
-  // Back to the page the form is on, where the thank-you note shows. The
-  // Referer only picks between pages that share a form; browsers and proxies
-  // don't always send it, or send it with a different host.
-  const paths = homes.map((p) => pagePath(p))
-  const ref = backPath(req, base)
-  back = paths.includes(ref) ? ref : paths[0]
+  let msg: { name: string; email: string; phone: string; body: string }
+  let answers: ReturnType<typeof readAnswers> = []
+  if (formId === 'classic') {
+    // A form on a page kept exactly as it was (lib/classic): their own
+    // fields, read by what they're called.
+    const homes = bundle.pages.filter((p) => p.status === 'published' && p.classic)
+    if (!homes.length) return new Response('Not found', { status: 404 })
+    const ref = backPath(req, base)
+    back = homes.some((p) => pagePath(p) === ref) ? ref : pagePath(homes[0])
+    const read = classicFields(data)
+    if (read.trap) return done()
+    msg = read.msg
+    if (!msg.email && !msg.phone) return new Response('Please add your email address or phone number, then go back and try again.', { status: 422, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+    if (msg.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(msg.email)) return new Response('Please use a real email address, then go back and try again.', { status: 422, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+  } else {
+    const homes = bundle.pages.filter((p) => p.status === 'published' && [...walk(p.body)].some((el) => el.type === 'form' && el.id === formId))
+    const form = homes.length ? [...walk(homes[0].body)].find((el) => el.type === 'form' && el.id === formId) : undefined
+    if (!form || form.type !== 'form') return new Response('Not found', { status: 404 })
+    // Back to the page the form is on, where the thank-you note shows. The
+    // Referer only picks between pages that share a form; browsers and proxies
+    // don't always send it, or send it with a different host.
+    const paths = homes.map((p) => pagePath(p))
+    const ref = backPath(req, base)
+    back = paths.includes(ref) ? ref : paths[0]
 
-  // Bots fill every field; people never see this one. Pretend it worked.
-  if (field('website', 200)) return done()
+    // Bots fill every field; people never see this one. Pretend it worked.
+    if (field('website', 200)) return done()
 
-  const msg = { name: field('name', 120), email: field('email', 200), phone: field('phone', 40), body: field('message', 5000) }
-  // Intake answers for the page it was sent from, checked against its set.
-  const from = homes.find((p) => pagePath(p) === back) ?? homes[0]
-  const answers = bundle.site.language === 'es' ? [] : readAnswers(intakeSet(bundle.site.intake?.[from.id]), (k) => field(k, 300))
-  const missing = form.fields.filter((f) => f !== 'phone' && !msg[f === 'message' ? 'body' : f])
-  if (missing.length || (msg.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(msg.email))) {
-    return new Response('Please fill in every field and use a real email address, then go back and try again.', { status: 422, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+    msg = { name: field('name', 120), email: field('email', 200), phone: field('phone', 40), body: field('message', 5000) }
+    // Intake answers for the page it was sent from, checked against its set.
+    const from = homes.find((p) => pagePath(p) === back) ?? homes[0]
+    answers = bundle.site.language === 'es' ? [] : readAnswers(intakeSet(bundle.site.intake?.[from.id]), (k) => field(k, 300))
+    const missing = form.fields.filter((f) => f !== 'phone' && !msg[f === 'message' ? 'body' : f])
+    if (missing.length || (msg.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(msg.email))) {
+      return new Response('Please fill in every field and use a real email address, then go back and try again.', { status: 422, headers: { 'content-type': 'text/plain; charset=utf-8' } })
+    }
   }
 
   // Showcase sites are examples; their forms work but nothing is stored.
@@ -230,6 +265,36 @@ export async function handleFormPost(bundle: SiteBundle, req: Request, opts: Ser
     void work()
   }
   return done()
+}
+
+// A kept page's own form fields: name, email, phone and message by what
+// their fields are called; anything else is added to the message as
+// "Field: answer". Fields meant to catch bots ("honeypot") end it quietly.
+export function classicFields(data: FormData): { msg: { name: string; email: string; phone: string; body: string }; trap: boolean } {
+  const msg = { name: '', email: '', phone: '', body: '' }
+  const extra: string[] = []
+  const first: string[] = []
+  let trap = false
+  for (const [k, raw] of data.entries()) {
+    if (typeof raw !== 'string') continue
+    const v = raw.trim()
+    const key = k.toLowerCase()
+    if (/honeypot|^hp[_-]|_hp$|ak_hp|^website$|^url$|fax_only|leave.*blank/.test(key)) {
+      if (v) trap = true
+      continue
+    }
+    if (!v || key === 'form' || /nonce|token|^_|referer|captcha|recaptcha|^gform_|^is_submit|^state_|^action$|^submit|^version|^post_id|^page_id|^form_id|^g-recaptcha/.test(key)) continue
+    if (/e-?mail/.test(key) || (!msg.email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) && v.length < 200)) msg.email ||= v.slice(0, 200)
+    else if (/phone|tel|mobile|cell/.test(key)) msg.phone ||= v.slice(0, 40)
+    else if (/first.?name|fname|given/.test(key)) first.unshift(v.slice(0, 60))
+    else if (/last.?name|lname|surname|family/.test(key)) first.push(v.slice(0, 60))
+    else if (/name/.test(key) && !msg.name) msg.name = v.slice(0, 120)
+    else if (/message|comment|question|details|describe|help|case|inquiry|enquiry|note|body|text/.test(key) && !msg.body) msg.body = v.slice(0, 5000)
+    else if (v.length <= 500) extra.push(`${k.replace(/[_-]+/g, ' ').replace(/\[.*\]$/, '').trim()}: ${v}`)
+  }
+  if (!msg.name && first.length) msg.name = first.join(' ').slice(0, 120)
+  if (extra.length) msg.body = [msg.body, extra.slice(0, 20).join('\n')].filter(Boolean).join('\n\n').slice(0, 5000)
+  return { msg, trap }
 }
 
 // The page the form was sent from, from the Referer, relative to the site.
