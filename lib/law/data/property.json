@@ -1,0 +1,820 @@
+{
+"researchedOn": "2026-10-22",
+"states": {
+"AL": {
+"adversePossession": {
+"value": "10 years (with color of title, taxes listed, or inheritance)",
+"years": 10,
+"detail": "Statutory adverse possession requires 10 years plus a recorded deed or color of title, 10 years of listing the land for taxes, or title by inheritance or devise.",
+"cite": "Ala. Code § 6-5-200",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=6-5-200",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by affidavit (Ala. Code § 35-9B-2)",
+"detail": "An owner can give law enforcement a sworn affidavit that the occupant is not a tenant, holdover tenant or family member; police then serve notice and remove the unauthorized person (Act 2024-237).",
+"cite": "Ala. Code §§ 35-9B-2, 35-9B-3",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=35-9B-2",
+"verified": true
+}
+},
+"AK": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An action to recover real property must be brought within 10 years, so 10 years of adverse possession can bar the owner's claim.",
+"cite": "Alaska Stat. § 09.10.030",
+"source": "https://codes.findlaw.com/ak/title-9-code-of-civil-procedure/ak-st-sect-09-10-030/",
+"verified": true
+}
+},
+"AZ": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "The owner must sue within 10 years against someone in peaceable and adverse possession who uses the property; shorter periods apply with color of title (3 years) or a recorded deed plus taxes (5 years).",
+"cite": "Ariz. Rev. Stat. §§ 12-526, 12-523, 12-525",
+"source": "https://azleg.gov/ars/12/00526.htm",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Expedited court eviction (A.R.S. § 12-1173)",
+"detail": "A 2026 law makes it a forcible detainer when an unauthorized occupant (not a tenant, cohabitant or family member) refuses a reasonable request to leave, so owners can file without the usual 5-day wait.",
+"cite": "A.R.S. § 12-1173(A)(3)(b) (Laws 2026, ch. 69, SB 1426)",
+"source": "https://www.azleg.gov/legtext/57leg/2R/laws/0069.htm",
+"verified": true
+}
+},
+"AR": {
+"adversePossession": {
+"value": "7 years (with color of title and taxes paid)",
+"years": 7,
+"detail": "Suits to recover land must be brought within 7 years, and the claimant generally must also have paid property taxes for 7 years under color of title.",
+"cite": "Ark. Code §§ 18-61-101, 18-11-106",
+"source": "https://codes.findlaw.com/ar/title-18-property/ar-code-sect-18-61-101/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police report for criminal squatting (Ark. Code § 5-39-215)",
+"detail": "Since 2025, unlawful squatting is a crime; an owner can report it to police, and an occupant who can't produce a deed, lease, written permission or recent rent receipt can be charged.",
+"cite": "Ark. Code § 5-39-215 (Act 238 of 2025)",
+"source": "https://arkleg.state.ar.us/Home/FTPDocument?path=%2FACTS%2F2025R%2FPublic%2FACT238.pdf",
+"verified": true
+}
+},
+"CA": {
+"adversePossession": {
+"value": "5 years (and taxes paid)",
+"years": 5,
+"detail": "The claimant must occupy the land continuously for 5 years and pay all property taxes levied during that time.",
+"cite": "Cal. Civ. Proc. Code § 325",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_325",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "California has no squatter-specific removal law; owners use a forcible entry/detainer (unlawful detainer) court action.",
+"cite": "Cal. Civ. Proc. Code §§ 1159-1160",
+"source": "https://california.public.law/codes/ca_civ_proc_code_section_1160",
+"verified": true
+}
+},
+"CO": {
+"adversePossession": {
+"value": "18 years",
+"years": 18,
+"detail": "Owners must sue within 18 years; a 7-year period applies with color of title plus tax payments, and claims must be proven by clear and convincing evidence.",
+"cite": "C.R.S. §§ 38-41-101, 38-41-108",
+"source": "https://colorado.public.law/statutes/crs_38-41-101",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use Colorado's forcible entry and detainer action, which covers anyone who enters without right or title.",
+"cite": "C.R.S. § 13-40-104(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_13-40-104",
+"verified": true
+}
+},
+"CT": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "An owner must re-enter or act within 15 years after being ousted from possession.",
+"cite": "Conn. Gen. Stat. § 52-575",
+"source": "https://www.cga.ct.gov/current/pub/chap_926.htm",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use summary process (eviction) against someone who never had a right to occupy, after a notice to quit.",
+"cite": "Conn. Gen. Stat. § 47a-23(a)(2)",
+"source": "https://www.cga.ct.gov/current/pub/chap_832.htm",
+"verified": true
+}
+},
+"DE": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "No one may enter or sue to recover land more than 20 years after the right accrued.",
+"cite": "10 Del. C. § 7901",
+"source": "https://delcode.delaware.gov/title10/c079/index.html",
+"verified": true
+}
+},
+"DC": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "Actions to recover land must be brought within 15 years.",
+"cite": "D.C. Code § 12-301(1)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners file a forcible entry and detainer action in D.C. Superior Court against anyone holding property without right.",
+"cite": "D.C. Code § 16-1501",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/16-1501",
+"verified": true
+}
+},
+"FL": {
+"adversePossession": {
+"value": "7 years (with taxes paid or color of title)",
+"years": 7,
+"detail": "Florida requires 7 years of continuous possession, either under color of title or, without title, with all property taxes paid and a return filed with the property appraiser.",
+"cite": "Fla. Stat. §§ 95.16, 95.18",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0095/Sections/0095.18.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by affidavit (Fla. Stat. § 82.036)",
+"detail": "An owner can give the sheriff a sworn complaint; if the occupant is not a tenant or family member, the sheriff serves a notice to vacate immediately and restores possession.",
+"cite": "Fla. Stat. § 82.036",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0000-0099/0082/Sections/0082.036.html",
+"verified": true
+}
+},
+"GA": {
+"adversePossession": {
+"value": "20 years (7 with color of title)",
+"years": 20,
+"detail": "Possession meeting the statutory requirements for 20 years gives title by prescription; 7 years suffices under written color of title.",
+"cite": "O.C.G.A. §§ 44-5-163, 44-5-164",
+"source": "https://codes.findlaw.com/ga/title-44-property/ga-code-sect-44-5-163/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police citation, then removal (O.C.G.A. § 16-7-21.1)",
+"detail": "Unlawful squatting is a crime; the accused gets a citation and must show a lease or other authorization within 3 business days or face arrest, with a fast magistrate-court affidavit process.",
+"cite": "O.C.G.A. § 16-7-21.1 (HB 1017, 2024)",
+"source": "https://gov.georgia.gov/document/2024-signed-legislation/hb-1017/download",
+"verified": true
+}
+},
+"HI": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "Actions to recover land must be brought within 20 years, and a claimant must also show good faith to establish title by adverse possession.",
+"cite": "Haw. Rev. Stat. §§ 657-31, 669-1(b)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol13_Ch0601-0676/HRS0657/HRS_0657-0031.htm",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Hawaii has no squatter-specific removal law; owners use a summary possession or ejectment action in court.",
+"cite": "Haw. Rev. Stat. § 666-1 (and ejectment)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol13_Ch0601-0676/HRS0666/HRS_0666-0001.htm",
+"verified": true
+}
+},
+"ID": {
+"adversePossession": {
+"value": "20 years (and taxes paid)",
+"years": 20,
+"detail": "The land must be occupied and claimed continuously for 20 years with all taxes paid, proven by clear and convincing evidence.",
+"cite": "Idaho Code § 5-210",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-210/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Sheriff removal on request (Idaho Code § 6-310A)",
+"detail": "An owner can ask the county sheriff for immediate removal of people unlawfully occupying residential property if listed conditions are met (2025 law).",
+"cite": "Idaho Code § 6-310A",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title6/T6CH3/SECT6-310A",
+"verified": true
+}
+},
+"IL": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "Actions to recover land must be brought within 20 years; a 7-year period applies to possession under record title from certain sources (such as tax or court sales).",
+"cite": "735 ILCS 5/13-101, 5/13-107",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/073500050K13-101.htm",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal for criminal trespass (735 ILCS 5/9-102(e))",
+"detail": "Since Jan. 1, 2026, eviction law does not stop police from enforcing criminal trespass and removing squatters; otherwise owners file an eviction.",
+"cite": "735 ILCS 5/9-102(e) (P.A. 104-29)",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/073500050K9-102.htm",
+"verified": true
+}
+},
+"IN": {
+"adversePossession": {
+"value": "10 years (and taxes paid)",
+"years": 10,
+"detail": "Actions to recover possession of real estate must be brought within 10 years, and an adverse possessor must pay the taxes they reasonably believe are due.",
+"cite": "Ind. Code §§ 34-11-2-11, 32-21-7-1",
+"source": "https://codes.findlaw.com/in/title-34-civil-law-and-procedure/in-code-sect-34-11-2-11/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by affidavit within 48 hours (SEA 157, 2025)",
+"detail": "An owner can sign an affidavit that a squatter (someone who never had a lease, permission or legal interest) is on the property; police must remove them within 48 hours unless there is credible evidence otherwise.",
+"cite": "Ind. P.L. 191-2025 (SEA 157)",
+"source": "https://legislativeupdate.courts.in.gov/2025/05/16/protection-of-property-rights-3",
+"verified": true
+}
+},
+"IA": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "Actions to recover real property must be brought within 10 years.",
+"cite": "Iowa Code § 614.1(5)",
+"source": "https://www.legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use Iowa's summary forcible entry and detainer action against someone who entered by force, fraud or stealth.",
+"cite": "Iowa Code § 648.1",
+"source": "https://www.legis.iowa.gov/docs/code/648.1.pdf",
+"verified": true
+}
+},
+"KS": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "Open, exclusive and continuous possession for 15 years, under a knowingly adverse claim or a belief of ownership, bars recovery.",
+"cite": "K.S.A. § 60-503",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch60/060_005_0003.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by affidavit (Removal of Squatters Act)",
+"detail": "A 2026 law lets an owner submit a notarized affidavit to law enforcement to remove an unauthorized person from a dwelling unit.",
+"cite": "Kan. HB 2378 (2026), Removal of Squatters Act",
+"source": "https://kslegislature.gov/li/b2025_26/measures/documents/supp_note_hb2378_02_0000.pdf",
+"verified": true
+}
+},
+"KY": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "An action to recover real property must be brought within 15 years after the right accrued.",
+"cite": "Ky. Rev. Stat. § 413.010",
+"source": "https://codes.findlaw.com/ky/title-xxxvi-statutory-actions-and-limitations/ky-rev-st-sect-413-010/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by petition (KRS 383.290)",
+"detail": "An owner can present a petition to law enforcement to immediately remove someone who was never a tenant and has no agreement to occupy.",
+"cite": "Ky. Rev. Stat. § 383.290",
+"source": "https://apps.legislature.ky.gov/LAW/STATUTES/statute.aspx?id=56192",
+"verified": true
+}
+},
+"LA": {
+"adversePossession": {
+"value": "30 years (10 with good faith and just title)",
+"years": 30,
+"detail": "Louisiana uses acquisitive prescription: 30 years of possession without title or good faith, or 10 years in good faith under just title.",
+"cite": "La. Civ. Code arts. 3486, 3473",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=110509",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Criminal trespass after demand; court injunction",
+"detail": "A squatter who fails to leave when told by the lawful possessor commits criminal trespass, and owners can get injunctive relief (Act 652 of 2024).",
+"cite": "La. R.S. 14:63; La. C.C.P. art. 3601",
+"source": "https://legis.la.gov/legis/ViewDocument.aspx?d=1382641",
+"verified": true
+}
+},
+"ME": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "Actions to recover land must be brought within 20 years after the right accrued.",
+"cite": "Me. Rev. Stat. tit. 14, § 801",
+"source": "https://legislature.maine.gov/statutes/14/title14sec801.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use forcible entry and detainer, which can be brought against a disseisor (someone wrongfully in possession).",
+"cite": "Me. Rev. Stat. tit. 14, § 6001",
+"source": "https://legislature.maine.gov/statutes/14/title14sec6001.html",
+"verified": true
+}
+},
+"MD": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "An action to recover possession of land must be filed within 20 years.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-103",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcj&section=5-103&enactments=false",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Expedited court action (wrongful detainer)",
+"detail": "Owners file a wrongful detainer complaint in District Court; a 2025 law requires a hearing within 10 business days.",
+"cite": "Md. Code, Real Prop. § 14-132",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=grp&section=14-132&enactments=false",
+"verified": true
+}
+},
+"MA": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "An action to recover land must be brought within 20 years after the right accrued.",
+"cite": "Mass. Gen. Laws ch. 260, § 21",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section21",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use summary process against a person who made a forcible entry or unlawfully holds possession.",
+"cite": "Mass. Gen. Laws ch. 239, § 1",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleIII/Chapter239/Section1",
+"verified": true
+}
+},
+"MI": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "The general limitation period for actions to recover land is 15 years (shorter for certain tax and court-sale titles).",
+"cite": "Mich. Comp. Laws § 600.5801(4)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5801",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use summary proceedings to recover possession from someone who came in by trespass without color of title.",
+"cite": "Mich. Comp. Laws § 600.5714(1)(g)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5714",
+"verified": true
+}
+},
+"MN": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "Actions to recover real estate must be brought within 15 years; for separately assessed parcels the claimant must also have paid taxes for at least 5 consecutive years.",
+"cite": "Minn. Stat. § 541.02",
+"source": "https://www.revisor.mn.gov/statutes/cite/541.02",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners file an eviction action against a person who unlawfully or forcibly occupied the property.",
+"cite": "Minn. Stat. § 504B.301",
+"source": "https://www.revisor.mn.gov/statutes/cite/504B.301",
+"verified": true
+}
+},
+"MS": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "Ten years of actual adverse possession under a claim of ownership vests full title in the occupant.",
+"cite": "Miss. Code § 15-1-13",
+"source": "https://codes.findlaw.com/ms/title-15-limitations-of-actions-and-prevention-of-frauds/ms-code-sect-15-1-13.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police citation by affidavit, then removal (HB 1200, 2025)",
+"detail": "An owner files a sworn affidavit with police, who cite the alleged squatter within 24 hours; the occupant must leave or ask the court for a hearing within 3 days, or be removed.",
+"cite": "Miss. HB 1200 (2025), Real Property Owners Protection Act",
+"source": "https://billstatus.ls.state.ms.us/documents/2025/pdf/HB/1200-1299/HB1200SG.pdf",
+"verified": true
+}
+},
+"MO": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An owner cannot recover land unless they possessed it within 10 years before suing.",
+"cite": "Mo. Rev. Stat. § 516.010",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.010",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Expedited court petition with ex parte order (Mo. Rev. Stat. § 534.602)",
+"detail": "Owners can file a verified petition to remove unlawful occupants of a residential dwelling; courts may issue an ex parte order enforced by the sheriff.",
+"cite": "Mo. Rev. Stat. § 534.602",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=534.602",
+"verified": true
+}
+},
+"MT": {
+"adversePossession": {
+"value": "5 years (and taxes paid)",
+"years": 5,
+"detail": "Adverse possession requires 5 years of continuous occupation plus payment of all taxes levied on the land.",
+"cite": "Mont. Code Ann. §§ 70-19-401, 70-19-411",
+"source": "https://archive.legmt.gov/bills/mca/title_0700/chapter_0190/part_0040/section_0110/0700-0190-0040-0110.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal on request (Mont. Code Ann. § 70-24-113)",
+"detail": "A person who can't produce authorization to occupy may be removed immediately by law enforcement at the owner's request; squatting is also a crime (MCA 45-6-206).",
+"cite": "Mont. Code Ann. § 70-24-113",
+"source": "https://mca.legmt.gov/bills/mca/title_0700/chapter_0240/part_0010/section_0130/0700-0240-0010-0130.html",
+"verified": true
+}
+},
+"NE": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An action to recover title or possession of land must be brought within 10 years.",
+"cite": "Neb. Rev. Stat. § 25-202",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-202",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use a forcible entry and detainer action in county or district court.",
+"cite": "Neb. Rev. Stat. § 25-21,219",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-21,219",
+"verified": true
+}
+},
+"NV": {
+"adversePossession": {
+"value": "5 years (and taxes paid)",
+"years": 5,
+"detail": "The land must be occupied and claimed for 5 continuous years with all taxes paid.",
+"cite": "Nev. Rev. Stat. §§ 11.070, 11.150",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Summary court removal (NRS 40.414)",
+"detail": "After a notice to surrender, an unlawful occupant has 4 judicial days to contest; the court can order the sheriff or constable to remove them within 24 hours.",
+"cite": "Nev. Rev. Stat. § 40.414",
+"source": "https://www.leg.state.nv.us/NRS/NRS-040.html",
+"verified": true
+}
+},
+"NH": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "No action to recover real estate may be brought after 20 years.",
+"cite": "N.H. Rev. Stat. § 508:2",
+"source": "https://gc.nh.gov/rsa/html/LII/508/508-2.htm",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners bring a possessory action against an occupant holding without right after written notice to quit.",
+"cite": "N.H. Rev. Stat. § 540:12",
+"source": "https://gc.nh.gov/rsa/html/LV/540/540-12.htm",
+"verified": true
+}
+},
+"NJ": {
+"adversePossession": {
+"value": "30 years (60 for woodland)",
+"years": 30,
+"detail": "Thirty years of uninterrupted possession vests title (60 years for woodlands or uncultivated land).",
+"cite": "N.J. Stat. § 2A:14-30",
+"source": "https://codes.findlaw.com/nj/title-2a-administration-of-civil-and-criminal-justice/nj-st-sect-2a-14-30/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Entry into an occupied residence is allowed only through legal process, so owners must use a court action.",
+"cite": "N.J. Stat. § 2A:39-1",
+"source": "https://codes.findlaw.com/nj/title-2a-administration-of-civil-and-criminal-justice/nj-st-sect-2a-39-1/",
+"verified": true
+}
+},
+"NM": {
+"adversePossession": {
+"value": "10 years (with color of title, good faith and taxes paid)",
+"years": 10,
+"detail": "Title requires 10 years of continuous, good-faith adverse possession under color of title, with all taxes paid.",
+"cite": "N.M. Stat. § 37-1-22",
+"source": "https://codes.findlaw.com/nm/chapter-37-limitation-of-actions-abatement-and-revivor/nm-st-sect-37-1-22/",
+"verified": true
+}
+},
+"NY": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An adverse possessor gains title when the 10-year limit to recover real property expires, if possession was adverse, under claim of right, open, continuous, exclusive and actual.",
+"cite": "N.Y. RPAPL § 501; CPLR 212(a)",
+"source": "https://www.nysenate.gov/legislation/laws/RPA/501",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Squatters excluded from tenant protections (RPAPL § 711)",
+"detail": "Since 2024, a squatter (someone who entered without permission and stays without title or right) is not a tenant, so tenant eviction protections don't apply.",
+"cite": "N.Y. RPAPL § 711",
+"source": "https://www.nysenate.gov/legislation/laws/RPA/711",
+"verified": true
+}
+},
+"NC": {
+"adversePossession": {
+"value": "20 years (7 with color of title)",
+"years": 20,
+"detail": "Twenty years of possession under known and visible boundaries gives title; 7 years suffices under color of title.",
+"cite": "N.C. Gen. Stat. §§ 1-40, 1-38",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-40.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Expedited court removal (G.S. 14-159.51)",
+"detail": "A 2025 law creates an expedited court proceeding to remove unauthorized persons from residential property.",
+"cite": "N.C. Gen. Stat. §§ 14-159.50 to -159.52 (S.L. 2025-88)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/ByArticle/Chapter_14/Article_22D.html",
+"verified": true
+}
+},
+"ND": {
+"adversePossession": {
+"value": "20 years",
+"years": 20,
+"detail": "An owner cannot recover real property unless they possessed it within 20 years before suing.",
+"cite": "N.D. Cent. Code § 28-01-04",
+"source": "https://ndlegis.gov/cencode/t28c01.pdf",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Felony trespass; police or court eviction",
+"detail": "Unlawfully occupying a residential dwelling is a class C felony (2025), so police can act; civil removal otherwise uses eviction.",
+"cite": "N.D. Cent. Code § 12.1-22-03(2)",
+"source": "https://ndlegis.gov/cencode/t12-1c22.pdf",
+"verified": true
+}
+},
+"OH": {
+"adversePossession": {
+"value": "21 years",
+"years": 21,
+"detail": "An action to recover title to or possession of real property must be brought within 21 years.",
+"cite": "Ohio Rev. Code § 2305.04",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.04",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use forcible entry and detainer, which covers occupiers without color of title.",
+"cite": "Ohio Rev. Code § 1923.02(A)(5)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1923.02",
+"verified": true
+}
+},
+"OK": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "Actions to recover real property not otherwise covered must be brought within 15 years.",
+"cite": "12 Okla. Stat. § 93(4)",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os12.pdf",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Sheriff removal by complaint (21 Okla. Stat. § 1354)",
+"detail": "An owner can submit a verified complaint asking the sheriff to immediately remove unauthorized occupants who are not tenants or family members.",
+"cite": "21 Okla. Stat. § 1354",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os21.pdf",
+"verified": true
+}
+},
+"OR": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "Requires 10 years of actual, open, notorious, exclusive, hostile and continuous possession plus an honest, reasonable belief of ownership when possession began, proven by clear and convincing evidence.",
+"cite": "ORS 105.620",
+"source": "https://oregon.public.law/statutes/ors_105.620",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction after 24-hour notice (2025 Or. Laws ch. 356)",
+"detail": "Owners may give a squatter 24 hours' written notice and then file an eviction (FED) action.",
+"cite": "HB 3522 (2025), 2025 Or. Laws ch. 356",
+"source": "https://olis.oregonlegislature.gov/liz/2025R1/Downloads/MeasureDocument/HB3522/Enrolled",
+"verified": true
+}
+},
+"PA": {
+"adversePossession": {
+"value": "21 years",
+"years": 21,
+"detail": "Actions for possession of real property must be brought within 21 years; a 10-year period applies to small (half-acre or less) residential lots.",
+"cite": "42 Pa.C.S. §§ 5530, 5527.1",
+"source": "https://codes.findlaw.com/pa/title-42-pacsa-judiciary-and-judicial-procedure/pa-csa-sect-42-5530/",
+"verified": true
+}
+},
+"RI": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "Ten years of uninterrupted, peaceful and actual possession under a claim of right gives title.",
+"cite": "R.I. Gen. Laws § 34-7-1",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE34/34-7/34-7-1.htm",
+"verified": true
+}
+},
+"SC": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "The owner is presumed in possession unless the land was held adversely for 10 years before the action.",
+"cite": "S.C. Code § 15-67-210",
+"source": "https://www.scstatehouse.gov/code/t15c067.php",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Expedited court petition (S.C. Code § 27-37-210)",
+"detail": "Since June 30, 2026, owners can file a verified petition with the clerk or chief magistrate to eject unlawful occupants of a residential dwelling, including ex parte orders.",
+"cite": "S.C. Code §§ 27-37-200 to -250 (Act 252 of 2026)",
+"source": "https://www.scstatehouse.gov/sess126_2025-2026/bills/3387.htm",
+"verified": true
+}
+},
+"SD": {
+"adversePossession": {
+"value": "20 years (10 with color of title and taxes paid)",
+"years": 20,
+"detail": "An owner cannot recover land unless they possessed it within 20 years; 10 years of possession under color of title with taxes paid also vests title.",
+"cite": "S.D. Codified Laws §§ 15-3-1, 15-3-15",
+"source": "https://sdlegislature.gov/Statutes/15-3-1",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners use forcible entry and detainer against someone who entered by force, fraud or stealth.",
+"cite": "S.D. Codified Laws § 21-16-1",
+"source": "https://sdlegislature.gov/Statutes/21-16-1",
+"verified": true
+}
+},
+"TN": {
+"adversePossession": {
+"value": "7 years (with recorded color of title)",
+"years": 7,
+"detail": "Seven years of adverse possession under a recorded deed or other assurance of title vests title; suits to recover land are also barred after 7 years.",
+"cite": "Tenn. Code §§ 28-2-101, 28-2-103",
+"source": "https://codes.findlaw.com/tn/title-28-limitation-of-actions/tn-code-sect-28-2-101/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Sheriff removal by complaint (2024 Pub. Ch. 1009)",
+"detail": "An owner can ask the county sheriff for immediate removal of unlawful occupants of residential property if listed conditions are met (effective July 1, 2024).",
+"cite": "2024 Tenn. Pub. Acts ch. 1009 (SB 795)",
+"source": "https://wapp.capitol.tn.gov/apps/BillInfo/Default.aspx?BillNumber=HB1259&GA=113",
+"verified": true
+}
+},
+"TX": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An owner must sue within 10 years against someone in peaceable and adverse possession who cultivates, uses or enjoys the property.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.026",
+"source": "https://codes.findlaw.com/tx/civil-practice-and-remedies-code/civ-prac-rem-sect-16-026/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Sheriff/constable removal by complaint (Tex. Prop. Code ch. 24B)",
+"detail": "Since Sept. 1, 2025, an owner can file a sworn complaint asking the sheriff or constable to remove someone who unlawfully entered a dwelling and is not a tenant or family member.",
+"cite": "Tex. Prop. Code §§ 24B.001-.002 (SB 1333)",
+"source": "https://capitol.texas.gov/tlodocs/89R/billtext/pdf/SB01333F.pdf",
+"verified": true
+}
+},
+"UT": {
+"adversePossession": {
+"value": "7 years (and taxes paid)",
+"years": 7,
+"detail": "Adverse possession requires 7 years of continuous occupation and claim, with all taxes paid.",
+"cite": "Utah Code §§ 78B-2-208, 78B-2-214",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter2/78B-2-S214.html",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by verified complaint (Utah Code § 78B-6-817)",
+"detail": "An owner can present a verified complaint asking law enforcement to immediately remove a trespasser who is not a tenant or family member.",
+"cite": "Utah Code § 78B-6-817",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter6/C78B-6-S817_2025050720250507.pdf",
+"verified": true
+}
+},
+"VT": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "An action to recover land must be brought within 15 years after it accrues.",
+"cite": "12 V.S.A. § 501",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00501",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners bring an ejectment action to recover possession.",
+"cite": "12 V.S.A. § 4761",
+"source": "https://legislature.vermont.gov/statutes/section/12/169/04761",
+"verified": true
+}
+},
+"VA": {
+"adversePossession": {
+"value": "15 years",
+"years": 15,
+"detail": "No one may enter or sue to recover land more than 15 years after the right accrued.",
+"cite": "Va. Code § 8.01-236",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter4/section8.01-236/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court eviction (unlawful detainer/ejectment)",
+"detail": "Owners file an unlawful entry or detainer action in court.",
+"cite": "Va. Code § 8.01-124",
+"source": "https://law.lis.virginia.gov/vacode/title8.01/chapter3/section8.01-124/",
+"verified": true
+}
+},
+"WA": {
+"adversePossession": {
+"value": "10 years (7 with color of title and taxes paid)",
+"years": 10,
+"detail": "Actions to recover real property must be brought within 10 years; 7 years suffices with good-faith color of title and tax payments.",
+"cite": "RCW 4.16.020, 7.28.070",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.020",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Court unlawful detainer after 3-day notice (RCW 59.16.010)",
+"detail": "Someone who enters without the owner's permission or color of title and won't leave after 3 days' notice is guilty of unlawful detainer and can be removed through court.",
+"cite": "RCW 59.16.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=59.16.010",
+"verified": true
+}
+},
+"WV": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "No one may enter or sue to recover land more than 10 years after the right accrued.",
+"cite": "W. Va. Code § 55-2-1",
+"source": "https://code.wvlegislature.gov/55-2-1/",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal by complaint (W. Va. Code § 55-3C-3)",
+"detail": "An owner can submit a verified complaint asking law enforcement to immediately remove a squatter from a residential or commercial building.",
+"cite": "W. Va. Code § 55-3C-3",
+"source": "https://code.wvlegislature.gov/55-3C-3/",
+"verified": true
+}
+},
+"WY": {
+"adversePossession": {
+"value": "10 years",
+"years": 10,
+"detail": "An action to recover title or possession of land can only be brought within 10 years.",
+"cite": "Wyo. Stat. § 1-3-103",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+},
+"squatterRemoval": {
+"value": "Police removal on request (Wyo. Stat. § 1-21-1402)",
+"detail": "Since July 1, 2025, an owner can ask law enforcement to immediately remove a person unlawfully occupying a residential dwelling who is not a tenant.",
+"cite": "Wyo. Stat. § 1-21-1402",
+"source": "https://wyoleg.gov/2025/Enroll/SF0006.pdf",
+"verified": true
+}
+}
+}
+}
