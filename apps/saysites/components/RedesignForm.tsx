@@ -3,12 +3,12 @@
 import { useActionState } from 'react'
 import { createRedesign } from '@/app/redesign/actions'
 
-export function RedesignForm({ id = 'redesign-url', dark = false }: { id?: string; dark?: boolean }) {
+export function RedesignForm({ id = 'redesign-url', dark = false, defaultUrl = '' }: { id?: string; dark?: boolean; defaultUrl?: string }) {
   const [state, run, pending] = useActionState(createRedesign, {})
   return (
     <form className={dark ? 'say say-light' : 'say'} action={run}>
       <label htmlFor={id} className="visually-hidden">Your current website</label>
-      <input id={id} name="url" placeholder="yourbusiness.com" autoComplete="url" inputMode="url" maxLength={300} required />
+      <input id={id} name="url" placeholder="yourbusiness.com" autoComplete="url" inputMode="url" maxLength={300} required defaultValue={defaultUrl} />
       <button className={`b ${dark ? 'b-dark' : 'b-light'}`} type="submit" disabled={pending}>{pending ? 'Rebuilding…' : 'See it redesigned'}</button>
       {pending && <p className="redesign-wait">Reading your pages and rebuilding them. About twenty seconds.</p>}
       {state.error && (
