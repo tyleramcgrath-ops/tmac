@@ -2652,10 +2652,20 @@ describe('SaySites: the redesign’s own designs, from their real photos, result
       expect(html).toContain('Past results do not guarantee')
       expect(html).not.toMatch(/undefined|NaN|\[object/)
     }
+    // Their own questions on the home page, marked up for Google, and a
+    // picture for shared links.
+    const withFaq = showcaseHome({ ...firm, look: 'gazette', faq: [{ q: 'How long do I have to file?', a: 'Georgia gives you two years from the injury in most cases.' }] })
+    expect(withFaq).toContain('<summary>How long do I have to file?</summary>')
+    expect(withFaq).toMatch(/"@type":"FAQPage"/)
+    expect(withFaq).toMatch(/<meta property="og:title" content="Atlanta injury lawyers &lt;who&gt; fight">/)
+    expect(showcaseHome({ ...firm, look: 'noir' })).not.toMatch(/FAQPage|What people ask us/)
     const inner = showcasePage({ ...firm, look: 'gazette' }, { path: '/practice-areas/truck-accidents', kicker: 'Practice areas', title: 'Truck accidents', blocks: [{ kind: 'h2', text: 'Why it matters' }, { kind: 'p', text: '• First thing' }, { kind: 'p', text: '• Second thing' }], faq: [{ q: 'How long?', a: 'It depends.' }] })
     expect(inner).toContain('<ul><li>First thing</li><li>Second thing</li></ul>')
     expect(inner).toContain('<summary>How long?</summary>')
     expect(inner).toContain('aria-current="page"')
+    // A service page tells Google what the service is and who provides it.
+    expect(inner).toMatch(/"@type":"Service","name":"Truck accidents"/)
+    expect(inner).toMatch(/"@type":"FAQPage"/)
   })
 
   it('measures the photos it leads with, and drops ones that don’t load', async () => {
@@ -2671,6 +2681,17 @@ describe('SaySites: the redesign’s own designs, from their real photos, result
     // The "banner" is really tall, and the photos that didn't load are gone.
     expect(measured.photos.find((p) => /home-hero/.test(p.src))).toMatchObject({ width: 800, height: 1400 })
     expect(measured.photos.some((p) => /Partner-Edward/.test(p.src))).toBe(false)
+  })
+
+  it('never passes the firm’s own words off as a client’s review', () => {
+    const r = readAssets([{ url: 'https://elk.example/', html: `<html><body>
+      <div class="testimonial"><p>When you hire Elk + Elk, your problem is our number one concern. We will out-work every opponent for you.</p><strong>Cheryl Krider</strong></div>
+      <div class="testimonial"><p>¡Gran experiencia! A pesar de que yo estaba débil, ellos trabajaron siempre conmigo.</p><strong>Ana</strong></div>
+      <div class="reviews"><p>Bill was very kind to me and always called back when I called him.</p><p>They handled my claim quickly and kept me informed the whole way.</p><strong>Lulu</strong></div>
+    </body></html>` }])
+    // The firm's marketing and the Spanish review are left out; with two
+    // reviews in one box, the name can't be matched to either, so no name.
+    expect(r.reviews).toEqual([{ quote: 'Bill was very kind to me and always called back when I called him.', name: 'A client' }])
   })
 
   it('reads their slogan from their banner, never a review, an announcement or a call to action', () => {

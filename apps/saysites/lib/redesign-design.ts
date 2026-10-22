@@ -52,6 +52,10 @@ export interface ShowcaseFirm {
   // A second photo of them, for the firm section.
   portrait?: SitePhoto
   assets: SiteAssets
+  // Questions they answer on their own pages, for the home page's FAQ.
+  faq?: { q: string; a: string }[]
+  // Their profiles elsewhere (Google, Facebook, Avvo), for Google.
+  sameAs?: string[]
   // Where forms post (the site's form handler).
   formAction: string
   schemaType: string
@@ -132,8 +136,9 @@ const QUOTE = '<svg class="qm" viewBox="0 0 48 36" aria-hidden="true"><path d="M
 const tel = (phone?: string) => (phone ? `tel:+1${phone.replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '')}` : '')
 const place = (f: ShowcaseFirm) => [f.city, f.region].filter(Boolean).join(', ')
 const address = (f: ShowcaseFirm) => [f.street, [f.city, [f.region, f.postalCode].filter(Boolean).join(' ')].filter(Boolean).join(', ')].filter(Boolean).join(', ')
+// Sized (its real size when measured), so nothing shifts while it loads.
 const img = (p: SitePhoto, cls: string, eager = false, sizes = '100vw') =>
-  `<img class="${cls}" src="${attr(p.src)}" alt="${attr(p.alt)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" sizes="${sizes}">`
+  `<img class="${cls}" src="${attr(p.src)}" alt="${attr(p.alt)}" width="${p.width || 1600}" height="${p.height || Math.round((p.width || 1600) * 0.625)}" ${eager ? 'fetchpriority="high"' : 'loading="lazy"'} decoding="async" sizes="${sizes}">`
 
 // The firm's name set as a wordmark: the surname part large, any "P.A.",
 // "LLC" or "Law Firm" small beneath.
@@ -204,7 +209,7 @@ function badges(f: ShowcaseFirm, label: string): string {
   const b = f.assets.badges.slice(0, 6)
   if (b.length < 2) return ''
   return `<section class="awards" aria-label="${attr(label)}"><div class="wrap"><p class="eyebrow">${esc(label)}</p><ul>${b
-    .map((x) => `<li${/white|light|wht|rev(erse)?[-_.]/i.test(x.src) ? ' class="dk"' : ''}><img src="${attr(x.src)}" alt="${attr(x.alt)}" loading="lazy" decoding="async"></li>`)
+    .map((x) => `<li${/white|light|wht|rev(erse)?[-_.]/i.test(x.src) ? ' class="dk"' : ''}><img src="${attr(x.src)}" alt="${attr(x.alt)}" width="160" height="80" loading="lazy" decoding="async"></li>`)
     .join('')}</ul></div></section>`
 }
 
@@ -218,7 +223,7 @@ function reviewName(n: string) {
 
 export function showcaseHome(f: ShowcaseFirm): string {
   const body = f.look === 'noir' ? noirHome(f) : f.look === 'gazette' ? gazetteHome(f) : atelierHome(f)
-  return doc(f, f.headline, body, '/')
+  return doc(f, f.headline, body, '/', f.faq?.length ? [faqLd(f.faq)] : [])
 }
 
 function noirHome(f: ShowcaseFirm): string {
@@ -238,6 +243,7 @@ ${r.length >= 2 ? `<section class="results" id="results"><div class="wrap"><div 
 ${firm(f)}
 ${team(f)}
 ${v.length ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">In their words</p><h2>What clients say</h2></div><figure class="rv-lead">${QUOTE}<blockquote>${esc(cut(v[0].quote, 420))}</blockquote><figcaption>${reviewName(v[0].name)}</figcaption></figure>${v.length > 1 ? `<div class="rv-more">${v.slice(1, 4).map((x) => `<figure><blockquote>${esc(cut(x.quote, 260))}</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div>` : ''}</div></section>` : ''}
+${homeFaq(f)}
 ${talk(f)}
 </main>
 ${footer(f)}`
@@ -265,6 +271,7 @@ ${rest.length >= 2 ? `<section class="results" id="results"><div class="wrap led
 ${firm(f)}
 ${v.length > (quoteHero ? 1 : 0) ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">Letters</p><h2>From the people we’ve represented</h2></div><div class="rv-cols">${v.slice(quoteHero ? 1 : 0, (quoteHero ? 1 : 0) + 3).map((x) => `<figure><blockquote>“${esc(cut(x.quote, 300))}”</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
 ${team(f)}
+${homeFaq(f)}
 ${talk(f)}
 </main>
 ${footer(f)}`
@@ -293,6 +300,7 @@ ${r.slice(3).length >= 2 ? `<section class="results" id="more-results"><div clas
 ${firm(f)}
 ${team(f)}
 ${v.length > shownRv ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">Reviews</p><h2>Clients on working with us</h2></div><div class="rv-cards">${v.slice(shownRv, shownRv + 3).map((x) => `<figure>${QUOTE}<blockquote>${esc(cut(x.quote, 280))}</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
+${homeFaq(f)}
 ${talk(f)}
 </main>
 ${footer(f)}`
@@ -366,9 +374,23 @@ function team(f: ShowcaseFirm, all = false): string {
   const people = f.team.filter((t) => t.photo)
   if (!people.length || (!all && people.length < 2 && !f.team.length)) return ''
   return `<section class="team"><div class="wrap"><div class="sec-h"><p class="eyebrow">Attorneys</p><h2>The people on your case</h2></div>
-<ul class="people">${people.slice(0, all ? 24 : 8).map((t) => `<li>${t.href ? `<a href="${attr(t.href)}">` : '<div>'}<span class="ph"><img src="${attr(t.photo!)}" alt="${attr(t.name)}" loading="lazy" decoding="async"></span><b>${esc(t.name)}</b><small>${esc(t.role)}</small>${t.href ? '</a>' : '</div>'}</li>`).join('')}</ul>
+<ul class="people">${people.slice(0, all ? 24 : 8).map((t) => `<li>${t.href ? `<a href="${attr(t.href)}">` : '<div>'}<span class="ph"><img src="${attr(t.photo!)}" alt="${attr(t.name)}" width="400" height="500" loading="lazy" decoding="async"></span><b>${esc(t.name)}</b><small>${esc(t.role)}</small>${t.href ? '</a>' : '</div>'}</li>`).join('')}</ul>
 </div></section>`
 }
+
+// Their own questions and answers, gathered from their pages: content that
+// answers what people search for, marked up so Google can show it.
+function homeFaq(f: ShowcaseFirm): string {
+  if (!f.faq?.length) return ''
+  return `<section class="hfaq" id="questions"><div class="wrap hfaq-g"><div class="sec-h"><p class="eyebrow">Questions</p><h2>What people ask us</h2>${f.phone ? `<p class="mut">Don’t see yours? Call <a href="${tel(f.phone)}">${esc(f.phone)}</a>.</p>` : ''}</div>
+<div class="faq">${f.faq.map((q) => `<details><summary>${esc(q.q)}</summary><p>${esc(cut(q.a, 700))}</p></details>`).join('')}</div></div></section>`
+}
+
+const faqLd = (faq: { q: string; a: string }[]) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faq.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })),
+})
 
 function talk(f: ShowcaseFirm): string {
   return `<section class="talk" id="talk"><div class="wrap talk-g">
@@ -402,7 +424,7 @@ export function showcasePage(f: ShowcaseFirm, p: ShowcasePage): string {
   const aside = `<aside class="side"><div class="card"><p class="eyebrow">${f.freeConsult ? 'Free consultation' : 'Talk to us'}</p>${f.phone ? `<a class="big" href="${tel(f.phone)}">${esc(f.phone)}</a>` : ''}<p>Tell us what happened and we’ll explain your options.</p><a class="btn solid" href="#talk">Send a message${ARROW}</a></div>${others.length ? `<nav class="card links" aria-label="Practice areas"><p class="eyebrow">Practice areas</p><ul>${others.map((s) => `<li><a href="${attr(s.href)}">${esc(s.name)}${ARROW}</a></li>`).join('')}</ul></nav>` : ''}</aside>`
   const faq = p.faq?.length ? `<section class="faq"><h2>Questions we hear often</h2>${p.faq.map((q) => `<details><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`).join('')}</section>` : ''
   const people = p.people?.length
-    ? `<ul class="people wide">${p.people.map((t) => `<li>${t.href ? `<a href="${attr(t.href)}">` : '<div>'}${t.photo ? `<span class="ph"><img src="${attr(t.photo)}" alt="${attr(t.name)}" loading="lazy" decoding="async"></span>` : ''}<b>${esc(t.name)}</b><small>${esc(t.role)}</small>${t.href ? '</a>' : '</div>'}</li>`).join('')}</ul>`
+    ? `<ul class="people wide">${p.people.map((t) => `<li>${t.href ? `<a href="${attr(t.href)}">` : '<div>'}${t.photo ? `<span class="ph"><img src="${attr(t.photo)}" alt="${attr(t.name)}" width="400" height="500" loading="lazy" decoding="async"></span>` : ''}<b>${esc(t.name)}</b><small>${esc(t.role)}</small>${t.href ? '</a>' : '</div>'}</li>`).join('')}</ul>`
     : ''
   const reviews = f.assets.reviews.length && !p.contact ? `<figure class="pull">${QUOTE}<blockquote>${esc(cut(f.assets.reviews[(p.path.length + 1) % f.assets.reviews.length].quote, 300))}</blockquote><figcaption>${reviewName(f.assets.reviews[(p.path.length + 1) % f.assets.reviews.length].name)}</figcaption></figure>` : ''
   // Inner pages open dark too: their photo for the page, else their colour.
@@ -415,12 +437,17 @@ ${p.contact && people ? `<div class="wrap">${people}</div>` : ''}
 ${talk(f)}
 </main>
 ${footer(f)}`
-  return doc(f, p.title, body, p.path)
+  const service = f.services.find((x) => x.href === p.path)
+  const lds: object[] = [
+    ...(service ? [{ '@context': 'https://schema.org', '@type': 'Service', name: service.name, serviceType: service.name, ...(p.intro ? { description: cut(p.intro, 300) } : {}), provider: { '@type': f.schemaType, name: f.name, ...(f.phone ? { telephone: f.phone } : {}) }, ...(f.city ? { areaServed: [f.city, f.region].filter(Boolean).join(', ') } : {}) }] : []),
+    ...(p.faq?.length ? [faqLd(p.faq)] : []),
+  ]
+  return doc(f, p.title, body, p.path, lds, p.photo?.src)
 }
 
 // ---------------------------------------------------------------- document
 
-function doc(f: ShowcaseFirm, title: string, body: string, path: string): string {
+function doc(f: ShowcaseFirm, title: string, body: string, path: string, extra: object[] = [], image?: string): string {
   const [display, text, q] = FONTS[f.look][f.pairing % 2]
   const c = accentFor(f.look, f.brand)
   const ld = {
@@ -431,7 +458,13 @@ function doc(f: ShowcaseFirm, title: string, body: string, path: string): string
     ...(f.email ? { email: f.email } : {}),
     ...(f.city ? { address: { '@type': 'PostalAddress', ...(f.street ? { streetAddress: f.street } : {}), addressLocality: f.city, ...(f.region ? { addressRegion: f.region } : {}), ...(f.postalCode ? { postalCode: f.postalCode } : {}) } } : {}),
     ...(f.services.length ? { knowsAbout: f.services.map((s) => s.name) } : {}),
+    ...(f.city ? { areaServed: [f.city, f.region].filter(Boolean).join(', ') } : {}),
+    ...(f.hero ? { image: f.hero.src } : {}),
+    ...(f.sameAs?.length ? { sameAs: f.sameAs } : {}),
+    ...(f.hours?.length ? { openingHours: f.hours } : {}),
   }
+  const lds = [...(path === '/' ? [ld] : []), ...extra]
+  const og = image ?? f.hero?.src ?? f.portrait?.src
   return `<!doctype html>
 <html lang="en" class="${f.look}">
 <head>
@@ -439,13 +472,18 @@ function doc(f: ShowcaseFirm, title: string, body: string, path: string): string
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>${esc(title)}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${q}&display=swap">
-${path === '/' ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : ''}
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?${q}&display=swap">
+<meta property="og:type" content="website">
+<meta property="og:title" content="${attr(title)}">
+<meta property="og:site_name" content="${attr(f.name)}">
+${og ? `<meta property="og:image" content="${attr(og)}">\n<meta name="twitter:card" content="summary_large_image">` : '<meta name="twitter:card" content="summary">'}
+${lds.map((x) => `<script type="application/ld+json">${JSON.stringify(x).replace(/</g, '\\u003c')}</script>`).join('\n')}
 <style>:root{--display:${display};--text:${text};--accent:${c.accent};--accent-soft:${c.soft};--accent-deep:${c.deep};--glow:${c.glow}}${CSS.base}${CSS[f.look]}</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 ${body}
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?${q}&display=swap">
 </body>
 </html>`
 }
@@ -600,7 +638,7 @@ section{position:relative}
 .awards ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:12px;align-items:center;flex:1}
 .awards li{background:#fff;border-radius:6px;padding:10px 16px;height:78px;display:grid;place-items:center;box-shadow:0 1px 0 rgba(0,0,0,.04)}
 .awards li.dk{background:#1b1f26}
-.awards img{max-height:56px;max-width:130px;width:auto;object-fit:contain}
+.awards img{max-height:56px;max-width:130px;width:auto;height:auto;object-fit:contain}
 .disc{font-size:13px;color:var(--muted);margin-top:22px}
 html .fh h1.kick,html .hero h1.kick{font:600 13px/1.3 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);max-width:none}
 .slogan{font:var(--dw,500) clamp(54px,8.4vw,132px)/.92 var(--display);letter-spacing:-.03em;text-wrap:balance;max-width:12ch}
@@ -690,6 +728,10 @@ figcaption{font-size:14px;font-weight:600;letter-spacing:.06em;text-transform:up
 .prose li{margin:.35em 0}
 .prose li::marker{color:var(--accent)}
 .faq{margin-top:3em;border-top:1px solid var(--line)}
+.hfaq{padding-block:clamp(64px,9vw,128px)}
+.hfaq-g{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,7fr);gap:clamp(32px,6vw,96px);align-items:start}
+.hfaq .faq{margin-top:0}
+@media (max-width:900px){.hfaq-g{grid-template-columns:1fr}}
 .faq h2{margin:1.4em 0 .6em}
 .faq details{border-bottom:1px solid var(--line);padding:18px 0}
 .faq summary{cursor:pointer;font-weight:600;font-size:18px;list-style:none;display:flex;justify-content:space-between;gap:16px}

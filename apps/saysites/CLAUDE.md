@@ -223,7 +223,8 @@ than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
   photos of their people first (named portraits need a sign it's a person:
   "Esq.", a middle initial, a role in the file name, a team page), their
   published results (largest first, always with the "past results"
-  caution), English reviews with real names only, award badges (never
+  caution), English reviews with real names only (never the firm's own "we/our"
+  copy from a quote box, and no name when a box holds several reviews), award badges (never
   stock photos), never photos with words baked in. Headlines are their H1
   in sentence case, never just their name; their own slogan ("Every Client.
   Every Day.", from their banner or title, never a review, announcement or
@@ -232,7 +233,12 @@ than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
   edge, a photo of them filling the right side, or with no photo a glow of
   their colour behind their initial, with grain, a scroll cue, the header over
   it and their results in it (glass cards, a line of figures, or a strip
-  beneath). A design's facts all come
+  beneath). SEO on every designed page: their
+  own questions as a home-page FAQ (`homeFaq`) with FAQPage data, the firm's
+  LegalService data (area, hours, profiles, photo), Service + FAQPage data on
+  service pages, share tags with their photo; fonts load after the content
+  and every image is sized, so pages pass `checkSpeed` (the preview report
+  now measures the designed page, not the starter one). A design's facts all come
   from their pages; designs are tuned by screenshotting them beside the
   real site (`compare-preview.ts`), never by guessing.
   The pages underneath come from SaySites' starter designs

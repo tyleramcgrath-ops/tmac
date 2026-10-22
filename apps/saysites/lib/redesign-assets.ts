@@ -195,12 +195,19 @@ export function readAssets(pages: { html: string; url: string }[]): SiteAssets {
     if (reviews.length < 6) {
       for (const box of findAll(body, (e) => /testimonial|review|quote/i.test(`${e.attrs.class ?? ''} ${e.attrs.id ?? ''}`) && !/reviews?-(link|button|cta)|write/i.test(e.attrs.class ?? ''))) {
         const ps = findAll(box, (e) => e.tag === 'p' || e.tag === 'blockquote' || (e.tag === 'div' && !e.children.some((c) => isEl(c) && !/^(span|strong|em|b|i|br|a)$/.test(c.tag))))
-        const quote = ps.map(words).find((t) => t.length >= 60 && t.length <= 520 && !/\$\s?\d/.test(t) && !/\b(el|los|las|que|muy|una|este|con|para)\b.*\b(el|los|las|que|muy|una|este|con|para)\b/i.test(t) && (t.match(/[.!?]/g) ?? []).length >= 1 && !/\(.*(daughter|son|wife|husband|mother|father) of/i.test(t))
+        const quote = ps.map(words).find((t) => t.length >= 60 && t.length <= 520 && !/\$\s?\d/.test(t) && !/[¡¿ñ]/.test(t) && !/\b(el|los|las|que|muy|una|este|con|para|ellos|pero|fue|por|gran|mi)\b.*\b(el|los|las|que|muy|una|este|con|para|ellos|pero|fue|por|gran|mi)\b/i.test(t) && (t.match(/[.!?]/g) ?? []).length >= 1 && !/\(.*(daughter|son|wife|husband|mother|father) of/i.test(t))
         if (!quote) continue
-        const name = findAll(box, (e) => /name|author|cite|client|title/i.test(`${e.attrs.class ?? ''} ${e.tag}`) || e.tag === 'cite' || e.tag === 'strong' || e.tag === 'h4' || e.tag === 'h5')
+        // A name is only trusted when the box holds this one review.
+        const several = ps.map(words).filter((t) => t.length >= 60).length > 1
+        const name = several ? undefined : findAll(box, (e) => /name|author|cite|client|title/i.test(`${e.attrs.class ?? ''} ${e.tag}`) || e.tag === 'cite' || e.tag === 'strong' || e.tag === 'h4' || e.tag === 'h5')
           .map(words)
           .find((t) => t && t.length <= 40 && t !== quote && !/review|testimonial|read more|google|stars?$/i.test(t))
         const q = quote.replace(/^["“”']+|["“”']+$/g, '').trim()
+        // The firm speaking ("we", "our") in a quote box is their marketing,
+        // never a client's review.
+        const we = (q.match(/\b(we|our|us|we're|we’ve|we've)\b/gi) ?? []).length
+        const i = (q.match(/\b(I|my|me|I'm|I’m|I've|I’ve)\b/g) ?? []).length
+        if (we >= 2 && we > i) continue
         const who = (name ?? '').replace(/^[-–—\s]+/, '').trim()
         const real = /^[A-Z][a-zA-Z'’-]+(\s+[A-Z][a-zA-Z'’.-]*){0,2}$/.test(who) && !/\b(spanish|english|star|stars|lawyer|attorney|review|client|google|avvo|yelp)\b/i.test(who)
         if (!reviews.some((r) => r.quote === q)) reviews.push({ quote: q, name: real ? (who === who.toUpperCase() ? who.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase()) : who) : 'A client' })

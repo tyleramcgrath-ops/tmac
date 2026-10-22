@@ -102,7 +102,7 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   const menu = new Set(['/', ...menuPaths(first.body, first.url).map(path)])
   const asIs = await copyAsIs(found, fresh, get, menu)
   const homePage = fresh.pages.find((p) => p.slug === '')!
-  const rendered = renderPage(fresh.site, homePage, fresh.pages)
+  const rendered = homePage.classic ? { html: homePage.classic.html, css: '' } : renderPage(fresh.site, homePage, fresh.pages)
   const shown = asIs.ok ? asIs : fresh
   return {
     id,
@@ -563,6 +563,12 @@ function dress(site: Site, pages: Page[], x: DressInput): Page[] {
   const aboutParas = (x.aboutPage ?? x.home)?.extracted.blocks.filter((b) => b.kind === 'p' && b.text.length >= 80 && !/^(contact|call|reach out|schedule|get in touch|click)\b|\b(call|contact) (us|our firm) today\b/i.test(b.text)).map((b) => b.text) ?? []
   const lede = desc.length >= 60 && desc.length <= 260 && !/\||»|›/.test(desc) ? desc : aboutParas[0]
   const kind = practiceKind(d.type, services.map((s) => s.name))
+  const homeQuestions: { q: string; a: string }[] = []
+  for (let round = 0; round < 3 && homeQuestions.length < 6; round++)
+    for (const w of x.written) {
+      const q = w.faq.filter((f) => f.q.length >= 15 && f.q.length <= 160 && f.a.length >= 40)[round]
+      if (q && homeQuestions.length < 6 && !homeQuestions.some((h) => h.q.toLowerCase() === q.q.toLowerCase())) homeQuestions.push({ q: q.q, a: q.a.replace(/^•\s*/gm, '') })
+    }
   const h = hashOf(d.name)
   // Their menu's own pages (Case Results, Testimonials, Blog) beside ours.
   const nav: ShowcaseFirm['nav'] = site.nav.filter((n) => n.href !== '/' && !/contact/i.test(n.href)).map((n) => ({ label: n.label, href: n.href, ...(n.children?.length ? { children: n.children } : {}) }))
@@ -595,6 +601,9 @@ function dress(site: Site, pages: Page[], x: DressInput): Page[] {
     headline: sentence(x.headline && !nameLike(x.headline, d.name) ? x.headline : `${kind}${x.place?.city ? ` in ${x.place.city}` : ''}`),
     ...(lede ? { lede } : {}),
     ...(assets.slogan ? { slogan: assets.slogan } : {}),
+    // Their own questions, a few from each service page, for the home page.
+    ...(homeQuestions.length ? { faq: homeQuestions } : {}),
+    ...(d.sameAs?.length ? { sameAs: d.sameAs } : {}),
     ...(x.phone ? { phone: x.phone } : {}),
     ...(d.email ? { email: d.email } : {}),
     ...(d.street ? { street: d.street } : {}),
