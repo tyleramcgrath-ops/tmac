@@ -4,7 +4,7 @@
  */
 if (!defined('ABSPATH')) { exit; }
 
-define('PPS_VERSION', '3.0.0');
+define('PPS_VERSION', '3.1.0');
 
 function pps_setup() {
 	add_theme_support('title-tag');
@@ -137,8 +137,12 @@ function pps_hero($title, $subtitle, $args = array()) {
 		$image = get_theme_mod('pps_hero_image');
 	}
 	?>
-	<section class="hero <?php echo esc_attr($args['class']); ?>">
-		<div class="hero-media" style="background-image:url('<?php echo esc_url($image); ?>');background-position:<?php echo esc_attr($args['position']); ?>"></div>
+	<section class="hero <?php echo esc_attr($args['class']); ?>" data-ripple>
+		<div class="hero-bg" style="--hero-img:url('<?php echo esc_url($image); ?>');--hero-pos:<?php echo esc_attr($args['position']); ?>">
+			<div class="hero-media"></div>
+			<div class="hero-water" aria-hidden="true"></div>
+		</div>
+		<div class="hero-glints" aria-hidden="true"><?php echo str_repeat('<i></i>', 14); ?></div>
 		<div class="hero-content wrap">
 			<?php if ($args['eyebrow']) : ?><p class="eyebrow eyebrow-light"><?php echo esc_html($args['eyebrow']); ?></p><?php endif; ?>
 			<h1><?php echo wp_kses($title, array('br' => array(), 'em' => array())); ?></h1>
@@ -187,7 +191,7 @@ function pps_services_band($heading = 'Complete care for a healthier, happier po
 			</div>
 			<?php foreach ($cards as $card) : ?>
 				<a class="service-card" href="<?php echo esc_url(pps_url('pool-care')); ?>">
-					<span class="service-image"><?php pps_image($card[0], ''); ?></span>
+					<span class="service-image"><?php pps_image($card[0], ''); ?><span class="glare" aria-hidden="true"></span></span>
 					<h3><?php echo esc_html($card[1]); ?></h3>
 					<p><?php echo esc_html($card[2]); ?></p>
 					<span class="rule" aria-hidden="true"></span>
@@ -205,7 +209,7 @@ function pps_offer_band() {
 		<div class="offer-panel">
 			<div class="offer-price">
 				<p class="eyebrow eyebrow-light">Weekly pool service</p>
-				<p class="price-line">Starting at<br><strong>$<?php echo esc_html(pps_intro_price()); ?>/month</strong></p>
+				<p class="price-line">Starting at<br><strong>$<span data-count="<?php echo esc_attr(pps_intro_price()); ?>"><?php echo esc_html(pps_intro_price()); ?></span>/month</strong></p>
 				<p class="price-note">For your first <?php echo esc_html(pps_intro_months()); ?> months. Standard chemicals included.</p>
 			</div>
 			<div class="offer-area">
@@ -224,7 +228,8 @@ function pps_offer_band() {
 
 function pps_cta($heading = 'Ready for healthy, balanced, clear water?') {
 	?>
-	<section class="cta-band">
+	<section class="cta-band" data-ripple>
+		<div class="cta-water" aria-hidden="true"></div>
 		<div class="wrap">
 			<h2><?php echo esc_html($heading); ?></h2>
 			<?php pps_button(); ?>
@@ -252,7 +257,7 @@ function pps_inclusions() {
 			<div class="inclusion-grid">
 				<?php foreach ($items as $item) : ?>
 					<article>
-						<span class="icon-ring"><?php pps_icon($item[0]); ?></span>
+						<span class="icon-ring"><span class="fill" aria-hidden="true"></span><?php pps_icon($item[0]); ?></span>
 						<h3><?php echo esc_html($item[1]); ?></h3>
 						<p><?php echo esc_html($item[2]); ?></p>
 					</article>

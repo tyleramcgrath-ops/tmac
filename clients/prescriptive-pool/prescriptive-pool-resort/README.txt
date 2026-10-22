@@ -1,4 +1,4 @@
-PRESCRIPTIVE POOL — RESORT LIVING 3.0
+PRESCRIPTIVE POOL — RESORT LIVING 3.1
 
 A WordPress theme built to match the Resort Living mockup: desert-sunset hero,
 round logo badge, "Meet the owner" section, services band, new-customer offer
@@ -34,6 +34,16 @@ Sends with wp_mail to the quote email above. Includes nonce, honeypot,
 validation and a one-minute per-visitor limit. Many hosts need an SMTP plugin
 (e.g. WP Mail SMTP) for mail to reach the inbox — send yourself a test request
 after launch.
+
+MOTION & EFFECTS (3.1)
+- Hero: light ripples across the pool, sun glints twinkle on the water, the
+  photo slowly drifts, and the headline rises in.
+- Tap or click the water (hero or the blue band) to send out ripples.
+- Service cards tilt toward the cursor, light follows the mouse, and pool
+  light plays across the photo on hover.
+- "What's included" icons hold a little water that rises on hover.
+- Sections fade up as you scroll, gold lines draw in, and the $99 price counts up.
+- Visitors whose device is set to "reduce motion" get a still version.
 
 FILES
 assets/site.css, assets/site.js — styles and the mobile menu.
