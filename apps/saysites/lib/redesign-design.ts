@@ -95,12 +95,14 @@ function hex(h: number, s: number, l: number): string {
   return `#${[f(0), f(8), f(4)].map((v) => v.toString(16).padStart(2, '0')).join('')}`
 }
 // Their colour, calmed to suit the look: never loud, always readable.
-export function accentFor(look: Look, brand?: string): { accent: string; soft: string; deep: string } {
+export function accentFor(look: Look, brand?: string): { accent: string; soft: string; deep: string; glow: string } {
   const [h, s0] = brand && /^#[0-9a-f]{6}$/i.test(brand) ? hsl(brand) : look === 'noir' ? [38, 0.38, 0] : look === 'gazette' ? [158, 0.36, 0] : [208, 0.55, 0]
   const s = Math.min(Math.max(s0, 0.22), look === 'atelier' ? 0.62 : 0.48)
-  if (look === 'noir') return { accent: hex(h, s, 0.66), soft: hex(h, s * 0.6, 0.2), deep: hex(h, s, 0.5) }
-  if (look === 'gazette') return { accent: hex(h, s, 0.3), soft: hex(h, s * 0.5, 0.93), deep: hex(h, s, 0.22) }
-  return { accent: hex(h, s, 0.38), soft: hex(h, s * 0.55, 0.95), deep: hex(h, s, 0.24) }
+  // glow: the colour on the dark heroes, light enough to read there.
+  const glow = hex(h, Math.min(s + 0.08, 0.6), 0.7)
+  if (look === 'noir') return { accent: hex(h, s, 0.66), soft: hex(h, s * 0.6, 0.2), deep: hex(h, s, 0.5), glow }
+  if (look === 'gazette') return { accent: hex(h, s, 0.3), soft: hex(h, s * 0.5, 0.93), deep: hex(h, s, 0.22), glow }
+  return { accent: hex(h, s, 0.38), soft: hex(h, s * 0.55, 0.95), deep: hex(h, s, 0.24), glow }
 }
 
 // ---------------------------------------------------------------- type
@@ -222,19 +224,14 @@ export function showcaseHome(f: ShowcaseFirm): string {
 function noirHome(f: ShowcaseFirm): string {
   const r = f.assets.results
   const v = f.assets.reviews
-  const hero = f.hero
-  const pos = hero ? focus(hero) : 'center'
   return `${header(f, '/', true)}
 <main id="main">
-<section class="hero${hero ? (isWide(hero) ? '' : ' side') : ' plain'}">
-${hero ? `<div class="hero-img" style="--pos:${pos}">${img(hero, 'cover', true)}</div>` : ''}
-<div class="wrap hero-in">
-${titleBlock(f, `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` <span>${esc(place(f))}</span>` : ''}</p>`)}
-${f.lede ? `<p class="lede">${esc(cut(f.lede, 230))}</p>` : ''}
-<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}Call ${esc(f.phone)}</a>` : ''}<a class="btn line" href="#talk">${f.freeConsult ? 'Free consultation' : 'Tell us what happened'}${ARROW}</a></div>
-${r.length ? `<dl class="hero-facts">${r.slice(0, 3).map((x) => `<div><dt>${esc(x.amount)}</dt><dd>${esc(cut(x.label, 60))}</dd></div>`).join('')}</dl>` : ''}
-</div>
-</section>
+${fullHero(f, {
+    eyebrow: `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` <span>${esc(place(f))}</span>` : ''}</p>`,
+    primary: `Call ${esc(f.phone ?? '')}`,
+    secondary: f.freeConsult ? 'Free consultation' : 'Tell us what happened',
+    bottom: r.length ? `<dl class="hero-facts">${r.slice(0, 3).map((x) => `<div><dt>${esc(x.amount)}</dt><dd>${esc(cut(x.label, 60))}</dd></div>`).join('')}</dl>${DISCLAIMER}` : '',
+  })}
 ${badges(f, 'Recognized by')}
 ${practiceList(f, 'What we handle', 'Practice areas')}
 ${r.length >= 2 ? `<section class="results" id="results"><div class="wrap"><div class="sec-h"><p class="eyebrow">Results</p><h2>Recovered for our clients</h2></div><ul class="rgrid">${r.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ul>${DISCLAIMER}</div></section>` : ''}
@@ -249,32 +246,22 @@ ${footer(f)}`
 function gazetteHome(f: ShowcaseFirm): string {
   const r = f.assets.results
   const v = f.assets.reviews
-  const wide = f.hero && isWide(f.hero) ? f.hero : undefined
-  const pic = wide ? undefined : f.hero?.people ? f.hero : f.portrait?.people ? f.portrait : undefined
   const lead = v[0]
-  const quoteHero = !wide && !pic && lead
-  const words = `${titleBlock(f, `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` — ${esc(place(f))}` : ''}</p>`)}
-${f.lede ? `<p class="lede">${esc(cut(f.lede, 240))}</p>` : ''}
-<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}${esc(f.phone)}</a>` : ''}<a class="btn text" href="#talk">${f.freeConsult ? 'Book a free consultation' : 'Send us a message'}${ARROW}</a></div>`
-  // Their banner photo is the cover, edge to edge, with their words over
-  // it and their record right beneath.
-  const hero = wide
-    ? `<section class="hero cover"><div class="cover-img" style="--pos:${focus(wide)}">${img(wide, 'cover', true)}</div>
-<div class="wrap cover-t hero-t">${words}</div></section>
+  // The record strip quotes the first review when there are few results.
+  const quoteHero = !!lead && r.length < 3
+  const hero = `${fullHero(f, {
+    eyebrow: `<p class="eyebrow">${esc(f.kind)}${place(f) ? ` — ${esc(place(f))}` : ''}</p>`,
+    primary: esc(f.phone ?? ''),
+    secondary: f.freeConsult ? 'Book a free consultation' : 'Send us a message',
+  })}
 ${r.length || lead ? `<section class="record"><div class="wrap record-g">${r.slice(0, 3).map((x) => `<div><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 70))}</span></div>`).join('')}${lead && r.length < 3 ? `<figure><blockquote>“${esc(cut(lead.quote, 170))}”</blockquote><figcaption>${reviewName(lead.name)}</figcaption></figure>` : ''}</div>${r.length ? `<div class="wrap">${DISCLAIMER}</div>` : ''}</section>` : ''}`
-    : `<section class="hero">
-<div class="wrap hero-g${pic || quoteHero ? '' : ' solo'}">
-<div class="hero-t">${words}</div>
-${pic ? `<figure class="hero-p" style="--pos:${focus(pic)}">${img(pic, 'cover', true, '(max-width: 900px) 100vw, 45vw')}${/^[A-Z][a-z]+ [A-Z]/.test(pic.alt) && pic.alt.length < 70 ? `<figcaption>${esc(pic.alt)}</figcaption>` : ''}</figure>` : quoteHero ? `<figure class="hero-q">${QUOTE}<blockquote>${esc(cut(lead.quote, 260))}</blockquote><figcaption>${reviewName(lead.name)}</figcaption></figure>` : ''}
-</div>
-</section>`
-  const rest = wide ? r.slice(3) : r
-  return `${header(f, '/')}
+  const rest = r.slice(3)
+  return `${header(f, '/', true)}
 <main id="main">
 ${hero}
 ${badges(f, 'Recognition')}
 ${practiceList(f, 'The practice', 'Index')}
-${rest.length >= 2 ? `<section class="results" id="results"><div class="wrap ledger"><div class="sec-h"><p class="eyebrow">The record</p><h2>${wide ? 'More results for our clients' : 'Results for our clients'}</h2>${DISCLAIMER}</div><ol>${rest.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><i></i><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ol></div></section>` : ''}
+${rest.length >= 2 ? `<section class="results" id="results"><div class="wrap ledger"><div class="sec-h"><p class="eyebrow">The record</p><h2>More results for our clients</h2>${DISCLAIMER}</div><ol>${rest.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><i></i><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ol></div></section>` : ''}
 ${firm(f)}
 ${v.length > (quoteHero ? 1 : 0) ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">Letters</p><h2>From the people we’ve represented</h2></div><div class="rv-cols">${v.slice(quoteHero ? 1 : 0, (quoteHero ? 1 : 0) + 3).map((x) => `<figure><blockquote>“${esc(cut(x.quote, 300))}”</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
 ${team(f)}
@@ -286,28 +273,23 @@ ${footer(f)}`
 function atelierHome(f: ShowcaseFirm): string {
   const r = f.assets.results
   const v = f.assets.reviews
-  const wide = f.hero && isWide(f.hero) ? f.hero : undefined
-  const pic = wide ? undefined : f.hero ?? (f.portrait?.people ? f.portrait : undefined)
-  // The review already quoted in the opening isn't repeated below.
-  const shownRv = wide && r.length ? 0 : 1
-  const words = `${titleBlock(f, `<p class="pill">${esc(f.kind)}${place(f) ? ` · ${esc(place(f))}` : ''}</p>`)}
-${f.lede ? `<p class="lede">${esc(cut(f.lede, 220))}</p>` : ''}
-<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}Call ${esc(f.phone)}</a>` : ''}<a class="btn line" href="#talk">${f.freeConsult ? 'Free consultation' : 'Get in touch'}${ARROW}</a></div>`
-  const hero = wide
-    ? `<section class="hero wide"><div class="wrap"><div class="banner" style="--pos:${focus(wide)}">${img(wide, 'cover', true)}<div class="banner-t hero-t">${words}</div></div>
-${r.length || v.length ? `<div class="under" id="results">${r.slice(0, 3).map((x) => `<div class="stat"><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 60))}</span></div>`).join('')}${!r.length && v[0] ? `<figure class="mini-rv"><blockquote>“${esc(cut(v[0].quote, 160))}”</blockquote><figcaption>${reviewName(v[0].name)}</figcaption></figure>` : ''}</div>${r.length ? DISCLAIMER : ''}` : ''}</div></section>`
-    : `<section class="hero"><div class="wrap hero-a${pic ? '' : ' card'}">
-<div class="hero-t">${words}
-${v[0] ? `<figure class="mini-rv"><blockquote>“${esc(cut(v[0].quote, 120))}”</blockquote><figcaption>${reviewName(v[0].name)}</figcaption></figure>` : ''}
-</div>
-${pic ? `<div class="hero-p" style="--pos:${focus(pic)}">${img(pic, 'cover', true, '(max-width: 900px) 100vw, 50vw')}${r[0] ? `<div class="float"><strong>${esc(r[0].amount)}</strong><span>${esc(cut(r[0].label, 70))}</span></div>` : ''}</div>` : `<aside class="hero-card"><p class="eyebrow">${f.freeConsult ? 'Free consultation' : 'Talk to us'}</p>${f.phone ? `<a class="big" href="${tel(f.phone)}">${esc(f.phone)}</a>` : ''}${address(f) ? `<p>${esc(address(f))}</p>` : ''}${f.hours?.length ? `<p class="mut">${f.hours.slice(0, 3).map(esc).join('<br>')}</p>` : ''}<ul>${f.services.slice(0, 5).map((s) => `<li><a href="${attr(s.href)}">${esc(s.name)}${ARROW}</a></li>`).join('')}</ul></aside>`}
-</div></section>`
-  return `${header(f, '/')}
+  // The opening quotes their first review when there are no results.
+  const shownRv = r.length ? 0 : 1
+  const hero = fullHero(f, {
+    eyebrow: `<p class="pill">${esc(f.kind)}${place(f) ? ` · ${esc(place(f))}` : ''}</p>`,
+    primary: `Call ${esc(f.phone ?? '')}`,
+    secondary: f.freeConsult ? 'Free consultation' : 'Get in touch',
+    bottom: r.length
+      ? `<div class="glass" id="results">${r.slice(0, 3).map((x) => `<div class="stat"><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 60))}</span></div>`).join('')}</div>`
+      : v[0] ? `<figure class="glass-rv"><blockquote>“${esc(cut(v[0].quote, 150))}”</blockquote><figcaption>${reviewName(v[0].name)}</figcaption></figure>` : '',
+  })
+  return `${header(f, '/', true)}
 <main id="main">
 ${hero}
+${r.length ? `<div class="wrap">${DISCLAIMER}</div>` : ''}
 ${badges(f, 'Recognized by')}
 ${practiceCards(f)}
-${(wide ? r.slice(3) : r).length >= 2 ? `<section class="results" id="${wide ? 'more-results' : 'results'}"><div class="wrap"><div class="sec-h"><p class="eyebrow">Results</p><h2>${wide ? 'More results for our clients' : 'Real outcomes for real clients'}</h2></div><ul class="rgrid">${(wide ? r.slice(3) : r).slice(0, 4).map((x) => `<li><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 100))}</span></li>`).join('')}</ul>${DISCLAIMER}</div></section>` : ''}
+${r.slice(3).length >= 2 ? `<section class="results" id="more-results"><div class="wrap"><div class="sec-h"><p class="eyebrow">Results</p><h2>More results for our clients</h2></div><ul class="rgrid">${r.slice(3).slice(0, 4).map((x) => `<li><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 100))}</span></li>`).join('')}</ul>${DISCLAIMER}</div></section>` : ''}
 ${firm(f)}
 ${team(f)}
 ${v.length > shownRv ? `<section class="reviews" id="reviews"><div class="wrap"><div class="sec-h"><p class="eyebrow">Reviews</p><h2>Clients on working with us</h2></div><div class="rv-cards">${v.slice(shownRv, shownRv + 3).map((x) => `<figure>${QUOTE}<blockquote>${esc(cut(x.quote, 280))}</blockquote><figcaption>${reviewName(x.name)}</figcaption></figure>`).join('')}</div></div></section>` : ''}
@@ -321,6 +303,27 @@ ${footer(f)}`
 function titleBlock(f: ShowcaseFirm, eyebrow: string): string {
   if (f.slogan) return `<h1 class="kick">${esc(f.headline)}</h1>\n<p class="slogan${sizeClass(f.slogan)}">${esc(f.slogan)}</p>`
   return `${eyebrow}\n<h1 class="${sizeClass(f.headline)}">${esc(f.headline)}</h1>`
+}
+
+// Every home page opens on a full, dark hero: their banner edge to edge, or
+// a photo of them filling the right side, or (with no photo) a glow of their
+// colour behind their initial. Grain, light and a scroll cue give it depth;
+// the header sits over it.
+function fullHero(f: ShowcaseFirm, o: { eyebrow: string; primary: string; secondary: string; bottom?: string }): string {
+  const ph = f.hero ?? (f.portrait?.people ? f.portrait : undefined)
+  const mode = ph ? (isWide(ph) ? 'wide' : 'tall') : 'none'
+  return `<section class="fh fh-${mode}">
+${ph ? `<div class="fh-img" style="--pos:${focus(ph)}">${img(ph, 'cover', true, mode === 'tall' ? '(max-width: 900px) 100vw, 55vw' : '100vw')}</div>` : '<div class="fh-mesh" aria-hidden="true"></div>'}
+<div class="fh-grain" aria-hidden="true"></div>
+${mode === 'none' ? `<span class="fh-mono" aria-hidden="true">${esc(shortName(f.name).charAt(0))}</span>` : ''}
+<div class="wrap fh-in hero-t">
+${titleBlock(f, o.eyebrow)}
+${f.lede ? `<p class="lede">${esc(cut(f.lede, 230))}</p>` : ''}
+<div class="acts">${f.phone ? `<a class="btn solid" href="${tel(f.phone)}">${PHONE_ICON}${o.primary}</a>` : ''}<a class="btn line" href="#talk">${o.secondary}${ARROW}</a></div>
+${o.bottom ?? ''}
+</div>
+<a class="fh-cue" href="#practice" aria-label="See more"><i></i></a>
+</section>`
 }
 
 // A banner-shaped photo (much wider than tall) is shown full width.
@@ -402,10 +405,11 @@ export function showcasePage(f: ShowcaseFirm, p: ShowcasePage): string {
     ? `<ul class="people wide">${p.people.map((t) => `<li>${t.href ? `<a href="${attr(t.href)}">` : '<div>'}${t.photo ? `<span class="ph"><img src="${attr(t.photo)}" alt="${attr(t.name)}" loading="lazy" decoding="async"></span>` : ''}<b>${esc(t.name)}</b><small>${esc(t.role)}</small>${t.href ? '</a>' : '</div>'}</li>`).join('')}</ul>`
     : ''
   const reviews = f.assets.reviews.length && !p.contact ? `<figure class="pull">${QUOTE}<blockquote>${esc(cut(f.assets.reviews[(p.path.length + 1) % f.assets.reviews.length].quote, 300))}</blockquote><figcaption>${reviewName(f.assets.reviews[(p.path.length + 1) % f.assets.reviews.length].name)}</figcaption></figure>` : ''
-  const body = `${header(f, p.path, f.look === 'noir')}
+  // Inner pages open dark too: their photo for the page, else their colour.
+  const body = `${header(f, p.path, true)}
 <main id="main">
-<section class="phero${p.photo ? ' has-p' : ''}">${p.photo && f.look === 'noir' ? `<div class="hero-img" style="--pos:${focus(p.photo)}">${img(p.photo, 'cover', true)}</div>` : ''}
-<div class="wrap phero-g"><div><p class="crumbs"><a href="/">Home</a> <span>/</span> ${esc(p.kicker)}</p><h1>${esc(p.title)}</h1>${p.intro ? `<p class="lede">${esc(cut(p.intro, 320))}</p>` : ''}</div>${p.photo && f.look !== 'noir' ? `<figure class="phero-p" style="--pos:${focus(p.photo)}">${img(p.photo, 'cover', true, '(max-width: 900px) 100vw, 40vw')}</figure>` : ''}</div></section>
+<section class="fh fh-page ${p.photo ? 'fh-wide' : 'fh-none'}">${p.photo ? `<div class="fh-img" style="--pos:${focus(p.photo)}">${img(p.photo, 'cover', true)}</div>` : '<div class="fh-mesh" aria-hidden="true"></div>'}<div class="fh-grain" aria-hidden="true"></div>
+<div class="wrap fh-in"><p class="crumbs"><a href="/">Home</a> <span>/</span> ${esc(p.kicker)}</p><h1 class="${sizeClass(p.title)}">${esc(p.title)}</h1>${p.intro ? `<p class="lede">${esc(cut(p.intro, 320))}</p>` : ''}</div></section>
 ${p.contact ? '' : `<div class="wrap art-g"><article class="prose">${blocks.join('\n')}${people}${faq}${reviews}</article>${aside}</div>`}
 ${p.contact && people ? `<div class="wrap">${people}</div>` : ''}
 ${talk(f)}
@@ -437,7 +441,7 @@ function doc(f: ShowcaseFirm, title: string, body: string, path: string): string
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${q}&display=swap">
 ${path === '/' ? `<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>` : ''}
-<style>:root{--display:${display};--text:${text};--accent:${c.accent};--accent-soft:${c.soft};--accent-deep:${c.deep}}${CSS.base}${CSS[f.look]}</style>
+<style>:root{--display:${display};--text:${text};--accent:${c.accent};--accent-soft:${c.soft};--accent-deep:${c.deep};--glow:${c.glow}}${CSS.base}${CSS[f.look]}</style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -508,6 +512,80 @@ a:hover>.ar,button:hover>.ar,a:hover .ar{transform:translateX(4px)}
 @media (max-width:1360px){.hd.many .nav{display:none}.hd.many .mnav{display:block}}
 .brand{flex:none}
 @media (max-width:560px){.hcall span{display:none}.hcall{width:44px;height:44px;justify-content:center;border:1px solid var(--line-strong);border-radius:50%}.util span{display:none}.bar{gap:10px;min-height:70px}}
+
+/* the full hero */
+.fh{position:relative;isolation:isolate;min-height:clamp(640px,94vh,940px);display:flex;align-items:flex-end;color:#fff;background:#0b0e13;overflow:hidden}
+.fh-img{position:absolute;inset:0;z-index:-3}
+.fh-img img{width:100%;height:100%;object-fit:cover;object-position:var(--pos)}
+.fh-wide .fh-img::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,11,15,.9) 0%,rgba(9,11,15,.66) 34%,rgba(9,11,15,.12) 64%,rgba(9,11,15,0) 80%),linear-gradient(0deg,rgba(9,11,15,.92) 0%,rgba(9,11,15,0) 46%),linear-gradient(180deg,rgba(9,11,15,.55) 0%,rgba(9,11,15,0) 24%)}
+.fh-tall{background:radial-gradient(70% 90% at 78% 30%,color-mix(in srgb,var(--glow) 26%,transparent),transparent 70%),radial-gradient(60% 70% at 0% 100%,color-mix(in srgb,var(--accent-deep) 45%,transparent),transparent 70%),#0b0e13}
+.fh-tall .fh-img{left:auto;width:min(54%,820px);-webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 32%);mask-image:linear-gradient(90deg,transparent 0%,#000 32%)}
+.fh-tall .fh-img img{object-position:50% 18%}
+.fh-tall .fh-img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0b0e13 0%,rgba(11,14,19,0) 40%),linear-gradient(180deg,rgba(11,14,19,.6) 0%,rgba(11,14,19,0) 25%)}
+.fh-tall .fh-in{padding-right:min(46%,620px)}
+.fh-mesh{position:absolute;inset:0;z-index:-3;background:radial-gradient(55% 70% at 82% 18%,color-mix(in srgb,var(--glow) 42%,transparent),transparent 70%),radial-gradient(50% 60% at 8% 96%,color-mix(in srgb,var(--accent-deep) 70%,transparent),transparent 72%),linear-gradient(160deg,#10141b,#07090c)}
+.fh-mesh::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 120px);-webkit-mask-image:linear-gradient(180deg,#000,transparent 85%);mask-image:linear-gradient(180deg,#000,transparent 85%)}
+.fh-grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.14;mix-blend-mode:overlay;background-image:url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E\")}
+.fh-mono{position:absolute;z-index:-2;right:-2vw;bottom:-.18em;font:400 clamp(320px,46vw,720px)/.8 var(--display);color:transparent;-webkit-text-stroke:1.5px color-mix(in srgb,var(--glow) 40%,transparent);opacity:.7;pointer-events:none;user-select:none}
+.fh-in{position:relative;display:grid;gap:24px;justify-items:start;padding-block:clamp(170px,22vh,230px) clamp(56px,8vh,96px)}
+.fh h1:not(.kick){font-size:clamp(46px,6.6vw,100px);line-height:.96;max-width:13ch;color:#fff}
+.fh h1.mid{font-size:clamp(42px,5.6vw,82px);max-width:15ch}
+.fh h1.long{font-size:clamp(36px,4.6vw,66px);max-width:18ch}
+.fh .slogan{color:#fff}
+.fh .eyebrow,html .fh h1.kick{color:var(--glow);display:flex;align-items:center;gap:14px}
+.fh .eyebrow::before,html .fh h1.kick::before{content:"";width:42px;height:1px;background:currentColor;opacity:.8}
+.fh .eyebrow span{color:rgba(255,255,255,.7)}
+.fh .lede{font-size:clamp(18px,1.6vw,21px);line-height:1.6;color:rgba(255,255,255,.84);max-width:580px;text-shadow:0 1px 24px rgba(0,0,0,.45)}
+.fh .btn.solid{background:#fff;color:#0b0e13}
+.fh .btn.solid:hover{background:var(--glow);color:#0b0e13}
+html .fh .btn.line{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.4);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+html .fh .btn.line:hover{border-color:#fff}
+html .fh .btn.solid{background:#fff;color:#0b0e13}
+html .fh .btn.solid:hover{background:var(--glow)}
+.fh .disc{color:rgba(255,255,255,.6);margin-top:0}
+.fh .hero-facts{display:grid;grid-template-columns:repeat(3,minmax(0,230px));margin:16px 0 0;border-top:1px solid rgba(255,255,255,.18)}
+.fh .hero-facts div{padding:20px 22px 0 0}
+.fh .hero-facts div+div{padding-left:22px;border-left:1px solid rgba(255,255,255,.18)}
+.fh .hero-facts dt{font:400 clamp(30px,3.2vw,44px)/1 var(--display);color:var(--glow)}
+.fh .hero-facts dd{margin:8px 0 0;font-size:13.5px;color:rgba(255,255,255,.7);line-height:1.45}
+.fh .glass{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:min(100%,860px);margin-top:18px}
+html .fh .stat,html .fh .glass-rv{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);border-radius:18px;padding:20px 22px;display:grid;gap:6px}
+html .fh .stat strong{font:800 clamp(28px,2.8vw,38px)/1 var(--display);letter-spacing:-.03em;color:#fff}
+html .fh .stat span{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.4}
+.fh .glass-rv{max-width:560px;margin-top:10px}
+.fh .glass-rv blockquote{font:italic 400 19px/1.5 var(--quote,var(--display))}
+.fh .glass-rv figcaption{color:rgba(255,255,255,.6)}
+.fh-page{min-height:clamp(420px,56vh,560px)}
+.fh-page .fh-in{padding-bottom:clamp(44px,6vh,72px)}
+.fh-page h1:not(.kick){font-size:clamp(40px,5.2vw,76px);max-width:18ch}
+.fh .crumbs{color:rgba(255,255,255,.65)}
+.fh-cue{position:absolute;right:clamp(18px,4vw,40px);bottom:clamp(28px,5vh,52px);width:28px;height:46px;border:1px solid rgba(255,255,255,.4);border-radius:14px}
+.fh-cue i{position:absolute;left:50%;top:9px;width:3px;height:8px;margin-left:-1.5px;border-radius:2px;background:#fff}
+/* the header over a hero */
+.hd.over{position:absolute;left:0;right:0;top:0;background:linear-gradient(180deg,rgba(9,11,15,.7),rgba(9,11,15,0));color:#fff;border:0;-webkit-backdrop-filter:none;backdrop-filter:none}
+.hd.over .util{color:rgba(255,255,255,.7);border-color:rgba(255,255,255,.12)}
+.hd.over .wm small,.hd.over .hcall small{color:rgba(255,255,255,.65)}
+.hd.over .hcall svg{color:var(--glow)}
+.hd.over .nav>ul>li>a[aria-current]{color:var(--glow)}
+.hd.over .nav li ul,.hd.over .mnav nav{color:var(--ink)}
+@media (max-width:900px){
+.fh{min-height:0}
+.fh-tall .fh-img{position:relative;inset:auto;width:100%;height:auto;aspect-ratio:4/5;max-height:62vh;-webkit-mask-image:linear-gradient(180deg,#000 60%,transparent);mask-image:linear-gradient(180deg,#000 60%,transparent)}
+.fh-tall{flex-direction:column;align-items:stretch}
+.fh-tall .fh-in{padding-right:clamp(18px,4vw,40px);padding-top:0;margin-top:-80px}
+.fh-wide{padding-top:0}
+.fh-wide .fh-img::after{background:linear-gradient(0deg,rgba(9,11,15,.95) 0%,rgba(9,11,15,.7) 45%,rgba(9,11,15,.25) 100%)}
+.fh .glass{grid-template-columns:1fr}
+.fh .hero-facts{grid-template-columns:1fr}
+.fh .hero-facts div+div{padding-left:0;border-left:0}
+.fh-cue{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+.fh-in{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+.fh-img img{animation:settle 1.8s cubic-bezier(.2,.7,.2,1) both}
+.fh-cue i{animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(16px)}}
+}
 /* sections */
 section{position:relative}
 .sec-h{display:grid;gap:12px;margin-bottom:clamp(28px,4vw,52px);max-width:720px}
@@ -524,7 +602,7 @@ section{position:relative}
 .awards li.dk{background:#1b1f26}
 .awards img{max-height:56px;max-width:130px;width:auto;object-fit:contain}
 .disc{font-size:13px;color:var(--muted);margin-top:22px}
-html .hero h1.kick{font:600 13px/1.3 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);max-width:none}
+html .fh h1.kick,html .hero h1.kick{font:600 13px/1.3 var(--text);letter-spacing:.16em;text-transform:uppercase;color:var(--accent);max-width:none}
 .slogan{font:var(--dw,500) clamp(54px,8.4vw,132px)/.92 var(--display);letter-spacing:-.03em;text-wrap:balance;max-width:12ch}
 .slogan.mid{font-size:clamp(48px,7vw,108px)}
 .slogan.long{font-size:clamp(42px,5.6vw,86px);max-width:15ch}
@@ -713,6 +791,7 @@ body{font-size:16.5px}
   gazette: `
 .gazette{--bg:#f4f4f1;--ink:#15181d;--muted:#5b5f66;--line:#d8d9d3;--line-strong:#a9aba5;--hover:#eaebe6;--form-bg:#fbfbf9;--field:#fff;--ft-bg:#15181d;--ft-ink:#d9dad6;--quote:"Newsreader",Georgia,serif;--r-btn:0}
 .gazette .hd{border-bottom:3px double var(--ink)}
+.gazette .hd.over{border-bottom:0}
 .gazette .bar{min-height:96px}
 .gazette .wm b{font-size:clamp(23px,2.5vw,31px)}
 .gazette .hero{padding-block:clamp(48px,7vw,104px) clamp(56px,8vw,112px)}
@@ -784,9 +863,16 @@ html .gazette .hero.cover .eyebrow,html .gazette .hero.cover h1.kick{color:rgba(
 `,
   atelier: `
 .atelier{--bg:#ffffff;--ink:#0e1421;--muted:#566070;--line:#e4e7ec;--line-strong:#c4c9d2;--hover:#f3f5f8;--form-bg:#fff;--field:#f6f7f9;--ft-bg:#0b101b;--ft-ink:#cfd5df;--dw:700;--dls:-.035em;--r-btn:999px;--r-card:22px;--r-img:20px;--r-field:12px;--quote:"Newsreader",Georgia,serif}
-.atelier .hd{position:sticky;top:0;background:rgba(255,255,255,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
+.atelier .hd:not(.over){position:sticky;top:0;background:rgba(255,255,255,.88);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid var(--line)}
 .atelier .util{display:none}
 .atelier .hcall{background:var(--ink);color:#fff;padding:10px 20px 10px 14px;border-radius:999px}
+.atelier .hd.over .hcall{background:#fff;color:var(--ink)}
+.atelier .hd.over .hcall svg{color:var(--accent)}
+.atelier .hd.over .hcall small{color:var(--muted)}
+.atelier .fh .pill{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.2);color:#fff;-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.atelier .fh .pill::before{background:var(--glow)}
+.atelier .fh h1:not(.kick){font-weight:800;letter-spacing:-.04em}
+.atelier .fh{border-radius:0 0 36px 36px}
 .atelier .hcall svg{color:#fff}
 .atelier .hcall small{color:rgba(255,255,255,.65)}
 .atelier .wm b{font-weight:800}

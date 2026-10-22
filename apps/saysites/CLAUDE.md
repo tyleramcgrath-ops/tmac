@@ -227,9 +227,12 @@ than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
   stock photos), never photos with words baked in. Headlines are their H1
   in sentence case, never just their name; their own slogan ("Every Client.
   Every Day.", from their banner or title, never a review, announcement or
-  call to action) is set large with the H1 small above it. The editorial
-  look turns a banner photo into a full-bleed cover with their results
-  right beneath. A design's facts all come
+  call to action) is set large with the H1 small above it. Every page opens on a full, dark hero
+  (`fullHero`; the owner found light heroes too plain): their banner edge to
+  edge, a photo of them filling the right side, or with no photo a glow of
+  their colour behind their initial, with grain, a scroll cue, the header over
+  it and their results in it (glass cards, a line of figures, or a strip
+  beneath). A design's facts all come
   from their pages; designs are tuned by screenshotting them beside the
   real site (`compare-preview.ts`), never by guessing.
   The pages underneath come from SaySites' starter designs
