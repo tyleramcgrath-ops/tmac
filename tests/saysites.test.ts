@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   PageSchema,
   SiteSchema,
@@ -2063,11 +2063,18 @@ describe('SaySites: events', async () => {
     expect(ld[1].startDate).toBe('2026-10-20T18:00')
     const pages = samplePages
     const home = pages.find((p) => p.slug === '')!
-    const html = renderPage(site, home, pages).html
-    expect(html).toContain('Tasting night')
-    expect(html).toContain('"@type":"Event"')
-    const about = pages.find((p) => p.slug !== '')!
-    expect(renderPage(site, about, pages).html).not.toContain('Tasting night')
+    // Rendering uses today's date; pin it to the test's, so the events stay upcoming.
+    vi.useFakeTimers({ toFake: ['Date'] })
+    vi.setSystemTime(now)
+    try {
+      const html = renderPage(site, home, pages).html
+      expect(html).toContain('Tasting night')
+      expect(html).toContain('"@type":"Event"')
+      const about = pages.find((p) => p.slug !== '')!
+      expect(renderPage(site, about, pages).html).not.toContain('Tasting night')
+    } finally {
+      vi.useRealTimers()
+    }
   })
 
   it('takes a practice off a law firm name only when the rest is a firm name', () => {

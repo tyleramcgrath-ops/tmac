@@ -78,7 +78,7 @@ export async function handleCartPost(bundle: SiteBundle, req: Request, store: St
   const v = field(form, 'v', 64) || undefined
   const q = Math.max(0, Math.min(99, Math.floor(Number(field(form, 'q', 3)) || 0)))
   if (a === 'add') {
-    const product = settings.products.find((x) => x.id === p && isLive(x))
+    const product = settings.products.find((x) => x.id === p && isLive(x) && !x.amazon)
     if (!product) return redirect('/cart', opts)
     if (hasVariants(product) && !product.variants!.some((x) => x.id === v)) return redirect(productPath(productSlugs(settings.products).get(product.id)!), opts)
     cart = addToCart(cart, { p, ...(hasVariants(product) ? { v } : {}), q: Math.max(1, q) })

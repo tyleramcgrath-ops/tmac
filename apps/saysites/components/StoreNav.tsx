@@ -35,11 +35,15 @@ const NOTES: Record<string, string> = {
   open: 'Your shop is taking orders.',
   paused: 'Checkout is paused. Your products still show, with a note to get in touch.',
   connected: 'Stripe is connected. Customers can pay you now.',
+  amazon: 'Amazon is connected. Paste Amazon links on the Products page to add them.',
+  'amazon-off': 'Amazon is disconnected. Your Amazon picks stay on your site until you remove them, but their prices stop showing after a day.',
 }
 
 // The note an action leaves after it redirects back.
 export function Flash({ m, e }: { m?: string; e?: string }) {
   if (e) return <p className="notice bad" role="alert">{e.slice(0, 300)}</p>
   if (m && NOTES[m]) return <p className="notice good" role="status">{NOTES[m]}</p>
+  // What an Amazon import did, in its own words (counts and any skipped links).
+  if (m?.startsWith('amazon:')) return <p className="notice good" role="status">{m.slice(7, 300)}</p>
   return null
 }

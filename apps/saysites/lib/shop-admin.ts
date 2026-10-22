@@ -22,6 +22,14 @@ export const emptyShop = (s?: ShopSettings): ShopSettings => s ?? { currency: 'U
 // Applies a change to the shop on the live site and on Sofie's draft (if
 // any), so the two never drift apart.
 export async function saveShop(store: Store, site: Site, fn: (s: ShopSettings) => ShopSettings): Promise<Site> {
+  const next = await applyShop(store, site, fn)
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return next
+}
+
+// saveShop without refreshing the dashboard, for background jobs (the
+// Amazon price refresh) that run outside a request.
+export async function applyShop(store: Store, site: Site, fn: (s: ShopSettings) => ShopSettings): Promise<Site> {
   const next = SiteSchema.parse(JSON.parse(JSON.stringify({ ...site, store: fn(emptyShop(site.store)), updatedAt: new Date().toISOString() })))
   await store.updateSite(next)
   const state = await store.sofieState(site.id)
@@ -33,7 +41,6 @@ export async function saveShop(store: Store, site: Site, fn: (s: ShopSettings) =
       // Leave a draft that can't take the change as it is.
     }
   }
-  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return next
 }
 
@@ -71,6 +78,20 @@ export interface ProductInput {
 export function readProductForm(form: FormData, existing: Product | undefined, id: string, photos: readonly PickPhoto[], taken: ReadonlySet<string>): ProductInput | { error: string } {
   const name = str(form, 'name', 120)
   if (!name) return { error: 'Give the product a name.' }
+  // An Amazon pick: the owner's words, section, status and address; the
+  // price and photos stay Amazon's (lib/amazon).
+  if (existing?.amazon) {
+    const wantedSlug = slugify(str(form, 'slug', 80) || name)
+    if (taken.has(wantedSlug)) return { error: `Another product already uses the address /shop/${wantedSlug}. Change this one’s address.` }
+    const desc = str(form, 'description', 600)
+    const more = String(form.get('details') ?? '').trim().slice(0, 5000)
+    const cat = str(form, 'category', 40)
+    const st = (['active', 'draft', 'unlisted'] as const).find((s) => s === str(form, 'status', 10)) ?? 'active'
+    const { description: _d, details: _x, category: _c, status: _s, ...rest } = existing
+    const ok = ProductSchema.safeParse({ ...rest, name, slug: wantedSlug, ...(desc ? { description: desc } : {}), ...(more ? { details: more } : {}), ...(cat ? { category: cat } : {}), ...(st !== 'active' ? { status: st } : {}) })
+    if (!ok.success) return { error: 'Some of those details don’t fit. Check them and try again.' }
+    return { product: ok.data, stock: {} }
+  }
   const price = money(form, 'price')
   if (price === undefined || price === null) return { error: 'Enter a price like 24 or 24.50.' }
   const compareAt = money(form, 'compareAt')
