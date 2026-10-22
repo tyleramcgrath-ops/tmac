@@ -8,6 +8,7 @@
 import type { AnalyticsRaw } from './analytics'
 import type { DirectoryRaw } from './directory'
 import type { Article } from './articles'
+import type { AmazonKeys } from './amazon'
 import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
@@ -146,6 +147,10 @@ export interface Store {
   saveCrmState(siteId: string, state: unknown): Promise<void>
   // Every site that has a leads pipeline, for the follow-up scheduler.
   crmSites(): Promise<{ site: Site; state: unknown }[]>
+  // The shop's Amazon Creators API credentials (lib/amazon), kept out of the
+  // site JSON. null clears them.
+  amazonKeys(siteId: string): Promise<AmazonKeys | null>
+  saveAmazonKeys(siteId: string, keys: AmazonKeys | null): Promise<void>
   // Every site, for the monthly results email.
   allSites(): Promise<Site[]>
   siteById(siteId: string): Promise<Site | null>
@@ -361,6 +366,11 @@ CREATE TABLE IF NOT EXISTS ss_seo (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_crm (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_amazon (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -911,6 +921,13 @@ class PgStore implements Store {
   async saveCrmState(siteId: string, state: unknown) {
     await this.q('INSERT INTO ss_crm (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(state)])
   }
+  async amazonKeys(siteId: string) {
+    return ((await this.q<{ data: AmazonKeys }>('SELECT data FROM ss_amazon WHERE site_id = $1', [siteId]))[0]?.data ?? null) as AmazonKeys | null
+  }
+  async saveAmazonKeys(siteId: string, keys: AmazonKeys | null) {
+    if (!keys) await this.q('DELETE FROM ss_amazon WHERE site_id = $1', [siteId])
+    else await this.q('INSERT INTO ss_amazon (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(keys)])
+  }
   async allSites() {
     return (await this.q<{ data: Site }>('SELECT data FROM ss_sites ORDER BY created_at')).map((r) => SiteSchema.parse(r.data))
   }
@@ -1432,6 +1449,14 @@ export class MemoryStore implements Store {
   }
   async saveCrmState(siteId: string, state: unknown) {
     this.crm.set(siteId, JSON.parse(JSON.stringify(state)))
+  }
+  private amazon = new Map<string, AmazonKeys>()
+  async amazonKeys(siteId: string) {
+    return this.amazon.get(siteId) ?? null
+  }
+  async saveAmazonKeys(siteId: string, keys: AmazonKeys | null) {
+    if (keys) this.amazon.set(siteId, { ...keys })
+    else this.amazon.delete(siteId)
   }
   async allSites() {
     return [...this.sites.values()].map((s) => s.site)

@@ -336,6 +336,34 @@ notes and the comparison: `marketing/store-research.md` at the repo root.
   webhook to https://saysites.com/api/stripe/shop for checkout.session.*
   events with its secret in STRIPE_CONNECT_WEBHOOK_SECRET.
 
+### Amazon picks (October 22, 2026, the owner's request)
+
+Products from Amazon in a SaySites shop (`lib/amazon.ts`, `lib/amazon-sync.ts`).
+The owner pastes Amazon links (Store, Products, "Add from Amazon") or tells
+Sofie (`add_amazon_products`); each becomes a product (`product.amazon`:
+ASIN, marketplace, checkedAt) with a **Buy on Amazon** button carrying the
+owner's own Associates tag, so they earn the commission.
+- **Data only from Amazon's Creators API** (PA-API 5 was shut down in 2026):
+  OAuth client credentials per region (NA 3.1 `api.amazon.com`, EU 3.2
+  `api.amazon.co.uk`, FE 3.3 `api.amazon.co.jp`, scope `creatorsapi::default`),
+  then `POST https://creatorsapi.amazon/catalog/v1/getItems` (10 ASINs per call,
+  `x-marketplace` header). Never scrape Amazon pages. Short links are followed
+  one hop (the redirect only).
+- **Credentials** (Credential ID and Secret) live in `ss_amazon`
+  (`store.amazonKeys`), never in the site JSON Sofie and the renderer read. The
+  tag and marketplace are public, on `site.store.amazon`.
+- **Amazon's rules:** a price shows only while under 24 hours old (else "See
+  price on Amazon"); the scheduler refreshes picks every ~day
+  (`refreshAllAmazon`, every 6 hours, items older than 20 hours); the
+  disclosure "As an Amazon Associate, we earn from qualifying purchases" shows
+  wherever picks do, and on /privacy; links are `rel="sponsored nofollow"`.
+- **Never sold here:** picks can't go in the cart or checkout (`priceCart`,
+  `handleCartPost`), have no stock, delivery or returns lines, and get no
+  Product/Offer structured data (Amazon is the seller, not the business). The
+  owner can change a pick's name, words, section, status and address; price
+  and photos stay Amazon's (the product form and Sofie both enforce it).
+- On the Store plan, like selling.
+
 ## Blog (October 2026)
 
 saysites.com/blog (`lib/articles.ts`, `app/blog`): guides and news on

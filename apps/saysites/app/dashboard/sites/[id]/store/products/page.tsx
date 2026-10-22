@@ -7,7 +7,8 @@ import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { liveUrl, previewPath } from '@/lib/urls'
 import { addShopPage } from '../../manage-actions'
-import { setStockCount } from '../actions'
+import { priceFresh } from '@/lib/amazon'
+import { addFromAmazon, setStockCount } from '../actions'
 
 const STATUS: Record<string, { label: string; tone: string }> = { active: { label: 'Active', tone: 'ok' }, draft: { label: 'Draft', tone: '' }, unlisted: { label: 'Unlisted', tone: '' } }
 
@@ -27,6 +28,7 @@ export default async function ProductsPage({ params, searchParams }: { params: P
   const q = (sp.q ?? '').trim().toLowerCase()
   const list = products.filter((p) => (!q || `${p.name} ${p.sku ?? ''} ${p.category ?? ''}`.toLowerCase().includes(q)) && (!sp.c || p.category === sp.c))
   const sell = canSell(access)
+  const amazonOn = !!site.store?.amazon && !!(await store.amazonKeys(site.id))
 
   return (
     <section className="stack store">
@@ -56,6 +58,22 @@ export default async function ProductsPage({ params, searchParams }: { params: P
         </div>
       )}
       {shown && <p className="notice good">Your shop is live. <a href={`${previewPath(site)}/shop`} target="_blank" rel="noopener">See it ↗</a></p>}
+
+
+      {sell && (
+        <details className="card stack amazon-add" open={products.length === 0 || !!sp.e?.includes('Amazon')}>
+          <summary><strong>Add from Amazon</strong> <span className="muted small">Paste Amazon links; shoppers buy on Amazon and you earn the commission</span></summary>
+          {amazonOn ? (
+            <form action={addFromAmazon.bind(null, site.id)} className="stack">
+              <label className="field"><span>Amazon product links, one per line (up to 30)</span><textarea className="input" name="links" rows={3} required placeholder={'https://www.amazon.com/dp/B0EXAMPLE1\nhttps://amzn.to/xxxxxxx'} /></label>
+              <p className="muted small" style={{ margin: 0 }}>The name, photos, features and price come from Amazon and update every day. You can change the name and description after. Or tell Sofie: “Add this from Amazon: [link]”.</p>
+              <button className="btn btn-primary btn-sm" type="submit">Add to my shop</button>
+            </form>
+          ) : (
+            <p style={{ margin: 0 }}>First connect your Amazon Associates account (about 5 minutes). <a href={`${base}/settings#amazon`}>Connect Amazon</a></p>
+          )}
+        </details>
+      )}
 
       {products.length > 0 && (
         <form method="get" className="order-filters">
@@ -92,10 +110,12 @@ export default async function ProductsPage({ params, searchParams }: { params: P
                         <span><strong>{p.name}</strong>{hasVariants(p) && <span className="muted small"> · {p.variants!.length} options</span>}</span>
                       </a>
                     </td>
-                    <td><span className={`pill ${st.tone}`}>{p.soldOut ? 'Sold out' : st.label}</span></td>
-                    <td>{min === max ? formatPrice(min, cur) : `${formatPrice(min, cur)} to ${formatPrice(max, cur)}`}</td>
+                    <td><span className={`pill ${st.tone}`}>{p.soldOut ? 'Sold out' : st.label}</span>{p.amazon && <span className="pill"> Amazon</span>}</td>
+                    <td>{p.amazon ? (priceFresh(p) ? formatPrice(p.price, cur) : <span className="muted small">Updating</span>) : min === max ? formatPrice(min, cur) : `${formatPrice(min, cur)} to ${formatPrice(max, cur)}`}</td>
                     <td>
-                      {!p.track ? (
+                      {p.amazon ? (
+                        <span className="muted small">Sold by Amazon</span>
+                      ) : !p.track ? (
                         <span className="muted small">Not counted</span>
                       ) : hasVariants(p) ? (
                         <details className="stock-pop">

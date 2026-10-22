@@ -11,6 +11,7 @@ import { loadAccess } from '@/lib/billing'
 import { costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { photoSetFor, reportUse, searchPhotos, unsplashReady } from '@/lib/unsplash'
+import { getItems, resolveShortLink } from '@/lib/amazon'
 import type { Page, Site } from '@/lib/schema'
 
 export interface StudioState {
@@ -96,9 +97,13 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
 
   after(async () => {
     const current = state.draft ?? live
+    // Amazon picks, when the shop has Amazon connected (lib/amazon).
+    const az = current.site.store?.amazon
+    const keys = az ? await store.amazonKeys(site.id) : null
+    const amazon = az && keys ? { lookup: (asins: string[]) => getItems(keys, az.market, az.tag, asins), resolve: (link: string) => resolveShortLink(link) } : undefined
     try {
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
-      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
+      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}), ...(amazon ? { amazon } : {}) })
       await store.recordUsage(site.id, today, costMicros(result.usage))
       for (const [item, qty] of Object.entries(result.stock ?? {})) await store.setStock(site.id, item, qty)
       for (const m of result.media) {

@@ -27,6 +27,7 @@ import type { Credit, FoundPhoto } from './unsplash'
 import type { PhotoSet } from './photos'
 import { costMicros, type Tokens } from './usage'
 import { buildVariants } from './commerce'
+import { isShortLink, itemToProduct, parseAmazonLink, type AmazonItem } from './amazon'
 
 export const SOFIE_MODEL = 'claude-opus-5'
 
@@ -50,7 +51,8 @@ export interface Snapshot {
 
 type Json = Record<string, unknown>
 
-// The shop changes only through save_product and remove_product.
+// The shop changes only through save_product, remove_product and
+// add_amazon_products.
 const LOCKED_SITE_KEYS = ['id', 'orgId', 'subdomain', 'customDomain', 'pendingDomain', 'handoff', 'ownership', 'startedVia', 'updatedAt', 'store'] as const
 const LOCKED_ELEMENT_KEYS = ['id', 'type', 'children'] as const
 
@@ -82,13 +84,54 @@ export class Workspace {
   private finder?: PhotoFinder
   // Credits for photos found this session, kept if the photo gets used.
   private found = new Map<string, Credit>()
+  // Amazon product lookups (lib/amazon), when the shop has Amazon connected.
+  private amazon?: AmazonLookup
 
-  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader; taken?: Set<string>; finder?: PhotoFinder } = {}) {
+  constructor(snapshot: Snapshot, opts: { fontLoader?: FontLoader; taken?: Set<string>; finder?: PhotoFinder; amazon?: AmazonLookup } = {}) {
     this.site = structuredClone(snapshot.site)
     this.pages = structuredClone(snapshot.pages)
     this.fontLoader = opts.fontLoader ?? googleFontLoader
     this.taken = opts.taken ?? new Set()
     this.finder = opts.finder
+    this.amazon = opts.amazon
+  }
+
+  // Adds the Amazon products behind the owner's links as Amazon picks
+  // (bought on Amazon with the owner's Associates link). Facts come only
+  // from Amazon.
+  async addAmazon(links: string[], summary: string): Promise<string> {
+    const shop = this.site.store
+    if (!this.amazon || !shop?.amazon) throw new ToolError('Amazon isn’t connected yet. Tell the owner to connect it in Store, then Settings, under Amazon picks (their Associates tracking ID and Creators API credentials).')
+    const asins: string[] = []
+    const notes: string[] = []
+    for (const raw of links.slice(0, 30)) {
+      const resolved = isShortLink(raw) ? await this.amazon.resolve(raw) : raw
+      const parsed = resolved ? parseAmazonLink(resolved) : null
+      if (!parsed) notes.push(`${raw.slice(0, 80)} is not an Amazon product link`)
+      else if (!asins.includes(parsed.asin)) asins.push(parsed.asin)
+    }
+    if (!asins.length) throw new ToolError(`No Amazon product links found. ${notes.join('; ')}`)
+    const { items, missing } = await this.amazon.lookup(asins)
+    for (const a of missing) notes.push(`Amazon didn't return ${a}`)
+    const now = new Date()
+    let products = [...shop.products]
+    const done: string[] = []
+    for (const item of items) {
+      const old = products.find((p) => p.amazon?.asin === item.asin)
+      if (!old && products.length >= 300) {
+        notes.push('the shop is full (300 products)')
+        break
+      }
+      const next = itemToProduct(item, shop.amazon.market, old?.id ?? `p-${Math.random().toString(36).slice(2, 10)}`, old, now)
+      products = old ? products.map((p) => (p.id === old.id ? next : p)) : [...products, next]
+      done.push(`${next.name} (id ${next.id})`)
+    }
+    if (!done.length) throw new ToolError(`Nothing was added: ${notes.join('; ')}.`)
+    const site = SiteSchema.safeParse({ ...this.site, store: { ...shop, products } })
+    if (!site.success) throw new ToolError(`That change is not valid: ${formatZod(site.error)}`)
+    this.site = site.data
+    this.changes.push(summary)
+    return `Done. Added or refreshed: ${done.join('; ')}.${notes.length ? ` Not added: ${notes.join('; ')}.` : ''}`
   }
 
   // Fresh stock photos for a search, none already on this site or another's.
@@ -329,6 +372,8 @@ export class Workspace {
     const id = typeof input.id === 'string' && input.id ? input.id : ''
     const old = id ? shop.products.find((p) => p.id === id) : undefined
     if (id && !old) throw new ToolError(`There is no product with id "${id}". Leave id out to add a new one.`)
+    if (old?.amazon && ['price', 'compare_at', 'cost', 'options', 'variant_prices', 'stock', 'sold_out', 'no_shipping', 'photos'].some((k) => input[k] !== undefined))
+      throw new ToolError('That is an Amazon pick: its price, photos and stock come from Amazon and update daily. Only its name, description, details, category and status can change.')
     const cents = (v: unknown, what: string): number | undefined => {
       if (v === undefined || v === null || v === '') return undefined
       const n = typeof v === 'number' ? v : Number(String(v).replace(/[$,£€\s]/g, ''))
@@ -422,6 +467,13 @@ export class Workspace {
 }
 
 export class ToolError extends Error {}
+
+// Looks up Amazon items for the shop's marketplace, and follows amzn.to
+// short links (lib/amazon), with the owner's own Associates credentials.
+export interface AmazonLookup {
+  lookup(asins: string[]): Promise<{ items: AmazonItem[]; missing: string[] }>
+  resolve(shortLink: string): Promise<string | null>
+}
 
 export interface PhotoFinder {
   search(query: string): Promise<FoundPhoto[]>
@@ -606,6 +658,13 @@ SOFIE_TOOLS.push({
 })
 
 SOFIE_TOOLS.push({
+  name: 'add_amazon_products',
+  description:
+    'Add products from Amazon to the owner\'s shop as "Amazon picks": each shows on the site with a "Buy on Amazon" button using the owner\'s Amazon Associates link (they earn the commission; it never goes in the cart). Pass the Amazon product links the owner gave (amazon.com/dp/..., amzn.to/... short links, or ASINs). The name, photos, features and price come from Amazon automatically and refresh daily; never type them yourself. Adding the same product again refreshes it. Only works once Amazon is connected (site.store.amazon is set); if not, tell the owner to connect it in Store, then Settings. If the site has no Shop page yet, also add one with a products widget and a menu link.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { links: { type: 'array', items: { type: 'string' } }, summary }, required: ['links', 'summary'] },
+})
+
+SOFIE_TOOLS.push({
   name: 'remove_product',
   description: 'Remove a product from the shop by its id (from site.store.products). Only when the owner asks.',
   input_schema: { type: 'object', additionalProperties: false, properties: { id: { type: 'string' }, summary }, required: ['id', 'summary'] },
@@ -685,6 +744,8 @@ export async function runTool(ws: Workspace, name: string, input: Record<string,
       case 'remove_product':
         ws.removeProduct(str('id'), s)
         break
+      case 'add_amazon_products':
+        return await ws.addAmazon(Array.isArray(input.links) ? input.links.map(String) : [], s)
       case 'add_page':
         ws.addPage({ slug: str('slug'), name: str('name'), title: str('title'), description: str('description'), body: parseJson(str('body_json'), 'array') as unknown[], addToNav: input.add_to_nav === true }, s)
         break
@@ -778,11 +839,11 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
   return create.call(client.beta.messages, params)
 }
 
-export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; budgetMicros?: number }): Promise<SofieResult> {
+export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; amazon?: AmazonLookup; budgetMicros?: number }): Promise<SofieResult> {
   // New API accounts hit rate limits quickly; the SDK waits and retries
   // (respecting retry-after) a few times before giving up.
   const client = input.client ?? new Anthropic({ maxRetries: 5 })
-  const ws = new Workspace(input.snapshot, { taken: input.taken, finder: input.finder })
+  const ws = new Workspace(input.snapshot, { taken: input.taken, finder: input.finder, amazon: input.amazon })
   const takenHere = PHOTO_KEYS.filter((k) => ws.taken.has(k))
 
   // Earlier turns as plain text; the current state of the site is sent fresh
