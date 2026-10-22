@@ -15,6 +15,9 @@ class OLA_API {
 	const LWA_URL         = 'https://api.amazon.com/auth/o2/token';
 	const MAX_RETRIES     = 2;
 
+	/** Region to use instead of the saved marketplace's region (used while detecting it). */
+	public static $region_override = null;
+
 	private static $endpoints = array(
 		'na' => 'https://sellingpartnerapi-na.amazon.com',
 		'eu' => 'https://sellingpartnerapi-eu.amazon.com',
@@ -57,7 +60,7 @@ class OLA_API {
 
 		$body = json_decode( wp_remote_retrieve_body( $response ), true );
 		if ( empty( $body['access_token'] ) ) {
-			$message = isset( $body['error_description'] ) ? $body['error_description'] : __( 'Login with Amazon did not return an access token.', 'open-lister-amazon' );
+			$message = self::lwa_error_message( isset( $body['error'] ) ? $body['error'] : '', isset( $body['error_description'] ) ? $body['error_description'] : '' );
 			OLA_Logger::error( 'LWA token exchange failed', array( 'response' => $body ) );
 			return new WP_Error( 'ola_lwa_failed', $message );
 		}
@@ -66,6 +69,16 @@ class OLA_API {
 		set_transient( self::TOKEN_TRANSIENT, $body['access_token'], max( 60, $ttl ) );
 
 		return $body['access_token'];
+	}
+
+	private static function lwa_error_message( $code, $description ) {
+		switch ( $code ) {
+			case 'invalid_client':
+				return __( 'Amazon did not accept the Client ID or Client Secret. Copy them again from your app in Seller Central (click "View" next to LWA credentials).', 'open-lister-amazon' );
+			case 'invalid_grant':
+				return __( 'Amazon did not accept the refresh token. In Seller Central, click "Authorize" next to your app again and copy the new token.', 'open-lister-amazon' );
+		}
+		return $description ? $description : __( 'Login with Amazon did not return an access token.', 'open-lister-amazon' );
 	}
 
 	/**
@@ -79,7 +92,8 @@ class OLA_API {
 	 * @return array|WP_Error Decoded JSON body (empty array for 204).
 	 */
 	public static function request( $method, $path, $query = array(), $body = null, $token = null ) {
-		$url = self::$endpoints[ OLA_Settings::region() ] . $path;
+		$region = self::$region_override ? self::$region_override : OLA_Settings::region();
+		$url    = self::$endpoints[ $region ] . $path;
 		if ( $query ) {
 			$url .= '?' . self::build_query( $query );
 		}
