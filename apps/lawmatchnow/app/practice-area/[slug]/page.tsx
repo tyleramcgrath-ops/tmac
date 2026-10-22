@@ -11,7 +11,7 @@ import { COMMON_FEES, FEE_TYPES } from '@/lib/content/fees'
 import { GUIDES } from '@/lib/content/guides'
 import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { CITIES } from '@/lib/geo'
-import { CONTENT_REVIEWED, SITE, abs, fmtDate } from '@/lib/site'
+import { CONTENT_REVIEWED, SITE, abs, clip, fmtDate, seoTitle } from '@/lib/site'
 
 type Props = { params: Promise<{ slug: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -26,8 +26,8 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   if (!p) return {}
   const paged = pageParam((await searchParams).page) > 1
   return {
-    title: `${p.lawyerTitle}: Find an Attorney Near You`,
-    description: p.short,
+    title: seoTitle(`${p.lawyerTitle}: Find an Attorney Near You`),
+    description: clip(p.short),
     alternates: { canonical: `/practice-area/${p.slug}` },
     robots: paged ? { index: false, follow: true } : undefined,
     openGraph: { title: `${p.lawyerTitle} | ${SITE.name}`, description: p.short, url: abs(`/practice-area/${p.slug}`) },

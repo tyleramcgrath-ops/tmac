@@ -10,7 +10,7 @@ import { neighbors } from '@/lib/law/compare'
 import { researchedOn } from '@/lib/law/facts'
 import { topicBySlug } from '@/lib/law/topics'
 import { toolBySlug } from '@/lib/law/tools'
-import { SITE, abs, fmtDate } from '@/lib/site'
+import { SITE, abs, clip, fmtDate, seoTitle } from '@/lib/site'
 
 type Props = { params: Promise<{ slug: string }> }
 export const dynamicParams = false
@@ -22,13 +22,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const p = answerPage(slug)
   if (p) {
-    const title = p.q.ask(p.s).replace(/\?$/, '')
-    const description = p.a.text.slice(0, 160)
-    return { title: `${title}? (${researchedOn(p.q.key).slice(0, 4)})`, description, alternates: { canonical: `/answers/${slug}` }, openGraph: { type: 'article', title: p.q.ask(p.s), description, url: abs(`/answers/${slug}`) } }
+    const description = clip(p.a.text.length < 120 && p.f.detail ? `${p.a.text} ${p.f.detail}` : p.a.text)
+    return { title: seoTitle(p.q.ask(p.s)), description, alternates: { canonical: `/answers/${slug}` }, openGraph: { type: 'article', title: p.q.ask(p.s), description, url: abs(`/answers/${slug}`) } }
   }
   const q = questionByNationalSlug(slug)
   if (!q) return {}
-  return { title: q.national.title, description: q.national.lede.slice(0, 160), alternates: { canonical: `/answers/${slug}` }, openGraph: { title: q.national.title, url: abs(`/answers/${slug}`) } }
+  return { title: seoTitle(q.national.title), description: clip(q.national.lede), alternates: { canonical: `/answers/${slug}` }, openGraph: { title: q.national.title, url: abs(`/answers/${slug}`) } }
 }
 
 export default async function Answer({ params }: Props) {

@@ -15,6 +15,7 @@ import { LocalCards } from '@/components/CityLocal'
 import { FactTable } from '@/components/LawFacts'
 import { type CityLocal, cityLocal } from '@/lib/law/cities'
 import { ctxFor, topicsForPractice } from '@/lib/law/topics'
+import { clip } from '@/lib/site'
 
 type Props = { params: Promise<{ city: string; practice: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -57,9 +58,9 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const lead = topics[0] ? law.f(topics[0].lead) : null
   return {
     title: `${c.name} ${p.lawyerTitle} & ${st.code} Law`,
-    description: (lead && topics[0]
-      ? `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${topics[0].answer(law)} Compare local attorneys and get a free case review.`
-      : `Find ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.name}. ${p.short}`).slice(0, 300),
+    description: clip(lead && topics[0]
+      ? `Compare ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.code} and get a free case review. ${topics[0].answer(law)}`
+      : `Compare ${p.lawyerTitle.toLowerCase()} in ${c.name}, ${st.code} and get a free case review. ${p.short}`),
     alternates: { canonical: `/${c.slug}/${p.slug}` },
     robots: thin ? { index: false, follow: true } : undefined,
   }

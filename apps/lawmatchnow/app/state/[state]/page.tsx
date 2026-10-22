@@ -13,6 +13,7 @@ import { cityLocal } from '@/lib/law/cities'
 import { fact } from '@/lib/law/facts'
 import { ctxFor, glanceRows, topicsFor } from '@/lib/law/topics'
 import { answersForState } from '@/lib/law/answers'
+import { clip } from '@/lib/site'
 
 type Props = { params: Promise<{ state: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -25,7 +26,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const pi = fact(s.code, 'sol-injury.personalInjury')
   return {
     title: `${s.name} Lawyers & ${s.code} Law Guide`,
-    description: `Find attorneys licensed in ${s.name} by city and practice area${pi ? `, and know the rules: ${pi.value} to file an injury lawsuit` : ''}, plus divorce, DUI, small claims and more, with statutes cited.`.slice(0, 300),
+    description: clip(`Find attorneys licensed in ${s.name} by city and practice area${pi ? `, and know the rules: ${pi.value} to file an injury lawsuit` : ''}, plus divorce, DUI, small claims and more, with statutes cited.`),
     alternates: { canonical: `/state/${s.slug}` },
     robots: pageParam((await searchParams).page) > 1 ? { index: false, follow: true } : undefined,
   }
