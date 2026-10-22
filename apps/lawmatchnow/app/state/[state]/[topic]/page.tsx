@@ -16,7 +16,7 @@ import { ctxFor, paras, topicBySlug, topicsFor } from '@/lib/law/topics'
 import { TOOLS } from '@/lib/law/tools'
 import { answersForState } from '@/lib/law/answers'
 import { photoUrl } from '@/lib/photos'
-import { SITE, abs, fmtDate } from '@/lib/site'
+import { SITE, abs, clip, fmtDate, seoTitle } from '@/lib/site'
 
 type Props = { params: Promise<{ state: string; topic: string }> }
 export const dynamicParams = false
@@ -50,10 +50,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { s, t, c } = r
   const year = researchedOn(t.lead).slice(0, 4)
   const title = `${t.heading(s)} (${year})`
-  const description = t.description(c).slice(0, 300)
+  const description = clip(t.description(c))
   const url = `/state/${s.slug}/${t.slug}`
   return {
-    title,
+    title: seoTitle(title),
     description,
     alternates: { canonical: url },
     openGraph: { type: 'article', title, description, url: abs(url), modifiedTime: researchedOn(t.lead), images: [{ url: photoUrl(t.photo, 1200), width: 1200, height: 800 }] },

@@ -33,7 +33,11 @@ const nextConfig: NextConfig = {
   typescript: { ignoreBuildErrors: true },
   turbopack: { root: path.join(__dirname) },
   async redirects() {
-    return MOVED.map(([source, destination]) => ({ source, destination, permanent: true }))
+    return [
+      // One canonical host: send www to the bare domain so rankings aren't split.
+      { source: '/:path*', has: [{ type: 'host' as const, value: 'www.lawmatchnow.com' }], destination: 'https://lawmatchnow.com/:path*', permanent: true },
+      ...MOVED.map(([source, destination]) => ({ source, destination, permanent: true })),
+    ]
   },
   async headers() {
     return [{

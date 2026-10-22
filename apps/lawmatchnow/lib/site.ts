@@ -9,6 +9,15 @@ export const SITE = {
   email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'hello@lawmatchnow.com',
 }
 
+/** Cut a meta description at a word boundary so search results show it whole. */
+export const clip = (s: string, n = 160) => {
+  if (s.length <= n) return s
+  return `${s.slice(0, s.lastIndexOf(' ', n - 1)).replace(/[\s,;:.(–-]+$/, '')}…`
+}
+
+/** Keep the brand suffix only when the whole title still fits in ~65 characters. */
+export const seoTitle = (t: string) => (t.length + 16 <= 65 ? t : { absolute: t })
+
 export const abs = (path: string) => `${SITE.url}${path.startsWith('/') ? path : `/${path}`}`
 
 type Crumb = { name: string; path: string }

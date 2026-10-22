@@ -7,7 +7,7 @@ import { CtaBand, Faqs, JsonLd } from '@/components/ui'
 import { STATES } from '@/lib/geo'
 import { FIELDS, fact, researchedOn } from '@/lib/law/facts'
 import { TOPICS, topicBySlug } from '@/lib/law/topics'
-import { SITE, abs, fmtDate } from '@/lib/site'
+import { SITE, abs, clip, fmtDate, seoTitle } from '@/lib/site'
 
 type Props = { params: Promise<{ topic: string }> }
 export const dynamicParams = false
@@ -21,8 +21,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!t) return {}
   const year = researchedOn(t.lead).slice(0, 4)
   return {
-    title: `${t.name} by State: 50-State Chart (${year})`,
-    description: `${t.name} in every U.S. state and D.C.: ${columns(t.slug).map((k) => FIELDS[k].label.toLowerCase()).join(', ')}, with the statute for each and a full guide per state.`,
+    title: seoTitle(`${t.name} by State: 50-State Chart (${year})`),
+    description: clip(`${t.name} in every U.S. state and D.C.: ${columns(t.slug).map((k) => FIELDS[k].label.toLowerCase()).join(', ')}, with the statute for each and a full guide per state.`),
     alternates: { canonical: `/laws/${t.slug}` },
   }
 }

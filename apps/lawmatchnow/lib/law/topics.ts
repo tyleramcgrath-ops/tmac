@@ -247,7 +247,7 @@ export const TOPICS: Topic[] = [
         body: ({ s, f }) => {
           const pd = f('divorce.propertyDivision')
           return [
-            has(pd, /^Community/i) && `${s.name} is a community property state. Property and debts acquired during the marriage generally belong to both spouses equally and are usually divided 50/50, while property owned before the marriage or received as a gift or inheritance usually stays separate.`,
+            has(pd, /^Community/i) && `${s.name} is a community property state. Property and debts acquired during the marriage generally belong to both spouses equally${s.code === 'TX' ? '; in a divorce, Texas courts divide them in a way that is "just and right", which isn’t always 50/50' : ' and are generally split evenly in a divorce'}, while property owned before the marriage or received as a gift or inheritance usually stays separate.`,
             has(pd, /^Equitable/i) && `${s.name} uses equitable distribution. Marital property is divided fairly, which isn’t always equally. Courts look at factors such as each spouse’s income and earning capacity, the length of the marriage and each spouse’s contributions, including homemaking.`,
             pd?.detail,
           ]

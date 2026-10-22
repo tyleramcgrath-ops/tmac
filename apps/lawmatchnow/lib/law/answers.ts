@@ -43,7 +43,7 @@ export const QUESTIONS: Question[] = [
       ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} is a community property state: most property and debts acquired during the marriage belong to both spouses equally${cite(f)}.` }
       : { verdict: 'no', short: 'No', text: `No. ${s.name} is an equitable distribution state, not a community property state. In a divorce, marital property is divided fairly, which is not always 50/50${cite(f)}.` },
     meaning: (s, _f, a) => a.verdict === 'yes' ? [
-      `In a ${s.name} divorce, the starting point is an equal split of community property: wages earned, homes bought and debts taken on by either spouse during the marriage, no matter whose name is on the title or account.`,
+      `Community property belongs to both spouses equally: wages earned, homes bought and debts taken on by either spouse during the marriage, no matter whose name is on the title or account. ${s.code === 'TX' ? 'In a Texas divorce, the court divides it in a way it finds "just and right", which is often close to equal but can favor one spouse (Tex. Fam. Code § 7.001).' : `In a ${s.name} divorce, that shared ownership is the starting point for dividing it, though some community property states let the judge depart from an exact 50/50 split.`}`,
       `Separate property usually stays with the spouse who owns it: what each spouse owned before the marriage, plus gifts and inheritances received by one spouse. Mixing separate money into joint accounts can turn it into community property, which is one of the most common fights in a divorce.`,
       `Community property rules also matter when a spouse dies and for debts: a creditor may be able to reach community property for debts one spouse took on during the marriage.`,
     ] : [
