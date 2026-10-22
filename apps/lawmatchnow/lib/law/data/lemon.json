@@ -1,0 +1,1514 @@
+{
+"researchedOn": "2026-10-22",
+"states": {
+"AZ": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Arizona presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Ariz. Rev. Stat. § 44-1264(A)(1)",
+"source": "https://www.azleg.gov/ars/44/01264.htm",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "Ariz. Rev. Stat. § 44-1264(A)(2)",
+"source": "https://www.azleg.gov/ars/44/01264.htm",
+"verified": true
+},
+"coverage": {
+"value": "Shorter of the warranty term or 2 years/24,000 miles",
+"detail": "The presumption applies to repairs during the shorter of the express warranty or two years or 24,000 miles from delivery.",
+"cite": "Ariz. Rev. Stat. § 44-1264(A)",
+"source": "https://www.azleg.gov/ars/44/01264.htm",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Used-car dealers must provide an implied warranty of merchantability for 15 days or 500 miles, whichever comes first, and the buyer pays up to $25 for each of the first two repairs.",
+"cite": "Ariz. Rev. Stat. § 44-1267",
+"source": "https://www.azleg.gov/ars/44/01267.htm",
+"verified": true
+}
+},
+"DE": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Delaware presumes a lemon if substantially the same defect has been repaired four or more times and still exists.",
+"cite": "6 Del. C. § 5004(a)(1)",
+"source": "https://delcode.delaware.gov/title6/c050/index.html",
+"verified": true
+},
+"daysOut": {
+"value": "More than 30 calendar days",
+"detail": "A cumulative total of more than 30 calendar days out of service for repairs also triggers the presumption.",
+"cite": "6 Del. C. § 5004(a)(2)",
+"source": "https://delcode.delaware.gov/title6/c050/index.html",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers repairs within the warranty term or one year after delivery, whichever ends first.",
+"cite": "6 Del. C. § 5004(a)",
+"source": "https://delcode.delaware.gov/title6/c050/index.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Delaware's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "6 Del. C. § 5004(a)(1)",
+"source": "https://delcode.delaware.gov/title6/c050/index.html",
+"verified": true
+}
+},
+"DC": {
+"attempts": {
+"value": "4 attempts for the same defect (or 1 for a safety-related defect)",
+"detail": "D.C. presumes a lemon after four repair attempts for the same non-safety defect, or one attempt for a safety-related defect that continues.",
+"cite": "D.C. Code § 50-502(d)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-502",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative total of 30 or more days out of service for repairs also triggers the presumption.",
+"cite": "D.C. Code § 50-502(d)(3)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-502",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 18,000 miles",
+"detail": "The presumption covers the first 2 years or 18,000 miles after delivery, whichever comes first.",
+"cite": "D.C. Code § 50-502(d)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-502",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "D.C.'s lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "D.C. Code § 50-502(d)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-502",
+"verified": true
+}
+},
+"FL": {
+"attempts": {
+"value": "3 attempts for the same defect, plus a final manufacturer repair attempt",
+"detail": "Florida presumes a lemon if the same defect has been repaired at least three times plus a final attempt by the manufacturer after written notice, and it still exists.",
+"cite": "Fla. Stat. § 681.104(3)(a)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/681.104",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 or more days out of service for repairs (60 for RVs) during the rights period also triggers the presumption.",
+"cite": "Fla. Stat. § 681.104(3)(b)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/681.104",
+"verified": true
+},
+"coverage": {
+"value": "24 months from delivery",
+"detail": "The Lemon Law rights period ends 24 months after the vehicle's original delivery to the consumer.",
+"cite": "Fla. Stat. § 681.102(9)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/681.102",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Florida's lemon law defines 'motor vehicle' as a new vehicle, so used cars are not covered (except transfers during the 24-month rights period).",
+"cite": "Fla. Stat. § 681.102(14)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2024/681.102",
+"verified": true
+}
+},
+"ID": {
+"attempts": {
+"value": "4 attempts for the same defect (or 1 for a brake/steering failure likely to cause death or serious injury)",
+"detail": "Idaho presumes a lemon after four repair attempts for the same defect, or one attempt if the defect is a complete braking or steering failure likely to cause death or serious injury.",
+"cite": "Idaho Code § 48-903(2)(a), (3)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title48/T48CH9/SECT48-903/",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Idaho Code § 48-903(2)(b)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title48/T48CH9/SECT48-903/",
+"verified": true
+},
+"coverage": {
+"value": "Earliest of warranty term, 2 years, or 24,000 miles",
+"detail": "The presumption covers the warranty term, two years from delivery, or 24,000 miles, whichever comes first.",
+"cite": "Idaho Code § 48-903(2)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title48/T48CH9/SECT48-903/",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Idaho's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Idaho Code § 48-903(2)(a), (3)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title48/T48CH9/SECT48-903/",
+"verified": true
+}
+},
+"KS": {
+"attempts": {
+"value": "4 attempts for the same defect (or 10 total attempts for any defects)",
+"detail": "Kansas presumes a lemon after four repair attempts for the same substantial defect, or ten or more repair attempts for any substantial defects.",
+"cite": "Kan. Stat. Ann. § 50-645(c)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch50/050_006_0045.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "Kan. Stat. Ann. § 50-645(c)(2)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch50/050_006_0045.html",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the warranty term or one year after delivery, whichever ends first.",
+"cite": "Kan. Stat. Ann. § 50-645",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch50/050_006_0045.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Kansas's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Kan. Stat. Ann. § 50-645(c)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch50/050_006_0045.html",
+"verified": true
+}
+},
+"KY": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Kentucky presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Ky. Rev. Stat. § 367.842(3)(a)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=40103",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative total of at least 30 calendar days out of service to repair the same defect also triggers the presumption.",
+"cite": "Ky. Rev. Stat. § 367.842(3)(b)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=40103",
+"verified": true
+},
+"coverage": {
+"value": "First 12 months or 12,000 miles",
+"detail": "The presumption covers the first 12 months or 12,000 miles after delivery, whichever comes first.",
+"cite": "Ky. Rev. Stat. § 367.842(3)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=40103",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Kentucky's lemon law applies only to buyers and lessees of new motor vehicles.",
+"cite": "Ky. Rev. Stat. § 367.841(1), (4)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=35087",
+"verified": true
+}
+},
+"ME": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a serious brake or steering failure)",
+"detail": "Maine presumes a lemon after three repair attempts for the same defect, or one attempt for a serious failure of the brakes or steering.",
+"cite": "10 M.R.S. § 1163(3)(A), (A-2)",
+"source": "https://legislature.maine.gov/statutes/10/title10sec1163.html",
+"verified": true
+},
+"daysOut": {
+"value": "15 business days",
+"detail": "A cumulative 15 or more business days out of service for repairs also triggers the presumption.",
+"cite": "10 M.R.S. § 1163(3)(B)",
+"source": "https://legislature.maine.gov/statutes/10/title10sec1163.html",
+"verified": true
+},
+"coverage": {
+"value": "Earliest of warranty term, 3 years, or 18,000 miles",
+"detail": "The presumption covers the express warranty term, three years from original delivery, or the first 18,000 miles, whichever comes first.",
+"cite": "10 M.R.S. § 1163(3)(A)",
+"source": "https://legislature.maine.gov/statutes/10/title10sec1163.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Maine has no separate used-car lemon law, but its lemon law isn't limited to new cars: later owners are covered while the vehicle is still within the express warranty and the 3-year/18,000-mile period.",
+"cite": "10 M.R.S. § 1161(1), (3)",
+"source": "https://legislature.maine.gov/statutes/10/title10sec1161.html",
+"verified": true
+}
+},
+"LA": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Louisiana requires a replacement or refund if a defect is not fixed after four or more repair attempts.",
+"cite": "La. R.S. 51:1944(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=104206",
+"verified": true
+},
+"daysOut": {
+"value": "45 calendar days",
+"detail": "A cumulative 45 or more calendar days out of service for repairs during the warranty period also qualifies.",
+"cite": "La. R.S. 51:1944(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=104206",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The repair attempts must occur within the express warranty term or one year after delivery, whichever ends first.",
+"cite": "La. R.S. 51:1944(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=104206",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Louisiana's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "La. R.S. 51:1944(A)",
+"source": "https://legis.la.gov/legis/LawPrint.aspx?d=104206",
+"verified": true
+}
+},
+"MD": {
+"attempts": {
+"value": "4 attempts for the same defect (or 1 for a brake or steering failure)",
+"detail": "Maryland presumes a lemon after four repair attempts for the same defect, or one unsuccessful repair of a braking or steering system failure.",
+"cite": "Md. Code, Com. Law § 14-1502(d)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcl&section=14-1502",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 or more days out of service for repairs during the warranty period also triggers the presumption.",
+"cite": "Md. Code, Com. Law § 14-1502(d)(2)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcl&section=14-1502",
+"verified": true
+},
+"coverage": {
+"value": "24 months or 18,000 miles",
+"detail": "The manufacturer's warranty period for lemon law purposes is the first 18,000 miles or 24 months after delivery, whichever comes first.",
+"cite": "Md. Code, Com. Law § 14-1501(e)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcl&section=14-1501",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Maryland's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Md. Code, Com. Law § 14-1502(d)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gcl&section=14-1502",
+"verified": true
+}
+},
+"MA": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Massachusetts presumes a lemon if the same defect has been repaired three or more times and still exists, after which the manufacturer gets one final chance to fix it.",
+"cite": "Mass. Gen. Laws ch. 90, § 7N1/2(4)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section7N1~2",
+"verified": true
+},
+"daysOut": {
+"value": "15 business days",
+"detail": "A cumulative 15 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Mass. Gen. Laws ch. 90, § 7N1/2(4)(b)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section7N1~2",
+"verified": true
+},
+"coverage": {
+"value": "1 year or 15,000 miles",
+"detail": "The 'term of protection' is one year or 15,000 miles from original delivery, whichever comes first.",
+"cite": "Mass. Gen. Laws ch. 90, § 7N1/2(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section7N1~2",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must warrant used cars for 30 to 90 days depending on mileage (under 125,000 miles), and the buyer can get a refund if the dealer can't fix a defect after three attempts or 10 business days out of service.",
+"cite": "Mass. Gen. Laws ch. 90, § 7N1/4",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section7N1~4",
+"verified": true
+}
+},
+"MN": {
+"attempts": {
+"value": "4 attempts for the same defect (or 1 for a brake/steering failure likely to cause death or serious injury)",
+"detail": "Minnesota presumes a lemon after four repair attempts for the same defect, or one attempt for a complete braking or steering failure likely to cause death or serious injury.",
+"cite": "Minn. Stat. § 325F.665, subd. 3(b)-(c)",
+"source": "https://www.revisor.mn.gov/statutes/cite/325F.665",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Minn. Stat. § 325F.665, subd. 3(b)(2)",
+"source": "https://www.revisor.mn.gov/statutes/cite/325F.665",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or 2 years, whichever is earlier",
+"detail": "The presumption covers the express warranty term or two years after delivery, whichever ends first.",
+"cite": "Minn. Stat. § 325F.665, subd. 3(b)",
+"source": "https://www.revisor.mn.gov/statutes/cite/325F.665",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must give a written warranty on most used cars, ranging from 60 days/2,500 miles (under 36,000 miles) down to 15 days/500 miles (75,000-199,999 miles).",
+"cite": "Minn. Stat. § 325F.662, subd. 2",
+"source": "https://www.revisor.mn.gov/statutes/cite/325F.662",
+"verified": true
+}
+},
+"IA": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a defect likely to cause death or serious injury), plus a final manufacturer attempt",
+"detail": "Iowa presumes a lemon after three repair attempts for the same substantial defect (one for a life-threatening defect) plus a final repair attempt by the manufacturer.",
+"cite": "Iowa Code § 322G.4(3)(a)(1)-(2)",
+"source": "https://www.legis.iowa.gov/docs/code/322G.4.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "Iowa Code § 322G.4(3)(a)(3)",
+"source": "https://www.legis.iowa.gov/docs/code/322G.4.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Earliest of warranty term, 2 years, or 24,000 miles",
+"detail": "The lemon law rights period is the manufacturer's warranty term, two years from delivery, or the first 24,000 miles, whichever ends first.",
+"cite": "Iowa Code § 322G.2(8)",
+"source": "https://www.legis.iowa.gov/docs/code/322G.2.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Iowa's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Iowa Code § 322G.4(3)(a)(1)-(2)",
+"source": "https://www.legis.iowa.gov/docs/code/322G.4.pdf",
+"verified": true
+}
+},
+"MO": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Missouri presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Mo. Rev. Stat. § 407.571(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=407.571",
+"verified": true
+},
+"daysOut": {
+"value": "30 working days",
+"detail": "A cumulative 30 or more working days out of service for repairs also triggers the presumption.",
+"cite": "Mo. Rev. Stat. § 407.571(2)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=407.571",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "Mo. Rev. Stat. § 407.571",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=407.571",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Missouri's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Mo. Rev. Stat. § 407.571(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=407.571",
+"verified": true
+}
+},
+"NE": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Nebraska presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Neb. Rev. Stat. § 60-2704",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-2704",
+"verified": true
+},
+"daysOut": {
+"value": "40 days",
+"detail": "A cumulative 40 or more days out of service for repairs also triggers the presumption.",
+"cite": "Neb. Rev. Stat. § 60-2704",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-2704",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "Neb. Rev. Stat. § 60-2704",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-2704",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Nebraska's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Neb. Rev. Stat. § 60-2704",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-2704",
+"verified": true
+}
+},
+"NV": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Nevada presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Nev. Rev. Stat. § 597.630(2)(a)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-597.html#NRS597Sec630",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "Nev. Rev. Stat. § 597.630(2)(b)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-597.html#NRS597Sec630",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery to the original buyer, whichever ends first.",
+"cite": "Nev. Rev. Stat. § 597.630(2)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-597.html#NRS597Sec630",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Nevada's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Nev. Rev. Stat. § 597.630(2)(a)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-597.html#NRS597Sec630",
+"verified": true
+}
+},
+"NC": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "North Carolina presumes a lemon if the same defect has been presented for repair four or more times and still exists.",
+"cite": "N.C. Gen. Stat. § 20-351.5(a)(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-351.5.html",
+"verified": true
+},
+"daysOut": {
+"value": "20 business days in any 12-month period",
+"detail": "A cumulative 20 or more business days out of service during any 12-month period of the warranty also triggers the presumption, after written notice to the manufacturer.",
+"cite": "N.C. Gen. Stat. § 20-351.5(a)(2)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-351.5.html",
+"verified": true
+},
+"coverage": {
+"value": "24 months or 24,000 miles",
+"detail": "The defect must occur within 24 months or 24,000 miles after original delivery, whichever comes first.",
+"cite": "N.C. Gen. Stat. § 20-351.3(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-351.3.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "North Carolina's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "N.C. Gen. Stat. § 20-351.5(a)(1)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-351.5.html",
+"verified": true
+}
+},
+"ND": {
+"attempts": {
+"value": "4 attempts for the same defect (more than three)",
+"detail": "North Dakota presumes a lemon if the same defect continues after more than three repair attempts.",
+"cite": "N.D. Cent. Code § 51-07-19(1)(a)",
+"source": "https://ndlegis.gov/cencode/t51c07.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative total of at least 30 business days out of service for repairs also triggers the presumption.",
+"cite": "N.D. Cent. Code § 51-07-19(1)(b)",
+"source": "https://ndlegis.gov/cencode/t51c07.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "N.D. Cent. Code § 51-07-19(1)",
+"source": "https://ndlegis.gov/cencode/t51c07.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "North Dakota's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "N.D. Cent. Code § 51-07-19(1)(a)",
+"source": "https://ndlegis.gov/cencode/t51c07.pdf",
+"verified": true
+}
+},
+"OH": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a defect likely to cause death or serious injury; or 8 total attempts)",
+"detail": "Ohio presumes a lemon after three repair attempts for substantially the same defect, one attempt for a life-threatening defect, or eight attempts for any defects.",
+"cite": "Ohio Rev. Code § 1345.73(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1345.73",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "Ohio Rev. Code § 1345.73(A)(2)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1345.73",
+"verified": true
+},
+"coverage": {
+"value": "1 year or 18,000 miles",
+"detail": "The presumption covers the first year or 18,000 miles after delivery, whichever comes first.",
+"cite": "Ohio Rev. Code § 1345.73(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1345.73",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Ohio's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Ohio Rev. Code § 1345.73(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-1345.73",
+"verified": true
+}
+},
+"OR": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 plus a final attempt for a defect likely to cause death or serious injury)",
+"detail": "Oregon presumes a lemon after three repair attempts for the same defect, or one attempt plus a final attempt for a defect likely to cause death or serious injury.",
+"cite": "Or. Rev. Stat. § 646A.406(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors646A.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs (60 for motor homes) also triggers the presumption.",
+"cite": "Or. Rev. Stat. § 646A.406(1)(b)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors646A.html",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 24,000 miles",
+"detail": "The presumption covers the first two years or 24,000 miles after delivery, whichever ends first.",
+"cite": "Or. Rev. Stat. § 646A.406(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors646A.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Oregon's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Or. Rev. Stat. § 646A.406(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors646A.html",
+"verified": true
+}
+},
+"SC": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "South Carolina presumes a lemon if the same defect has been repaired three or more times within the warranty term and still exists.",
+"cite": "S.C. Code § 56-28-50(A)(1)",
+"source": "https://www.scstatehouse.gov/code/t56c028.php",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs during the warranty also triggers the presumption.",
+"cite": "S.C. Code § 56-28-50(A)(2)",
+"source": "https://www.scstatehouse.gov/code/t56c028.php",
+"verified": true
+},
+"coverage": {
+"value": "First 12 months or 12,000 miles",
+"detail": "The lemon law covers defects arising within the first 12 months or 12,000 miles, whichever comes first, and reported during the warranty.",
+"cite": "S.C. Code § 56-28-30",
+"source": "https://www.scstatehouse.gov/code/t56c028.php",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "South Carolina's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "S.C. Code § 56-28-50(A)(1)",
+"source": "https://www.scstatehouse.gov/code/t56c028.php",
+"verified": true
+}
+},
+"SD": {
+"attempts": {
+"value": "4 attempts for the same defect, plus a final manufacturer attempt",
+"detail": "South Dakota presumes a lemon after four or more repair attempts for the same defect (at least one in the first year/12,000 miles) plus a final attempt by the manufacturer.",
+"cite": "S.D. Codified Laws § 32-6D-5(1)",
+"source": "https://sdlegislature.gov/api/Statutes/32-6D-5.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 calendar days out of service in the manufacturer's or dealer's custody, including the final repair attempt, also triggers the presumption.",
+"cite": "S.D. Codified Laws § 32-6D-5(2)",
+"source": "https://sdlegislature.gov/api/Statutes/32-6D-5.html",
+"verified": true
+},
+"coverage": {
+"value": "Defect reported in first year or 12,000 miles; presumption runs 24 months or 24,000 miles",
+"detail": "The defect must first be reported in the lemon law rights period (1 year or 12,000 miles), and the presumption looks at repairs within 24 months or 24,000 miles.",
+"cite": "S.D. Codified Laws §§ 32-6D-1(3), 32-6D-5",
+"source": "https://sdlegislature.gov/api/Statutes/32-6D-5.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "South Dakota's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "S.D. Codified Laws § 32-6D-5(1)",
+"source": "https://sdlegislature.gov/api/Statutes/32-6D-5.html",
+"verified": true
+}
+},
+"TX": {
+"attempts": {
+"value": "4 attempts for the same defect (or 2 for a serious safety hazard)",
+"detail": "Texas presumes a lemon after four repair attempts for the same defect, or two attempts if the defect creates a serious safety hazard.",
+"cite": "Tex. Occ. Code § 2301.605(a)(1)-(2)",
+"source": "https://texas.public.law/statutes/tex._occ._code_section_2301.605",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 or more days out of service for repairs (not counting days with a comparable loaner) also triggers the presumption.",
+"cite": "Tex. Occ. Code § 2301.605(a)(3), (c)",
+"source": "https://texas.public.law/statutes/tex._occ._code_section_2301.605",
+"verified": true
+},
+"coverage": {
+"value": "Earlier of warranty expiration or 24 months/24,000 miles",
+"detail": "Repair attempts must occur before the warranty expires or 24 months/24,000 miles after delivery, whichever is first.",
+"cite": "Tex. Occ. Code § 2301.605(a)",
+"source": "https://texas.public.law/statutes/tex._occ._code_section_2301.605",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Texas's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Tex. Occ. Code § 2301.605(a)(1)-(2)",
+"source": "https://texas.public.law/statutes/tex._occ._code_section_2301.605",
+"verified": true
+}
+},
+"UT": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Utah presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Utah Code § 13-20-5(1)(a)",
+"source": "https://le.utah.gov/xcode/Title13/Chapter20/13-20-S5.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Utah Code § 13-20-5(1)(b)",
+"source": "https://le.utah.gov/xcode/Title13/Chapter20/13-20-S5.html",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "Utah Code § 13-20-5(1)",
+"source": "https://le.utah.gov/xcode/Title13/Chapter20/13-20-S5.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Utah's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Utah Code § 13-20-5(1)(a)",
+"source": "https://le.utah.gov/xcode/Title13/Chapter20/13-20-S5.html",
+"verified": true
+}
+},
+"VT": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Vermont presumes a lemon if the same defect has been repaired at least three times (the first within the warranty term) and still exists.",
+"cite": "9 V.S.A. § 4172(g)(1)",
+"source": "https://legislature.vermont.gov/statutes/section/09/115/04172",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs during the warranty term also triggers the presumption.",
+"cite": "9 V.S.A. § 4172(g)(2)",
+"source": "https://legislature.vermont.gov/statutes/section/09/115/04172",
+"verified": true
+},
+"coverage": {
+"value": "Manufacturer's express warranty term",
+"detail": "The presumption is measured against the term of the manufacturer's express warranty rather than a fixed statutory period.",
+"cite": "9 V.S.A. § 4172(g)",
+"source": "https://legislature.vermont.gov/statutes/section/09/115/04172",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Vermont's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "9 V.S.A. § 4172(g)(1)",
+"source": "https://legislature.vermont.gov/statutes/section/09/115/04172",
+"verified": true
+}
+},
+"VA": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a serious safety defect)",
+"detail": "Virginia presumes a lemon after three repair attempts for the same defect, or one attempt for a serious safety defect that continues.",
+"cite": "Va. Code § 59.1-207.13(B)",
+"source": "https://law.lis.virginia.gov/vacode/title59.1/chapter17.3/section59.1-207.13/",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 calendar days out of service for repairs also triggers the presumption.",
+"cite": "Va. Code § 59.1-207.13(B)(3)",
+"source": "https://law.lis.virginia.gov/vacode/title59.1/chapter17.3/section59.1-207.13/",
+"verified": true
+},
+"coverage": {
+"value": "18 months from delivery",
+"detail": "The lemon law rights period ends 18 months after the new vehicle's original delivery.",
+"cite": "Va. Code § 59.1-207.11",
+"source": "https://law.lis.virginia.gov/vacode/title59.1/chapter17.3/section59.1-207.11/",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Virginia's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Va. Code § 59.1-207.13(B)",
+"source": "https://law.lis.virginia.gov/vacode/title59.1/chapter17.3/section59.1-207.13/",
+"verified": true
+}
+},
+"WA": {
+"attempts": {
+"value": "4 attempts for the same defect (or 2 for the same serious safety defect)",
+"detail": "Washington presumes a lemon after four diagnosis or repair attempts for the same defect, or two for the same serious safety defect (at least one during the manufacturer's warranty).",
+"cite": "Rev. Code Wash. § 19.118.041(2)(a)-(b)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.118.041",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 calendar days out of service, at least 15 during the manufacturer's written warranty, also triggers the presumption.",
+"cite": "Rev. Code Wash. § 19.118.041(2)(c)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.118.041",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 24,000 miles",
+"detail": "The eligibility period ends two years after delivery or at 24,000 miles, whichever comes first.",
+"cite": "Rev. Code Wash. § 19.118.021",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.118.021",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Washington's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Rev. Code Wash. § 19.118.041(2)(a)-(b)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=19.118.041",
+"verified": true
+}
+},
+"WV": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a defect likely to cause death or serious injury)",
+"detail": "West Virginia presumes a lemon after three repair attempts for the same defect, or one attempt for a defect likely to cause death or serious bodily injury.",
+"cite": "W. Va. Code § 46A-6A-5(a)-(b)",
+"source": "https://code.wvlegislature.gov/46A-6A-5/",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "W. Va. Code § 46A-6A-5(a)",
+"source": "https://code.wvlegislature.gov/46A-6A-5/",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "W. Va. Code § 46A-6A-5(a)",
+"source": "https://code.wvlegislature.gov/46A-6A-5/",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "West Virginia has no used-car lemon law, but merchants cannot disclaim implied warranties on consumer goods, including used cars.",
+"cite": "W. Va. Code § 46A-6-107",
+"source": "https://www.nclc.org/wp-content/uploads/2026/01/202601_White-Paper_Compendium-of-Used-Car-Warranty-Laws.pdf",
+"verified": true
+}
+},
+"WY": {
+"attempts": {
+"value": "4 attempts for the same defect (more than three)",
+"detail": "Wyoming presumes a lemon if the same defect has been repaired more than three times and still exists.",
+"cite": "Wyo. Stat. § 40-17-101(d)(i)",
+"source": "https://wyoleg.gov/statutes/compress/title40.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 business days out of service for repairs also triggers the presumption.",
+"cite": "Wyo. Stat. § 40-17-101(d)(ii)",
+"source": "https://wyoleg.gov/statutes/compress/title40.pdf",
+"verified": true
+},
+"coverage": {
+"value": "First year after delivery",
+"detail": "The presumption covers repairs within one year after the vehicle's original delivery.",
+"cite": "Wyo. Stat. § 40-17-101(d)",
+"source": "https://wyoleg.gov/statutes/compress/title40.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Wyoming's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Wyo. Stat. § 40-17-101(d)(i)",
+"source": "https://wyoleg.gov/statutes/compress/title40.pdf",
+"verified": true
+}
+},
+"MT": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Montana presumes a lemon if the same defect has been repaired four or more times during the warranty period and still exists.",
+"cite": "Mont. Code Ann. § 61-4-504(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0610/chapter_0040/part_0050/section_0040/0610-0040-0050-0040.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service after notifying the manufacturer also triggers the presumption.",
+"cite": "Mont. Code Ann. § 61-4-504(2)",
+"source": "https://mca.legmt.gov/bills/mca/title_0610/chapter_0040/part_0050/section_0040/0610-0040-0050-0040.html",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 18,000 miles",
+"detail": "The warranty period for lemon law purposes ends two years after delivery or at 18,000 miles, whichever comes first.",
+"cite": "Mont. Code Ann. § 61-4-501",
+"source": "https://mca.legmt.gov/bills/mca/title_0610/chapter_0040/part_0050/section_0010/0610-0040-0050-0010.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Montana's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Mont. Code Ann. § 61-4-504(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0610/chapter_0040/part_0050/section_0040/0610-0040-0050-0040.html",
+"verified": true
+}
+},
+"CA": {
+"attempts": {
+"value": "4 attempts for the same defect (or 2 for a defect likely to cause death or serious injury)",
+"detail": "California presumes a lemon after four repair attempts for the same defect, or two for a defect likely to cause death or serious injury, if the buyer notified the manufacturer directly at least once.",
+"cite": "Cal. Civ. Code § 1793.22(b)(1)-(2)",
+"source": "https://california.public.law/codes/civil_code_section_1793.22",
+"verified": true
+},
+"daysOut": {
+"value": "More than 30 calendar days",
+"detail": "A cumulative total of more than 30 calendar days out of service for repairs also triggers the presumption.",
+"cite": "Cal. Civ. Code § 1793.22(b)(3)",
+"source": "https://california.public.law/codes/civil_code_section_1793.22",
+"verified": true
+},
+"coverage": {
+"value": "18 months or 18,000 miles",
+"detail": "The presumption covers the first 18 months or 18,000 miles after delivery, whichever comes first.",
+"cite": "Cal. Civ. Code § 1793.22(b)",
+"source": "https://california.public.law/codes/civil_code_section_1793.22",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Under the Song-Beverly Act, a dealer that sells a used car with its own express warranty takes on the same repair-or-refund obligations a manufacturer has for new goods.",
+"cite": "Cal. Civ. Code § 1795.5",
+"source": "https://california.public.law/codes/civil_code_section_1795.5",
+"verified": true
+}
+},
+"CO": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Colorado presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "Colo. Rev. Stat. § 42-10-103(2)(a)(I)",
+"source": "https://colorado.public.law/statutes/crs_42-10-103",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Colo. Rev. Stat. § 42-10-103(2)(a)(II)",
+"source": "https://colorado.public.law/statutes/crs_42-10-103",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the warranty term or one year after delivery, whichever ends first.",
+"cite": "Colo. Rev. Stat. § 42-10-103(2)(a)",
+"source": "https://colorado.public.law/statutes/crs_42-10-103",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Colorado's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Colo. Rev. Stat. § 42-10-103(2)(a)(I)",
+"source": "https://colorado.public.law/statutes/crs_42-10-103",
+"verified": true
+}
+},
+"NY": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "New York presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "N.Y. Gen. Bus. Law § 198-a(d)(1)",
+"source": "https://newyork.public.law/laws/n.y._general_business_law_section_198-a",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption.",
+"cite": "N.Y. Gen. Bus. Law § 198-a(d)(2)",
+"source": "https://newyork.public.law/laws/n.y._general_business_law_section_198-a",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 18,000 miles",
+"detail": "The presumption covers the first two years or 18,000 miles after delivery, whichever comes first.",
+"cite": "N.Y. Gen. Bus. Law § 198-a(d)",
+"source": "https://newyork.public.law/laws/n.y._general_business_law_section_198-a",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must give a written warranty on used cars of 30 to 90 days depending on mileage (up to 100,000 miles), with refund rights if covered defects can't be fixed.",
+"cite": "N.Y. Gen. Bus. Law § 198-b",
+"source": "https://newyork.public.law/laws/n.y._general_business_law_section_198-b",
+"verified": true
+}
+},
+"MI": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Michigan presumes a lemon if the same substantial defect has been repaired four or more times within two years of the first repair attempt and still exists, with written notice to the manufacturer after the third attempt.",
+"cite": "Mich. Comp. Laws § 257.1403(5)(a)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-1403",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A total of 30 or more days (or parts of days) out of service during the warranty term or first year also triggers the presumption.",
+"cite": "Mich. Comp. Laws § 257.1403(5)(b)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-1403",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The defect must first be reported during the manufacturer's warranty or within one year of delivery, whichever is earlier.",
+"cite": "Mich. Comp. Laws § 257.1402",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-1402",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Michigan's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Mich. Comp. Laws § 257.1403(5)(a)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-1403",
+"verified": true
+}
+},
+"AL": {
+"attempts": {
+"value": "3 attempts for the same defect, plus a final manufacturer attempt",
+"detail": "Alabama presumes a lemon after three repair attempts for the same defect (at least one in the first year/12,000 miles) plus a final attempt by the manufacturer.",
+"cite": "Ala. Code § 8-20A-2(c)(1)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=8-20A-2",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 calendar days out of service in the manufacturer's or dealer's custody, including the final repair attempt, also triggers the presumption.",
+"cite": "Ala. Code § 8-20A-2(c)(2)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=8-20A-2",
+"verified": true
+},
+"coverage": {
+"value": "Defect reported in first year or 12,000 miles; presumption runs 24 months or 24,000 miles",
+"detail": "The defect must first be reported during the lemon law rights period (1 year or 12,000 miles), and the presumption looks at repairs within 24 months or 24,000 miles.",
+"cite": "Ala. Code §§ 8-20A-1(8), 8-20A-2(c)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=8-20A-2",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Alabama's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Ala. Code § 8-20A-2(c)(1)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=8-20A-2",
+"verified": true
+}
+},
+"RI": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Rhode Island presumes a lemon if the same defect has been repaired four or more times within the term of protection and still exists or recurs.",
+"cite": "R.I. Gen. Laws § 31-5.2-5",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-5.2/31-5.2-5.htm",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs also triggers the presumption, after which the manufacturer gets one more chance (up to 7 days) to fix it.",
+"cite": "R.I. Gen. Laws § 31-5.2-5",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-5.2/31-5.2-5.htm",
+"verified": true
+},
+"coverage": {
+"value": "1 year or 15,000 miles",
+"detail": "The term of protection is one year or 15,000 miles from original delivery, whichever comes first.",
+"cite": "R.I. Gen. Laws § 31-5.2-1(10)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-5.2/31-5.2-1.htm",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must give a written warranty on used cars with up to 100,000 miles (60 days/3,000 miles or 30 days/1,000 miles depending on mileage), and must refund the price if they can't fix a covered defect.",
+"cite": "R.I. Gen. Laws §§ 31-5.4-2, 31-5.4-3",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-5.4/31-5.4-2.htm",
+"verified": true
+}
+},
+"PA": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Pennsylvania presumes a lemon if the same defect has been repaired three times and still exists.",
+"cite": "73 P.S. § 1956 (Automobile Lemon Law § 6(a)(1))",
+"source": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=PDF&SessYr=1984&ActNum=0028.&SessInd=0",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for any defect also triggers the presumption.",
+"cite": "73 P.S. § 1956 (Automobile Lemon Law § 6(a)(2))",
+"source": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=PDF&SessYr=1984&ActNum=0028.&SessInd=0",
+"verified": true
+},
+"coverage": {
+"value": "First of 1 year, 12,000 miles, or the warranty term",
+"detail": "Defects must be reported within one year of delivery, the first 12,000 miles, or the warranty term, whichever comes first.",
+"cite": "73 P.S. § 1954(a) (Automobile Lemon Law § 4(a))",
+"source": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=PDF&SessYr=1984&ActNum=0028.&SessInd=0",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Pennsylvania's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "73 P.S. § 1956 (Automobile Lemon Law § 6(a)(1))",
+"source": "https://www.palegis.us/statutes/unconsolidated/law-information/view-statute?txtType=PDF&SessYr=1984&ActNum=0028.&SessInd=0",
+"verified": true
+}
+},
+"OK": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Oklahoma presumes a lemon if the same defect has been repaired four or more times and still exists.",
+"cite": "15 Okla. Stat. § 901(D)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=66311",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 business days out of service for repairs also triggers the presumption.",
+"cite": "15 Okla. Stat. § 901(D)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=66311",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "15 Okla. Stat. § 901(B), (D)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=66311",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Oklahoma's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "15 Okla. Stat. § 901(D)",
+"source": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=66311",
+"verified": true
+}
+},
+"CT": {
+"attempts": {
+"value": "4 attempts for the same defect (or 2 for a serious safety defect)",
+"detail": "Connecticut presumes four repair attempts is reasonable, or two attempts for a defect likely to cause death or serious injury (during the first year or 24,000 miles).",
+"cite": "Conn. Gen. Stat. § 42-179 (per CT Dept. of Consumer Protection)",
+"source": "https://portal.ct.gov/dcp/knowledge-base/articles/lemon-law/repair-attempts",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 or more days out of service at the dealership for repairs also qualifies.",
+"cite": "Conn. Gen. Stat. § 42-179 (per CT Dept. of Consumer Protection)",
+"source": "https://portal.ct.gov/dcp/knowledge-base/articles/lemon-law/repair-attempts",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 24,000 miles",
+"detail": "Repair attempts must occur within the first two years from delivery or the first 24,000 miles, whichever ends first.",
+"cite": "Conn. Gen. Stat. § 42-179 (per CT Dept. of Consumer Protection)",
+"source": "https://portal.ct.gov/dcp/lemon-law/lemon-law-app/lemon-law-for-the-consumer?language=en_US",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers can't disclaim implied warranties on used cars costing $3,000 or more and must give an express warranty of 30 days/1,500 miles ($3,000-$4,999) or 60 days/3,000 miles ($5,000+).",
+"cite": "Conn. Gen. Stat. § 42-221",
+"source": "https://www.nclc.org/wp-content/uploads/2026/01/202601_White-Paper_Compendium-of-Used-Car-Warranty-Laws.pdf",
+"verified": true
+}
+},
+"NJ": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a serious safety defect)",
+"detail": "New Jersey presumes a lemon after three repair attempts for the same defect, or one attempt for a serious safety defect, followed by a certified-mail final chance for the manufacturer.",
+"cite": "N.J.S.A. 56:12-33 (per NJ Division of Consumer Affairs)",
+"source": "https://www.njconsumeraffairs.gov/news/consumer%20briefs/new-car-lemon-law.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "20 calendar days",
+"detail": "A cumulative 20 or more days out of service for repairs (45 for motor homes) also qualifies.",
+"cite": "N.J.S.A. 56:12-33 (per NJ Division of Consumer Affairs)",
+"source": "https://www.njconsumeraffairs.gov/news/consumer%20briefs/new-car-lemon-law.pdf",
+"verified": true
+},
+"coverage": {
+"value": "2 years or 24,000 miles",
+"detail": "The term of protection is the first two years or 24,000 miles from delivery, whichever comes first.",
+"cite": "N.J.S.A. 56:12-31 (per NJ Division of Consumer Affairs)",
+"source": "https://www.njconsumeraffairs.gov/news/consumer%20briefs/new-car-lemon-law.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must warrant qualifying used cars (under 7 years old, under 100,000 miles, at least $3,000) for 30 to 90 days depending on mileage, with refund rights after 3 failed repairs or 20 days out of service.",
+"cite": "N.J.S.A. 56:8-67 et seq. (per Ocean County Dept. of Consumer Affairs)",
+"source": "https://co.ocean.nj.us/OC/ConsumerAffairs/frmUsedCarLemonLaws.aspx",
+"verified": true
+}
+},
+"IL": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Illinois's lemon law applies when a substantial defect isn't fixed after at least four repair attempts.",
+"cite": "815 ILCS 380/3 (per Illinois Attorney General)",
+"source": "https://illinoisattorneygeneral.gov/Page-Attachments/LemonLawEnglish.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A total of 30 or more business days out of service for repairs also qualifies.",
+"cite": "815 ILCS 380/3 (per Illinois Attorney General)",
+"source": "https://illinoisattorneygeneral.gov/Page-Attachments/LemonLawEnglish.pdf",
+"verified": true
+},
+"coverage": {
+"value": "First 12 months or 12,000 miles",
+"detail": "The lemon law covers new vehicles in their first 12 months or 12,000 miles, whichever comes first.",
+"cite": "815 ILCS 380/3 (per Illinois Attorney General)",
+"source": "https://illinoisattorneygeneral.gov/Page-Attachments/LemonLawEnglish.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Illinois's lemon law excludes used cars, but dealers must give a 15-day/500-mile limited powertrain warranty on most used vehicles (under 150,000 miles).",
+"cite": "815 ILCS 505/2L",
+"source": "https://illinoisattorneygeneral.gov/Page-Attachments/FAQforDealers.pdf",
+"verified": true
+}
+},
+"IN": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Indiana treats at least four repair attempts on a defect that still exists as a reasonable number of attempts.",
+"cite": "Ind. Code ch. 24-5-13 (per Indiana Attorney General)",
+"source": "https://www.in.gov/attorneygeneral/consumer-protection-division/files/Lemon_Law.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "At least 30 business days out of service for repairs also qualifies.",
+"cite": "Ind. Code ch. 24-5-13 (per Indiana Attorney General)",
+"source": "https://www.in.gov/attorneygeneral/consumer-protection-division/files/Lemon_Law.pdf",
+"verified": true
+},
+"coverage": {
+"value": "18 months or 18,000 miles",
+"detail": "The problem must be reported within 18 months of delivery or before 18,000 miles, whichever comes first.",
+"cite": "Ind. Code § 24-5-13 (per Indiana Attorney General)",
+"source": "https://www.in.gov/attorneygeneral/consumer-protection-division/files/Lemon_Law.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Indiana's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Ind. Code ch. 24-5-13 (per Indiana Attorney General)",
+"source": "https://www.in.gov/attorneygeneral/consumer-protection-division/files/Lemon_Law.pdf",
+"verified": true
+}
+},
+"GA": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a serious safety defect)",
+"detail": "Georgia deems a reasonable number of attempts made after three repairs of the same defect, or one repair of a serious safety defect, during the lemon law rights period.",
+"cite": "O.C.G.A. § 10-1-784(a)",
+"source": "https://consumer.georgia.gov/document/document/lemon-law-jan-2025/download",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A cumulative 30 days out of service for repairs during the lemon law rights period also qualifies.",
+"cite": "O.C.G.A. § 10-1-784(a)",
+"source": "https://consumer.georgia.gov/document/document/lemon-law-jan-2025/download",
+"verified": true
+},
+"coverage": {
+"value": "24 months or 24,000 miles",
+"detail": "The lemon law rights period is the first 24 months or 24,000 miles after delivery, whichever comes first.",
+"cite": "O.C.G.A. § 10-1-782",
+"source": "https://consumer.georgia.gov/lemonlaw",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Georgia's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "O.C.G.A. § 10-1-784(a)",
+"source": "https://consumer.georgia.gov/document/document/lemon-law-jan-2025/download",
+"verified": true
+}
+},
+"TN": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Tennessee presumes a lemon if the same defect has been repaired three or more times and still exists.",
+"cite": "Tenn. Code Ann. § 55-24-105(a)(1)",
+"source": "https://www.tn.gov/content/dam/tn/attorneygeneral/documents/consumer/militaryguide/chapter01.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative 30 or more calendar days out of service for repairs during the term of protection also triggers the presumption.",
+"cite": "Tenn. Code Ann. § 55-24-105(a)(2)",
+"source": "https://www.tn.gov/content/dam/tn/attorneygeneral/documents/consumer/militaryguide/chapter01.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The term of protection is the express warranty term or one year after delivery, whichever comes first.",
+"cite": "Tenn. Code Ann. § 55-24-101(7)",
+"source": "https://www.lemonlaw.com/wp-content/uploads/2024/08/Tennessee-Lemon-Law-Statute.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Tennessee's lemon law only applies to vehicles bought new; used vehicle purchases are not covered.",
+"cite": "Tenn. Code Ann. § 55-24-101 et seq.",
+"source": "https://www.tn.gov/content/dam/tn/attorneygeneral/documents/consumer/militaryguide/chapter01.pdf",
+"verified": true
+}
+},
+"MS": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Mississippi presumes a lemon if the same defect has been repaired three or more times and still exists.",
+"cite": "Miss. Code Ann. § 63-17-159(3)(a)",
+"source": "https://www.mmvc.ms.gov/sites/mmvc/files/Statutes/WarrantyEnforcementAct.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "15 working days",
+"detail": "A cumulative 15 or more working days out of service for repairs also triggers the presumption.",
+"cite": "Miss. Code Ann. § 63-17-159(3)(b)",
+"source": "https://www.mmvc.ms.gov/sites/mmvc/files/Statutes/WarrantyEnforcementAct.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery, whichever ends first.",
+"cite": "Miss. Code Ann. § 63-17-159(3)",
+"source": "https://www.mmvc.ms.gov/sites/mmvc/files/Statutes/WarrantyEnforcementAct.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Mississippi has no used-car lemon law, though sellers of consumer goods (including used cars) cannot disclaim implied warranties.",
+"cite": "Miss. Code Ann. § 11-7-18",
+"source": "https://www.nclc.org/wp-content/uploads/2026/01/202601_White-Paper_Compendium-of-Used-Car-Warranty-Laws.pdf",
+"verified": true
+}
+},
+"AR": {
+"attempts": {
+"value": "3 attempts for the same defect plus a final manufacturer attempt (or 1 for a defect likely to cause death or serious injury; or 5 total attempts)",
+"detail": "Arkansas presumes a lemon after three failed repairs of the same defect plus a final repair opportunity, one failed repair of a life-threatening defect, or five or more attempts on defects that together substantially impair the vehicle.",
+"cite": "Ark. Code Ann. § 4-90-401 et seq. (per Arkansas Attorney General)",
+"source": "https://media.ark.org/ag/Lemon-Law-Corrected-2025.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 calendar days",
+"detail": "A cumulative total of at least 30 calendar days out of service for repairs also qualifies.",
+"cite": "Ark. Code Ann. § 4-90-401 et seq. (per Arkansas Attorney General)",
+"source": "https://media.ark.org/ag/Lemon-Law-Corrected-2025.pdf",
+"verified": true
+},
+"coverage": {
+"value": "24 months or 24,000 miles, whichever is longer",
+"detail": "Arkansas's Quality Assurance Period runs 24 months from delivery or the first 24,000 miles, whichever is longer.",
+"cite": "Ark. Code Ann. § 4-90-401 et seq. (per Arkansas Attorney General)",
+"source": "https://media.ark.org/ag/Lemon-Law-Corrected-2025.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Arkansas's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Ark. Code Ann. § 4-90-401 et seq. (per Arkansas Attorney General)",
+"source": "https://media.ark.org/ag/Lemon-Law-Corrected-2025.pdf",
+"verified": true
+}
+},
+"HI": {
+"attempts": {
+"value": "3 attempts for the same defect (or 1 for a defect likely to cause death or serious injury)",
+"detail": "Hawaii presumes a lemon after three repair attempts for the same defect, or one attempt for a defect likely to cause death or serious bodily injury.",
+"cite": "Haw. Rev. Stat. § 481I-3(d)",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/481I-L.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs also triggers the presumption.",
+"cite": "Haw. Rev. Stat. § 481I-3(d)(3)",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/481I-L.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Earliest of warranty term, 2 years, or 24,000 miles",
+"detail": "The lemon law rights period is the manufacturer's warranty term, two years from delivery, or the first 24,000 miles, whichever comes first.",
+"cite": "Haw. Rev. Stat. § 481I-2",
+"source": "https://cca.hawaii.gov/wp-content/uploads/2026/01/481I-L.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "Yes",
+"detail": "Dealers must give a written warranty on used cars with under 75,000 miles (90 days/5,000 miles down to 30 days/1,000 miles depending on mileage) and must refund the price if they can't fix a covered defect.",
+"cite": "Haw. Rev. Stat. §§ 481J-2, 481J-6",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol11_Ch0476-0490/HRS0481J/HRS_0481J-0002.htm",
+"verified": true
+}
+},
+"AK": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "Alaska presumes a lemon if the same defect has been repaired three or more times and still exists.",
+"cite": "Alaska Stat. § 45.45.320 (per Alaska Attorney General)",
+"source": "https://www.law.alaska.gov/consumer/lemonlaw.html",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A total of 30 or more business days out of service for repairs also qualifies.",
+"cite": "Alaska Stat. § 45.45.320 (per Alaska Attorney General)",
+"source": "https://www.law.alaska.gov/consumer/lemonlaw.html",
+"verified": true
+},
+"coverage": {
+"value": "Warranty term or first year, whichever is earlier",
+"detail": "The presumption covers the express warranty term or one year after delivery to the original owner, whichever ends first.",
+"cite": "Alaska Stat. § 45.45.320 (per Alaska Attorney General)",
+"source": "https://www.law.alaska.gov/consumer/lemonlaw.html",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "The Alaska Attorney General states the Lemon Law does not apply to used vehicles.",
+"cite": "Alaska Stat. § 45.45.300 (per Alaska Attorney General)",
+"source": "https://www.law.alaska.gov/consumer/lemonlaw.html",
+"verified": true
+}
+},
+"NH": {
+"attempts": {
+"value": "3 attempts for the same defect",
+"detail": "New Hampshire presumes a lemon if the same defect has been repaired at least three times within the warranty term and still exists.",
+"cite": "N.H. Rev. Stat. ch. 357-D",
+"source": "https://www.lemonlaw.com/wp-content/uploads/2024/08/New-Hampshire-Lemon-Law-Statute.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 business days",
+"detail": "A cumulative 30 or more business days out of service for repairs during the warranty term also triggers the presumption.",
+"cite": "N.H. Rev. Stat. ch. 357-D",
+"source": "https://www.lemonlaw.com/wp-content/uploads/2024/08/New-Hampshire-Lemon-Law-Statute.pdf",
+"verified": true
+},
+"coverage": {
+"value": "Manufacturer's express warranty term",
+"detail": "The presumption is measured against the term of the manufacturer's express warranty rather than a fixed statutory period.",
+"cite": "N.H. Rev. Stat. ch. 357-D",
+"source": "https://www.lemonlaw.com/wp-content/uploads/2024/08/New-Hampshire-Lemon-Law-Statute.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "New Hampshire's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "N.H. Rev. Stat. ch. 357-D",
+"source": "https://www.lemonlaw.com/wp-content/uploads/2024/08/New-Hampshire-Lemon-Law-Statute.pdf",
+"verified": true
+}
+},
+"WI": {
+"attempts": {
+"value": "4 attempts for the same defect",
+"detail": "Wisconsin's lemon law applies if the dealer fails four times to fix the same defect during the first year and before the warranty expires.",
+"cite": "Wis. Stat. § 218.0171(1)(h) (per Wisconsin DOT)",
+"source": "https://www.wisconsindot.gov/Documents/dmv/shared/lemonlawafter.pdf",
+"verified": true
+},
+"daysOut": {
+"value": "30 days",
+"detail": "A vehicle out of service for 30 or more days due to defects also qualifies (counting days a vehicle is unusable after two failed repairs of a serious safety or use defect).",
+"cite": "Wis. Stat. § 218.0171(1)(h) (per Wisconsin DOT)",
+"source": "https://www.wisconsindot.gov/Documents/dmv/shared/lemonlawafter.pdf",
+"verified": true
+},
+"coverage": {
+"value": "First year and within the warranty, whichever ends first",
+"detail": "The repair attempts or days out of service must occur during the vehicle's first year of operation and before the warranty expires.",
+"cite": "Wis. Stat. § 218.0171 (per Wisconsin DOT)",
+"source": "https://www.wisconsindot.gov/Documents/dmv/shared/lemonlawafter.pdf",
+"verified": true
+},
+"usedCars": {
+"value": "No",
+"detail": "Wisconsin's lemon law covers new vehicles, and the state has no separate used-car lemon or mandatory used-car warranty law.",
+"cite": "Wis. Stat. § 218.0171(1)(h) (per Wisconsin DOT)",
+"source": "https://www.wisconsindot.gov/Documents/dmv/shared/lemonlawafter.pdf",
+"verified": true
+}
+},
+"NM": {
+"usedCars": {
+"value": "Yes",
+"detail": "Used-car dealers cannot disclaim the implied warranty of merchantability for the first 15 days or 500 miles after delivery, whichever comes first.",
+"cite": "N.M. Stat. Ann. § 57-16A-3.1",
+"source": "https://www.nclc.org/wp-content/uploads/2026/01/202601_White-Paper_Compendium-of-Used-Car-Warranty-Laws.pdf",
+"verified": true
+}
+}
+}
+}

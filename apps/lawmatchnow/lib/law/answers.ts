@@ -30,6 +30,10 @@ const lc = (s: string) => s.charAt(0).toLowerCase() + s.slice(1)
 const cite = (f: Fact) => (f.cite ? ` (${f.cite})` : '')
 /** "3 days (excluding weekends)" -> "3 days of notice (excluding weekends)" */
 const noticeOf = (val: string) => { const m = /^([^(]*?)\s*(\(.*\))?$/.exec(val)!; return `${lc(m[1])} of notice${m[2] ? ` ${m[2]}` : ''}` }
+/** "7 years (with taxes paid)" -> "7 years of <what> (with taxes paid)" */
+export const periodOf = (val: string, what: string) => { const m = /^([^(]*?)\s*(\(.*\))?$/.exec(val)!; return `${lc(m[1])} of ${what}${m[2] ? ` ${m[2]}` : ''}` }
+/** Drop a trailing "(Fla. Stat. § 82.036)" when the citation is shown separately. */
+export const noCite = (val: string) => val.replace(/\s*\([^)]*§[^)]*\)$/, '')
 /** "next regular payday" reads as "on the next regular payday" */
 export const due = (val: string) => (/^next\b/i.test(val) ? `on the ${lc(val)}` : lc(val))
 
@@ -284,6 +288,164 @@ export const QUESTIONS: Question[] = [
     yesLabel: 'Required',
     topic: 'final-paycheck-laws',
     practice: 'employment-law',
+  },
+  {
+    id: 'common-law-marriage',
+    key: 'marriage.commonLaw',
+    slug: (s) => `is-${s.slug}-a-common-law-marriage-state`,
+    ask: (s) => `Is ${s.name} a common-law marriage state?`,
+    answer: (s, f) => /^recognized/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} recognizes common-law marriage: a couple can be legally married without a license if they agree to be married, live together and present themselves as married${cite(f)}.` }
+      : /^only/i.test(v(f))
+        ? { verdict: 'partly', short: 'Only older ones', text: `Only for older relationships. ${s.name} abolished common-law marriage but still recognizes one ${lc(v(f)).replace(/^only if /, '')}${cite(f)}.` }
+        : { verdict: 'no', short: 'No', text: `No. ${s.name} does not allow common-law marriage; a couple must get a marriage license and have a ceremony to be legally married${cite(f)}.` },
+    meaning: (s, f, a) => [
+      f.detail ?? '',
+      a.verdict === 'yes'
+        ? `Living together isn't enough on its own, and there is no set number of years. A common-law marriage in ${s.name} is a full legal marriage: ending it requires a divorce, and spouses have the same property and inheritance rights.`
+        : `Unmarried couples in ${s.name} don't get spousal rights by living together, no matter how long. Cohabitation agreements, joint titles, wills and beneficiary designations protect each partner instead. ${s.name} still generally recognizes a valid common-law marriage formed in a state that allows one.`,
+    ].filter(Boolean),
+    national: { slug: 'common-law-marriage-states', title: 'Common-Law Marriage States: The Full List', h1: 'Which states recognize common-law marriage?', lede: 'Only a handful of states still let couples form a common-law marriage; others recognize only ones formed before a cutoff date. Here is every state’s rule, with the law.', group: 'Recognized' },
+    yesLabel: 'Recognized',
+    topic: 'marriage-laws',
+    practice: 'family-law',
+  },
+  {
+    id: 'marriage-age',
+    key: 'marriage.minAge',
+    slug: (s) => `what-is-the-legal-age-to-get-married-in-${s.slug}`,
+    ask: (s) => `What is the legal age to get married in ${s.name}?`,
+    answer: (s, f) => ({ verdict: 'info', short: /^no minimum/i.test(v(f)) ? 'No set minimum' : `Age ${/^\d+/.exec(v(f))?.[0] ?? v(f)}`, text: `The minimum age to marry in ${s.name} is ${lc(v(f))}${cite(f)}. ${f.detail ?? ''}`.trim() }),
+    meaning: (s) => [
+      `Adults 18 and over can marry in ${s.name} with a license from the county clerk. A growing number of states have ended all exceptions for minors, so check for recent changes before relying on an older rule.`,
+    ],
+    national: { slug: 'marriage-age-by-state', title: 'Legal Marriage Age by State', h1: 'What is the legal age to get married in each state?', lede: 'More and more states set 18 as the minimum with no exceptions; others still allow younger marriages with parental consent or a judge’s approval. Here is every state, with the statute.', group: 'Age' },
+    yesLabel: 'Minimum',
+    topic: 'marriage-laws',
+    practice: 'family-law',
+  },
+  {
+    id: 'squatters',
+    key: 'property.adversePossession',
+    slug: (s) => `how-long-for-squatters-rights-in-${s.slug}`,
+    ask: (s) => `How long until a squatter has rights in ${s.name}?`,
+    answer: (s, f) => ({ verdict: 'info', short: v(f).replace(/\s*\(.*$/, ''), text: `In ${s.name}, a squatter can claim title to property through adverse possession only after ${periodOf(v(f), "continuous, open possession without the owner's permission")}${cite(f)}. ${f.detail ?? ''}`.trim() }),
+    meaning: (s) => [
+      `Squatters rarely win title: they must prove every element of adverse possession for the whole period, and an owner who objects, gives permission or starts a removal case interrupts the clock. The bigger practical issue is getting them out.`,
+      `See the ${s.name} squatters' rights guide for how owners remove an unauthorized occupant, and don't use self-help like changing locks or shutting off utilities.`,
+    ],
+    national: { slug: 'squatters-rights-by-state', title: "Squatters' Rights by State: Adverse Possession Periods", h1: 'How long until squatters have rights in each state?', lede: 'Adverse possession lets someone claim land after possessing it openly for a set number of years, from 5 to 30 depending on the state. Here is every state’s period, with the statute.', group: 'Years' },
+    yesLabel: 'Period',
+    topic: 'squatters-rights',
+    practice: 'real-estate',
+  },
+  {
+    id: 'at-will',
+    key: 'employment2.atWill',
+    slug: (s) => `is-${s.slug}-an-at-will-state`,
+    ask: (s) => `Is ${s.name} an at-will employment state?`,
+    answer: (s, f) => /^at-will/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} is an at-will employment state: an employer can fire an employee for any lawful reason, or no reason, without notice, and the employee can quit the same way${cite(f)}.` }
+      : { verdict: 'no', short: 'No', text: `No. ${s.name} is the only state that is not at-will: after a probation period, an employer needs good cause to fire an employee${cite(f)}.` },
+    meaning: (s, f, a) => [
+      f.detail ?? '',
+      a.verdict === 'yes'
+        ? `At-will doesn't mean anything goes. Firing someone in ${s.name} is still illegal if the real reason is discrimination, retaliation for a complaint or claim, taking protected leave, or if it breaks a contract or union agreement.`
+        : `Employees in ${s.name} who are fired without good cause after probation can bring a wrongful discharge claim under the state's statute, which has its own deadlines and damage limits.`,
+    ].filter(Boolean),
+    national: { slug: 'at-will-employment-states', title: 'At-Will Employment States (Every State Except One)', h1: 'Which states are at-will employment states?', lede: 'Every state but one follows at-will employment, where either side can end the job at any time for any lawful reason. Here is each state’s rule, with its source.', group: 'At-will' },
+    yesLabel: 'At-will',
+    topic: 'at-will-employment',
+    practice: 'employment-law',
+  },
+  {
+    id: 'non-compete',
+    key: 'employment2.nonCompete',
+    slug: (s) => `are-non-competes-enforceable-in-${s.slug}`,
+    ask: (s) => `Are non-compete agreements enforceable in ${s.name}?`,
+    answer: (s, f) => /^banned/i.test(v(f))
+      ? { verdict: 'no', short: 'Mostly no', text: `Mostly no. ${s.name} bans non-compete agreements for most employees${cite(f)}. ${f.detail ?? ''}`.trim() }
+      : /^allowed if reasonable$/i.test(v(f))
+        ? { verdict: 'yes', short: 'Yes, if reasonable', text: `Yes, if reasonable. ${s.name} courts enforce non-competes that protect a legitimate business interest and are reasonable in time, area and scope${cite(f)}. ${f.detail ?? ''}`.trim() }
+        : { verdict: 'partly', short: 'With limits', text: `With limits. ${s.name}: ${lc(v(f))}${cite(f)}. ${f.detail ?? ''}`.trim() },
+    meaning: (s) => [
+      `Even where non-competes are allowed, ${s.name} courts can refuse to enforce one that is broader than needed, and many will narrow it. Non-solicitation and confidentiality clauses are separate and are enforced more often.`,
+      'Non-compete law is changing quickly across the country. Have an employment lawyer review an agreement before you sign it, or before you take a new job that might break it.',
+    ],
+    national: { slug: 'non-compete-laws-by-state', title: 'Non-Compete Laws by State: Where They’re Banned or Limited', h1: 'Are non-compete agreements enforceable in each state?', lede: 'A few states ban non-competes for most workers, a growing number set salary thresholds, and the rest enforce them only if reasonable. Here is every state’s rule we could verify, with the law.', group: 'Enforced if reasonable' },
+    yesLabel: 'Enforced',
+    topic: 'at-will-employment',
+    practice: 'employment-law',
+  },
+  {
+    id: 'expunge-misdemeanor',
+    key: 'records.misdemeanorWait',
+    slug: (s) => `how-long-to-expunge-a-misdemeanor-in-${s.slug}`,
+    ask: (s) => `How long until you can expunge a misdemeanor in ${s.name}?`,
+    answer: (s, f) => ({ verdict: 'info', short: /^not eligible/i.test(v(f)) ? 'Not eligible' : v(f).replace(/\s*\(.*$/, '').replace(/ after .*$/, '').replace(/;.*$/, ''), text: `In ${s.name}: ${lc(v(f))}${cite(f)}. ${f.detail ?? ''}`.trim() }),
+    meaning: (s) => [
+      'The waiting period usually starts when the whole sentence is finished, including probation, fines and restitution, and a new offense during it can reset the clock or make the record ineligible.',
+      `Dismissed charges and arrests without a conviction can often be cleared sooner. A ${s.name} criminal defense lawyer can confirm eligibility and file the petition.`,
+    ],
+    national: { slug: 'expungement-waiting-periods-by-state', title: 'Expungement Waiting Periods by State (Misdemeanors)', h1: 'How long until a misdemeanor can be expunged in each state?', lede: 'Most states let people clear an old misdemeanor after a waiting period; a few allow little or no clearing. Here is every state’s rule, with the statute.', group: 'Wait' },
+    yesLabel: 'Wait',
+    topic: 'expungement-laws',
+    practice: 'criminal-defense',
+  },
+  {
+    id: 'clean-slate',
+    key: 'records.autoClear',
+    slug: (s) => `does-${s.slug}-have-a-clean-slate-law`,
+    ask: (s) => `Does ${s.name} have a Clean Slate law?`,
+    answer: (s, f) => /^yes/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} has a Clean Slate law providing for automatic clearing of some old records${cite(f)}. ${f.detail ?? ''}`.trim() }
+      : { verdict: 'no', short: 'No', text: `No. ${s.name} has no automatic record-clearing (Clean Slate) law; eligible people must petition to clear a record${cite(f)}. ${f.detail ?? ''}`.trim() },
+    meaning: (s, _f, a) => [
+      a.verdict === 'yes'
+        ? `Clean Slate laws typically clear qualifying records only after a crime-free period and often exclude serious offenses; rollouts can take years. Check whether your record has actually been cleared before answering a background-check question, and petition if it hasn't.`
+        : `In ${s.name}, nothing happens automatically: you must file a petition once you're eligible. A criminal defense lawyer can check your full record and file it.`,
+    ],
+    national: { slug: 'clean-slate-states', title: 'Clean Slate States: Automatic Record Clearing Laws', h1: 'Which states have Clean Slate laws?', lede: 'A growing number of states automatically clear qualifying old criminal records. Here is every state’s status, with the law.', group: 'Clean Slate' },
+    yesLabel: 'Clean Slate',
+    topic: 'expungement-laws',
+    practice: 'criminal-defense',
+  },
+  {
+    id: 'lemon-attempts',
+    key: 'lemon.attempts',
+    slug: (s) => `how-many-repair-attempts-for-a-lemon-in-${s.slug}`,
+    ask: (s) => `How many repair attempts make a car a lemon in ${s.name}?`,
+    answer: (s, f) => {
+      const days = fact(s.code, 'lemon.daysOut')
+      return { verdict: 'info', short: v(f).replace(/\s*\(.*$/, '').replace(/ for the same defect/, ''), text: `In ${s.name}, a new car is presumed a lemon after ${lc(v(f))}${cite(f)}${days ? `, or after ${lc(v(days))} out of service${cite(days)}` : ''}.` }
+    },
+    meaning: (s, f) => [
+      f.detail ?? '',
+      `If the manufacturer can't fix the defect within those limits, ${s.name}'s lemon law generally entitles you to a replacement or refund. Keep every repair order and notify the manufacturer in writing.`,
+      'Most lemon laws make the manufacturer pay your attorney fees if you win, so lemon law lawyers often take cases at no cost to the buyer.',
+    ].filter(Boolean),
+    national: { slug: 'lemon-laws-by-state', title: 'Lemon Laws by State: Repair Attempts and Days Out of Service', h1: 'How many repair attempts make a car a lemon in each state?', lede: 'Every state has a new-car lemon law, but the number of repair attempts and days in the shop that trigger it differ. Here is every state, with the statute.', group: 'Attempts' },
+    yesLabel: 'Attempts',
+    topic: 'lemon-laws',
+    practice: 'consumer-protection',
+  },
+  {
+    id: 'used-lemon',
+    key: 'lemon.usedCars',
+    slug: (s) => `does-${s.slug}-have-a-used-car-lemon-law`,
+    ask: (s) => `Does ${s.name} have a lemon law for used cars?`,
+    answer: (s, f) => /^yes/i.test(v(f))
+      ? { verdict: 'yes', short: 'Yes', text: `Yes. ${s.name} gives used-car buyers some lemon protection${cite(f)}. ${f.detail ?? ''}`.trim() }
+      : { verdict: 'no', short: 'No', text: `No. ${s.name}'s lemon law covers new cars, not used ones${cite(f)}. A used car may still be covered by a remaining manufacturer warranty, a dealer warranty or the federal Magnuson-Moss Warranty Act.` },
+    meaning: (s, _f, a) => [
+      a.verdict === 'yes'
+        ? `Used-car protections in ${s.name} usually depend on the car's age, mileage and price, and how long you have owned it. Read the dealer's written warranty and act within its deadlines.`
+        : `Many used cars are sold "as is", but a car still under the manufacturer's original warranty when you buy it can sometimes qualify under ${s.name}'s new-car lemon law. A dealer who lied about a car's condition can also be liable for fraud.`,
+    ],
+    national: { slug: 'used-car-lemon-law-states', title: 'Used Car Lemon Law States (Full List)', h1: 'Which states have used-car lemon laws?', lede: 'Every state has a new-car lemon law, but only a handful protect used-car buyers. Here is every state, with the source.', group: 'Covered' },
+    yesLabel: 'Used cars covered',
+    topic: 'lemon-laws',
+    practice: 'consumer-protection',
   },
   {
     id: 'pip',

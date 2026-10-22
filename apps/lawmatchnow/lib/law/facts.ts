@@ -6,11 +6,16 @@ import custody from './data/custody.json'
 import dogBite from './data/dog-bite.json'
 import eviction from './data/eviction.json'
 import finalPay from './data/final-pay.json'
+import lemon from './data/lemon.json'
+import marriage from './data/marriage.json'
+import property from './data/property.json'
+import records from './data/records.json'
 import recording from './data/recording.json'
 import damagesBar from './data/damages-bar.json'
 import divorce from './data/divorce.json'
 import dui from './data/dui.json'
 import employment from './data/employment.json'
+import employment2 from './data/employment2.json'
 import smallClaims from './data/small-claims.json'
 import solCivil from './data/sol-civil.json'
 import solInjury from './data/sol-injury.json'
@@ -43,6 +48,11 @@ const DATA: Record<string, Dataset> = {
   'dog-bite': dogBite as Dataset,
   eviction: eviction as Dataset,
   'final-pay': finalPay as Dataset,
+  marriage: marriage as Dataset,
+  property: property as Dataset,
+  employment2: employment2 as Dataset,
+  records: records as Dataset,
+  lemon: lemon as Dataset,
 }
 
 /** What each fact is, for table labels and FAQ wording. */
@@ -80,6 +90,19 @@ export const FIELDS = {
   'final-pay.fired': { label: 'Final paycheck if fired', ask: 'deadline for a final paycheck after being fired' },
   'final-pay.quit': { label: 'Final paycheck if you quit', ask: 'deadline for a final paycheck after quitting' },
   'final-pay.accruedVacation': { label: 'Unused vacation payout', ask: 'rule on paying out unused vacation' },
+  'marriage.commonLaw': { label: 'Common-law marriage', ask: 'rule on common-law marriage' },
+  'marriage.minAge': { label: 'Minimum age to marry', ask: 'minimum age to marry' },
+  'property.adversePossession': { label: 'Adverse possession period', ask: 'time needed for adverse possession' },
+  'property.squatterRemoval': { label: 'Removing a squatter', ask: 'way an owner removes a squatter' },
+  'employment2.atWill': { label: 'At-will employment', ask: 'at-will employment rule' },
+  'employment2.nonCompete': { label: 'Non-compete agreements', ask: 'rule on non-compete agreements' },
+  'records.misdemeanorWait': { label: 'Clearing a misdemeanor', ask: 'wait to clear a misdemeanor conviction' },
+  'records.felonyWait': { label: 'Clearing a felony', ask: 'wait to clear a felony conviction' },
+  'records.autoClear': { label: 'Automatic record clearing', ask: 'automatic record clearing (Clean Slate) rule' },
+  'lemon.attempts': { label: 'Repair attempts', ask: 'repair attempts that make a car a lemon' },
+  'lemon.daysOut': { label: 'Days out of service', ask: 'days out of service that make a car a lemon' },
+  'lemon.coverage': { label: 'Covered period', ask: 'period the lemon law covers' },
+  'lemon.usedCars': { label: 'Used-car protection', ask: 'used-car lemon law' },
   'custody.custodyFactorsCite': { label: 'Best-interest factors', ask: 'factors courts weigh in custody cases' },
   'dui.name': { label: 'Name of the offense', ask: 'name for drunk driving' },
   'dui.bacLimit': { label: 'Legal limit (21+)', ask: 'legal blood alcohol limit' },
