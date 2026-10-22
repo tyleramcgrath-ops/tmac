@@ -150,6 +150,55 @@ For a service page, that usually means:
 
 For local businesses, Google says prominence is one of the factors in local results, and that reviews and how well-known a business is across the web feed into it ([Google Business Profile help](${GBP_RANKING})). Keep your Google Business Profile complete and accurate, and ask happy clients for honest reviews.
 
+## The three local signals Google names
+
+Google says local results are decided mainly by three things, and it explains each in its [Business Profile help](${GBP_RANKING}). They are worth knowing, because AI answers about local businesses lean on the same information.
+
+| Signal | What Google says it means | What you can do |
+|---|---|---|
+| Relevance | How well a profile matches what someone searched for | Choose accurate categories and describe every service you offer |
+| Distance | How far each result is from the searcher or the place they named | List your real address and the areas you actually serve |
+| Prominence | How well known the business is, including reviews and mentions across the web | Ask happy clients for honest reviews and keep your details consistent |
+
+You cannot change distance, and you should never fake relevance or prominence. You can make sure Google has the full, accurate picture.
+
+## Assistants can only cite what they are allowed to read
+
+AI assistants that search the web use their own crawlers. OpenAI, for example, documents a crawler called OAI-SearchBot that it uses to find pages for ChatGPT search, and says sites that block it will not be shown as sources in those answers ([OpenAI’s crawler documentation](https://developers.openai.com/api/docs/bots)). Some website templates and security plugins block unfamiliar crawlers by default.
+
+> **Watch out:** Check your robots.txt file and any firewall or bot-blocking settings. If they block the search crawlers you want to be found by, no amount of good writing will get you cited.
+
+Blocking a crawler that trains AI models is a separate choice from blocking one that finds pages for search answers. Read each company’s documentation before you change anything, and decide on purpose rather than by default.
+
+## How a question becomes an answer
+
+It helps to picture the steps, even though each company’s system differs in the details:
+
+1. Someone asks a question in their own words, often longer and more specific than a typical search.
+2. The system searches its index for pages that look relevant to that question.
+3. It reads the most promising passages and writes a summary.
+4. It shows a handful of the pages it drew on as sources.
+
+Your page can drop out at any step. It might not be indexed, it might not look relevant because the question never appears on it, or the useful passage might be too vague to summarize. Each step has a fix, and most of them are the same fixes that help human visitors.
+
+## Signs your pages are hard to quote
+
+Read one of your key pages as if you were a stranger with one question. These are the common problems:
+
+- The heading names a service, but never the question people ask about it.
+- The first paragraph talks about the firm instead of answering anything.
+- Prices, timelines and deadlines are missing, or hidden behind "contact us".
+- The town or state you serve is only in the footer.
+- Facts differ between your site, your Google profile and directory listings.
+
+- [ ] Each key service has its own page
+- [ ] Each page answers its main question in the first two sentences
+- [ ] Your location and service area appear in the body of the page
+- [ ] Your name, address and phone match everywhere
+- [ ] Your robots.txt does not block the search crawlers you want
+
+For the full picture, our [AI search guide](/guides/ai-search) brings every article on this subject together, and the [local SEO guide](/guides/local-seo) covers your Google profile and reviews in depth.
+
 ## What this means in practice
 
 1. Make sure every service you want to be found for has its own page.
@@ -159,6 +208,12 @@ For local businesses, Google says prominence is one of the factors in local resu
 5. Check which sites AI answers cite for your most important searches, and compare their pages with yours.
 
 The last step is the one most firms skip. It’s exactly what the [Citation Gap scan](/#citation-gap) in every SaySites dashboard does.`,
+    updated: '2026-10-22',
+    faq: [
+      { q: 'Can I pay to be recommended by an AI assistant?', a: 'Not in the written answer itself. Google says AI Overviews come from its normal search index, and ads are shown separately and labeled. The reliable route is the ordinary one: pages that can be crawled, answer real questions clearly, and carry accurate details that match your Google profile and listings.' },
+      { q: 'Why does an AI answer mention a competitor and not my business?', a: 'Usually because their page answers the question more directly, covers the exact service or place asked about, or has more consistent details and reviews across the web. Look at the pages that are cited, compare them honestly with yours, and fix the gaps you find on your own pages.' },
+      { q: 'Should I block AI crawlers from my website?', a: 'It depends on what each crawler does. Some find pages for search answers, which you probably want, and others gather data for training models, which you may not. Read each company’s documentation, decide crawler by crawler, and check that your firewall or plugins are not blocking search crawlers by accident.' },
+    ],
     published: '2026-10-03',
     status: 'published',
   },
