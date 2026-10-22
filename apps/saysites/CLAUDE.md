@@ -180,13 +180,58 @@ redirects to /early.
   of the child, messages go to the parent, hidden from search, a kind
   Sofie. Don't advertise it ("so easy kids can make one") until it exists.
 
-## Free redesign preview (October 2026)
+## Free redesign preview (October 2026, rebuilt October 22)
 
-The owner wants firms to see their own site first. A preview has two
-versions: "Your site, as it is" (`lib/mirror.ts`: their sections, words,
-photos, colours, menu, rebuilt section by section) and "A fresh redesign"
-(`lib/restyle.ts`: the same pages and every word, in a clean modern
-design). Both keep every page's address for SEO. The owner claims either.
+The owner wants firms to see their own site first, and said plainly: the
+copy must look **identical** to their site, the redesign must look **better**
+than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
+- **"Your site, as it is"** (`lib/classic.ts`): each page *exactly* as it
+  looks, from their own markup and stylesheets (inlined, trimmed to the
+  rules the page uses), with no scripts (stripped, and `CLASSIC_CSP` blocks
+  any left), lazy photos and scroll-reveal content shown, links moved to the
+  new addresses, and their forms posting to SaySites (`form=classic`, read
+  by `classicFields` in lib/serve). Stored on the page as `page.classic`,
+  served instead of the body; the body holds the SaySites design for when
+  the owner switches that page over (Pages tab, or Sofie's
+  `use_saysites_design`). Sofie edits a kept page's words with
+  `replace_words` (text only, never code; phone changes update call links)
+  and its Google title/description apply on top (`withSeo`).
+- **Only exact copies are offered, and only once checked in a browser.**
+  `jsOnly` and `scriptedCarousels` rule out what can't be copied without
+  scripts (Wix, app shells, any slideshow or carousel with two or more
+  slides, Themify, pagespeed-rewritten scripts, priority menus); if the home
+  page or a menu page fails, `asIs` is false. Even then the copy isn't shown
+  until `scripts/compare-preview.ts <their url> --preview <id>` (Chromium:
+  the team's machine or Claude's cloud session) has scored it against their
+  live site and recorded `asIsCheck` through `POST /api/redesign/<id>/check`
+  (needs `PREVIEW_CHECK_TOKEN`, 24+ characters, on the host and where the
+  check runs): both computer and phone at `COPY_PASS` (97%) or more.
+  `offersCopy` is the rule; the preview page and claiming follow it. No
+  token set means no copy is ever offered. Pop-ups on their site can fail a
+  check; that errs on the side of not offering a copy, which is the point.
+- **"A fresh redesign"** (`redesign`): one of SaySites' own designs
+  (`buildStarterSite`, the law/medical designs) filled with their real
+  details and words. Services are the links under their menu's "Practice
+  Areas"/"Services" heading (`menuTree`; without one, menu links that read
+  like that business's services, `SERVICE_WORDS`), each written from its
+  own page (`writtenFrom`: intro, their headings as sections, their
+  questions as the FAQ); their about text, attorneys from their bio pages,
+  their name as their address spells it (`businessName`), their town from
+  their pages when the home page doesn't say (`placeFromText`), their
+  headline. Every other page comes across with its words; old addresses
+  redirect. Nothing invented. **Only offered with enough of their own
+  substance** (`REDESIGN_NEEDS`: 3+ services, 2+ written from their pages,
+  `freshReady`); otherwise SaySites' general wording would be most of it,
+  which isn't better than their site. Outreach skips those prospects.
+- A preview showing neither says so and offers to build from their details.
+  Previews made before this (no `asIs` field) rebuild themselves in place
+  on their next view (`rebuildPreview`, same id and links).
+- Claiming the copy copies their old host's photos and fonts to SaySites
+  (`lib/classic-assets.ts`, `ss_media` kind 'asset', hidden from the photo
+  library), since the old host goes away when the domain moves.
+- Tune `lib/classic.ts` and `lib/redesign.ts` against real sites with
+  `npx tsx scripts/compare-preview.ts <url>` (builds a preview locally and
+  screenshots their site, the copy and the redesign), never by guessing.
 
 ## SEO tab, powered by RankForge (October 2026)
 

@@ -404,6 +404,11 @@ export const PageSchema = z
       .strict()
       .optional(),
     body: z.array(ContainerSchema).max(100),
+    // The page exactly as it looked on the owner's previous website (their
+    // own markup and styles, no scripts; lib/classic). Served instead of the
+    // body until the owner switches the page to a SaySites design, which
+    // the body holds ready.
+    classic: z.object({ html: z.string().min(1).max(4_000_000) }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()

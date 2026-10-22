@@ -1,6 +1,6 @@
 // A free homepage mockup for a business that asked for one: their site
-// today next to the same business redesigned on SaySites (the fresh design
-// from lib/restyle, built from their own words and photos), as one PNG to
+// today next to the same business redesigned on SaySites (one of SaySites'
+// premium starter designs, filled with their real details), as one PNG to
 // email back. Runs on a machine with Chromium (the team's or Claude's cloud
 // session), never on the SaySites host.
 //
