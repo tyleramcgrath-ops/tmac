@@ -238,6 +238,7 @@ ${fullHero(f, {
     bottom: r.length ? `<dl class="hero-facts">${r.slice(0, 3).map((x) => `<div><dt>${esc(x.amount)}</dt><dd>${esc(cut(x.label, 60))}</dd></div>`).join('')}</dl>${DISCLAIMER}` : '',
   })}
 ${badges(f, 'Recognized by')}
+${ticker(f)}
 ${practiceList(f, 'What we handle', 'Practice areas')}
 ${r.length >= 2 ? `<section class="results" id="results"><div class="wrap"><div class="sec-h"><p class="eyebrow">Results</p><h2>Recovered for our clients</h2></div><ul class="rgrid">${r.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ul>${DISCLAIMER}</div></section>` : ''}
 ${firm(f)}
@@ -266,6 +267,7 @@ ${r.length || lead ? `<section class="record"><div class="wrap record-g">${r.sli
 <main id="main">
 ${hero}
 ${badges(f, 'Recognition')}
+${ticker(f)}
 ${practiceList(f, 'The practice', 'Index')}
 ${rest.length >= 2 ? `<section class="results" id="results"><div class="wrap ledger"><div class="sec-h"><p class="eyebrow">The record</p><h2>More results for our clients</h2>${DISCLAIMER}</div><ol>${rest.slice(0, 6).map((x) => `<li><strong>${esc(x.amount)}</strong><i></i><span>${esc(cut(x.label, 110))}</span></li>`).join('')}</ol></div></section>` : ''}
 ${firm(f)}
@@ -295,6 +297,7 @@ function atelierHome(f: ShowcaseFirm): string {
 ${hero}
 ${r.length ? `<div class="wrap">${DISCLAIMER}</div>` : ''}
 ${badges(f, 'Recognized by')}
+${ticker(f)}
 ${practiceCards(f)}
 ${r.slice(3).length >= 2 ? `<section class="results" id="more-results"><div class="wrap"><div class="sec-h"><p class="eyebrow">Results</p><h2>More results for our clients</h2></div><ul class="rgrid">${r.slice(3).slice(0, 4).map((x) => `<li><strong>${esc(x.amount)}</strong><span>${esc(cut(x.label, 100))}</span></li>`).join('')}</ul>${DISCLAIMER}</div></section>` : ''}
 ${firm(f)}
@@ -343,6 +346,15 @@ function focus(p: SitePhoto): string {
   return p.height && p.width / p.height > 2.2 ? '72% 30%' : p.people ? '50% 25%' : '50% 50%'
 }
 
+// Their practice areas drifting past in large type: a band of movement
+// between the hero and the page. Shown twice over so the loop is seamless;
+// hidden from screen readers (the list itself follows).
+function ticker(f: ShowcaseFirm): string {
+  if (f.services.length < 3) return ''
+  const row = f.services.map((s) => `<span>${esc(s.name)}</span><i>✦</i>`).join('')
+  return `<div class="ticker" aria-hidden="true"><div class="tk">${row}${row}</div></div>`
+}
+
 function practiceList(f: ShowcaseFirm, title: string, eyebrow: string): string {
   if (!f.services.length) return ''
   return `<section class="practice" id="practice"><div class="wrap pr-g">
@@ -364,8 +376,12 @@ function practiceCards(f: ShowcaseFirm): string {
 function firm(f: ShowcaseFirm): string {
   if (!f.about?.paragraphs.length) return ''
   const pic = f.portrait && f.portrait.src !== f.hero?.src ? f.portrait : undefined
-  return `<section class="firm"><div class="wrap firm-g${pic ? '' : ' solo'}">
-${pic ? `<figure class="firm-p" style="--pos:${focus(pic)}">${img(pic, 'cover', false, '(max-width: 900px) 100vw, 40vw')}</figure>` : ''}
+  if (!pic)
+    return `<section class="firm"><div class="wrap firm-g split"><div class="sec-h sticky"><p class="eyebrow">The firm</p><h2>${esc(f.about.heading)}</h2></div>
+<div class="firm-t">${f.about.paragraphs.slice(0, 2).map((p, i) => `<p${i === 0 ? ' class="first"' : ''}>${esc(cut(p, 560))}</p>`).join('')}${f.about.href ? `<a class="btn text" href="${attr(f.about.href)}">More about the firm${ARROW}</a>` : ''}</div>
+</div></section>`
+  return `<section class="firm"><div class="wrap firm-g">
+<figure class="firm-p" style="--pos:${focus(pic)}">${img(pic, 'cover', false, '(max-width: 900px) 100vw, 40vw')}</figure>
 <div class="firm-t"><p class="eyebrow">The firm</p><h2>${esc(f.about.heading)}</h2>${f.about.paragraphs.slice(0, 2).map((p, i) => `<p${i === 0 ? ' class="first"' : ''}>${esc(cut(p, 560))}</p>`).join('')}${f.about.href ? `<a class="btn text" href="${attr(f.about.href)}">More about the firm${ARROW}</a>` : ''}</div>
 </div></section>`
 }
@@ -624,6 +640,17 @@ html .fh .stat span{font-size:13.5px;color:rgba(255,255,255,.75);line-height:1.4
 .fh-cue i{animation:cue 1.8s ease-in-out infinite}
 @keyframes cue{0%{opacity:0;transform:translateY(0)}30%{opacity:1}100%{opacity:0;transform:translateY(16px)}}
 }
+
+/* the band of practice areas */
+.ticker{overflow:hidden;padding-block:clamp(22px,3vw,34px);border-bottom:1px solid var(--line);background:var(--bg)}
+.tk{display:flex;width:max-content;align-items:center;gap:clamp(22px,3vw,40px);white-space:nowrap}
+.tk span{font:var(--dw,500) clamp(30px,4.4vw,62px)/1 var(--display);letter-spacing:var(--dls,-.01em);color:var(--ink)}
+.tk span:nth-child(4n+3){color:transparent;-webkit-text-stroke:1px var(--ink)}
+.tk i{font-style:normal;font-size:clamp(16px,1.6vw,22px);color:var(--accent)}
+@media (prefers-reduced-motion:no-preference){.tk{animation:drift 60s linear infinite}@keyframes drift{to{transform:translateX(-50%)}}}
+.firm-g.split{grid-template-columns:minmax(0,4fr) minmax(0,7fr);align-items:start}
+.firm-g.split .sec-h h2{font-size:clamp(32px,4.2vw,54px)}
+@media (max-width:900px){.firm-g.split{grid-template-columns:1fr}}
 /* sections */
 section{position:relative}
 .sec-h{display:grid;gap:12px;margin-bottom:clamp(28px,4vw,52px);max-width:720px}
@@ -985,6 +1012,10 @@ html .gazette .hero.cover .eyebrow,html .gazette .hero.cover h1.kick{color:rgba(
 .atelier .cards b{font:700 22px/1.2 var(--display);letter-spacing:-.02em}
 .atelier .cards small{color:var(--muted);font-size:15px;line-height:1.55}
 .atelier .cards .more{display:flex;align-items:center;gap:8px;font-weight:600;font-size:14.5px;color:var(--accent);margin-top:6px}
+.atelier .cards a{position:relative;overflow:hidden}
+.atelier .cards a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--glow));transform:scaleX(0);transform-origin:left;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+.atelier .cards a:hover::after{transform:scaleX(1)}
+.atelier .cards a:hover b{color:var(--accent-deep)}
 .atelier .results{background:var(--accent-deep);color:#fff;--muted:rgba(255,255,255,.7);border-radius:32px;margin:clamp(40px,6vw,80px) clamp(10px,2vw,24px)}
 .atelier .results .eyebrow{color:rgba(255,255,255,.75)}
 .atelier .rgrid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
