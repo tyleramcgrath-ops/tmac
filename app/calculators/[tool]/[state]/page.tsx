@@ -9,7 +9,7 @@ import { citiesInState, stateBySlug } from '@/lib/geo'
 import { neighbors } from '@/lib/law/compare'
 import { researchedOn } from '@/lib/law/facts'
 import { TOOLS, type Rule, statesFor, toolBySlug } from '@/lib/law/tools'
-import { SITE, abs, fmtDate } from '@/lib/site'
+import { SITE, abs, clip, fmtDate, seoTitle } from '@/lib/site'
 
 type Props = { params: Promise<{ tool: string; state: string }> }
 export const dynamicParams = false
@@ -37,8 +37,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { t, s, d } = r
   const url = `/calculators/${t.slug}/${s.slug}`
   const title = t.heading(s)
-  const description = t.description(s, d).slice(0, 300)
-  return { title, description, alternates: { canonical: url }, openGraph: { title: t.title(s), description, url: abs(url) } }
+  const description = clip(t.description(s, d))
+  return { title: seoTitle(title), description, alternates: { canonical: url }, openGraph: { title: t.title(s), description, url: abs(url) } }
 }
 
 export default async function StateToolPage({ params }: Props) {
