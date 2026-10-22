@@ -61,13 +61,13 @@ export default async function PagesPage({ params }: { params: Promise<{ id: stri
               </div>
               <div className="page-pills">
                 {errors.length ? <span className="pill bad">Needs fixing</span> : tips.length ? <span className="pill warn">{tips.length} SEO tip{tips.length > 1 ? 's' : ''}</span> : <span className="pill ok">SEO all good</span>}
-                {page.classic ? <span className="pill ok">Kept exactly as it was</span> : speed.pass ? <span className="pill ok">Fast, {kb} KB</span> : <span className="pill bad">Too heavy</span>}
+                {page.classic ? <span className="pill ok">{page.classic.design ? 'Custom design' : 'Kept exactly as it was'}</span> : speed.pass ? <span className="pill ok">Fast, {kb} KB</span> : <span className="pill bad">Too heavy</span>}
                 {page.seo.noindex ? <span className="pill warn">Hidden from Google</span> : vibe.indexable ? <span className="pill ok">Original, on Google</span> : <span className="pill warn">Held back from Google</span>}
               </div>
             </header>
             {page.classic && (
               <div className="vibe">
-                <p className="small">This page looks exactly as it did on your old site, without the scripts that slowed it down. Ask Sofie to change its words, or move it to the SaySites design to edit it section by section (its words come with it; its old look goes).</p>
+                <p className="small">{page.classic.design ? 'This page has its own custom design.' : 'This page looks exactly as it did on your old site, without the scripts that slowed it down.'} Ask Sofie to change its words, or move it to the SaySites design to edit it section by section (its words come with it; its current look goes).</p>
                 <ActionForm action={switchToSaySitesDesign.bind(null, site.id, page.id)} submit="Use the SaySites design">{null}</ActionForm>
               </div>
             )}

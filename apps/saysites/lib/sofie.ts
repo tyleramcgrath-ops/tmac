@@ -171,7 +171,7 @@ export class Workspace {
   // validates.
   private editPage(slug: string, summary: string, edit: (page: Page) => void, onKept = false) {
     const current = this.page(slug)
-    if (current.classic && !onKept) throw new ToolError(`The ${current.slug ? `/${current.slug}` : 'home'} page is kept exactly as it looked on the owner's old site, so its sections can't be edited one by one. Use replace_words to change its words, or use_saysites_design (only if the owner wants a new look for that page) and then edit it.`)
+    if (current.classic && !onKept) throw new ToolError(`The ${current.slug ? `/${current.slug}` : 'home'} page ${current.classic.design ? 'has a custom design' : 'is kept exactly as it looked on the owner\'s old site'}, so its sections can't be edited one by one. Use replace_words to change its words, or use_saysites_design (only if the owner wants a new look for that page) and then edit it.`)
     const draft = structuredClone(current)
     edit(draft)
     const parsed = PageSchema.safeParse(draft)
@@ -248,7 +248,7 @@ export class Workspace {
     if (!current.classic) throw new ToolError('That page uses the SaySites design; change it with update_element.')
     const { html, count } = replaceKeptWords(current.classic.html, find, replace)
     if (!count) throw new ToolError(`"${find}" isn't on that page's text exactly as written. Check the spelling and capitals.`)
-    this.editPage(slug, summary, (page) => (page.classic = { html }), true)
+    this.editPage(slug, summary, (page) => (page.classic = { ...current.classic!, html }), true)
   }
 
   // The page leaves its old look for the SaySites design (already built
@@ -889,7 +889,7 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
 function forSofie(p: Page): unknown {
   if (!p.classic) return p
   const { classic, body: _body, ...rest } = p
-  return { ...rest, kept: 'Exactly as on the old site. Change words with replace_words; use_saysites_design for anything else.', text: keptText(classic.html).slice(0, 6000) }
+  return { ...rest, kept: `${classic.design ? 'A custom design.' : 'Exactly as on the old site.'} Change words with replace_words; use_saysites_design for anything else.`, text: keptText(classic.html).slice(0, 6000) }
 }
 
 export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; amazon?: AmazonLookup; budgetMicros?: number }): Promise<SofieResult> {

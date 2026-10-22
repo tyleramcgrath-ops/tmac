@@ -209,9 +209,27 @@ than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
   `offersCopy` is the rule; the preview page and claiming follow it. No
   token set means no copy is ever offered. Pop-ups on their site can fail a
   check; that errs on the side of not offering a copy, which is the point.
-- **"A fresh redesign"** (`redesign`): one of SaySites' own designs
-  (`buildStarterSite`, the law/medical designs) filled with their real
-  details and words. Services are the links under their menu's "Practice
+- **"A fresh redesign"** (`redesign`): their real details and words in one
+  of the redesign's own hand-made designs (`lib/redesign-design.ts`). The
+  owner's bar is "better than their site, not a generic template", so each
+  page is raw designed HTML/CSS (no scripts), stored as
+  `page.classic` with `design: true` (served like a kept page; Sofie changes
+  its words with `replace_words`; `use_saysites_design` falls back to the
+  `buildStarterSite` body built underneath). Three looks (`noir` dark with
+  their photo full-bleed, `gazette` light editorial, `atelier` modern), two
+  type pairings each and their brand colour calmed (`accentFor`), picked by
+  their name, so firms differ. Built around what convinces on their own
+  site, read by `lib/redesign-assets.ts` (`readAssets`): their banner and
+  photos of their people first (named portraits need a sign it's a person:
+  "Esq.", a middle initial, a role in the file name, a team page), their
+  published results (largest first, always with the "past results"
+  caution), English reviews with real names only, award badges (never
+  stock photos), never photos with words baked in. Headlines are their H1
+  in sentence case, never just their name. A design's facts all come
+  from their pages; designs are tuned by screenshotting them beside the
+  real site (`compare-preview.ts`), never by guessing.
+  The pages underneath come from SaySites' starter designs
+  (`buildStarterSite`) filled with their real details and words. Services are the links under their menu's "Practice
   Areas"/"Services" heading (`menuTree`; without one, menu links that read
   like that business's services, `SERVICE_WORDS`), each written from its
   own page (`writtenFrom`: intro, their headings as sections, their

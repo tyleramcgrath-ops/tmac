@@ -1376,7 +1376,10 @@ describe('SaySites: free redesign preview', async () => {
     expect(p.after.seoErrors).toBe(0)
     // The copy is only offered (and claimed) once a browser check passed.
     expect(offersCopy(p)).toBe(false)
-    expect(claimFromPreview(p, 'user_1', 'smith-lee-law').pages.some((x) => x.classic)).toBe(false)
+    // Without a passed check, what's claimed is the redesign: our designs,
+    // never a copy of their old pages.
+    expect(claimFromPreview(p, 'user_1', 'smith-lee-law').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
+    expect(fresh.pages.find((x) => x.slug === '')!.classic?.design).toBe(true)
     expect(offersCopy({ ...p, asIsCheck: { desktop: 99, phone: 96, passed: false, at: '' } })).toBe(false)
     p.asIsCheck = { desktop: 99.4, phone: 98.1, passed: true, at: '2026-10-22T00:00:00Z' }
     expect(offersCopy(p)).toBe(true)
@@ -1386,7 +1389,7 @@ describe('SaySites: free redesign preview', async () => {
     expect(c.pages.find((x) => x.slug === 'car-accidents')!.status).toBe('draft')
     expect(c.pages.find((x) => x.slug === '')!.classic).toBeDefined()
     expect(new Set(c.pages.map((x) => x.id)).size).toBe(c.pages.length)
-    expect(claimFromPreview(p, 'user_1', 'smith-lee-law', 'fresh').pages.some((x) => x.classic)).toBe(false)
+    expect(claimFromPreview(p, 'user_1', 'smith-lee-law', 'fresh').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     const store = new MemoryStore()
     await store.savePreview(p, 'who')
     expect(await store.previewCount(new Date(Date.now() - 1000), 'who')).toBe(1)
@@ -2123,9 +2126,9 @@ describe('SaySites: redesign preview, their site exactly as it is', async () => 
     expect(p.asIsReasons?.join(' ')).toMatch(/carousel/)
     // One service isn't enough of theirs for a redesign worth showing.
     expect(p.freshReady).toBe(false)
-    expect(p.pages.some((x) => x.classic)).toBe(false)
+    expect(p.pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     expect(p.site.business.area).toBeDefined()
-    expect(claimFromPreview(p, 'u', 'firm2').pages.some((x) => x.classic)).toBe(false)
+    expect(claimFromPreview(p, 'u', 'firm2').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     expect(claimPath('aaaaaaaaaaaaaaaaf')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=fresh')
     expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaa')).toBe(true)
   })
@@ -2582,5 +2585,98 @@ describe('SaySites: hosting health', async () => {
     H.recordSchedulerRun(2)
     H.recordSchedulerRun(0, 'boom')
     expect(H.schedulerRuns().slice(-2)).toMatchObject([{ sent: 2 }, { sent: 0, error: 'boom' }])
+  })
+})
+
+describe('SaySites: the redesign’s own designs, from their real photos, results and reviews', async () => {
+  const { readAssets } = await import('../apps/saysites/lib/redesign-assets')
+  const { showcaseHome, showcasePage, accentFor, LOOKS } = await import('../apps/saysites/lib/redesign-design')
+  const { placeFromText } = await import('../apps/saysites/lib/redesign')
+  const home = `<html><body>
+    <div class="hero" style="background-image:url('/up/home-hero-1920.jpg')"></div>
+    <div class="hero" style="background-image:url('/up/home-hero-mobile.jpg')"></div>
+    <div class="results"><div class="item"><div class="amount"><span>$20</span><span>Million</span></div><div class="d">Settlement for a trucking collision</div></div>
+    <div class="item"><div class="amount"><span>$4.2</span><span>Million</span></div><div class="d">Verdict for a crash victim</div></div>
+    <div class="item"><div class="amount"><span>$900</span></div><div class="d">Too small to be a result</div></div></div>
+    <img src="/up/Partner-Edward-Piasta_22_5739-1000x1000-1.jpg" alt="Edward Piasta Atlanta personal injury lawyer" width="1000" height="1000">
+    <img src="/up/Partner-Michael-Wlker_22_5446.jpg" alt="Michael Walker Atlanta personal injury lawyer" width="1000" height="1000">
+    <img src="/up/Vehicle-Accidents.jpg" alt="Vehicle Accidents" width="1200" height="800">
+    <div class="awards"><img src="/up/super-lawyers.png" alt="Super Lawyers"><img src="/up/istock-office.jpg" alt="" width="1200"></div>
+    <div class="testimonial"><p>Ed and Mike are the cream of the crop for injury cases. I recommend them highly.</p><strong>Joel Williams</strong></div>
+    <div class="testimonial"><p>Este bufete de abogados hace un trabajo sensacional, te trata con amabilidad y respeto.</p><strong>Ana</strong></div>
+    <div class="testimonial"><p>They answered every call and explained every step of my case to me clearly.</p><strong>Spanish</strong></div>
+  </body></html>`
+  const a = readAssets([{ html: home, url: 'https://firm.example/' }])
+
+  it('reads their results (largest first), people, reviews and awards, and nothing else', () => {
+    expect(a.results).toEqual([
+      { amount: '$20M', label: 'Settlement for a trucking collision' },
+      { amount: '$4.2M', label: 'Verdict for a crash victim' },
+    ])
+    // A misspelt file name takes the name from the photo's description.
+    expect(a.portraits.map((p) => [p.name, p.role])).toEqual([['Edward Piasta', 'Partner'], ['Michael Walker', 'Partner']])
+    expect(a.portraits.some((p) => /Vehicle/.test(p.name))).toBe(false)
+    // One banner, though their site has a size for each screen.
+    expect(a.photos.filter((p) => /home-hero/.test(p.src))).toHaveLength(1)
+    expect(a.photos.find((p) => /home-hero/.test(p.src))?.banner).toBe(true)
+    expect(a.badges.map((b) => b.alt)).toEqual(['Super Lawyers'])
+    // Reviews in English, named only when the name is a name.
+    expect(a.reviews).toEqual([
+      { quote: 'Ed and Mike are the cream of the crop for injury cases. I recommend them highly.', name: 'Joel Williams' },
+      { quote: 'They answered every call and explained every step of my case to me clearly.', name: 'A client' },
+    ])
+  })
+
+  it('lays out a firm in each look with only their facts, no scripts and a working form', () => {
+    const firm = {
+      pairing: 0, name: 'Piasta Walker Hagenbush, LLC', kind: 'Personal injury lawyers', headline: 'Atlanta injury lawyers <who> fight', lede: 'We take cases to trial.',
+      phone: '(404) 996-1296', city: 'Atlanta', region: 'GA', freeConsult: true, brand: '#ff0000',
+      nav: [{ label: 'Practice Areas', href: '/practice-areas', children: [{ label: 'Truck accidents', href: '/practice-areas/truck-accidents' }] }, { label: 'Contact', href: '/contact' }],
+      services: [{ name: 'Truck accidents', href: '/practice-areas/truck-accidents', summary: 'Trucking companies cut corners.' }],
+      about: { heading: 'About the firm', paragraphs: ['Founded by two trial lawyers who met at a national firm.'] },
+      team: a.portraits.map((p) => ({ name: p.name, role: p.role ?? 'Attorney', photo: p.src })),
+      assets: a, formAction: '/__form', schemaType: 'LegalService',
+    }
+    const pages = LOOKS.map((look) => showcaseHome({ ...firm, look, hero: a.photos.find((p) => p.banner) }))
+    for (const [i, html] of pages.entries()) {
+      expect(html).toContain(`<html lang="en" class="${LOOKS[i]}">`)
+      // No scripts but the business details Google reads.
+      expect(html.match(/<script\b[^>]*>/g)).toEqual(['<script type="application/ld+json">'])
+      expect(html).toContain('Atlanta injury lawyers &lt;who&gt; fight')
+      expect(html).toContain('$20M')
+      expect(html).toContain('Joel Williams')
+      expect(html).toContain('<input type="hidden" name="form" value="classic">')
+      expect(html).toContain('action="/__form"')
+      expect(html).toContain('href="tel:+14049961296"')
+      // Results are shown with the usual caution.
+      expect(html).toContain('Past results do not guarantee')
+      expect(html).not.toMatch(/undefined|NaN|\[object/)
+    }
+    const inner = showcasePage({ ...firm, look: 'gazette' }, { path: '/practice-areas/truck-accidents', kicker: 'Practice areas', title: 'Truck accidents', blocks: [{ kind: 'h2', text: 'Why it matters' }, { kind: 'p', text: '• First thing' }, { kind: 'p', text: '• Second thing' }], faq: [{ q: 'How long?', a: 'It depends.' }] })
+    expect(inner).toContain('<ul><li>First thing</li><li>Second thing</li></ul>')
+    expect(inner).toContain('<summary>How long?</summary>')
+    expect(inner).toContain('aria-current="page"')
+  })
+
+  it('measures the photos it leads with, and drops ones that don’t load', async () => {
+    const { imageSize, measurePhotos } = await import('../apps/saysites/lib/redesign-assets')
+    const png = Buffer.alloc(32)
+    png.writeUInt32BE(0x89504e47, 0)
+    png.writeUInt32BE(800, 16)
+    png.writeUInt32BE(1400, 20)
+    expect(imageSize(png)).toEqual({ width: 800, height: 1400 })
+    const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 4, 0, 0, 0xff, 0xc0, 0, 17, 8, 0x02, 0xbc, 0x07, 0x80, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    expect(imageSize(jpeg)).toEqual({ width: 1920, height: 700 })
+    const measured = await measurePhotos(structuredClone(a), async (url) => (/home-hero/.test(url) ? { type: 'image/png', data: png } : null))
+    // The "banner" is really tall, and the photos that didn't load are gone.
+    expect(measured.photos.find((p) => /home-hero/.test(p.src))).toMatchObject({ width: 800, height: 1400 })
+    expect(measured.photos.some((p) => /Partner-Edward/.test(p.src))).toBe(false)
+  })
+
+  it('calms their brand colour and never mistakes a firm’s “P.A.” for Pennsylvania', () => {
+    const { accent } = accentFor('atelier', '#ff0000')
+    expect(accent).not.toBe('#ff0000')
+    expect(parseInt(accent.slice(1, 3), 16)).toBeLessThan(200)
+    expect(placeFromText('Christopher P. Taylor, PA serves Delray Beach, FL and Boca Raton, FL. Delray Beach, FL', 'Christopher P. Taylor, P.A.')).toEqual({ city: 'Delray Beach', region: 'FL' })
   })
 })

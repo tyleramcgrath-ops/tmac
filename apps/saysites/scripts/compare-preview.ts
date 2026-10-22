@@ -74,7 +74,7 @@ async function main() {
     const home = p.pages.find((x) => x.slug === '')
     const redesign = p.fresh!.pages.find((x) => x.slug === '')!
     files.redesign = join(out, `${host}-redesign.html`)
-    writeFileSync(files.redesign, renderPage(p.fresh!.site, redesign, p.fresh!.pages).html)
+    writeFileSync(files.redesign, redesign.classic?.html ?? renderPage(p.fresh!.site, redesign, p.fresh!.pages).html)
     if (p.asIs !== false && home?.classic) writeFileSync((files.copy = join(out, `${host}-copy.html`)), home.classic.html)
     asIsReasons = p.asIsReasons ?? []
     console.log(`${p.url}: ${p.pages.length} pages read`)

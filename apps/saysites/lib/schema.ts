@@ -408,7 +408,9 @@ export const PageSchema = z
     // own markup and styles, no scripts; lib/classic). Served instead of the
     // body until the owner switches the page to a SaySites design, which
     // the body holds ready.
-    classic: z.object({ html: z.string().min(1).max(4_000_000) }).strict().optional(),
+    // design: one of the free redesign's hand-made pages (lib/redesign-design)
+    // rather than a copy of their old page.
+    classic: z.object({ html: z.string().min(1).max(4_000_000), design: z.literal(true).optional() }).strict().optional(),
     updatedAt: z.string(),
   })
   .strict()

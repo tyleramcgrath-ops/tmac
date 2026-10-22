@@ -17,7 +17,7 @@ import { randomUUID, timingSafeEqual } from 'crypto'
 import { audit, type Audit } from './audit'
 import { classicPage, type ClassicResult, type SheetCache } from './classic'
 import { detectBusiness, type Detected } from './detect'
-import { ImportError, decode, discover, lastFetchError, dropTemplate, extract, normalizeStart, planImport, safeFetch, slugForPath, type Extracted, type Fetcher, type ImportedPage } from './importer'
+import { ImportError, decode, discover, lastFetchError, dropTemplate, extract, normalizeStart, planImport, safeFetch, safeFetchBytes, slugForPath, type Extracted, type Fetcher, type ImportedPage } from './importer'
 import { lawStyleFor, LAW_STYLES, type Attorney, type LawStyle } from './law-designs'
 import { renderPage } from './render'
 import { checkPage } from './seo'
@@ -26,6 +26,8 @@ import { Slug, type Page, type Redirect, type Site } from './schema'
 import { buildStarterSite, serviceSlug, subdomainFor, type WrittenContent, type WrittenService } from './starter'
 import type { Store } from './store'
 import { ancestors, findAll, isEl, parseHtml, regions, textOf, type El } from './dom'
+import { measurePhotos, readAssets, type SiteAssets, type SitePhoto } from './redesign-assets'
+import { isWide, LOOKS, showcaseHome, showcasePage, type ShowcaseFirm, type ShowcasePage } from './redesign-design'
 
 // A preview reads fewer pages than a full move, to stay quick and cheap.
 export const PREVIEW_PAGES = 24
@@ -61,7 +63,9 @@ export interface Preview {
   claimed?: { by: string; siteId: string }
 }
 
-export async function buildPreview(input: string, get: Fetcher = safeFetch, id = randomUUID().replace(/-/g, '').slice(0, 16)): Promise<Preview> {
+// fetchBytes measures the photos a design leads with (measurePhotos); left
+// out when pages come from somewhere other than the web (tests).
+export async function buildPreview(input: string, get: Fetcher = safeFetch, id = randomUUID().replace(/-/g, '').slice(0, 16), fetchBytes: BytesFetcher | undefined = get === safeFetch ? safeFetchBytes : undefined): Promise<Preview> {
   const start = normalizeStart(input)
   const first = await get(start.href)
   if (!first) throw new ImportError(`We couldn’t reach ${start.hostname}${lastFetchError ? ` (${lastFetchError})` : ''}. Check the address and try again.`)
@@ -92,7 +96,9 @@ export async function buildPreview(input: string, get: Fetcher = safeFetch, id =
   const cleaned = dropTemplate(found.map((f) => f.extracted))
   const pages = found.map((f, i) => ({ ...f, extracted: cleaned[i] }))
 
-  const { ready: freshReady, ...fresh } = redesign(pages, detected, id)
+  const read = readAssets(pages.map((p) => ({ html: p.html, url: p.url })))
+  const assets = fetchBytes ? await measurePhotos(read, fetchBytes) : read
+  const { ready: freshReady, ...fresh } = redesign(pages, detected, id, assets)
   const menu = new Set(['/', ...menuPaths(first.body, first.url).map(path)])
   const asIs = await copyAsIs(found, fresh, get, menu)
   const homePage = fresh.pages.find((p) => p.slug === '')!
@@ -123,7 +129,7 @@ export const COPY_PASS = 97
 // The exact copy is only ever offered once a browser has confirmed it looks
 // the same as their site; checks run where Chromium does (never this host).
 export function offersCopy(p: Pick<Preview, 'asIs' | 'asIsCheck' | 'pages'>): boolean {
-  return p.asIs === true && !!p.asIsCheck?.passed && p.pages.some((pg) => pg.classic)
+  return p.asIs === true && !!p.asIsCheck?.passed && p.pages.some((pg) => pg.classic && !pg.classic.design)
 }
 
 // Records a browser check of a preview's copy. It runs where Chromium does,
@@ -264,7 +270,8 @@ export const tidyName = (s: string) => {
 // A service's page, in their words: the opening paragraph, then each of
 // their headings with what follows it; their questions become the FAQ.
 export function writtenFrom(name: string, e: Extracted): WrittenService | undefined {
-  const blocks = e.blocks.filter((b) => b.text.trim())
+  // Breadcrumbs ("Home » Practice Areas » …") aren't their words.
+  const blocks = e.blocks.filter((b) => b.text.trim() && !/^home\s*[»›>/|]/i.test(b.text.trim()) && !/\s[»›>]\s.*\s[»›>]\s/.test(b.text) && !/^[^.!?]{0,80}\s[»›>]\s[^.!?]{0,80}$/.test(b.text))
   const firstP = blocks.findIndex((b) => b.kind === 'p' && b.text.length >= 60)
   if (firstP < 0) return undefined
   const intro: string[] = [blocks[firstP].text]
@@ -339,15 +346,18 @@ export function businessName(detected: string, html: string, url: string): strin
 const STATES: Record<string, string> = { AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware', DC: 'District of Columbia', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas', KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi', MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York', NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington', WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming' }
 
 // The town their pages name most often as "Town, ST" (or "Town, State").
-export function placeFromText(text: string): { city: string; region: string } | null {
+// "Christopher P. Taylor, PA" is a firm, not Taylor, Pennsylvania: a
+// "town" that's part of their name, before PA, doesn't count.
+export function placeFromText(text: string, name = ''): { city: string; region: string } | null {
   const count = new Map<string, number>()
   const byName = Object.fromEntries(Object.entries(STATES).map(([k, v]) => [v.toLowerCase(), k]))
   const re = /\b((?:[A-Z][a-z]+\.?\s){0,2}[A-Z][a-z]+),\s*([A-Z]{2}|[A-Z][a-z]+(?:\s[A-Z][a-z]+)?)\b/g
   for (const m of text.matchAll(re)) {
     const st = STATES[m[2]] ? m[2] : byName[m[2].toLowerCase()]
     if (!st) continue
-    const city = m[1].replace(/^(?:In|Near|Of|Serving|From|And|The|Our|Located|Offices?)\s+/, '')
+    const city = m[1].replace(/^(?:In|Near|Of|Serving|From|And|The|Our|Located|Offices?|Floor|Suite|Ste|Unit|Level|Building)\s+/, '')
     if (!city || STATES[city.toUpperCase()] || byName[city.toLowerCase()] || /^(Suite|Inc|LLC|Street|Avenue|Road|Blvd|Drive|Lawyer|Attorney|Law)$/i.test(city)) continue
+    if (st === 'PA' && name.toLowerCase().split(/[^a-z]+/).includes(city.toLowerCase())) continue
     const k = `${city}|${st}`
     count.set(k, (count.get(k) ?? 0) + 1)
   }
@@ -357,7 +367,9 @@ export function placeFromText(text: string): { city: string; region: string } | 
   return { city, region }
 }
 
-function redesign(pages: (ImportedPage & { html: string })[], d: Detected, id: string): Built & { ready: boolean } {
+type BytesFetcher = (url: string) => Promise<{ type: string; data: Buffer } | null>
+
+function redesign(pages: (ImportedPage & { html: string })[], d: Detected, id: string, assets: SiteAssets): Built & { ready: boolean } {
   const home = pages.find((p) => p.from === '/')
   const rest = pages.filter((p) => p !== home && !DEMO.test(p.from))
   const kind = (p: ImportedPage) => (CONTACT.test(p.from) ? 'contact' : ABOUT.test(p.from) ? 'about' : PEOPLE.test(p.from) ? 'people' : NOT_SERVICE_PAGE.test(p.from) ? 'other' : 'service')
@@ -398,7 +410,7 @@ function redesign(pages: (ImportedPage & { html: string })[], d: Detected, id: s
   // Their name (businessName), and their town from their own pages when
   // the home page didn't give it.
   const name = d.name
-  const place = d.city ? { city: d.city, region: d.region ?? '' } : placeFromText(pages.map((p) => `${p.extracted.title} ${p.extracted.h1} ${p.extracted.blocks.map((b) => b.text).join(' ')}`).join(' '))
+  const place = d.city ? { city: d.city, region: d.region ?? '' } : placeFromText(pages.map((p) => `${p.extracted.title} ${p.extracted.h1} ${p.extracted.blocks.map((b) => b.text).join(' ')}`).join(' '), d.name)
   // "+15617928551" reads as "(561) 792-8551".
   const digits = (d.phone ?? '').replace(/\D/g, '').replace(/^1(?=\d{10}$)/, '')
   const phone = digits.length === 10 ? `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}` : d.phone
@@ -450,7 +462,185 @@ function redesign(pages: (ImportedPage & { html: string })[], d: Detected, id: s
   const plan = planImport(built.site, built.pages, rest.filter((p) => !covered.has(p)).map((p) => ({ from: p.from, url: p.url, extracted: p.extracted })))
   const pagesOut = [...built.pages, ...plan.pages.map((p) => ({ ...p, status: 'published' as const }))]
   const ready = names.length >= REDESIGN_NEEDS.services && (content.services?.length ?? 0) >= REDESIGN_NEEDS.written
-  return { site: built.site, pages: pagesOut, redirects: [...redirects, ...plan.redirects.filter((r) => !redirects.some((x) => x.from === r.from))], ready }
+  // Every page in one of our hand-made designs, around their own photos,
+  // people, results, reviews and awards.
+  const firmPages = dress(built.site, pagesOut, { home, rest, aboutPage, team, written: content.services ?? [], headline, phone, place, d, assets, menu })
+  return { site: built.site, pages: firmPages, redirects: [...redirects, ...plan.redirects.filter((r) => !redirects.some((x) => x.from === r.from))], ready }
+}
+
+// What kind of practice, in a few words, from their services.
+function practiceKind(type: string, services: string[]): string {
+  if (type !== 'lawyer') return ({ doctor: 'Medical practice', medspa: 'Med spa', dentist: 'Dental practice' } as Record<string, string>)[type] ?? 'Local business'
+  const kinds: [RegExp, string][] = [
+    [/injur|accident|wrongful|malpractice|truck|motorcycle|slip|premises/, 'Personal injury lawyers'],
+    [/criminal|dui|dwi|drug|theft|assault|felony|misdemeanor|domestic violence|sex crime/, 'Criminal defense'],
+    [/divorce|custody|family|alimony|child support|adoption/, 'Family law'],
+    [/estate|probate|will|trust|guardianship|elder/, 'Estate planning & probate'],
+    [/bankrupt|chapter 7|chapter 13|debt/, 'Bankruptcy lawyers'],
+    [/immigra|visa|green card|citizenship|asylum/, 'Immigration lawyers'],
+    [/employ|discriminat|wage|harass|wrongful termination/, 'Employment lawyers'],
+    [/business|corporate|contract|real estate/, 'Business & real estate law'],
+  ]
+  const hits = kinds.map(([re, label]) => ({ label, n: services.filter((s) => re.test(s.toLowerCase())).length })).sort((a, b) => b.n - a.n)
+  return hits[0].n >= Math.max(1, services.length * 0.4) ? hits[0].label : 'Attorneys at law'
+}
+
+// A photo of theirs about a service ("motorcycle-accident.jpg" for
+// Motorcycle Accidents), when one fits.
+const GENERIC = new Set(['law', 'laws', 'lawyer', 'lawyers', 'legal', 'attorney', 'attorneys', 'accident', 'accidents', 'injury', 'injuries', 'case', 'cases', 'claims', 'defense', 'services', 'planning', 'and', 'the', 'for'])
+function photoFor(name: string, photos: SitePhoto[], used: Set<string>): SitePhoto | undefined {
+  const words = name.toLowerCase().split(/[^a-z]+/).filter((w) => w.length > 2 && !GENERIC.has(w)).map((w) => w.replace(/(ies|s)$/, ''))
+  if (!words.length) return undefined
+  return photos.find((p) => !used.has(p.src) && words.every((w) => `${p.src} ${p.alt}`.toLowerCase().includes(w)))
+}
+
+const nameLike = (headline: string, name: string) => {
+  const last = name.replace(/,?\s+(p\.?a\.?|l\.?l\.?c\.?|p\.?l\.?l\.?c\.?|l\.?l\.?p\.?|p\.?c\.?)\.?$/i, '').trim().split(/\s+/).pop()?.toLowerCase() ?? ''
+  return !!last && headline.toLowerCase().includes(last) && !/lawyer|attorney|injury|defen|divorce|family|estate|probate|criminal|accident/i.test(headline)
+}
+const hashOf = (s: string) => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7)
+
+interface DressInput {
+  home?: ImportedPage & { html: string }
+  rest: (ImportedPage & { html: string })[]
+  aboutPage?: ImportedPage
+  team: Attorney[]
+  written: WrittenService[]
+  headline?: string
+  phone?: string
+  place: { city: string; region: string } | null
+  d: Detected
+  assets: SiteAssets
+  menu: (MenuLink & { children: MenuLink[] })[]
+}
+
+// Our own designs for every page (lib/redesign-design), stored like kept
+// pages so their look is exactly as made. The page bodies stay as they were
+// built, so moving a page to the SaySites design keeps its words.
+function dress(site: Site, pages: Page[], x: DressInput): Page[] {
+  const { d, assets } = x
+  const path = (p: Page) => (p.slug ? `/${p.slug}` : '/')
+  const svcPages = pages.filter((p) => /^(practice-areas|services|treatments)\/[^/]+$/.test(p.slug))
+  const used = new Set<string>()
+  // The hero: a wide photo of them (their banner or a group photo) first.
+  // Their banner when it shows people, else a photo of them, else their
+  // banner anyway; never a photo with words baked in.
+  const usable = assets.photos.filter((p) => !/^(get help|file a claim|call|contact|free|click|learn|read)/i.test(p.alt))
+  const banner = usable.find((p) => isWide(p) && p.width >= 1000 && p.people) ?? usable.find((p) => p.banner && isWide(p))
+  const ofThem = usable.find((p) => p.people && !isWide(p) && (p.width >= 500 || !p.width))
+  const lead = assets.portraits.find((p) => p.home)
+  const hero = banner ?? ofThem ?? (lead ? { src: lead.src, alt: lead.name, people: true, width: 800, height: 1000, score: 0 } : undefined)
+  if (hero) used.add(hero.src)
+  const lone = assets.portraits.length === 1 ? { src: assets.portraits[0].src, alt: assets.portraits[0].name, people: true, width: 800, height: 1000, score: 0 } : undefined
+  const portrait = usable.find((p) => p.people && !used.has(p.src) && p.width >= 500) ?? lone
+  if (portrait) used.add(portrait.src)
+  const services = svcPages.map((p) => {
+    const w = x.written.find((s) => serviceSlug(s.name) === p.slug.split('/')[1])
+    const name = w?.name ?? p.name
+    const photo = photoFor(name, usable, used)
+    if (photo) used.add(photo.src)
+    return { name, href: path(p), summary: w?.summary ?? '', ...(photo ? { photo } : {}) }
+  })
+  // A sentence on every page of theirs ("30+ years of experience…") says
+  // nothing about any one service.
+  for (const s of services) if (s.summary && services.filter((o) => o.summary === s.summary).length > 1) s.summary = ''
+  const teamPage = pages.find((p) => /^(attorneys|providers|our-team)$/.test(p.slug))
+  const named = (s: string) => s.toLowerCase().replace(/[^a-z]+/g, ' ').replace(/\b(esq|esquire|jr|sr|iii|ii)\b/g, '').trim()
+  const team: ShowcaseFirm['team'] = []
+  for (const a of x.team) {
+    const pic = assets.portraits.find((p) => named(p.name) === named(a.name) || (named(a.name).split(' ').pop() === named(p.name).split(' ').pop() && named(a.name)[0] === named(p.name)[0]))
+    team.push({ name: a.name, role: a.role, ...(teamPage ? { href: path(teamPage) } : {}), ...(pic ? { photo: pic.src } : {}) })
+  }
+  for (const p of assets.portraits) if (!team.some((t) => named(t.name) === named(p.name) || named(t.name).split(' ').pop() === named(p.name).split(' ').pop())) team.push({ name: p.name, role: p.role ?? (d.type === 'lawyer' ? 'Attorney' : 'Team'), ...(teamPage ? { href: path(teamPage) } : {}), photo: p.src })
+  for (const t of team) {
+    const role = assets.portraits.find((p) => p.src === t.photo)?.role
+    if (role) t.role = role
+  }
+  const homeText = x.home ? textOf(parseHtml(x.home.html)) : ''
+  const desc = x.home?.extracted.description ?? ''
+  const aboutPg = pages.find((p) => p.slug === 'about')
+  // Their own description of the firm, without calls to action.
+  const aboutParas = (x.aboutPage ?? x.home)?.extracted.blocks.filter((b) => b.kind === 'p' && b.text.length >= 80 && !/^(contact|call|reach out|schedule|get in touch|click)\b|\b(call|contact) (us|our firm) today\b/i.test(b.text)).map((b) => b.text) ?? []
+  const lede = desc.length >= 60 && desc.length <= 260 && !/\||»|›/.test(desc) ? desc : aboutParas[0]
+  const kind = practiceKind(d.type, services.map((s) => s.name))
+  const h = hashOf(d.name)
+  // Their menu's own pages (Case Results, Testimonials, Blog) beside ours.
+  const nav: ShowcaseFirm['nav'] = site.nav.filter((n) => n.href !== '/' && !/contact/i.test(n.href)).map((n) => ({ label: n.label, href: n.href, ...(n.children?.length ? { children: n.children } : {}) }))
+  const add = (label: string, href: string) => {
+    if (nav.length < 6 && !nav.some((n) => n.href === href || n.label.toLowerCase() === label.toLowerCase())) nav.push({ label, href })
+  }
+  if (aboutPg) add('About', path(aboutPg))
+  if (teamPage) add(teamPage.name.length <= 20 ? teamPage.name : 'Attorneys', path(teamPage))
+  for (const m of x.menu) {
+    const pg = pages.find((p) => p.source && (new URL(p.source).pathname.replace(/\/+$/, '') || '/') === m.path)
+    // "AboutThe firm": a menu label with a second line run into it.
+    const label = tidyName(m.label.split(/(?<=[a-z])(?=[A-Z])/)[0])
+    if (pg && !svcPages.includes(pg) && label.length <= 22) add(label || pg.name, path(pg))
+  }
+  if (assets.results.length >= 2 && !nav.some((n) => /result|verdict|settlement/i.test(n.label))) add('Results', '/#results')
+  if (assets.reviews.length && !nav.some((n) => /review|testimonial/i.test(n.label))) add('Reviews', '/#reviews')
+  const contactPg = pages.find((p) => p.slug === 'contact')
+  nav.push({ label: 'Contact', href: contactPg ? path(contactPg) : '/#talk' })
+  // "Top Personal Injury Attorneys In Atlanta, Georgia" reads better as a
+  // sentence; places and names keep their capitals.
+  const keep = new Set([...`${x.place?.city ?? ''} ${x.place?.region ?? ''} ${STATES[x.place?.region ?? ''] ?? ''} ${d.name}`.split(/[\s,]+/).filter(Boolean).map((w) => w.toLowerCase())])
+  const titleCased = (s: string) => s.split(/\s+/).filter((w) => /^[a-z]/i.test(w)).every((w) => /^[A-Z]/.test(w) || /^(of|in|and|the|for|a|an|to|at|on|by|with|near|from|your|our|you|&)$/.test(w))
+  const sentence = (s: string) => (titleCased(s) ? s.split(/\s+/).map((w, i) => (i === 0 || keep.has(w.replace(/[^a-z]/gi, '').toLowerCase()) || /^[A-Z]{2,}$/.test(w) ? w : w.toLowerCase())).join(' ') : s)
+  const firm: ShowcaseFirm = {
+    look: LOOKS[h % LOOKS.length],
+    pairing: (h >>> 4) % 2,
+    name: d.name,
+    kind,
+    // Their name isn't a headline ("Law Offices of Christopher P. Taylor").
+    headline: sentence(x.headline && !nameLike(x.headline, d.name) ? x.headline : `${kind}${x.place?.city ? ` in ${x.place.city}` : ''}`),
+    ...(lede ? { lede } : {}),
+    ...(x.phone ? { phone: x.phone } : {}),
+    ...(d.email ? { email: d.email } : {}),
+    ...(d.street ? { street: d.street } : {}),
+    ...(x.place?.city ? { city: x.place.city } : {}),
+    ...(x.place?.region ? { region: x.place.region } : {}),
+    ...(d.postalCode ? { postalCode: d.postalCode } : {}),
+    ...(d.hours?.length ? { hours: d.hours } : {}),
+    freeConsult: /free (initial |case |legal )?(consultation|case review|case evaluation|evaluation)/i.test(homeText),
+    ...(d.color ? { brand: d.color } : {}),
+    nav,
+    services,
+    ...(aboutParas.length ? { about: { heading: x.aboutPage?.extracted.h1 && x.aboutPage.extracted.h1.length < 70 ? tidyName(x.aboutPage.extracted.h1) || `About ${d.name}` : `About ${d.name}`, paragraphs: aboutParas.slice(0, 2), ...(aboutPg ? { href: path(aboutPg) } : {}) } } : {}),
+    team,
+    ...(hero ? { hero } : {}),
+    ...(portrait ? { portrait } : {}),
+    assets,
+    formAction: '/__form',
+    schemaType: site.business.schemaType,
+  }
+  const bySource = new Map(x.rest.map((p) => [p.url.slice(0, 500), p]))
+  return pages.map((pg) => {
+    let html: string | undefined
+    if (pg.slug === '') html = showcaseHome(firm)
+    else {
+      const w = x.written.find((s) => serviceSlug(s.name) === pg.slug.split('/')[1] && /^(practice-areas|services|treatments)\//.test(pg.slug))
+      const src = pg.source ? bySource.get(pg.source) : undefined
+      let page: ShowcasePage | undefined
+      if (w) {
+        const svc = services.find((s) => s.href === path(pg))
+        page = { path: path(pg), kicker: 'Practice areas', title: w.name, intro: w.intro, blocks: w.sections.flatMap((s) => [{ kind: 'h2' as const, text: s.heading }, ...s.body.split(/\n\n+/).map((t) => ({ kind: 'p' as const, text: t }))]), faq: w.faq, ...(svc?.photo ? { photo: svc.photo } : {}) }
+      } else if (/^(practice-areas|services|treatments)$/.test(pg.slug)) {
+        page = { path: path(pg), kicker: 'Practice areas', title: pg.name, intro: lede, blocks: services.flatMap((s) => [{ kind: 'h2' as const, text: s.name }, ...(s.summary ? [{ kind: 'p' as const, text: s.summary }] : [])]) }
+      } else if (pg.slug === 'about') {
+        const e = x.aboutPage?.extracted
+        page = { path: path(pg), kicker: 'About', title: firm.about?.heading ?? `About ${d.name}`, blocks: e ? e.blocks : aboutParas.map((t) => ({ kind: 'p' as const, text: t })), ...(portrait ? { photo: portrait } : {}) }
+      } else if (teamPage && pg === teamPage) {
+        page = { path: path(pg), kicker: 'Attorneys', title: pg.name, blocks: x.team.flatMap((a) => [{ kind: 'h2' as const, text: a.name }, { kind: 'p' as const, text: a.bio }]), people: team }
+      } else if (pg.slug === 'contact') {
+        page = { path: path(pg), kicker: 'Contact', title: pg.name, intro: lede, blocks: [], contact: true }
+      } else if (src) {
+        const e = src.extracted
+        page = { path: path(pg), kicker: pg.name, title: e.h1 || pg.name, blocks: e.blocks.filter((b) => b.text.length > 1).slice(0, 120) }
+      }
+      if (page) html = showcasePage(firm, page)
+    }
+    return html ? { ...pg, classic: { html, design: true as const } } : pg
+  })
 }
 
 const SKIP_MENU = /\/(wp-admin|wp-content|feed|tag|category|author|cart|checkout|my-account|login)(\/|$)/i
