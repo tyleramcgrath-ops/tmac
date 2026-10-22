@@ -1070,3 +1070,4 @@
 .home .mockup-form .redesign-err { grid-column: 1 / -1; margin: 0; color: #ffb4a8; }
 .home .mockup-done { max-width: 640px; margin: 28px 0 14px; padding: 16px 18px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 17px; }
 @media (max-width: 560px) { .home .mockup-form { grid-template-columns: 1fr; } }
+.ind-guide-more { margin: 40px 0 0; font-size: 18px; font-weight: 600; }

@@ -42,6 +42,7 @@ export function SiteFooter() {
           <a href="/visibility-index">The Index</a>
           <a href="/reports">Local reports</a>
           <a href="/google-guidelines">Google’s guidelines</a>
+          <a href="/guides">Guides</a>
           <a href="/blog">Blog</a>
           <a href="/#faq">FAQ</a>
           <a href="/privacy">Privacy</a>

@@ -453,6 +453,23 @@ sitemap and an RSS feed (/blog/rss.xml). Writing rules: no invented numbers,
 studies, quotes or results; link every outside fact to its source (Google's
 own documentation where possible); never promise rankings or leads; never
 name a competitor; never mention the founder's name (byline is "SaySites").
+**Evergreen guides** (October 22, 2026; the owner asked for separate
+sections on the industries we concentrate on): /guides and one hub per
+subject (`lib/topics.ts`: law firms, medical & dental, med spas, home
+services, online shops, local search, AI search). Each hub is an evergreen
+guide (same writing rules), a checklist, FAQs (FAQPage markup), the
+/websites-for pages it belongs to and every article on the subject
+(`topicsOf` matches an article by its address and title; a test requires
+every article to land in at least one hub). Articles show their hub in the
+breadcrumb, a "Part of a guide" box and related reading from the same hub;
+industry pages link to their hub. Pillar checklists (`lib/articles-pillars.ts`,
+scheduled one a day from October 23) follow the daily-article rules. Article
+bodies can use tables, `- [ ]` checklists and `> **Tip:**` / `**Note:**` /
+`**Watch out:**` boxes (`renderBody`). Core pages carry structured data via
+`components/JsonLd.tsx` (Organization, WebSite and SoftwareApplication on
+the home page; plan offers from PRICES on /pricing; breadcrumbs and item
+lists on hubs). Long article titles drop the "| SaySites" suffix so search
+results show the words, not the brand.
 **One article a day** (the owner's request, October 8, 2026): articles are
 written a week ahead in `lib/articles-scheduled.ts`, each dated a day apart;
 `publishedArticles` hides each until its day, so a week ships in one deploy.

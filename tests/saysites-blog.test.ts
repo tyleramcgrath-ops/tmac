@@ -98,3 +98,35 @@ describe('SaySites blog', () => {
     expect(() => assertNoDuplicates([...all.filter((x) => x.slug !== a.slug), noPhoto, { ...noPhoto, slug: 'near-copy', title: 'Another title entirely' }])).toThrow(/too similar/)
   })
 })
+
+describe('SaySites: evergreen guides (/guides) and richer articles', async () => {
+  const { TOPICS, articlesFor, topicsOf } = await import('../apps/saysites/lib/topics')
+  const { LAUNCH_ARTICLES, renderBody, headingsOf } = await import('../apps/saysites/lib/articles')
+  const { SCHEDULED_ARTICLES } = await import('../apps/saysites/lib/articles-scheduled')
+  const all = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES]
+
+  it('gives each subject a full guide that links to its sources, with every article filed under one', () => {
+    expect(new Set(TOPICS.map((t) => t.slug)).size).toBe(TOPICS.length)
+    for (const t of TOPICS) {
+      expect(t.title.length, t.slug).toBeLessThanOrEqual(65)
+      expect(t.description.length, t.slug).toBeGreaterThanOrEqual(110)
+      expect(t.description.length, t.slug).toBeLessThanOrEqual(160)
+      expect(headingsOf(t.body).length, t.slug).toBeGreaterThanOrEqual(4)
+      expect(t.body.match(/\]\(https:\/\//g)?.length ?? 0, t.slug).toBeGreaterThanOrEqual(3)
+      expect(t.checklist.length, t.slug).toBeGreaterThanOrEqual(5)
+      expect(t.faq.length, t.slug).toBeGreaterThanOrEqual(3)
+      expect(`${t.title} ${t.description} ${t.body}`, t.slug).not.toContain('—')
+      expect(t.body, t.slug).not.toMatch(/we guarantee|guaranteed (rank|result|lead|traffic)|rank first|#1 (on|in) google/i)
+      expect(articlesFor(t, all).length, t.slug).toBeGreaterThanOrEqual(1)
+    }
+    // Every article belongs to at least one guide, so none is left unlinked.
+    for (const a of all) expect(topicsOf(a).length, a.slug).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders tables, checklists and tip boxes, escaping what’s in them', () => {
+    const html = renderBody('| Rule | <b>Where</b> |\n|---|---|\n| Disclaimer | Next to results |\n\n- [ ] One\n- [x] Two\n\n> **Watch out:** Rules change.')
+    expect(html).toContain('<div class="post-table"><table><thead><tr><th scope="col">Rule</th><th scope="col">&lt;b&gt;Where&lt;/b&gt;</th></tr></thead><tbody><tr><td>Disclaimer</td><td>Next to results</td></tr></tbody></table></div>')
+    expect(html).toContain('<ul class="post-check"><li>One</li><li class="done">Two</li></ul>')
+    expect(html).toContain('<aside class="post-tip post-tip-warn"><p><strong>Watch out:</strong> Rules change.</p></aside>')
+  })
+})

@@ -11,7 +11,10 @@
 //
 // Bodies are a small, safe subset of Markdown (renderBody): ## and ###
 // headings, paragraphs, - lists, 1. lists, > quotes, **bold** and
-// [links](https://…). Everything else is shown as plain text.
+// [links](https://…), plus three visual blocks: tables (| a | b | rows with
+// a |---| line under the header), checklists (- [ ] items) and tip boxes
+// (a quote starting "**Tip:**", "**Note:**" or "**Watch out:**").
+// Everything else is shown as plain text.
 
 import type { Store } from './store'
 import { SCHEDULED_ARTICLES } from './articles-scheduled'
@@ -399,6 +402,21 @@ export function renderBody(body: string): string {
     const img = /^!\[([^\]]+)\]\((\S+)\)$/.exec(b)
     if (img) {
       if (safeImage(img[2])) html.push(`<figure><img src="${esc(img[2])}" alt="${esc(img[1])}" width="1200" height="800" loading="lazy" decoding="async"></figure>`)
+      continue
+    }
+    // A table: header row, a |---| line, then rows.
+    if (lines.length >= 3 && lines.every((l) => /^\|.*\|$/.test(l)) && /^\|[\s:|-]+\|$/.test(lines[1])) {
+      const cells = (l: string) => l.slice(1, -1).split('|').map((c) => inline(c.trim()))
+      html.push(`<div class="post-table"><table><thead><tr>${cells(lines[0]).map((c) => `<th scope="col">${c}</th>`).join('')}</tr></thead><tbody>${lines.slice(2).map((l) => `<tr>${cells(l).map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`)
+      continue
+    }
+    if (lines.every((l) => /^[-*] \[[ x]\] /.test(l))) {
+      html.push(`<ul class="post-check">${lines.map((l) => `<li${/^[-*] \[x\]/.test(l) ? ' class="done"' : ''}>${inline(l.replace(/^[-*] \[[ x]\] /, ''))}</li>`).join('')}</ul>`)
+      continue
+    }
+    const tip = lines.every((l) => l.startsWith('>')) && /^>\s?\*\*(Tip|Note|Watch out):\*\*/.exec(lines[0])
+    if (tip) {
+      html.push(`<aside class="post-tip post-tip-${tip[1] === 'Watch out' ? 'warn' : 'tip'}"><p>${inline(lines.map((l) => l.replace(/^>\s?/, '')).join(' '))}</p></aside>`)
       continue
     }
     if (b.startsWith('### ')) html.push(`<h3>${inline(b.slice(4))}</h3>`)
