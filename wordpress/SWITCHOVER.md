@@ -256,3 +256,7 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - The form on /elevate-dinner2026/ showed blank because EWWW Image Optimizer's lazy loader rewrote the iframe
   (`src` to `data-src`) and never loaded it. The iframe now carries `skip-lazy` / `data-skip-lazy` so EWWW leaves it alone.
 - If the page is cached (EWWW, a caching plugin or the host), clear the cache after installing.
+
+## v6.21.2 — Taste of Tampa banner on the Elevate Dinner page
+- The hero on /elevate-dinner2026/ now shows the "Taste of Tampa" banner (EnVue, Geotab, Bosch) taken from the
+  Google Form header. It ships with the theme at `assets/images/elevate-dinner-2026-banner.webp`.

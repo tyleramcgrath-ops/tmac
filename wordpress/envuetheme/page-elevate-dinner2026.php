@@ -8,9 +8,18 @@ $ed_form = 'https://docs.google.com/forms/d/e/1FAIpQLSfqALiDBavZ9_CsO9Tw5zPAPJkQ
 ?>
 <main id="main">
 
+<style>
+.ed-hero-banner{display:block;width:100%;max-width:1100px;height:auto;border-radius:var(--r-lg);margin:12px 0 28px;box-shadow:0 18px 40px rgba(0,0,0,.35);}
+.ed-form-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;max-width:720px;margin:0 auto;}
+.ed-form-card iframe{display:block;width:100%;height:2738px;border:0;}
+.ed-form-alt{text-align:center;font-size:.875rem;color:var(--slate);margin-top:1rem;}
+@media(max-width:760px){.ed-form-card{padding:8px;}}
+</style>
+
 <section class="page-hero page-hero--post">
   <div class="wrap">
     <nav class="breadcrumb"><a href="<?php echo esc_url( home_url( '/' ) ); ?>">Home</a> / <a href="<?php echo esc_url( home_url( '/elevate-dinner2026/' ) ); ?>">Elevate Dinner 2026</a></nav>
+    <img class="ed-hero-banner skip-lazy" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/elevate-dinner-2026-banner.webp' ); ?>" width="1600" height="400" alt="Taste of Tampa, a private dinner experience from EnVue Telematics, Geotab and Bosch" loading="eager" fetchpriority="high" data-skip-lazy="1">
     <span class="eyebrow eyebrow--light">EnVue Telematics</span>
     <h1>Elevate Dinner 2026</h1>
     <p>Please complete the form below to register.</p>
@@ -20,12 +29,6 @@ $ed_form = 'https://docs.google.com/forms/d/e/1FAIpQLSfqALiDBavZ9_CsO9Tw5zPAPJkQ
   </div>
 </section>
 
-<style>
-.ed-form-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;max-width:720px;margin:0 auto;}
-.ed-form-card iframe{display:block;width:100%;height:2738px;border:0;}
-.ed-form-alt{text-align:center;font-size:.875rem;color:var(--slate);margin-top:1rem;}
-@media(max-width:760px){.ed-form-card{padding:8px;}}
-</style>
 
 <section class="section section--soft" id="rsvp"><div class="wrap">
   <div class="ed-form-card">
