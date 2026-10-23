@@ -251,3 +251,8 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - New page at **/elevate-dinner2026/** with the event's Google Form embedded. Responses go straight to that
   Google Form, not WPForms or /get-in-touch/. There is also a link to open the form in a new tab.
 - Works with no WordPress page. To manage its SEO in AIOSEO, add a blank page with the slug `elevate-dinner2026`.
+
+## v6.21.1 — Elevate Dinner form fix
+- The form on /elevate-dinner2026/ showed blank because EWWW Image Optimizer's lazy loader rewrote the iframe
+  (`src` to `data-src`) and never loaded it. The iframe now carries `skip-lazy` / `data-skip-lazy` so EWWW leaves it alone.
+- If the page is cached (EWWW, a caching plugin or the host), clear the cache after installing.
