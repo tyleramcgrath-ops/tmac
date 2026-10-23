@@ -135,6 +135,7 @@ function envue_template_map() {
         'gofocusplus-demo50'      => 'page-gofocusplus-demo50.php',
         'gofocusplus-email50'     => 'page-gofocusplus-email50.php',
         'gofocusplus-ads50'       => 'page-gofocusplus-ads50.php',
+        'elevate-dinner2026'      => 'page-elevate-dinner2026.php',
         'drivewyze'               => 'page-drivewyze.php',
         'route4me'                => 'page-route4me.php',
         'elite-extra'             => 'page-elite-extra.php',
@@ -718,6 +719,7 @@ function envue_seo_meta() {
         'gofocusplus-demo50'        => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-email50'       => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-ads50'         => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
+        'elevate-dinner2026'        => [ 'Elevate Dinner 2026 | EnVue Telematics', 'Register for the EnVue Telematics Elevate Dinner 2026.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
     ];
 }

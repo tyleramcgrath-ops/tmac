@@ -246,3 +246,8 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - New page at **/gofocusplus-ads50/**. It matches /gofocusplus-demo50/ and /gofocusplus-email50/ exactly but tags
   its leads `source=gofocusplus-ads50`, so ad sign-ups stay separate from email and trade-show sign-ups on /get-in-touch/.
   All three pages are built from one template, so any change to the offer shows up on all of them.
+
+## v6.21 — Elevate Dinner 2026 registration page
+- New page at **/elevate-dinner2026/** with the event's Google Form embedded. Responses go straight to that
+  Google Form, not WPForms or /get-in-touch/. There is also a link to open the form in a new tab.
+- Works with no WordPress page. To manage its SEO in AIOSEO, add a blank page with the slug `elevate-dinner2026`.
