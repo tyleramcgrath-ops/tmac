@@ -1,0 +1,10 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+await p.goto('http://127.0.0.1:8899/experiences/', { waitUntil: 'networkidle' });
+await p.evaluate(() => document.querySelector('.cta-band').scrollIntoView({block:'center'}));
+await p.waitForTimeout(2000);
+const op = await p.evaluate(() => getComputedStyle(document.querySelector('.cta-band__inner')).opacity);
+console.log('cta reveal opacity:', op);
+await p.screenshot({ path: '/tmp/shots/cta.png' });
+await b.close();

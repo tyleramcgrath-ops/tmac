@@ -1,0 +1,446 @@
+<?php
+/**
+ * Public booking form rendering.
+ *
+ * @package PalmTreeBookings
+ */
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Render one field control.
+ *
+ * @param string $key    Field key.
+ * @param array  $field  Field definition.
+ * @param array  $values Previously submitted values, preserved after an error.
+ */
+function ptb_render_field( $key, $field, $values = array() ) {
+	$id       = 'ptb-' . sanitize_key( $key );
+	$name     = 'ptb[' . $key . ']';
+	$value    = isset( $values[ $key ] ) ? $values[ $key ] : ( isset( $field['default'] ) ? $field['default'] : '' );
+	$required = ! empty( $field['required'] );
+	$type     = $field['type'];
+	$describe = ! empty( $field['hint'] ) ? $id . '-hint' : '';
+
+	/*
+	 * A carried-over value has no question to ask, so it gets no wrapper and no
+	 * label — otherwise the tour page shows a labelled "Which experience?" with
+	 * nothing under it.
+	 */
+	if ( 'experience_fixed' === $type ) {
+		// Keeps its id: the availability script looks the experience up by it,
+		// and without one the time picker never loads a single slot.
+		printf(
+			'<input type="hidden" id="%1$s" name="%2$s" value="%3$d" />',
+			esc_attr( $id ),
+			esc_attr( $name ),
+			(int) $value
+		);
+
+		return;
+	}
+
+	$classes = array( 'ptb-field', 'ptb-field--' . sanitize_html_class( $type ) );
+	printf( '<div class="%s">', esc_attr( implode( ' ', $classes ) ) );
+
+	if ( 'checkbox' !== $type ) {
+		printf(
+			'<label class="ptb-field__label" for="%1$s">%2$s%3$s</label>',
+			esc_attr( $id ),
+			esc_html( $field['label'] ),
+			$required ? '<span class="ptb-req" aria-hidden="true">*</span>' : ''
+		);
+	}
+
+	$common = sprintf(
+		'id="%1$s" name="%2$s"%3$s%4$s',
+		esc_attr( $id ),
+		esc_attr( $name ),
+		$required ? ' required' : '',
+		$describe ? ' aria-describedby="' . esc_attr( $describe ) . '"' : ''
+	);
+
+	switch ( $type ) {
+		case 'textarea':
+			printf(
+				'<textarea %1$s rows="%2$d" placeholder="%3$s" class="ptb-input">%4$s</textarea>',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				isset( $field['rows'] ) ? (int) $field['rows'] : 4,
+				esc_attr( isset( $field['placeholder'] ) ? $field['placeholder'] : '' ),
+				esc_textarea( $value )
+			);
+			break;
+
+		case 'select':
+			printf( '<select %s class="ptb-input">', $common ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+			foreach ( $field['options'] as $opt_value => $opt_label ) {
+				printf(
+					'<option value="%1$s"%2$s>%3$s</option>',
+					esc_attr( $opt_value ),
+					selected( $value, $opt_value, false ),
+					esc_html( $opt_label )
+				);
+			}
+			echo '</select>';
+			break;
+
+		case 'experience':
+			ptb_render_experience_field( $id, $name, $value, $required );
+			break;
+
+		case 'pay_method':
+			/*
+			 * Two cards rather than a dropdown: this is the decision the whole
+			 * form leads to, and it should not look like another question.
+			 * Cash is the default and the only choice offered when card
+			 * payment has not been switched on, so the form never promises a
+			 * checkout that does not exist.
+			 */
+			$ptb_card_ready = function_exists( 'ptb_active_gateway' ) && ptb_active_gateway();
+			$ptb_chosen     = ( 'card' === $value && $ptb_card_ready ) ? 'card' : 'cash';
+
+			echo '<div class="ptb-pay">';
+
+			printf(
+				'<label class="ptb-pay__choice"><input type="radio" name="%1$s" value="cash"%2$s /><span class="ptb-pay__body"><span class="ptb-pay__title">%3$s</span><span class="ptb-pay__note">%4$s</span></span></label>',
+				esc_attr( $name ),
+				checked( $ptb_chosen, 'cash', false ),
+				esc_html__( 'Cash on the day', 'palm-tree-bookings' ),
+				esc_html__( 'Book now, pay when you arrive.', 'palm-tree-bookings' )
+			);
+
+			if ( $ptb_card_ready ) {
+				printf(
+					'<label class="ptb-pay__choice"><input type="radio" name="%1$s" value="card"%2$s /><span class="ptb-pay__body"><span class="ptb-pay__title">%3$s</span><span class="ptb-pay__note">%4$s</span></span></label>',
+					esc_attr( $name ),
+					checked( $ptb_chosen, 'card', false ),
+					esc_html__( 'Pay by card now', 'palm-tree-bookings' ),
+					esc_html__( 'Secure checkout, confirmed straight away.', 'palm-tree-bookings' )
+				);
+			}
+
+			echo '</div>';
+			break;
+
+		case 'trip_option':
+			/*
+			 * Hidden until the chosen experience turns out to have options,
+			 * which form.js fills in. Most tours are sold one way and showing
+			 * an empty "which option?" on those is noise.
+			 */
+			printf(
+				'<select %1$s class="ptb-input" data-ptb-trip-options hidden><option value="">%2$s</option></select>',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_html__( 'Choose an experience first', 'palm-tree-bookings' )
+			);
+			break;
+
+		case 'slot':
+			/*
+			 * Populated by form.js once an experience and date are chosen. With
+			 * JavaScript off it stays a plain empty select and the server still
+			 * accepts the booking, then staff confirm the time by reply.
+			 */
+			printf(
+				'<select %1$s class="ptb-input" data-ptb-slots><option value="">%2$s</option></select>',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_html__( 'Choose an experience and date first', 'palm-tree-bookings' )
+			);
+			break;
+
+		case 'checkbox':
+			printf(
+				'<label class="ptb-check"><input type="checkbox" id="%1$s" name="%2$s" value="1"%3$s /> <span>%4$s</span></label>',
+				esc_attr( $id ),
+				esc_attr( $name ),
+				checked( $value, '1', false ),
+				esc_html( $field['label'] )
+			);
+			break;
+
+		case 'number':
+			printf(
+				'<input type="number" %1$s value="%2$s" class="ptb-input" min="%3$d" max="%4$d" inputmode="numeric" />',
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_attr( $value ),
+				isset( $field['min'] ) ? (int) $field['min'] : 0,
+				isset( $field['max'] ) ? (int) $field['max'] : 99
+			);
+			break;
+
+		default:
+			printf(
+				'<input type="%1$s" %2$s value="%3$s" class="ptb-input"%4$s />',
+				esc_attr( $type ),
+				$common, // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped above.
+				esc_attr( $value ),
+				! empty( $field['autocomplete'] ) ? ' autocomplete="' . esc_attr( $field['autocomplete'] ) . '"' : ''
+			);
+	}
+
+	if ( $describe ) {
+		printf( '<p class="ptb-hint" id="%1$s">%2$s</p>', esc_attr( $describe ), esc_html( $field['hint'] ) );
+	}
+
+	echo '</div>';
+}
+
+/**
+ * Render the experience picker.
+ *
+ * Uses the theme's experience post type when it exists, and degrades to a text
+ * input when the plugin runs on a theme that has none.
+ *
+ * @param string $id       Control ID.
+ * @param string $name     Control name.
+ * @param string $value    Current value.
+ * @param bool   $required Whether the field is required.
+ */
+function ptb_render_experience_field( $id, $name, $value, $required ) {
+	$post_type = apply_filters( 'ptb_experience_post_type', 'experience' );
+
+	if ( ! post_type_exists( $post_type ) ) {
+		printf(
+			'<input type="text" id="%1$s" name="%2$s" value="%3$s" class="ptb-input"%4$s />',
+			esc_attr( $id ),
+			esc_attr( $name ),
+			esc_attr( $value ),
+			$required ? ' required' : ''
+		);
+		return;
+	}
+
+	$items = get_posts(
+		array(
+			'post_type'      => $post_type,
+			'posts_per_page' => 100,
+			'orderby'        => 'menu_order title',
+			'order'          => 'ASC',
+			'post_status'    => 'publish',
+		)
+	);
+
+	printf(
+		'<select id="%1$s" name="%2$s" class="ptb-input"%3$s>',
+		esc_attr( $id ),
+		esc_attr( $name ),
+		$required ? ' required' : ''
+	);
+	printf( '<option value="">%s</option>', esc_html__( 'Select an experience…', 'palm-tree-bookings' ) );
+
+	foreach ( $items as $item ) {
+		printf(
+			'<option value="%1$d"%2$s>%3$s</option>',
+			(int) $item->ID,
+			selected( (string) $value, (string) $item->ID, false ),
+			esc_html( $item->post_title )
+		);
+	}
+
+	printf( '<option value="not_sure"%s>%s</option>', selected( $value, 'not_sure', false ), esc_html__( 'Not sure yet — help me choose', 'palm-tree-bookings' ) );
+	echo '</select>';
+}
+
+/**
+ * Render the booking form.
+ *
+ * @param array $atts Shortcode attributes.
+ * @return string
+ */
+function ptb_render_form( $atts = array() ) {
+	$atts = shortcode_atts(
+		array(
+			'experience' => '',
+			'title'      => __( 'Request your booking', 'palm-tree-bookings' ),
+			'location'   => 'page',
+		),
+		$atts,
+		'palm_tree_booking_form'
+	);
+
+	$state  = ptb_get_form_state();
+	$values = $state['values'];
+
+	if ( $atts['experience'] && empty( $values['experience'] ) ) {
+		$values['experience'] = $atts['experience'];
+	}
+
+	ob_start();
+	?>
+	<section class="ptb" id="booking">
+		<?php if ( $atts['title'] ) : ?>
+			<h2 class="ptb__title"><?php echo esc_html( $atts['title'] ); ?></h2>
+		<?php endif; ?>
+
+		<div class="ptb__status" aria-live="polite">
+			<?php if ( 'success' === $state['status'] ) : ?>
+				<div class="ptb-notice ptb-notice--success">
+					<h3><?php esc_html_e( 'Request received', 'palm-tree-bookings' ); ?></h3>
+					<p><?php echo esc_html( ptb_confirmation_message() ); ?></p>
+				</div>
+			<?php elseif ( 'paid' === $state['status'] ) : ?>
+				<div class="ptb-notice ptb-notice--success">
+					<h3><?php esc_html_e( 'Payment received', 'palm-tree-bookings' ); ?></h3>
+					<p>
+						<?php esc_html_e( 'Thank you — your card payment went through and your booking is confirmed. A receipt is on its way to your email.', 'palm-tree-bookings' ); ?>
+					</p>
+				</div>
+			<?php elseif ( 'payment_cancelled' === $state['status'] ) : ?>
+				<div class="ptb-notice ptb-notice--error">
+					<h3><?php esc_html_e( 'Payment not completed', 'palm-tree-bookings' ); ?></h3>
+					<p>
+						<?php esc_html_e( 'Nothing has been charged and your booking is still held. You can pay now, or leave it and settle in cash on the day.', 'palm-tree-bookings' ); ?>
+					</p>
+					<?php if ( ! empty( $state['pay_url'] ) ) : ?>
+						<p>
+							<a class="ptb__button" href="<?php echo esc_url( $state['pay_url'] ); ?>">
+								<?php esc_html_e( 'Try the payment again', 'palm-tree-bookings' ); ?>
+							</a>
+						</p>
+					<?php endif; ?>
+				</div>
+			<?php elseif ( $state['errors'] ) : ?>
+				<div class="ptb-notice ptb-notice--error">
+					<p><?php esc_html_e( 'Please check the fields below.', 'palm-tree-bookings' ); ?></p>
+					<ul>
+						<?php foreach ( $state['errors'] as $error ) : ?>
+							<li><?php echo esc_html( $error ); ?></li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endif; ?>
+		</div>
+
+		<?php if ( ! in_array( $state['status'], array( 'success', 'paid' ), true ) ) : ?>
+			<form class="ptb__form" method="post" action="<?php echo esc_url( ptb_form_action() ); ?>" novalidate>
+				<?php wp_nonce_field( 'ptb_submit', 'ptb_nonce' ); ?>
+				<input type="hidden" name="ptb_submit" value="1" />
+				<input type="hidden" name="ptb_ts" value="<?php echo esc_attr( time() ); ?>" />
+				<input type="hidden" name="ptb_meta[source_section]" value="<?php echo esc_attr( $atts['location'] ); ?>" />
+				<input type="hidden" name="ptb_meta[page_url]" value="<?php echo esc_attr( ptb_current_url() ); ?>" />
+				<?php foreach ( array( 'utm_source', 'utm_medium', 'utm_campaign' ) as $utm ) : ?>
+					<input type="hidden" name="ptb_meta[<?php echo esc_attr( $utm ); ?>]" value="<?php echo esc_attr( ptb_query_param( $utm ) ); ?>" />
+				<?php endforeach; ?>
+
+				<div class="ptb-hp" aria-hidden="true">
+					<label for="ptb-company"><?php esc_html_e( 'Company', 'palm-tree-bookings' ); ?></label>
+					<input type="text" id="ptb-company" name="ptb_company" tabindex="-1" autocomplete="off" />
+				</div>
+
+				<?php
+				/*
+				 * Only the fields marked for the form. Everything a booking
+				 * does not strictly need to exist was retired: nobody abandons
+				 * a booking because they were not asked their country, but
+				 * plenty abandon one that asks twenty-three questions.
+				 */
+				foreach ( ptb_field_groups() as $group_key => $group ) :
+					$visible = array();
+
+					foreach ( $group['fields'] as $key => $field ) {
+						if ( isset( $field['form'] ) && false === $field['form'] ) {
+							continue;
+						}
+
+						// Shortcode carries the tour, so it needs no question.
+						if ( 'experience' === $key && $atts['experience'] ) {
+							$field['type'] = 'experience_fixed';
+						}
+
+						$visible[ $key ] = $field;
+					}
+
+					if ( ! $visible ) {
+						continue;
+					}
+					?>
+					<fieldset class="ptb-group ptb-group--<?php echo esc_attr( $group_key ); ?>">
+						<legend class="ptb-group__legend"><?php echo esc_html( $group['label'] ); ?></legend>
+						<div class="ptb-group__fields">
+							<?php foreach ( $visible as $key => $field ) : ?>
+								<?php ptb_render_field( $key, $field, $values ); ?>
+							<?php endforeach; ?>
+						</div>
+					</fieldset>
+				<?php endforeach; ?>
+
+				<div class="ptb__actions">
+					<button type="submit" class="ptb-btn">
+						<span class="ptb-btn__label"><?php esc_html_e( 'Book now', 'palm-tree-bookings' ); ?></span>
+						<span class="ptb-btn__spinner" aria-hidden="true"></span>
+					</button>
+					<p class="ptb__smallprint"><?php esc_html_e( 'We confirm your spot by email. Paying by card takes you straight to checkout.', 'palm-tree-bookings' ); ?></p>
+				</div>
+			</form>
+		<?php endif; ?>
+	</section>
+	<?php
+	return (string) ob_get_clean();
+}
+add_shortcode( 'palm_tree_booking_form', 'ptb_render_form' );
+
+/**
+ * The URL the form posts back to.
+ *
+ * @return string
+ */
+function ptb_form_action() {
+	return esc_url_raw( ptb_current_url() ) . '#booking';
+}
+
+/**
+ * Current request URL, without the query string.
+ *
+ * @return string
+ */
+function ptb_current_url() {
+	$path = isset( $_SERVER['REQUEST_URI'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+
+	return home_url( strtok( $path, '?' ) );
+}
+
+/**
+ * Read a query parameter safely.
+ *
+ * @param string $key Parameter name.
+ * @return string
+ */
+function ptb_query_param( $key ) {
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only attribution value.
+	return isset( $_GET[ $key ] ) ? sanitize_text_field( wp_unslash( $_GET[ $key ] ) ) : '';
+}
+
+/**
+ * Enqueue the form styles and script only where the form renders.
+ */
+function ptb_enqueue() {
+	wp_enqueue_style( 'ptb-form', PTB_URL . 'assets/css/form.css', array(), PTB_VERSION );
+	wp_enqueue_script( 'ptb-form', PTB_URL . 'assets/js/form.js', array(), PTB_VERSION, true );
+
+	wp_localize_script(
+		'ptb-form',
+		'ptbAvailability',
+		array(
+			'endpoint' => rest_url( 'ptb/v1/availability' ),
+			'loading'  => __( 'Checking availability…', 'palm-tree-bookings' ),
+			'none'     => __( 'No times left on that date', 'palm-tree-bookings' ),
+			'choose'   => __( 'Choose a time', 'palm-tree-bookings' ),
+			'prompt'   => __( 'Choose an experience and date first', 'palm-tree-bookings' ),
+			'left'     => __( '%1$s — %2$d left', 'palm-tree-bookings' ),
+		)
+	);
+
+	wp_enqueue_script( 'ptb-quote', PTB_URL . 'assets/js/quote.js', array(), PTB_VERSION, true );
+
+	wp_localize_script(
+		'ptb-quote',
+		'ptbQuote',
+		array(
+			'endpoint' => rest_url( 'ptb/v1/quote' ),
+			'options'  => rest_url( 'ptb/v1/options' ),
+			'heading'  => __( 'Your price', 'palm-tree-bookings' ),
+			'total'    => __( 'Total', 'palm-tree-bookings' ),
+		)
+	);
+}
+add_action( 'wp_enqueue_scripts', 'ptb_enqueue' );

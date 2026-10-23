@@ -1,0 +1,6 @@
+[
+  {
+    "url": "https://palmtreesurf.com/",
+    "error": "page.goto: net::ERR_TUNNEL_CONNECTION_FAILED at https://palmtreesurf.com/\nCall log:\n\u001b[2m  - navigating to \"https://palmtreesurf.com/\", waiting until \"networkidle\"\u001b[22m\n"
+  }
+]

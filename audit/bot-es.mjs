@@ -1,0 +1,11 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium' });
+const p = await b.newPage({ viewport: { width: 1280, height: 860 } });
+await p.goto('http://127.0.0.1:8899/?lang=es', { waitUntil: 'networkidle' });
+await p.click('[data-assistant-toggle]');
+await p.waitForTimeout(500);
+console.log('launcher:', await p.locator('.assistant__launcher-label').innerText().catch(()=>'n/a'));
+console.log('title:', await p.locator('.assistant__title').innerText());
+console.log('notice:', await p.locator('.assistant__notice').innerText());
+await p.screenshot({ path: '/tmp/shots/bot-es.png' });
+await b.close();

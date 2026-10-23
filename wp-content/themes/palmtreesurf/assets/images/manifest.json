@@ -1,0 +1,429 @@
+{
+  "_readme": "Every content photo slot in the theme. pt_image( 'slot' ) renders these. A slot with file:null renders a correctly-sized grey placeholder, so swapping in a real photo causes zero layout shift and needs no template or CSS change. 'file' is a filename in assets/images/src/. 'option' names a Customizer setting holding a Media Library attachment ID, which wins over 'file' when set.",
+  "hero-home": {
+    "w": 2400,
+    "h": 1350,
+    "ratio": "16:9",
+    "role": "Homepage hero background",
+    "alt": "The Palm Tree Surf kayak fleet and surf tent on the sand at Tamarindo",
+    "file": "hero-tamarindo-beach.jpg",
+    "option": "pt_hero_image",
+    "note": "The operator's own shop. The fleet shot the site used to carry in three other slots was cut back to this one, so the home page opens on a photograph the visitor does not meet again. A Customizer hero image still overrides it."
+  },
+  "hero-video": {
+    "w": 1920,
+    "h": 1080,
+    "ratio": "16:9",
+    "role": "Homepage hero loop, mp4 + webm, under 4MB, 8-12s",
+    "file": null,
+    "alt": ""
+  },
+  "exp-card-1": {
+    "w": 1200,
+    "h": 1600,
+    "ratio": "3:4",
+    "role": "Experience card thumbnail",
+    "alt": "Surf instructor coaching a student on the sand at Tamarindo",
+    "file": "group-instruction-sand.jpg"
+  },
+  "exp-card-2": {
+    "w": 899,
+    "h": 1599,
+    "ratio": "auto",
+    "role": "Experience card thumbnail",
+    "alt": "Kayaks pulled up on the shore beneath the mangroves",
+    "file": "estuary-kayaks-mangrove-shore.jpg"
+  },
+  "exp-card-3": {
+    "w": 1600,
+    "h": 1200,
+    "ratio": "4:3",
+    "role": "Experience card thumbnail",
+    "alt": "The charter boat at anchor off Tamarindo",
+    "file": "fishing-charter-boat.jpg"
+  },
+  "split-1-primary": {
+    "w": 1600,
+    "h": 900,
+    "ratio": "auto",
+    "role": "Split feature, tall image",
+    "alt": "A crocodile in the Tamarindo estuary, seen from the water",
+    "file": "estuary-crocodile.jpg"
+  },
+  "split-1-offset": {
+    "w": 900,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Split feature, overlapping inset",
+    "alt": "A white-faced capuchin in the branches above the estuary",
+    "file": "estuary-capuchin-monkey.jpg"
+  },
+  "split-2-primary": {
+    "w": 1600,
+    "h": 1200,
+    "ratio": "auto",
+    "role": "Second split feature, tall image",
+    "alt": "An angler working a rod as the boat trolls offshore",
+    "file": "fishing-trolling-wake.jpg"
+  },
+  "split-2-offset": {
+    "w": 1125,
+    "h": 1500,
+    "ratio": "auto",
+    "role": "Second split feature, inset",
+    "alt": "A kayak and gear beside the Surf & Beach tent",
+    "file": "kayak-surf-tent.jpg"
+  },
+  "gallery-1": {
+    "w": 1500,
+    "h": 2000,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A beginner group lesson gathered on the beach",
+    "file": "group-lesson-beach.jpg"
+  },
+  "gallery-2": {
+    "w": 1500,
+    "h": 2000,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "An instructor demonstrating the pop-up on the sand",
+    "file": "instructor-popup-stance.jpg"
+  },
+  "gallery-3": {
+    "w": 1125,
+    "h": 1500,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A small group receiving surf instruction on the sand",
+    "file": "group-instruction-sand.jpg"
+  },
+  "gallery-4": {
+    "w": 1920,
+    "h": 1280,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "The catamaran under sail off Tamarindo as the sun goes down",
+    "file": "sunset-catamaran-tour.jpg"
+  },
+  "gallery-5": {
+    "w": 1600,
+    "h": 1200,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "Three surf students on the beach with their boards",
+    "file": "surf-students-with-boards.jpg"
+  },
+  "gallery-6": {
+    "w": 1125,
+    "h": 1500,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A kayak and gear beside the Surf & Beach tent",
+    "file": "kayak-surf-tent.jpg"
+  },
+  "gallery-7": {
+    "w": 960,
+    "h": 1280,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A turtle heading back down the sand to the water after nesting",
+    "file": "turtle-returning-to-sea.jpg"
+  },
+  "gallery-8": {
+    "w": 1600,
+    "h": 1200,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A group of guests with their kayaks at the end of a tour",
+    "file": "kayak-group-guests.jpg"
+  },
+  "gallery-9": {
+    "w": 1440,
+    "h": 1080,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "Two guides with paddles and kayaks ready on the sand",
+    "file": "kayak-guides-paddles.jpg"
+  },
+  "gallery-10": {
+    "w": 1200,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "Two guests paddling a kayak through the mangrove channel",
+    "file": "estuary-mangrove-kayak.jpg"
+  },
+  "gallery-11": {
+    "w": 1200,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A pair of guests paddling deeper into the mangrove channel",
+    "file": "estuary-mangrove-paddlers.jpg"
+  },
+  "gallery-12": {
+    "w": 899,
+    "h": 1599,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "Kayaks pulled up on the shore beneath the mangroves",
+    "file": "estuary-kayaks-mangrove-shore.jpg"
+  },
+  "gallery-13": {
+    "w": 1600,
+    "h": 900,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A crocodile in the Tamarindo estuary, seen from the water",
+    "file": "estuary-crocodile.jpg"
+  },
+  "gallery-14": {
+    "w": 900,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A crocodile surfacing in the estuary channel",
+    "file": "estuary-crocodile-surfacing.jpg"
+  },
+  "gallery-15": {
+    "w": 900,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A white-faced capuchin in the branches above the estuary",
+    "file": "estuary-capuchin-monkey.jpg"
+  },
+  "gallery-16": {
+    "w": 900,
+    "h": 1600,
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "alt": "A capuchin moving through the canopy above the water",
+    "file": "estuary-capuchin-troop.jpg"
+  },
+  "gallery-17": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 1600,
+    "h": 1200,
+    "alt": "The charter boat at anchor off Tamarindo",
+    "file": "fishing-charter-boat.jpg"
+  },
+  "gallery-18": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 1600,
+    "h": 1200,
+    "alt": "An angler working a rod as the boat trolls offshore",
+    "file": "fishing-trolling-wake.jpg"
+  },
+  "gallery-19": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 854,
+    "h": 1280,
+    "alt": "A sailfish held alongside the boat before release",
+    "file": "fishing-sailfish-release.jpg"
+  },
+  "gallery-20": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 960,
+    "h": 960,
+    "alt": "A marlin brought to the boat before release",
+    "file": "fishing-marlin-release.jpg"
+  },
+  "gallery-21": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 1200,
+    "h": 1600,
+    "alt": "A mahi-mahi landed on the back deck",
+    "file": "fishing-mahi-mahi.jpg"
+  },
+  "gallery-22": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 960,
+    "h": 1280,
+    "alt": "A yellowfin tuna landed on the back deck",
+    "file": "fishing-yellowfin-tuna.jpg"
+  },
+  "gallery-23": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 960,
+    "h": 1280,
+    "alt": "Two anglers with a tuna caught offshore",
+    "file": "fishing-anglers-tuna.jpg"
+  },
+  "gallery-24": {
+    "ratio": "auto",
+    "role": "Gallery tile",
+    "w": 864,
+    "h": 1184,
+    "alt": "Two anglers with a grouper taken inshore",
+    "file": "fishing-grouper.jpg"
+  },
+  "cta-bg": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Lifestyle closing band background",
+    "alt": "Surf students on the beach with their boards",
+    "file": "banner-surf-students.jpg"
+  },
+  "story-banner": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Story band and experiences listing hero",
+    "alt": "A group of guests with their kayaks at the end of a tour",
+    "file": "banner-kayak-group.jpg"
+  },
+  "instructor-1": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 1",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-2": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 2",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-3": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 3",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "instructor-4": {
+    "w": 800,
+    "h": 1067,
+    "ratio": "3:4",
+    "role": "Instructor portrait 4",
+    "alt": "",
+    "file": null,
+    "note": "Needs a real portrait of this guide. Renders a brand panel until one exists."
+  },
+  "tax-surf-lessons": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the surf lessons archive",
+    "alt": "A group surf lesson gathered on the beach at Tamarindo",
+    "file": "banner-surf-lesson.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-kayak-tours": {
+    "ratio": "auto",
+    "role": "Header photo for the kayak tours archive",
+    "w": 1920,
+    "h": 640,
+    "alt": "The kayak fleet lined up on the sand before a tour",
+    "file": "banner-kayak-fleet.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-fishing-charters": {
+    "w": 1600,
+    "h": 533,
+    "ratio": "auto",
+    "role": "Header photo for the fishing charters archive",
+    "alt": "The charter boat at anchor off Tamarindo",
+    "file": "banner-fishing-boat.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-boat-tours": {
+    "w": 1600,
+    "h": 533,
+    "ratio": "auto",
+    "role": "Header photo for the boat tours archive",
+    "alt": "Working a rod from the boat off the Guanacaste coast",
+    "file": "banner-fishing-troll.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-wildlife-nature": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the wildlife nature archive",
+    "alt": "A crocodile in the Tamarindo estuary, seen from the water",
+    "file": "banner-crocodile.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-adventure": {
+    "w": 1200,
+    "h": 400,
+    "ratio": "auto",
+    "role": "Header photo for the adventure archive",
+    "alt": "Paddling in under the mangroves on the estuary",
+    "file": "banner-mangrove.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-private-custom": {
+    "w": 1500,
+    "h": 2000,
+    "ratio": "auto",
+    "role": "Header photo for the private custom archive",
+    "alt": "An instructor working one to one with a student on the sand",
+    "file": "instructor-popup-stance.jpg",
+    "note": "Overridden per term by the Header photo field."
+  },
+  "tax-first-timer": {
+    "w": 1500,
+    "h": 2000,
+    "ratio": "auto",
+    "role": "Header photo for the first timer archive",
+    "alt": "A first lesson gathered on the beach before going in",
+    "file": "group-lesson-beach.jpg",
+    "note": "Overridden per term by the Header photo field."
+  },
+  "tax-beginner": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the beginner archive",
+    "alt": "Surf students on the beach with their boards",
+    "file": "banner-surf-students.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-intermediate": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the intermediate archive",
+    "alt": "Surf students on the beach with their boards",
+    "file": "banner-surf-students.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-advanced": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the advanced archive",
+    "alt": "Surf students on the beach with their boards",
+    "file": "banner-surf-students.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  },
+  "tax-all-levels": {
+    "w": 1920,
+    "h": 640,
+    "ratio": "auto",
+    "role": "Header photo for the all levels archive",
+    "alt": "A group of guests with their kayaks at the end of a tour",
+    "file": "banner-kayak-group.jpg",
+    "note": "Wide crop cut for the banner. Overridden per term by the Header photo field."
+  }
+}
