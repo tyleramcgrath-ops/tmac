@@ -285,7 +285,339 @@ const NOAA_2026 = 'https://www.cpc.ncep.noaa.gov/products/outlooks/hurricane2026
 const TPA_STORM_PERMITS = 'https://www.tampa.gov/news/2025-08/city-tampa-offering-virtual-appointments-hurricane-recovery-permit-assistance-158896'
 const CENSUS_HILLS = 'https://www.census.gov/quickfacts/fact/table/hillsboroughcountyflorida/PST045225'
 
+const NJ_RPC = 'https://www.njcourts.gov/sites/default/files/rpc.pdf'
+const NJ_AWARDS = 'https://njcourts.gov/sites/default/files/notices/2021/05/n210510a.pdf'
+const NJ_735 = 'https://www.njcourts.gov/system/files/court-opinions/2025/a_61_62_19.pdf'
+const NJ_CERT = 'https://www.njcourts.gov/sites/default/files/notices/2026/04/n260501a.pdf'
+const NJ_GUIDE1 = 'https://www.njcourts.gov/sites/default/files/notices/2019/10/n191023a.pdf'
+const NJ_SPC = 'https://www.njcourts.gov/faq/what-special-civil-part'
+const CENSUS_HUDSON = 'https://www.census.gov/quickfacts/hudsoncountynewjersey'
+const CENSUS_ESSEX = 'https://www.census.gov/quickfacts/essexcountynewjersey'
+const CA_651 = 'https://law.justia.com/codes/california/code-bpc/division-2/chapter-1/article-6/section-651/'
+const CA_2415 = 'https://law.justia.com/codes/california/code-bpc/division-2/chapter-5/article-18/section-2415/'
+const MBC_MEDSPA = 'https://www.mbc.ca.gov/Resources/Medical-Resources/Medical-Spas.aspx'
+const MBC_FNP = 'https://www.mbc.ca.gov/Licensing/Fictitious-Name-Permit/'
+const BBC_MEDSPA = 'https://barbercosmo.ca.gov/consumers/medspa_factsheet.pdf'
+const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'new-jersey-law-firm-website-design',
+    title: 'New Jersey Law Firm Website Design: NJ Ad Rules',
+    description: 'Plan a New Jersey law firm website under RPC 7.1 to 7.4: monthly website captures, award disclaimers, fee wording, certified attorney titles and keyword ads.',
+    kind: 'guide',
+    summary: [
+      "New Jersey RPC 7.2(b) requires lawyers to capture everything on their websites at least once a month and keep those captures for three years.",
+      "Awards and \"best of\" badges need the awarding organization's name, a description of how it chooses, and the sentence \"No aspect of this advertisement has been approved by the Supreme Court of New Jersey\" placed next to the badge.",
+      "RPC 7.1(a)(4) lists the kinds of fee statements an ad may make, such as a consultation fee, a fixed or contingent fee for a specific service, or hourly rates with a note that the total depends on time and staffing.",
+      "Only attorneys certified by the Supreme Court of New Jersey (or an ABA-approved body) may call themselves certified, and the five state certifications are civil trial, criminal trial, matrimonial, workers' compensation and municipal court law.",
+      "Since May 22, 2025, a firm may bid on a rival's name as a search keyword, but the landing page must say the visitor arrived through a paid ad and that the site is affiliated only with the advertising lawyer.",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1638824886048-06303754077c?auto=format&fit=crop&w=1600&q=75', alt: 'An NJ Transit light rail train stopped at a Jersey City station with office towers behind it in the late afternoon sun' },
+    body: `A New Jersey law firm website has to do two jobs at once: win the client who is comparing three firms on a phone in Newark, Jersey City or Cherry Hill, and satisfy some of the most detailed attorney advertising rules in the country. In practice that means five things most out-of-state templates miss: a monthly capture of the whole site kept for three years, a specific disclaimer beside every award badge, fee wording that fits the list in RPC 7.1(a)(4), certified attorney titles used only as the Supreme Court allows, and a paid-ad landing page disclaimer if you bid on another firm's name. Get those right, then build the site around the questions New Jersey clients actually ask, in the languages they speak, and with a clear way to request a consultation from every page.
+
+This guide walks through each rule with links to the Court's own text, then turns it into a page plan. It is general information, not legal or ethics advice. The Rules of Professional Conduct and the Committee on Attorney Advertising's notices are the authority; read them yourself, and if a question is close, ask the Committee or ethics counsel before you publish.
+
+## Is a law firm website "advertising" under New Jersey rules?
+
+Yes. RPC 7.2(a) allows a lawyer to advertise "through public media" subject to RPC 7.1, and RPC 7.1 applies to any communication about the lawyer or the lawyer's services ([New Jersey Rules of Professional Conduct](${NJ_RPC})). RPC 7.2(b) then names websites directly, which settles the question: a New Jersey firm site is an advertisement, and every page on it, from the practice area pages to the attorney bios to the blog, is held to the advertising rules.
+
+Two baseline requirements follow from that:
+
+- **Contact information.** Attorney Advertising Guideline 1, as amended in 2019, requires every attorney or law firm advertisement to include contact information, and lists acceptable forms such as a street address, a mailing address, a phone number, an email address or a website address ([Guideline 1 notice](${NJ_GUIDE1})). A footer with the firm's office address and phone number on every page covers it.
+- **Predominantly informational.** RPC 7.2(a) says "all advertisements shall be predominantly informational." Its stricter limits on drawings, animations, dramatizations and music apply to televised ads, but the general standard is a good test for web copy too. A home page that is mostly slogans and stock photography of gavels gives a reader little information. One that says who you help, with what, where, and how to reach you does.
+
+## What is New Jersey's monthly website capture rule?
+
+This is the rule that surprises firms moving from other states. RPC 7.2(b) requires lawyers to keep a copy or recording of each advertisement for three years after its last use, with a record of when and where it was used. For websites it goes further: lawyers must capture all material on their websites, including any new content, at least once a month, in electronic or paper form, and keep those captures for three years ([RPC 7.2(b)](${NJ_RPC})).
+
+A website changes constantly: a new verdict summary, a revised fee page, a new associate's bio. Without a capture routine you cannot show what the site said on a given date if a grievance or a malpractice claim ever turns on it. A simple routine that works:
+
+1. **Pick a date.** The first business day of each month, put it on the calendar of someone who is not the busiest lawyer in the firm.
+2. **Capture every page, not just the home page.** Save a full-page PDF of each published page, including practice areas, attorney bios, blog posts and any landing pages used for paid ads. A list of pages from your sitemap makes this a checklist rather than a guess.
+3. **Name files consistently.** For example "2026-11-02_practice-areas_car-accidents.pdf", so a capture from any month can be found in seconds.
+4. **Store them where they will survive three years.** A shared drive folder by year and month, backed up like client files.
+5. **Capture extra when something big changes.** A redesign, a new fee page or an awards announcement is worth an immediate capture, not just the monthly one.
+
+Whatever platform you use, the capture is the firm's responsibility. A platform that keeps its own history of edits is helpful for seeing what changed, but the rule asks the lawyer to capture and retain, so keep your own copies.
+
+## What makes a New Jersey law firm website misleading?
+
+RPC 7.1(a) bars false or misleading communications, and then defines misleading in ways that map neatly onto website content ([RPC 7.1](${NJ_RPC})):
+
+- **(a)(1)** A material misrepresentation of fact or law, or leaving out a fact needed to keep the statement from being misleading.
+- **(a)(2)** Anything "likely to create an unjustified expectation about results the lawyer can achieve," or that suggests results can be achieved by unlawful means.
+- **(a)(3)** Comparisons with other lawyers' services, unless the comparison can be substantiated, the comparing organization is named and the required disclaimer appears.
+- **(a)(4)** Fee statements other than the kinds the rule lists.
+
+On a website, (a)(2) is where most trouble starts. A results page that lists only the largest settlements, with no context, invites a reader to expect a similar number. If you publish results, describe each one plainly (the type of matter, the outcome, the year), note that every case is different and that past results do not guarantee a similar outcome, and keep the list honest rather than curated to the outliers. Avoid lines like "we always win" or "maximum compensation guaranteed", which no firm can substantiate.
+
+![Wood-paneled courtroom with an empty judge's bench, witness stand and counsel tables](https://images.unsplash.com/photo-1568092806323-8ec13dfa9b92?auto=format&fit=crop&w=1200&q=75)
+
+## Can a New Jersey firm show "Super Lawyers" or "Best Lawyers" badges?
+
+Yes, but only with three pieces of information sitting right beside the badge. The Committee on Attorney Advertising's notice of May 5, 2021 reminds the bar that an award comparing a lawyer to other lawyers may be advertised only if the basis for the comparison can be verified and the awarding organization made an adequate, individualized inquiry into the lawyer's fitness, more rigorous than a survey or a count of years in practice without discipline ([Committee notice on awards](${NJ_AWARDS})). Awards bought with a fee, won by popularity vote or granted for membership or website participation are suspect.
+
+When an award qualifies, the website must show:
+
+1. **A description of the standard or methodology**, either in the text or by pointing to where it is publicly available.
+2. **The name of the comparing organization** that granted it, which is often not the same as the name of the award or the magazine.
+3. **The disclaimer:** "No aspect of this advertisement has been approved by the Supreme Court of New Jersey."
+
+The notice is specific about placement. The added language must be near the reference to the award, and that includes badges and logos; it cannot be tucked at the bottom of the page, set in tiny type or placed where it falls outside the visible part of the screen. And if the award's name contains a superlative such as "best" or "top", the ad may say only that the lawyer was included in the list, not that the lawyer is the best.
+
+For a website, the clean pattern is an awards block on each attorney's bio with one short caption under each badge: the organization's name, a one-line description of how it selects with a link to its methodology, and the Supreme Court disclaimer. A footer of badges with no captions is the pattern to remove.
+
+## How can a New Jersey firm talk about fees on its website?
+
+RPC 7.1(a)(4) treats fee statements as misleading unless they fall into the categories it lists ([RPC 7.1(a)(4)](${NJ_RPC})). In plain terms, an ad may state:
+
+- The fee for an initial consultation.
+- A fixed or contingent fee for a specific legal service, with a description of the service.
+- A range of fees for a specific service, with the variables that affect the fee disclosed.
+- Hourly rates, with a statement that the total fee depends on the hours spent and on which lawyers and staff do the work.
+- That credit arrangements are available.
+- Fees charged by a qualified legal assistance organization the lawyer takes part in.
+
+So "Free initial consultation" fits the first category, and a flat fee page for an uncontested divorce or a simple will fits the second, as long as it says what the service covers. A personal injury page can describe a contingent fee for that service. What the list does not cover is vague price talk: "affordable", "low fees" or "we beat any quote" are not fee statements the rule recognizes, and they add nothing a client can rely on. If your firm publishes fees, give each one a page that names the service, the fee and what can change it.
+
+## Who can say "certified" on a New Jersey law firm website?
+
+RPC 7.4(a) lets a lawyer say they practice in particular fields, but not that they have been "recognized or certified as a specialist" except as the rule allows ([RPC 7.4](${NJ_RPC})). Under RPC 7.4(d), a lawyer may state a certification only if the statement is not false or misleading, names the certifying organization, and states that the certification was granted by the Supreme Court of New Jersey or by an organization the American Bar Association has approved. If the certifying organization lacks that approval, the communication must say so. Two narrow designations stand apart: "Patent Attorney" for lawyers admitted before the U.S. Patent and Trademark Office, and "Admiralty" or "Proctor in Admiralty" for admiralty practitioners.
+
+The Supreme Court's own certification program, run by the Board on Attorney Certification, covers five areas. The Court's April 27, 2026 order authorizing newly certified attorneys lists Civil Trial, Criminal Trial, Matrimonial Law, Workers Compensation Law and Municipal Court Law, and states that the authorization lasts five years from the date of the order ([certification order, April 2026](${NJ_CERT})).
+
+On the website, put the full certification statement on the attorney's bio, with the date it was granted, and keep it current. The Court's authorization runs for five years from its order, so put the end date on someone's calendar. Everyone else describes their practice in factual terms: "Her practice focuses on matrimonial law" is fine; "matrimonial specialist" is not, unless she holds the certification and the statement names who granted it.
+
+## Can a New Jersey firm bid on another firm's name in Google Ads?
+
+Yes, with a website requirement attached. On May 22, 2025, in In re Opinion No. 735, the New Jersey Supreme Court held that buying a competitor's name as a search keyword does not, by itself, violate the Rules of Professional Conduct ([In re Opinion No. 735](${NJ_735})). The Court described it as a form of proximity marketing and said it is permissible only so long as it does not create a false or misleading suggestion that the advertiser is affiliated with the firm the user searched for.
+
+The condition lands on your website. Any attorney who buys another lawyer's or firm's name as a keyword must put a disclaimer on the landing page the ad leads to. It must tell visitors that they arrived through a paid advertisement on the search engine and that the website is affiliated only with the purchasing attorney and the attorneys named on it. The Court also noted that lawyers control the content of their own sites, which is why the duty sits there.
+
+Three practical points follow:
+
+- **Use a dedicated landing page** for any campaign that includes other firms' names, with the disclaimer near the top where a visitor sees it, rather than sending that traffic to your home page.
+- **Do not hyperlink or display the other firm's name** in a way that suggests a connection. The Court left open whether keyword advertising can ever be misleading in a particular case, and a separate challenge to hyperlinking a competitor's name was not decided.
+- **Capture that landing page monthly** like the rest of the site, since it is part of your advertising.
+
+## What happens after a visitor fills out the consultation form?
+
+A website aimed at the public is advertising, not personal contact. The rules change when your firm reaches out to a specific person. RPC 7.3(b) bars contact with a prospective client whose physical, emotional or mental state prevents reasonable judgment about hiring a lawyer, who has asked not to be contacted, or that involves coercion, duress or harassment ([RPC 7.3](${NJ_RPC})). It also bars unsolicited contact within 30 days of a mass-disaster event about compensation arising from it, and requires specific formatting for targeted letters about a particular event, including the word "ADVERTISEMENT" at the top of the first page and on the envelope.
+
+When someone fills out your form, they have asked to hear from you, so a prompt reply is not solicitation. Still, write the auto-reply and follow-up emails with the same care as the website: no promised outcomes, a plain statement of what happens next, and an easy way to say no. If your intake team also sends letters to people who have not contacted you, for example after an accident report, that is a separate program with its own rules, and the website should never be the place that program starts.
+
+## Where will your New Jersey clients actually go to court?
+
+A good practice area page answers the client's next question, and in New Jersey that often means which court. Two examples from the Judiciary's own pages are worth building into your content:
+
+- **Small money disputes.** The Special Civil Part hears claims of $20,000 or less, and its Small Claims Section takes claims of $5,000 or less; larger claims go to the Law Division of the Superior Court ([Special Civil Part](${NJ_SPC})). A collections, landlord-tenant or contract page that explains where a claim of a given size is filed answers a real question in the first paragraph.
+- **County by county.** Clients search by county as often as by city: "Essex County divorce lawyer", "Bergen County DWI attorney". If your firm regularly appears in particular county courthouses, name them on the relevant practice pages and on your contact page, along with parking and transit notes clients will thank you for.
+
+If certified attorneys in your firm handle municipal court matters, the municipal court page is also the natural place for the certification statement, since that is exactly where a client is choosing a lawyer.
+
+![Manhattan skyline across the Hudson River, seen from the New Jersey waterfront on a clear evening](https://images.unsplash.com/photo-1589178941221-136be7711c99?auto=format&fit=crop&w=1200&q=75)
+
+## Should a New Jersey law firm website be in Spanish?
+
+In many parts of the state, a Spanish version is the difference between being considered and being skipped. Census QuickFacts reports that 56.5% of Hudson County residents age 5 and older speak a language other than English at home, 42.8% were born outside the United States and 40.7% are Hispanic or Latino ([QuickFacts: Hudson County](${CENSUS_HUDSON})). In Essex County the figures are 37.8%, 30.1% and 27.4% ([QuickFacts: Essex County](${CENSUS_ESSEX})).
+
+A few rules keep language pages honest and useful:
+
+- **Offer a language only if someone at the firm can serve clients in it.** If an attorney speaks Spanish, say so on her bio. If a paralegal or intake coordinator does, say that instead.
+- **Translate the required statements, not just the marketing.** Award captions, the Supreme Court disclaimer, fee wording and any certification statement belong on the Spanish page too.
+- **Write real pages.** Machine translation without review produces awkward legal terms and loses trust. Have a fluent speaker write or review each page.
+- **Capture them monthly.** Language pages are advertisements like any other.
+
+## How should a New Jersey firm set up its Google Business Profile?
+
+Google's guidelines for representing a business allow individual practitioners such as lawyers their own profiles if they can be contacted directly at the verified location during stated hours, while the firm's office gets a separate profile ([Google Business Profile guidelines](${GBP_GUIDELINES})). A solo attorney practicing under a firm brand shares one profile named in the form "Firm name: Attorney name". The business name must match the real-world name, with no keywords such as "Best Car Accident Lawyer NJ" added. Virtual offices are not eligible, and a satellite office in a coworking space qualifies only with signage, staff and reception during business hours.
+
+That matters in New Jersey because many firms keep an appointment-only office in a second county. If nobody from the firm is there during posted hours, that location should not have its own profile. Point clients to the real offices, and use your website's county and practice pages to show the places you serve.
+
+## What pages should a New Jersey law firm website include?
+
+Use this as a build checklist:
+
+1. **Home page** that says who you help, with what and where in the first lines, with a call button and a consultation request visible on a phone, and the office address and phone in the footer for Guideline 1.
+2. **One page per practice area**, written for New Jersey: the court that hears it, the timeline a client can expect, what to bring, and fee wording that fits RPC 7.1(a)(4).
+3. **Attorney bios** with education, admissions, languages spoken, certifications stated in full, and awards captioned with the organization, methodology and disclaimer.
+4. **A results page, if you publish results**, with context for each and a plain statement that results depend on the facts of each case.
+5. **A fees page or fee section** for any flat-fee services, naming each service and what can change the price.
+6. **County and office pages** for places where you really practice, with directions and court notes, never thin copies of each other with the town name swapped.
+7. **A Spanish or other language section** if your team can serve clients in that language.
+8. **A landing page with the Opinion 735 disclaimer** for any paid search campaign that bids on other firms' names.
+9. **A consultation form on every page** that asks only for what you need to call back, plus a conflict-check name, and tells visitors not to send confidential details until you have agreed to represent them.
+10. **A monthly capture folder**, set up before launch, with the first capture taken the day the site goes live.
+
+If you want to see how your current site measures against that list, [request a free redesign](/redesign): we rebuild your existing pages in a clean, fast design so you can compare before you change anything.
+
+## How do you keep a New Jersey site fast and readable?
+
+The rules above add captions, disclaimers and notes. They should never make the site slow or cluttered. Keep disclaimers short and close to what they qualify, set them in readable type, and resist the urge to pile badges into a header. Google's guidance on helpful content asks whether a page was created primarily to help people rather than to attract search visits ([Google: creating helpful content](${HELPFUL})), and an honest practice page that answers a New Jersey client's questions in order is exactly that. Mark up the firm, its address and its attorneys with structured data so search engines can read them ([Google: local business structured data](${LOCAL_SD})), and test every page on a phone setting before it goes live.
+
+## How SaySites helps New Jersey firms
+
+SaySites is built for firms that want to own and change their own website. Every law firm site has a page for each practice area, attorney profiles, a consultation request on every page, an attorney advertising notice and a note that the site isn't legal advice. Each attorney and each practice area is described in structured data, and every page has to score 95 or more on a mobile speed test before it can go live. Requests land in a leads pipeline, and you can add intake questions, including the other party's name for a conflict check. You make changes by asking Sofie in plain English or editing directly, see each change as a draft first, and can undo anything. Sofie never invents results, awards or credentials, and the New Jersey wording above stays yours to review and approve. SaySites keeps each saved version of a page, but the monthly captures RPC 7.2(b) asks for are still yours to take and keep.
+
+Law Firm Starter is $79 a month, with no setup fee and no contract ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and put your New Jersey pages together this week, or [send us your current site for a free redesign](/redesign) and see it rebuilt first. Firms that also practice across the river can compare [New York's 2026 advertising rule changes](/blog/new-york-law-firm-website-rules), South Jersey firms working in Philadelphia can read the [Pennsylvania guide](/blog/philadelphia-law-firm-website-design), and anyone curious about what top-ranking sites get wrong can read [what we found testing 105 law firm websites](/blog/we-tested-top-ranking-law-firm-websites).`,
+    faq: [
+      { q: 'Does New Jersey require law firms to keep copies of their website?', a: "Yes. RPC 7.2(b) requires lawyers to capture all material on their websites, including new content, at least once a month in electronic or paper form, and to keep those captures for three years. Saving a full-page PDF of every published page on a set day each month, filed by date, is a simple way to comply." },
+      { q: 'What disclaimer does a New Jersey lawyer need next to an award badge?', a: "The sentence \"No aspect of this advertisement has been approved by the Supreme Court of New Jersey\", plus the name of the organization that granted the award and a description of its selection method. The Committee on Attorney Advertising says this language must sit near the badge, not in a footer or small print elsewhere." },
+      { q: 'Can a New Jersey attorney call themselves a specialist on their website?', a: "Not unless certified. RPC 7.4 lets a lawyer state the fields they practice in, but a claim of certification must name the certifying body and state that the Supreme Court of New Jersey or an ABA-approved organization granted it. The Court certifies civil trial, criminal trial, matrimonial, workers' compensation and municipal court attorneys." },
+      { q: 'Can a New Jersey law firm post its fees online?', a: "Yes, in the forms RPC 7.1(a)(4) lists: a consultation fee, a fixed or contingent fee for a specific service, a fee range with the variables disclosed, hourly rates with a note that the total depends on time and staffing, the availability of credit, or fees of a qualified legal assistance organization. Vague phrases like \"affordable\" are not fee statements." },
+      { q: 'Is it allowed to bid on a competitor law firm\'s name in Google Ads in New Jersey?', a: "Yes, after In re Opinion No. 735, decided May 22, 2025, as long as nothing suggests an affiliation with the other firm. The landing page must carry a disclaimer that the visitor arrived through a paid search ad and that the site is affiliated only with the advertising attorney and the lawyers named on it." },
+      { q: 'Should a New Jersey law firm have a Spanish website?', a: "Often, yes. Census QuickFacts reports that 56.5% of Hudson County residents age 5 and older speak a language other than English at home, and 37.8% in Essex County. Offer Spanish pages only if someone at the firm can serve clients in Spanish, translate the required disclaimers too, and capture those pages monthly with the rest of the site." },
+      { q: 'How much does a New Jersey law firm website cost on SaySites?', a: "Law Firm Starter is $79 a month with no setup fee or contract, and it starts with a 7-day free trial. It includes practice area and attorney pages, a consultation form on every page, structured data, a leads pipeline and hosting. You can also request a free redesign of your current site to compare first." },
+    ],
+    about: ['New Jersey Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'New Jersey'],
+    published: '2026-10-23',
+    status: 'published',
+  },
+  {
+    slug: 'los-angeles-med-spa-website-design',
+    title: 'Los Angeles Med Spa Websites: California Ad Rules',
+    description: 'Build a Los Angeles med spa website that fits California law: physician ownership, fictitious name permits, exact prices, model labels and before-and-afters.',
+    kind: 'guide',
+    summary: [
+      "The Medical Board of California says a med spa offering medical procedures must be owned by physicians, and injections and lasers are done by a physician, or a registered nurse or physician assistant under a physician's supervision.",
+      "A spa brand name on a physician practice needs a Fictitious Name Permit from the Medical Board before it appears in ads, signs or announcements (B&P Code 2285 and 2415).",
+      "California's healing arts advertising law, B&P Code 651, bans price phrases like \"as low as\", \"and up\" and \"lowest prices\", so a treatment menu needs exact prices.",
+      "Photos of models must be labeled as models, and real before and after photos must name the procedures and say the same results may not occur for all patients.",
+      "Only physicians certified through an ABMS member board or another route section 651 recognizes may write \"board certified\".",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1767681774612-a3062667f6ac?auto=format&fit=crop&w=1600&q=75', alt: 'Tall palm trees silhouetted against a sunset with the downtown Los Angeles skyline in the distance' },
+    body: `A Los Angeles med spa website is a healing arts advertisement under California law, so before it is beautiful it has to be accurate in five specific ways. The practice behind it must be physician-owned if it offers medical treatments. A spa-style brand name on a physician practice needs a Fictitious Name Permit from the Medical Board of California. Prices must be exact, because Business and Professions Code section 651 rules out phrases like "as low as" and "and up". Stock or model photos must be labeled as models, and real before and after photos need a list of procedures and a results statement. And "board certified" belongs only to physicians certified through the routes the statute names. Once those are right, build the site around how Angelenos actually choose a treatment: one service at a time, by the person who will perform it, in English or Spanish, on a phone.
+
+This guide explains each requirement with links to the Medical Board and the code, then turns it into a page plan. It is general information, not legal or medical advice. Ownership, supervision and delegation decide which rules apply to your practice, so have a California health care attorney review your structure and your copy before launch.
+
+## Is a med spa website "advertising" under California law?
+
+Yes. Section 651 of the Business and Professions Code makes it unlawful for a licensed healing arts practitioner to disseminate a false, fraudulent, misleading or deceptive statement or image to induce the use of their services, and it defines a public communication to include the internet and other electronic communication ([B&P Code § 651](${CA_651})). Treatment pages, provider bios, galleries, seasonal offers and the posts you embed from social media are all covered.
+
+That puts a license behind the website. Section 651 is written for licensees, and the Medical Board describes injections, lasers and medical-level peels as the practice of medicine, so the pages about those treatments are a physician practice's advertising ([Medical Board: medical spas](${MBC_MEDSPA})).
+
+## Who can own and run a med spa in Los Angeles?
+
+The Medical Board's consumer page on medical spas is short and direct. It says "medical spa" is a term used for advertising purposes, that offering medical procedures is the practice of medicine, and that a spa offering medical procedures must be owned by physicians ([Medical Board: medical spas](${MBC_MEDSPA})). It also says who may perform the work: in California, a physician, or a registered nurse or physician assistant under the supervision of a physician. The supervising physician does not have to be on site but must be immediately reachable.
+
+The Board of Barbering and Cosmetology's fact sheet "Medical Spas: What You Need to Know" (revised March 2024) draws the line from the other side: cosmetologists and estheticians are qualified for superficial treatments such as facials and microdermabrasion, but they may never inject the skin, use lasers, or perform medical-level dermabrasion or peels ([Board of Barbering and Cosmetology fact sheet](${BBC_MEDSPA})).
+
+For the website, that means three things:
+
+1. **Name the medical director** on the About page and on each medical treatment page, with their license type, and explain how supervision works at your practice.
+2. **Say who performs each treatment.** A Botox page should name the physicians, nurses or physician assistants who inject, not "our expert team".
+3. **Keep esthetician services separate** from medical ones. A facial menu written by your licensed esthetician sits fine beside your injectables pages, but it should not suggest the esthetician performs laser or injection work.
+
+![A provider in black scrubs talks with a seated client in a bright, white consultation room](https://images.unsplash.com/photo-1785861001619-b263ebd4e615?auto=format&fit=crop&w=1200&q=75)
+
+## Does a Los Angeles med spa need a Fictitious Name Permit?
+
+If the practice is owned by physicians and advertises under a name other than the physicians' own, almost certainly. The Medical Board explains that under section 2285 it is unprofessional conduct for a physician to use a fictitious, false or assumed name, or any name other than their own, in any public communication, advertisement, sign or announcement of their practice without a Fictitious Name Permit obtained under section 2415 ([Medical Board: Fictitious Name Permit](${MBC_FNP})).
+
+Section 2415 sets the conditions: the applicants must hold valid physician licenses, the practice must be wholly owned and entirely controlled by them, and the name must not be deceptive, misleading or confusing. A notice must also be displayed where patients and staff can see it at each location listed on the permit ([B&P Code § 2415](${CA_2415})). The Board's page lists the application and renewal fees and notes that permits are renewed every two years, and that practicing under a name with an expired permit violates the Medical Practice Act.
+
+So a hypothetical practice called "Silver Lake Skin Studio", owned by a Dr. Rivera, needs the permit before that name goes on the website, the sign and the Google Business Profile. Put the permit holder's name in the site footer ("Silver Lake Skin Studio is a medical practice of Ana Rivera, MD") and keep the permit's renewal date on the calendar. The name itself is also an advertising decision: one that implies a hospital, a university or a government program is the kind of confusing name the permit can be refused for.
+
+## How should a California med spa show prices on its website?
+
+This is where many treatment menus go wrong. Section 651(c) says price advertising must be exact, and that phrases such as "as low as", "and up" and "lowest prices" may not be used ([B&P Code § 651](${CA_651})). Price comparisons must be based on verifiable data, and the advertiser must be ready to back them up. Prices must be clearly identifiable for each service.
+
+A menu that complies and still reads well:
+
+- **Price per defined unit.** A neuromodulator listed at one exact price per unit is exact. "Injections from" a number is not.
+- **Price per defined package.** "Laser hair removal, underarms, single session" at one stated price names the area and the count.
+- **Say what is included.** If the consultation, numbing cream or a follow-up visit is part of the price, say so; if it costs extra, list it as its own line.
+- **Date your specials.** A seasonal price needs its start and end dates, and the page should change when the offer does.
+- **Skip "lowest in LA" and "best price".** The statute names "lowest prices" specifically, and "best" claims invite a comparison you would have to prove.
+
+If exact prices are not practical for a treatment because the amount depends on assessment (fillers measured in syringes, for example), you can explain how the price is set at the consultation and give exact prices for the parts that are fixed, such as the price per syringe. What the law does not allow is a teaser number that most clients will never pay.
+
+## What does California require for before and after photos?
+
+Section 651(b)(3) is unusually specific about images, which matters for an industry that sells with photos ([B&P Code § 651](${CA_651})):
+
+- **Altered images are out.** A statement or image is misleading if it does not accurately depict the results of the procedure or has been manipulated from the actual subject. Filters, smoothing and lighting changes between the before and the after all count.
+- **Models must be labeled.** An image of a model, meaning anyone other than an actual patient who has had the advertised procedure, must say clearly, in a prominent place and in easily readable type, that it is a model. That includes the stock photo in your hero section.
+- **Real patients need context.** A before and after image of an actual patient must list the procedures performed in that image, the before and after views must be comparable in presentation, and the ad must state that the same results may not occur for all patients.
+
+A practical template for each gallery card: the treatment and the number of sessions, the time between the two photos, the provider, and the line "Results vary. The same results may not occur for all patients." Get written consent from each patient that covers the website and social media specifically, and keep it on file.
+
+![A client in a beige sweater studies her reflection in a handheld mirror after a treatment, with a provider in black gloves beside her](https://images.unsplash.com/photo-1785860855601-58107d722164?auto=format&fit=crop&w=1200&q=75)
+
+## Who can say "board certified" on a California med spa site?
+
+Section 651(h)(5) limits the term. A physician licensed by the Medical Board may advertise board certification only if it comes from an American Board of Medical Specialties member board, from a board or association with equivalent requirements that the Medical Board approved before January 1, 2019, or from a board with an ACGME-approved postgraduate training program that provides complete training in that specialty. A physician certified by any other organization "shall not use the term 'board certified'" for it ([B&P Code § 651](${CA_651})). Practitioners may still say they limit their practice to specific fields.
+
+In practice: if your medical director is certified by the American Board of Dermatology or the American Board of Plastic Surgery, name the board on their bio. If their credential is a certificate from a training course or an aesthetics association, describe it factually ("completed advanced injector training with...") and leave "board certified" out. For nurses and physician assistants, list their license and training, never a board title they do not hold. Patients can check physician licenses on the Board's own lookup, and a link to it from each bio signals you have nothing to hide.
+
+## What else does section 651 treat as misleading?
+
+Beyond prices and photos, section 651(b) lists statements that are false or misleading, including ones that are likely to create false or unjustified expectations of favorable results, that omit a material fact, that claim professional superiority, or that make scientific claims the advertiser cannot back with reliable, peer-reviewed studies ([B&P Code § 651](${CA_651})). For a med spa that rules out a lot of familiar copy:
+
+- "Look ten years younger in one visit" is an unjustified expectation.
+- "Painless", "no downtime" and "zero risk" omit material facts about what most clients experience.
+- "LA's top injector" is a claim of superiority you would need to prove.
+- "Clinically proven to melt fat" needs a reliable, peer-reviewed source, and the treatment page should say what the evidence actually shows.
+
+Replace them with what a careful client wants to read: who the treatment suits, how it works in plain words, what it feels like, typical downtime, common side effects, how many sessions people usually need, and when you would recommend against it.
+
+## Should a Los Angeles med spa website be in Spanish?
+
+In Los Angeles County, there is a strong case for it. Census QuickFacts reports that 55.1% of residents age 5 and older speak a language other than English at home, 33.4% were born outside the United States, and 49.3% are Hispanic or Latino, out of a county population estimated at 9,694,934 in July 2025 ([QuickFacts: Los Angeles County](${CENSUS_LAC})).
+
+Section 651(h)(4) expressly allows advertising to include languages other than English that are spoken fluently by the practitioner or by a person in the practitioner's office ([B&P Code § 651](${CA_651})). So:
+
+- **List the languages each provider speaks** on their bio, and say whether front desk staff speak them too.
+- **Write Spanish treatment pages, not a translated menu.** A fluent speaker should write or review them, including the model labels, results statements and price notes.
+- **Match the Spanish pages to the services** you can really deliver in Spanish, including the consultation and aftercare instructions.
+
+The same goes for any other language: add it only where your team can serve clients in it from the first call to the follow-up.
+
+![A technician wearing protective glasses holds a laser hair removal handpiece to a client's chin](https://images.unsplash.com/photo-1785861775561-c6db7da314a0?auto=format&fit=crop&w=1200&q=75)
+
+## How should a med spa set up its Google Business Profile in LA?
+
+Google's guidelines give the practice location its own profile and allow public-facing practitioners, such as physicians, separate profiles if they can be reached at the verified location during stated hours ([Google Business Profile guidelines](${GBP_GUIDELINES})). The profile name must match your real-world name, which for a physician practice is the name on your Fictitious Name Permit, without added keywords such as "Best Injectables Beverly Hills". Choose the category that completes "this business is a", rather than listing every service, and use a local phone number your practice controls.
+
+Los Angeles practices often work from shared suites. Google treats a virtual office as ineligible and allows a coworking or shared location only with permanent signage and your own staff receiving clients during business hours. A room you rent two days a month in a second neighborhood should be mentioned on your website, not given its own profile.
+
+## What pages should a Los Angeles med spa website include?
+
+Use this as a build checklist:
+
+1. **Home page** with your signature treatments, neighborhood, a call button and a consultation request visible on a phone, and the practice's legal name in the footer.
+2. **One page per treatment**: neuromodulators, fillers, laser hair removal, resurfacing, microneedling and so on, each with who it suits, what to expect, downtime, side effects, who performs it and an exact price or price basis.
+3. **Provider bios** with license type, training, languages, and board certification stated only where section 651 allows it.
+4. **Medical director and supervision page** explaining how your physician oversees care and how clients reach them.
+5. **Before and after gallery** with consented, unaltered photos, the procedures listed and the results statement on each.
+6. **Prices page** with exact prices and dated specials.
+7. **Spanish pages** for the treatments you can deliver in Spanish.
+8. **Consultation request form** that asks for contact details and the treatment of interest, and asks clients not to send medical history through it.
+9. **Contact page** with address, parking notes, hours and a map-ready address search engines can read.
+
+Before you launch, test every page on a phone, label every model photo, and read each claim aloud asking "could we prove this?" Google's own guidance asks whether content was created to help people rather than to attract search visits ([Google: creating helpful content](${HELPFUL})). A clear treatment page with an honest price is both.
+
+Want to see your current site rebuilt before you decide anything? [Request a free redesign](/redesign) and we'll rebuild your existing pages in a clean, fast design.
+
+## How SaySites helps Los Angeles med spas
+
+SaySites gives a med spa a polished, fast website it owns and changes itself. Every treatment gets its own page, providers get real bios, the gallery carries a "results vary" note, and the consultation form asks clients not to send medical details through it. Business details are described in structured data, and every page has to score 95 or more on a mobile speed test before it can go live. You change the site by asking Sofie in plain English or editing directly, see each change as a draft first, and can undo anything. Sofie never invents results, reviews, credentials or before and after photos; the California wording above stays yours to review with your counsel.
+
+The Site plan is $15 a month, with no setup fee and no contract ([websites for med spas](/websites-for/med-spas), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your treatment pages this week, or [send us your current site for a free redesign](/redesign). If you also run a location in Texas, compare the rules in [Dallas med spa websites](/blog/dallas-med-spa-website-design), and Los Angeles attorneys can read the [California law firm guide](/blog/los-angeles-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a med spa in California have to be owned by a doctor?', a: "If it offers medical procedures, yes. The Medical Board of California says a spa offering medical procedures such as injections, lasers or medical-level peels must be owned by physicians, and those procedures are performed by a physician, or by a registered nurse or physician assistant under a physician's supervision. Have a health care attorney review your structure." },
+      { q: 'Do I need a Fictitious Name Permit for my LA med spa name?', a: "If physicians own the practice and advertise it under any name other than their own, generally yes. Business and Professions Code section 2285 makes it unprofessional conduct to use such a name in ads, signs or announcements without a permit under section 2415, which requires full physician ownership and a name that is not misleading." },
+      { q: "Can a California med spa list prices as \"as low as\" or \"and up\"?", a: "No. Section 651(c) requires price advertising to be exact and bars phrases such as \"as low as\", \"and up\" and \"lowest prices\". Give exact prices per unit, area or session, say what each price includes, and put start and end dates on specials." },
+      { q: 'What must appear with before and after photos in California?', a: "Section 651(b)(3) requires that images not be altered from the actual subject, that the procedures performed be listed, that before and after views be comparable, and that the ad state the same results may not occur for all patients. Get each patient's written consent before posting." },
+      { q: 'Do stock photos on a med spa website need a label?', a: "Yes. Under section 651, an image of a model, meaning anyone other than an actual patient who had the advertised procedure, must be clearly labeled as a model in a prominent place and in easily readable type. That includes hero images and photos on treatment pages." },
+      { q: 'Should a Los Angeles med spa have a Spanish website?', a: "Often, yes. Census QuickFacts reports that 55.1% of Los Angeles County residents age 5 and older speak a language other than English at home. Section 651 allows ads to list languages spoken fluently by the practitioner or office staff, so offer Spanish pages for treatments your team can deliver in Spanish." },
+      { q: 'How much does a med spa website cost on SaySites?', a: "The Site plan is $15 a month with no setup fee or contract, and it starts with a 7-day free trial. It includes treatment pages, provider bios, a gallery with a results note, a consultation form, structured data and hosting. You can also request a free redesign of your current site first." },
+    ],
+    about: ['Medical Board of California', 'Healing arts advertising', 'Med spa websites', 'Los Angeles, California'],
+    published: '2026-10-23',
+    status: 'published',
+  },
   {
     slug: 'seattle-law-firm-website-design',
     title: 'Seattle Law Firm Website Design: Washington Ad Rules',
