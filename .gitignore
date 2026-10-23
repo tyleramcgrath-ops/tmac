@@ -53,3 +53,21 @@ apps/north-star-hq/package-lock.json
 apps/citation-gap/node_modules
 apps/citation-gap/public
 apps/citation-gap/test/*.png
+
+# Packaged social kits: build artefacts of instagram-kit/ and facebook-kit/,
+# whose contents are already tracked. Rebuild with `zip -r <name>.zip <dir>`.
+/instagram-kit.zip
+/facebook-kit.zip
+
+# Theme package and the preview render handed to the client: both are built
+# from themes/mcgrath-chrome, which is tracked, so neither belongs in the repo.
+# Rebuild with `zip -r mcgrath-chrome.zip mcgrath-chrome` from themes/.
+/themes/mcgrath-chrome.zip
+/mcgrath-chrome.zip
+/theme-preview-home.png
+/surfaces-band.png
+/roots-spotlight.png
+/hero-seo-lit.png
+/hero-aeo-lit.png
+/surfaces-band-fixed.png
+/roots-resting.png
