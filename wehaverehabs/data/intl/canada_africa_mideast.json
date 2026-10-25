@@ -1,0 +1,3858 @@
+[
+ {
+  "name": "EHN Edgewood Nanaimo",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Nanaimo",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/edgewood/",
+  "phone": "1-866-841-7395",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Accredited residential addiction and mental health treatment centre on Vancouver Island, part of the EHN Canada network.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Edgewood Rockies",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Fort Steele",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/edgewood-rockies/",
+  "phone": "1-866-486-9769",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains",
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Medically supervised, evidence-based holistic addiction treatment centre in southern British Columbia's Rocky Mountain region.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Guardians Nanaimo",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Nanaimo",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/guardians-nanaimo/",
+  "phone": "1-866-486-9769",
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Trauma and addiction treatment program for military members, veterans and first responders on Vancouver Island.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Sandstone Recovery Centre",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/sandstone/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Eating disorder treatment centre serving individuals in Calgary, operated within the EHN Canada network.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Willowview Recovery Centre",
+  "country": "Canada",
+  "region": "Saskatchewan",
+  "city": "Lumsden",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/willowview/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Government-funded, privately run residential addiction treatment centre in Lumsden, Saskatchewan.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Bellwood Toronto",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/bellwood/",
+  "phone": "1-866-927-1585",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Toronto centre offering inpatient and outpatient treatment for addiction and mental health disorders.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Guardians Gateway",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Peterborough",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/guardians-gateway/",
+  "phone": "1-866-938-6138",
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Evidence-based treatment for PTSD, trauma and addiction for military, veterans and first responders.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Nouveau Départ Montréal",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Mount Royal",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/clinique-nouveau-depart/",
+  "phone": "1-888-488-2611",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "French",
+  "description": "Inpatient addiction treatment delivered in French, located in Mount Royal near Montreal.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Bellwood Nova Scotia",
+  "country": "Canada",
+  "region": "Nova Scotia",
+  "city": "Lawrencetown",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/bellwood-nova-scotia/",
+  "phone": "1-866-486-9769",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential addiction rehab in Nova Scotia's Annapolis Valley with a holistic treatment approach.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "EHN Guardians Atlantic",
+  "country": "Canada",
+  "region": "Nova Scotia",
+  "city": "Head of Jeddore",
+  "website": "https://www.edgewoodhealthnetwork.com/locations/guardians-atlantic/",
+  "phone": "1-866-938-6492",
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Trauma and addiction treatment designed for military members, veterans and first responders in Atlantic Canada.",
+  "source_url": "https://www.edgewoodhealthnetwork.com/locations/"
+ },
+ {
+  "name": "Sunshine Coast Health Centre",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Powell River",
+  "website": "https://www.sunshinecoasthealthcentre.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Residential treatment centre for men addressing addiction, mental health and trauma, with 24-hour services.",
+  "source_url": "https://www.sunshinecoasthealthcentre.ca/"
+ },
+ {
+  "name": "Georgia Strait Women's Clinic",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Powell River",
+  "website": "https://georgiastraitwomensclinic.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Women-only residential treatment programs for mental health, trauma and alcohol or substance use, serving women across Canada.",
+  "source_url": "https://georgiastraitwomensclinic.ca/"
+ },
+ {
+  "name": "Orchard Recovery Center",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Bowen Island",
+  "website": "https://orchardrecovery.com/",
+  "phone": "1-866-233-2299",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Residential drug and alcohol treatment centre on Bowen Island near Vancouver offering a full range of addiction treatment options.",
+  "source_url": "https://orchardrecovery.com/"
+ },
+ {
+  "name": "Last Door Recovery Centre",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "New Westminster",
+  "website": "https://lastdoor.org/",
+  "phone": "1-855-910-5942",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Alcohol and drug addiction treatment centre providing recovery programs for youth and adults.",
+  "source_url": "https://lastdoor.org/"
+ },
+ {
+  "name": "Pacifica Treatment Centre",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Vancouver",
+  "website": "https://www.pacificatreatment.ca/",
+  "phone": "1-866-446-0668",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Vancouver drug and alcohol treatment and recovery centre offering residential and outpatient programs.",
+  "source_url": "https://www.pacificatreatment.ca/"
+ },
+ {
+  "name": "Cedars Recovery",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Cobble Hill",
+  "website": "https://www.cedarsrecovery.com/",
+  "phone": "1-866-716-2006",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential addiction and mental health treatment centre on Vancouver Island.",
+  "source_url": "https://www.cedarsrecovery.com/"
+ },
+ {
+  "name": "Homewood Ravensview",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "North Saanich",
+  "website": "https://ravensview.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Private mental health and addiction treatment facility near Victoria offering evidence-based programs for adults, young adults and first responders.",
+  "source_url": "https://ravensview.com/"
+ },
+ {
+  "name": "Into Action Recovery Centre - Burnaby",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Burnaby",
+  "website": "https://intoaction.ca/locations/burnaby-rehab-centre/",
+  "phone": "+1 604 933 9003",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private men's residential addiction treatment centre in Burnaby with small group programming.",
+  "source_url": "https://intoaction.ca/locations/burnaby-rehab-centre/"
+ },
+ {
+  "name": "Into Action Recovery Centre - Surrey",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Surrey",
+  "website": "https://intoaction.ca/locations/surrey-rehab-centre/",
+  "phone": "+1 604 933 9003",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Men-only inpatient addiction treatment centres in Surrey providing structured residential recovery programs.",
+  "source_url": "https://intoaction.ca/locations/surrey-rehab-centre/"
+ },
+ {
+  "name": "Into Action Recovery Centre - Abbotsford",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Abbotsford",
+  "website": "https://intoaction.ca/locations/abbotsford-rehab-centre/",
+  "phone": "+1 604 933 9003",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Men's residential addiction treatment centre in Abbotsford for a range of substance addictions.",
+  "source_url": "https://intoaction.ca/locations/abbotsford-rehab-centre/"
+ },
+ {
+  "name": "The Healing Institute at Taylor Bay",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Gabriola Island",
+  "website": "https://www.thehealinginstitute.ca/",
+  "phone": "1-877-774-3843",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Mental health and addiction recovery centre in BC providing personalized residential treatment away from daily influences.",
+  "source_url": "https://www.thehealinginstitute.ca/"
+ },
+ {
+  "name": "Valiant Recovery",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Kelowna",
+  "website": "https://valiantrecovery.com/",
+  "phone": "1-877-958-8247",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Drug and alcohol addiction treatment programs including residential care in the Okanagan region.",
+  "source_url": "https://valiantrecovery.com/"
+ },
+ {
+  "name": "Paradise Valley Healing Center",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Squamish",
+  "website": "https://paradisevalleyhealing.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Residential addiction treatment and wellness programs in Squamish addressing substance use, depression and PTSD.",
+  "source_url": "https://paradisevalleyhealing.com/"
+ },
+ {
+  "name": "Together We Can",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Vancouver",
+  "website": "https://www.twcrecoverylife.org/",
+  "phone": "(604) 451-9854",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Vancouver non-profit offering addiction treatment, sober living, medical care, counselling and family recovery support.",
+  "source_url": "https://www.twcrecoverylife.org/"
+ },
+ {
+  "name": "Westminster House",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "New Westminster",
+  "website": "https://www.westminsterhouse.ca/",
+  "phone": "1-866-524-5633",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Residential addiction recovery centre for women in New Westminster.",
+  "source_url": "https://www.westminsterhouse.ca/"
+ },
+ {
+  "name": "Foothills Centre for Change",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Salmon Arm",
+  "website": "https://www.foothillscentre.com/",
+  "phone": "1-844-366-8445",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Drug and alcohol rehab centre in BC combining addiction recovery treatment with wellness programs.",
+  "source_url": "https://www.foothillscentre.com/"
+ },
+ {
+  "name": "Miklat Recovery",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Powell River",
+  "website": "https://www.miklatrecovery.ca/",
+  "phone": "(604) 483-6462",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential and supportive recovery for men in Powell River with counselling, life skills, wellness and cultural programming.",
+  "source_url": "https://www.miklatrecovery.ca/"
+ },
+ {
+  "name": "iRecover Okanagan",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": null,
+  "website": "https://irecover.ca/",
+  "phone": "1-877-387-4155",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private drug and alcohol rehab offering medically supervised detox and residential treatment in British Columbia.",
+  "source_url": "https://irecover.ca/"
+ },
+ {
+  "name": "iRecover Alberta",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Tees",
+  "website": "https://irecover.ca/central-alberta/",
+  "phone": "1-877-387-4155",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private drug and alcohol treatment facility in central Alberta with medically supervised detox.",
+  "source_url": "https://irecover.ca/central-alberta/"
+ },
+ {
+  "name": "Peak House",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Vancouver",
+  "website": "https://peakhouse.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Licensed, voluntary, no-cost ten-week live-in addiction treatment program for youth.",
+  "source_url": "https://peakhouse.ca/"
+ },
+ {
+  "name": "Turning Point Recovery Society",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": null,
+  "website": "https://turningpointrecovery.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Non-profit society operating residential recovery houses for people recovering from substance use.",
+  "source_url": "https://turningpointrecovery.com/"
+ },
+ {
+  "name": "Hollyhock",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Cortes Island",
+  "website": "https://hollyhock.ca/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Retreat centre on Cortes Island hosting programs for personal growth, yoga and learning.",
+  "source_url": "https://hollyhock.ca/"
+ },
+ {
+  "name": "Mountain Trek",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Ainsworth Hot Springs",
+  "website": "https://mountaintrek.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Mountains",
+   "Hot springs"
+  ],
+  "languages": null,
+  "description": "Week-long immersive health reset retreat with hiking, fitness, nutrition and stress-reduction programming in the Kootenay mountains.",
+  "source_url": "https://mountaintrek.com/"
+ },
+ {
+  "name": "Salt Spring Centre of Yoga",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Salt Spring Island",
+  "website": "https://saltspringcentre.com/",
+  "phone": "+1 250 537 2326",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Spiritual and wellness retreat centre teaching yoga practices, with retreats, workshops and teacher training.",
+  "source_url": "https://saltspringcentre.com/"
+ },
+ {
+  "name": "Yasodhara Ashram",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Kootenay Bay",
+  "website": "https://www.yasodhara.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Yoga retreat and study centre offering residential yoga and reflection programs.",
+  "source_url": "https://www.yasodhara.org/"
+ },
+ {
+  "name": "The Haven",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Gabriola Island",
+  "website": "https://haven.ca/",
+  "phone": "+1 250 247 9211",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Not-for-profit centre for transformative learning offering healing and personal growth programs on Gabriola Island.",
+  "source_url": "https://haven.ca/"
+ },
+ {
+  "name": "Homewood Health Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Guelph",
+  "website": "https://homewoodhealthcentre.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Inpatient treatment facility on a 50-acre Guelph campus for mental health, trauma, addiction and co-occurring conditions.",
+  "source_url": "https://homewoodhealthcentre.com/"
+ },
+ {
+  "name": "Renascent",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://renascent.ca/",
+  "phone": "1-866-232-1212",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Ontario provider of residential and outpatient addiction treatment with trauma-informed programs; self-referrals accepted.",
+  "source_url": "https://renascent.ca/"
+ },
+ {
+  "name": "GreeneStone Centre for Recovery",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Bala",
+  "website": "https://greenestone.net/",
+  "phone": "1-855-821-5010",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private CARF-accredited inpatient addiction treatment centre in Muskoka with medically supervised detox.",
+  "source_url": "https://greenestone.net/"
+ },
+ {
+  "name": "Trafalgar Addiction Treatment Centres",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://trafalgarresidence.com/",
+  "phone": "1-855-972-9760",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential and outpatient treatment for addictions and concurrent mental health disorders, including medical detox.",
+  "source_url": "https://trafalgarresidence.com/"
+ },
+ {
+  "name": "Canadian Centre for Addictions",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Cobourg",
+  "website": "https://canadiancentreforaddictions.org/",
+  "phone": "1-855-499-9446",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private residential addiction rehab in Ontario offering detox and inpatient treatment programs.",
+  "source_url": "https://canadiancentreforaddictions.org/"
+ },
+ {
+  "name": "Centres for Health and Healing",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Vaughan",
+  "website": "https://cfhh.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private addiction and mental health treatment provider serving the Toronto area.",
+  "source_url": "https://cfhh.ca/"
+ },
+ {
+  "name": "Addiction Rehab Toronto",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://addictionrehabtoronto.ca/",
+  "phone": "+1 855 787 2424",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private drug and alcohol rehab with medical detox and mental health support across the Greater Toronto Area.",
+  "source_url": "https://addictionrehabtoronto.ca/"
+ },
+ {
+  "name": "1000 Islands Addictions Treatment Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Mallorytown",
+  "website": "https://addictions.ca/",
+  "phone": "+1 855 929 4045",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "CARF-accredited inpatient drug and alcohol rehab in eastern Ontario offering personalized and holistic treatment.",
+  "source_url": "https://addictions.ca/"
+ },
+ {
+  "name": "Metamorphosis Centre for Change",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": null,
+  "website": "https://metamorphosiscentre.com/",
+  "phone": "1-705-429-3870",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Drug and alcohol rehab in Ontario with residential and outpatient programs and mental health care.",
+  "source_url": "https://metamorphosiscentre.com/"
+ },
+ {
+  "name": "Simcoe Addiction and Mental Health",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": null,
+  "website": "https://www.simcoerehab.ca/",
+  "phone": "+1 705 458 8181",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private residential centre in Ontario treating addiction and mental health concerns together.",
+  "source_url": "https://www.simcoerehab.ca/"
+ },
+ {
+  "name": "York Addiction & Mental Health",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Aurora",
+  "website": "https://yorkaddiction.ca/",
+  "phone": "1-888-241-3391",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Accredited inpatient drug, alcohol and mental health treatment in Aurora with medical detox and 24/7 care.",
+  "source_url": "https://yorkaddiction.ca/"
+ },
+ {
+  "name": "Twelve Mile Recovery",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "St. Catharines",
+  "website": "https://twelvemilerecovery.ca/",
+  "phone": "+1 289 301 8852",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential drug and alcohol rehab in St. Catharines offering addiction treatment programs.",
+  "source_url": "https://twelvemilerecovery.ca/"
+ },
+ {
+  "name": "Valiant Behavioural Health",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Ottawa",
+  "website": "https://valiantbehaviouralhealth.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private residential mental health treatment program in the Ottawa area offering therapy in a retreat-style setting.",
+  "source_url": "https://valiantbehaviouralhealth.com/"
+ },
+ {
+  "name": "Victoria Wellness",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Gores Landing",
+  "website": "https://victoriawellness.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential mental health program in Ontario offering evidence-based therapy and ecotherapy.",
+  "source_url": "https://victoriawellness.ca/"
+ },
+ {
+  "name": "Pine River Institute",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": null,
+  "website": "https://pineriverinstitute.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential treatment program helping adolescents with addictive behaviours and other mental health issues, with family involvement.",
+  "source_url": "https://pineriverinstitute.com/"
+ },
+ {
+  "name": "Kyla Fox Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://www.kylafoxcentre.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Toronto centre providing eating disorder treatment and support programs.",
+  "source_url": "https://www.kylafoxcentre.com/"
+ },
+ {
+  "name": "Westwind Counselling & Eating Disorder Recovery Centre",
+  "country": "Canada",
+  "region": null,
+  "city": null,
+  "website": "https://www.westwindcounselling.ca/",
+  "phone": "888-353-3372",
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Eating disorder treatment including residential recovery centres and an online program for anorexia, bulimia, binge eating and ARFID.",
+  "source_url": "https://www.westwindcounselling.ca/"
+ },
+ {
+  "name": "The Residence at Homewood",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Guelph",
+  "website": "https://theresidenceathomewood.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private residential treatment with one-on-one care for substance use, anxiety, depression or trauma on Homewood's 50-acre Guelph estate.",
+  "source_url": "https://theresidenceathomewood.com/"
+ },
+ {
+  "name": "Andy's House",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Montreal",
+  "website": "https://andyshouse.com/",
+  "phone": "514-738-2639",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private residential substance use treatment centre in Montreal.",
+  "source_url": "https://andyshouse.com/"
+ },
+ {
+  "name": "CAMH - Centre for Addiction and Mental Health",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://www.camh.ca/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Canada's largest mental health teaching hospital, providing addiction and mental health inpatient and outpatient care in Toronto.",
+  "source_url": "https://www.camh.ca/"
+ },
+ {
+  "name": "The Royal Ottawa Mental Health Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Ottawa",
+  "website": "https://www.theroyal.ca/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Mental health treatment, teaching and research hospital focused on complex mental illness and addiction.",
+  "source_url": "https://www.theroyal.ca/"
+ },
+ {
+  "name": "Ontario Shores Centre for Mental Health Sciences",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Whitby",
+  "website": "https://www.ontarioshores.ca/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Public specialty mental health hospital offering inpatient and outpatient programs.",
+  "source_url": "https://www.ontarioshores.ca/"
+ },
+ {
+  "name": "Waypoint Centre for Mental Health Care",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Penetanguishene",
+  "website": "https://www.waypointcentre.ca/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Specialized mental health and addiction hospital offering inpatient and outpatient services.",
+  "source_url": "https://www.waypointcentre.ca/"
+ },
+ {
+  "name": "The Jean Tweed Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://jeantweed.com/",
+  "phone": "416-255-7359",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Toronto centre offering substance use, mental health and trauma services for women and their families.",
+  "source_url": "https://jeantweed.com/"
+ },
+ {
+  "name": "Stonehenge Therapeutic Community",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Guelph",
+  "website": "https://stonehengetc.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Addiction services including residential treatment, withdrawal management and supportive housing in Guelph.",
+  "source_url": "https://stonehengetc.com/"
+ },
+ {
+  "name": "Hopewell Eating Disorder Support Centre",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Ottawa",
+  "website": "https://hopewell.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Ottawa centre providing support programs for people affected by eating disorders and their families.",
+  "source_url": "https://hopewell.ca/"
+ },
+ {
+  "name": "Sheena's Place",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Toronto",
+  "website": "https://sheenasplace.org/",
+  "phone": "+1-416-927-8900",
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Free, professionally facilitated group support for people aged 17+ affected by eating disorders or disordered eating.",
+  "source_url": "https://sheenasplace.org/"
+ },
+ {
+  "name": "Grail Springs",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Bancroft",
+  "website": "https://www.grailsprings.com/",
+  "phone": "1-877-553-5772",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Spa wellness retreat in Ontario offering yoga, detox and relaxation programs.",
+  "source_url": "https://www.grailsprings.com/"
+ },
+ {
+  "name": "Aurora Recovery Centre",
+  "country": "Canada",
+  "region": "Manitoba",
+  "city": "Gimli",
+  "website": "https://aurorarecoverycentre.com/",
+  "phone": "(204) 642-8058",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential addiction treatment centre with on-site medical detox, also treating depression, anxiety, trauma and eating disorders.",
+  "source_url": "https://aurorarecoverycentre.com/"
+ },
+ {
+  "name": "Kelburn Recovery Centre",
+  "country": "Canada",
+  "region": "Manitoba",
+  "city": "Howden",
+  "website": "https://www.kelburnrecoverycentre.com/",
+  "phone": "1-855-857-6768",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private addiction treatment centre on an estate in southern Manitoba with intensive in-patient programs starting at 42 days.",
+  "source_url": "https://www.kelburnrecoverycentre.com/"
+ },
+ {
+  "name": "Behavioural Health Foundation",
+  "country": "Canada",
+  "region": "Manitoba",
+  "city": "Winnipeg",
+  "website": "https://www.bhf.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Therapeutic community offering residential addiction treatment, including a women's program and Indigenous services.",
+  "source_url": "https://www.bhf.ca/"
+ },
+ {
+  "name": "Tamarack Recovery Centre",
+  "country": "Canada",
+  "region": "Manitoba",
+  "city": "Winnipeg",
+  "website": "https://tamarackrehab.org/",
+  "phone": "+1 204 775 3546",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Winnipeg residential recovery centre for adults with substance use problems.",
+  "source_url": "https://tamarackrehab.org/"
+ },
+ {
+  "name": "Two Ten Recovery",
+  "country": "Canada",
+  "region": "Manitoba",
+  "city": "Winnipeg",
+  "website": "https://twotenrecovery.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Structured sober living environment in Winnipeg with recovery centres for men and women.",
+  "source_url": "https://twotenrecovery.org/"
+ },
+ {
+  "name": "Prairie Sky Recovery Centre",
+  "country": "Canada",
+  "region": "Saskatchewan",
+  "city": null,
+  "website": "https://prairieskyrecovery.ca/",
+  "phone": "888-519-4445",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential treatment centre for drug, alcohol and non-substance addictions in Saskatchewan.",
+  "source_url": "https://prairieskyrecovery.ca/"
+ },
+ {
+  "name": "Village of Hope Eston",
+  "country": "Canada",
+  "region": "Saskatchewan",
+  "city": "Eston",
+  "website": "https://www.villageofhopeeston.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential rehabilitation program for people recovering from addiction in rural Saskatchewan.",
+  "source_url": "https://www.villageofhopeeston.ca/"
+ },
+ {
+  "name": "Fresh Start Recovery Centre",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://freshstartrecovery.ca/",
+  "phone": "403-387-6266",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Calgary residential addiction recovery centre offering treatment programs and community support.",
+  "source_url": "https://freshstartrecovery.ca/"
+ },
+ {
+  "name": "Simon House Recovery Centre",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://www.simonhouse.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Calgary residential program supporting men in long-term recovery from addiction.",
+  "source_url": "https://www.simonhouse.com/"
+ },
+ {
+  "name": "Recovery Acres Calgary",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://recoveryacres.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Calgary society providing residential addiction recovery programs.",
+  "source_url": "https://recoveryacres.org/"
+ },
+ {
+  "name": "Poundmaker's Lodge Treatment Centres",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "St. Albert",
+  "website": "https://poundmakerslodge.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Indigenous accredited, cultural and spiritually based addiction and mental health treatment facility.",
+  "source_url": "https://poundmakerslodge.ca/"
+ },
+ {
+  "name": "Calgary Dream Centre",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://calgarydreamcentre.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Calgary organization offering addiction recovery programs, affordable housing and community support.",
+  "source_url": "https://calgarydreamcentre.com/"
+ },
+ {
+  "name": "Maison Jean Lapointe",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Montreal",
+  "website": "https://maisonjeanlapointe.org/",
+  "phone": "514-288-2611",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "French",
+  "description": "Quebec centre for prevention and treatment of dependencies on alcohol, other substances, gambling and hyperconnectivity.",
+  "source_url": "https://maisonjeanlapointe.org/"
+ },
+ {
+  "name": "Portage",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": null,
+  "website": "https://portage.ca/",
+  "phone": "1-844-939-0202",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Free addiction rehabilitation centres in Quebec and New Brunswick, including programs for youth, adults and mothers.",
+  "source_url": "https://portage.ca/"
+ },
+ {
+  "name": "Centre Le Grand Chemin",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": null,
+  "website": "https://www.legrandchemin.qc.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French",
+  "description": "Residential treatment centres for adolescents dealing with drug, alcohol and gambling problems.",
+  "source_url": "https://www.legrandchemin.qc.ca/"
+ },
+ {
+  "name": "Centre Casa",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Quebec City",
+  "website": "https://www.centrecasa.qc.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French",
+  "description": "Quebec City therapy centre with a residential program for adults dependent on alcohol or drugs.",
+  "source_url": "https://www.centrecasa.qc.ca/"
+ },
+ {
+  "name": "Maison L'Épervier",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": null,
+  "website": "https://maisonlepervier.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French",
+  "description": "Private detox and therapy centre in Quebec for alcohol and drug dependencies.",
+  "source_url": "https://maisonlepervier.com/"
+ },
+ {
+  "name": "Maison Cap d'Espoir",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Cap-Saint-Ignace",
+  "website": "https://www.maisoncapdespoir.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Certified residential addiction therapy centre offering a 28-day program for adults near Quebec City.",
+  "source_url": "https://www.maisoncapdespoir.com/"
+ },
+ {
+  "name": "Maison Eurêka",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Saint-Guillaume",
+  "website": "https://maisoneureka.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Certified residential resource for drug, alcohol and medication dependence with a three-month program.",
+  "source_url": "https://maisoneureka.ca/"
+ },
+ {
+  "name": "Les Maisons Péladeau",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Val-David",
+  "website": "https://lesmaisonspeladeau.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "French",
+  "description": "Residential therapy centres in the Laurentians for alcoholism, drug addiction and prescription-drug dependence.",
+  "source_url": "https://lesmaisonspeladeau.com/"
+ },
+ {
+  "name": "Villa de la Paix",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Chertsey",
+  "website": "https://villadelapaix.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Certified addiction treatment centre in Lanaudière offering closed residential therapies of 28 and 56 days.",
+  "source_url": "https://villadelapaix.ca/"
+ },
+ {
+  "name": "Toxico-Stop",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Montreal",
+  "website": "https://toxico-stop.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "French",
+  "description": "Montreal charity offering residential addiction therapy and social reintegration.",
+  "source_url": "https://toxico-stop.com/"
+ },
+ {
+  "name": "Centre CARAT",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Sainte-Brigide-d'Iberville",
+  "website": "https://www.therapie-carat.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Residential addiction therapy centre for men over 18 near Montreal.",
+  "source_url": "https://www.therapie-carat.com/"
+ },
+ {
+  "name": "Maison Carignan",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Trois-Rivières",
+  "website": "https://maisoncarignan.qc.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French",
+  "description": "Addiction therapy centre in Trois-Rivières offering residential treatment.",
+  "source_url": "https://maisoncarignan.qc.ca/"
+ },
+ {
+  "name": "Centre Wapan",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": null,
+  "website": "https://centrewapan.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Healing and wellness centre for First Nations people addressing addiction through culturally based programs.",
+  "source_url": "https://centrewapan.com/"
+ },
+ {
+  "name": "Sage Health Centre",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Kamloops",
+  "website": "https://sagehealthcentre.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Licensed private residential addiction treatment centre in Kamloops with programs of 28 to 84 days and family support.",
+  "source_url": "https://sagehealthcentre.ca/"
+ },
+ {
+  "name": "Terradyne Wellness Centre",
+  "country": "Canada",
+  "region": "Nova Scotia",
+  "city": null,
+  "website": "https://terradynewellness.ca/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Accredited boutique addiction and mental health treatment centre offering withdrawal management, psychiatric assessment and individualized therapy.",
+  "source_url": "https://terradynewellness.ca/"
+ },
+ {
+  "name": "Jellinek Society",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Edmonton",
+  "website": "https://www.jellinek.ca/",
+  "phone": null,
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Non-profit 17-bed abstinence-based residence supporting men in early recovery from drug and alcohol addiction.",
+  "source_url": "https://www.jellinek.ca/"
+ },
+ {
+  "name": "Newgate 180",
+  "country": "Canada",
+  "region": "Ontario",
+  "city": "Ottawa",
+  "website": "https://newgate180.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Not-for-profit residential addiction treatment centre in Ontario operating since 1975, with family support programs.",
+  "source_url": "https://newgate180.com/"
+ },
+ {
+  "name": "Aventa",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Calgary",
+  "website": "https://aventa.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Trauma-informed, gender-specific residential addiction treatment for women in Alberta.",
+  "source_url": "https://aventa.org/"
+ },
+ {
+  "name": "Red Road Recovery",
+  "country": "Canada",
+  "region": "British Columbia",
+  "city": "Sorrento",
+  "website": "https://redroadrecovery.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "CARF-accredited addiction treatment with residential programs combining evidence-based counselling and Indigenous cultural healing practices.",
+  "source_url": "https://redroadrecovery.com/"
+ },
+ {
+  "name": "Searidge Foundation",
+  "country": "Canada",
+  "region": "Nova Scotia",
+  "city": "Halifax",
+  "website": "https://searidgealcoholrehab.com/",
+  "phone": "1-888-777-9972",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential alcohol rehab and mental health treatment with on-site detox, private rooms, aftercare and family support; self-referrals accepted.",
+  "source_url": "https://searidgealcoholrehab.com/"
+ },
+ {
+  "name": "Venture Academy",
+  "country": "Canada",
+  "region": null,
+  "city": null,
+  "website": "https://www.ventureacademy.ca/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential assessment and treatment programs for teens, covering substance use, depression, anxiety and other mental health concerns.",
+  "source_url": "https://www.ventureacademy.ca/"
+ },
+ {
+  "name": "Vita Wellness",
+  "country": "Canada",
+  "region": "Alberta",
+  "city": "Bragg Creek",
+  "website": "https://www.vitawellnessretreat.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Customized one-on-one private mental health and wellness retreat programs addressing depression, anxiety, trauma and nervous system regulation.",
+  "source_url": "https://www.vitawellnessretreat.com/"
+ },
+ {
+  "name": "Spa Eastman",
+  "country": "Canada",
+  "region": "Quebec",
+  "city": "Eastman",
+  "website": "https://www.spa-eastman.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Nature-based wellness retreat in Quebec's Eastern Townships offering healthy meals, workshops, treatments and themed retreats.",
+  "source_url": "https://www.spa-eastman.com/"
+ },
+ {
+  "name": "The Grange Treatment Centre",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://grange-treatment.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Treatment for addictions and eating disorders with separate adult and youth clinics, therapy and aftercare.",
+  "source_url": "https://grange-treatment.com/"
+ },
+ {
+  "name": "Kfar Izun",
+  "country": "Israel",
+  "region": null,
+  "city": null,
+  "website": "https://www.anatta.org.il/en/initiative/kfar-izun",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Therapeutic rehabilitation village for people aged 18-40 facing life crises, substance abuse and co-occurring mental health challenges.",
+  "source_url": "https://www.anatta.org.il/en/initiative/kfar-izun"
+ },
+ {
+  "name": "Zulal Wellness Resort",
+  "country": "Qatar",
+  "region": null,
+  "city": null,
+  "website": "https://zulal.com/en/",
+  "phone": "+974 4477 6500",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Wellness resort in Qatar offering holistic retreats, treatments and traditional Arabic and Islamic medicine.",
+  "source_url": "https://zulal.com/en/"
+ },
+ {
+  "name": "Embrace Mental Health Center",
+  "country": "Lebanon",
+  "region": null,
+  "city": null,
+  "website": "https://embracelebanon.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Lebanese NGO running a mental health centre providing consultations alongside a national emotional support lifeline.",
+  "source_url": "https://embracelebanon.org/"
+ },
+ {
+  "name": "Twin Rivers Recovery",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Plettenberg Bay",
+  "website": "https://www.twinriversrecovery.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Private residential addiction and mental health treatment centre in Plettenberg Bay offering dual-diagnosis support.",
+  "source_url": "https://www.twinriversrecovery.com/"
+ },
+ {
+  "name": "Minnesota House",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": null,
+  "website": "https://minnesotahouse.co.za/",
+  "phone": "+27 82 696 9669",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Transitional living and holistic healing centre at the base of the Outeniqua Mountains for addiction, trauma and related mental health difficulties.",
+  "source_url": "https://minnesotahouse.co.za/"
+ },
+ {
+  "name": "Bloemendal Clinic",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Paarl",
+  "website": "https://www.bloemendalclinic.com/",
+  "phone": "+27 21 863 3399",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential mental health and addiction recovery clinic on a Paarl farm with psychiatrists, doctors, nurses and psychologists.",
+  "source_url": "https://www.bloemendalclinic.com/"
+ },
+ {
+  "name": "Netcare Akeso Stepping Stones",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Kommetjie",
+  "website": "https://www.steppingstones.co.za/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Dual-licensed private psychiatric hospital and addiction treatment centre in the seaside village of Kommetjie, Cape Town.",
+  "source_url": "https://www.steppingstones.co.za/"
+ },
+ {
+  "name": "Netcare Akeso",
+  "country": "South Africa",
+  "region": null,
+  "city": null,
+  "website": "https://www.netcare.co.za/Netcare-Akeso",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Grief & life transitions",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Network of private psychiatric hospitals offering inpatient and outpatient programmes for depression, anxiety, trauma, eating disorders and addiction.",
+  "source_url": "https://www.netcare.co.za/Netcare-Akeso"
+ },
+ {
+  "name": "Vivari Wellness",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://vivariwellness.co.za/",
+  "phone": "+27 11 958 2261",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Doctor-led longevity and executive health institute in Johannesburg with programmes including burnout recovery and metabolic reset.",
+  "source_url": "https://vivariwellness.co.za/"
+ },
+ {
+  "name": "Butabika National Referral Mental Hospital",
+  "country": "Uganda",
+  "region": "Central",
+  "city": "Kampala",
+  "website": "https://www.butabikahospital.go.ug/",
+  "phone": "+256 414 504375",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Uganda's national referral mental hospital offering mental health services, counselling and an alcohol and drug unit.",
+  "source_url": "https://www.butabikahospital.go.ug/"
+ },
+ {
+  "name": "The Valens Clinic",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://thevalensclinic.ae/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Outpatient psychiatry and psychology clinic in Dubai treating anxiety, depression, eating disorders and other conditions.",
+  "source_url": "https://thevalensclinic.ae/"
+ },
+ {
+  "name": "The Grace Centre",
+  "country": "Canada",
+  "region": "Newfoundland and Labrador",
+  "city": "Harbour Grace",
+  "website": "https://mha.easternhealth.ca/adults/treatment-centres-and-withdrawal-management/the-grace-centre/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Provincial voluntary inpatient addictions treatment centre for adults offering a structured 28-day program.",
+  "source_url": "https://mha.easternhealth.ca/adults/treatment-centres-and-withdrawal-management/the-grace-centre/"
+ },
+ {
+  "name": "Ridgewood Concurrent Rehabilitation Program",
+  "country": "Canada",
+  "region": "New Brunswick",
+  "city": "Saint John",
+  "website": "https://horizonnb.ca/services/addictions-mental-health/adult-services/short-term-inpatient-addiction-rehabilitation-program/",
+  "phone": "506-674-4342",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Provincial live-in program run by Horizon Health for people with substance or gambling addiction alongside mental illness.",
+  "source_url": "https://horizonnb.ca/services/addictions-mental-health/adult-services/short-term-inpatient-addiction-rehabilitation-program/"
+ },
+ {
+  "name": "Horizon Recovery Centre",
+  "country": "Canada",
+  "region": "New Brunswick",
+  "city": "Saint John",
+  "website": "https://horizonnb.ca/services/addictions-mental-health/adult-services/recovery-centre/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Early-recovery live-in program for adult men with addiction to alcohol, drugs or gambling at the Ridgewood campus.",
+  "source_url": "https://horizonnb.ca/services/addictions-mental-health/adult-services/recovery-centre/"
+ },
+ {
+  "name": "Watan Center for Addiction Treatment and Rehabilitation (WTN)",
+  "country": "Saudi Arabia",
+  "region": null,
+  "city": null,
+  "website": "https://wtnrehab.sa/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "Arabic",
+  "description": "Addiction treatment centre offering detox, emergency and outpatient care, rehabilitation, dual-diagnosis treatment and aftercare.",
+  "source_url": "https://wtnrehab.sa/"
+ },
+ {
+  "name": "Les Mariannes Wellness Sanctuary",
+  "country": "Mauritius",
+  "region": null,
+  "city": null,
+  "website": "https://lesmariannes.com/",
+  "phone": "+230 5257 7070",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private physician-led residential care in Mauritius for addiction, mental health conditions and burnout.",
+  "source_url": "https://lesmariannes.com/"
+ },
+ {
+  "name": "Olive Hill Clinique",
+  "country": "Morocco",
+  "region": "Marrakech-Safi",
+  "city": "Marrakech",
+  "website": "https://olivehillclinic.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "French, English, Arabic",
+  "description": "Residential clinic near Marrakech with medically managed detox and programmes for substance and behavioural addictions and mental health disorders.",
+  "source_url": "https://olivehillclinic.com/"
+ },
+ {
+  "name": "Paradis Plage Surf Yoga & Spa Resort",
+  "country": "Morocco",
+  "region": "Souss-Massa",
+  "city": "Imi Ouaddar",
+  "website": "https://paradisplage.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Beachfront resort near Agadir offering yoga, surf and eco-spa stays.",
+  "source_url": "https://paradisplage.com/"
+ },
+ {
+  "name": "Chiromo Hospital Group",
+  "country": "Kenya",
+  "region": "Nairobi",
+  "city": "Nairobi",
+  "website": "https://chiromohospitalgroup.co.ke/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Kenyan mental health hospital group providing inpatient and outpatient psychiatric care and addiction treatment.",
+  "source_url": "https://chiromohospitalgroup.co.ke/"
+ },
+ {
+  "name": "Retreat Rehab",
+  "country": "Kenya",
+  "region": null,
+  "city": "Limuru",
+  "website": "https://retreatrehab.co.ke/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Family-oriented treatment for substance use disorders with branches in Limuru and Ngong.",
+  "source_url": "https://retreatrehab.co.ke/"
+ },
+ {
+  "name": "Primrose Rehab and Wellness",
+  "country": "Kenya",
+  "region": "Kiambu",
+  "city": "Nairobi",
+  "website": "https://primroserehab.org/",
+  "phone": "0726 883 960",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "NACADA-registered residential rehab off Kiambu Road treating drug and alcohol addiction and related mental health conditions.",
+  "source_url": "https://primroserehab.org/"
+ },
+ {
+  "name": "The Raphaelites Rehabilitation Center",
+  "country": "Kenya",
+  "region": "Kiambu",
+  "city": "Limuru",
+  "website": "https://theraphaelites.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Addiction treatment organization integrating the 12 steps with medical detoxification and behavioural rehab.",
+  "source_url": "https://theraphaelites.com/"
+ },
+ {
+  "name": "Dove International Wellness",
+  "country": "Kenya",
+  "region": "Nairobi",
+  "city": "Karen",
+  "website": "https://doveinternational.co.ke/",
+  "phone": "0800 724 299",
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Mental health and dual-diagnosis treatment centre in Karen, Nairobi, also treating drug and substance abuse.",
+  "source_url": "https://doveinternational.co.ke/"
+ },
+ {
+  "name": "Diamonds Recovery Center",
+  "country": "Kenya",
+  "region": null,
+  "city": null,
+  "website": "https://diamondsrecoverycenter.com/",
+  "phone": "+254 791 200 277",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Addiction recovery programmes from 21 to 90 days, outpatient care, counselling and a burnout programme.",
+  "source_url": "https://diamondsrecoverycenter.com/"
+ },
+ {
+  "name": "Havilah Restoration Centre",
+  "country": "Kenya",
+  "region": "Uasin Gishu",
+  "city": "Eldoret",
+  "website": "https://havilahrestorationcentre.org/",
+  "phone": "+254 742 163 418",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Eldoret rehabilitation centre for substance abuse and mental health struggles.",
+  "source_url": "https://havilahrestorationcentre.org/"
+ },
+ {
+  "name": "SmartLife Rehab & Wellness Centre",
+  "country": "Kenya",
+  "region": "Kiambu",
+  "city": "Juja",
+  "website": "https://smartlifewellnesscentre.co.ke/",
+  "phone": "0711 597 407",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Inpatient drug and alcohol rehabilitation in Juja with a four-month structured programme, CBT and family therapy.",
+  "source_url": "https://smartlifewellnesscentre.co.ke/"
+ },
+ {
+  "name": "Zawena Treatment Centre",
+  "country": "Kenya",
+  "region": "Kiambu",
+  "city": null,
+  "website": "http://www.zawenatreatment.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Alcohol and drug addiction treatment with detox, residential and outpatient programmes and family support.",
+  "source_url": "http://www.zawenatreatment.com/"
+ },
+ {
+  "name": "Jorgs Ark Rehabilitation Centre",
+  "country": "Kenya",
+  "region": "Kiambu",
+  "city": "Tigoni",
+  "website": "https://jorgstrust.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Chemical dependence treatment centre run by Jorgs Trust, a Kenyan charity, first opened in Tigoni in 2005.",
+  "source_url": "https://jorgstrust.org/"
+ },
+ {
+  "name": "Fountain of Hope Treatment Centre",
+  "country": "Kenya",
+  "region": "Nairobi",
+  "city": "Nairobi",
+  "website": "https://fountainofhoperehab.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Nairobi alcohol and drug rehabilitation centre offering detox, counselling and naltrexone treatment.",
+  "source_url": "https://fountainofhoperehab.org/"
+ },
+ {
+  "name": "Africa Retreat Centre",
+  "country": "Uganda",
+  "region": "Central",
+  "city": "Kampala",
+  "website": "https://www.africaretreat.org/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Specialist mental health and addiction centre with medically supervised detox, psychotherapy and dual-diagnosis treatment.",
+  "source_url": "https://www.africaretreat.org/"
+ },
+ {
+  "name": "Hope and Beyond",
+  "country": "Uganda",
+  "region": "Central",
+  "city": "Kampala",
+  "website": "https://www.hopeandbeyondug.org/",
+  "phone": "+256 701 481003",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Ugandan organization providing treatment and rehabilitation for people with alcohol and drug problems.",
+  "source_url": "https://www.hopeandbeyondug.org/"
+ },
+ {
+  "name": "Focus on Recovery Uganda (FORE)",
+  "country": "Uganda",
+  "region": null,
+  "city": null,
+  "website": "https://recoveryuganda.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Non-profit providing mental health and addiction treatment in Uganda since 2015.",
+  "source_url": "https://recoveryuganda.org/"
+ },
+ {
+  "name": "Synapse Services",
+  "country": "Nigeria",
+  "region": null,
+  "city": "Abuja",
+  "website": "https://www.synapseservices.org/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private psychiatric and drug rehabilitation provider with facilities in Abuja, Lagos, Port Harcourt and Anambra.",
+  "source_url": "https://www.synapseservices.org/"
+ },
+ {
+  "name": "The Olive Prime",
+  "country": "Nigeria",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "http://www.theoliveprime.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Drug treatment and psychological care centres in Abuja and Lagos, including a women-only centre.",
+  "source_url": "http://www.theoliveprime.com/"
+ },
+ {
+  "name": "Hakron Specialist Care Center",
+  "country": "Nigeria",
+  "region": "Lagos",
+  "city": "Lagos",
+  "website": "https://hakroncare.com/",
+  "phone": "+234 803 976 0351",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Lagos rehabilitation and psychiatric treatment centre for alcohol and drug dependence and mental health recovery.",
+  "source_url": "https://hakroncare.com/"
+ },
+ {
+  "name": "A & D Referral Services",
+  "country": "Nigeria",
+  "region": "Lagos",
+  "city": "Lagos",
+  "website": "https://adaddictionservices.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Lagos service offering confidential drug and alcohol assessments and addiction rehabilitation support.",
+  "source_url": "https://adaddictionservices.com/"
+ },
+ {
+  "name": "Vanguard Against Drug Abuse Detox Center",
+  "country": "Nigeria",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://www.vgadanigeria.com/",
+  "phone": "+234 706 322 2217",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Abuja addiction treatment and recovery centre offering counselling, group and family therapy and drug screening.",
+  "source_url": "https://www.vgadanigeria.com/"
+ },
+ {
+  "name": "NewLife Specialist Hospital & Rehab Centre",
+  "country": "Nigeria",
+  "region": "FCT",
+  "city": "Abuja",
+  "website": "https://newlifehospitalandrehab.com.ng/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Mental health hospital and rehabilitation centre in Abuja.",
+  "source_url": "https://newlifehospitalandrehab.com.ng/"
+ },
+ {
+  "name": "House of Refuge",
+  "country": "Nigeria",
+  "region": "Lagos",
+  "city": "Lekki",
+  "website": "https://freedomfoundationng.org/house-of-refuge/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Drug rehabilitation and resource centre for people dependent on drugs and alcohol, run by Freedom Foundation.",
+  "source_url": "https://freedomfoundationng.org/house-of-refuge/"
+ },
+ {
+  "name": "House of St. Francis",
+  "country": "Ghana",
+  "region": null,
+  "city": "Tema",
+  "website": "https://www.recoveryafrica.org/house-of-st-francis",
+  "phone": null,
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Recovery residence operated by Recovery Africa in Ghana for people recovering from addiction.",
+  "source_url": "https://www.recoveryafrica.org/house-of-st-francis"
+ },
+ {
+  "name": "Okonguarri Psychotherapeutic Centre",
+  "country": "Namibia",
+  "region": "Otjozondjupa",
+  "city": "Otjiwarongo",
+  "website": "https://okonguarri.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential psychotherapy and group therapy centre on a large private wilderness reserve in Namibia.",
+  "source_url": "https://okonguarri.com/"
+ },
+ {
+  "name": "Sitota Center for Mental Health Care",
+  "country": "Ethiopia",
+  "region": "Addis Ababa",
+  "city": "Addis Ababa",
+  "website": "https://new.sitotapsy.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Psychiatric centre in Addis Ababa offering mental health care, rehab, crisis intervention and psychotherapy.",
+  "source_url": "https://new.sitotapsy.com/"
+ },
+ {
+  "name": "Gefersa Mental Health Rehabilitation Centre",
+  "country": "Ethiopia",
+  "region": null,
+  "city": "Addis Ababa",
+  "website": "https://www.fracarita-international.org/gefersa-mental-health-centre",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Rehabilitation centre near Addis Ababa offering psychiatric treatment, boarding and occupational therapy.",
+  "source_url": "https://www.fracarita-international.org/gefersa-mental-health-centre"
+ },
+ {
+  "name": "The LightHouse Arabia",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://www.lighthousearabia.com/",
+  "phone": "+971 4 380 2088",
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Outpatient mental health and wellbeing centre offering therapy, training and support groups for adults, children, couples and families.",
+  "source_url": "https://www.lighthousearabia.com/"
+ },
+ {
+  "name": "Camali Clinic",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://camaliclinic.com/",
+  "phone": "+971 4 276 6064",
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Dubai clinic providing psychiatry, psychology and therapy services for children, adolescents and adults.",
+  "source_url": "https://camaliclinic.com/"
+ },
+ {
+  "name": "American Center for Psychiatry and Neurology",
+  "country": "United Arab Emirates",
+  "region": "Abu Dhabi",
+  "city": "Abu Dhabi",
+  "website": "https://americancenteruae.com/",
+  "phone": "+971 2 492 6000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Mental health centre offering psychiatry, neurology, psychology and rehabilitation services in Abu Dhabi.",
+  "source_url": "https://americancenteruae.com/"
+ },
+ {
+  "name": "Maudsley Health",
+  "country": "United Arab Emirates",
+  "region": "Abu Dhabi",
+  "city": "Abu Dhabi",
+  "website": "https://maudsleyhealth.com/",
+  "phone": "+971 2 610 7777",
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Psychiatric and psychological care in collaboration with South London and Maudsley NHS Foundation Trust, including addiction services.",
+  "source_url": "https://maudsleyhealth.com/"
+ },
+ {
+  "name": "alkalma (formerly Aspris Wellbeing Centre)",
+  "country": "United Arab Emirates",
+  "region": null,
+  "city": null,
+  "website": "https://alkalmahealth.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Psychiatry, psychology and therapy services for children, adults and families in Abu Dhabi and Dubai.",
+  "source_url": "https://alkalmahealth.com/"
+ },
+ {
+  "name": "Ardens Medical Center",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://ardensmedicalcenter.com/",
+  "phone": "+971 4 523 2999",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private addiction detox and mental health centre in Dubai with inpatient, partial hospitalization and outpatient services.",
+  "source_url": "https://ardensmedicalcenter.com/"
+ },
+ {
+  "name": "New Life Rehab Dubai",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://newliferehab.ae/",
+  "phone": "+971 50 268 9465",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private rehabilitation programmes in Dubai for addiction, mental health and wellness aimed at executives.",
+  "source_url": "https://newliferehab.ae/"
+ },
+ {
+  "name": "Sakina Rehabilitation",
+  "country": "United Arab Emirates",
+  "region": null,
+  "city": null,
+  "website": "https://sakinauae.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential alcohol addiction and mental health rehabilitation centre near Dubai.",
+  "source_url": "https://sakinauae.com/"
+ },
+ {
+  "name": "Erada Centre for Treatment and Rehabilitation",
+  "country": "United Arab Emirates",
+  "region": "Dubai",
+  "city": "Dubai",
+  "website": "https://www.erada.ae/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Dubai government centre established under Law No. 5 of 2016 providing addiction treatment and rehabilitation programmes.",
+  "source_url": "https://www.erada.ae/"
+ },
+ {
+  "name": "Retorno",
+  "country": "Israel",
+  "region": null,
+  "city": null,
+  "website": "https://retorno.org/",
+  "phone": "053-840-0374",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Jewish kosher addiction rehab centre in Israel with detox, adult residential treatment and an English-speaking programme.",
+  "source_url": "https://retorno.org/"
+ },
+ {
+  "name": "Genesis Israel",
+  "country": "Israel",
+  "region": "Jerusalem",
+  "city": "Jerusalem",
+  "website": "https://www.genesisisrael.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Kosher therapeutic programme in Jerusalem with residential and outpatient care for Jewish individuals.",
+  "source_url": "https://www.genesisisrael.com/"
+ },
+ {
+  "name": "Villa Balance",
+  "country": "Israel",
+  "region": "Central District",
+  "city": "Savyon",
+  "website": "https://vila-balance.co.il/",
+  "phone": "053-487-7977",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Hebrew",
+  "description": "Private rehab centre in Savyon treating addiction to drugs, alcohol, medications and gambling.",
+  "source_url": "https://vila-balance.co.il/"
+ },
+ {
+  "name": "Villa Matrix",
+  "country": "Israel",
+  "region": null,
+  "city": null,
+  "website": "https://www.matrixreloadrehab.com/",
+  "phone": "050-223-0860",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Hebrew",
+  "description": "Private alcohol balance house combining holistic, individual and group therapy with psychotherapy.",
+  "source_url": "https://www.matrixreloadrehab.com/"
+ },
+ {
+  "name": "Harmony Institute",
+  "country": "Israel",
+  "region": "Tel Aviv",
+  "city": "Tel Aviv",
+  "website": "https://harmonylife.co.il/",
+  "phone": "050-479-0097",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Hebrew",
+  "description": "Private outpatient addiction treatment in Tel Aviv for drugs, alcohol, gambling and prescription medications.",
+  "source_url": "https://harmonylife.co.il/"
+ },
+ {
+  "name": "Phoenix Rehabilitation Center",
+  "country": "Israel",
+  "region": null,
+  "city": null,
+  "website": "https://phoenix-rehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Russian, Hebrew",
+  "description": "Israeli rehabilitation centre treating alcoholism, drug addiction and gambling with individual programmes.",
+  "source_url": "https://phoenix-rehab.com/"
+ },
+ {
+  "name": "Skoun Lebanese Addictions Center",
+  "country": "Lebanon",
+  "region": "Beirut",
+  "city": "Beirut",
+  "website": "https://www.skoun.org/en",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Arabic, English",
+  "description": "Non-profit outpatient centre offering prevention, treatment and harm reduction for people who use drugs.",
+  "source_url": "https://www.skoun.org/en"
+ },
+ {
+  "name": "Oum El Nour",
+  "country": "Lebanon",
+  "region": null,
+  "city": null,
+  "website": "https://www.oumelnour.org/",
+  "phone": "+961 76 947 460",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Independent NGO founded in 1989 offering residential and outpatient addiction rehabilitation, prevention and reintegration.",
+  "source_url": "https://www.oumelnour.org/"
+ },
+ {
+  "name": "Behman Hospital",
+  "country": "Egypt",
+  "region": "Cairo",
+  "city": "Helwan",
+  "website": "https://www.behman.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private psychiatric hospital in Cairo with inpatient programme, day hospital, psychological therapies and addiction care.",
+  "source_url": "https://www.behman.com/"
+ },
+ {
+  "name": "Al Mashfa Hospital",
+  "country": "Egypt",
+  "region": "Cairo",
+  "city": "Cairo",
+  "website": "https://almashfa.com.eg/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Psychiatric hospital with programmes for depression, anxiety, addiction, eating disorders and other conditions.",
+  "source_url": "https://almashfa.com.eg/"
+ },
+ {
+  "name": "Al Rakhawy Hospital for Mental Health and Addiction Treatment",
+  "country": "Egypt",
+  "region": "Cairo",
+  "city": "Cairo",
+  "website": "https://rakhawyhospital.org/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Arabic",
+  "description": "Mental health and addiction hospital applying a therapeutic community model for over 40 years.",
+  "source_url": "https://rakhawyhospital.org/"
+ },
+ {
+  "name": "Dar El Shefaa Hospital",
+  "country": "Egypt",
+  "region": "Giza",
+  "city": "6th of October City",
+  "website": "https://www.darelshefaa.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "Arabic",
+  "description": "Psychiatric and addiction treatment hospital offering withdrawal management and psychotherapy programmes.",
+  "source_url": "https://www.darelshefaa.com/%D9%85%D8%B1%D9%83%D8%B2-%D8%AF%D8%A7%D8%B1-%D8%A7%D9%84%D8%B4%D9%81%D8%A7%D8%A1-%D9%84%D8%B9%D9%84%D8%A7%D8%AC-%D8%A7%D9%84%D8%A7%D8%AF%D9%85%D8%A7%D9%86/"
+ },
+ {
+  "name": "Dar Elsakina Foundation",
+  "country": "Egypt",
+  "region": "Cairo",
+  "city": "New Cairo",
+  "website": "https://darelsakina.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "Arabic",
+  "description": "Behavioural rehabilitation and addiction treatment foundation using a therapeutic community approach.",
+  "source_url": "https://darelsakina.com/"
+ },
+ {
+  "name": "Freedom Program for Rehabilitation",
+  "country": "Egypt",
+  "region": "Cairo",
+  "city": "Maadi",
+  "website": "http://www.freedom-maadi.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Arabic",
+  "description": "Addiction rehabilitation therapeutic community supervised by a consultant psychiatrist, with several branches.",
+  "source_url": "http://www.freedom-maadi.com/"
+ },
+ {
+  "name": "Harmony Addictions Clinic",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://harmonyclinic.co.za/",
+  "phone": "+27 21 790 7779",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Cape Town residential rehab for drug, alcohol and behavioural addictions with psychiatric and psychological support for co-occurring conditions.",
+  "source_url": "https://harmonyclinic.co.za/"
+ },
+ {
+  "name": "The Cedars Cape Manor House",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://thecedars.co.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential drug and alcohol rehabilitation centre in Cape Town with detox support and relapse prevention, part of The Cedars group.",
+  "source_url": "https://thecedars.co.za/"
+ },
+ {
+  "name": "Anker Huis",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://www.ankerhuis.co.za/",
+  "phone": "+27 72 088 0446",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential addiction recovery centre in Cape Town offering therapy for substance use and co-occurring mental health concerns.",
+  "source_url": "https://www.ankerhuis.co.za/"
+ },
+ {
+  "name": "Rustenburg Addiction Care",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Somerset West",
+  "website": "https://rustenburgaddictioncare.co.za/",
+  "phone": "+27 21 205 3640",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Residential drug, alcohol and substance abuse rehabilitation centre in the Western Cape.",
+  "source_url": "https://rustenburgaddictioncare.co.za/"
+ },
+ {
+  "name": "Liberty Home - Weltevreden Manor",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://libertyhomerehab.com/",
+  "phone": "+27 60 014 4200",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Cape Town addiction treatment centre offering residential rehab and sober living programmes.",
+  "source_url": "https://libertyhomerehab.com/"
+ },
+ {
+  "name": "Connection Mental Healthcare",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://connection-mhc.co.za/",
+  "phone": "+27 21 541 0643",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Private residential addiction treatment with dual-diagnosis care and aftercare in Cape Town.",
+  "source_url": "https://connection-mhc.co.za/"
+ },
+ {
+  "name": "Sandhurst Manor",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://cpt.sandhurstmanor.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Cape Town wellness facility offering addiction and mental health recovery programmes tailored to individual needs.",
+  "source_url": "https://cpt.sandhurstmanor.com/"
+ },
+ {
+  "name": "New Life Cape Town",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://newlife.rehab/location/luxury-rehab-capetown",
+  "phone": "+27 21 200 8424",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Private residential addiction and mental health treatment in Cape Town aimed at executives and professionals.",
+  "source_url": "https://newlife.rehab/location/luxury-rehab-capetown"
+ },
+ {
+  "name": "Imani Treatment",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://imanitreatment.co.za/",
+  "phone": "+27 21 761 0740",
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Specialist eating disorder treatment programme in Cape Town with residential and outpatient options.",
+  "source_url": "https://imanitreatment.co.za/"
+ },
+ {
+  "name": "Palm Tree Clinic",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://www.palmtreeclinic.co.za/",
+  "phone": "+27 21 556 8080",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Small private psychiatric clinic in Cape Town providing inpatient mental health care.",
+  "source_url": "https://www.palmtreeclinic.co.za/"
+ },
+ {
+  "name": "The Living House",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://thelivinghouse.co.za/",
+  "phone": "+27 84 454 8464",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Cape Town sober living facility offering several levels of addiction rehabilitation care.",
+  "source_url": "https://thelivinghouse.co.za/"
+ },
+ {
+  "name": "Oasis Recovery Centre",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Plettenberg Bay",
+  "website": "https://www.oasisrecoverycentre.com/",
+  "phone": "+27 44 533 1752",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Residential addiction treatment centre in Plettenberg Bay focusing on the function addiction serves and underlying pain.",
+  "source_url": "https://www.oasisrecoverycentre.com/"
+ },
+ {
+  "name": "Rise Recovery",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Plettenberg Bay",
+  "website": "https://risecare.co.za/",
+  "phone": "+27 64 774 7618",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential recovery programme for teenagers and adolescents with substance and behavioural addictions.",
+  "source_url": "https://risecare.co.za/"
+ },
+ {
+  "name": "Cape Town Drug Counselling Centre",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://drugcentre.org.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Non-profit established in 1985 providing outpatient drug treatment and rehabilitation services in Cape Town.",
+  "source_url": "https://drugcentre.org.za/"
+ },
+ {
+  "name": "Bellevue Sober Residence",
+  "country": "South Africa",
+  "region": "Western Cape",
+  "city": "Cape Town",
+  "website": "https://bellevuesoberresidence.com/",
+  "phone": null,
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Independent sober living residence in Constantia supporting people in recovery from addiction.",
+  "source_url": "https://bellevuesoberresidence.com/"
+ },
+ {
+  "name": "Ocean Bay Recovery",
+  "country": "South Africa",
+  "region": "Eastern Cape",
+  "city": "St Francis Bay",
+  "website": "https://www.oceanbayrecovery.com/",
+  "phone": "+27 42 940 0606",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Coastal rehabilitation centre providing residential and outpatient addiction and mental health programmes.",
+  "source_url": "https://www.oceanbayrecovery.com/"
+ },
+ {
+  "name": "Step Away Treatment Centre",
+  "country": "South Africa",
+  "region": "Eastern Cape",
+  "city": null,
+  "website": "https://www.stepaway.co.za/",
+  "phone": "+27 41 379 1097",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Residential treatment centre for drug and alcohol addiction offering structured, personalised recovery programmes.",
+  "source_url": "https://www.stepaway.co.za/"
+ },
+ {
+  "name": "Houghton House",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://www.houghtonhouse.co.za/",
+  "phone": "+27 11 787 9142",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Johannesburg addiction rehabilitation centre and private psychiatric hospital with detox, inpatient and outpatient programmes.",
+  "source_url": "https://www.houghtonhouse.co.za/"
+ },
+ {
+  "name": "Changes Addiction Rehab",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://changesrehab.co.za/",
+  "phone": "+27 81 444 7000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Private addiction rehab with medically supervised detox and 24-hour care across four Johannesburg facilities.",
+  "source_url": "https://changesrehab.co.za/"
+ },
+ {
+  "name": "Journey Recovery and Wellness Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://journeyrecoverycentre.com/",
+  "phone": "+27 79 465 4556",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Johannesburg rehab offering detox, inpatient treatment, halfway house and outpatient programmes.",
+  "source_url": "https://journeyrecoverycentre.com/"
+ },
+ {
+  "name": "Eden Recovery Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Kyalami",
+  "website": "https://www.edenrecovery.co.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Drug and alcohol rehabilitation centre in Glenferness, Kyalami, offering inpatient, outpatient and aftercare treatment.",
+  "source_url": "https://www.edenrecovery.co.za/"
+ },
+ {
+  "name": "Clearview Clinic",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Pretoria",
+  "website": "https://clearviewclinicsa.co.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Licensed drug and alcohol rehabilitation centre in Pretoria with adult and youth programmes, including equine therapy.",
+  "source_url": "https://clearviewclinicsa.co.za/"
+ },
+ {
+  "name": "Crossroads Recovery Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://crossroadsrecovery.co.za/",
+  "phone": "+27 82 653 3311",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private drug and alcohol rehab centres in Johannesburg and Pretoria with detox, inpatient and outpatient programmes.",
+  "source_url": "https://crossroadsrecovery.co.za/"
+ },
+ {
+  "name": "Healing Wings",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://www.healingwings.co.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Addiction recovery centres for adults and youth offering individual and group therapy.",
+  "source_url": "https://www.healingwings.co.za/"
+ },
+ {
+  "name": "MyRehab",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Benoni",
+  "website": "https://myrehab.co.za/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private addiction treatment centre in Benoni with nursing, case management and evidence-based therapy.",
+  "source_url": "https://myrehab.co.za/"
+ },
+ {
+  "name": "Papillon Recovery Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://papillonrecoverycentre.co.za/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Psychiatric recovery centre offering team-based programmes for mood, anxiety, eating and personality disorders.",
+  "source_url": "https://papillonrecoverycentre.co.za/"
+ },
+ {
+  "name": "ZwavelStream Clinic",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Pretoria",
+  "website": "https://zwavelstreamclinic.co.za/",
+  "phone": "+27 10 475 0150",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Integrative mental health clinic in Pretoria treating anxiety, depression, trauma and burnout.",
+  "source_url": "https://zwavelstreamclinic.co.za/"
+ },
+ {
+  "name": "The Way Recovery",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Pretoria",
+  "website": "https://thewayrecovery.co.za/",
+  "phone": "012 030 0323",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Pretoria rehabilitation centres treating alcohol, drug and gambling addiction using a 12-step approach.",
+  "source_url": "https://thewayrecovery.co.za/"
+ },
+ {
+  "name": "Freeman House Recovery",
+  "country": "South Africa",
+  "region": "North West",
+  "city": "Hartbeespoort",
+  "website": "https://www.freemanhouserecovery.com/",
+  "phone": "+27 12 111 1739",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Residential drug and alcohol rehabilitation centre in Hartbeespoort near Johannesburg.",
+  "source_url": "https://www.freemanhouserecovery.com/"
+ },
+ {
+  "name": "Eagles View Wellness Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Roodepoort",
+  "website": "https://evwc.co.za/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Johannesburg-area alcohol and drug rehabilitation centre with medical detox, primary and extended care, and outpatient programmes.",
+  "source_url": "https://evwc.co.za/"
+ },
+ {
+  "name": "New Horizon Halfway House",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Randburg",
+  "website": "https://newhorizonhouse.com/",
+  "phone": "084 450 9562",
+  "care_level": "Unknown",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Halfway house and sober living home in Randburg for people in addiction recovery.",
+  "source_url": "https://newhorizonhouse.com/"
+ },
+ {
+  "name": "Elim Clinic",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Kempton Park",
+  "website": "https://www.elimclin.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Treatment centre offering inpatient, outpatient and aftercare for adults with substance use and behavioural addictions.",
+  "source_url": "https://www.elimclin.com/"
+ },
+ {
+  "name": "On Course Recovery Health & Wellness Centre",
+  "country": "South Africa",
+  "region": "Gauteng",
+  "city": "Johannesburg",
+  "website": "https://oncourserecovery.co.za/",
+  "phone": "+27 82 787 9560",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Addiction recovery centre offering intervention services and tailored recovery programmes.",
+  "source_url": "https://oncourserecovery.co.za/"
+ },
+ {
+  "name": "The Cedars Midlands Estate",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": null,
+  "website": "https://thecedars.co.za/facility/cedars-midlands-estate/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential addiction treatment estate in the KwaZulu-Natal Midlands, part of The Cedars group.",
+  "source_url": "https://thecedars.co.za/facility/cedars-midlands-estate/"
+ },
+ {
+  "name": "The Cedars South Coast Estate",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": null,
+  "website": "https://thecedars.co.za/facility/cedars-south-coast-estate/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Residential alcohol and drug rehab estate on the KwaZulu-Natal South Coast near Durban.",
+  "source_url": "https://thecedars.co.za/facility/cedars-south-coast-estate/"
+ },
+ {
+  "name": "Riverview Manor",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": null,
+  "website": "https://www.riverviewmanor.co.za/",
+  "phone": "+27 33 701 1911",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Specialist residential addiction treatment clinic in the Southern Drakensberg.",
+  "source_url": "https://www.riverviewmanor.co.za/"
+ },
+ {
+  "name": "Wellvale Recovery Centre",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": null,
+  "website": "https://www.wellvalerecovery.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean",
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Private inpatient drug and alcohol rehabilitation centre in a nature reserve on the Dolphin Coast.",
+  "source_url": "https://www.wellvalerecovery.com/"
+ },
+ {
+  "name": "South Coast Recovery Centre",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Margate",
+  "website": "https://www.southcoastrecoverycentre.co.za/",
+  "phone": "+27 72 545 5414",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Residential treatment for drug, alcohol and gambling addiction, including trauma and dual-diagnosis programmes.",
+  "source_url": "https://www.southcoastrecoverycentre.co.za/"
+ },
+ {
+  "name": "ARCA Durban",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Durban",
+  "website": "https://arcadurban.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Medical detox centre and addiction rehab in Durban using medications to manage withdrawal.",
+  "source_url": "https://arcadurban.com/"
+ },
+ {
+  "name": "AC Wellness and Rehabilitation Centre",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": null,
+  "website": "https://acwellness.co.za/",
+  "phone": "+27 72 565 2050",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Addiction rehabilitation centre offering detox, therapies and support meetings.",
+  "source_url": "https://acwellness.co.za/"
+ },
+ {
+  "name": "Harmony Retreat - Agape House",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Greytown",
+  "website": "https://harmonyretreat.co.za/",
+  "phone": "+27 84 417 2227",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Drug and alcohol rehab offering one-month primary treatment and extended halfway-house care, also addressing anxiety, depression and trauma.",
+  "source_url": "https://harmonyretreat.co.za/"
+ },
+ {
+  "name": "Zen-Sai Recovery & Wellness Centre",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Durban North",
+  "website": "https://zensaiwellness.co.za/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private rehabilitation and wellness facility in Durban North with programmes for substance use, behavioural health and stress-related concerns.",
+  "source_url": "https://zensaiwellness.co.za/"
+ },
+ {
+  "name": "WayNol Christian Rehab",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Port Edward",
+  "website": "https://waynol.co.za/",
+  "phone": "+27 61 202 2788",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": null,
+  "description": "Faith-based rehabilitation centre on the South Coast combining therapy with Christian principles.",
+  "source_url": "https://waynol.co.za/"
+ },
+ {
+  "name": "Buddhist Retreat Centre Ixopo",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Ixopo",
+  "website": "https://www.brcixopo.co.za/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Retreat centre in the KwaZulu-Natal hills offering meditation, yoga and mindfulness retreats.",
+  "source_url": "https://www.brcixopo.co.za/"
+ },
+ {
+  "name": "Dharmagiri Sacred Mountain Retreat",
+  "country": "South Africa",
+  "region": "KwaZulu-Natal",
+  "city": "Underberg",
+  "website": "https://www.dharmagiri.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Mountain retreat centre in the Drakensberg offering Buddhist meditation retreats alongside African spiritual traditions.",
+  "source_url": "https://www.dharmagiri.org/"
+ },
+ {
+  "name": "White River Manor",
+  "country": "South Africa",
+  "region": "Mpumalanga",
+  "city": "White River",
+  "website": "https://www.whiterivermanor.com/",
+  "phone": "+27 67 389 4020",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential treatment centre in White River for addictions, depression, anxiety, trauma and burnout.",
+  "source_url": "https://www.whiterivermanor.com/activities/"
+ },
+ {
+  "name": "WRM Wellness",
+  "country": "South Africa",
+  "region": "Mpumalanga",
+  "city": "White River",
+  "website": "https://wrmwellness.com/",
+  "phone": "+27 67 389 4020",
+  "care_level": "Clinical program",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Wellness programmes from White River Manor for professionals dealing with burnout, stress and related concerns.",
+  "source_url": "https://wrmwellness.com/"
+ },
+ {
+  "name": "The Ark at White River",
+  "country": "South Africa",
+  "region": "Mpumalanga",
+  "city": "White River",
+  "website": "https://thearkwhiteriver.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential mental health treatment combining psychiatric and psychological care in a private 50-bed facility.",
+  "source_url": "https://thearkwhiteriver.com/"
+ },
+ {
+  "name": "White River Recovery",
+  "country": "South Africa",
+  "region": "Mpumalanga",
+  "city": "White River",
+  "website": "https://whiteriverrecovery.com/",
+  "phone": "+27 87 250 0967",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential drug and alcohol addiction treatment centre in White River.",
+  "source_url": "https://whiteriverrecovery.com/"
+ },
+ {
+  "name": "Pace Recovery",
+  "country": "South Africa",
+  "region": "Mpumalanga",
+  "city": "Nelspruit",
+  "website": "https://www.prcrecovery.co.za/",
+  "phone": "+27 61 657 0948",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Registered private rehab near Nelspruit providing trauma-informed care for substance and behavioural addiction.",
+  "source_url": "https://www.prcrecovery.co.za/"
+ }
+]

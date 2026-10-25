@@ -1,0 +1,2707 @@
+[
+ {
+  "name": "Oasis Premium Recovery",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://www.oasispremiumrecovery.com/",
+  "phone": "+34 633 398 916",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "One-to-one residential treatment in a private Sierra Blanca residence for addiction, dual diagnosis, eating disorders and mental health, with medically supported detox.",
+  "source_url": "https://www.oasispremiumrecovery.com/"
+ },
+ {
+  "name": "The Bridge Marbella",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://thebridgemarbella.com/",
+  "phone": "+34 711 052 974",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Boutique residential rehab in a private villa offering small-group and one-to-one therapy for addiction, anxiety, depression and eating disorders, with virtual aftercare.",
+  "source_url": "https://thebridgemarbella.com/"
+ },
+ {
+  "name": "Camino Recovery",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": null,
+  "website": "https://www.caminorecovery.com/",
+  "phone": "+34 711 018 708",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean",
+   "Mountains",
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Residential 30–90 day programmes near Málaga for substance and behavioural addictions, trauma and co-occurring conditions, using CBT, DBT, EMDR and equine therapy.",
+  "source_url": "https://www.caminorecovery.com/"
+ },
+ {
+  "name": "Ibiza Calm",
+  "country": "Spain",
+  "region": "Balearic Islands",
+  "city": "Ibiza",
+  "website": "https://www.ibizacalm.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English, Spanish",
+  "description": "Residential clinic for up to 12 clients on a rural estate in north Ibiza treating addiction, depression, trauma and burnout, with detox and TMS.",
+  "source_url": "https://www.ibizacalm.com/"
+ },
+ {
+  "name": "THE BALANCE Mallorca",
+  "country": "Spain",
+  "region": "Balearic Islands",
+  "city": "Mallorca",
+  "website": "https://thebalance.clinic/",
+  "phone": "+34 871 249 003",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Single-client private residential treatment on a countryside estate for addiction, eating disorders, trauma and mental health, including medical detox.",
+  "source_url": "https://thebalance.clinic/"
+ },
+ {
+  "name": "THE BALANCE Zurich",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Zurich",
+  "website": "https://thebalance.clinic/",
+  "phone": "+41 44 500 5111",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Single-client residential treatment in a private Zurich residence for addiction and mental health, with medical detox and psychiatric care.",
+  "source_url": "https://thebalance.clinic/"
+ },
+ {
+  "name": "Satori Recovery",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Manilva",
+  "website": "https://www.satorirecovery.com/",
+  "phone": "+34 611 865 171",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Residential addiction clinic on the Costa del Sol offering medical detox and 10- to 40-day programmes with individual and group therapy and aftercare.",
+  "source_url": "https://www.satorirecovery.com/"
+ },
+ {
+  "name": "Montgó Lifestyle",
+  "country": "Spain",
+  "region": "Valencian Community",
+  "city": null,
+  "website": "https://www.montgolifestyle.com/",
+  "phone": "+31 85 400 11 58",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "Dutch, English",
+  "description": "Private residential programme of 2–8 weeks in Spain for Dutch and English speakers with addiction, burnout, trauma, anxiety or eating disorders, with aftercare in the Netherlands.",
+  "source_url": "https://www.montgolifestyle.com/"
+ },
+ {
+  "name": "InnerLife Recovery",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://www.innerliferecovery.com/",
+  "phone": "+34 613 79 53 40",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Mountains",
+   "Ocean"
+  ],
+  "languages": "English, French, Italian, Spanish",
+  "description": "Residential rehab for up to eight clients on a 40-acre estate near Marbella combining 12-step, CBT and holistic therapies, with detox via licensed partners.",
+  "source_url": "https://www.innerliferecovery.com/"
+ },
+ {
+  "name": "The Kusnacht Practice",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Zurich",
+  "website": "https://www.kusnachtpractice.com/",
+  "phone": "+41 43 541 11 52",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English, German, French, Arabic",
+  "description": "Individual residential treatment in private villas around Lake Zurich with psychiatrists, physicians and nurses for addiction, depression, trauma and burnout.",
+  "source_url": "https://www.kusnachtpractice.com/"
+ },
+ {
+  "name": "Paracelsus Recovery",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Zurich",
+  "website": "https://www.paracelsus-recovery.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": null,
+  "description": "Single-client residential rehabilitation in Zurich combining psychiatry, functional medicine and complementary therapies for addiction, eating disorders and mental health conditions.",
+  "source_url": "https://www.paracelsus-recovery.com/"
+ },
+ {
+  "name": "CALDA Clinic",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Zurich",
+  "website": "https://www.caldaclinic.com/",
+  "phone": "+41 44 224 20 00",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English, German, Arabic, Russian, Spanish",
+  "description": "Private clinic treating one client at a time in residences above Lake Zurich, with 24-hour psychiatric, psychological and medical care.",
+  "source_url": "https://www.caldaclinic.com/"
+ },
+ {
+  "name": "Clinic Les Alpes",
+  "country": "Switzerland",
+  "region": "Vaud",
+  "city": null,
+  "website": "https://www.cliniclesalpes.com/",
+  "phone": "+41 58 360 55 00",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English, French, German",
+  "description": "Licensed inpatient clinic offering detoxification and individualised multidisciplinary treatment for substance and behavioural addictions, depression, anxiety and burnout.",
+  "source_url": "https://www.cliniclesalpes.com/"
+ },
+ {
+  "name": "NEOVIVA",
+  "country": "Switzerland",
+  "region": "Lake Lucerne",
+  "city": null,
+  "website": "https://www.neoviva.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": null,
+  "description": "Private hotel-based intensive treatment programmes by Lake Lucerne for addiction, dual diagnosis, anxiety, depression and trauma, including rTMS and aftercare.",
+  "source_url": "https://www.neoviva.com/"
+ },
+ {
+  "name": "Clinique La Métairie",
+  "country": "Switzerland",
+  "region": "Vaud",
+  "city": "Nyon",
+  "website": "https://www.lametairie.ch/",
+  "phone": "+41 22 363 20 20",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French, English",
+  "description": "Private psychiatric clinic in Nyon providing inpatient and outpatient psychiatric and psychotherapy care, including a dependence programme.",
+  "source_url": "https://www.lametairie.ch/"
+ },
+ {
+  "name": "Rutland Centre",
+  "country": "Ireland",
+  "region": "Dublin",
+  "city": "Dublin",
+  "website": "https://rutlandcentre.ie/",
+  "phone": "01 494 6358",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Charity addiction treatment centre offering residential and outpatient programmes, medical detox, continuing care and family support for substance and behavioural addictions.",
+  "source_url": "https://rutlandcentre.ie/"
+ },
+ {
+  "name": "Cuan Mhuire Athy",
+  "country": "Ireland",
+  "region": "Co. Kildare",
+  "city": "Athy",
+  "website": "https://www.cuanmhuire.ie/",
+  "phone": "+353 59 86 31090",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Voluntary residential abstinence-based programmes of 12 weeks for alcohol and gambling and 20 weeks for drugs, with continuing care and family support.",
+  "source_url": "https://www.cuanmhuire.ie/"
+ },
+ {
+  "name": "Cuan Mhuire Coolarne",
+  "country": "Ireland",
+  "region": "Co. Galway",
+  "city": "Coolarne",
+  "website": "https://www.cuanmhuire.ie/",
+  "phone": "+353 91 797102",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Cuan Mhuire residential centre providing abstinence-based treatment programmes for alcohol, drug and gambling addiction.",
+  "source_url": "https://www.cuanmhuire.ie/"
+ },
+ {
+  "name": "Cuan Mhuire Bruree",
+  "country": "Ireland",
+  "region": "Co. Limerick",
+  "city": "Bruree",
+  "website": "https://www.cuanmhuire.ie/",
+  "phone": "+353 63 90555",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Cuan Mhuire residential centre providing abstinence-based treatment programmes for alcohol, drug and gambling addiction.",
+  "source_url": "https://www.cuanmhuire.ie/"
+ },
+ {
+  "name": "Cuan Mhuire Farnanes",
+  "country": "Ireland",
+  "region": "Co. Cork",
+  "city": "Farnanes",
+  "website": "https://www.cuanmhuire.ie/",
+  "phone": "+353 21 7335994",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Cuan Mhuire residential centre providing abstinence-based treatment programmes for alcohol, drug and gambling addiction.",
+  "source_url": "https://www.cuanmhuire.ie/"
+ },
+ {
+  "name": "Aiséirí Cahir",
+  "country": "Ireland",
+  "region": "Co. Tipperary",
+  "city": "Cahir",
+  "website": "https://www.aiseiri.ie/",
+  "phone": "052 744 1166",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Adult residential detox and primary treatment for alcohol, drug and gambling addiction, with family programme and recovery support.",
+  "source_url": "https://www.aiseiri.ie/"
+ },
+ {
+  "name": "Aiséirí Wexford",
+  "country": "Ireland",
+  "region": "Co. Wexford",
+  "city": "Wexford",
+  "website": "https://www.aiseiri.ie/",
+  "phone": "052 744 1166",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Adult residential primary treatment for alcohol, drug and gambling addiction run by Aiséirí.",
+  "source_url": "https://www.aiseiri.ie/"
+ },
+ {
+  "name": "Aiséirí Aislinn",
+  "country": "Ireland",
+  "region": "Co. Kilkenny",
+  "city": "Ballyragget",
+  "website": "https://www.aiseiri.ie/",
+  "phone": "052 744 1166",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential detox and primary treatment for young people aged 15–21 with alcohol, drug or gambling addiction.",
+  "source_url": "https://www.aiseiri.ie/"
+ },
+ {
+  "name": "Smarmore Castle Private Clinic",
+  "country": "Ireland",
+  "region": "Co. Louth",
+  "city": "Ardee",
+  "website": "https://www.smarmorecastle.ie/",
+  "phone": "+353 41 986 5080",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private residential clinic on a rural estate offering medical detox, psychiatric input, 12-step and CBT-based therapy for drug, alcohol and behavioural addictions.",
+  "source_url": "https://www.smarmorecastle.ie/"
+ },
+ {
+  "name": "Bushypark Addiction Treatment Centre",
+  "country": "Ireland",
+  "region": "Co. Clare",
+  "city": "Ennis",
+  "website": "https://www.bushypark.ie/",
+  "phone": "065 684 0944",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "28-day residential programme plus community-based sessions, family programme and two years of continuing care for alcohol, drug and gambling problems.",
+  "source_url": "https://www.bushypark.ie/"
+ },
+ {
+  "name": "White Oaks Centre",
+  "country": "Ireland",
+  "region": "Co. Donegal",
+  "city": "Muff",
+  "website": "https://www.whiteoakscentre.com/",
+  "phone": "+353 74 9384400",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential 12-step based addiction treatment on a 35-acre countryside site for alcohol, drug and gambling dependency, with family support and continuing care.",
+  "source_url": "https://www.whiteoakscentre.com/"
+ },
+ {
+  "name": "Tabor Lodge",
+  "country": "Ireland",
+  "region": "Co. Cork",
+  "city": "Belgooly",
+  "website": "https://www.taborgroup.ie/",
+  "phone": "021 488 7110",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential primary treatment programme of 28–42 days for adults with alcohol, drug or gambling addiction, with family and continuing care programmes.",
+  "source_url": "https://www.taborgroup.ie/"
+ },
+ {
+  "name": "Tabor Fellowship",
+  "country": "Ireland",
+  "region": "Co. Cork",
+  "city": "Cork",
+  "website": "https://www.taborgroup.ie/",
+  "phone": "021 488 7110",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Tabor Group residential centre offering a 12-week integrated recovery programme for adults with more complex addiction needs.",
+  "source_url": "https://www.taborgroup.ie/"
+ },
+ {
+  "name": "Hope House",
+  "country": "Ireland",
+  "region": "Co. Mayo",
+  "city": "Foxford",
+  "website": "https://www.hopehouse.ie/",
+  "phone": "094 9256888",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Four-week residential addiction treatment programme with two years of continuing care and a family programme, beside the River Moy.",
+  "source_url": "https://www.hopehouse.ie/"
+ },
+ {
+  "name": "Coolmine Therapeutic Community",
+  "country": "Ireland",
+  "region": "Dublin",
+  "city": "Dublin",
+  "website": "https://www.coolmine.ie/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Drug and alcohol treatment charity providing community, day and residential therapeutic community services, including Ashleigh House for mothers with children.",
+  "source_url": "https://www.coolmine.ie/"
+ },
+ {
+  "name": "St Patrick's University Hospital",
+  "country": "Ireland",
+  "region": "Dublin",
+  "city": "Dublin",
+  "website": "https://www.stpatricks.ie/",
+  "phone": "01 249 3200",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Independent mental health hospital providing inpatient, day and outpatient care for depression, anxiety, bipolar disorder, eating disorders, addiction and dual diagnosis.",
+  "source_url": "https://www.stpatricks.ie/"
+ },
+ {
+  "name": "VillaRamadas",
+  "country": "Portugal",
+  "region": "Leiria District",
+  "city": null,
+  "website": "https://www.villaramadas.com/",
+  "phone": "+351 262 598 028",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": "Portuguese, Spanish, Dutch, English",
+  "description": "International residential treatment centre with personalised plans for alcohol and drug dependence, eating disorders, anxiety, depression, trauma and behavioural addictions.",
+  "source_url": "https://www.villaramadas.com/"
+ },
+ {
+  "name": "Vale de Moses",
+  "country": "Portugal",
+  "region": "Castelo Branco District",
+  "city": "Oleiros",
+  "website": "https://www.valedemoses.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains",
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Remote yoga retreat in forested mountain valleys offering daily yoga, somatic retreats, Traditional Chinese Medicine treatments, forest bathing and vegetarian meals.",
+  "source_url": "https://www.valedemoses.com/"
+ },
+ {
+  "name": "Shanti-Som Wellbeing Retreat Marbella",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Monda",
+  "website": "https://www.shantisom.com/",
+  "phone": "+34 952 864 455",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains",
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Adults-only wellness retreat in the Sierra de las Nieves hills offering yoga, detox, relaxation, sleep and healing programmes with meals and spa treatments.",
+  "source_url": "https://www.shantisom.com/"
+ },
+ {
+  "name": "Shanti-Som Wellbeing Retreat Algarve",
+  "country": "Portugal",
+  "region": "Algarve",
+  "city": "Moncarapacho",
+  "website": "https://www.shantisom.com/",
+  "phone": "+351 308 800 554",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Wellness retreat in a restored farmhouse in the eastern Algarve, opening February 2027, with yoga, detox and a burnout and nervous system recovery programme.",
+  "source_url": "https://www.shantisom.com/"
+ },
+ {
+  "name": "Suryalila Yoga Retreat Centre",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Villamartín",
+  "website": "https://www.suryalila.com/",
+  "phone": "+34 856 02 36 31",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Yoga and wellness retreat centre in the Andalusian hills offering group retreats, personal rest packages, yoga teacher trainings, massage and vegetarian meals.",
+  "source_url": "https://www.suryalila.com/"
+ },
+ {
+  "name": "SHA Wellness Clinic Spain",
+  "country": "Spain",
+  "region": "Valencian Community",
+  "city": null,
+  "website": "https://shawellness.com/",
+  "phone": "+34 865 614 147",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Medical wellness clinic with physicians and a clinical psychologist offering longevity, detox, stress-load and sleep programmes.",
+  "source_url": "https://shawellness.com/"
+ },
+ {
+  "name": "Quinta Carvalhas",
+  "country": "Portugal",
+  "region": "Santarém District",
+  "city": null,
+  "website": "https://www.quintacarvalhas.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Rural farm retreat about an hour from Lisbon hosting private and group retreats with yoga, meditation, massage, Reiki, horse interactions and vegetarian meals.",
+  "source_url": "https://www.quintacarvalhas.com/"
+ },
+ {
+  "name": "Privatklinik Hohenegg",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Meilen",
+  "website": "https://www.hohenegg.ch/",
+  "phone": "+41 44 925 12 12",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Private psychiatric clinic above Lake Zurich treating depression, burnout, anxiety, psychosomatic and trauma-related disorders, with specialist substance use care.",
+  "source_url": "https://www.hohenegg.ch/"
+ },
+ {
+  "name": "Clinica Holistica Engiadina",
+  "country": "Switzerland",
+  "region": "Graubünden",
+  "city": "Susch",
+  "website": "https://www.clinica-holistica.ch/",
+  "phone": "+41 81 300 20 30",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Specialist inpatient clinic for burnout and stress-related disorders in the Lower Engadine, also treating depression, anxiety and psychosomatic conditions.",
+  "source_url": "https://www.clinica-holistica.ch/"
+ },
+ {
+  "name": "Forel Klinik",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Ellikon an der Thur",
+  "website": "https://www.forel-klinik.ch/",
+  "phone": "+41 52 369 11 11",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Clinic for alcohol and medication dependence offering inpatient detoxification and rehabilitation, plus a day clinic and outpatient service in Zurich.",
+  "source_url": "https://www.forel-klinik.ch/"
+ },
+ {
+  "name": "Klinik Südhang",
+  "country": "Switzerland",
+  "region": "Bern",
+  "city": "Kirchlindach",
+  "website": "https://www.suedhang.ch/",
+  "phone": "+41 31 828 14 14",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Specialised addiction clinic offering inpatient detox and rehabilitation, day clinic and outpatient treatment across several Bern-area locations.",
+  "source_url": "https://www.suedhang.ch/"
+ },
+ {
+  "name": "Klinik Schützen Rheinfelden",
+  "country": "Switzerland",
+  "region": "Aargau",
+  "city": "Rheinfelden",
+  "website": "https://www.klinikschuetzen.ch/",
+  "phone": "061 836 26 26",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "German",
+  "description": "Private clinic for psychosomatics, psychiatry and psychotherapy in historic hotels, with inpatient, day clinic and outpatient care for burnout, depression and eating disorders.",
+  "source_url": "https://www.klinikschuetzen.ch/"
+ },
+ {
+  "name": "Privatklinik Wyss",
+  "country": "Switzerland",
+  "region": "Bern",
+  "city": "Münchenbuchsee",
+  "website": "https://www.privatklinik-wyss.ch/",
+  "phone": "031 868 33 33",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Family-run private psychiatric clinic offering inpatient, day-clinic and outpatient psychotherapy, crisis intervention and acute treatment.",
+  "source_url": "https://www.privatklinik-wyss.ch/"
+ },
+ {
+  "name": "Sanatorium Kilchberg",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Kilchberg",
+  "website": "https://www.sanatorium-kilchberg.ch/",
+  "phone": "+41 44 716 42 42",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private psychiatric clinic on Lake Zurich offering inpatient and outpatient psychiatry, psychosomatic care, geriatric psychiatry and a burnout programme.",
+  "source_url": "https://www.sanatorium-kilchberg.ch/"
+ },
+ {
+  "name": "Klinik Meissenberg",
+  "country": "Switzerland",
+  "region": "Zug",
+  "city": "Zug",
+  "website": "https://www.meissenberg.ch/",
+  "phone": "+41 41 726 57 57",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Psychiatric and psychotherapeutic clinic exclusively for women, treating depression, burnout, anxiety, stress and eating disorders on inpatient and outpatient basis.",
+  "source_url": "https://www.meissenberg.ch/"
+ },
+ {
+  "name": "Privatklinik Aadorf",
+  "country": "Switzerland",
+  "region": "Thurgau",
+  "city": "Aadorf",
+  "website": "https://www.klinik-aadorf.ch/",
+  "phone": "+41 52 368 88 88",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Eating disorders",
+   "Anxiety & depression",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Physician-led private clinic providing inpatient and outpatient psychotherapy for eating disorders, depression, anxiety and burnout.",
+  "source_url": "https://www.klinik-aadorf.ch/"
+ },
+ {
+  "name": "Klinik Selhofen",
+  "country": "Switzerland",
+  "region": "Bern",
+  "city": "Burgdorf",
+  "website": "https://www.selhofen.ch/",
+  "phone": "034 420 41 41",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Specialised addiction clinic offering inpatient, partial inpatient and outpatient treatment in Burgdorf, Bern and Biel.",
+  "source_url": "https://www.selhofen.ch/"
+ },
+ {
+  "name": "Klinik Sonnenhalde",
+  "country": "Switzerland",
+  "region": "Basel-Stadt",
+  "city": "Riehen",
+  "website": "https://www.sonnenhalde.ch/",
+  "phone": "+41 61 645 46 46",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Psychiatric clinic with inpatient, day-clinic and consultation services in Riehen, Basel and Reinach for depression, burnout, anxiety, eating disorders and dependence.",
+  "source_url": "https://www.sonnenhalde.ch/"
+ },
+ {
+  "name": "Klinik Wysshölzli",
+  "country": "Switzerland",
+  "region": "Bern",
+  "city": "Herzogenbuchsee",
+  "website": "https://www.wysshoelzli.ch/",
+  "phone": "062 510 58 00",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Specialist clinic for women offering inpatient and outpatient treatment of alcohol, medication and other addictions and eating disorders.",
+  "source_url": "https://www.wysshoelzli.ch/"
+ },
+ {
+  "name": "Clienia Littenheid",
+  "country": "Switzerland",
+  "region": "Thurgau",
+  "city": "Littenheid",
+  "website": "https://www.clienia.ch/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Private psychiatric inpatient clinic for children, adolescents, adults and seniors covering the full range of mental illnesses.",
+  "source_url": "http://www.clienia.ch/de/"
+ },
+ {
+  "name": "Clienia Schlössli",
+  "country": "Switzerland",
+  "region": "Zurich",
+  "city": "Oetwil am See",
+  "website": "https://www.clienia.ch/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private psychiatric inpatient clinic for all ages treating depression, anxiety, PTSD, eating disorders, addiction and other mental illnesses.",
+  "source_url": "http://www.clienia.ch/de/"
+ },
+ {
+  "name": "Clinique Belmont",
+  "country": "Switzerland",
+  "region": "Geneva",
+  "city": "Geneva",
+  "website": "https://www.cliniquebelmont.ch/",
+  "phone": "+41 22 735 78 11",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "French",
+  "description": "Geneva clinic with psychiatrists, psychologists and nurses treating alcohol, drug and medication dependence, eating disorders and behavioural addictions.",
+  "source_url": "https://www.cliniquebelmont.ch/"
+ },
+ {
+  "name": "Oberwaid",
+  "country": "Switzerland",
+  "region": "St. Gallen",
+  "city": "St. Gallen",
+  "website": "https://www.oberwaid.ch/",
+  "phone": "+41 71 282 0000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Hotel-clinic with psychosomatic, cardiology and orthopaedic rehabilitation, burnout-prevention cures and sleep and psyche programmes.",
+  "source_url": "https://www.oberwaid.ch/"
+ },
+ {
+  "name": "ITA Salud Mental",
+  "country": "Spain",
+  "region": null,
+  "city": null,
+  "website": "https://www.itasaludmental.com/",
+  "phone": "900 500 535",
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders",
+   "Anxiety & depression",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "Spanish",
+  "description": "Network of mental health centres across Spain offering 24-hour residential treatment, day hospitals and outpatient care for eating disorders, addiction, dual pathology and emotional disorders.",
+  "source_url": "https://www.itasaludmental.com/"
+ },
+ {
+  "name": "Clínicas CITA",
+  "country": "Spain",
+  "region": "Catalonia",
+  "city": "Dosrius",
+  "website": "https://www.clinicascita.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": null,
+  "description": "Addiction and dual pathology clinic offering detoxification, residential and outpatient treatment with daily psychiatric care, family support and follow-up.",
+  "source_url": "https://www.clinicascita.com/"
+ },
+ {
+  "name": "Mas Ferriol",
+  "country": "Spain",
+  "region": "Catalonia",
+  "city": "Sant Miquel de Campmajor",
+  "website": "https://www.masferriol.com/",
+  "phone": "872 21 39 70",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Spanish",
+  "description": "Seven-bed medical-psychological residential centre in a restored Girona farmhouse treating addiction, depression, anxiety and dual pathology, with medically managed detox.",
+  "source_url": "https://www.masferriol.com/"
+ },
+ {
+  "name": "Instituto Castelao",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Málaga",
+  "website": "https://www.institutocastelao.com/",
+  "phone": "900 505 100",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Spanish",
+  "description": "Private addiction recovery provider with centres in Málaga, Murcia, A Coruña, Almería and elsewhere offering detoxification and multidisciplinary treatment for alcohol and drug dependence.",
+  "source_url": "https://www.institutocastelao.com/"
+ },
+ {
+  "name": "Llaurant La Llum",
+  "country": "Spain",
+  "region": "Valencian Community",
+  "city": "Picassent",
+  "website": "https://www.llaurantlallum.com/",
+  "phone": "961 232 870",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Spanish",
+  "description": "Accredited private addiction centre with a rural residential therapeutic community and outpatient care in Valencia, covering drugs, alcohol, chemsex, gambling and dual pathology.",
+  "source_url": "https://www.llaurantlallum.com/"
+ },
+ {
+  "name": "Oberberg Fachklinik Rhein-Jura",
+  "country": "Germany",
+  "region": "Baden-Württemberg",
+  "city": "Bad Säckingen",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "07761 - 9174007",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Köln Herrig",
+  "country": "Germany",
+  "region": "North Rhine-Westphalia",
+  "city": "Erftstadt",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "02235 - 4739024",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Bad Tölz",
+  "country": "Germany",
+  "region": "Bavaria",
+  "city": "Bad Tölz",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "08041 - 4353010",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Berlin Brandenburg",
+  "country": "Germany",
+  "region": "Brandenburg",
+  "city": "Wendisch Rietz",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "033679 - 134112",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Düsseldorf Kaarst",
+  "country": "Germany",
+  "region": "North Rhine-Westphalia",
+  "city": "Kaarst",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "02131 - 5379064",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Potsdam",
+  "country": "Germany",
+  "region": "Brandenburg",
+  "city": "Potsdam",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "0331 - 96803124",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Scheidegg im Allgäu",
+  "country": "Germany",
+  "region": "Bavaria",
+  "city": "Scheidegg",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "08381 - 8924002",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Schwarzwald",
+  "country": "Germany",
+  "region": "Baden-Württemberg",
+  "city": "Hornberg",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "07833 - 58995180",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Weserbergland",
+  "country": "Germany",
+  "region": "North Rhine-Westphalia",
+  "city": "Extertal-Laßbruch",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "05754 - 7883964",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Parkklinik Wiesbaden Schlangenbad",
+  "country": "Germany",
+  "region": "Hesse",
+  "city": "Schlangenbad",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "06129 - 1834002",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Jägerwinkel am Tegernsee",
+  "country": "Germany",
+  "region": "Bavaria",
+  "city": "Bad Wiessee",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "08022 - 9984004",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Fachklinik Friedenweiler",
+  "country": "Germany",
+  "region": "Baden-Württemberg",
+  "city": "Friedenweiler",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "07654 - 6714000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Oberberg Klinik Windach",
+  "country": "Germany",
+  "region": "Bavaria",
+  "city": "Windach",
+  "website": "https://www.oberbergkliniken.de/",
+  "phone": "08193 - 3014014",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Private Oberberg specialist clinic for psychiatry, psychosomatics and psychotherapy treating depression, burnout, trauma, anxiety and alcohol dependence on an inpatient basis.",
+  "source_url": "https://www.oberbergkliniken.de/"
+ },
+ {
+  "name": "Clínica López Ibor",
+  "country": "Spain",
+  "region": "Madrid",
+  "city": "Madrid",
+  "website": "https://www.lopezibor.com/",
+  "phone": "+34 913 162 740",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Psychiatric clinic in Madrid with inpatient hospitalisation, day hospital, outpatient consultations and 24-hour emergency care for addiction, mood, eating and other disorders.",
+  "source_url": "https://www.lopezibor.com/"
+ },
+ {
+  "name": "Max Grundig Klinik",
+  "country": "Germany",
+  "region": "Baden-Württemberg",
+  "city": "Bühl",
+  "website": "https://www.max-grundig-klinik.de/",
+  "phone": "07226 / 54 - 0",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Private clinic on the Black Forest high road with a psychosomatic department treating depression, anxiety and burnout, plus stress consultations and biofeedback.",
+  "source_url": "https://www.max-grundig-klinik.de/"
+ },
+ {
+  "name": "Anton Proksch Institut",
+  "country": "Austria",
+  "region": "Vienna",
+  "city": "Vienna",
+  "website": "https://www.api.or.at/",
+  "phone": "+43 1 880 10",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "German",
+  "description": "Addiction treatment institute offering inpatient, day-clinic and outpatient treatment for alcohol, medication, drug, nicotine and behavioural addictions and comorbidity.",
+  "source_url": "https://www.api.or.at/"
+ },
+ {
+  "name": "Grüner Kreis",
+  "country": "Austria",
+  "region": "Lower Austria",
+  "city": null,
+  "website": "https://www.gruenerkreis.at/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German",
+  "description": "Non-profit addiction provider offering inpatient detox, short- and long-term therapy in therapeutic communities, and long-term supported care.",
+  "source_url": "https://www.gruenerkreis.at/"
+ },
+ {
+  "name": "Heritage Counseling Clinic",
+  "country": "Portugal",
+  "region": "Lisbon District",
+  "city": "Sintra",
+  "website": "https://heritagecounseling.pt/",
+  "phone": "+351 210 145 575",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English, French, Portuguese",
+  "description": "Residential addiction treatment clinic near Sintra with a multidisciplinary programme, CBT, family programme and complementary therapies for drug, alcohol and behavioural dependencies.",
+  "source_url": "https://heritagecounseling.pt/"
+ },
+ {
+  "name": "Doze Passos",
+  "country": "Portugal",
+  "region": "Algarve",
+  "city": null,
+  "website": "https://dozepassos.pt/",
+  "phone": "085 - 500 12 12",
+  "care_level": "Clinical program",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "Dutch",
+  "description": "Four-week intensive residential programme in an Algarve villa for Dutch clients with burnout, stress, depression or substance problems, using CBT and ACT with aftercare in Naarden.",
+  "source_url": "https://dozepassos.pt/"
+ },
+ {
+  "name": "Algarve Wellness",
+  "country": "Portugal",
+  "region": "Algarve",
+  "city": null,
+  "website": "https://algarve-wellness.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Personalised residential recovery programmes, including a 30-day core programme, for substance use, depression, anxiety, trauma and executive burnout.",
+  "source_url": "https://algarve-wellness.org/"
+ },
+ {
+  "name": "Viver Mais",
+  "country": "Portugal",
+  "region": "Braga District",
+  "city": "Braga",
+  "website": "https://vivermaisbraga.pt/",
+  "phone": "+351 253 274 940",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese, English",
+  "description": "Therapeutic community offering residential treatment of at least 120 days for alcohol, drug and gambling dependence, with a reintegration phase in Porto.",
+  "source_url": "https://vivermaisbraga.pt/"
+ },
+ {
+  "name": "Vida Innova",
+  "country": "Portugal",
+  "region": "Leiria District",
+  "city": "Alcobaça",
+  "website": "https://vidainnova.com/",
+  "phone": "+351 912 344 196",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese, English",
+  "description": "Residential programme of 6–8 weeks with psychologists, 12-step work, CBT and ACT for substance and behavioural dependencies and associated anxiety, depression and grief.",
+  "source_url": "https://vidainnova.com/"
+ },
+ {
+  "name": "Foco Saúde Vida GO",
+  "country": "Portugal",
+  "region": "Vila Real District",
+  "city": "Vidago",
+  "website": "https://www.focosaudereabilitacao.com/",
+  "phone": "+351 965 599 445",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Hot springs"
+  ],
+  "languages": "Portuguese, English, French",
+  "description": "Therapeutic community in Vidago offering detoxification and intensive personalised therapy for chemical dependencies and alcoholism.",
+  "source_url": "https://www.focosaudereabilitacao.com/"
+ },
+ {
+  "name": "Clínica Horizonte",
+  "country": "Portugal",
+  "region": "Lisbon District",
+  "city": "Sintra",
+  "website": "https://horizonterecover.pt/",
+  "phone": "+351 210 537 970",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "Portuguese, English, French",
+  "description": "Certified residential treatment clinic with a multidisciplinary team treating drug addiction, alcoholism, depression and eating disorders, with post-treatment follow-up.",
+  "source_url": "https://horizonterecover.pt/"
+ },
+ {
+  "name": "Dianova Portugal – Quinta das Lapas",
+  "country": "Portugal",
+  "region": "Lisbon District",
+  "city": "Torres Vedras",
+  "website": "https://www.dianova.pt/",
+  "phone": "+351 261 312 300",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Portuguese",
+  "description": "Non-profit association providing dependency treatment, psychosocial support and socio-professional reintegration for drug, alcohol and internet dependence.",
+  "source_url": "https://www.dianova.pt/"
+ },
+ {
+  "name": "Hacienda Paradiso",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": null,
+  "website": "https://haciendaparadiso.com/",
+  "phone": "+34 647 968 967",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English, Spanish",
+  "description": "Private eco rehab in a natural park in Málaga province offering medically supervised detox, daily individual and group therapy, dual-diagnosis care and aftercare.",
+  "source_url": "https://haciendaparadiso.com/"
+ },
+ {
+  "name": "MOMENTO Centro Terapéutico",
+  "country": "Spain",
+  "region": "Madrid",
+  "city": "Madrid",
+  "website": "https://adiccionesmadrid.es/",
+  "phone": "608 78 34 25",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Spanish",
+  "description": "Madrid addiction treatment centre offering detoxification, residential and outpatient treatment, family therapy and aftercare for substance and behavioural addictions.",
+  "source_url": "https://adiccionesmadrid.es/"
+ },
+ {
+  "name": "Phoenix Programmes",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://phoenixprogrammes.com/",
+  "phone": "+34 691 881 422",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": "English, French, German, Spanish",
+  "description": "Individual residential addiction treatment in Marbella with medical detox, psychiatric therapy, 12-step and CBT-based models, and ongoing aftercare.",
+  "source_url": "https://phoenixprogrammes.com/"
+ },
+ {
+  "name": "New Life Marbella",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://newlife.rehab/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Private rehabilitation and burnout clinic offering personalised clinical programmes, including a Prestige Program at a Marbella hotel, for addiction, burnout and mental health.",
+  "source_url": "https://newlife.rehab/"
+ },
+ {
+  "name": "Istana Ibiza",
+  "country": "Spain",
+  "region": "Balearic Islands",
+  "city": "Ibiza",
+  "website": "https://istanaprivate.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": null,
+  "description": "Bespoke one-client treatment in a private Ibiza villa with clinical assessment, psychotherapy, detox and aftercare for addiction, trauma, burnout and mental health.",
+  "source_url": "https://istanaprivate.com/"
+ },
+ {
+  "name": "The Edge Rehab Crete",
+  "country": "Greece",
+  "region": "Crete",
+  "city": "Houdetsi",
+  "website": "https://www.theedgerehab.com/",
+  "phone": "+30 800 999 9120",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Residential addiction treatment for men in the Cretan mountains with medically supervised detox, 4–12 week programmes and treatment of co-occurring mental health conditions.",
+  "source_url": "https://www.theedgerehab.com/"
+ },
+ {
+  "name": "Castle Craig Hospital",
+  "country": "Scotland",
+  "region": "Scottish Borders",
+  "city": "West Linton",
+  "website": "https://www.castlecraig.co.uk/",
+  "phone": "01721 546 263",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private residential addiction hospital on a 50-acre estate offering psychiatrist-led medical detox and 28- to 90-day rehab programmes, including dual diagnosis care.",
+  "source_url": "https://www.castlecraig.co.uk/"
+ },
+ {
+  "name": "Abbeycare Scotland",
+  "country": "Scotland",
+  "region": "Renfrewshire",
+  "city": "Erskine",
+  "website": "https://www.abbeycarefoundation.com/rehab-scotland/",
+  "phone": "01603 513 091",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehab near Glasgow offering clinically managed detox within a typical 28-day inpatient programme for adults.",
+  "source_url": "https://www.abbeycarefoundation.com/rehab-scotland/"
+ },
+ {
+  "name": "Calderglen House",
+  "country": "Scotland",
+  "region": "South Lanarkshire",
+  "city": "Blantyre",
+  "website": "https://calderglenhouse.co.uk/",
+  "phone": "01698 823 624",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Abstinence-based residential alcohol and drug rehab with 24 en-suite bedrooms and a 12-step programme.",
+  "source_url": "https://calderglenhouse.co.uk/"
+ },
+ {
+  "name": "Teen Challenge Sunnybrae Men's Centre",
+  "country": "Scotland",
+  "region": "Aberdeenshire",
+  "city": "Fyvie",
+  "website": "https://tcns.org.uk/about-us/sunnybrae-mens-centre/",
+  "phone": "01651 891627",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Rural residential centre where men with life-controlling addictions complete a year-long Teen Challenge programme.",
+  "source_url": "https://tcns.org.uk/about-us/sunnybrae-mens-centre/"
+ },
+ {
+  "name": "Priory Hospital Glasgow",
+  "country": "Scotland",
+  "region": "Glasgow",
+  "city": "Glasgow",
+  "website": "https://www.priorygroup.com/locations/priory-hospital-glasgow",
+  "phone": "0141 636 6116",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private hospital offering medically assisted detox, a 28-day residential addiction programme, inpatient mental health care and outpatient therapy.",
+  "source_url": "https://www.priorygroup.com/locations/priory-hospital-glasgow"
+ },
+ {
+  "name": "U-center",
+  "country": "Netherlands",
+  "region": "Limburg",
+  "city": "Epen",
+  "website": "https://www.u-center.nl/",
+  "phone": "0800 – 222 444 6",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Dutch",
+  "description": "Residential mental health clinic in the South Limburg hills offering six-week intensive clinical admission and outpatient aftercare for depression, anxiety, trauma, personality problems and addiction.",
+  "source_url": "https://www.u-center.nl/"
+ },
+ {
+  "name": "Changes GGZ Weert",
+  "country": "Netherlands",
+  "region": "Limburg",
+  "city": "Weert",
+  "website": "https://changesggz.nl/locaties/weert/",
+  "phone": "088 242 6437",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": "Dutch",
+  "description": "Changes GGZ location offering detox, 24/7 clinical admission, day treatment and supported living for addiction, eating disorders and trauma.",
+  "source_url": "https://changesggz.nl/"
+ },
+ {
+  "name": "Changes GGZ Breda",
+  "country": "Netherlands",
+  "region": "North Brabant",
+  "city": "Breda",
+  "website": "https://changesggz.nl/",
+  "phone": "088 242 6437",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Trauma & PTSD"
+  ],
+  "setting": [],
+  "languages": "Dutch",
+  "description": "Changes GGZ location offering clinical admission, day treatment and individual therapy for addiction, eating disorders and trauma.",
+  "source_url": "https://changesggz.nl/"
+ },
+ {
+  "name": "Triora Verslavingszorg",
+  "country": "Netherlands",
+  "region": "South Holland",
+  "city": "The Hague",
+  "website": "https://www.triora.nl/",
+  "phone": "088 358 37 41",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Dutch",
+  "description": "Clinic for alcohol and drug addiction in The Hague and Rotterdam focused on long-term recovery through the Triora treatment model.",
+  "source_url": "https://www.triora.nl/"
+ },
+ {
+  "name": "Afkickkliniek Valkenburg",
+  "country": "Netherlands",
+  "region": "Limburg",
+  "city": "Valkenburg",
+  "website": "https://afkickkliniek.nu/",
+  "phone": "085-4007585",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Dutch",
+  "description": "Detox clinic providing 24/7 medically supervised withdrawal from alcohol, drugs and medication, combined with motivational interviewing and referral to follow-up treatment.",
+  "source_url": "https://afkickkliniek.nu/"
+ },
+ {
+  "name": "SolutionS Afkickkliniek Voorthuizen",
+  "country": "Netherlands",
+  "region": "Gelderland",
+  "city": "Voorthuizen",
+  "website": "https://solutions-center.nl/",
+  "phone": "0342 – 42 70 60",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Dutch",
+  "description": "Addiction clinic offering detox, clinical admission based on the Minnesota Model, intensive day treatment, outpatient care and family programmes at multiple Dutch locations.",
+  "source_url": "https://solutions-center.nl/"
+ },
+ {
+  "name": "Jellinek",
+  "country": "Netherlands",
+  "region": "North Holland",
+  "city": "Amsterdam",
+  "website": "https://www.jellinek.nl/",
+  "phone": "088 505 1220",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Dutch",
+  "description": "Addiction care organisation within Arkin offering treatment for adults and youth, online self-help, prevention and drug testing for alcohol, drugs and gambling.",
+  "source_url": "https://www.jellinek.nl/"
+ },
+ {
+  "name": "Centro San Nicola",
+  "country": "Italy",
+  "region": "Marche",
+  "city": "Arcevia",
+  "website": "https://www.centrosannicola.com/",
+  "phone": "+39 0731 9142",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Italian",
+  "description": "Regionally accredited addiction recovery centre offering detox, short residential treatment, follow-up and family support for substance and behavioural addictions.",
+  "source_url": "https://www.centrosannicola.com/"
+ },
+ {
+  "name": "The Retreat in Italy",
+  "country": "Italy",
+  "region": "Marche",
+  "city": "Cagli",
+  "website": "https://theretreatinitaly.com/",
+  "phone": "+39 333 3230381",
+  "care_level": "Retreat",
+  "focus": [
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside",
+   "Mountains"
+  ],
+  "languages": "English, Italian",
+  "description": "Recovery retreat on a 63-hectare estate with one-to-one psychotherapy and coaching, workshops and sober holidays for addiction recovery, codependency, trauma and burnout; not a treatment centre.",
+  "source_url": "https://theretreatinitaly.com/"
+ },
+ {
+  "name": "Holina Village Cyprus",
+  "country": "Cyprus",
+  "region": "Famagusta District",
+  "city": "Achna",
+  "website": "https://holinacyprus.com/",
+  "phone": "+357 95 667869",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential therapeutic community on a working farm with adult and youth programmes using CBT, DBT, EMDR and 12-step work for dependency, trauma, anxiety and depression.",
+  "source_url": "https://holinacyprus.com/"
+ },
+ {
+  "name": "CALME Illiers-Combray",
+  "country": "France",
+  "region": "Centre-Val de Loire",
+  "city": "Illiers-Combray",
+  "website": "https://calme.fr/",
+  "phone": "+33 2 37 91 63 33",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "French",
+  "description": "Alcohol and addiction treatment centre in a former mill offering full inpatient stays, day hospital care and addiction and tobacco consultations.",
+  "source_url": "https://calme.fr/"
+ },
+ {
+  "name": "CALME Cabris",
+  "country": "France",
+  "region": "Provence-Alpes-Côte d'Azur",
+  "city": "Cabris",
+  "website": "https://calme.fr/",
+  "phone": "+33 4 93 40 69 99",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "French",
+  "description": "Alcohol and addiction treatment centre offering full inpatient stays, day hospital care and addiction consultations.",
+  "source_url": "https://calme.fr/"
+ },
+ {
+  "name": "Gylleby Behandlingshem",
+  "country": "Sweden",
+  "region": "Värmland",
+  "city": "Sunne",
+  "website": "https://nytida.se/verksamheter/gylleby-behandlingshem/",
+  "phone": "0565-102 30",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Swedish",
+  "description": "Residential treatment home with 38 places for adults with substance abuse, psychiatric illness or both, using CBT, relapse prevention and motivational interviewing.",
+  "source_url": "https://nytida.se/verksamheter/gylleby-behandlingshem/"
+ },
+ {
+  "name": "Stockholms beroendeklinik",
+  "country": "Sweden",
+  "region": "Stockholm",
+  "city": "Stockholm",
+  "website": "https://beroendekliniken.se/",
+  "phone": "08-525 18 232",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Swedish",
+  "description": "Private addiction clinic offering outpatient and online treatment, detoxification and aftercare for alcohol, drug, medication and behavioural addictions.",
+  "source_url": "https://beroendekliniken.se/"
+ },
+ {
+  "name": "Den Rooy Clinics",
+  "country": "Belgium",
+  "region": "Antwerp",
+  "city": "Meerle",
+  "website": "https://www.denrooyclinics.com/",
+  "phone": "+32 3 293 7998",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Dutch",
+  "description": "Private clinic on a 14-hectare estate offering detox, 21- and 28-day residential addiction programmes and six-week programmes for burnout and depression.",
+  "source_url": "https://www.denrooyclinics.com/nl/"
+ },
+ {
+  "name": "Salux Care Group",
+  "country": "Belgium",
+  "region": "Flemish Brabant",
+  "city": null,
+  "website": "https://www.salux.care/",
+  "phone": "+32 11 15 40 40",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Dutch",
+  "description": "Small residential clinic on a castle estate between Leuven and Hasselt with medically supervised detox and six-week programmes for depression, burnout, trauma, grief and substance use.",
+  "source_url": "https://www.salux.care/"
+ },
+ {
+  "name": "Brynawel Rehab",
+  "country": "Wales",
+  "region": "Rhondda Cynon Taf",
+  "city": "Llanharan",
+  "website": "https://www.brynawel.org/",
+  "phone": "01443 226 864",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential alcohol and drug rehab with on-site nursing-supported alcohol detox, 8–16 week programmes, a year of aftercare and family support.",
+  "source_url": "https://www.brynawel.org/"
+ },
+ {
+  "name": "Parkland Place Old Colwyn",
+  "country": "Wales",
+  "region": "Conwy",
+  "city": "Old Colwyn",
+  "website": "https://www.parklandplace.co.uk/",
+  "phone": "01492 203 421",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation centre for alcohol, drug and gambling addiction in North Wales.",
+  "source_url": "https://www.parklandplace.co.uk/"
+ },
+ {
+  "name": "Parkland Place Llandudno",
+  "country": "Wales",
+  "region": "Conwy",
+  "city": "Llandudno",
+  "website": "https://www.parklandplace.co.uk/",
+  "phone": "0300 777 2255",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Inpatient clinically led detox unit for alcohol and drug addiction in Llandudno.",
+  "source_url": "https://www.parklandplace.co.uk/"
+ },
+ {
+  "name": "Zeus Detox & Rehab",
+  "country": "Poland",
+  "region": "Masovian Voivodeship",
+  "city": "Łomianki Dolne",
+  "website": "https://zeusrehab.com/en/",
+  "phone": "+48 537 677 773",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Eating disorders",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Inpatient clinic near Warsaw with 24/7 medical and nursing care offering supervised detox and English-language therapy for addiction, eating disorders and dual diagnosis.",
+  "source_url": "https://zeusrehab.com/en/"
+ },
+ {
+  "name": "Verity Mountain",
+  "country": "Poland",
+  "region": "Lesser Poland Voivodeship",
+  "city": "Murzasichle",
+  "website": "https://veritymountain.com/",
+  "phone": "+44 203 918 1687",
+  "care_level": "Clinical program",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Small private residential therapeutic programme in the Polish mountains for behavioural change, with externally arranged detox and three months of aftercare.",
+  "source_url": "https://veritymountain.com/"
+ },
+ {
+  "name": "Terapia Nałęczów",
+  "country": "Poland",
+  "region": "Lublin Voivodeship",
+  "city": "Uniszowice",
+  "website": "https://terapianaleczow.pl/",
+  "phone": "536 288 288",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Polish",
+  "description": "Private rural residential addiction centre with 4–8 week programmes, detox as needed and psychiatric consultation for alcohol, drug and gambling addiction.",
+  "source_url": "https://terapianaleczow.pl/"
+ },
+ {
+  "name": "Odwróceni Clinic",
+  "country": "Poland",
+  "region": "Warmian-Masurian Voivodeship",
+  "city": "Kal",
+  "website": "https://odwroceni.com.pl/",
+  "phone": "+48 87 888 71 71",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "Polish",
+  "description": "Private mental health and addiction centre by a lakeshore offering supervised detox, residential therapy and family therapy for addictions, depression, anxiety and trauma.",
+  "source_url": "https://odwroceni.com.pl/"
+ },
+ {
+  "name": "Moodist Hospital",
+  "country": "Turkey",
+  "region": "Istanbul",
+  "city": "Istanbul",
+  "website": "https://moodisthospital.com/",
+  "phone": "+90 216 912 17 80",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Turkish, English",
+  "description": "Private psychiatric hospital with 75 inpatient beds, a licensed addiction centre (AMATEM), eating disorder treatment and TMS.",
+  "source_url": "https://moodisthospital.com/"
+ },
+ {
+  "name": "Schweizer Haus Hadersdorf",
+  "country": "Austria",
+  "region": "Vienna",
+  "city": "Vienna",
+  "website": "https://shh.at/",
+  "phone": "01 / 979 10 83",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "German",
+  "description": "Viennese addiction service offering short- to medium-term inpatient and outpatient therapy for drug and alcohol problems across several locations.",
+  "source_url": "https://shh.at/"
+ },
+ {
+  "name": "Burren Yoga and Meditation Retreat",
+  "country": "Ireland",
+  "region": "Co. Galway",
+  "city": "Kinvara",
+  "website": "https://www.burrenyoga.com/",
+  "phone": "+353 91 637 680",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside",
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Weekend and week-long yoga, meditation and wellness retreats in the Burren with guided walks, yoga therapy and vegetarian meals, aimed at stress relief.",
+  "source_url": "https://www.burrenyoga.com/"
+ },
+ {
+  "name": "Dzogchen Beara",
+  "country": "Ireland",
+  "region": "Co. Cork",
+  "city": "Allihies",
+  "website": "https://www.dzogchenbeara.org/",
+  "phone": "+353 27 73 032",
+  "care_level": "Retreat",
+  "focus": [
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Buddhist meditation and retreat centre offering onsite and online retreats and non-medical spiritual care, including support breaks and a grief programme.",
+  "source_url": "https://www.dzogchenbeara.org/"
+ },
+ {
+  "name": "Sea Recovery Centre",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Sotogrande",
+  "website": "https://thesearecovery.com/",
+  "phone": "+34 641 423173",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, Spanish, Swedish, German, Danish, Russian",
+  "description": "Private villa-based one-to-one recovery programmes near Marbella for addiction, dual diagnosis, trauma and burnout, with detox and medical support via licensed third parties.",
+  "source_url": "https://thesearecovery.com/"
+ },
+ {
+  "name": "Programa Victoria",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://www.programavictoria.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Spanish",
+  "description": "Addiction programme with a 10-day intensive residential retreat for up to eight people in a Marbella hotel, followed by about a year of follow-up therapy.",
+  "source_url": "https://www.programavictoria.com/"
+ },
+ {
+  "name": "InHarmoni Rehab",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://www.inharmonirehab.com/",
+  "phone": "+34 658 656 011",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Alcohol & substance use",
+   "Eating disorders"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Mental health and addiction centre offering 14- and 28-day residential programmes with physician-supervised withdrawal, EMDR, CBT and ACT.",
+  "source_url": "https://www.inharmonirehab.com/"
+ },
+ {
+  "name": "Instituto S. João de Deus – Telhal",
+  "country": "Portugal",
+  "region": "Lisbon District",
+  "city": "Sintra",
+  "website": "https://www.isjd.pt/onde-estamos/instituto-s-joao-de-deus-telhal",
+  "phone": "+351 217 213 300",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Portuguese",
+  "description": "Hospitaller mental health unit providing psychiatric care, alcohol and addiction treatment with detox and clinical stabilisation, psychosocial rehabilitation and dementia care.",
+  "source_url": "https://www.isjd.pt/onde-estamos/instituto-s-joao-de-deus-telhal"
+ },
+ {
+  "name": "UPK Basel Private Clinic",
+  "country": "Switzerland",
+  "region": "Basel-Stadt",
+  "city": "Basel",
+  "website": "https://www.privatklinik.upk.ch/en/about-the-private-clinic",
+  "phone": "+41 61 325 52 08",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "German, English",
+  "description": "Private psychiatric inpatient clinic of the University Psychiatric Clinics Basel treating depression, burnout, psychoses, anxiety and dependency conditions, with an outpatient department.",
+  "source_url": "https://www.privatklinik.upk.ch/en/about-the-private-clinic"
+ },
+ {
+  "name": "Monte da Orada Retreat Center",
+  "country": "Portugal",
+  "region": "Alentejo",
+  "city": "Odemira",
+  "website": "https://www.orada.eu/",
+  "phone": "+351 918 82 57 44",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Retreat venue on 71 hectares of forest hosting facilitator-led yoga, meditation, breathwork and sound retreats, with rooms, meals and practice halls.",
+  "source_url": "https://www.orada.eu/"
+ },
+ {
+  "name": "Sandhi House",
+  "country": "Portugal",
+  "region": "Lisbon District",
+  "city": "Ericeira",
+  "website": "https://www.sandhihouse.com/",
+  "phone": "+351 913 220 899",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Five-room yoga guesthouse in Ericeira offering yoga classes, Ayurvedic consultations, massage and 3- to 7-day wellbeing getaways.",
+  "source_url": "https://www.sandhihouse.com/"
+ },
+ {
+  "name": "NEO Centrum",
+  "country": "Czech Republic",
+  "region": "Prague",
+  "city": "Prague",
+  "website": "https://www.neocentrum.cz/en/home-page/",
+  "phone": "+420 228 226 101",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Czech, English",
+  "description": "Mental health and addiction clinic in Prague offering residential stays with medical therapy and outpatient therapy, psychiatry and counselling for substance and behavioural addictions.",
+  "source_url": "https://www.neocentrum.cz/en/home-page/"
+ },
+ {
+  "name": "Floralund Misbrugscenter",
+  "country": "Denmark",
+  "region": "Capital Region",
+  "city": "Fredensborg",
+  "website": "https://www.floralund.dk/",
+  "phone": "48 40 40 60",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Residential addiction centre for adults offering detox, alcohol, drug, medication and gambling treatment with psychiatrist follow-up, plus outpatient and day treatment.",
+  "source_url": "https://www.floralund.dk/"
+ },
+ {
+  "name": "Skovhus Privathospital",
+  "country": "Denmark",
+  "region": "Region Zealand",
+  "city": "Nykøbing Sjælland",
+  "website": "https://www.skovhusprivathospital.dk/",
+  "phone": "+45 5996 1590",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Private psychiatric hospital offering outpatient and inpatient psychiatric assessment and treatment for adults and young people, including ADHD, anxiety and OCD.",
+  "source_url": "https://www.skovhusprivathospital.dk/"
+ },
+ {
+  "name": "Fekjær psykiatriske senter",
+  "country": "Norway",
+  "region": "Innlandet",
+  "city": "Hedalen",
+  "website": "https://www.fekjaer.no/",
+  "phone": "+47 61 34 88 00",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health",
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains",
+   "Countryside"
+  ],
+  "languages": "Norwegian",
+  "description": "Psychiatric centre in Valdres providing inpatient, outpatient and transitional housing services for moderate and serious mental disorders and specialised addiction treatment.",
+  "source_url": "https://www.fekjaer.no/"
+ },
+ {
+  "name": "Vendepunktet Rusklinikk",
+  "country": "Norway",
+  "region": "Viken",
+  "city": "Vestby",
+  "website": "https://vendepunktet.no/",
+  "phone": "90 99 81 11",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "Norwegian",
+  "description": "Private addiction clinic with residential stays from six weeks in Vestby and Dillingøy and an Oslo outpatient clinic, treating alcohol, medication and drug problems and burnout.",
+  "source_url": "https://vendepunktet.no/"
+ },
+ {
+  "name": "Behandlingscenter Tjele Langsødal",
+  "country": "Denmark",
+  "region": "Central Denmark Region",
+  "city": "Tjele",
+  "website": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/",
+  "phone": "70 20 40 80",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Short-term detox and primary residential treatment for alcohol and medication dependence, with discharge programmes and aftercare.",
+  "source_url": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/"
+ },
+ {
+  "name": "Behandlingscenter Tjele Tågelund",
+  "country": "Denmark",
+  "region": "Region of Southern Denmark",
+  "city": "Egtved",
+  "website": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/",
+  "phone": "70 20 40 80",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Primary residential treatment for alcohol, hash and medication dependence, with discharge programmes and aftercare.",
+  "source_url": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/"
+ },
+ {
+  "name": "Behandlingscenter Tjele Søgården",
+  "country": "Denmark",
+  "region": "North Denmark Region",
+  "city": "Hobro",
+  "website": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/",
+  "phone": "70 20 40 80",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Specialised longer and complex detox for alcohol and medication dependence.",
+  "source_url": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/"
+ },
+ {
+  "name": "Behandlingscenter Tjele Vingehus",
+  "country": "Denmark",
+  "region": "Central Denmark Region",
+  "city": "Tjele",
+  "website": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/",
+  "phone": "70 20 40 80",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Primary and longer specialised residential treatment for alcohol, hash, medication and gambling addiction, with aftercare.",
+  "source_url": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/"
+ },
+ {
+  "name": "Behandlingscenter Tjele Orelund",
+  "country": "Denmark",
+  "region": "Region Zealand",
+  "city": "Mørkøv",
+  "website": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/",
+  "phone": "70 20 40 80",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Danish",
+  "description": "Short-term detox, primary treatment and aftercare for alcohol, hash, cocaine and medication dependence.",
+  "source_url": "https://www.tjele.com/om-tjele/tjeles-centre-i-danmark/"
+ },
+ {
+  "name": "CATCH Recovery Dublin",
+  "country": "Ireland",
+  "region": "Dublin",
+  "city": "Dublin",
+  "website": "https://www.catchrecovery.ie/",
+  "phone": "+353 1 270 7603",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Outpatient addiction service offering assessments, CBT and DBT counselling, group and family therapy, interventions and referrals to residential rehab.",
+  "source_url": "https://www.catchrecovery.ie/"
+ },
+ {
+  "name": "CATCH Recovery Edinburgh",
+  "country": "Scotland",
+  "region": "Edinburgh",
+  "city": "Edinburgh",
+  "website": "https://www.catchrecovery.com/locations/edinburgh/",
+  "phone": "020 3098 2503",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Outpatient addiction treatment, psychiatric assessment, counselling and recovery coaching in Edinburgh, with residential referrals to Castle Craig.",
+  "source_url": "https://www.catchrecovery.com/locations/edinburgh/"
+ },
+ {
+  "name": "Schön Klinik Roseneck",
+  "country": "Germany",
+  "region": "Bavaria",
+  "city": "Prien am Chiemsee",
+  "website": "https://www.schoen-klinik.de/roseneck",
+  "phone": "+49 8051 68-0",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Eating disorders",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "German",
+  "description": "Psychosomatic specialist clinic offering inpatient and day-clinic treatment for eating disorders, anxiety, depression, burnout, PTSD, OCD and prolonged grief.",
+  "source_url": "https://www.schoen-klinik.de/roseneck"
+ },
+ {
+  "name": "Buchinger Wilhelmi Lake Constance",
+  "country": "Germany",
+  "region": "Baden-Württemberg",
+  "city": "Überlingen",
+  "website": "https://www.buchinger-wilhelmi.com/en/",
+  "phone": "+49 7551 807-0",
+  "care_level": "Medically supervised",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "German, English",
+  "description": "Therapeutic fasting and integrative medicine clinic above Lake Constance with doctors and nurses, offering medically supervised fasting programmes, walks and yoga.",
+  "source_url": "https://www.buchinger-wilhelmi.com/en/"
+ },
+ {
+  "name": "Buchinger Wilhelmi Marbella",
+  "country": "Spain",
+  "region": "Andalusia",
+  "city": "Marbella",
+  "website": "https://www.buchinger-wilhelmi.com/en/",
+  "phone": "+34 952 76 43 00",
+  "care_level": "Medically supervised",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English, German, Spanish",
+  "description": "Therapeutic fasting clinic with doctors and nurses offering the medically supervised Buchinger fasting programme in residences with Mediterranean views.",
+  "source_url": "https://www.buchinger-wilhelmi.com/en/"
+ }
+]

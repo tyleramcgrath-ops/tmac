@@ -1,0 +1,4099 @@
+[
+ {
+  "name": "The Dawn Wellness Centre",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Hang Dong",
+  "website": "https://thedawnrehab.com/",
+  "phone": "+66 52 135 123",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential addiction and mental health treatment centre outside Chiang Mai combining medical detox, psychotherapy and wellness activities.",
+  "source_url": "https://thedawnrehab.com/"
+ },
+ {
+  "name": "Hope Rehab Center Thailand",
+  "country": "Thailand",
+  "region": "Chonburi",
+  "city": "Sriracha",
+  "website": "https://www.hope-rehab-center-thailand.com/",
+  "phone": "+66 99 502 1553",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Licensed residential drug and alcohol rehab near Sriracha offering detox support, counselling, group therapy and fitness-based recovery programmes.",
+  "source_url": "https://www.hope-rehab-center-thailand.com/"
+ },
+ {
+  "name": "Jintara Rehab",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Chiang Mai",
+  "website": "https://jintararehab.com/",
+  "phone": "+66 94 095 4142",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Boutique residential rehab for up to 10 clients with on-site medical detox, 24-hour nursing and therapy for addiction and mental health.",
+  "source_url": "https://jintararehab.com/"
+ },
+ {
+  "name": "The Warmth Rehab",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Mae Rim",
+  "website": "https://thewarmthrehab.com/",
+  "phone": "+66 82 492 4845",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Small private residential centre in Mae Rim offering medical detox, psychotherapy and trauma care for addiction and mental health.",
+  "source_url": "https://thewarmthrehab.com/"
+ },
+ {
+  "name": "One Step Rehab",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Mae Rim",
+  "website": "https://onesteprehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehab in Mae Rim combining behavioural therapies with structured fitness and nutrition programmes.",
+  "source_url": "https://onesteprehab.com/"
+ },
+ {
+  "name": "The Cabin Chiang Mai",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Saraphi",
+  "website": "https://www.thecabinchiangmai.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Riverside residential addiction treatment centre near Chiang Mai offering a multidisciplinary programme of therapy, fitness and mindfulness.",
+  "source_url": "https://www.thecabinchiangmai.com/"
+ },
+ {
+  "name": "The Beekeeper House",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Mae Rim",
+  "website": "https://beekeeperhouse.com/",
+  "phone": "+66 90 893 5296",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Medically licensed residential centre in Chiang Mai treating addiction, anxiety, depression, PTSD and burnout with individual therapy.",
+  "source_url": "https://beekeeperhouse.com/"
+ },
+ {
+  "name": "The Hills Rehab Chiang Mai",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Mae Rim",
+  "website": "https://thehillsrehabchiangmai.com/",
+  "phone": "+66 80 387 8577",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Inpatient rehab and mental health clinic in Mae Rim licensed by the Ministry of Public Health, offering detox and residential therapy.",
+  "source_url": "https://thehillsrehabchiangmai.com/"
+ },
+ {
+  "name": "The Orchid Recovery Thailand",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Hang Dong",
+  "website": "https://orchidrecoverythailand.com/",
+  "phone": "+66 98 524 5093",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential addiction and mental health treatment centre in Hang Dong offering individual and group therapy programmes.",
+  "source_url": "https://orchidrecoverythailand.com/"
+ },
+ {
+  "name": "New Paradigm Trauma Recovery",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Hang Dong",
+  "website": "https://www.newparadigm.org/",
+  "phone": "+66 81 894 4513",
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Private one-to-one mental health retreat for up to four clients offering EMDR and CBT for trauma, PTSD, depression and burnout.",
+  "source_url": "https://www.newparadigm.org/"
+ },
+ {
+  "name": "Siam Rehab",
+  "country": "Thailand",
+  "region": "Chiang Rai",
+  "city": "Chiang Rai",
+  "website": "https://siamrehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private residential drug and alcohol treatment programme for international clients with medical care, daily therapy and aftercare planning.",
+  "source_url": "https://siamrehab.com/"
+ },
+ {
+  "name": "Miracles Asia",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Phuket",
+  "website": "https://miraclesasia.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private residential addiction treatment programme in Phuket that includes one-to-one aftercare following discharge.",
+  "source_url": "https://miraclesasia.com/"
+ },
+ {
+  "name": "The PARC (Phuket Addiction Recovery Clinic)",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Phuket",
+  "website": "https://phuketaddictionrecoveryclinic.com/",
+  "phone": "+66 63 751 6831",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Small residential addiction recovery clinic in Phuket following a 12-step based programme for a limited number of residents.",
+  "source_url": "https://phuketaddictionrecoveryclinic.com/"
+ },
+ {
+  "name": "Phuket Island Rehab",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Phuket Town",
+  "website": "https://phuketislandrehab.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Residential rehab in Phuket offering medically supervised detox with psychotherapy for addiction and co-occurring mental health issues.",
+  "source_url": "https://phuketislandrehab.com/"
+ },
+ {
+  "name": "Holina Rehab",
+  "country": "Thailand",
+  "region": "Surat Thani",
+  "city": "Koh Phangan",
+  "website": "https://holinarehab.com/",
+  "phone": "+66 61 936 8047",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Licensed residential addiction treatment centre on Koh Phangan with 30, 60 and 90-day programmes and a clinical team.",
+  "source_url": "https://holinarehab.com/"
+ },
+ {
+  "name": "Holina Healing Centre",
+  "country": "Thailand",
+  "region": "Nakhon Ratchasima",
+  "city": "Pak Chong",
+  "website": "https://holinahealing.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Trauma recovery centre in the Khao Yai area of Pak Chong offering residential therapy programmes for trauma and emotional burnout.",
+  "source_url": "https://holinahealing.com/"
+ },
+ {
+  "name": "Horizon Rehab Center",
+  "country": "Thailand",
+  "region": "Pathum Thani",
+  "city": "Khlong Luang",
+  "website": "https://horizonrehabcenter.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Hospital-integrated mental health and addiction recovery programme north of Bangkok offering detox and evidence-based therapy.",
+  "source_url": "https://horizonrehabcenter.com/"
+ },
+ {
+  "name": "Inspire Rehab Center",
+  "country": "Thailand",
+  "region": "Bangkok",
+  "city": "Bangkok",
+  "website": "https://inspirerehabcenter.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Small residential addiction treatment centre in Bangkok for up to five clients using CBT, SMART Recovery and individual therapy.",
+  "source_url": "https://inspirerehabcenter.com/"
+ },
+ {
+  "name": "The Diamond Rehab Thailand",
+  "country": "Thailand",
+  "region": "Prachuap Khiri Khan",
+  "city": "Hua Hin",
+  "website": "https://diamondrehabthailand.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private residential drug and alcohol rehab near Hua Hin offering individual therapy, detox support and holistic activities.",
+  "source_url": "https://diamondrehabthailand.com/"
+ },
+ {
+  "name": "The White Room Thailand",
+  "country": "Thailand",
+  "region": "Prachuap Khiri Khan",
+  "city": "Hua Hin",
+  "website": "https://thewhiteroomthailand.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Sober living resort near Hua Hin supporting people in recovery from drug and alcohol addiction.",
+  "source_url": "https://thewhiteroomthailand.com/"
+ },
+ {
+  "name": "Pearl Sober House",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": "Chiang Mai",
+  "website": "https://pearlsoberhouse.com/",
+  "phone": "+66 82 854 8088",
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Sober living and transitional residence in Chiang Mai for people moving from treatment to independent living.",
+  "source_url": "https://pearlsoberhouse.com/"
+ },
+ {
+  "name": "Yatra Centre",
+  "country": "Thailand",
+  "region": "Krabi",
+  "city": "Krabi",
+  "website": "https://yatracentre.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean",
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Trauma and PTSD treatment centre in Krabi offering clinician-led residential programmes in a private setting.",
+  "source_url": "https://yatracentre.com/"
+ },
+ {
+  "name": "Bali Beginnings",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Uluwatu",
+  "website": "https://rehabbali.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehab in Uluwatu for up to eight clients with 24-hour medical care and a long aftercare programme.",
+  "source_url": "https://rehabbali.com/"
+ },
+ {
+  "name": "Calm Rehab",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Kerobokan",
+  "website": "https://calmrehab.com/",
+  "phone": "+62 813 3871 4050",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehab in Kerobokan offering detox, therapy and specialist treatment services.",
+  "source_url": "https://calmrehab.com/"
+ },
+ {
+  "name": "Ascendant Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://ascendantbali.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private one-to-one clinician-led addiction and mental health recovery programme in Bali for professionals.",
+  "source_url": "https://ascendantbali.com/"
+ },
+ {
+  "name": "Freedom Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://www.freedom-bali.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private one-to-one inpatient alcohol and drug rehabilitation programme in Bali.",
+  "source_url": "https://www.freedom-bali.com/"
+ },
+ {
+  "name": "Holistic Recovery Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Denpasar",
+  "website": "https://www.holisticrecoverybali.com/",
+  "phone": "+62 811 3880 4006",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private one-to-one rehab in Bali for drug, alcohol and mental health issues with 28 to 60-day evidence-based and holistic programmes.",
+  "source_url": "https://www.holisticrecoverybali.com/"
+ },
+ {
+  "name": "Istana",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://istanaprivate.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Confidential private rehabilitation that treats one client at a time with an individually designed clinical programme.",
+  "source_url": "https://istanaprivate.com/"
+ },
+ {
+  "name": "Kembali Recovery Center",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Ubud",
+  "website": "https://kembalirehab.com/",
+  "phone": "+62 813 3987 491",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Drug and alcohol recovery centre in the Ubud area offering residential addiction treatment.",
+  "source_url": "https://kembalirehab.com/"
+ },
+ {
+  "name": "Pesona Jiwa",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Kesiman",
+  "website": "https://pesonajiwa.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private wellness retreat with one guest per villa offering trauma-informed therapy, burnout recovery and nervous system support with clinical oversight.",
+  "source_url": "https://pesonajiwa.com/"
+ },
+ {
+  "name": "Reborn Gold",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Denpasar",
+  "website": "https://www.reborn.gold/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Wellness retreat in Denpasar offering mental health and addiction recovery programmes.",
+  "source_url": "https://www.reborn.gold/"
+ },
+ {
+  "name": "Alive Luxury Retreats",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Keramas",
+  "website": "https://www.aliveluxuryretreats.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private one-to-one holistic retreats in Bali offering health resets, detox, burnout and mental health recovery programmes.",
+  "source_url": "https://www.aliveluxuryretreats.com/"
+ },
+ {
+  "name": "Bali Harmony Rehab",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Pererenan",
+  "website": "https://www.baliharmonyrehab.com/",
+  "phone": "+62 811 390 805",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Licensed private rehab in Pererenan for a maximum of four clients, using hypnotherapy and structured clinical support for addiction and mental health.",
+  "source_url": "https://www.baliharmonyrehab.com/"
+ },
+ {
+  "name": "Foundations Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Denpasar",
+  "website": "https://foundationsbali.com/",
+  "phone": "+62 813 3840 194",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private drug and alcohol rehab in Bali with personalised clinical care led by professionals with lived experience of addiction.",
+  "source_url": "https://foundationsbali.com/"
+ },
+ {
+  "name": "Sabalical Embodied Recovery",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Canggu",
+  "website": "https://sabalical.com/",
+  "phone": "+62 817 0099 995",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private medically supervised detox and early recovery in Canggu for one client at a time, with 7, 14 and 30-day pathways.",
+  "source_url": "https://sabalical.com/"
+ },
+ {
+  "name": "Serenity Life Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Tampaksiring",
+  "website": "https://serenitylifebali.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Recovery and wellbeing retreat in Tampaksiring, Gianyar.",
+  "source_url": "https://serenitylifebali.com/"
+ },
+ {
+  "name": "Thera Bespoke",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Ubud",
+  "website": "https://therabespoke.com/",
+  "phone": "+62 818 1814 4484",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Private rehab in Ubud focused on executive burnout, addiction and mental health treatment.",
+  "source_url": "https://therabespoke.com/"
+ },
+ {
+  "name": "Kolonial House",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Sanur",
+  "website": "https://kolonialhouse.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Mental health rehab, wellness retreat and boutique accommodation centre in Sanur.",
+  "source_url": "https://kolonialhouse.com/"
+ },
+ {
+  "name": "Seasons Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://seasonsbali.org/",
+  "phone": "+62 812 4678 4999",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential drug and alcohol treatment facility in Bali offering addiction treatment programmes.",
+  "source_url": "https://seasonsbali.org/"
+ },
+ {
+  "name": "Sivana Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Canggu",
+  "website": "https://www.sivanabali.com/",
+  "phone": "+62 812 3990 9771",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private residential rehab in Canggu offering drug and alcohol treatment combined with holistic therapies.",
+  "source_url": "https://www.sivanabali.com/"
+ },
+ {
+  "name": "Sober Living Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Ungasan",
+  "website": "https://soberlivingbali.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Sober living community in Ungasan providing a structured environment for people in recovery.",
+  "source_url": "https://soberlivingbali.com/"
+ },
+ {
+  "name": "The Lighthouse Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://thelighthousebali.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "One-to-one addiction and trauma treatment in Bali with a private villa, dedicated clinical team and holistic programme.",
+  "source_url": "https://thelighthousebali.org/"
+ },
+ {
+  "name": "The Place Retreats",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Seminyak",
+  "website": "https://www.theplaceretreats.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Mental health and wellness centre in Seminyak offering tailored programmes for emotional and physical wellbeing.",
+  "source_url": "https://www.theplaceretreats.com/"
+ },
+ {
+  "name": "The Reset Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://theresetbali.com/",
+  "phone": "+62 821 4657 4163",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Private residential mental health and wellbeing retreat in Bali with counselling programmes for teens and adults.",
+  "source_url": "https://theresetbali.com/"
+ },
+ {
+  "name": "Transitions Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Seminyak",
+  "website": "https://transitionsbali.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Small Balinese-style recovery house combining a structured addiction treatment programme with recovery living.",
+  "source_url": "https://transitionsbali.com/"
+ },
+ {
+  "name": "South Pacific Private",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Curl Curl",
+  "website": "https://www.southpacificprivate.com.au/",
+  "phone": "02 9905 9696",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private hospital on Sydney's Northern Beaches treating addiction, trauma and mental health with multidisciplinary inpatient and day programmes.",
+  "source_url": "https://www.southpacificprivate.com.au/"
+ },
+ {
+  "name": "Byron Private",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Myocum",
+  "website": "https://www.byronprivaterehab.com.au/",
+  "phone": "+61 2 6684 4145",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Psychiatrist-led private residential rehab near Byron Bay for up to 12 guests treating addiction and mental health.",
+  "source_url": "https://www.byronprivaterehab.com.au/"
+ },
+ {
+  "name": "The Buttery",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Binna Burra",
+  "website": "https://www.buttery.org.au/",
+  "phone": "+61 2 6687 1111",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Not-for-profit service in the Northern Rivers providing residential and community programmes for substance use and mental health since 1973.",
+  "source_url": "https://www.buttery.org.au/"
+ },
+ {
+  "name": "Billabong Retreat",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Maraylya",
+  "website": "https://billabongretreat.com.au/",
+  "phone": "+61 2 4573 6080",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Wellness and yoga retreat north-west of Sydney offering meditation, yoga and rest programmes.",
+  "source_url": "https://billabongretreat.com.au/"
+ },
+ {
+  "name": "Cedarvale Health and Lifestyle Retreat",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Barrengarry",
+  "website": "https://cedarvaleretreat.com.au/",
+  "phone": "(02) 4465 1362",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Health and lifestyle retreat in Kangaroo Valley offering residential health and wellbeing programmes.",
+  "source_url": "https://cedarvaleretreat.com.au/"
+ },
+ {
+  "name": "Aurora Kellyville Private Hospital",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Kellyville",
+  "website": "https://kellyvilleprivate.com.au/",
+  "phone": "1300 122 144",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health hospital in Sydney's north-west offering inpatient and day therapy programmes.",
+  "source_url": "https://kellyvilleprivate.com.au/"
+ },
+ {
+  "name": "Aston Private",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://www.astonprivate.com/",
+  "phone": "+61 2 5663 2677",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Tailored one-to-one private rehab programmes in Byron Bay for addiction and mental health.",
+  "source_url": "https://www.astonprivate.com/"
+ },
+ {
+  "name": "The Bay",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://thebay.com.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private one-to-one drug, alcohol and mental health treatment in a residence in Byron Bay with a 24/7 clinical team.",
+  "source_url": "https://thebay.com.au/"
+ },
+ {
+  "name": "The Sanctuary Byron Bay",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://www.sanctuarybb.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Individually tailored private treatment, therapeutic retreats and rehabilitation programmes in Byron Bay.",
+  "source_url": "https://www.sanctuarybb.com/"
+ },
+ {
+  "name": "Raindrum",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://raindrum.com.au/",
+  "phone": "1300 007 607",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private residential health, wellbeing and rehabilitation programmes in Byron Bay.",
+  "source_url": "https://raindrum.com.au/"
+ },
+ {
+  "name": "Zen Private",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://www.zenprivate.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Confidential residential rehabilitation in private homes in Byron Bay, Sydney, Adelaide Hills and the Whitsundays with clinical and holistic support.",
+  "source_url": "https://www.zenprivate.com/"
+ },
+ {
+  "name": "Heal for Life Foundation",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Cessnock",
+  "website": "https://healforlife.com.au/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Five-day residential healing programme in the Hunter Valley for adult survivors of childhood trauma, supervised by health professionals.",
+  "source_url": "https://healforlife.com.au/"
+ },
+ {
+  "name": "Gunnebah Addiction Retreat",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Nobbys Creek",
+  "website": "https://www.gunnebah.com.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential alcohol and drug rehab near Murwillumbah with psychiatrists, therapists and doctors, plus relapse prevention and aftercare.",
+  "source_url": "https://www.gunnebah.com.au/"
+ },
+ {
+  "name": "The Sydney Retreat",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Stanmore",
+  "website": "https://www.thesydneyretreat.org.au/",
+  "phone": "02 9171 2920",
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Non-clinical 28-day residential drug and alcohol programme in Stanmore using Twelve Step Facilitation, with family support and sober housing.",
+  "source_url": "https://www.thesydneyretreat.org.au/"
+ },
+ {
+  "name": "Sydney Detox and Rehab",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Northern Beaches",
+  "website": "https://sydneydetoxandrehab.com/",
+  "phone": "0428 610 322",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private drug and alcohol detox and rehabilitation centre on Sydney's Northern Beaches.",
+  "source_url": "https://sydneydetoxandrehab.com/"
+ },
+ {
+  "name": "Savasana Private",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Sydney",
+  "website": "https://savasanaprivate.com.au/",
+  "phone": "+61 2 7259 9688",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private residential addiction and mental health retreat in Sydney.",
+  "source_url": "https://savasanaprivate.com.au/"
+ },
+ {
+  "name": "Tranquilo Wellness",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Sydney",
+  "website": "https://tranquilowellness.com.au/",
+  "phone": "1300 791 297",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private rehab in Sydney providing personalised residential support for addiction, mental health and burnout.",
+  "source_url": "https://tranquilowellness.com.au/"
+ },
+ {
+  "name": "Southern Highlands Addiction Retreat",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Canyonleigh",
+  "website": "https://southernhighlandsrehab.com.au/",
+  "phone": "0485 880 816",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential addiction treatment retreat in the Southern Highlands of New South Wales.",
+  "source_url": "https://southernhighlandsrehab.com.au/"
+ },
+ {
+  "name": "The Cabin Sydney",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Edgecliff",
+  "website": "https://www.thecabinsydney.com.au/",
+  "phone": "1800 251 994",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Outpatient drug and alcohol addiction treatment centre in Sydney's eastern suburbs.",
+  "source_url": "https://www.thecabinsydney.com.au/"
+ },
+ {
+  "name": "Aurora Belmont Private Hospital",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Carina",
+  "website": "https://belmontprivate.com.au/",
+  "phone": "+61 7 3398 0111",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private psychiatric hospital in Brisbane offering inpatient, day therapy and hospital-in-the-home mental health treatment.",
+  "source_url": "https://belmontprivate.com.au/"
+ },
+ {
+  "name": "Aurora Currumbin Clinic",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Currumbin",
+  "website": "https://currumbinclinic.com.au/",
+  "phone": "+61 7 5534 4944",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private mental health hospital on the Gold Coast offering inpatient, day therapy and community treatment options.",
+  "source_url": "https://currumbinclinic.com.au/"
+ },
+ {
+  "name": "Robina Private Hospital",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Robina",
+  "website": "https://robinaprivate.com.au/",
+  "phone": "07 5665 5100",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private hospital on the Gold Coast providing inpatient, day and community mental health and rehabilitation services.",
+  "source_url": "https://robinaprivate.com.au/"
+ },
+ {
+  "name": "The Banyans",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Brisbane hinterland",
+  "website": "https://thebanyans.com.au/",
+  "phone": "1300 226 926",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private one-to-one residential treatment for mental health and addiction in the Brisbane hinterland, with a day programme in Bowen Hills.",
+  "source_url": "https://thebanyans.com.au/"
+ },
+ {
+  "name": "The Bardo Health & Wellness",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": null,
+  "website": "https://www.thebardo.com.au/",
+  "phone": "0411 071 146",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private mental health, detox and rehab retreat located between the Gold Coast and Brisbane.",
+  "source_url": "https://www.thebardo.com.au/"
+ },
+ {
+  "name": "Hader Clinic Queensland",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Gympie region",
+  "website": "https://haderclinicqld.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private drug and alcohol rehab with inpatient medically supervised detox, residential rehabilitation and aftercare in south-east Queensland.",
+  "source_url": "https://haderclinicqld.com.au/"
+ },
+ {
+  "name": "The Health Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Kiels Mountain",
+  "website": "https://thehealthretreat.net.au/",
+  "phone": "+61 7 5391 3888",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Residential retreat on the Sunshine Coast focused on recovery from depression and anxiety.",
+  "source_url": "https://thehealthretreat.net.au/"
+ },
+ {
+  "name": "Hinterland Health Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Montville",
+  "website": "https://hinterlandhealthretreat.com/",
+  "phone": "+61 1300 444 110",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Residential mental health programmes in the Sunshine Coast hinterland using QEEG scans, therapy, nutrition and nature-based care.",
+  "source_url": "https://hinterlandhealthretreat.com/"
+ },
+ {
+  "name": "Goodsky Mental Health Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Marcoola",
+  "website": "https://www.goodsky.com.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Trauma & PTSD",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "One-to-one residential retreats and outpatient care on the Sunshine Coast for adults and teens with trauma, depression and anxiety.",
+  "source_url": "https://www.goodsky.com.au/"
+ },
+ {
+  "name": "Noosa Confidential",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Noosa",
+  "website": "https://noosaconfidential.com.au/",
+  "phone": "1800 210 038",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Evidence-based residential programmes in Noosa for mental health, addiction and trauma recovery.",
+  "source_url": "https://noosaconfidential.com.au/"
+ },
+ {
+  "name": "Living Valley Health Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Kin Kin",
+  "website": "https://livingvalley.com.au/",
+  "phone": "+61 7 5485 4344",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Health retreat in the Noosa hinterland offering detox, weight loss and wellness programmes.",
+  "source_url": "https://livingvalley.com.au/"
+ },
+ {
+  "name": "Gwinganna Lifestyle Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Tallebudgera Valley",
+  "website": "https://www.gwinganna.com/",
+  "phone": "+61 7 5589 5000",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Wellness retreat and spa in the Gold Coast hinterland offering detox, wellness weekends and stress-focused retreats.",
+  "source_url": "https://www.gwinganna.com/"
+ },
+ {
+  "name": "The Hermitage Centre (Gold Coast Detox and Rehab)",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Currumbin",
+  "website": "https://www.goldcoastdetoxandrehab.com/",
+  "phone": "0476 468 860",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private drug and alcohol detox and rehab on the Gold Coast offering confidential personalised care.",
+  "source_url": "https://www.goldcoastdetoxandrehab.com/"
+ },
+ {
+  "name": "Avive Health Brisbane",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Windsor",
+  "website": "https://avivehealth.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private clinician-led mental health hospital in Brisbane.",
+  "source_url": "https://avivehealth.com.au/"
+ },
+ {
+  "name": "Avive Health Melbourne",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Alphington",
+  "website": "https://avivehealth.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private clinician-led mental health hospital in Melbourne.",
+  "source_url": "https://avivehealth.com.au/"
+ },
+ {
+  "name": "Avive Health Mornington Peninsula",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Mount Eliza",
+  "website": "https://avivehealth.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private clinician-led mental health hospital in Mount Eliza on the Mornington Peninsula.",
+  "source_url": "https://avivehealth.com.au/"
+ },
+ {
+  "name": "The Freedom Room",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Carseldine",
+  "website": "https://thefreedomroom.com.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Alcohol addiction support service in Brisbane offering counselling and workshops.",
+  "source_url": "https://thefreedomroom.com.au/"
+ },
+ {
+  "name": "Arrow Health",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Armadale",
+  "website": "https://arrowhealth.com.au/",
+  "phone": "03 9533 7888",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private addiction treatment provider near Melbourne offering services for individuals and families.",
+  "source_url": "https://arrowhealth.com.au/"
+ },
+ {
+  "name": "Fullarton Clinic",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Epping",
+  "website": "https://fullartonclinic.com.au/",
+  "phone": "1300 377 464",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private psychiatric hospital in Melbourne offering mental health treatment and drug and alcohol rehabilitation.",
+  "source_url": "https://fullartonclinic.com.au/"
+ },
+ {
+  "name": "The Hader Clinic Geelong",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "St Albans Park",
+  "website": "https://www.rayhaderclinic.com.au/",
+  "phone": "1800 957 455",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private drug and alcohol rehabilitation provider in Victoria offering detox and residential treatment.",
+  "source_url": "https://www.rayhaderclinic.com.au/"
+ },
+ {
+  "name": "Hills and Ranges Private",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Olinda",
+  "website": "https://harprehab.com/",
+  "phone": "1800 534 893",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Private residential rehab in the Dandenong Ranges offering clinical treatment for addiction and mental health.",
+  "source_url": "https://harprehab.com/"
+ },
+ {
+  "name": "Refocus Rehab",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Toorak",
+  "website": "https://refocus.com.au/",
+  "phone": "03 9537 0880",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private drug and alcohol rehabilitation programme in Melbourne.",
+  "source_url": "https://refocus.com.au/"
+ },
+ {
+  "name": "Seahaven Private",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Carrum",
+  "website": "https://seahaven.com.au/",
+  "phone": "03 8738 4252",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Drug and alcohol rehab centre in Melbourne's south-east bayside suburbs.",
+  "source_url": "https://seahaven.com.au/"
+ },
+ {
+  "name": "Turning Point",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Richmond",
+  "website": "https://turningpoint.org.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Addiction treatment, research and education centre providing treatment for alcohol, drug and gambling problems.",
+  "source_url": "https://turningpoint.org.au/"
+ },
+ {
+  "name": "Reset My Future",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Hawthorn",
+  "website": "https://www.resetmyfuture.com.au/",
+  "phone": "1800 300 813",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private addiction treatment with weekday residential rehab and family-focused guidance, with locations in Melbourne and Sydney.",
+  "source_url": "https://www.resetmyfuture.com.au/"
+ },
+ {
+  "name": "Cyrenian House",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Perth",
+  "website": "https://cyrenianhouse.com/",
+  "phone": "9328 9200",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Not-for-profit alcohol and other drug treatment service in Perth operating residential and community programmes since 1981.",
+  "source_url": "https://cyrenianhouse.com/"
+ },
+ {
+  "name": "Pindari House",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Bedfordale",
+  "website": "https://pindari.org.au/",
+  "phone": "0427 386 381",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential addiction recovery programme for men near Armadale in Perth's south-east.",
+  "source_url": "https://pindari.org.au/"
+ },
+ {
+  "name": "Shalom House",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Henley Brook",
+  "website": "https://www.shalomhouse.com.au/",
+  "phone": "0488 661 725",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential programme in the Swan Valley supporting men, women and families affected by addiction.",
+  "source_url": "https://www.shalomhouse.com.au/"
+ },
+ {
+  "name": "Perth Clinic",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "West Perth",
+  "website": "https://www.perthclinic.com.au/",
+  "phone": "+61 8 9481 4888",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health hospital in West Perth.",
+  "source_url": "https://www.perthclinic.com.au/"
+ },
+ {
+  "name": "Centre for Clinical Interventions",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Northbridge",
+  "website": "https://cci.health.wa.gov.au/",
+  "phone": "(08) 9227 4399",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Public clinical psychology service in Perth treating anxiety, depression, bipolar disorder and eating disorders.",
+  "source_url": "https://cci.health.wa.gov.au/"
+ },
+ {
+  "name": "Karralika Programs",
+  "country": "Australia",
+  "region": "Australian Capital Territory",
+  "city": "Canberra",
+  "website": "https://karralika.org.au/",
+  "phone": "1800 152 772",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Not-for-profit alcohol and drug organisation in Canberra running therapeutic community and community programmes.",
+  "source_url": "https://karralika.org.au/"
+ },
+ {
+  "name": "Ashburn Clinic",
+  "country": "New Zealand",
+  "region": "Otago",
+  "city": "Dunedin",
+  "website": "https://www.ashburn.co.nz/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private not-for-profit psychiatric hospital in Dunedin running a therapeutic community for mental health and addiction.",
+  "source_url": "https://www.ashburn.co.nz/"
+ },
+ {
+  "name": "Capri Sanctuary",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Karaka",
+  "website": "https://www.caprisanctuary.co.nz/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private rehab facility south of Auckland treating anxiety, depression, alcohol and drug problems.",
+  "source_url": "https://www.caprisanctuary.co.nz/"
+ },
+ {
+  "name": "Higher Ground Drug Rehabilitation Trust",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Te Atatu Peninsula",
+  "website": "https://higherground.org.nz/",
+  "phone": "(09) 834 0017",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential drug and alcohol rehabilitation service in Auckland.",
+  "source_url": "https://higherground.org.nz/"
+ },
+ {
+  "name": "Keystone Lodge",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Wainui",
+  "website": "https://www.keystonelodge.co.nz/",
+  "phone": "0800 539 888",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private alcohol and drug rehab near Auckland offering residential treatment, individual therapy and aftercare.",
+  "source_url": "https://www.keystonelodge.co.nz/"
+ },
+ {
+  "name": "Ocean Hills Detox and Rehabilitation",
+  "country": "New Zealand",
+  "region": "Hawke's Bay",
+  "city": "Napier",
+  "website": "https://www.oceanhillsrehab.co.nz/",
+  "phone": "027 573 7744",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Private alcohol and drug rehab centre in Hawke's Bay providing medical care and residential treatment.",
+  "source_url": "https://www.oceanhillsrehab.co.nz/"
+ },
+ {
+  "name": "House of Hope",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Waitoki",
+  "website": "https://www.houseofhope.co.nz/",
+  "phone": "0800 144 454",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Private residential drug and alcohol rehabilitation centre in Auckland.",
+  "source_url": "https://www.houseofhope.co.nz/"
+ },
+ {
+  "name": "The Retreat NZ",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Warkworth",
+  "website": "https://www.theretreatnz.org.nz/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Alcohol recovery service offering interventions, supervised detox, a 30-day residential rehab programme and sober living houses.",
+  "source_url": "https://www.theretreatnz.org.nz/"
+ },
+ {
+  "name": "The Turning Point NZ",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Beachlands",
+  "website": "https://www.theturningpoint.co.nz/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private residential alcohol and drug rehabilitation centre in Auckland.",
+  "source_url": "https://www.theturningpoint.co.nz/"
+ },
+ {
+  "name": "Resolution Retreats",
+  "country": "New Zealand",
+  "region": "Waikato",
+  "city": "Cambridge",
+  "website": "https://www.resolutionretreats.co.nz/",
+  "phone": "0800 473 873",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Women's health and wellness retreats at Lake Karapiro.",
+  "source_url": "https://www.resolutionretreats.co.nz/"
+ },
+ {
+  "name": "Solace Asia",
+  "country": "Malaysia",
+  "region": "Kuala Lumpur",
+  "city": "Kuala Lumpur",
+  "website": "https://solaceasia.org/",
+  "phone": "+603-33100145",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Drug and alcohol addiction treatment and rehab centre in Kuala Lumpur using evidence-based clinical programmes.",
+  "source_url": "https://solaceasia.org/"
+ },
+ {
+  "name": "Salus",
+  "country": "Malaysia",
+  "region": "Selangor",
+  "city": "Cyberjaya",
+  "website": "https://salus.my/",
+  "phone": "+60 12 839 4686",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential wellness recovery retreat in Cyberjaya run by the clinical team behind Solace Asia.",
+  "source_url": "https://salus.my/"
+ },
+ {
+  "name": "Sage Centre",
+  "country": "Malaysia",
+  "region": "Selangor",
+  "city": "Subang Jaya",
+  "website": "https://www.sagecentre.co/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health and addiction recovery centre in Subang Jaya offering therapy, counselling and psychological assessments.",
+  "source_url": "https://www.sagecentre.co/"
+ },
+ {
+  "name": "Green Wings Recovery Centre",
+  "country": "Malaysia",
+  "region": "Kuala Lumpur",
+  "city": "Bangsar",
+  "website": "https://greenwings-psy.com/",
+  "phone": "+603-22018029",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health rehabilitation centre in Kuala Lumpur offering psychological treatment and addiction recovery support.",
+  "source_url": "https://greenwings-psy.com/"
+ },
+ {
+  "name": "Serene Psychology Centre",
+  "country": "Malaysia",
+  "region": "Kuala Lumpur",
+  "city": "Kuala Lumpur",
+  "website": "https://serene.com.my/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Outpatient psychology and mental health practice in Kuala Lumpur.",
+  "source_url": "https://serene.com.my/"
+ },
+ {
+  "name": "The Winslow",
+  "country": "Singapore",
+  "region": "Singapore",
+  "city": "Singapore",
+  "website": "https://thewinslow.com.sg/",
+  "phone": "+65 8030 4606",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private residential addiction treatment in Singapore with a 16-week evidence-based programme.",
+  "source_url": "https://thewinslow.com.sg/"
+ },
+ {
+  "name": "Promises Healthcare",
+  "country": "Singapore",
+  "region": "Singapore",
+  "city": "Novena",
+  "website": "https://promises.com.sg/",
+  "phone": "+65 6397 7309",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Psychiatric clinic in Singapore offering mental health and addiction treatment by psychiatrists and clinical psychologists.",
+  "source_url": "https://promises.com.sg/"
+ },
+ {
+  "name": "Addictions Recovery Singapore",
+  "country": "Singapore",
+  "region": "Singapore",
+  "city": "Bishan",
+  "website": "https://addictionsrecovery.sg/",
+  "phone": "+65 8824 2995",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Trauma & PTSD"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Addiction recovery counselling and support service in Singapore.",
+  "source_url": "https://addictionsrecovery.sg/"
+ },
+ {
+  "name": "The Cabin Hong Kong",
+  "country": "Hong Kong",
+  "region": "Hong Kong Island",
+  "city": "Central",
+  "website": "https://www.thecabinhongkong.com.hk/",
+  "phone": "+852 3008 5841",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Outpatient drug and alcohol addiction treatment centre in Central, Hong Kong.",
+  "source_url": "https://www.thecabinhongkong.com.hk/"
+ },
+ {
+  "name": "The Emerald",
+  "country": "Sri Lanka",
+  "region": "Central Province",
+  "city": "Kandy",
+  "website": "https://theemeraldsrilanka.com/",
+  "phone": "+94 76 800 0103",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Private residential addiction and mental health rehab in Kandy for clients from Australia and New Zealand.",
+  "source_url": "https://theemeraldsrilanka.com/"
+ },
+ {
+  "name": "Kaya Rehab and Recovery",
+  "country": "Philippines",
+  "region": "Benguet",
+  "city": "Baguio",
+  "website": "https://kayarehab.com/",
+  "phone": "+63 917 509 9755",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Addiction recovery programmes in Baguio for drug and alcohol dependence.",
+  "source_url": "https://kayarehab.com/"
+ },
+ {
+  "name": "Akari Wellness and Treatment Hub",
+  "country": "Philippines",
+  "region": "Cebu",
+  "city": "Cebu City",
+  "website": "https://akariwellnesshub.com/",
+  "phone": "09616578543",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Addiction recovery, aftercare and holistic wellness support centre in Cebu City.",
+  "source_url": "https://akariwellnesshub.com/"
+ },
+ {
+  "name": "Kurihama Medical and Addiction Center",
+  "country": "Japan",
+  "region": "Kanagawa",
+  "city": "Yokosuka",
+  "website": "https://kurihama.hosp.go.jp/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "Japanese",
+  "description": "National hospital specialising in treatment of alcohol dependence and other addictions, alongside general psychiatric care.",
+  "source_url": "https://kurihama.hosp.go.jp/"
+ },
+ {
+  "name": "The Sanctuary Japan",
+  "country": "Japan",
+  "region": "Kanagawa",
+  "city": "Kamakura",
+  "website": "https://www.thesanctuaryjapan.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [],
+  "languages": "English",
+  "description": "Individually tailored private retreats in Japan for a VIP clientele.",
+  "source_url": "https://www.thesanctuaryjapan.com/"
+ },
+ {
+  "name": "New Destination Active Group",
+  "country": "Nepal",
+  "region": "Kavrepalanchok",
+  "city": "Dhulikhel",
+  "website": "https://ndag.org.np/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Drug rehabilitation centre in Dhulikhel using a holistic, community-based approach to addiction recovery.",
+  "source_url": "https://ndag.org.np/"
+ },
+ {
+  "name": "Third Eye Rehabilitation Center",
+  "country": "Nepal",
+  "region": "Lalitpur",
+  "city": "Lalitpur",
+  "website": "https://thirdeye.org.np/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Drug and alcohol rehabilitation centre in Khumaltar, Lalitpur.",
+  "source_url": "https://thirdeye.org.np/"
+ },
+ {
+  "name": "Namaste Upakar Nepal Sudhar Kendra",
+  "country": "Nepal",
+  "region": "Kathmandu",
+  "city": "Tarakeshwar",
+  "website": "https://unskrehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Addiction rehabilitation centre near Kathmandu following a 12-step programme.",
+  "source_url": "https://unskrehab.com/"
+ },
+ {
+  "name": "Asha Bhawan Nepal",
+  "country": "Nepal",
+  "region": "Kathmandu",
+  "city": "Chandragiri",
+  "website": "https://ashabhawannepal.org/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Drug and alcohol rehabilitation centre in Chandragiri near Kathmandu.",
+  "source_url": "https://ashabhawannepal.org/"
+ },
+ {
+  "name": "Abhasa Rehab and Wellness - Karjat",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Karjat",
+  "website": "https://www.abhasa.in/",
+  "phone": "+91 73736 44444",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential rehabilitation centre near Mumbai offering evidence-based treatment for addiction and mental health conditions.",
+  "source_url": "https://www.abhasa.in/"
+ },
+ {
+  "name": "Abhasa Rehab and Wellness - Coimbatore",
+  "country": "India",
+  "region": "Tamil Nadu",
+  "city": "Coimbatore",
+  "website": "https://www.abhasa.in/",
+  "phone": "+91 73736 44444",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential rehabilitation centres in Coimbatore, including a women-only centre, treating addiction and mental health conditions.",
+  "source_url": "https://www.abhasa.in/"
+ },
+ {
+  "name": "Cadabam's Hospitals",
+  "country": "India",
+  "region": "Karnataka",
+  "city": "Bengaluru",
+  "website": "https://www.cadabams.org/",
+  "phone": "+91 96111 94949",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Mental health rehabilitation and de-addiction provider with residential centres in Bengaluru, Mysore and Hyderabad.",
+  "source_url": "https://www.cadabams.org/"
+ },
+ {
+  "name": "Ganaa Mental Health",
+  "country": "India",
+  "region": "Delhi",
+  "city": "New Delhi",
+  "website": "https://www.ganaa.in/",
+  "phone": "+91 87500 75006",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Outpatient mental health clinics and residential rehab centres across Delhi NCR and Goa with psychiatric care and therapy.",
+  "source_url": "https://www.ganaa.in/"
+ },
+ {
+  "name": "Sukoon Health",
+  "country": "India",
+  "region": "Haryana",
+  "city": "Gurugram",
+  "website": "https://www.sukoonhealth.com/",
+  "phone": "+91 84481 56500",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health hospital chain with residential and outpatient psychiatry, psychology and de-addiction services in several Indian cities.",
+  "source_url": "https://www.sukoonhealth.com/"
+ },
+ {
+  "name": "Athena Behavioral Health",
+  "country": "India",
+  "region": "Haryana",
+  "city": "Gurugram",
+  "website": "https://www.athenabhs.com/",
+  "phone": "+91 92890 86193",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Psychiatric hospital and rehab with de-addiction treatment in Delhi, Gurgaon, Noida and Guwahati.",
+  "source_url": "https://www.athenabhs.com/"
+ },
+ {
+  "name": "Aroha Rehab",
+  "country": "India",
+  "region": "Haryana",
+  "city": "Faridabad",
+  "website": "https://www.aroharehab.com/",
+  "phone": "+91 79774 13144",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Psychiatry-led residential addiction rehabilitation centre near Delhi.",
+  "source_url": "https://www.aroharehab.com/"
+ },
+ {
+  "name": "Alpha Healing Center",
+  "country": "India",
+  "region": "Gujarat",
+  "city": "Vadodara",
+  "website": "https://alphahealingcenter.in/",
+  "phone": "+91 74900 23387",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Inpatient rehabilitation centre in Gujarat for alcohol, drug and substance addiction.",
+  "source_url": "https://alphahealingcenter.in/"
+ },
+ {
+  "name": "Anatta Humanversity",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Pune",
+  "website": "https://anatta.in/",
+  "phone": "+91 99673 34000",
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Voluntary, non-medical rehabilitation centre near Pune using a holistic approach to drug and alcohol addiction.",
+  "source_url": "https://anatta.in/"
+ },
+ {
+  "name": "Amaha Mental Health Hospital",
+  "country": "India",
+  "region": "Karnataka",
+  "city": "Bengaluru",
+  "website": "https://www.amahahealth.com/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health provider offering therapy, psychiatry, assessments and inpatient care.",
+  "source_url": "https://www.amahahealth.com/"
+ },
+ {
+  "name": "Hope Rehab & Wellness",
+  "country": "India",
+  "region": "Delhi",
+  "city": "New Delhi",
+  "website": "https://www.hope-rehabs.com/",
+  "phone": "+91 98210 43262",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation centre in Delhi offering treatment for addiction and mental health conditions.",
+  "source_url": "https://www.hope-rehabs.com/"
+ },
+ {
+  "name": "Humana Wellness",
+  "country": "India",
+  "region": "Haryana",
+  "city": "Gurugram",
+  "website": "https://humanawellness.in/",
+  "phone": "08826644491",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Licensed alcohol and drug rehabilitation and de-addiction centre in Gurgaon.",
+  "source_url": "https://humanawellness.in/"
+ },
+ {
+  "name": "Jagruti Rehabilitation Centre",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Pune",
+  "website": "https://www.jagrutirehab.org/",
+  "phone": "+91 98222 07761",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation centres in several Indian cities treating alcohol and drug addiction, mental illness, dementia and OCD.",
+  "source_url": "https://www.jagrutirehab.org/"
+ },
+ {
+  "name": "Kairali - The Ayurvedic Healing Village",
+  "country": "India",
+  "region": "Kerala",
+  "city": "Palakkad",
+  "website": "https://ayurvedichealingvillage.com/",
+  "phone": "+91 9555 156 156",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Ayurvedic retreat in Palakkad offering Ayurvedic programmes, villas and physician consultations.",
+  "source_url": "https://ayurvedichealingvillage.com/"
+ },
+ {
+  "name": "Live Life Rehab",
+  "country": "India",
+  "region": "Gujarat",
+  "city": "Nadiad",
+  "website": "https://www.liveliferehab.org/",
+  "phone": "+91 79901 77863",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Drug and alcohol rehabilitation centre in Ahmedabad and Nadiad offering medically supervised detox, therapy and family counselling.",
+  "source_url": "https://www.liveliferehab.org/"
+ },
+ {
+  "name": "Lotus Wellness Rehab",
+  "country": "India",
+  "region": "Tamil Nadu",
+  "city": "Pollachi",
+  "website": "https://lotuswellness.life/",
+  "phone": "7339062555",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential addiction recovery centre near Coimbatore with personalised therapy.",
+  "source_url": "https://lotuswellness.life/"
+ },
+ {
+  "name": "Lotus Life Center",
+  "country": "India",
+  "region": "Tamil Nadu",
+  "city": "Coimbatore",
+  "website": "https://lotuslifecenter.in/",
+  "phone": "9087813555",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation centre in Coimbatore offering therapy and wellness programmes for addiction and mental wellbeing.",
+  "source_url": "https://lotuslifecenter.in/"
+ },
+ {
+  "name": "Maanavta Psychiatry and De-Addiction Centre",
+  "country": "India",
+  "region": "Uttarakhand",
+  "city": "Dehradun",
+  "website": "https://maanavta.in/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Psychiatric and drug rehabilitation centre in Dehradun.",
+  "source_url": "https://maanavta.in/"
+ },
+ {
+  "name": "MindPlus",
+  "country": "India",
+  "region": "Punjab",
+  "city": "Ludhiana",
+  "website": "https://mind.plus/",
+  "phone": "+91 97817 07400",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Mental health and de-addiction hospitals in Punjab offering psychiatric and psychological care.",
+  "source_url": "https://mind.plus/"
+ },
+ {
+  "name": "Rekindle Wellness",
+  "country": "India",
+  "region": "West Bengal",
+  "city": "Howrah",
+  "website": "https://rekindlewellness.com/",
+  "phone": "+91 98333 04241",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Inpatient psychiatric hospital and de-addiction centre near Kolkata treating depression, bipolar disorder, OCD, PTSD and addiction.",
+  "source_url": "https://rekindlewellness.com/"
+ },
+ {
+  "name": "Nityanand Rehabilitation Centre",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Pune",
+  "website": "https://nityanandrehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation and de-addiction centre in Pune offering therapy and holistic care for addiction and mental health.",
+  "source_url": "https://nityanandrehab.com/"
+ },
+ {
+  "name": "Roar Wellness",
+  "country": "India",
+  "region": "Delhi",
+  "city": "New Delhi",
+  "website": "https://www.roarwellness.org/",
+  "phone": "+91 93199 77207",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential alcohol and drug rehabilitation centre in Chattarpur, Delhi.",
+  "source_url": "https://www.roarwellness.org/"
+ },
+ {
+  "name": "Sanctum Wellness and Healing",
+  "country": "India",
+  "region": "Delhi",
+  "city": "New Delhi",
+  "website": "https://www.sanctumwellness.org/",
+  "phone": "+91 89290 82073",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential drug, alcohol and de-addiction rehabilitation centre in Chhatarpur, Delhi.",
+  "source_url": "https://www.sanctumwellness.org/"
+ },
+ {
+  "name": "Solace Raha",
+  "country": "India",
+  "region": "Kerala",
+  "city": "Kochi",
+  "website": "https://solaceraha.in/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "De-addiction and psychological treatment centres in Kochi.",
+  "source_url": "https://solaceraha.in/"
+ },
+ {
+  "name": "The Hermitage Rehab",
+  "country": "India",
+  "region": "Punjab",
+  "city": "Amritsar",
+  "website": "https://thehermitage.rehab/",
+  "phone": "+91 98140 70700",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential alcohol and drug rehabilitation centre in Amritsar.",
+  "source_url": "https://thehermitage.rehab/"
+ },
+ {
+  "name": "Tulasi Healthcare",
+  "country": "India",
+  "region": "Haryana",
+  "city": "Gurugram",
+  "website": "https://www.tulasihealthcare.com/",
+  "phone": "8800000255",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Psychiatric hospital and rehabilitation centre in Delhi NCR treating substance use disorders and mental illness.",
+  "source_url": "https://www.tulasihealthcare.com/"
+ },
+ {
+  "name": "Umeed Wellness Centre",
+  "country": "India",
+  "region": "Delhi",
+  "city": "New Delhi",
+  "website": "https://umeedwellnesscentre.com/",
+  "phone": "8800727020",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Alcohol and drug rehabilitation centre in Delhi NCR.",
+  "source_url": "https://umeedwellnesscentre.com/"
+ },
+ {
+  "name": "Veda Rehabilitation and Wellness",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Mumbai",
+  "website": "https://vedawellnessworld.com/",
+  "phone": "+91 81518 30000",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private rehabilitation for addiction, dual diagnosis and mental health with centres in Mumbai, Delhi, Bengaluru and Gangtok.",
+  "source_url": "https://vedawellnessworld.com/"
+ },
+ {
+  "name": "Veda5",
+  "country": "India",
+  "region": "Goa",
+  "city": "Arambol",
+  "website": "https://www.vedafive.com/",
+  "phone": "+91 93544 83728",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Ayurveda, panchakarma and yoga wellness retreats in Rishikesh, Goa and Kerala.",
+  "source_url": "https://www.vedafive.com/"
+ },
+ {
+  "name": "Wisdom Matters",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Pune",
+  "website": "https://wisdommatters.in/",
+  "phone": "+91 98810 08187",
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation centre in Pune for schizophrenia and other mental health conditions, with doctors and counsellors.",
+  "source_url": "https://wisdommatters.in/"
+ },
+ {
+  "name": "ZorbaCare",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Khopoli",
+  "website": "https://zorbacare.com/",
+  "phone": "+91 86695 67929",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Voluntary residential de-addiction and mental health rehabilitation centres near Mumbai and in Bengaluru.",
+  "source_url": "https://zorbacare.com/"
+ },
+ {
+  "name": "Collective Care",
+  "country": "India",
+  "region": "Maharashtra",
+  "city": "Mumbai",
+  "website": "https://www.collectivecare.in/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Rehabilitation and life skills centre in Mumbai founded by licensed clinical psychologists.",
+  "source_url": "https://www.collectivecare.in/"
+ },
+ {
+  "name": "HLC Ayurveda & Nature Cure Hospital",
+  "country": "India",
+  "region": "Karnataka",
+  "city": "Bengaluru",
+  "website": "https://www.hlcayush.com/",
+  "phone": "8431388326",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Ayurvedic and nature cure hospital in Bengaluru offering holistic treatments.",
+  "source_url": "https://www.hlcayush.com/"
+ },
+ {
+  "name": "Kamalaya Koh Samui",
+  "country": "Thailand",
+  "region": "Surat Thani",
+  "city": "Koh Samui",
+  "website": "https://kamalaya.com/",
+  "phone": "+66 774 298 00",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion",
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Ocean",
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Wellness sanctuary on Koh Samui offering stress and burnout, emotional healing, detox and yoga programmes with integrative therapies.",
+  "source_url": "https://kamalaya.com/"
+ },
+ {
+  "name": "Chiva-Som",
+  "country": "Thailand",
+  "region": "Prachuap Khiri Khan",
+  "city": "Hua Hin",
+  "website": "https://www.chivasom.com/en/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Holistic health and wellness resort in Hua Hin offering wellness, detox and stress-related programmes.",
+  "source_url": "https://www.chivasom.com/en/"
+ },
+ {
+  "name": "Absolute Sanctuary",
+  "country": "Thailand",
+  "region": "Surat Thani",
+  "city": "Koh Samui",
+  "website": "https://www.absolutesanctuary.com/",
+  "phone": "+66 77 601 190",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion",
+   "Mental health"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Wellness resort on Koh Samui offering mental wellbeing, detox, yoga and longevity programmes.",
+  "source_url": "https://www.absolutesanctuary.com/"
+ },
+ {
+  "name": "Samahita Retreat",
+  "country": "Thailand",
+  "region": "Surat Thani",
+  "city": "Koh Samui",
+  "website": "https://samahitaretreat.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Wellbeing retreat centre on Koh Samui offering yoga, fitness, breathwork and recovery programmes.",
+  "source_url": "https://samahitaretreat.com/"
+ },
+ {
+  "name": "Atmanjai Wellness",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Phuket",
+  "website": "https://www.atmanjai.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Health and detox retreat in Phuket offering detox, fitness, wellbeing and spa programmes.",
+  "source_url": "https://www.atmanjai.com/"
+ },
+ {
+  "name": "Manarom Hospital",
+  "country": "Thailand",
+  "region": "Bangkok",
+  "city": "Bangkok",
+  "website": "https://www.manarom.com/",
+  "phone": "02-032-9595",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Thai, English",
+  "description": "Private psychiatric hospital in Bangkok providing adult, child and elderly psychiatry, inpatient and outpatient care and therapies.",
+  "source_url": "https://www.manarom.com/"
+ },
+ {
+  "name": "Bali Silent Retreat",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Tabanan",
+  "website": "https://www.balisilentretreat.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle",
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Nature retreat in Tabanan offering silence, meditation, mindfulness programmes and organic meals.",
+  "source_url": "https://www.balisilentretreat.com/"
+ },
+ {
+  "name": "Ramsay Clinic Northside",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "St Leonards",
+  "website": "https://www.ramsaymentalhealth.com.au/northside",
+  "phone": "02 9433 3555",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private psychiatric hospital in Sydney's north providing inpatient and day programmes for mental health and addiction.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/northside"
+ },
+ {
+  "name": "Ramsay Clinic Wentworthville",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Wentworthville",
+  "website": "https://www.ramsaymentalhealth.com.au/wentworthville",
+  "phone": "02 8833 2222",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health clinic in western Sydney offering inpatient and day programme psychiatric care.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/wentworthville"
+ },
+ {
+  "name": "Ramsay Clinic Albert Road",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Melbourne",
+  "website": "https://www.ramsaymentalhealth.com.au/albertroad",
+  "phone": "03 9256 8311",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private psychiatric hospital in Melbourne with inpatient, neurostimulation and day programmes for mood, anxiety, addiction and trauma.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/albertroad"
+ },
+ {
+  "name": "Ramsay Clinic New Farm",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "New Farm",
+  "website": "https://www.ramsaymentalhealth.com.au/newfarm",
+  "phone": "1300 290 645",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health facility in Brisbane offering inpatient and day programmes.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/newfarm"
+ },
+ {
+  "name": "Ramsay Clinic Cairns",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Cairns",
+  "website": "https://www.ramsaymentalhealth.com.au/cairns",
+  "phone": "07 4050 7000",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health clinic serving Cairns and Far North Queensland.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/cairns"
+ },
+ {
+  "name": "Ramsay Clinic Adelaide",
+  "country": "Australia",
+  "region": "South Australia",
+  "city": "Gilberton",
+  "website": "https://www.ramsaymentalhealth.com.au/adelaide",
+  "phone": "08 8269 8100",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private mental health clinic in Adelaide offering psychiatric inpatient and day programmes.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/adelaide"
+ },
+ {
+  "name": "Ramsay Clinic Hollywood",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Nedlands",
+  "website": "https://www.ramsaymentalhealth.com.au/hollywood",
+  "phone": "08 9346 6803",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health service in Perth's western suburbs with acute inpatient, neurostimulation and day programmes.",
+  "source_url": "https://www.ramsaymentalhealth.com.au/hollywood"
+ },
+ {
+  "name": "The Melbourne Clinic",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Richmond",
+  "website": "https://themelbourneclinic.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Private psychiatric hospital in Melbourne offering inpatient programmes, day programmes, ECT and TMS.",
+  "source_url": "https://themelbourneclinic.com.au/"
+ },
+ {
+  "name": "The Geelong Clinic",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Geelong",
+  "website": "https://thegeelongclinic.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private mental health hospital in Geelong with programmes for addiction, eating disorders, anxiety, depression and PTSD.",
+  "source_url": "https://thegeelongclinic.com.au/"
+ },
+ {
+  "name": "Pine Rivers Private Hospital",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Strathpine",
+  "website": "https://pineriversprivatehospital.com.au/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Private mental health hospital north of Brisbane with inpatient and day programmes, EMDR, ECT and TMS.",
+  "source_url": "https://pineriversprivatehospital.com.au/"
+ },
+ {
+  "name": "Odyssey House NSW",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Sydney",
+  "website": "https://odysseyhouse.com.au/",
+  "phone": "1800 397 739",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Not-for-profit alcohol and other drug rehabilitation services in Sydney and NSW.",
+  "source_url": "https://odysseyhouse.com.au/"
+ },
+ {
+  "name": "WHOS (We Help Ourselves)",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Sydney",
+  "website": "https://whos.com.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Not-for-profit provider of residential therapeutic communities and day programmes for alcohol and drug dependence in NSW and Queensland.",
+  "source_url": "https://whos.com.au/"
+ },
+ {
+  "name": "Gaia Retreat & Spa",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay hinterland",
+  "website": "https://www.gaiaretreat.com.au/",
+  "phone": "+61 2 6687 1216",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Wellness retreat and spa in the Byron Bay hinterland with tailored wellness stays.",
+  "source_url": "https://www.gaiaretreat.com.au/"
+ },
+ {
+  "name": "Odyssey",
+  "country": "New Zealand",
+  "region": "Auckland",
+  "city": "Auckland",
+  "website": "https://www.odyssey.org.nz/",
+  "phone": "096384957",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Addiction treatment services for adults, youth and families seeking to be free from drug, alcohol and other addiction challenges.",
+  "source_url": "https://www.odyssey.org.nz/"
+ },
+ {
+  "name": "Moana House",
+  "country": "New Zealand",
+  "region": "Otago",
+  "city": "Dunedin",
+  "website": "https://www.moanahouse.org.nz/",
+  "phone": "03-477-0842",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential therapeutic community in Dunedin for adult male offenders addressing addiction and offending.",
+  "source_url": "https://www.moanahouse.org.nz/"
+ },
+ {
+  "name": "CareNZ",
+  "country": "New Zealand",
+  "region": null,
+  "city": null,
+  "website": "https://www.carenz.co.nz/",
+  "phone": "0800499469",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Addiction treatment and recovery support services across New Zealand.",
+  "source_url": "https://www.carenz.co.nz/"
+ },
+ {
+  "name": "Hanmer Clinic",
+  "country": "New Zealand",
+  "region": "Bay of Plenty",
+  "city": "Tauranga",
+  "website": "https://www.hanmerclinic.co.nz/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Addiction treatment programmes and peer support services based in Tauranga.",
+  "source_url": "https://www.hanmerclinic.co.nz/"
+ },
+ {
+  "name": "Tokyo Mental Health",
+  "country": "Japan",
+  "region": "Tokyo",
+  "city": "Tokyo",
+  "website": "https://www.tokyomentalhealth.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English, Japanese",
+  "description": "English-language counselling, psychology and psychiatry services in Tokyo, Okinawa and online by licensed professionals.",
+  "source_url": "https://www.tokyomentalhealth.com/"
+ },
+ {
+  "name": "TELL Japan",
+  "country": "Japan",
+  "region": "Tokyo",
+  "city": "Tokyo",
+  "website": "https://telljp.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Anxiety & depression",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English, Japanese",
+  "description": "Non-profit offering counselling services and a support lifeline in English and Japanese.",
+  "source_url": "https://telljp.com/"
+ },
+ {
+  "name": "Tokyo DARC",
+  "country": "Japan",
+  "region": "Tokyo",
+  "city": "Tokyo",
+  "website": "https://tokyo-darc.org/",
+  "phone": "0338758808",
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Japanese",
+  "description": "Non-profit drug addiction rehabilitation facility supporting people who want to stop using drugs.",
+  "source_url": "https://tokyo-darc.org/"
+ },
+ {
+  "name": "Healience Seon Village",
+  "country": "South Korea",
+  "region": "Gangwon",
+  "city": "Hongcheon",
+  "website": "https://www.healience.co.kr/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "Korean",
+  "description": "Wellness resort in a forest setting focused on healthy lifestyle habits, with healing programmes and trekking courses.",
+  "source_url": "https://www.healience.co.kr/"
+ },
+ {
+  "name": "National Center for Mental Health",
+  "country": "South Korea",
+  "region": "Seoul",
+  "city": "Seoul",
+  "website": "https://www.ncmh.go.kr/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Korean",
+  "description": "National mental health hospital and centre in Seoul.",
+  "source_url": "https://www.ncmh.go.kr/"
+ },
+ {
+  "name": "Ulpotha",
+  "country": "Sri Lanka",
+  "region": "Kurunegala",
+  "city": null,
+  "website": "https://www.ulpotha.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Off-grid yoga and Ayurveda retreat in a traditional village setting in Sri Lanka's interior.",
+  "source_url": "https://www.ulpotha.com/"
+ },
+ {
+  "name": "Santani Wellness Kandy",
+  "country": "Sri Lanka",
+  "region": "Central Province",
+  "city": "Kandy",
+  "website": "https://www.santani.com/santaniwellness-kandy/",
+  "phone": "+94 70 366 9110",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Wellness retreat in the hills near Kandy offering personalised wellbeing, Ayurveda and yoga programmes.",
+  "source_url": "https://www.santani.com/santaniwellness-kandy/"
+ },
+ {
+  "name": "Barberyn Ayurveda Resorts",
+  "country": "Sri Lanka",
+  "region": "Southern Province",
+  "city": "Beruwala",
+  "website": "https://www.barberynresorts.com/",
+  "phone": "+94 34 22 76036",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Group of Ayurveda resorts in Sri Lanka offering traditional Ayurvedic treatment and yoga.",
+  "source_url": "https://www.barberynresorts.com/"
+ },
+ {
+  "name": "Sen Wellness Sanctuary",
+  "country": "Sri Lanka",
+  "region": "Southern Province",
+  "city": null,
+  "website": "https://www.senwellnesssanctuary.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Bespoke retreats in Sri Lanka combining Ayurveda, yoga, meditation and breathwork.",
+  "source_url": "https://www.senwellnesssanctuary.com/"
+ },
+ {
+  "name": "The Farm at San Benito",
+  "country": "Philippines",
+  "region": "Batangas",
+  "city": "Lipa",
+  "website": "https://www.thefarmatsanbenito.com/",
+  "phone": "+63 917 572 2222",
+  "care_level": "Retreat",
+  "focus": [
+   "Anxiety & depression"
+  ],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Medical wellness resort in Batangas offering holistic healing programmes, spas and retreats.",
+  "source_url": "https://www.thefarmatsanbenito.com/"
+ },
+ {
+  "name": "Hope Trust",
+  "country": "India",
+  "region": "Telangana",
+  "city": "Hyderabad",
+  "website": "https://hopetrustindia.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Trauma & PTSD",
+   "Grief & life transitions",
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Mental health and de-addiction centre in Banjara Hills offering therapy, psychiatry, counselling and de-addiction treatment.",
+  "source_url": "https://hopetrustindia.com/"
+ },
+ {
+  "name": "Somatheeram Ayurveda Resort",
+  "country": "India",
+  "region": "Kerala",
+  "city": "Thiruvananthapuram",
+  "website": "https://www.somatheeram.in/",
+  "phone": "+91 81118 86151",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Ayurveda resort and hospital on the Kerala coast offering Ayurvedic treatments and yoga.",
+  "source_url": "https://www.somatheeram.in/"
+ },
+ {
+  "name": "Kopan Monastery",
+  "country": "Nepal",
+  "region": "Kathmandu",
+  "city": "Kathmandu",
+  "website": "https://kopanmonastery.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Buddhist monastery near Kathmandu offering meditation courses and retreats.",
+  "source_url": "https://kopanmonastery.org/"
+ },
+ {
+  "name": "Society for the Aid and Rehabilitation of Drug Abusers (SARDA)",
+  "country": "Hong Kong",
+  "region": null,
+  "city": null,
+  "website": "https://www.sarda.org.hk/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Cantonese, English",
+  "description": "Hong Kong non-profit running drug treatment and rehabilitation services, including the Shek Kwu Chau treatment centre and halfway houses.",
+  "source_url": "https://www.sarda.org.hk/"
+ },
+ {
+  "name": "WE CARE Community Services",
+  "country": "Singapore",
+  "region": "Singapore",
+  "city": "Singapore",
+  "website": "https://www.wecare.org.sg/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Addiction recovery centre providing counselling for drugs, alcohol, gambling, gaming and other compulsive behaviours.",
+  "source_url": "https://www.wecare.org.sg/"
+ },
+ {
+  "name": "Phuket Cleanse",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Rawai",
+  "website": "https://www.phuketcleanse.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "All-inclusive wellness retreat in Rawai combining fitness, health food and recovery activities.",
+  "source_url": "https://www.phuketcleanse.com/"
+ },
+ {
+  "name": "Tao Garden Health Spa & Resort",
+  "country": "Thailand",
+  "region": "Chiang Mai",
+  "city": null,
+  "website": "https://taogarden.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Health spa resort near Chiang Mai offering detox, healing and rejuvenation programmes based on Tao teachings and wellness practices.",
+  "source_url": "https://taogarden.com/"
+ },
+ {
+  "name": "Amatara Wellness Resort",
+  "country": "Thailand",
+  "region": "Phuket",
+  "city": "Cape Panwa",
+  "website": "https://amatara.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Wellness resort in Phuket offering spa, detox and wellbeing programmes.",
+  "source_url": "https://amatara.com/"
+ },
+ {
+  "name": "Orion Healing Centre",
+  "country": "Thailand",
+  "region": "Surat Thani",
+  "city": "Koh Phangan",
+  "website": "https://www.orionhealing.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Beachfront centre on Koh Phangan offering yoga, detox programmes, Reiki and healing sessions.",
+  "source_url": "https://www.orionhealing.com/"
+ },
+ {
+  "name": "Fivelements Ubud",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Ubud",
+  "website": "https://fivelements.com/ubud/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Jungle"
+  ],
+  "languages": "English",
+  "description": "Riverside wellness retreat near Ubud combining Balinese healing traditions, yoga and plant-based cuisine in structured programmes.",
+  "source_url": "https://fivelements.com/ubud/"
+ },
+ {
+  "name": "Bali Usada Meditation",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": null,
+  "website": "https://baliusada.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [],
+  "languages": "Indonesian",
+  "description": "Health meditation organisation in Bali teaching meditation techniques aimed at physical and mental wellbeing.",
+  "source_url": "https://baliusada.com/"
+ },
+ {
+  "name": "Wandi Nerida",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Sunshine Coast",
+  "website": "https://wandinerida.org.au/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Eating disorders"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Residential eating disorder treatment centre on the Sunshine Coast with 13 beds and individualised 60 to 90-day multidisciplinary programmes.",
+  "source_url": "https://wandinerida.org.au/"
+ },
+ {
+  "name": "Eden Retreat",
+  "country": "Australia",
+  "region": "Queensland",
+  "city": "Currumbin Valley",
+  "website": "https://eden.com.au/",
+  "phone": "1800 074 157",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Health and wellbeing retreat in the Gold Coast hinterland focused on nature, nourishment and rest.",
+  "source_url": "https://eden.com.au/"
+ },
+ {
+  "name": "Peninsula Hot Springs",
+  "country": "Australia",
+  "region": "Victoria",
+  "city": "Fingal",
+  "website": "https://www.peninsulahotsprings.com/",
+  "phone": "+61 3 5950 8777",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Hot springs"
+  ],
+  "languages": "English",
+  "description": "Geothermal hot springs bathing and wellness centre on the Mornington Peninsula.",
+  "source_url": "https://www.peninsulahotsprings.com/"
+ },
+ {
+  "name": "Byron Yoga Centre",
+  "country": "Australia",
+  "region": "New South Wales",
+  "city": "Byron Bay",
+  "website": "https://www.byronyoga.com/",
+  "phone": "+61 2 6685 8327",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Yoga retreat centre in Byron Bay offering residential yoga retreats, day retreats and teacher trainings.",
+  "source_url": "https://www.byronyoga.com/"
+ },
+ {
+  "name": "Fresh Start Recovery Programme",
+  "country": "Australia",
+  "region": "Western Australia",
+  "city": "Perth",
+  "website": "https://www.freshstart.org.au/",
+  "phone": "08 9381 1333",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Perth addiction treatment service with detox support accommodation, a 26-week residential recovery programme for men in Northam and shared housing.",
+  "source_url": "https://www.freshstart.org.au/"
+ },
+ {
+  "name": "Aro Ha Wellness Retreat",
+  "country": "New Zealand",
+  "region": "Otago",
+  "city": "Glenorchy",
+  "website": "https://www.aro-ha.com/",
+  "phone": "+64 3 442 7011",
+  "care_level": "Retreat",
+  "focus": [
+   "Burnout & exhaustion"
+  ],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Wellness retreat near Glenorchy with guided hiking, yoga, massage and plant-based food programmes.",
+  "source_url": "https://www.aro-ha.com/"
+ },
+ {
+  "name": "Shreyas Retreat",
+  "country": "India",
+  "region": "Karnataka",
+  "city": "Bengaluru",
+  "website": "https://www.shreyasretreat.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Wellness retreat near Bangalore combining Ayurveda, yoga and naturopathy.",
+  "source_url": "https://www.shreyasretreat.com/"
+ },
+ {
+  "name": "Kalari Rasayana",
+  "country": "India",
+  "region": "Kerala",
+  "city": "Kollam",
+  "website": "https://www.cghearthayurveda.com/kalari-rasayana/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Ayurveda hospital and retreat in Kerala offering traditional Ayurvedic therapies and healing programmes.",
+  "source_url": "https://www.cghearthayurveda.com/kalari-rasayana/"
+ },
+ {
+  "name": "Parmarth Niketan",
+  "country": "India",
+  "region": "Uttarakhand",
+  "city": "Rishikesh",
+  "website": "https://parmarth.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "Mountains"
+  ],
+  "languages": "English",
+  "description": "Ashram on the banks of the Ganges in Rishikesh offering yoga, meditation and spiritual programmes.",
+  "source_url": "https://parmarth.org/"
+ },
+ {
+  "name": "Hariharalaya Yoga & Meditation Retreat",
+  "country": "Cambodia",
+  "region": "Siem Reap",
+  "city": "Siem Reap",
+  "website": "https://hariharalaya.com/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Grief & life transitions"
+  ],
+  "setting": [
+   "Countryside"
+  ],
+  "languages": "English",
+  "description": "Yoga and meditation retreat near Siem Reap with 6-day immersion and 16-day life reset programmes including a digital detox.",
+  "source_url": "https://hariharalaya.com/"
+ },
+ {
+  "name": "Angkor Grace Wellness Resort",
+  "country": "Cambodia",
+  "region": "Siem Reap",
+  "city": "Siem Reap",
+  "website": "https://angkorgrace.com/",
+  "phone": "+855 63 900 288",
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [
+   "City"
+  ],
+  "languages": "English",
+  "description": "Wellness resort in Siem Reap offering spa, yoga and sound healing inspired by Khmer healing practices.",
+  "source_url": "https://angkorgrace.com/"
+ },
+ {
+  "name": "Navutu Dreams",
+  "country": "Cambodia",
+  "region": "Siem Reap",
+  "city": "Siem Reap",
+  "website": "https://navuturesorts.com/siem-reap/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [],
+  "setting": [],
+  "languages": "English",
+  "description": "Wellness resort in Siem Reap with yoga and wellness activities set in gardens.",
+  "source_url": "https://navuturesorts.com/siem-reap/"
+ },
+ {
+  "name": "Sahwan International Rehab Centre",
+  "country": "Thailand",
+  "region": "Prachuap Khiri Khan",
+  "city": "Hua Hin",
+  "website": "https://sahwan.rehab/",
+  "phone": null,
+  "care_level": "Medically supervised",
+  "focus": [
+   "Alcohol & substance use",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Residential rehab centre in Hua Hin offering medically supervised addiction treatment, including alcohol and drug detox.",
+  "source_url": "https://sahwan.rehab/"
+ },
+ {
+  "name": "SafeHouse Rehab",
+  "country": "Thailand",
+  "region": null,
+  "city": null,
+  "website": "https://safehouserehab.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [
+   "Ocean"
+  ],
+  "languages": "English",
+  "description": "Drug and alcohol addiction treatment centre in a beach setting in Thailand with staged primary treatment, sober living and aftercare.",
+  "source_url": "https://safehouserehab.com/"
+ },
+ {
+  "name": "Wat Thamkrabok",
+  "country": "Thailand",
+  "region": "Saraburi",
+  "city": "Phra Phutthabat",
+  "website": "https://wat-thamkrabok.org/",
+  "phone": null,
+  "care_level": "Retreat",
+  "focus": [
+   "Alcohol & substance use"
+  ],
+  "setting": [],
+  "languages": "Thai, English",
+  "description": "Buddhist temple running a traditional drug and alcohol detoxification and rehabilitation programme.",
+  "source_url": "https://wat-thamkrabok.org/"
+ },
+ {
+  "name": "Somdet Chaopraya Institute of Psychiatry",
+  "country": "Thailand",
+  "region": "Bangkok",
+  "city": "Bangkok",
+  "website": "https://www.somdet.go.th/",
+  "phone": "02-442-2500",
+  "care_level": "Medically supervised",
+  "focus": [
+   "Mental health"
+  ],
+  "setting": [
+   "City"
+  ],
+  "languages": "Thai",
+  "description": "Public psychiatric institute and hospital in Bangkok.",
+  "source_url": "https://www.somdet.go.th/"
+ },
+ {
+  "name": "Prana Bali",
+  "country": "Indonesia",
+  "region": "Bali",
+  "city": "Ubud",
+  "website": "https://pranabali.com/",
+  "phone": null,
+  "care_level": "Clinical program",
+  "focus": [
+   "Alcohol & substance use",
+   "Anxiety & depression",
+   "Burnout & exhaustion",
+   "Eating disorders",
+   "Mental health"
+  ],
+  "setting": [],
+  "languages": "English",
+  "description": "Holistic mental health and rehab retreat in Bali addressing alcohol, drugs, anxiety, burnout, stress and eating disorders.",
+  "source_url": "https://pranabali.com/"
+ }
+]
