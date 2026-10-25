@@ -7,6 +7,7 @@ import { generateObject } from 'ai'
 import { z } from 'zod'
 import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
+import { stripInvisibleDeep } from '@/lib/strip-invisible'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -51,10 +52,13 @@ Write a better SEO title and meta description, and generate appropriate JSON-LD 
       prompt,
       system: 'You are Forge, an elite SEO strategist. Produce ready-to-ship, on-brand output. Titles 50-60 chars, meta descriptions 140-160 chars. JSON-LD must be valid schema.org and reflect the real page type.',
     })
+    // Model output ships to the user's site, so strip any invisible characters
+    // before it goes anywhere. See lib/strip-invisible.ts.
+    const clean = stripInvisibleDeep(object)
     // Validate the JSON-LD parses; if not, drop it rather than ship broken markup.
-    let jsonLd = object.jsonLd
+    let jsonLd = clean.jsonLd
     try { JSON.parse(jsonLd) } catch { jsonLd = '' }
-    return Response.json({ ...object, jsonLd })
+    return Response.json({ ...clean, jsonLd })
   } catch (err) {
     console.error('[forge/rewrite] error', err)
     return Response.json(

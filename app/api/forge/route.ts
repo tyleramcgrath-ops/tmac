@@ -8,6 +8,7 @@
 import { streamText } from 'ai'
 import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
+import { createInvisibleStripper } from '@/lib/strip-invisible'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -52,7 +53,20 @@ export async function POST(req: Request) {
       messages,
       onError: (e) => console.error('[forge] stream error', e),
     })
-    return result.toTextStreamResponse()
+    // Same guarantee as the non-streaming routes: no invisible characters reach
+    // the client. The stripper holds back only the trailing characters whose
+    // classification depends on the next chunk.
+    return new Response(
+      result.textStream
+        .pipeThrough(createInvisibleStripper())
+        .pipeThrough(new TextEncoderStream()),
+      {
+        headers: {
+          'content-type': 'text/plain; charset=utf-8',
+          'cache-control': 'no-store',
+        },
+      }
+    )
   } catch (err) {
     console.error('[forge] error', err)
     return Response.json(

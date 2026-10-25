@@ -10,6 +10,7 @@ import { generateObject } from 'ai'
 import { z } from 'zod'
 import { DEFAULT_MODEL } from '@/ai/constants'
 import { getModelOptions } from '@/ai/gateway'
+import { stripInvisibleDeep } from '@/lib/strip-invisible'
 import { audit, enforceRateLimit, handled, HttpError, requireProjectRole, requireUser } from '@/lib/foundation/auth'
 import { getStore } from '@/lib/foundation/store'
 import { latestScanPages } from '@/lib/foundation/operator/context'
@@ -92,7 +93,9 @@ export const POST = handled(async (request, { params }) => {
         system:
           'You are Forge, an elite SEO content strategist. Write genuinely useful, original blog posts that satisfy real search intent — never thin, generic, or copied from competitors. Titles 50-60 chars, meta descriptions 140-160 chars. Body HTML must be clean and semantic.',
       })
-      object = result.object
+      // Strip invisible characters before the draft is stored, so everything
+      // downstream — preview, edit, WordPress publish — works from clean text.
+      object = stripInvisibleDeep(result.object)
     } catch (err) {
       console.error('[content/generate] error', err)
       throw new HttpError(502, 'AI generation failed. Ensure AI Gateway (AI_GATEWAY_API_KEY) is configured in your environment.')
