@@ -18,6 +18,7 @@ jobs:
           - apps/lawmatchnow
           - apps/north-star-hq
           - apps/reloop
+          - apps/zillow-killer
           - apps/saysites
           - seo-intel
           - shorts
