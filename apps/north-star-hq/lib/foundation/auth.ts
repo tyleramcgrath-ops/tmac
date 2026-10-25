@@ -6,7 +6,7 @@
 // role. Tenant isolation lives here — routes never trust client-sent org
 // or project ownership claims.
 
-import { randomUUID } from 'crypto'
+import { randomUUID, timingSafeEqual } from 'crypto'
 import { createSessionToken, readSessionToken } from './crypto'
 import { getStore } from './store'
 import { clientKey, rateLimit } from './rate-limit'
@@ -45,7 +45,44 @@ function tokenFromRequest(request: Request): string | null {
   return m ? m[1] : null
 }
 
+// Agent access. The Compass's agent runtime (Hermes) lives outside the browser
+// and has no session cookie, but the questions worth asking it — "how is
+// visibility trending", "what did the roster do overnight" — need the same
+// data the room shows. Rather than duplicate every route's engine composition
+// behind a second, machine-only API, the agent authenticates AS a specific
+// user and calls the real routes.
+//
+// Deliberately narrow, and off unless BOTH variables are set:
+//   AGENT_SECRET   — bearer token, >= 32 chars
+//   AGENT_USER_ID  — the single user the agent acts as
+//
+// This is a full-account bearer credential for that one user, so it is only
+// appropriate for a single-operator deployment. It must never be handed to a
+// customer-facing surface: there is no per-request scoping here, and anything
+// holding the secret can do whatever that user can. A multi-tenant Compass
+// needs per-user tokens and a scoped API instead — not this.
+async function agentUser(request: Request): Promise<User | null> {
+  const secret = process.env.AGENT_SECRET
+  const userId = process.env.AGENT_USER_ID
+  if (!secret || !userId || secret.length < 32) return null
+
+  const header = request.headers.get('authorization') ?? ''
+  if (!header.startsWith('Bearer ')) return null
+  const presented = header.slice(7)
+
+  // Constant-time compare. A length check first because timingSafeEqual throws
+  // on mismatched lengths, and the length itself is not worth protecting.
+  if (presented.length !== secret.length) return null
+  if (!timingSafeEqual(Buffer.from(presented), Buffer.from(secret))) return null
+
+  const store = await getStore()
+  return (await store.getUserById(userId)) ?? null
+}
+
 export async function currentUser(request: Request): Promise<User | null> {
+  const agent = await agentUser(request)
+  if (agent) return agent
+
   const token = tokenFromRequest(request)
   if (!token) return null
   const claims = await readSessionToken(token)

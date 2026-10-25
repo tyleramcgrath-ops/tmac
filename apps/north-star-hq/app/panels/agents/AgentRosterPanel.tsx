@@ -5,6 +5,7 @@ import { Telescope, Map, Hammer, Rocket, ShieldCheck } from 'lucide-react'
 import { api, ApiError, type AgentId, type AgentRosterDTO } from '../../lib/client'
 import { useLivePoll } from '../../_lib/use-live-poll'
 import { deriveCompassSignal } from '../../_lib/agent-signal'
+import RunScanButton from './RunScanButton'
 import type { CompassState } from '../../compass'
 
 const STATUS_LABEL: Record<string, string> = {
@@ -32,11 +33,15 @@ export default function AgentRosterPanel({
   projectsResolved,
   panelsUp,
   onCompassSignal,
+  domain,
 }: {
   projectId: string | null
   projectsResolved: boolean
   panelsUp: boolean
   onCompassSignal: (s: CompassState | null) => void
+  // Needed to start a crawl. Absent on the empty-project path, where the
+  // button hides itself rather than offering to scan nothing.
+  domain?: string | null
 }) {
   const { data, error } = useLivePoll<{ roster: AgentRosterDTO }>(
     async () => {
@@ -115,6 +120,9 @@ export default function AgentRosterPanel({
           )
         })}
       </ul>
+      {/* Without this the roster is read-only and the agents have no way to
+          ever leave 'Nothing yet' from inside the room. */}
+      <RunScanButton projectId={projectId} domain={domain ?? null} />
     </>
   )
 }
