@@ -1,0 +1,17 @@
+/*
+Theme Name: Relative Marketing Agency
+Theme URI: https://relativemarketing.agency
+Author: RMA
+Author URI: https://relativemarketing.agency
+Description: A modern, conversion-focused WordPress theme for Relative Marketing Agency (RMA). AI-powered marketing systems design with a full set of page templates: Home, Services, Service Details, About, Case Studies, Blog, Single Post, Contact, Careers and a custom 404.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.5
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: rma
+Tags: business, agency, marketing, two-columns, custom-menu, featured-images, blog
+*/
+
+/* All visual styles live in /assets/css/theme.css (enqueued in functions.php). */
