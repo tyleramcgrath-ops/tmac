@@ -1,0 +1,38 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Everyone sees the Lambo. And the watch on the wrist."
+    },
+    {
+      "id": "02",
+      "text": "Five years later, only one of them is still worth the money."
+    },
+    {
+      "id": "03",
+      "text": "A twenty twenty Lamborghini Urus: two hundred eleven grand new. Today? About one thirty-nine. Down thirty-four percent."
+    },
+    {
+      "id": "04",
+      "text": "A steel Rolex Daytona: sixteen thousand nine hundred at retail. Resale? About thirty-two thousand."
+    },
+    {
+      "id": "05",
+      "text": "A Patek Nautilus: thirty-five grand new. Now around a hundred twenty-four thousand."
+    },
+    {
+      "id": "06",
+      "text": "The catch? Almost nobody gets one at retail. And the Rolex market is down eight percent in five years."
+    },
+    {
+      "id": "07",
+      "text": "The car lost seventy-two grand. The watch made fifteen. Watch, or car?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Aspen chalets don't rent for just Christmas week."
+    },
+    {
+      "id": "02",
+      "text": "Five bedrooms in Snowmass. Hot tub in the snow. Room for ten."
+    },
+    {
+      "id": "03",
+      "text": "The holiday rate: seventy-two thousand a week."
+    },
+    {
+      "id": "04",
+      "text": "And the minimum stay is fourteen nights: a hundred forty-four thousand."
+    },
+    {
+      "id": "05",
+      "text": "Ten skiers, one week of lift tickets: about nineteen and a half thousand."
+    },
+    {
+      "id": "06",
+      "text": "A private chef for two weeks: about twelve thousand, plus food."
+    },
+    {
+      "id": "07",
+      "text": "Before tips and tax: about a hundred seventy-five thousand dollars."
+    },
+    {
+      "id": "08",
+      "text": "That's seventeen thousand five hundred a guest. Would you split it?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

@@ -1,0 +1,707 @@
+{
+  "bgm": {
+    "path": "assets/bgm/dark-pulse.mp3",
+    "volume": 0.18
+  },
+  "bgm_pending": false,
+  "voices": [
+    {
+      "frame": 1,
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.736,
+      "words": [
+        {
+          "id": "w0",
+          "text": "This",
+          "start": 0.07,
+          "end": 0.32
+        },
+        {
+          "id": "w1",
+          "text": "Lamborghini",
+          "start": 0.32,
+          "end": 1.2
+        },
+        {
+          "id": "w2",
+          "text": "costs",
+          "start": 1.2,
+          "end": 1.6
+        },
+        {
+          "id": "w3",
+          "text": "$250,000.",
+          "start": 1.6,
+          "end": 3.54
+        },
+        {
+          "id": "w4",
+          "text": "That's",
+          "start": 3.61,
+          "end": 3.87
+        },
+        {
+          "id": "w5",
+          "text": "the",
+          "start": 3.87,
+          "end": 4.04
+        },
+        {
+          "id": "w6",
+          "text": "cheap",
+          "start": 4.04,
+          "end": 4.32
+        },
+        {
+          "id": "w7",
+          "text": "part.",
+          "start": 4.32,
+          "end": 4.74
+        }
+      ]
+    },
+    {
+      "frame": 2,
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.203,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Sales",
+          "start": 0.08,
+          "end": 0.49
+        },
+        {
+          "id": "w1",
+          "text": "tax",
+          "start": 0.49,
+          "end": 0.78
+        },
+        {
+          "id": "w2",
+          "text": "alone",
+          "start": 0.78,
+          "end": 1.07
+        },
+        {
+          "id": "w3",
+          "text": "about",
+          "start": 1.43,
+          "end": 1.6
+        },
+        {
+          "id": "w4",
+          "text": "$17",
+          "start": 1.6,
+          "end": 1.98
+        },
+        {
+          "id": "w5",
+          "text": "and",
+          "start": 1.98,
+          "end": 2.17
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.17,
+          "end": 2.23
+        },
+        {
+          "id": "w7",
+          "text": "half",
+          "start": 2.23,
+          "end": 2.37
+        },
+        {
+          "id": "w8",
+          "text": "thousand",
+          "start": 2.5,
+          "end": 2.87
+        },
+        {
+          "id": "w9",
+          "text": "gone",
+          "start": 3.18,
+          "end": 3.41
+        },
+        {
+          "id": "w10",
+          "text": "on",
+          "start": 3.41,
+          "end": 3.55
+        },
+        {
+          "id": "w11",
+          "text": "day",
+          "start": 3.55,
+          "end": 3.76
+        },
+        {
+          "id": "w12",
+          "text": "one.",
+          "start": 3.76,
+          "end": 4.04
+        }
+      ]
+    },
+    {
+      "frame": 3,
+      "path": "assets/voice/03.wav",
+      "duration_s": 7.531,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Then",
+          "start": 0.05,
+          "end": 0.35
+        },
+        {
+          "id": "w1",
+          "text": "depreciation.",
+          "start": 0.43,
+          "end": 1.6
+        },
+        {
+          "id": "w2",
+          "text": "The",
+          "start": 1.66,
+          "end": 1.82
+        },
+        {
+          "id": "w3",
+          "text": "Urus",
+          "start": 1.82,
+          "end": 2.11
+        },
+        {
+          "id": "w4",
+          "text": "loses",
+          "start": 2.11,
+          "end": 2.47
+        },
+        {
+          "id": "w5",
+          "text": "about",
+          "start": 2.47,
+          "end": 2.66
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.66,
+          "end": 3.21
+        },
+        {
+          "id": "w7",
+          "text": "third",
+          "start": 3.21,
+          "end": 3.3
+        },
+        {
+          "id": "w8",
+          "text": "of",
+          "start": 3.3,
+          "end": 3.43
+        },
+        {
+          "id": "w9",
+          "text": "its",
+          "start": 3.43,
+          "end": 3.62
+        },
+        {
+          "id": "w10",
+          "text": "value",
+          "start": 3.62,
+          "end": 3.96
+        },
+        {
+          "id": "w11",
+          "text": "in",
+          "start": 3.96,
+          "end": 4.2
+        },
+        {
+          "id": "w12",
+          "text": "five",
+          "start": 4.2,
+          "end": 4.52
+        },
+        {
+          "id": "w13",
+          "text": "years.",
+          "start": 4.68,
+          "end": 5.28
+        },
+        {
+          "id": "w14",
+          "text": "That's",
+          "start": 5.34,
+          "end": 5.63
+        },
+        {
+          "id": "w15",
+          "text": "roughly",
+          "start": 5.71,
+          "end": 6.09
+        },
+        {
+          "id": "w16",
+          "text": "$17,000",
+          "start": 6.09,
+          "end": 7.14
+        },
+        {
+          "id": "w17",
+          "text": "a",
+          "start": 7.14,
+          "end": 7.2
+        },
+        {
+          "id": "w18",
+          "text": "year.",
+          "start": 7.2,
+          "end": 7.68
+        }
+      ]
+    },
+    {
+      "frame": 4,
+      "path": "assets/voice/04.wav",
+      "duration_s": 6.891,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Insurance",
+          "start": 0.04,
+          "end": 0.68
+        },
+        {
+          "id": "w1",
+          "text": "runs",
+          "start": 0.68,
+          "end": 0.98
+        },
+        {
+          "id": "w2",
+          "text": "around",
+          "start": 0.98,
+          "end": 1.42
+        },
+        {
+          "id": "w3",
+          "text": "$6,600,",
+          "start": 1.5,
+          "end": 2.64
+        },
+        {
+          "id": "w4",
+          "text": "a",
+          "start": 2.65,
+          "end": 2.69
+        },
+        {
+          "id": "w5",
+          "text": "dealer",
+          "start": 2.69,
+          "end": 3.02
+        },
+        {
+          "id": "w6",
+          "text": "service",
+          "start": 3.02,
+          "end": 3.46
+        },
+        {
+          "id": "w7",
+          "text": "about",
+          "start": 3.48,
+          "end": 3.72
+        },
+        {
+          "id": "w8",
+          "text": "$2,000,",
+          "start": 3.84,
+          "end": 4.8
+        },
+        {
+          "id": "w9",
+          "text": "a",
+          "start": 4.83,
+          "end": 4.88
+        },
+        {
+          "id": "w10",
+          "text": "set",
+          "start": 4.88,
+          "end": 5.12
+        },
+        {
+          "id": "w11",
+          "text": "of",
+          "start": 5.12,
+          "end": 5.27
+        },
+        {
+          "id": "w12",
+          "text": "tires",
+          "start": 5.27,
+          "end": 5.68
+        },
+        {
+          "id": "w13",
+          "text": "$3,000.",
+          "start": 5.68,
+          "end": 6.78
+        }
+      ]
+    },
+    {
+      "frame": 5,
+      "path": "assets/voice/05.wav",
+      "duration_s": 6.912,
+      "words": [
+        {
+          "id": "w0",
+          "text": "and",
+          "start": 0.12,
+          "end": 0.27
+        },
+        {
+          "id": "w1",
+          "text": "the",
+          "start": 0.27,
+          "end": 0.54
+        },
+        {
+          "id": "w2",
+          "text": "one",
+          "start": 0.54,
+          "end": 0.8
+        },
+        {
+          "id": "w3",
+          "text": "nobody",
+          "start": 0.8,
+          "end": 1.27
+        },
+        {
+          "id": "w4",
+          "text": "counts,",
+          "start": 1.43,
+          "end": 2.02
+        },
+        {
+          "id": "w5",
+          "text": "that",
+          "start": 2.02,
+          "end": 2.2
+        },
+        {
+          "id": "w6",
+          "text": "quarter",
+          "start": 2.26,
+          "end": 2.58
+        },
+        {
+          "id": "w7",
+          "text": "million",
+          "start": 2.58,
+          "end": 2.89
+        },
+        {
+          "id": "w8",
+          "text": "invested",
+          "start": 3,
+          "end": 3.51
+        },
+        {
+          "id": "w9",
+          "text": "at",
+          "start": 3.51,
+          "end": 3.61
+        },
+        {
+          "id": "w10",
+          "text": "5%",
+          "start": 3.77,
+          "end": 4.47
+        },
+        {
+          "id": "w11",
+          "text": "would",
+          "start": 4.86,
+          "end": 4.96
+        },
+        {
+          "id": "w12",
+          "text": "have",
+          "start": 4.96,
+          "end": 5.04
+        },
+        {
+          "id": "w13",
+          "text": "earned",
+          "start": 5.04,
+          "end": 5.28
+        },
+        {
+          "id": "w14",
+          "text": "you",
+          "start": 5.28,
+          "end": 5.36
+        },
+        {
+          "id": "w15",
+          "text": "$12,500.",
+          "start": 5.36,
+          "end": 6.67
+        }
+      ]
+    },
+    {
+      "frame": 6,
+      "path": "assets/voice/06.wav",
+      "duration_s": 6.336,
+      "words": [
+        {
+          "id": "w0",
+          "text": "$58,700",
+          "start": 0.08,
+          "end": 1.92
+        },
+        {
+          "id": "w1",
+          "text": "in",
+          "start": 1.92,
+          "end": 2.13
+        },
+        {
+          "id": "w2",
+          "text": "year",
+          "start": 2.13,
+          "end": 2.56
+        },
+        {
+          "id": "w3",
+          "text": "one",
+          "start": 2.56,
+          "end": 2.64
+        },
+        {
+          "id": "w4",
+          "text": "on",
+          "start": 2.93,
+          "end": 3.13
+        },
+        {
+          "id": "w5",
+          "text": "top",
+          "start": 3.13,
+          "end": 3.47
+        },
+        {
+          "id": "w6",
+          "text": "of",
+          "start": 3.47,
+          "end": 3.69
+        },
+        {
+          "id": "w7",
+          "text": "the",
+          "start": 3.69,
+          "end": 3.82
+        },
+        {
+          "id": "w8",
+          "text": "car,",
+          "start": 4.38,
+          "end": 4.4
+        },
+        {
+          "id": "w9",
+          "text": "about",
+          "start": 4.42,
+          "end": 4.64
+        },
+        {
+          "id": "w10",
+          "text": "$4,900",
+          "start": 4.82,
+          "end": 5.8
+        },
+        {
+          "id": "w11",
+          "text": "a",
+          "start": 5.8,
+          "end": 5.85
+        },
+        {
+          "id": "w12",
+          "text": "month.",
+          "start": 5.85,
+          "end": 6.23
+        }
+      ]
+    },
+    {
+      "frame": 7,
+      "path": "assets/voice/07.wav",
+      "duration_s": 3.755,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Looking",
+          "start": 0.05,
+          "end": 0.44
+        },
+        {
+          "id": "w1",
+          "text": "rich",
+          "start": 0.44,
+          "end": 0.69
+        },
+        {
+          "id": "w2",
+          "text": "and",
+          "start": 0.69,
+          "end": 0.88
+        },
+        {
+          "id": "w3",
+          "text": "being",
+          "start": 0.88,
+          "end": 1.2
+        },
+        {
+          "id": "w4",
+          "text": "rich",
+          "start": 1.2,
+          "end": 1.45
+        },
+        {
+          "id": "w5",
+          "text": "are",
+          "start": 1.45,
+          "end": 1.64
+        },
+        {
+          "id": "w6",
+          "text": "different",
+          "start": 1.64,
+          "end": 2.07
+        },
+        {
+          "id": "w7",
+          "text": "math,",
+          "start": 2.2,
+          "end": 2.52
+        },
+        {
+          "id": "w8",
+          "text": "still",
+          "start": 2.57,
+          "end": 2.83
+        },
+        {
+          "id": "w9",
+          "text": "want",
+          "start": 2.83,
+          "end": 3
+        },
+        {
+          "id": "w10",
+          "text": "the",
+          "start": 3.08,
+          "end": 3.27
+        },
+        {
+          "id": "w11",
+          "text": "Lambo?",
+          "start": 3.27,
+          "end": 3.64
+        }
+      ]
+    }
+  ],
+  "sfx": [
+    {
+      "frame": 1,
+      "file": "assets/sfx/impact-bass-1.mp3",
+      "offset_s": 0,
+      "duration_s": 2.12,
+      "volume": 0.35
+    },
+    {
+      "frame": 1,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 0,
+      "duration_s": 0.57,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/impact-bass-2.mp3",
+      "offset_s": 0,
+      "duration_s": 2.59,
+      "volume": 0.35
+    },
+    {
+      "frame": 2,
+      "file": "assets/sfx/ping.mp3",
+      "offset_s": 0,
+      "duration_s": 1.32,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/whoosh-short.mp3",
+      "offset_s": 0,
+      "duration_s": 0.57,
+      "volume": 0.35
+    },
+    {
+      "frame": 3,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0,
+      "duration_s": 0.37,
+      "volume": 0.35
+    },
+    {
+      "frame": 4,
+      "file": "assets/sfx/click.mp3",
+      "offset_s": 0,
+      "duration_s": 0.37,
+      "volume": 0.35
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/riser.mp3",
+      "offset_s": 0,
+      "duration_s": 10.03,
+      "volume": 0.35
+    },
+    {
+      "frame": 5,
+      "file": "assets/sfx/impact-bass-1.mp3",
+      "offset_s": 0,
+      "duration_s": 2.12,
+      "volume": 0.35
+    },
+    {
+      "frame": 6,
+      "file": "assets/sfx/impact-bass-2.mp3",
+      "offset_s": 0,
+      "duration_s": 2.59,
+      "volume": 0.35
+    },
+    {
+      "frame": 7,
+      "file": "assets/sfx/whoosh-cinematic.mp3",
+      "offset_s": 0,
+      "duration_s": 5.54,
+      "volume": 0.35
+    }
+  ]
+}

@@ -1,0 +1,481 @@
+{
+  "tts_provider": "kokoro",
+  "voice_id": "am_michael",
+  "bgm": null,
+  "bgm_pending": false,
+  "bgm_provider": null,
+  "bgm_pid": null,
+  "bgm_log": null,
+  "bgm_mode": null,
+  "bgm_target_duration_s": null,
+  "bgm_seed_duration_s": null,
+  "bgm_loop_count": null,
+  "voices": [
+    {
+      "id": "01",
+      "path": "assets/voice/01.wav",
+      "duration_s": 4.352,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Billionaire",
+          "start": 0.04,
+          "end": 0.67
+        },
+        {
+          "id": "w1",
+          "text": "weddings",
+          "start": 0.67,
+          "end": 1.15
+        },
+        {
+          "id": "w2",
+          "text": "make",
+          "start": 1.25,
+          "end": 1.37
+        },
+        {
+          "id": "w3",
+          "text": "headlines.",
+          "start": 1.39,
+          "end": 2.15
+        },
+        {
+          "id": "w4",
+          "text": "Here's",
+          "start": 2.2,
+          "end": 2.56
+        },
+        {
+          "id": "w5",
+          "text": "what",
+          "start": 2.56,
+          "end": 2.83
+        },
+        {
+          "id": "w6",
+          "text": "a",
+          "start": 2.83,
+          "end": 2.89
+        },
+        {
+          "id": "w7",
+          "text": "luxury",
+          "start": 2.89,
+          "end": 3.29
+        },
+        {
+          "id": "w8",
+          "text": "one",
+          "start": 3.29,
+          "end": 3.49
+        },
+        {
+          "id": "w9",
+          "text": "really",
+          "start": 3.49,
+          "end": 3.77
+        },
+        {
+          "id": "w10",
+          "text": "costs.",
+          "start": 3.89,
+          "end": 4.48
+        }
+      ]
+    },
+    {
+      "id": "02",
+      "path": "assets/voice/02.wav",
+      "duration_s": 4.203,
+      "words": [
+        {
+          "id": "w0",
+          "text": "A",
+          "start": 0.04,
+          "end": 0.08
+        },
+        {
+          "id": "w1",
+          "text": "private",
+          "start": 0.15,
+          "end": 0.62
+        },
+        {
+          "id": "w2",
+          "text": "estate,",
+          "start": 0.68,
+          "end": 1.27
+        },
+        {
+          "id": "w3",
+          "text": "walls",
+          "start": 1.27,
+          "end": 1.63
+        },
+        {
+          "id": "w4",
+          "text": "of",
+          "start": 1.63,
+          "end": 1.79
+        },
+        {
+          "id": "w5",
+          "text": "flowers,",
+          "start": 1.79,
+          "end": 2.48
+        },
+        {
+          "id": "w6",
+          "text": "dinner",
+          "start": 2.57,
+          "end": 2.9
+        },
+        {
+          "id": "w7",
+          "text": "for",
+          "start": 2.9,
+          "end": 3.11
+        },
+        {
+          "id": "w8",
+          "text": "150",
+          "start": 3.11,
+          "end": 3.73
+        },
+        {
+          "id": "w9",
+          "text": "guests.",
+          "start": 3.73,
+          "end": 4.16
+        }
+      ]
+    },
+    {
+      "id": "03",
+      "path": "assets/voice/03.wav",
+      "duration_s": 2.453,
+      "words": [
+        {
+          "id": "w0",
+          "text": "the",
+          "start": 0.04,
+          "end": 0.18
+        },
+        {
+          "id": "w1",
+          "text": "venue",
+          "start": 0.18,
+          "end": 0.48
+        },
+        {
+          "id": "w2",
+          "text": "alone,",
+          "start": 0.48,
+          "end": 0.8
+        },
+        {
+          "id": "w3",
+          "text": "$50,000.",
+          "start": 0.96,
+          "end": 2.31
+        }
+      ]
+    },
+    {
+      "id": "04",
+      "path": "assets/voice/04.wav",
+      "duration_s": 3.477,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Dinner",
+          "start": 0.07,
+          "end": 0.53
+        },
+        {
+          "id": "w1",
+          "text": "and",
+          "start": 0.53,
+          "end": 0.79
+        },
+        {
+          "id": "w2",
+          "text": "an",
+          "start": 0.79,
+          "end": 0.86
+        },
+        {
+          "id": "w3",
+          "text": "open",
+          "start": 0.96,
+          "end": 1.31
+        },
+        {
+          "id": "w4",
+          "text": "bar,",
+          "start": 1.31,
+          "end": 1.78
+        },
+        {
+          "id": "w5",
+          "text": "$52,500.",
+          "start": 1.81,
+          "end": 3.44
+        }
+      ]
+    },
+    {
+      "id": "05",
+      "path": "assets/voice/05.wav",
+      "duration_s": 2.709,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Flowers",
+          "start": 0.11,
+          "end": 0.51
+        },
+        {
+          "id": "w1",
+          "text": "and",
+          "start": 0.51,
+          "end": 0.73
+        },
+        {
+          "id": "w2",
+          "text": "décor,",
+          "start": 0.73,
+          "end": 1.12
+        },
+        {
+          "id": "w3",
+          "text": "25,000.",
+          "start": 1.41,
+          "end": 2.55
+        }
+      ]
+    },
+    {
+      "id": "06",
+      "path": "assets/voice/06.wav",
+      "duration_s": 2.688,
+      "words": [
+        {
+          "id": "w0",
+          "text": "A",
+          "start": 0.07,
+          "end": 0.09
+        },
+        {
+          "id": "w1",
+          "text": "planner",
+          "start": 0.09,
+          "end": 0.61
+        },
+        {
+          "id": "w2",
+          "text": "to",
+          "start": 0.61,
+          "end": 0.76
+        },
+        {
+          "id": "w3",
+          "text": "run",
+          "start": 0.76,
+          "end": 0.99
+        },
+        {
+          "id": "w4",
+          "text": "it",
+          "start": 0.99,
+          "end": 1.14
+        },
+        {
+          "id": "w5",
+          "text": "all,",
+          "start": 1.14,
+          "end": 1.46
+        },
+        {
+          "id": "w6",
+          "text": "15,000.",
+          "start": 1.57,
+          "end": 2.49
+        }
+      ]
+    },
+    {
+      "id": "07",
+      "path": "assets/voice/07.wav",
+      "duration_s": 5.888,
+      "words": [
+        {
+          "id": "w0",
+          "text": "Add",
+          "start": 0.08,
+          "end": 0.2
+        },
+        {
+          "id": "w1",
+          "text": "photos,",
+          "start": 0.34,
+          "end": 0.74
+        },
+        {
+          "id": "w2",
+          "text": "music,",
+          "start": 0.74,
+          "end": 1.2
+        },
+        {
+          "id": "w3",
+          "text": "the",
+          "start": 1.2,
+          "end": 1.41
+        },
+        {
+          "id": "w4",
+          "text": "dress,",
+          "start": 1.45,
+          "end": 1.88
+        },
+        {
+          "id": "w5",
+          "text": "and",
+          "start": 1.88,
+          "end": 2.08
+        },
+        {
+          "id": "w6",
+          "text": "the",
+          "start": 2.08,
+          "end": 2.28
+        },
+        {
+          "id": "w7",
+          "text": "rest.",
+          "start": 2.28,
+          "end": 2.66
+        },
+        {
+          "id": "w8",
+          "text": "200,000,",
+          "start": 2.74,
+          "end": 4.26
+        },
+        {
+          "id": "w9",
+          "text": "over",
+          "start": 4.26,
+          "end": 4.62
+        },
+        {
+          "id": "w10",
+          "text": "1,300",
+          "start": 4.62,
+          "end": 5.85
+        },
+        {
+          "id": "w11",
+          "text": "per",
+          "start": 5.95,
+          "end": 6.16
+        },
+        {
+          "id": "w12",
+          "text": "guest.",
+          "start": 6.16,
+          "end": 6.94
+        }
+      ]
+    },
+    {
+      "id": "08",
+      "path": "assets/voice/08.wav",
+      "duration_s": 5.333,
+      "words": [
+        {
+          "id": "w0",
+          "text": "the",
+          "start": 0.06,
+          "end": 0.2
+        },
+        {
+          "id": "w1",
+          "text": "average",
+          "start": 0.2,
+          "end": 0.67
+        },
+        {
+          "id": "w2",
+          "text": "American",
+          "start": 0.67,
+          "end": 1.2
+        },
+        {
+          "id": "w3",
+          "text": "wedding,",
+          "start": 1.2,
+          "end": 1.76
+        },
+        {
+          "id": "w4",
+          "text": "292",
+          "start": 1.78,
+          "end": 2.71
+        },
+        {
+          "id": "w5",
+          "text": "per",
+          "start": 2.77,
+          "end": 3.06
+        },
+        {
+          "id": "w6",
+          "text": "guest,",
+          "start": 3.06,
+          "end": 3.62
+        },
+        {
+          "id": "w7",
+          "text": "would",
+          "start": 3.68,
+          "end": 4.01
+        },
+        {
+          "id": "w8",
+          "text": "you",
+          "start": 4.01,
+          "end": 4.24
+        },
+        {
+          "id": "w9",
+          "text": "go",
+          "start": 4.24,
+          "end": 4.39
+        },
+        {
+          "id": "w10",
+          "text": "big",
+          "start": 4.39,
+          "end": 4.62
+        },
+        {
+          "id": "w11",
+          "text": "or",
+          "start": 4.62,
+          "end": 4.77
+        },
+        {
+          "id": "w12",
+          "text": "alope?",
+          "start": 4.77,
+          "end": 5.42
+        }
+      ]
+    }
+  ],
+  "sfx": [],
+  "total_duration_s": 31.103
+}

@@ -1,0 +1,205 @@
+{
+ "lines": [
+  {
+   "text": "This seat to Dubai costs eighteen thousand dollars. One way.",
+   "shots": [
+    [
+     "mk40102.mp4@0.6",
+     8,
+     "lux"
+    ],
+    [
+     "mk6737.mp4",
+     3,
+     "lux",
+     "one"
+    ]
+   ]
+  },
+  {
+   "text": "A private suite with a door. A shower in the sky. Champagne that never stops.",
+   "shots": [
+    [
+     "mk15642.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk40101.mp4@0.7",
+     2,
+     "lux",
+     "shower"
+    ],
+    [
+     "mk51562.mp4",
+     6,
+     "lux",
+     "champagne"
+    ]
+   ]
+  },
+  {
+   "text": "Emirates First, New York to Dubai: eighteen thousand one hundred.",
+   "shots": [
+    [
+     "mk7179.mp4@0.3",
+     3,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Economy, same flight, same plane: seven hundred seventy-three.",
+   "shots": [
+    [
+     "mk6909.mp4@0.3",
+     2,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "It's twelve and a half hours. Economy: about sixty dollars an hour.",
+   "shots": [
+    [
+     "mk4204.mp4@0.7",
+     6,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "First: about fourteen hundred fifty an hour.",
+   "shots": [
+    [
+     "mk22739.mp4",
+     6,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "That's twenty-three economy tickets for one suite.",
+   "shots": [
+    [
+     "mk40102.mp4@0.6",
+     14,
+     "lux"
+    ],
+    [
+     "mk34425.mp4",
+     2,
+     "lux",
+     "one"
+    ]
+   ]
+  },
+  {
+   "text": "And the shower? Five minutes of water. Worth eighteen grand?",
+   "shots": [
+    [
+     "mk40101.mp4@0.7",
+     5,
+     "lux"
+    ],
+    [
+     "mk51562.mp4",
+     12,
+     "lux",
+     "worth"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "EMIRATES FIRST \u00b7 ONE-WAY",
+   "$18,117",
+   "",
+   "L1:$18",
+   "L2",
+   ""
+  ],
+  [
+   "A380 FIRST",
+   "suite \u00b7 shower spa",
+   "",
+   "L2:shower",
+   "L3",
+   ""
+  ],
+  [
+   "JFK \u2192 DXB \u00b7 FIRST",
+   "$18,117",
+   "",
+   "L3:18",
+   "L4",
+   ""
+  ],
+  [
+   "JFK \u2192 DXB \u00b7 ECONOMY",
+   "$773",
+   "SAME FLIGHT",
+   "L4:773",
+   "L5",
+   ""
+  ],
+  [
+   "ECONOMY",
+   "~$62 / hr",
+   "EST. \u00b7 12.5 HRS",
+   "L5:economy",
+   "L6",
+   ""
+  ],
+  [
+   "FIRST",
+   "~$1,449 / hr",
+   "EST.",
+   "L6:about",
+   "L7",
+   ""
+  ],
+  [
+   "SHOWER",
+   "5 min of water",
+   "",
+   "L8:five",
+   "L8:worth",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "1 suite<br><span style='font-size:44px;font-weight:600'>\u2248 23 economy seats</span>",
+   "L7:23",
+   "L8",
+   110,
+   "#fff"
+  ],
+  [
+   "worth<br>$18,000?",
+   "L8:worth",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:23",
+ "footnote": "Cash fares: Expedia search for EK204, Nov 4 2026 (flex fares, searched Oct 3 2026). Shower: Simple Flying. Per-hour figures est. Stock footage.",
+ "caption_fix": {}
+}

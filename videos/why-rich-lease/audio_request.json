@@ -1,0 +1,30 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "The guy in the three hundred thousand dollar supercar? There's a good chance he doesn't own it."
+    },
+    {
+      "id": "02",
+      "text": "Exotic cars lose about twenty-eight percent in five years. That's eighty-five grand."
+    },
+    {
+      "id": "03",
+      "text": "So a lot of wealthy people lease. They still pay for the drop, but they never tie up the cash."
+    },
+    {
+      "id": "04",
+      "text": "That three hundred K stays invested. At seven percent, that's about a hundred twenty grand in five years."
+    },
+    {
+      "id": "05",
+      "text": "The car is the flex. The cash is the wealth. Lease, or buy?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

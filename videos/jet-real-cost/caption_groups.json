@@ -1,0 +1,829 @@
+{
+  "total_duration_s": 34.2,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.1,
+      "end": 1.19,
+      "text": "Everyone sees the",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Everyone",
+          "start": 0.1,
+          "end": 0.63
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "sees",
+          "start": 0.63,
+          "end": 0.95
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "the",
+          "start": 0.95,
+          "end": 1.19
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 1.19,
+      "end": 1.73,
+      "text": "private",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "private",
+          "start": 1.19,
+          "end": 1.61
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 2,
+      "end": 2.11,
+      "text": "jet,",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "jet,",
+          "start": 2,
+          "end": 2.1
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.11,
+      "end": 2.94,
+      "text": "the champagne,",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "the",
+          "start": 2.11,
+          "end": 2.26
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "champagne,",
+          "start": 2.26,
+          "end": 2.83
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 1,
+      "start": 2.94,
+      "end": 4,
+      "text": "the lifestyle.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "the",
+          "start": 2.94,
+          "end": 3.1
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "lifestyle.",
+          "start": 3.1,
+          "end": 3.88
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 4.163,
+      "end": 5.263,
+      "text": "Nobody sees the",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "Nobody",
+          "start": 4.163,
+          "end": 4.643
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "sees",
+          "start": 4.643,
+          "end": 4.993
+        },
+        {
+          "id": "caption-word-5-2",
+          "text": "the",
+          "start": 4.993,
+          "end": 5.223
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 5.263,
+      "end": 5.763,
+      "text": "bill,",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "bill,",
+          "start": 5.263,
+          "end": 5.763
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 5.763,
+      "end": 6.173,
+      "text": "nine and",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "nine",
+          "start": 5.763,
+          "end": 6.003
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "and",
+          "start": 6.003,
+          "end": 6.173
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 6.173,
+      "end": 6.483,
+      "text": "a half",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "a",
+          "start": 6.173,
+          "end": 6.233
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "half",
+          "start": 6.233,
+          "end": 6.373
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 2,
+      "start": 6.483,
+      "end": 7.683,
+      "text": "million dollars just",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "million",
+          "start": 6.483,
+          "end": 6.903
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "dollars",
+          "start": 6.903,
+          "end": 7.323
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "just",
+          "start": 7.413,
+          "end": 7.613
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 2,
+      "start": 7.683,
+      "end": 8.083,
+      "text": "to buy",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "to",
+          "start": 7.683,
+          "end": 7.813
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "buy",
+          "start": 7.833,
+          "end": 8.083
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 2,
+      "start": 8.083,
+      "end": 8.463,
+      "text": "one.",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "one.",
+          "start": 8.083,
+          "end": 8.343
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 8.636,
+      "end": 11.466,
+      "text": "Pilots Hangar Insurance Management,",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "Pilots",
+          "start": 8.636,
+          "end": 9.076
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "Hangar",
+          "start": 9.186,
+          "end": 9.596
+        },
+        {
+          "id": "caption-word-12-2",
+          "text": "Insurance",
+          "start": 9.766,
+          "end": 10.496
+        },
+        {
+          "id": "caption-word-12-3",
+          "text": "Management,",
+          "start": 10.496,
+          "end": 11.436
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 3,
+      "start": 11.466,
+      "end": 12.996,
+      "text": "$360 grand a year",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "$360",
+          "start": 11.466,
+          "end": 12.176
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "grand",
+          "start": 12.176,
+          "end": 12.426
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "a",
+          "start": 12.606,
+          "end": 12.666
+        },
+        {
+          "id": "caption-word-13-3",
+          "text": "year",
+          "start": 12.666,
+          "end": 12.996
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 3,
+      "start": 12.996,
+      "end": 13.906,
+      "text": "before it even",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "before",
+          "start": 12.996,
+          "end": 13.486
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "it",
+          "start": 13.486,
+          "end": 13.606
+        },
+        {
+          "id": "caption-word-14-2",
+          "text": "even",
+          "start": 13.656,
+          "end": 13.786
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 3,
+      "start": 14.326,
+      "end": 14.796,
+      "text": "flies.",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "flies.",
+          "start": 14.326,
+          "end": 14.676
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 4,
+      "start": 14.821,
+      "end": 15.981,
+      "text": "Fly it 100",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "Fly",
+          "start": 14.821,
+          "end": 14.981
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "it",
+          "start": 14.981,
+          "end": 15.161
+        },
+        {
+          "id": "caption-word-16-2",
+          "text": "100",
+          "start": 15.161,
+          "end": 15.981
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 4,
+      "start": 15.981,
+      "end": 16.631,
+      "text": "hours,",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "hours,",
+          "start": 15.981,
+          "end": 16.631
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 4,
+      "start": 16.631,
+      "end": 18.641,
+      "text": "another $165 grand.",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "another",
+          "start": 16.631,
+          "end": 17.241
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "$165",
+          "start": 17.241,
+          "end": 17.991
+        },
+        {
+          "id": "caption-word-18-2",
+          "text": "grand.",
+          "start": 18.041,
+          "end": 18.521
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 5,
+      "start": 18.75,
+      "end": 19.79,
+      "text": "and that $9.5",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "and",
+          "start": 18.75,
+          "end": 18.84
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "that",
+          "start": 18.84,
+          "end": 19.09
+        },
+        {
+          "id": "caption-word-19-2",
+          "text": "$9.5",
+          "start": 19.09,
+          "end": 19.69
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 5,
+      "start": 19.79,
+      "end": 20.99,
+      "text": "million invested at",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "million",
+          "start": 19.79,
+          "end": 20.15
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "invested",
+          "start": 20.24,
+          "end": 20.69
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "at",
+          "start": 20.69,
+          "end": 20.99
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 5,
+      "start": 20.99,
+      "end": 21.71,
+      "text": "5%,",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "5%,",
+          "start": 20.99,
+          "end": 21.59
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 5,
+      "start": 21.89,
+      "end": 23.66,
+      "text": "$470,000 a year,",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "$470,000",
+          "start": 21.89,
+          "end": 23.19
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "a",
+          "start": 23.19,
+          "end": 23.24
+        },
+        {
+          "id": "caption-word-22-2",
+          "text": "year,",
+          "start": 23.25,
+          "end": 23.64
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 5,
+      "start": 23.66,
+      "end": 24.51,
+      "text": "gone.",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "gone.",
+          "start": 23.66,
+          "end": 24.39
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 6,
+      "start": 24.783,
+      "end": 25.643,
+      "text": "That's almost",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "That's",
+          "start": 24.783,
+          "end": 25.193
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "almost",
+          "start": 25.193,
+          "end": 25.643
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 6,
+      "start": 25.643,
+      "end": 26.653,
+      "text": "a million dollars",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "a",
+          "start": 25.643,
+          "end": 25.713
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "million",
+          "start": 25.713,
+          "end": 26.243
+        },
+        {
+          "id": "caption-word-25-2",
+          "text": "dollars",
+          "start": 26.243,
+          "end": 26.653
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 6,
+      "start": 26.653,
+      "end": 27.213,
+      "text": "a year.",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "a",
+          "start": 26.653,
+          "end": 26.933
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "year.",
+          "start": 26.933,
+          "end": 27.213
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 6,
+      "start": 27.213,
+      "end": 29.193,
+      "text": "$10,000 for every hour",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "$10,000",
+          "start": 27.213,
+          "end": 28.383
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "for",
+          "start": 28.383,
+          "end": 28.583
+        },
+        {
+          "id": "caption-word-27-2",
+          "text": "every",
+          "start": 28.583,
+          "end": 28.913
+        },
+        {
+          "id": "caption-word-27-3",
+          "text": "hour",
+          "start": 28.913,
+          "end": 29.133
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 6,
+      "start": 29.193,
+      "end": 29.643,
+      "text": "in the",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "in",
+          "start": 29.193,
+          "end": 29.203
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "the",
+          "start": 29.343,
+          "end": 29.523
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 6,
+      "start": 29.643,
+      "end": 30.012,
+      "text": "air.",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "air.",
+          "start": 29.643,
+          "end": 29.983
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 7,
+      "start": 30.012,
+      "end": 30.492,
+      "text": "They see",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "They",
+          "start": 30.012,
+          "end": 30.262
+        },
+        {
+          "id": "caption-word-30-1",
+          "text": "see",
+          "start": 30.262,
+          "end": 30.492
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 7,
+      "start": 30.492,
+      "end": 30.732,
+      "text": "the",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "the",
+          "start": 30.492,
+          "end": 30.612
+        }
+      ]
+    },
+    {
+      "id": "caption-group-32",
+      "frame": 7,
+      "start": 30.962,
+      "end": 31.032,
+      "text": "jet,",
+      "words": [
+        {
+          "id": "caption-word-32-0",
+          "text": "jet,",
+          "start": 30.962,
+          "end": 31.002
+        }
+      ]
+    },
+    {
+      "id": "caption-group-33",
+      "frame": 7,
+      "start": 31.032,
+      "end": 31.362,
+      "text": "now you",
+      "words": [
+        {
+          "id": "caption-word-33-0",
+          "text": "now",
+          "start": 31.032,
+          "end": 31.182
+        },
+        {
+          "id": "caption-word-33-1",
+          "text": "you",
+          "start": 31.182,
+          "end": 31.362
+        }
+      ]
+    },
+    {
+      "id": "caption-group-34",
+      "frame": 7,
+      "start": 31.362,
+      "end": 31.782,
+      "text": "know the",
+      "words": [
+        {
+          "id": "caption-word-34-0",
+          "text": "know",
+          "start": 31.362,
+          "end": 31.592
+        },
+        {
+          "id": "caption-word-34-1",
+          "text": "the",
+          "start": 31.602,
+          "end": 31.782
+        }
+      ]
+    },
+    {
+      "id": "caption-group-35",
+      "frame": 7,
+      "start": 31.782,
+      "end": 32.072,
+      "text": "math,",
+      "words": [
+        {
+          "id": "caption-word-35-0",
+          "text": "math,",
+          "start": 31.782,
+          "end": 32.062
+        }
+      ]
+    },
+    {
+      "id": "caption-group-36",
+      "frame": 7,
+      "start": 32.072,
+      "end": 32.612,
+      "text": "still want",
+      "words": [
+        {
+          "id": "caption-word-36-0",
+          "text": "still",
+          "start": 32.072,
+          "end": 32.372
+        },
+        {
+          "id": "caption-word-36-1",
+          "text": "want",
+          "start": 32.372,
+          "end": 32.542
+        }
+      ]
+    },
+    {
+      "id": "caption-group-37",
+      "frame": 7,
+      "start": 32.612,
+      "end": 33.142,
+      "text": "the jet?",
+      "words": [
+        {
+          "id": "caption-word-37-0",
+          "text": "the",
+          "start": 32.612,
+          "end": 32.802
+        },
+        {
+          "id": "caption-word-37-1",
+          "text": "jet?",
+          "start": 32.802,
+          "end": 33.022
+        }
+      ]
+    }
+  ]
+}

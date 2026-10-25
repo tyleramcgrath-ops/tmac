@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Monaco Grand Prix, on a yacht. Race day alone: five thousand two hundred euros."
+    },
+    {
+      "id": "02",
+      "text": "Champagne on deck. Formula One cars screaming past the harbor."
+    },
+    {
+      "id": "03",
+      "text": "Three race days aboard, for two: eighteen thousand four hundred."
+    },
+    {
+      "id": "04",
+      "text": "Hotel de Paris, race week: thirty-three thousand euros."
+    },
+    {
+      "id": "05",
+      "text": "Helicopter from Nice: about eight hundred, there and back."
+    },
+    {
+      "id": "06",
+      "text": "Sunday after-party: fifteen hundred for two."
+    },
+    {
+      "id": "07",
+      "text": "Total for one couple: about fifty-four thousand euros. Roughly sixty thousand dollars."
+    },
+    {
+      "id": "08",
+      "text": "Or a Sunday grandstand seat: nine hundred fifty euros. Which would you pick?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

@@ -1,0 +1,212 @@
+{
+ "lines": [
+  {
+   "text": "At the last Super Bowl, suites started around six hundred thousand dollars.",
+   "shots": [
+    [
+     "mk4262.mp4",
+     1,
+     "lux"
+    ],
+    [
+     "mk9585.mp4",
+     3,
+     "lux",
+     "suites"
+    ]
+   ]
+  },
+  {
+   "text": "Sixteen tickets. A private room. The field right below.",
+   "shots": [
+    [
+     "mk5227.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk10167.mp4",
+     4,
+     "lux",
+     "the"
+    ]
+   ]
+  },
+  {
+   "text": "Split sixteen ways: thirty-seven thousand five hundred a seat.",
+   "shots": [
+    [
+     "mk22810.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Food isn't always included. One stadium burger cost a hundred eighty dollars.",
+   "shots": [
+    [
+     "mk15642.mp4",
+     2,
+     "lux"
+    ],
+    [
+     "mk51562.mp4",
+     3,
+     "lux",
+     "one"
+    ]
+   ]
+  },
+  {
+   "text": "Catering, staff and security reportedly add thirty-five percent or more.",
+   "shots": [
+    [
+     "mk48510.mp4",
+     2,
+     "lux"
+    ]
+   ]
+  },
+  {
+   "text": "Fly private, and one landing in San Jose can cost twenty-five thousand.",
+   "shots": [
+    [
+     "mk2266.mp4",
+     2,
+     "calm"
+    ]
+   ]
+  },
+  {
+   "text": "Suite plus add-ons: about eight hundred ten thousand dollars.",
+   "shots": [
+    [
+     "mk9585.mp4",
+     12,
+     "lux"
+    ],
+    [
+     "mk42555.mp4",
+     0,
+     "lux",
+     "about"
+    ]
+   ]
+  },
+  {
+   "text": "Fifty grand a guest, for one game. Suite or cash?",
+   "shots": [
+    [
+     "mk24341.mp4",
+     4,
+     "calm"
+    ],
+    [
+     "mk4262.mp4",
+     4,
+     "lux",
+     "suite"
+    ]
+   ]
+  }
+ ],
+ "pills": [
+  [
+   "WHAT THEY SEE",
+   "L1",
+   "L3",
+   "#FFC94A"
+  ],
+  [
+   "WHAT IT COSTS",
+   "L3",
+   "L8",
+   "#fff"
+  ]
+ ],
+ "tags": [
+  [
+   "SUPER BOWL LX SUITE",
+   "from $600,000",
+   "",
+   "L1:suites",
+   "L2",
+   ""
+  ],
+  [
+   "SUITE",
+   "16 tickets",
+   "",
+   "L2:16",
+   "L3",
+   ""
+  ],
+  [
+   "$600K \u00f7 16",
+   "$37,500 / seat",
+   "EST.",
+   "L3:split",
+   "L4",
+   ""
+  ],
+  [
+   "STADIUM BURGER",
+   "$180",
+   "SERVES 4",
+   "L4:one",
+   "L5",
+   ""
+  ],
+  [
+   "ADD-ONS",
+   "+35% or more",
+   "REPORTED",
+   "L5:catering",
+   "L6",
+   ""
+  ],
+  [
+   "JET LANDING \u00b7 SAN JOSE",
+   "$25K+",
+   "",
+   "L6:fly",
+   "L7",
+   ""
+  ],
+  [
+   "PER GUEST",
+   "~$50,625",
+   "EST.",
+   "L8:50",
+   "L8:suite",
+   ""
+  ]
+ ],
+ "mids": [
+  [
+   "\u2248 $810,000<br><span style='font-size:44px;font-weight:600'>one suite \u00b7 one game</span>",
+   "L7:about",
+   "L8",
+   104,
+   "#fff"
+  ],
+  [
+   "suite<br>or cash?",
+   "L8:suite",
+   "END",
+   96,
+   "#fff"
+  ]
+ ],
+ "impact": "L7:about",
+ "footnote": "Suite pricing: Sports Illustrated, The Independent (Super Bowl LX); add-ons: Elite Traveler (reported). Totals est. Stock footage, not the Super Bowl.",
+ "caption_fix": {
+  "sweets": "suites",
+  "Sweet": "Suite",
+  "sweet": "suite",
+  "Plus": "plus",
+  "Add-Ons,": "add-ons:",
+  "cash.": "cash?"
+ }
+}

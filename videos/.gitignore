@@ -1,0 +1,4 @@
+renders/
+snapshots/
+.media/cache/
+node_modules/

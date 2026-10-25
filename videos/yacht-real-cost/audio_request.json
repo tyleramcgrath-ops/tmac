@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Owning this yacht costs about eight thousand dollars a day."
+    },
+    {
+      "id": "02",
+      "text": "Fifty meters. Thirty million dollars. Champagne in Saint-Tropez."
+    },
+    {
+      "id": "03",
+      "text": "The crew, about a dozen people: one to two million a year."
+    },
+    {
+      "id": "04",
+      "text": "Maintenance and repairs: seven hundred grand, minimum."
+    },
+    {
+      "id": "05",
+      "text": "Fuel: a quarter million. Double that if you actually cruise."
+    },
+    {
+      "id": "06",
+      "text": "A Riviera berth: up to three hundred fifty grand."
+    },
+    {
+      "id": "07",
+      "text": "The industry rule: ten percent of the price, every year. Three million dollars."
+    },
+    {
+      "id": "08",
+      "text": "Ten years in, you've paid for it twice. Still want the yacht?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

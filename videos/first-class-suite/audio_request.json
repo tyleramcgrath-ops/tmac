@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "This seat to Dubai costs eighteen thousand dollars. One way."
+    },
+    {
+      "id": "02",
+      "text": "A private suite with a door. A shower in the sky. Champagne that never stops."
+    },
+    {
+      "id": "03",
+      "text": "Emirates First, New York to Dubai: eighteen thousand one hundred."
+    },
+    {
+      "id": "04",
+      "text": "Economy, same flight, same plane: seven hundred seventy-three."
+    },
+    {
+      "id": "05",
+      "text": "It's twelve and a half hours. Economy: about sixty dollars an hour."
+    },
+    {
+      "id": "06",
+      "text": "First: about fourteen hundred fifty an hour."
+    },
+    {
+      "id": "07",
+      "text": "That's twenty-three economy tickets for one suite."
+    },
+    {
+      "id": "08",
+      "text": "And the shower? Five minutes of water. Worth eighteen grand?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

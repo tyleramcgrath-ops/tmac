@@ -1,0 +1,685 @@
+{
+  "total_duration_s": 34.39,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.05,
+      "end": 1.42,
+      "text": "Monaco Grand Prix",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "Monaco",
+          "start": 0.05,
+          "end": 0.51
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "Grand",
+          "start": 0.57,
+          "end": 1.04
+        },
+        {
+          "id": "caption-word-0-2",
+          "text": "Prix",
+          "start": 1.04,
+          "end": 1.42
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 1.42,
+      "end": 1.69,
+      "text": "on a",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "on",
+          "start": 1.42,
+          "end": 1.61
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "a",
+          "start": 1.61,
+          "end": 1.67
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.69,
+      "end": 2.27,
+      "text": "yacht.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "yacht.",
+          "start": 1.69,
+          "end": 2.22
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 1,
+      "start": 2.27,
+      "end": 3.34,
+      "text": "Race day alone,",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "Race",
+          "start": 2.27,
+          "end": 2.49
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "day",
+          "start": 2.55,
+          "end": 2.74
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "alone,",
+          "start": 2.79,
+          "end": 3.34
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 1,
+      "start": 3.34,
+      "end": 5.47,
+      "text": "5,200 euros.",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "5,200",
+          "start": 3.34,
+          "end": 4.67
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "euros.",
+          "start": 4.67,
+          "end": 5.35
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 5.625,
+      "end": 7.075,
+      "text": "Champagne on deck,",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "Champagne",
+          "start": 5.625,
+          "end": 6.385
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "on",
+          "start": 6.385,
+          "end": 6.445
+        },
+        {
+          "id": "caption-word-5-2",
+          "text": "deck,",
+          "start": 6.585,
+          "end": 7.075
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 7.075,
+      "end": 8.095,
+      "text": "Formula One cars",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "Formula",
+          "start": 7.075,
+          "end": 7.575
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "One",
+          "start": 7.575,
+          "end": 7.785
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "cars",
+          "start": 7.785,
+          "end": 8.095
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 2,
+      "start": 8.095,
+      "end": 8.775,
+      "text": "screaming past",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "screaming",
+          "start": 8.095,
+          "end": 8.515
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "past",
+          "start": 8.565,
+          "end": 8.775
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 2,
+      "start": 8.775,
+      "end": 9.495,
+      "text": "the harbor.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "the",
+          "start": 8.775,
+          "end": 8.905
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "harbor.",
+          "start": 8.945,
+          "end": 9.375
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 3,
+      "start": 9.645,
+      "end": 10.665,
+      "text": "three race days",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "three",
+          "start": 9.645,
+          "end": 9.965
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "race",
+          "start": 9.965,
+          "end": 10.315
+        },
+        {
+          "id": "caption-word-9-2",
+          "text": "days",
+          "start": 10.315,
+          "end": 10.665
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 3,
+      "start": 10.665,
+      "end": 11.445,
+      "text": "aboard for",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "aboard",
+          "start": 10.665,
+          "end": 11.185
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "for",
+          "start": 11.185,
+          "end": 11.325
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 3,
+      "start": 11.735,
+      "end": 11.945,
+      "text": "two,",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "two,",
+          "start": 11.735,
+          "end": 11.865
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 3,
+      "start": 11.945,
+      "end": 13.365,
+      "text": "18,400.",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "18,400.",
+          "start": 11.945,
+          "end": 13.245
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 4,
+      "start": 13.447,
+      "end": 14.547,
+      "text": "Hotel de Paris",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "Hotel",
+          "start": 13.447,
+          "end": 13.857
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "de",
+          "start": 13.857,
+          "end": 14.057
+        },
+        {
+          "id": "caption-word-13-2",
+          "text": "Paris",
+          "start": 14.057,
+          "end": 14.547
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 4,
+      "start": 14.547,
+      "end": 15.497,
+      "text": "Race week:",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "Race",
+          "start": 14.547,
+          "end": 14.947
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "week:",
+          "start": 14.947,
+          "end": 15.497
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 4,
+      "start": 15.497,
+      "end": 17.047,
+      "text": "€33,000.",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "€33,000.",
+          "start": 15.497,
+          "end": 16.927
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 5,
+      "start": 17.215,
+      "end": 18.755,
+      "text": "helicopter from Nice,",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "helicopter",
+          "start": 17.215,
+          "end": 17.975
+        },
+        {
+          "id": "caption-word-16-1",
+          "text": "from",
+          "start": 17.975,
+          "end": 18.305
+        },
+        {
+          "id": "caption-word-16-2",
+          "text": "Nice,",
+          "start": 18.305,
+          "end": 18.755
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 5,
+      "start": 18.755,
+      "end": 19.475,
+      "text": "about 800",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "about",
+          "start": 18.755,
+          "end": 19.015
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "800",
+          "start": 19.015,
+          "end": 19.475
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 5,
+      "start": 19.475,
+      "end": 20.315,
+      "text": "there and back.",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "there",
+          "start": 19.475,
+          "end": 19.745
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "and",
+          "start": 19.745,
+          "end": 19.895
+        },
+        {
+          "id": "caption-word-18-2",
+          "text": "back.",
+          "start": 19.895,
+          "end": 20.195
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 6,
+      "start": 20.482,
+      "end": 21.742,
+      "text": "Sunday after party,",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "Sunday",
+          "start": 20.482,
+          "end": 20.832
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "after",
+          "start": 20.832,
+          "end": 21.182
+        },
+        {
+          "id": "caption-word-19-2",
+          "text": "party,",
+          "start": 21.182,
+          "end": 21.622
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 6,
+      "start": 21.882,
+      "end": 23.222,
+      "text": "1,500 for two.",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "1,500",
+          "start": 21.882,
+          "end": 22.572
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "for",
+          "start": 22.682,
+          "end": 22.852
+        },
+        {
+          "id": "caption-word-20-2",
+          "text": "two.",
+          "start": 22.862,
+          "end": 23.102
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 7,
+      "start": 23.389,
+      "end": 23.999,
+      "text": "Total for",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "Total",
+          "start": 23.389,
+          "end": 23.709
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "for",
+          "start": 23.819,
+          "end": 23.999
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 7,
+      "start": 23.999,
+      "end": 24.879,
+      "text": "one couple,",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "one",
+          "start": 23.999,
+          "end": 24.239
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "couple,",
+          "start": 24.239,
+          "end": 24.879
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 7,
+      "start": 24.879,
+      "end": 27.049,
+      "text": "about 54,000 euros,",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "about",
+          "start": 24.879,
+          "end": 25.189
+        },
+        {
+          "id": "caption-word-23-1",
+          "text": "54,000",
+          "start": 25.299,
+          "end": 26.399
+        },
+        {
+          "id": "caption-word-23-2",
+          "text": "euros,",
+          "start": 26.539,
+          "end": 27.049
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 7,
+      "start": 27.049,
+      "end": 28.769,
+      "text": "roughly $60,000.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "roughly",
+          "start": 27.049,
+          "end": 27.409
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "$60,000.",
+          "start": 27.409,
+          "end": 28.649
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 8,
+      "start": 28.965,
+      "end": 29.085,
+      "text": "or a",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "or",
+          "start": 28.965,
+          "end": 29.015
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "a",
+          "start": 29.015,
+          "end": 29.085
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 8,
+      "start": 29.085,
+      "end": 30.865,
+      "text": "Sunday grandstand seat,",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "Sunday",
+          "start": 29.085,
+          "end": 29.535
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "grandstand",
+          "start": 29.535,
+          "end": 30.295
+        },
+        {
+          "id": "caption-word-26-2",
+          "text": "seat,",
+          "start": 30.295,
+          "end": 30.865
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 8,
+      "start": 30.865,
+      "end": 32.655,
+      "text": "950 euros,",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "950",
+          "start": 30.865,
+          "end": 31.965
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "euros,",
+          "start": 31.965,
+          "end": 32.655
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 8,
+      "start": 32.655,
+      "end": 32.995,
+      "text": "which would",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "which",
+          "start": 32.655,
+          "end": 32.825
+        },
+        {
+          "id": "caption-word-28-1",
+          "text": "would",
+          "start": 32.825,
+          "end": 32.995
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 8,
+      "start": 32.995,
+      "end": 33.355,
+      "text": "you pick?",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "you",
+          "start": 32.995,
+          "end": 33.095
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "pick?",
+          "start": 33.095,
+          "end": 33.235
+        }
+      ]
+    }
+  ]
+}

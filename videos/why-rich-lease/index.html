@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8" /><meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-600.woff2") format("woff2");font-weight:600;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-700.woff2") format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-800.woff2") format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Plex";src:url("assets/fonts/IBM_Plex_Mono-500.woff2") format("woff2");font-weight:500;font-display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:"Barlow",sans-serif}
+#footage{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 55%,rgba(0,0,0,.35) 75%,rgba(0,0,0,.6) 100%)}
+.pill{position:absolute;top:110px;left:70px;font-family:"Plex",monospace;font-weight:500;font-size:28px;letter-spacing:.16em;color:#fff;
+  padding:10px 20px;border-radius:40px;background:rgba(0,0,0,.35);border:1.5px solid rgba(255,255,255,.55);backdrop-filter:blur(6px)}
+.pill b{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:12px;vertical-align:middle}
+.tag{position:absolute;left:70px;top:1230px;padding:18px 26px 20px;border-radius:16px;background:rgba(10,10,10,.42);backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.18);color:#fff;min-width:360px}
+.tag .k{font-family:"Plex",monospace;font-weight:500;font-size:27px;letter-spacing:.16em;color:rgba(255,255,255,.75)}
+.tag .v{font-weight:700;font-size:76px;line-height:1.05;letter-spacing:-.01em}
+.tag .s{font-family:"Plex",monospace;font-size:20px;letter-spacing:.1em;color:rgba(255,255,255,.6);margin-top:4px}
+.mid{position:absolute;left:0;right:0;text-align:center;color:#fff;text-shadow:0 4px 30px rgba(0,0,0,.6)}
+</style></head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="27.0" data-width="1080" data-height="1920">
+  <video id="footage" class="clip" src="assets/footage/track.mp4" muted playsinline data-start="0" data-duration="27.0" data-track-index="0"></video>
+  <div id="ovl" class="clip" data-start="0" data-duration="27.0" data-track-index="1" style="position:absolute;inset:0">
+    <div id="shade"></div>
+    <div id="pS" class="pill" style="opacity:0"><b style="background:#FFC94A"></b>THE SUPERCAR · $300,000</div>
+    <div id="pL" class="pill" style="opacity:0"><b style="background:#fff"></b>LEASED, NOT OWNED</div>
+    <div id="pB" class="pill" style="opacity:0"><b style="background:#5CFF7A"></b>THE CASH · STILL INVESTED</div>
+
+    <div id="t1" class="tag" style="opacity:0"><div class="k">VALUE LOST · 5 YEARS</div><div class="v">−28%</div><div class="s">AVG EXOTIC CAR (ISEECARS)</div></div>
+    <div id="t2" class="tag" style="opacity:0"><div class="k">ON A $300K CAR</div><div class="v">≈ −$84,600</div></div>
+    <div id="t3" class="tag" style="opacity:0"><div class="k">THE LEASE</div><div class="v" style="font-size:52px">still pays the drop</div><div class="s">PAYMENTS = DEPRECIATION + INTEREST</div></div>
+    <div id="t4" class="tag" style="opacity:0;border-color:rgba(92,255,122,.6)"><div class="k" style="color:#5CFF7A">KEPT INVESTED</div><div class="v">$300,000</div></div>
+    <div id="t5" class="tag" style="opacity:0;border-color:rgba(92,255,122,.6)"><div class="k" style="color:#5CFF7A">AT 7% · 5 YEARS</div><div class="v">≈ +$120,800</div><div class="s">NOT GUARANTEED</div></div>
+
+    <div id="m1" class="mid" style="top:330px;opacity:0;font-weight:800;font-size:76px;line-height:1.05">the car is the flex.</div>
+    <div id="m2" class="mid" style="top:430px;opacity:0;font-weight:800;font-size:76px;line-height:1.05;color:#5CFF7A">the cash is the wealth.</div>
+    <div id="m3" class="mid" style="top:330px;opacity:0;font-weight:800;font-size:96px;line-height:1.05">lease or buy?</div>
+    <div id="src" class="mid" style="top:1840px;opacity:0;font-size:20px;color:rgba(255,255,255,.6)">Not financial or tax advice. Estimates: iSeeCars 5-yr exotic avg; 7% return assumed. Urus photo: Alexander Migl, CC BY-SA 4.0</div>
+  </div>
+  <div id="caps" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="27.0" data-track-index="2"></div>
+    <audio id="vo1" class="clip" src="assets/voice/01.wav" data-start="0.1" data-duration="4.949" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo2" class="clip" src="assets/voice/02.wav" data-start="5.169" data-duration="5.12" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo3" class="clip" src="assets/voice/03.wav" data-start="10.409" data-duration="5.099" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo4" class="clip" src="assets/voice/04.wav" data-start="15.628" data-duration="6.464" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo5" class="clip" src="assets/voice/05.wav" data-start="22.212" data-duration="3.712" data-track-index="10" data-volume="1"></audio>
+  <audio id="bgm" class="clip" src="assets/bgm/dark-pulse.mp3" data-start="0" data-duration="27.0" data-track-index="11" data-volume="0.2"></audio>
+  <audio id="sfx0" class="clip" src="assets/sfx/click.mp3" data-start="1.01" data-duration="1.2" data-track-index="20" data-volume="0.4"></audio>
+  <audio id="sfx1" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="5.15" data-duration="1.2" data-track-index="21" data-volume="0.35"></audio>
+  <audio id="sfx2" class="clip" src="assets/sfx/click.mp3" data-start="6.98" data-duration="1.2" data-track-index="22" data-volume="0.4"></audio>
+  <audio id="sfx3" class="clip" src="assets/sfx/click.mp3" data-start="9.28" data-duration="1.2" data-track-index="20" data-volume="0.4"></audio>
+  <audio id="sfx4" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="10.39" data-duration="1.2" data-track-index="21" data-volume="0.35"></audio>
+  <audio id="sfx5" class="clip" src="assets/sfx/click.mp3" data-start="12.12" data-duration="1.2" data-track-index="22" data-volume="0.4"></audio>
+  <audio id="sfx6" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="15.61" data-duration="1.2" data-track-index="20" data-volume="0.35"></audio>
+  <audio id="sfx7" class="clip" src="assets/sfx/click.mp3" data-start="16.0" data-duration="1.2" data-track-index="21" data-volume="0.4"></audio>
+  <audio id="sfx8" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="20.19" data-duration="1.2" data-track-index="22" data-volume="0.55"></audio>
+  <audio id="sfx9" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="22.19" data-duration="1.2" data-track-index="20" data-volume="0.35"></audio>
+</div>
+<script>
+(function(){
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true });
+  function IN(sel, at, from){ tl.fromTo(sel, Object.assign({opacity:0, y:24}, from||{}), {opacity:1, y:0, x:0, scale:1, duration:0.45, ease:"power3.out", immediateRender:false}, at); }
+  function OUT(sel, at){ tl.to(sel, {opacity:0, y:-10, duration:0.3, ease:"power2.in"}, at); }
+  tl.set("#pS", {opacity:1}, 0);
+  tl.fromTo("#pS", {scale:1.06}, {scale:1, duration:0.4, ease:"power3.out"}, 0);
+  OUT("#pS", 3.20); IN("#pL", 3.34, {x:-20, y:0});
+  IN("#t1", 6.98); OUT("#t1", 9.0); IN("#t2", 9.28); OUT("#t2", 10.3);
+  IN("#t3", 13.11); OUT("#t3", 15.45);
+  OUT("#pL", 15.45); IN("#pB", 15.63, {x:-20, y:0});
+  IN("#t4", 16.0); OUT("#t4", 19.9); IN("#t5", 20.19); OUT("#t5", 22.05);
+  OUT("#pB", 22.05);
+  IN("#m1", 22.25, {y:0}); IN("#m2", 23.68, {y:0}); OUT(["#m1","#m2"], 24.85);
+  IN("#m3", 24.97, {y:20});
+  tl.fromTo("#src", {opacity:0}, {opacity:1, duration:0.4, immediateRender:false}, 25.3);
+  tl.to({}, {duration:27.0}, 0);
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body></html>

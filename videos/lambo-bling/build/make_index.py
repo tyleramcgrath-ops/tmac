@@ -1,0 +1,169 @@
+import json
+m=json.load(open('audio_meta.json'))
+TOTAL=32.3
+starts=[];t=0.10
+for v in m['voices']:
+    starts.append(round(t,3)); t+=v['duration_s']+0.12
+audio=[]
+for i,v in enumerate(m['voices']):
+    audio.append(f'<audio id="vo{i+1}" class="clip" src="{v["path"]}" data-start="{starts[i]}" data-duration="{v["duration_s"]}" data-track-index="10" data-volume="1"></audio>')
+audio.append(f'<audio id="bgm" class="clip" src="assets/bgm/dark-pulse.mp3" data-start="0" data-duration="{TOTAL}" data-track-index="11" data-volume="0.22"></audio>')
+sfx=[('whoosh-short',1.88,0.5),('whoosh-short',2.53,0.5),('impact-bass-2',3.44,0.9),('impact-bass-1',5.33,0.8),
+     ('impact-bass-1',8.31,0.8),('whoosh-short',10.57,0.5),('impact-bass-2',12.33,0.9),('click',15.22,0.7),('click',16.86,0.7),
+     ('click',17.84,0.7),('whoosh-short',19.0,0.5),('impact-bass-1',21.78,0.8),('riser',22.2,0.5),('impact-bass-2',23.34,1.0),
+     ('whoosh-short',27.76,0.5),('impact-bass-1',30.29,0.9)]
+for k,(n,s,vol) in enumerate(sfx):
+    audio.append(f'<audio id="sfx{k}" class="clip" src="assets/sfx/{n}.mp3" data-start="{s}" data-duration="1.2" data-track-index="{20+k%4}" data-volume="{vol}"></audio>')
+html=f'''<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{{font-family:"Barlow";src:url("assets/fonts/Barlow-700.woff2") format("woff2");font-weight:700;font-display:block}}
+@font-face{{font-family:"Barlow";src:url("assets/fonts/Barlow-800.woff2") format("woff2");font-weight:800;font-display:block}}
+@font-face{{font-family:"Barlow";src:url("assets/fonts/Barlow-900.woff2") format("woff2");font-weight:900;font-display:block}}
+@font-face{{font-family:"Plex";src:url("assets/fonts/IBM_Plex_Mono-600.woff2") format("woff2");font-weight:600;font-display:block}}
+*{{margin:0;padding:0;box-sizing:border-box}}
+html,body{{width:1080px;height:1920px;overflow:hidden;background:#000}}
+#root{{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:"Barlow",sans-serif}}
+#footage{{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}}
+#shade{{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 32%,rgba(0,0,0,0) 50%,rgba(0,0,0,.25) 72%,rgba(0,0,0,.65) 100%)}}
+#ov{{position:absolute;inset:0}}
+.abs{{position:absolute;left:0;right:0;text-align:center}}
+.big{{font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;color:#fff;
+  text-shadow:0 6px 0 rgba(0,0,0,.35),0 10px 40px rgba(0,0,0,.75)}}
+.red{{color:#FF3B30}} .gold{{color:#FFC94A}} .green{{color:#5CFF7A}}
+.lab{{font-family:"Plex",monospace;font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:34px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.9)}}
+#banner{{position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:"Plex",monospace;font-weight:600;
+  font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px}}
+#bSee{{background:#FFC94A;color:#111}} #bPay{{background:#FF3B30;color:#fff}}
+#chip{{position:absolute;top:235px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);border:3px solid #FF3B30;border-radius:10px;
+  padding:10px 28px;white-space:nowrap;display:flex;gap:22px;align-items:baseline}}
+#chip .k{{font-family:"Plex",monospace;font-weight:600;font-size:30px;letter-spacing:.14em;color:#ddd}}
+#chip .v{{font-weight:900;font-size:64px;color:#FF3B30;font-variant-numeric:tabular-nums}}
+.row{{position:absolute;left:90px;right:90px;display:flex;justify-content:space-between;align-items:baseline;
+  background:rgba(0,0,0,.6);border-left:10px solid #FF3B30;padding:18px 30px;border-radius:8px}}
+.row .n{{font-weight:800;font-size:64px;color:#fff;text-transform:uppercase}}
+.row .p{{font-weight:900;font-size:84px;color:#FF3B30}}
+#flash{{position:absolute;inset:0;background:#fff;opacity:0}}
+#tag{{position:absolute;left:50%;top:1290px;transform:translateX(-50%) rotate(-4deg);background:#fff;color:#111;border-radius:14px;
+  padding:16px 40px 20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)}}
+#tag .t1{{font-family:"Plex",monospace;font-weight:600;font-size:30px;letter-spacing:.16em}}
+#tag .t2{{font-weight:900;font-size:150px;line-height:1;font-variant-numeric:tabular-nums}}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="{TOTAL}" data-width="1080" data-height="1920">
+  <video id="footage" class="clip" src="assets/footage/track.mp4" muted playsinline data-start="0" data-duration="{TOTAL}" data-track-index="0"></video>
+  <div id="ovl" class="clip" data-start="0" data-duration="{TOTAL}" data-track-index="1" style="position:absolute;inset:0">
+    <div id="shade"></div>
+    <div id="ov">
+      <div id="bSee" class="bn" style="position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:Plex,monospace;font-weight:600;font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px">WHAT THEY SEE</div>
+      <div id="bPay" class="bn" style="position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:Plex,monospace;font-weight:600;font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px;opacity:0">WHAT THEY PAY</div>
+      <div id="chip" style="opacity:0"><span class="k">REAL COST</span><span class="v" id="chipv">$0</span></div>
+
+      <div id="h1" class="abs big gold" style="top:300px;font-size:150px">THE LAMBO.</div>
+      <div id="h2" class="abs big" style="top:300px;font-size:140px;opacity:0">THE PARTIES.</div>
+      <div id="h3" class="abs big" style="top:300px;font-size:128px;opacity:0">THE LIFESTYLE.</div>
+
+      <div id="bill" class="abs big red" style="top:320px;font-size:150px;opacity:0">THE BILL.</div>
+      <div id="tag" style="opacity:0"><div class="t1">STICKER PRICE</div><div class="t2" id="tagv">$250,490</div></div>
+      <div id="start" class="abs lab" style="top:1540px;opacity:0;font-size:38px">…AND THAT'S JUST THE START</div>
+
+      <div id="taxL" class="abs lab" style="top:560px;opacity:0;font-size:44px">SALES TAX</div>
+      <div id="taxV" class="abs big red" style="top:630px;font-size:200px;opacity:0">+$17,500</div>
+      <div id="taxD" class="abs big" style="top:850px;font-size:96px;opacity:0">DAY ONE.</div>
+
+      <div id="depL" class="abs lab" style="top:560px;opacity:0;font-size:44px">DEPRECIATION</div>
+      <div id="depV" class="abs big red" style="top:630px;font-size:200px;opacity:0">−$17,100</div>
+      <div id="depD" class="abs big" style="top:850px;font-size:96px;opacity:0">EVERY YEAR.</div>
+
+      <div id="r1" class="row" style="top:560px;opacity:0"><span class="n">Insurance</span><span class="p">$6,600</span></div>
+      <div id="r2" class="row" style="top:720px;opacity:0"><span class="n">Service</span><span class="p">$2,000</span></div>
+      <div id="r3" class="row" style="top:880px;opacity:0"><span class="n">Tires</span><span class="p">$3,000</span></div>
+
+      <div id="opL" class="abs lab" style="top:520px;opacity:0;font-size:44px">IF YOU'D INVESTED IT</div>
+      <div id="opA" class="abs big" style="top:590px;font-size:170px;opacity:0">$250,000</div>
+      <div id="opB" class="abs big gold" style="top:760px;font-size:120px;opacity:0">× 5%</div>
+      <div id="opC" class="abs big green" style="top:900px;font-size:170px;opacity:0">+$12,500</div>
+      <div id="opD" class="abs lab" style="top:1070px;opacity:0;font-size:40px">PER YEAR · YOU GAVE UP</div>
+
+      <div id="totL" class="abs lab" style="top:520px;opacity:0;font-size:46px">THE REAL COST</div>
+      <div id="totV" class="abs big red" style="top:590px;font-size:250px;opacity:0">$58,700</div>
+      <div id="totY" class="abs big" style="top:840px;font-size:110px;opacity:0">YEAR ONE.</div>
+      <div id="totS" class="abs big gold" style="top:980px;font-size:80px;opacity:0">JUST TO BE SEEN IN IT.</div>
+
+      <div id="o1" class="abs big gold" style="top:420px;font-size:118px;opacity:0">THEY SEE<br>THE FLEX.</div>
+      <div id="o2" class="abs big" style="top:680px;font-size:118px;opacity:0">YOU KNOW<br>THE MATH.</div>
+      <div id="o3" class="abs big red" style="top:300px;font-size:150px;opacity:0">STILL WANT<br>THE LAMBO?</div>
+      <div id="src" class="abs" style="top:1830px;opacity:0;font-size:22px;color:rgba(255,255,255,.6);font-family:Barlow">Estimates. Sources: TrueCar, iSeeCars, Insuranceopedia. Tax varies by state. Urus photo: Alexander Migl, CC BY-SA 4.0</div>
+      <div id="flash"></div>
+    </div>
+  </div>
+  <div id="caps" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="{TOTAL}" data-track-index="2"></div>
+  {chr(10).join("  "+a for a in audio)}
+</div>
+<script>
+(function(){{
+  window.__timelines = window.__timelines || {{}};
+  var tl = gsap.timeline({{ paused: true }});
+  var SL = function(sel, at, from){{ tl.fromTo(sel, Object.assign({{opacity:0, scale:1.6, filter:"blur(12px)"}}, from||{{}}), {{opacity:1, scale:1, y:0, x:0, filter:"blur(0px)", duration:0.22, ease:"power4.out", immediateRender:false}}, at); }};
+  var OUT = function(sel, at){{ tl.to(sel, {{opacity:0, duration:0.12, ease:"none"}}, at); }};
+  var chipN = {{v:0}}, chipEl = document.getElementById("chipv");
+  function fmt(n){{ return "$" + Math.round(n).toLocaleString("en-US"); }}
+  function chipTo(v, at){{ tl.to(chipN, {{v:v, duration:0.45, ease:"power2.out", onUpdate:function(){{ chipEl.textContent = fmt(chipN.v); }}}}, at);
+    tl.fromTo("#chip", {{scale:1.18}}, {{scale:1, duration:0.3, ease:"power3.out", immediateRender:false}}, at); }}
+  tl.set(chipEl, {{textContent:"$0"}}, 0);
+
+  // HOOK: what they see (frame 0 already shows THE LAMBO.)
+  tl.fromTo("#h1", {{scale:1.12}}, {{scale:1, duration:0.5, ease:"power3.out"}}, 0);
+  OUT("#h1", 1.88); SL("#h2", 1.90); OUT("#h2", 2.53); SL("#h3", 2.55); OUT("#h3", 3.42);
+  // TURN: what they pay
+  tl.fromTo("#flash", {{opacity:0}}, {{opacity:0.85, duration:0.05, ease:"none", immediateRender:false}}, 3.44);
+  tl.to("#flash", {{opacity:0, duration:0.3, ease:"power2.out"}}, 3.49);
+  OUT("#bSee", 3.44); tl.fromTo("#bPay", {{opacity:0, scale:1.4}}, {{opacity:1, scale:1, duration:0.2, ease:"back.out(2)", immediateRender:false}}, 3.44);
+  SL("#bill", 4.71, {{rotation:-8}}); tl.to("#bill", {{rotation:-4, duration:0.2}}, 4.93);
+  var tagN = {{v:0}}, tagEl = document.getElementById("tagv");
+  tl.fromTo("#tag", {{opacity:0, y:120}}, {{opacity:1, y:0, duration:0.3, ease:"back.out(1.6)", immediateRender:false}}, 5.30);
+  tl.fromTo(tagN, {{v:0}}, {{v:250490, duration:0.7, ease:"power3.out", immediateRender:false, onUpdate:function(){{ tagEl.textContent = fmt(tagN.v); }}}}, 5.33);
+  SL("#start", 6.46, {{scale:1}});
+  OUT(["#bill","#tag","#start"], 7.50);
+  // SALES TAX
+  tl.fromTo("#chip", {{opacity:0, y:-30}}, {{opacity:1, y:0, duration:0.25, ease:"power3.out", immediateRender:false}}, 7.55);
+  SL("#taxL", 7.61, {{scale:1, y:20}}); SL("#taxV", 8.31); chipTo(17500, 8.31); SL("#taxD", 9.93);
+  OUT(["#taxL","#taxV","#taxD"], 10.55);
+  // DEPRECIATION
+  SL("#depL", 10.63, {{scale:1, y:20}}); SL("#depV", 12.33); chipTo(34600, 12.33); SL("#depD", 13.60);
+  OUT(["#depL","#depV","#depD"], 14.40);
+  // RUNNING COSTS
+  SL("#r1", 15.22, {{scale:1, x:-300}}); chipTo(41200, 15.22);
+  SL("#r2", 16.86, {{scale:1, x:-300}}); chipTo(43200, 16.86);
+  SL("#r3", 17.84, {{scale:1, x:-300}}); chipTo(46200, 17.84);
+  OUT(["#r1","#r2","#r3"], 18.98);
+  // OPPORTUNITY COST
+  SL("#opL", 19.12, {{scale:1, y:20}}); SL("#opA", 19.54); SL("#opB", 20.57); SL("#opC", 21.78); chipTo(58700, 21.78); SL("#opD", 22.10, {{scale:1}});
+  OUT(["#opL","#opA","#opB","#opC","#opD"], 23.20);
+  // TOTAL
+  OUT("#chip", 23.24);
+  SL("#totL", 23.30, {{scale:1, y:20}});
+  var totN = {{v:46200}}, totEl = document.getElementById("totV");
+  tl.fromTo("#totV", {{opacity:0, scale:0.6}}, {{opacity:1, scale:1, duration:1.1, ease:"power3.out", immediateRender:false}}, 23.34);
+  tl.fromTo(totN, {{v:46200}}, {{v:58700, duration:1.1, ease:"power3.out", immediateRender:false, onUpdate:function(){{ totEl.textContent = fmt(totN.v); }}}}, 23.34);
+  tl.fromTo("#totV", {{x:0}}, {{x:12, duration:0.04, yoyo:true, repeat:5, ease:"none", immediateRender:false}}, 24.44);
+  SL("#totY", 25.67); SL("#totS", 26.45, {{scale:1.3}});
+  OUT(["#totL","#totV","#totY","#totS","#bPay"], 27.74);
+  // OUTRO
+  SL("#o1", 27.82); SL("#o2", 29.34);
+  OUT(["#o1","#o2"], 30.25); SL("#o3", 30.29, {{scale:2}});
+  tl.fromTo("#src", {{opacity:0}}, {{opacity:1, duration:0.3, immediateRender:false}}, 30.6);
+  tl.to({{}}, {{duration:{TOTAL}}}, 0);
+  window.__timelines["main"] = tl;
+}})();
+</script>
+</body>
+</html>
+'''
+open('index.html','w').write(html)
+print('written', len(html))

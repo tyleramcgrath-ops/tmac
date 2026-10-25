@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "You can actually live at the Plaza. Here's the bill."
+    },
+    {
+      "id": "02",
+      "text": "Central Park out the window. Room service. Someone else makes the bed."
+    },
+    {
+      "id": "03",
+      "text": "One standard room, one November night: about seventeen hundred dollars."
+    },
+    {
+      "id": "04",
+      "text": "Taxes and fees push it past two thousand."
+    },
+    {
+      "id": "05",
+      "text": "Book twenty-eight nights: sixty-six thousand dollars."
+    },
+    {
+      "id": "06",
+      "text": "The median Manhattan rent? Forty-nine hundred a month."
+    },
+    {
+      "id": "07",
+      "text": "A full year at the Plaza: over seven hundred thousand dollars."
+    },
+    {
+      "id": "08",
+      "text": "One Plaza month covers thirteen people's rent. Would you check in?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

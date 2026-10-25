@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1080, height=1920" />
+<script src="assets/vendor/gsap.min.js"></script>
+<style>
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-700.woff2") format("woff2");font-weight:700;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-800.woff2") format("woff2");font-weight:800;font-display:block}
+@font-face{font-family:"Barlow";src:url("assets/fonts/Barlow-900.woff2") format("woff2");font-weight:900;font-display:block}
+@font-face{font-family:"Plex";src:url("assets/fonts/IBM_Plex_Mono-600.woff2") format("woff2");font-weight:600;font-display:block}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:"Barlow",sans-serif}
+#footage{position:absolute;inset:0;width:1080px;height:1920px;object-fit:cover}
+#shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 32%,rgba(0,0,0,0) 50%,rgba(0,0,0,.25) 72%,rgba(0,0,0,.65) 100%)}
+#ov{position:absolute;inset:0}
+.abs{position:absolute;left:0;right:0;text-align:center}
+.big{font-weight:900;text-transform:uppercase;letter-spacing:-.02em;line-height:.9;color:#fff;
+  text-shadow:0 6px 0 rgba(0,0,0,.35),0 10px 40px rgba(0,0,0,.75)}
+.red{color:#FF3B30} .gold{color:#FFC94A} .green{color:#5CFF7A}
+.lab{font-family:"Plex",monospace;font-weight:600;letter-spacing:.16em;text-transform:uppercase;font-size:34px;color:#fff;text-shadow:0 2px 12px rgba(0,0,0,.9)}
+#banner{position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:"Plex",monospace;font-weight:600;
+  font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px}
+#bSee{background:#FFC94A;color:#111} #bPay{background:#FF3B30;color:#fff}
+#chip{position:absolute;top:235px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.72);border:3px solid #FF3B30;border-radius:10px;
+  padding:10px 28px;white-space:nowrap;display:flex;gap:22px;align-items:baseline}
+#chip .k{font-family:"Plex",monospace;font-weight:600;font-size:30px;letter-spacing:.14em;color:#ddd}
+#chip .v{font-weight:900;font-size:64px;color:#FF3B30;font-variant-numeric:tabular-nums}
+.row{position:absolute;left:90px;right:90px;display:flex;justify-content:space-between;align-items:baseline;
+  background:rgba(0,0,0,.6);border-left:10px solid #FF3B30;padding:18px 30px;border-radius:8px}
+.row .n{font-weight:800;font-size:64px;color:#fff;text-transform:uppercase}
+.row .p{font-weight:900;font-size:84px;color:#FF3B30}
+.stamp{position:absolute;left:50%;transform:translateX(-50%) rotate(-6deg);font-weight:900;font-size:150px;padding:6px 40px;border:10px solid currentColor;border-radius:18px;background:rgba(0,0,0,.55);line-height:1}
+.vs{position:absolute;left:50%;top:960px;transform:translate(-50%,-50%);background:#FF3B30;color:#fff;font-weight:900;font-size:110px;line-height:.9;text-align:center;padding:30px 50px;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.vs span{font-size:60px;color:#111}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+#tag{position:absolute;left:50%;top:1290px;transform:translateX(-50%) rotate(-4deg);background:#fff;color:#111;border-radius:14px;
+  padding:16px 40px 20px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+#tag .t1{font-family:"Plex",monospace;font-weight:600;font-size:30px;letter-spacing:.16em}
+#tag .t2{font-weight:900;font-size:150px;line-height:1;font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="39.1" data-width="1080" data-height="1920">
+  <video id="footage" class="clip" src="assets/footage/track.mp4" muted playsinline data-start="0" data-duration="39.1" data-track-index="0"></video>
+  <div id="ovl" class="clip" data-start="0" data-duration="39.1" data-track-index="1" style="position:absolute;inset:0">
+    <div id="shade"></div>
+    <div id="ov">
+      <div id="bSee" class="bn" style="position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:Plex,monospace;font-weight:600;font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px">WHAT THEY SEE</div>
+      <div id="bPay" class="bn" data-x="1" style="position:absolute;top:120px;left:50%;transform:translateX(-50%);padding:14px 30px;font-family:Plex,monospace;font-weight:600;font-size:40px;letter-spacing:.14em;white-space:nowrap;border-radius:6px;opacity:0">WHAT IT'S WORTH</div>
+      <div id="chip" style="opacity:0;display:none"><span class="k">REAL COST</span><span class="v" id="chipv">$0</span></div>
+
+      <div id="h1" class="abs big gold" style="top:300px;font-size:150px">THE LAMBO.</div>
+      <div id="h2" class="abs big" style="top:300px;font-size:150px;opacity:0">THE WATCH.</div>
+
+      <div id="q1" class="abs big" style="top:520px;font-size:120px;opacity:0">5 YEARS<br>LATER…</div>
+      <div id="q2" class="abs big gold" style="top:800px;font-size:92px;opacity:0">ONLY ONE IS STILL<br>WORTH THE MONEY.</div>
+
+      <div id="uL" class="abs lab" style="top:520px;opacity:0;font-size:42px">2020 LAMBORGHINI URUS</div>
+      <div id="uA" class="abs big" style="top:590px;font-size:170px;opacity:0">$211,321</div>
+      <div id="uAl" class="abs lab" style="top:760px;opacity:0;font-size:34px">NEW</div>
+      <div id="uB" class="abs big red" style="top:830px;font-size:170px;opacity:0">$139,260</div>
+      <div id="uBl" class="abs lab" style="top:1000px;opacity:0;font-size:34px">5 YEARS LATER</div>
+      <div id="uS" class="stamp red" style="top:1140px;opacity:0">−34%</div>
+
+      <div id="dL" class="abs lab" style="top:520px;opacity:0;font-size:42px">STEEL ROLEX DAYTONA</div>
+      <div id="dA" class="abs big" style="top:590px;font-size:170px;opacity:0">$16,900</div>
+      <div id="dAl" class="abs lab" style="top:760px;opacity:0;font-size:34px">RETAIL</div>
+      <div id="dB" class="abs big green" style="top:830px;font-size:170px;opacity:0">~$32,000</div>
+      <div id="dBl" class="abs lab" style="top:1000px;opacity:0;font-size:34px">RESALE MARKET</div>
+      <div id="dS" class="stamp green" style="top:1140px;opacity:0">+89%</div>
+
+      <div id="pL" class="abs lab" style="top:520px;opacity:0;font-size:42px">PATEK NAUTILUS 5711</div>
+      <div id="pA" class="abs big" style="top:590px;font-size:170px;opacity:0">$34,890</div>
+      <div id="pAl" class="abs lab" style="top:760px;opacity:0;font-size:34px">LAST RETAIL</div>
+      <div id="pB" class="abs big green" style="top:830px;font-size:160px;opacity:0">~$123,700</div>
+      <div id="pBl" class="abs lab" style="top:1000px;opacity:0;font-size:34px">RESALE MARKET</div>
+      <div id="pS" class="stamp green" style="top:1140px;opacity:0">3.5×</div>
+
+      <div id="cA" class="abs big gold" style="top:420px;font-size:150px;opacity:0">THE CATCH.</div>
+      <div id="cB" class="abs big" style="top:600px;font-size:86px;opacity:0">ALMOST NOBODY<br>BUYS AT RETAIL.</div>
+      <div id="cL" class="abs lab" style="top:880px;opacity:0;font-size:40px">ROLEX MARKET INDEX · 5 YRS</div>
+      <div id="cV" class="abs big red" style="top:940px;font-size:190px;opacity:0">−7.9%</div>
+
+      <div id="eA" class="abs big red" style="top:360px;font-size:120px;opacity:0">CAR −$72,061</div>
+      <div id="eB" class="abs big green" style="top:1300px;font-size:120px;opacity:0">WATCH +$15,103</div>
+      <div id="o3" class="vs" style="opacity:0">WATCH<br><span>or</span><br>CAR?</div>
+      <div id="src" class="abs" style="top:1830px;opacity:0;font-size:21px;color:rgba(255,255,255,.65);font-family:Barlow">Footage illustrative. Sources: Jalopnik/iSeeCars, WatchCharts (Sept 2026). Watch gain assumes buying at retail. Urus photo: Alexander Migl, CC BY-SA 4.0</div>
+      <div id="flash"></div>
+    </div>
+  </div>
+  <div id="caps" data-composition-id="captions" data-composition-src="compositions/captions.html" data-start="0" data-duration="39.1" data-track-index="2"></div>
+    <audio id="vo1" class="clip" src="assets/voice/01.wav" data-start="0.1" data-duration="3.072" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo2" class="clip" src="assets/voice/02.wav" data-start="3.292" data-duration="3.2" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo3" class="clip" src="assets/voice/03.wav" data-start="6.612" data-duration="7.851" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo4" class="clip" src="assets/voice/04.wav" data-start="14.583" data-duration="6.635" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo5" class="clip" src="assets/voice/05.wav" data-start="21.338" data-duration="5.397" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo6" class="clip" src="assets/voice/06.wav" data-start="26.855" data-duration="6.549" data-track-index="10" data-volume="1"></audio>
+  <audio id="vo7" class="clip" src="assets/voice/07.wav" data-start="33.524" data-duration="4.587" data-track-index="10" data-volume="1"></audio>
+  <audio id="bgm" class="clip" src="assets/bgm/dark-pulse.mp3" data-start="0" data-duration="39.1" data-track-index="11" data-volume="0.22"></audio>
+  <audio id="sfx0" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="1.83" data-duration="1.2" data-track-index="20" data-volume="0.5"></audio>
+  <audio id="sfx1" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="3.29" data-duration="1.2" data-track-index="21" data-volume="0.9"></audio>
+  <audio id="sfx2" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="6.59" data-duration="1.2" data-track-index="22" data-volume="0.5"></audio>
+  <audio id="sfx3" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="8.85" data-duration="1.2" data-track-index="23" data-volume="0.7"></audio>
+  <audio id="sfx4" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="11.82" data-duration="1.2" data-track-index="20" data-volume="0.7"></audio>
+  <audio id="sfx5" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="13.26" data-duration="1.2" data-track-index="21" data-volume="1.0"></audio>
+  <audio id="sfx6" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="14.56" data-duration="1.2" data-track-index="22" data-volume="0.5"></audio>
+  <audio id="sfx7" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="16.58" data-duration="1.2" data-track-index="23" data-volume="0.7"></audio>
+  <audio id="sfx8" class="clip" src="assets/sfx/riser.mp3" data-start="19.4" data-duration="1.2" data-track-index="20" data-volume="0.5"></audio>
+  <audio id="sfx9" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="20.03" data-duration="1.2" data-track-index="21" data-volume="1.0"></audio>
+  <audio id="sfx10" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="21.32" data-duration="1.2" data-track-index="22" data-volume="0.5"></audio>
+  <audio id="sfx11" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="23.06" data-duration="1.2" data-track-index="23" data-volume="0.7"></audio>
+  <audio id="sfx12" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="25.28" data-duration="1.2" data-track-index="20" data-volume="1.0"></audio>
+  <audio id="sfx13" class="clip" src="assets/sfx/whoosh-short.mp3" data-start="26.84" data-duration="1.2" data-track-index="21" data-volume="0.5"></audio>
+  <audio id="sfx14" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="32.02" data-duration="1.2" data-track-index="22" data-volume="0.9"></audio>
+  <audio id="sfx15" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="34.42" data-duration="1.2" data-track-index="23" data-volume="0.9"></audio>
+  <audio id="sfx16" class="clip" src="assets/sfx/impact-bass-1.mp3" data-start="36.28" data-duration="1.2" data-track-index="20" data-volume="0.9"></audio>
+  <audio id="sfx17" class="clip" src="assets/sfx/impact-bass-2.mp3" data-start="36.96" data-duration="1.2" data-track-index="21" data-volume="0.9"></audio>
+</div>
+<script>
+(function(){
+  window.__timelines = window.__timelines || {};
+  var tl = gsap.timeline({ paused: true });
+  var SL = function(sel, at, from){ tl.fromTo(sel, Object.assign({opacity:0, scale:1.6, filter:"blur(12px)"}, from||{}), {opacity:1, scale:1, y:0, x:0, filter:"blur(0px)", duration:0.22, ease:"power4.out", immediateRender:false}, at); };
+  var OUT = function(sel, at){ tl.to(sel, {opacity:0, duration:0.12, ease:"none"}, at); };
+  var chipN = {v:0}, chipEl = document.getElementById("chipv");
+  function fmt(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+  function chipTo(v, at){ tl.to(chipN, {v:v, duration:0.45, ease:"power2.out", onUpdate:function(){ chipEl.textContent = fmt(chipN.v); }}, at);
+    tl.fromTo("#chip", {scale:1.18}, {scale:1, duration:0.3, ease:"power3.out", immediateRender:false}, at); }
+  tl.set(chipEl, {textContent:"$0"}, 0);
+
+  // HOOK
+  tl.fromTo("#h1", {scale:1.12}, {scale:1, duration:0.5, ease:"power3.out"}, 0);
+  OUT("#h1", 1.83); SL("#h2", 1.85); OUT("#h2", 3.27);
+  // TURN
+  tl.fromTo("#flash", {opacity:0}, {opacity:0.85, duration:0.05, ease:"none", immediateRender:false}, 3.29);
+  tl.to("#flash", {opacity:0, duration:0.3, ease:"power2.out"}, 3.34);
+  OUT("#bSee", 3.29); tl.fromTo("#bPay", {opacity:0, scale:1.4}, {opacity:1, scale:1, duration:0.2, ease:"back.out(2)", immediateRender:false}, 3.29);
+  SL("#q1", 3.39); SL("#q2", 4.58, {scale:1.3});
+  OUT(["#q1","#q2"], 6.57);
+  // URUS
+  SL("#uL", 6.67, {scale:1, y:20}); SL("#uA", 8.85); SL("#uAl", 10.16, {scale:1});
+  SL("#uB", 11.82); SL("#uBl", 12.3, {scale:1}); SL("#uS", 13.26, {scale:2.2, rotation:-20});
+  OUT(["#uL","#uA","#uAl","#uB","#uBl","#uS"], 14.54);
+  // DAYTONA
+  SL("#dL", 14.65, {scale:1, y:20}); SL("#dA", 16.58); SL("#dAl", 17.74, {scale:1});
+  SL("#dB", 20.03); SL("#dBl", 20.4, {scale:1}); SL("#dS", 20.55, {scale:2.2, rotation:-20});
+  OUT(["#dL","#dA","#dAl","#dB","#dBl","#dS"], 21.30);
+  // NAUTILUS
+  SL("#pL", 21.41, {scale:1, y:20}); SL("#pA", 23.06); SL("#pAl", 23.67, {scale:1});
+  SL("#pB", 25.28); SL("#pBl", 25.7, {scale:1}); SL("#pS", 25.9, {scale:2.2, rotation:-20});
+  OUT(["#pL","#pA","#pAl","#pB","#pBl","#pS"], 26.82);
+  // CATCH
+  SL("#cA", 26.89); SL("#cB", 27.80, {scale:1.2}); SL("#cL", 30.41, {scale:1, y:20}); SL("#cV", 32.02);
+  OUT(["#cA","#cB","#cL","#cV","#bPay"], 33.48);
+  // OUTRO
+  SL("#eA", 34.42); SL("#eB", 36.28);
+  OUT(["#eA","#eB"], 36.94); SL("#o3", 36.96, {scale:2.2});
+  tl.fromTo("#src", {opacity:0}, {opacity:1, duration:0.3, immediateRender:false}, 37.2);
+  tl.to({}, {duration:39.1}, 0);
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

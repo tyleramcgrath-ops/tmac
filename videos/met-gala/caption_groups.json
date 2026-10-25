@@ -1,0 +1,733 @@
+{
+  "total_duration_s": 32.99,
+  "width": 1080,
+  "height": 1920,
+  "groups": [
+    {
+      "id": "caption-group-0",
+      "frame": 1,
+      "start": 0.07,
+      "end": 0.41,
+      "text": "A Met",
+      "words": [
+        {
+          "id": "caption-word-0-0",
+          "text": "A",
+          "start": 0.07,
+          "end": 0.1
+        },
+        {
+          "id": "caption-word-0-1",
+          "text": "Met",
+          "start": 0.1,
+          "end": 0.29
+        }
+      ]
+    },
+    {
+      "id": "caption-group-1",
+      "frame": 1,
+      "start": 0.42,
+      "end": 1.02,
+      "text": "Gala ticket",
+      "words": [
+        {
+          "id": "caption-word-1-0",
+          "text": "Gala",
+          "start": 0.42,
+          "end": 0.6
+        },
+        {
+          "id": "caption-word-1-1",
+          "text": "ticket",
+          "start": 0.6,
+          "end": 1.02
+        }
+      ]
+    },
+    {
+      "id": "caption-group-2",
+      "frame": 1,
+      "start": 1.02,
+      "end": 3.51,
+      "text": "now costs $100,000.",
+      "words": [
+        {
+          "id": "caption-word-2-0",
+          "text": "now",
+          "start": 1.02,
+          "end": 1.35
+        },
+        {
+          "id": "caption-word-2-1",
+          "text": "costs",
+          "start": 1.35,
+          "end": 1.65
+        },
+        {
+          "id": "caption-word-2-2",
+          "text": "$100,000.",
+          "start": 1.68,
+          "end": 3.39
+        }
+      ]
+    },
+    {
+      "id": "caption-group-3",
+      "frame": 2,
+      "start": 3.652,
+      "end": 4.942,
+      "text": "The museum steps,",
+      "words": [
+        {
+          "id": "caption-word-3-0",
+          "text": "The",
+          "start": 3.652,
+          "end": 3.852
+        },
+        {
+          "id": "caption-word-3-1",
+          "text": "museum",
+          "start": 3.852,
+          "end": 4.322
+        },
+        {
+          "id": "caption-word-3-2",
+          "text": "steps,",
+          "start": 4.322,
+          "end": 4.872
+        }
+      ]
+    },
+    {
+      "id": "caption-group-4",
+      "frame": 2,
+      "start": 4.942,
+      "end": 5.972,
+      "text": "the flash bulbs,",
+      "words": [
+        {
+          "id": "caption-word-4-0",
+          "text": "the",
+          "start": 4.942,
+          "end": 5.082
+        },
+        {
+          "id": "caption-word-4-1",
+          "text": "flash",
+          "start": 5.082,
+          "end": 5.392
+        },
+        {
+          "id": "caption-word-4-2",
+          "text": "bulbs,",
+          "start": 5.452,
+          "end": 5.952
+        }
+      ]
+    },
+    {
+      "id": "caption-group-5",
+      "frame": 2,
+      "start": 5.972,
+      "end": 6.352,
+      "text": "a gown",
+      "words": [
+        {
+          "id": "caption-word-5-0",
+          "text": "a",
+          "start": 5.972,
+          "end": 6.032
+        },
+        {
+          "id": "caption-word-5-1",
+          "text": "gown",
+          "start": 6.032,
+          "end": 6.292
+        }
+      ]
+    },
+    {
+      "id": "caption-group-6",
+      "frame": 2,
+      "start": 6.352,
+      "end": 7.482,
+      "text": "everyone talks about.",
+      "words": [
+        {
+          "id": "caption-word-6-0",
+          "text": "everyone",
+          "start": 6.352,
+          "end": 6.772
+        },
+        {
+          "id": "caption-word-6-1",
+          "text": "talks",
+          "start": 6.772,
+          "end": 7.012
+        },
+        {
+          "id": "caption-word-6-2",
+          "text": "about.",
+          "start": 7.052,
+          "end": 7.362
+        }
+      ]
+    },
+    {
+      "id": "caption-group-7",
+      "frame": 3,
+      "start": 7.727,
+      "end": 8.237,
+      "text": "Last year",
+      "words": [
+        {
+          "id": "caption-word-7-0",
+          "text": "Last",
+          "start": 7.727,
+          "end": 7.927
+        },
+        {
+          "id": "caption-word-7-1",
+          "text": "year",
+          "start": 8.027,
+          "end": 8.237
+        }
+      ]
+    },
+    {
+      "id": "caption-group-8",
+      "frame": 3,
+      "start": 8.237,
+      "end": 10.007,
+      "text": "it was 75,000.",
+      "words": [
+        {
+          "id": "caption-word-8-0",
+          "text": "it",
+          "start": 8.237,
+          "end": 8.377
+        },
+        {
+          "id": "caption-word-8-1",
+          "text": "was",
+          "start": 8.377,
+          "end": 8.467
+        },
+        {
+          "id": "caption-word-8-2",
+          "text": "75,000.",
+          "start": 8.647,
+          "end": 9.887
+        }
+      ]
+    },
+    {
+      "id": "caption-group-9",
+      "frame": 4,
+      "start": 10.151,
+      "end": 10.531,
+      "text": "A table",
+      "words": [
+        {
+          "id": "caption-word-9-0",
+          "text": "A",
+          "start": 10.151,
+          "end": 10.191
+        },
+        {
+          "id": "caption-word-9-1",
+          "text": "table",
+          "start": 10.191,
+          "end": 10.531
+        }
+      ]
+    },
+    {
+      "id": "caption-group-10",
+      "frame": 4,
+      "start": 10.531,
+      "end": 11.401,
+      "text": "of 10,",
+      "words": [
+        {
+          "id": "caption-word-10-0",
+          "text": "of",
+          "start": 10.531,
+          "end": 10.661
+        },
+        {
+          "id": "caption-word-10-1",
+          "text": "10,",
+          "start": 10.751,
+          "end": 11.281
+        }
+      ]
+    },
+    {
+      "id": "caption-group-11",
+      "frame": 4,
+      "start": 11.511,
+      "end": 13.951,
+      "text": "350,000 usually paid by",
+      "words": [
+        {
+          "id": "caption-word-11-0",
+          "text": "350,000",
+          "start": 11.511,
+          "end": 12.871
+        },
+        {
+          "id": "caption-word-11-1",
+          "text": "usually",
+          "start": 13.001,
+          "end": 13.411
+        },
+        {
+          "id": "caption-word-11-2",
+          "text": "paid",
+          "start": 13.471,
+          "end": 13.791
+        },
+        {
+          "id": "caption-word-11-3",
+          "text": "by",
+          "start": 13.791,
+          "end": 13.951
+        }
+      ]
+    },
+    {
+      "id": "caption-group-12",
+      "frame": 4,
+      "start": 13.951,
+      "end": 14.641,
+      "text": "a brand.",
+      "words": [
+        {
+          "id": "caption-word-12-0",
+          "text": "a",
+          "start": 13.951,
+          "end": 14.011
+        },
+        {
+          "id": "caption-word-12-1",
+          "text": "brand.",
+          "start": 14.021,
+          "end": 14.521
+        }
+      ]
+    },
+    {
+      "id": "caption-group-13",
+      "frame": 5,
+      "start": 14.72,
+      "end": 15.45,
+      "text": "Stars prep",
+      "words": [
+        {
+          "id": "caption-word-13-0",
+          "text": "Stars",
+          "start": 14.72,
+          "end": 15.07
+        },
+        {
+          "id": "caption-word-13-1",
+          "text": "prep",
+          "start": 15.16,
+          "end": 15.4
+        }
+      ]
+    },
+    {
+      "id": "caption-group-14",
+      "frame": 5,
+      "start": 15.45,
+      "end": 15.86,
+      "text": "at The",
+      "words": [
+        {
+          "id": "caption-word-14-0",
+          "text": "at",
+          "start": 15.45,
+          "end": 15.6
+        },
+        {
+          "id": "caption-word-14-1",
+          "text": "The",
+          "start": 15.6,
+          "end": 15.86
+        }
+      ]
+    },
+    {
+      "id": "caption-group-15",
+      "frame": 5,
+      "start": 15.86,
+      "end": 16.77,
+      "text": "Mark Hotel,",
+      "words": [
+        {
+          "id": "caption-word-15-0",
+          "text": "Mark",
+          "start": 15.86,
+          "end": 16.18
+        },
+        {
+          "id": "caption-word-15-1",
+          "text": "Hotel,",
+          "start": 16.19,
+          "end": 16.77
+        }
+      ]
+    },
+    {
+      "id": "caption-group-16",
+      "frame": 5,
+      "start": 16.77,
+      "end": 17.52,
+      "text": "Penthouses:",
+      "words": [
+        {
+          "id": "caption-word-16-0",
+          "text": "Penthouses:",
+          "start": 16.77,
+          "end": 17.4
+        }
+      ]
+    },
+    {
+      "id": "caption-group-17",
+      "frame": 5,
+      "start": 17.52,
+      "end": 19.18,
+      "text": "$45,000 a night.",
+      "words": [
+        {
+          "id": "caption-word-17-0",
+          "text": "$45,000",
+          "start": 17.52,
+          "end": 18.63
+        },
+        {
+          "id": "caption-word-17-1",
+          "text": "a",
+          "start": 18.63,
+          "end": 18.69
+        },
+        {
+          "id": "caption-word-17-2",
+          "text": "night.",
+          "start": 18.69,
+          "end": 19.06
+        }
+      ]
+    },
+    {
+      "id": "caption-group-18",
+      "frame": 6,
+      "start": 19.385,
+      "end": 20.855,
+      "text": "custom couture?",
+      "words": [
+        {
+          "id": "caption-word-18-0",
+          "text": "custom",
+          "start": 19.385,
+          "end": 19.905
+        },
+        {
+          "id": "caption-word-18-1",
+          "text": "couture?",
+          "start": 19.955,
+          "end": 20.855
+        }
+      ]
+    },
+    {
+      "id": "caption-group-19",
+      "frame": 6,
+      "start": 20.855,
+      "end": 21.615,
+      "text": "Some estimates",
+      "words": [
+        {
+          "id": "caption-word-19-0",
+          "text": "Some",
+          "start": 20.855,
+          "end": 21.085
+        },
+        {
+          "id": "caption-word-19-1",
+          "text": "estimates",
+          "start": 21.085,
+          "end": 21.615
+        }
+      ]
+    },
+    {
+      "id": "caption-group-20",
+      "frame": 6,
+      "start": 21.615,
+      "end": 21.835,
+      "text": "put a",
+      "words": [
+        {
+          "id": "caption-word-20-0",
+          "text": "put",
+          "start": 21.615,
+          "end": 21.785
+        },
+        {
+          "id": "caption-word-20-1",
+          "text": "a",
+          "start": 21.785,
+          "end": 21.835
+        }
+      ]
+    },
+    {
+      "id": "caption-group-21",
+      "frame": 6,
+      "start": 21.835,
+      "end": 23.515,
+      "text": "gown at $500,000.",
+      "words": [
+        {
+          "id": "caption-word-21-0",
+          "text": "gown",
+          "start": 21.835,
+          "end": 22.105
+        },
+        {
+          "id": "caption-word-21-1",
+          "text": "at",
+          "start": 22.105,
+          "end": 22.135
+        },
+        {
+          "id": "caption-word-21-2",
+          "text": "$500,000.",
+          "start": 22.195,
+          "end": 23.395
+        }
+      ]
+    },
+    {
+      "id": "caption-group-22",
+      "frame": 7,
+      "start": 23.634,
+      "end": 24.724,
+      "text": "Ticket plus that",
+      "words": [
+        {
+          "id": "caption-word-22-0",
+          "text": "Ticket",
+          "start": 23.634,
+          "end": 24.094
+        },
+        {
+          "id": "caption-word-22-1",
+          "text": "plus",
+          "start": 24.094,
+          "end": 24.394
+        },
+        {
+          "id": "caption-word-22-2",
+          "text": "that",
+          "start": 24.444,
+          "end": 24.724
+        }
+      ]
+    },
+    {
+      "id": "caption-group-23",
+      "frame": 7,
+      "start": 24.724,
+      "end": 25.314,
+      "text": "suite,",
+      "words": [
+        {
+          "id": "caption-word-23-0",
+          "text": "suite,",
+          "start": 24.724,
+          "end": 25.314
+        }
+      ]
+    },
+    {
+      "id": "caption-group-24",
+      "frame": 7,
+      "start": 25.314,
+      "end": 27.904,
+      "text": "145,000 before the dress.",
+      "words": [
+        {
+          "id": "caption-word-24-0",
+          "text": "145,000",
+          "start": 25.314,
+          "end": 26.784
+        },
+        {
+          "id": "caption-word-24-1",
+          "text": "before",
+          "start": 26.934,
+          "end": 27.264
+        },
+        {
+          "id": "caption-word-24-2",
+          "text": "the",
+          "start": 27.264,
+          "end": 27.444
+        },
+        {
+          "id": "caption-word-24-3",
+          "text": "dress.",
+          "start": 27.444,
+          "end": 27.784
+        }
+      ]
+    },
+    {
+      "id": "caption-group-25",
+      "frame": 8,
+      "start": 27.935,
+      "end": 28.405,
+      "text": "but most",
+      "words": [
+        {
+          "id": "caption-word-25-0",
+          "text": "but",
+          "start": 27.935,
+          "end": 28.115
+        },
+        {
+          "id": "caption-word-25-1",
+          "text": "most",
+          "start": 28.115,
+          "end": 28.405
+        }
+      ]
+    },
+    {
+      "id": "caption-group-26",
+      "frame": 8,
+      "start": 28.405,
+      "end": 29.115,
+      "text": "stars don't",
+      "words": [
+        {
+          "id": "caption-word-26-0",
+          "text": "stars",
+          "start": 28.405,
+          "end": 28.765
+        },
+        {
+          "id": "caption-word-26-1",
+          "text": "don't",
+          "start": 28.765,
+          "end": 29.115
+        }
+      ]
+    },
+    {
+      "id": "caption-group-27",
+      "frame": 8,
+      "start": 29.115,
+      "end": 29.535,
+      "text": "buy the",
+      "words": [
+        {
+          "id": "caption-word-27-0",
+          "text": "buy",
+          "start": 29.115,
+          "end": 29.325
+        },
+        {
+          "id": "caption-word-27-1",
+          "text": "the",
+          "start": 29.325,
+          "end": 29.535
+        }
+      ]
+    },
+    {
+      "id": "caption-group-28",
+      "frame": 8,
+      "start": 29.535,
+      "end": 29.975,
+      "text": "dress.",
+      "words": [
+        {
+          "id": "caption-word-28-0",
+          "text": "dress.",
+          "start": 29.535,
+          "end": 29.945
+        }
+      ]
+    },
+    {
+      "id": "caption-group-29",
+      "frame": 8,
+      "start": 29.975,
+      "end": 30.715,
+      "text": "Brands lend",
+      "words": [
+        {
+          "id": "caption-word-29-0",
+          "text": "Brands",
+          "start": 29.975,
+          "end": 30.375
+        },
+        {
+          "id": "caption-word-29-1",
+          "text": "lend",
+          "start": 30.375,
+          "end": 30.645
+        }
+      ]
+    },
+    {
+      "id": "caption-group-30",
+      "frame": 8,
+      "start": 30.715,
+      "end": 30.965,
+      "text": "it,",
+      "words": [
+        {
+          "id": "caption-word-30-0",
+          "text": "it,",
+          "start": 30.715,
+          "end": 30.965
+        }
+      ]
+    },
+    {
+      "id": "caption-group-31",
+      "frame": 8,
+      "start": 30.965,
+      "end": 32.265,
+      "text": "who's really paying?",
+      "words": [
+        {
+          "id": "caption-word-31-0",
+          "text": "who's",
+          "start": 30.965,
+          "end": 31.225
+        },
+        {
+          "id": "caption-word-31-1",
+          "text": "really",
+          "start": 31.265,
+          "end": 31.595
+        },
+        {
+          "id": "caption-word-31-2",
+          "text": "paying?",
+          "start": 31.595,
+          "end": 32.145
+        }
+      ]
+    }
+  ]
+}

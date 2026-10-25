@@ -1,0 +1,38 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "Everyone sees the private jet. The champagne. The lifestyle."
+    },
+    {
+      "id": "02",
+      "text": "Nobody sees the bill. Nine and a half million dollars, just to buy one."
+    },
+    {
+      "id": "03",
+      "text": "Pilots, hangar, insurance, management. Three hundred sixty grand a year, before it even flies."
+    },
+    {
+      "id": "04",
+      "text": "Fly it a hundred hours? Another hundred sixty-five grand."
+    },
+    {
+      "id": "05",
+      "text": "And that nine and a half million, invested at five percent? Four hundred seventy grand a year. Gone."
+    },
+    {
+      "id": "06",
+      "text": "That's almost a million dollars a year. Ten thousand dollars for every hour in the air."
+    },
+    {
+      "id": "07",
+      "text": "They see the jet. Now you know the math. Still want the jet?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

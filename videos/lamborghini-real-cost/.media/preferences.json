@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "preferences": {
+    "destination": {
+      "value": "youtube-shorts",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.729Z"
+    },
+    "aspect": {
+      "value": "1080x1920",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.781Z"
+    },
+    "language": {
+      "value": "en",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.825Z"
+    },
+    "flow": {
+      "value": "automation",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.868Z"
+    },
+    "storyboard": {
+      "value": "no",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.916Z"
+    },
+    "style_preset.faceless-explainer": {
+      "value": "broadside",
+      "confirmed_in": [
+        "lamborghini-real-cost"
+      ],
+      "updated_at": "2026-10-03T08:51:28.961Z"
+    }
+  },
+  "sightings": {}
+}

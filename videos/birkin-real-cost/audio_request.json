@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "You can't just walk in and buy a Birkin."
+    },
+    {
+      "id": "02",
+      "text": "A Birkin twenty-five, in Togo leather. Straight from the boutique."
+    },
+    {
+      "id": "03",
+      "text": "The US sticker price: thirteen and a half grand."
+    },
+    {
+      "id": "04",
+      "text": "First, buyers say, you build a purchase history. Scarves, shoes, home goods."
+    },
+    {
+      "id": "05",
+      "text": "Collectors describe spending one to one. Some say double."
+    },
+    {
+      "id": "06",
+      "text": "A twenty twenty-four lawsuit alleged illegal tying. Dismissed, now on appeal."
+    },
+    {
+      "id": "07",
+      "text": "At one to one, your thirteen-grand bag really costs twenty-seven thousand."
+    },
+    {
+      "id": "08",
+      "text": "Or skip the line: resale runs close to thirty grand. Which would you pay?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}

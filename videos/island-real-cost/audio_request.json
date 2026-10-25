@@ -1,0 +1,42 @@
+{
+  "provider": "auto",
+  "speed": "1.15",
+  "lines": [
+    {
+      "id": "01",
+      "text": "A Bahamas island costs about five million. That's the easy part."
+    },
+    {
+      "id": "02",
+      "text": "Twelve acres in the Exumas. Two white-sand beaches. Your own harbor."
+    },
+    {
+      "id": "03",
+      "text": "Add a house, and you need a live-in caretaker: forty-two grand a year."
+    },
+    {
+      "id": "04",
+      "text": "Insurance in hurricane country: thirty-five thousand."
+    },
+    {
+      "id": "05",
+      "text": "Salt air eats everything. Maintenance: fifty-five grand."
+    },
+    {
+      "id": "06",
+      "text": "The boat is your only road. Fifteen thousand to run it."
+    },
+    {
+      "id": "07",
+      "text": "Add solar, desalination and property tax: a hundred seventy-seven thousand a year."
+    },
+    {
+      "id": "08",
+      "text": "That's almost five hundred dollars a day. Still want the island?"
+    }
+  ],
+  "bgm": {
+    "mode": "none"
+  },
+  "voice": "am_michael"
+}
