@@ -1,0 +1,4200 @@
+{
+  "brand": "Teddy Headwear",
+  "title": "A New Frontier: 60-Day Launch",
+  "strategy": {
+    "objective": "Use the relaunch of teddyheadwear.com to build awareness and traffic: introduce the hat line and its details, make Monogram Studio the reason to visit, launch the apparel drop, and end with a community that posts its own Teddy photos.",
+    "audience": [
+      "Style-led 25–40 year olds in South Florida who live near the coast and want a hat that works at the beach and at dinner",
+      "Modern Western fans who like the silhouette but want something less costume, more everyday",
+      "Gift buyers looking for something personal (Monogram Studio, someone else's initials)",
+      "People who care about details and will pay for wool, silk and leather",
+      "City dwellers with ties to Texas, Florida, New York or Los Angeles who want the monogram for their place"
+    ],
+    "positioning": "Teddy Headwear is a Western hat brand born in Jupiter, Florida: traditional silhouettes, contemporary design and original embroidered artwork, on 100% wool with gold silk inside. A new frontier: Western hats that make sense on the Atlantic coast and in the city, now with your own letters on them.",
+    "pillars": [
+      {
+        "id": "product",
+        "name": "The Hats",
+        "why": "Show the cowboy and fedora range, prices and product pages clearly so new followers know what they can buy.",
+        "share": "15%"
+      },
+      {
+        "id": "monogram",
+        "name": "The Monogram",
+        "why": "City monograms and Monogram Studio are the brand's most distinctive hook and the new site's main feature.",
+        "share": "18%"
+      },
+      {
+        "id": "craft",
+        "name": "Made to Last",
+        "why": "Silk lining, sweatband, woven label and leather band justify the price and give macro content that gets saved.",
+        "share": "17%"
+      },
+      {
+        "id": "lifestyle",
+        "name": "Coast & Shadow",
+        "why": "Beach, Atlantic and hard-shadow editorial imagery gives the brand a look people recognize.",
+        "share": "15%"
+      },
+      {
+        "id": "apparel",
+        "name": "The Apparel Drop",
+        "why": "The new apparel line gives a second launch moment and lower entry prices into the brand.",
+        "share": "23%"
+      },
+      {
+        "id": "community",
+        "name": "Worn In",
+        "why": "Prompts, votes and #WornInTeddy turn followers into contributors and supply reshareable content.",
+        "share": "12%"
+      }
+    ],
+    "phases": [
+      {
+        "name": "Relaunch: A New Frontier",
+        "days": "1-7",
+        "goal": "Announce the new site and make the lineup clear.",
+        "focus": "Brand film, full lineup, the four details, first look at Monogram Studio, cowboy vs fedora."
+      },
+      {
+        "name": "The Monogram",
+        "days": "8-21",
+        "goal": "Drive visits to Monogram Studio and build affinity with the four city monograms.",
+        "focus": "Studio tutorials, lettering and thread guides, T/F/NY/LA hero posts, comment prompts and votes."
+      },
+      {
+        "name": "Made to Last",
+        "days": "22-35",
+        "goal": "Earn trust in the price through craft and care content.",
+        "focus": "Macro detail Reels, anatomy and care carousels, embroidery close-ups, ends on a gold silk apparel tease."
+      },
+      {
+        "name": "The Apparel Drop",
+        "days": "36-49",
+        "goal": "Build anticipation, reveal and launch the apparel drop.",
+        "focus": "Texture and palette teases (36-39), full reveal with prices (40-41), product heroes and how-tos, launch day (44), pairing content."
+      },
+      {
+        "name": "Worn In",
+        "days": "50-60",
+        "goal": "Turn followers into contributors and close with a recap.",
+        "focus": "#WornInTeddy UGC prompt, styling carousels, comment-to-Studio builds, thank-you and 60-day recap."
+      }
+    ],
+    "cadence": {
+      "feed": "One feed post every day for 60 days: 24 Reels, 18 Carousels, 18 Static posts. Selected statics also pinned to Pinterest.",
+      "stories": "A 2–5 frame story sequence every day using interactive stickers (polls, quizzes, question boxes, product and link stickers); reshare the day's feed post in stories.",
+      "reels": "24 Reels, cross-posted natively to TikTok (re-upload without the Instagram watermark, TikTok-native text). Reels run 16–27s with on-screen text so they work with the sound off.",
+      "best_times": "Start with 7–9am and 6–8pm ET on weekdays, 9–11am ET on weekends. Treat these as a test: check Instagram Insights after week 2 and move to the top two windows."
+    },
+    "voice": {
+      "do": [
+        "Short, declarative lines. Say what it is and stop.",
+        "Name the real details: 100% wool, gold silk lining, leather band, metal button, woven label.",
+        "Give prices plainly and point to the exact product page.",
+        "A little Western swagger, delivered dry.",
+        "Ground it in place: Jupiter, the Atlantic, the four cities.",
+        "Ask one clear question per post when you want comments."
+      ],
+      "dont": [
+        "Use 'elevate', 'unleash', 'game-changer', 'curated', 'timeless' or similar filler.",
+        "Use cowboy clichés ('yeehaw', 'howdy partner').",
+        "Stack emoji; use 0–2 per caption.",
+        "Invent reviews, quotes, sales numbers, discounts, shipping promises or dates. Use [placeholders].",
+        "Put hashtags inside the caption copy; keep them in the hashtag block.",
+        "Post anyone's photo or handle without permission."
+      ]
+    },
+    "hashtags": {
+      "core": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#CowboyHat",
+        "#Fedora",
+        "#ModernWestern",
+        "#WesternStyle"
+      ],
+      "product": [
+        "#WoolCowboyHat",
+        "#WoolFedora",
+        "#CustomHat",
+        "#MonogramStudio",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle"
+      ],
+      "lifestyle": [
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#HatSeason",
+        "#MensStyle",
+        "#WomensStyle",
+        "#EditorialStyle",
+        "#EverydayStyle",
+        "#HatsOfInstagram"
+      ],
+      "local": [
+        "#JupiterFlorida",
+        "#JupiterFL",
+        "#PalmBeachCounty",
+        "#SouthFlorida",
+        "#FloridaStyle",
+        "#FloridaCowboy",
+        "#AtlanticCoast",
+        "#FloridaBeaches"
+      ]
+    },
+    "kpis": [
+      {
+        "metric": "Link-in-bio clicks to teddyheadwear.com",
+        "target": "Week-over-week growth every week; record the week 1 baseline as [baseline]"
+      },
+      {
+        "metric": "Monogram Studio sessions from social (UTM-tagged links)",
+        "target": "Studio is the #1 social landing page during Days 8–21"
+      },
+      {
+        "metric": "Reel average watch-through rate",
+        "target": "40%+ on Reels under 20s"
+      },
+      {
+        "metric": "Saves per carousel",
+        "target": "3%+ of reach on guide/how-to carousels (Days 5, 16, 23, 33, 41)"
+      },
+      {
+        "metric": "Comments on prompt posts",
+        "target": "Every prompt post (Days 6, 12, 14, 21, 54) beats the account's average comment count"
+      },
+      {
+        "metric": "#WornInTeddy and @TeddyHeadwear tags",
+        "target": "At least [target] tagged posts by Day 60, with enough permissions to reshare one per day in stories"
+      }
+    ],
+    "shot_list_master": [
+      "Brim-lift: hard single light, brim shadow over the eyes, brim slowly tipped up (brown cowboy)",
+      "Jupiter beach sunrise wide: model in cream cowboy walking the waterline toward camera",
+      "Surfer exiting the shorebreak in a cream cowboy, board under arm (golden hour)",
+      "Macro slider across the gold silk lining with raking light",
+      "Macro of the gold woven label on the brim, shallow depth of field",
+      "Leather band and metal button: side profile plus fingertip-tap close-up (record clean audio)",
+      "Sweatband inside the crown, plus hands adjusting it",
+      "Embroidery macros: T, F, NY, LA on cream and brown",
+      "Product turns on bone: every cowboy and fedora, cream and brown, three-quarter angle",
+      "Over-the-shoulder phone shots of Monogram Studio (plus clean screen recordings of every style, thread and toggle)",
+      "Studio linen portraits: woman holding the brim of a cream fedora; man in brown NY cowboy with a long coat",
+      "Hat-over-lens wipe transitions in three settings (beach, studio, evening interior)",
+      "Apparel flat-lay drops onto bone, overhead locked-off, one piece at a time",
+      "Apparel on body: hoodie pull-on, fit-check throw-and-catch between two models, wild rag tied three ways",
+      "Polaroids of the hats dropped onto sand one by one, plus a blank polaroid with #WornInTeddy written on it"
+    ]
+  },
+  "days": [
+    {
+      "day": 1,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "product",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Relaunch film: A new frontier",
+      "hook": "A brim lifts out of a hard shadow. \"A new frontier.\"",
+      "concept": "The relaunch announcement as a 22-second brand film: shadow, Atlantic, details, monograms, then the new Monogram Studio. It sets the look for the next 60 days.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Tight shot, deep shadow. The brim of a brown cowboy hat covers the eyes, then slowly tips up.",
+          "onscreen": "A new frontier.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Wide on Jupiter beach at first light. Model in a cream cowboy walks toward camera along the waterline.",
+          "onscreen": "Born in Jupiter, Florida.",
+          "vo": "Western silhouettes."
+        },
+        {
+          "t": "6-10s",
+          "shot": "Three macro cuts: gold silk lining, gold woven label on the brim, metal button on the leather band.",
+          "onscreen": "100% wool. Silk lined.",
+          "vo": "Built in the details."
+        },
+        {
+          "t": "10-14s",
+          "shot": "Four fast cuts on the beat: T, F, NY, LA monograms, alternating cream and brown.",
+          "onscreen": "T  ·  F  ·  NY  ·  LA",
+          "vo": ""
+        },
+        {
+          "t": "14-18s",
+          "shot": "Over-the-shoulder phone shot: letters being typed into Monogram Studio and appearing on the hat.",
+          "onscreen": "Or stitch your own.",
+          "vo": "Or your own letters."
+        },
+        {
+          "t": "18-22s",
+          "shot": "End card: forest green field, gold Teddy script.",
+          "onscreen": "The new teddyheadwear.com",
+          "vo": "Teddy Headwear."
+        }
+      ],
+      "audio": "Slow build: ocean wash and a single reverb-heavy electric guitar, a kick drum lands on each monogram cut, then a clean drop to silence on the end card.",
+      "caption": "The new teddyheadwear.com is live.\nWestern silhouettes, original embroidered artwork, born on the beaches of Jupiter, Florida.\nEvery hat has its own page now, and Monogram Studio lets you stitch your own letters.\nA new frontier. Link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#CustomHat",
+        "#MonogramStudio",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#NewSite"
+      ],
+      "cta": "Explore the new site → link in bio",
+      "story": "4 frames: homepage screen-recording scroll / link sticker 'The new site is live' / poll 'Cowboy or fedora?' / question box 'What letters would you stitch?'",
+      "asset": {
+        "template": "cover",
+        "photo": "hero",
+        "headline": "A New Frontier",
+        "sub": "The new teddyheadwear.com is live.",
+        "tag": "Relaunch"
+      }
+    },
+    {
+      "day": 2,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "product",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Meet the lineup",
+      "hook": "Two silhouettes. Four monograms. Two wools. Here's all of it.",
+      "concept": "A clean, swipeable catalog of the whole hat line so new followers understand the range in one post.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Cream T cowboy hat, front-on, on a bone backdrop with soft side light.",
+          "onscreen": "The Lineup",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "All four cowboy hats in a row, cream and brown alternating.",
+          "onscreen": "Cowboy — $150\nT, F, NY, LA",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "All four fedoras in a row, same arrangement.",
+          "onscreen": "Fedora — $140\nSame four monograms",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Cream and brown hats side by side, crowns touching, shot from above.",
+          "onscreen": "Cream or brown.\n100% wool. Unisex.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Close crop of the T and F embroidery.",
+          "onscreen": "T for Texas.\nF for Florida.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Close crop of the NY and LA embroidery.",
+          "onscreen": "NY for New York.\nLA for Los Angeles.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Monogram Studio on a phone screen, custom letters on a brown fedora.",
+          "onscreen": "None of these yours?\nStitch your own.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Swipe for the full lineup.\nCowboy hats at $150, fedoras at $140, cream or brown 100% wool.\nT, F, NY or LA on the front, or your own letters in Monogram Studio.\nEvery hat has its own page now. Link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy"
+      ],
+      "cta": "Find yours → link in bio",
+      "story": "3 frames: slide 1 reshared with 'New post' sticker / quiz sticker 'What does the F stand for?' / link sticker to the shop",
+      "asset": {
+        "template": "product",
+        "photo": "cowboy-t-cream",
+        "headline": "Meet the Lineup",
+        "sub": "Cowboys and fedoras in cream or brown wool.",
+        "tag": "From $140"
+      }
+    },
+    {
+      "day": 3,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "lifestyle",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "Where it started: Jupiter",
+      "hook": "Where it started.",
+      "concept": "A single big photograph that anchors the brand in place: Jupiter, Florida, the Atlantic, and a cowboy hat that has never seen a ranch.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Shirtless surfer walking up from the Jupiter shorebreak in a cream cowboy hat, board under one arm, late light, low horizon, lots of sky.",
+          "onscreen": "Jupiter, FL (small, bottom left)",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Where it started.\nJupiter, Florida. Salt air, Atlantic light, and a Western silhouette that never needed a ranch to make sense.\nThe cream cowboy → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#EverydayStyle",
+        "#HatsOfInstagram",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#SurfStyle"
+      ],
+      "cta": "Shop the cream cowboy → link in bio",
+      "story": "3 frames: the photo full-bleed with location sticker 'Jupiter, Florida' / slider sticker 'How much do you love a beach hat?' / product sticker cream cowboy",
+      "asset": {
+        "template": "poster",
+        "photo": "life-6",
+        "headline": "Where It Started",
+        "sub": "Jupiter, Florida. Western silhouettes by the Atlantic.",
+        "tag": "Jupiter, FL"
+      }
+    },
+    {
+      "day": 4,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "monogram",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "First look: Monogram Studio",
+      "hook": "You can see your initials stitched on the hat before you buy it.",
+      "concept": "A fast screen-plus-hands demo of Monogram Studio, the headline feature of the new site.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Over-the-shoulder on a phone, Monogram Studio open, a blank cream cowboy on screen.",
+          "onscreen": "Your letters. On the hat. Before you order.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Thumb types two letters. They appear on the crown in real time.",
+          "onscreen": "Type 1–3 letters",
+          "vo": "Type your letters."
+        },
+        {
+          "t": "6-10s",
+          "shot": "Thumb taps through Script, Varsity, Serif and Western; the letters change each time.",
+          "onscreen": "Pick a lettering style",
+          "vo": "Pick a style."
+        },
+        {
+          "t": "10-14s",
+          "shot": "Thumb taps through White, Gold, Cream, Forest, Black thread.",
+          "onscreen": "Pick a thread color",
+          "vo": "Pick a thread."
+        },
+        {
+          "t": "14-17s",
+          "shot": "Toggle cream to brown, then cowboy to fedora.",
+          "onscreen": "Cowboy or fedora. Cream or brown.",
+          "vo": ""
+        },
+        {
+          "t": "17-20s",
+          "shot": "Pull back: a real Teddy hat held up next to the phone.",
+          "onscreen": "Monogram Studio. Live now.",
+          "vo": "Then build yours."
+        }
+      ],
+      "audio": "Crisp UI taps and soft clicks over a confident mid-tempo beat with a twangy guitar riff; each tap lands on a hit.",
+      "caption": "Introducing Monogram Studio.\nType up to three letters, pick a lettering style and a thread color, and watch it land on a cream or brown cowboy or fedora.\nYou see it before you order it.\nTry it → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#Monogram",
+        "#MonogramStudio",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#NewFeature"
+      ],
+      "cta": "Try Monogram Studio → link in bio",
+      "story": "4 frames: screen recording of the Studio / poll 'Script or Western?' / emoji slider 'Would you put your initials on a hat?' / link sticker to Monogram Studio",
+      "asset": {
+        "template": "cover",
+        "photo": "studio",
+        "headline": "Your Letters Here",
+        "sub": "Monogram Studio is live on the new site.",
+        "tag": "New"
+      }
+    },
+    {
+      "day": 5,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "craft",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Four details on every hat",
+      "hook": "Four things you'll find on every Teddy hat. Swipe.",
+      "concept": "A details primer: the four features that come standard, so the price makes sense before anyone asks.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Hat flipped crown-down, gold silk lining filling the frame.",
+          "onscreen": "Four details.\nEvery hat.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Macro of the gold silk lining with soft raking light.",
+          "onscreen": "01  Custom silk lining, in gold.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "The sweatband, inside the crown, shot from above.",
+          "onscreen": "02  Adjustable, breathable sweatband.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Macro of the gold woven label on the brim.",
+          "onscreen": "03  Woven label. Gold Teddy script on the brim.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Side profile on the leather band and metal button.",
+          "onscreen": "04  Leather hat band. Metal button.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "The full hat, three-quarter view, on bone.",
+          "onscreen": "All on 100% wool.\nNo matter the monogram.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Four things on every Teddy hat, whatever the monogram:\nGold silk lining. An adjustable, breathable sweatband. Our woven label on the brim. A leather band with a metal button.\nSave this for when someone asks what's inside.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#SilkLining",
+        "#WoolHats",
+        "#Embroidery",
+        "#MadeToLast",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#HatDetails"
+      ],
+      "cta": "Save this post",
+      "story": "3 frames: macro of the lining with 'Swipe the new post' / quiz 'Which detail is your favorite?' / link sticker to any hat page",
+      "asset": {
+        "template": "detail",
+        "photo": "detail-interior",
+        "headline": "Four Details. Every Hat.",
+        "sub": "Silk lining, sweatband, woven label, leather band.",
+        "tag": "The Details"
+      }
+    },
+    {
+      "day": 6,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "product",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "Cowboy or fedora?",
+      "hook": "Same letters. Different attitude.",
+      "concept": "A side-by-side that starts the oldest argument in hats and drives comments.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Split frame on bone: brown NY cowboy hat on the left, cream NY fedora on the right, matched angle and light.",
+          "onscreen": "Cowboy or Fedora?",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Same monogram. Different attitude.\nLeft: the NY cowboy in brown, $150. Right: the NY fedora in cream, $140.\nWhich one's yours? Tell us below.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle",
+        "#AtlanticCoast",
+        "#JupiterFL",
+        "#ThisOrThat"
+      ],
+      "cta": "Comment cowboy or fedora",
+      "story": "3 frames: the split image with a poll 'Cowboy / Fedora' / results reshare later in the day / link sticker to both product pages",
+      "asset": {
+        "template": "split",
+        "photo": "cowboy-ny-brown",
+        "photo2": "fedora-ny-cream",
+        "headline": "Cowboy or Fedora?",
+        "sub": "Same NY monogram. Two silhouettes.",
+        "tag": "$150 / $140"
+      }
+    },
+    {
+      "day": 7,
+      "week": 1,
+      "phase": "Relaunch: A New Frontier",
+      "pillar": "lifestyle",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Sunrise to sundown in one hat",
+      "hook": "One hat. One Jupiter day. Sunrise to sundown.",
+      "concept": "A week-one wrap that shows the range of settings a Teddy hat fits into, cut on location changes.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Sunrise over the Atlantic; a cream cowboy hat rests on a folded towel in the foreground.",
+          "onscreen": "Sunrise.",
+          "vo": ""
+        },
+        {
+          "t": "3-7s",
+          "shot": "Man in a cream T cowboy walks the beach, tracking shot from the side.",
+          "onscreen": "Beach.",
+          "vo": ""
+        },
+        {
+          "t": "7-11s",
+          "shot": "Studio linen backdrop, model in a brown NY cowboy, hard light, brim shadow over the eyes.",
+          "onscreen": "Studio.",
+          "vo": ""
+        },
+        {
+          "t": "11-15s",
+          "shot": "Woman in a cream NY fedora, hand on the brim, walking past a sunlit wall.",
+          "onscreen": "Out.",
+          "vo": ""
+        },
+        {
+          "t": "15-19s",
+          "shot": "Golden hour, back on the sand, hat tipped low against the sun.",
+          "onscreen": "Sundown.",
+          "vo": ""
+        },
+        {
+          "t": "19-22s",
+          "shot": "End card on forest green.",
+          "onscreen": "Week one. Thanks for being here.",
+          "vo": ""
+        }
+      ],
+      "audio": "Warm, unhurried acoustic loop with a light shuffle beat; hard cut on each location change.",
+      "caption": "First week of the new site, in one day.\nSunrise on the Atlantic to sundown with the brim down.\nThanks for showing up this week. Which hat would you wear all day?\nShop the lineup → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#EverydayStyle",
+        "#HatsOfInstagram",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#DayInTheLife"
+      ],
+      "cta": "Shop the lineup → link in bio",
+      "story": "3 frames: behind-the-scenes clip from the shoot / question box 'Where would you wear yours?' / link sticker to the shop",
+      "asset": {
+        "template": "cover",
+        "photo": "life-1",
+        "headline": "Sunrise to Sundown",
+        "sub": "One hat, one Jupiter day.",
+        "tag": "Week One"
+      }
+    },
+    {
+      "day": 8,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Build a custom hat, start to finish",
+      "hook": "Here's how to build a hat with your letters on it. Six steps.",
+      "concept": "A step-by-step screen-recording tutorial of Monogram Studio, labeled so it works with the sound off.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Screen recording: homepage, thumb taps 'Monogram Studio'.",
+          "onscreen": "Step 1: Open Monogram Studio",
+          "vo": "Open Monogram Studio."
+        },
+        {
+          "t": "3-8s",
+          "shot": "Choose cowboy or fedora, then cream or brown.",
+          "onscreen": "Step 2: Pick your hat",
+          "vo": "Pick your hat and your wool."
+        },
+        {
+          "t": "8-13s",
+          "shot": "Type three letters; they appear on the crown.",
+          "onscreen": "Step 3: Up to 3 letters",
+          "vo": "Type up to three letters."
+        },
+        {
+          "t": "13-18s",
+          "shot": "Tap through to Western lettering.",
+          "onscreen": "Step 4: Lettering style",
+          "vo": "Choose a lettering style."
+        },
+        {
+          "t": "18-22s",
+          "shot": "Select Forest thread.",
+          "onscreen": "Step 5: Thread color",
+          "vo": "Then a thread color."
+        },
+        {
+          "t": "22-27s",
+          "shot": "Preview fills the screen; thumb hovers over the order button.",
+          "onscreen": "Step 6: See it. Then order it.",
+          "vo": "See it before you order it."
+        }
+      ],
+      "audio": "Clean UI clicks over a low, steady beat; calm, matter-of-fact voiceover reads each step.",
+      "caption": "Six steps to a hat with your letters on it.\nPick the hat, type up to three letters, choose a lettering style and a thread color, and see it before you order.\nSave this, then go build yours.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#Monogram",
+        "#MonogramStudio",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#HowTo"
+      ],
+      "cta": "Build yours → link in bio",
+      "story": "4 frames: the tutorial cut into 3 story clips / link sticker 'Monogram Studio' at the end",
+      "asset": {
+        "template": "cover",
+        "photo": "studio",
+        "headline": "Build It in Six",
+        "sub": "A Monogram Studio walkthrough, start to finish.",
+        "tag": "How-To"
+      }
+    },
+    {
+      "day": 9,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "T is for Texas",
+      "hook": "T is for Texas.",
+      "concept": "The first of the four city monograms gets its own hero post: where the Western silhouette comes from.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Brown T cowboy hat on bone, three-quarter angle, a hard key light giving the crown a long shadow.",
+          "onscreen": "T for Texas",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "T is for Texas.\nWhere the silhouette comes from. Stitched on brown wool, gold silk inside.\nThe T cowboy, $150. Also in cream, also as a fedora.\nShop T → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#CustomHat",
+        "#Initials",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#Texas"
+      ],
+      "cta": "Shop the T → link in bio",
+      "story": "3 frames: macro of the T embroidery / quiz 'What does T stand for?' (Texas / Teddy / Both) / product sticker T cowboy",
+      "asset": {
+        "template": "product",
+        "photo": "cowboy-t-brown",
+        "headline": "T for Texas",
+        "sub": "Brown wool cowboy, gold silk lined.",
+        "tag": "Cowboy / $150"
+      }
+    },
+    {
+      "day": 10,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Four lettering styles",
+      "hook": "Same letters. Four completely different hats.",
+      "concept": "A side-by-side guide to the four lettering styles in Monogram Studio so people choose with confidence.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Monogram Studio screen with the style selector open.",
+          "onscreen": "Four ways to write it.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Studio preview: three letters in Script on a cream fedora.",
+          "onscreen": "Script\nLoose and personal.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Same letters in Varsity on a brown cowboy.",
+          "onscreen": "Varsity\nBold and blocky. Off-duty.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Same letters in Serif on a brown fedora.",
+          "onscreen": "Serif\nSharp and dressed.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Same letters in Western on a cream cowboy.",
+          "onscreen": "Western\nThe frontier one.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "2x2 grid of all four previews.",
+          "onscreen": "Same letters. Four moods.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Phone in hand over a linen backdrop, Studio open.",
+          "onscreen": "Try all four in Monogram Studio.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Same three letters, four lettering styles.\nScript, Varsity, Serif, Western. Each one changes the whole hat.\nWhich is yours? Try all four in Monogram Studio, link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#CustomHat",
+        "#Initials",
+        "#EmbroideredHat",
+        "#MonogramHat",
+        "#PalmBeachCounty",
+        "#FloridaCowboy",
+        "#Lettering"
+      ],
+      "cta": "Comment your style",
+      "story": "3 frames: slide 6 grid / poll with four options via two polls (Script vs Serif, Varsity vs Western) / link sticker to Studio",
+      "asset": {
+        "template": "quote",
+        "photo": "studio",
+        "headline": "Four Ways to Write It",
+        "sub": "Script, Varsity, Serif, Western. Same letters, four moods.",
+        "tag": "Lettering"
+      }
+    },
+    {
+      "day": 11,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "F is for Florida",
+      "hook": "Every brand is from somewhere. Ours has an F on it.",
+      "concept": "The home monogram. Jupiter beach footage and the F hat, told as a short origin note.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Macro: the F embroidery on cream wool, slow push-in.",
+          "onscreen": "F",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Wide on Jupiter beach; model in the cream F cowboy, close crop as he turns into the wind.",
+          "onscreen": "F is for Florida.",
+          "vo": "F is for Florida."
+        },
+        {
+          "t": "6-10s",
+          "shot": "The hat set down on the sand, ocean blurred behind.",
+          "onscreen": "Born in Jupiter.",
+          "vo": "Where Teddy was born. Jupiter, to be exact."
+        },
+        {
+          "t": "10-14s",
+          "shot": "Model picks the hat up, puts it on, tips the brim.",
+          "onscreen": "",
+          "vo": "Western hats. Atlantic light."
+        },
+        {
+          "t": "14-18s",
+          "shot": "Studio turn: brown F fedora rotating on bone.",
+          "onscreen": "Cowboy $150 · Fedora $140",
+          "vo": ""
+        },
+        {
+          "t": "18-20s",
+          "shot": "End card.",
+          "onscreen": "Shop F → link in bio",
+          "vo": ""
+        }
+      ],
+      "audio": "Breezy, sun-warm instrumental: fingerpicked guitar, light hand percussion, a little surf reverb.",
+      "caption": "F is for Florida.\nTeddy was born in Jupiter, so this one's home.\nThe F comes on a cream or brown cowboy ($150) or fedora ($140).\nShop F → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#EmbroideredHat",
+        "#MonogramHat",
+        "#Monogram",
+        "#MonogramStudio",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#FloridaLife"
+      ],
+      "cta": "Shop the F → link in bio",
+      "story": "3 frames: beach clip with location sticker 'Jupiter, Florida' / question box 'Favorite Florida beach?' / product sticker F cowboy",
+      "asset": {
+        "template": "cover",
+        "photo": "cowboy-f-cream",
+        "headline": "F Is for Florida",
+        "sub": "Born in Jupiter. Stitched on wool.",
+        "tag": "Home"
+      }
+    },
+    {
+      "day": 12,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Pick your thread",
+      "hook": "Five threads. Which one's yours?",
+      "concept": "Introduces the five Monogram Studio thread colors and invites pairing suggestions that feed Day 54-55.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Five spools of thread (white, gold, cream, forest, black) lined up on linen beside a brown cowboy hat brim with its gold woven label visible.",
+          "onscreen": "Pick Your Thread",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Five thread colors in Monogram Studio: White, Gold, Cream, Forest, Black.\nGold on brown. Forest on cream. Black on cream if you want it loud.\nWhat's your pairing? Comment it and we'll mock a few up in the Studio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#Monogram",
+        "#MonogramStudio",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#ThreadColors"
+      ],
+      "cta": "Comment your pairing",
+      "story": "3 frames: thread lineup / poll 'Gold on brown or Forest on cream?' / link sticker to Monogram Studio",
+      "asset": {
+        "template": "quote",
+        "photo": "detail-label",
+        "headline": "Pick Your Thread",
+        "sub": "White, Gold, Cream, Forest, Black. Five threads in Monogram Studio.",
+        "tag": "Thread Colors"
+      }
+    },
+    {
+      "day": 13,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "lifestyle",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "The NY edit",
+      "hook": "How we'd wear the NY monogram. Swipe for four looks.",
+      "concept": "Styling carousel for the NY hats, shot on studio linen with city-leaning wardrobe.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Man on studio linen in the brown NY cowboy, dark coat, hard side light.",
+          "onscreen": "The NY Edit",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Same model, full length, long dark coat and boots.",
+          "onscreen": "Brown NY cowboy + a long coat.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Woman in the cream NY fedora, white tee, straight denim.",
+          "onscreen": "Cream NY fedora + a white tee.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Macro of the NY embroidery on brown wool.",
+          "onscreen": "Stitched, not printed.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Brim tipped low, hard shadow across the eyes.",
+          "onscreen": "Hard shadow. Hard city.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Both NY hats on bone.",
+          "onscreen": "NY Cowboy $150 · NY Fedora $140",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "The NY edit.\nBrown cowboy with a long coat. Cream fedora with a white tee. Brim down either way.\nSave the look you'd wear, then shop NY → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#HatSeason",
+        "#MensStyle",
+        "#WomensStyle",
+        "#EditorialStyle",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#NYStyle"
+      ],
+      "cta": "Save the look",
+      "story": "3 frames: slide 5 full screen / poll 'Coat or tee?' / product stickers for both NY hats",
+      "asset": {
+        "template": "poster",
+        "photo": "life-2",
+        "headline": "The NY Edit",
+        "sub": "Two NY hats, four ways to wear them.",
+        "tag": "Styling"
+      }
+    },
+    {
+      "day": 14,
+      "week": 2,
+      "phase": "The Monogram",
+      "pillar": "community",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "What would you stitch?",
+      "hook": "Three letters. What would you put on your hat?",
+      "concept": "Hands of different people (whoever is on set: crew, friends, models) type their letters into Monogram Studio. Quick cuts, no talking heads, ends on a question to drive comments.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Phone passes into frame, hand #1 takes it.",
+          "onscreen": "Three letters. Go.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Hand #1 types initials; preview shows Script in Gold on brown.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "6-10s",
+          "shot": "Phone passed to hand #2: Varsity in Forest on cream fedora.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "10-14s",
+          "shot": "Hand #3: one single letter, Western, Black on cream cowboy.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "14-18s",
+          "shot": "Hand #4 hesitates, thumb hovering over the keyboard.",
+          "onscreen": "Your turn.",
+          "vo": ""
+        },
+        {
+          "t": "18-21s",
+          "shot": "Phone turned to camera, blank Studio screen.",
+          "onscreen": "What would you stitch? Comment below.",
+          "vo": ""
+        }
+      ],
+      "audio": "Playful, upbeat percussion loop with a quick whoosh on each phone pass.",
+      "caption": "We passed the phone around set and asked one question: what three letters would you stitch?\nNow it's your turn. Drop yours in the comments.\nTry them for real in Monogram Studio → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#OOTD",
+        "#CoastalCowboy",
+        "#EverydayStyle",
+        "#WesternStyle",
+        "#AtlanticCoast",
+        "#JupiterFL",
+        "#Monogram"
+      ],
+      "cta": "Comment your letters",
+      "story": "3 frames: question box 'What letters would you stitch?' / reshare 2-3 answers as text (no names without permission) / link sticker to Studio",
+      "asset": {
+        "template": "cover",
+        "photo": "studio",
+        "headline": "What Would You Stitch?",
+        "sub": "Three letters. Your hat. Tell us below.",
+        "tag": "Your Turn"
+      }
+    },
+    {
+      "day": 15,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "LA, still life",
+      "hook": "LA, in still life.",
+      "concept": "A quiet, editorial still life of the LA fedora, built for saves and Pinterest.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "The LA fedora in a still-life arrangement on linen: late-afternoon window light, long shadow, nothing else in frame.",
+          "onscreen": "LA",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "LA.\nWest Coast letters on a hat born on the East Coast.\nThe LA fedora, $140. Cream or brown → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#EmbroideredHat",
+        "#MonogramHat",
+        "#Monogram",
+        "#MonogramStudio",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#LosAngeles",
+        "#StillLife"
+      ],
+      "cta": "Shop the LA fedora → link in bio",
+      "story": "3 frames: still life full-bleed / poll 'LA or NY?' / product sticker LA fedora",
+      "asset": {
+        "template": "poster",
+        "photo": "life-7",
+        "headline": "LA",
+        "sub": "West Coast letters on a Florida-born fedora.",
+        "tag": "Fedora / $140"
+      }
+    },
+    {
+      "day": 16,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "What to stitch: ideas",
+      "hook": "Stuck on what to stitch? Six ideas.",
+      "concept": "An idea-starter carousel for Monogram Studio, each slide showing a real Studio preview of the idea.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Studio preview with a blinking cursor on a blank brown cowboy.",
+          "onscreen": "Stuck on what to stitch?",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Studio preview: three initials in Serif, Gold on brown fedora.",
+          "onscreen": "Your initials.\nClassic for a reason.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Studio preview: one bold letter in Western on a cream cowboy.",
+          "onscreen": "One letter.\nBig statement.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Studio preview: three letters for a hometown shorthand in Varsity.",
+          "onscreen": "Your hometown, shortened.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Studio preview: a two-letter nickname in Script.",
+          "onscreen": "The nickname only your friends use.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Studio preview: someone else's initials in Forest on cream.",
+          "onscreen": "Someone else's initials.\n(That's a gift.)",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Phone on linen next to a real hat.",
+          "onscreen": "1–3 characters. Make them yours.\nMonogram Studio → link in bio",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Six ideas for Monogram Studio.\nInitials, a single letter, your hometown, a nickname, or someone else's letters if it's a gift.\nSave this for when you're ready to build.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#Monogram",
+        "#MonogramStudio",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#GiftIdeas"
+      ],
+      "cta": "Save for later",
+      "story": "3 frames: slide 1 with 'Swipe the new post' / quiz 'Which idea would you use?' / link sticker to Studio",
+      "asset": {
+        "template": "quote",
+        "photo": "studio",
+        "headline": "Stuck on Letters?",
+        "sub": "Six ideas for what to stitch in Monogram Studio.",
+        "tag": "Ideas"
+      }
+    },
+    {
+      "day": 17,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Cream vs brown: same letters",
+      "hook": "Same letters. Watch what the wool does.",
+      "concept": "A beat-synced comparison: Studio preview toggles and real-hat swaps showing how cream and brown change the monogram.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Phone in hand, Studio preview of LA on cream cowboy.",
+          "onscreen": "Same letters.",
+          "vo": ""
+        },
+        {
+          "t": "2-4s",
+          "shot": "Toggle to brown on the beat.",
+          "onscreen": "Different wool.",
+          "vo": ""
+        },
+        {
+          "t": "4-8s",
+          "shot": "Match cut: real cream LA cowboy in hand swaps to the brown LA cowboy as the hand passes the lens.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "8-12s",
+          "shot": "Studio: Gold thread on brown, then Forest thread on cream.",
+          "onscreen": "Gold on brown. Forest on cream.",
+          "vo": ""
+        },
+        {
+          "t": "12-16s",
+          "shot": "Both real hats side by side on bone, slow push-in.",
+          "onscreen": "Cream or brown?",
+          "vo": ""
+        },
+        {
+          "t": "16-18s",
+          "shot": "End card.",
+          "onscreen": "Comment your pick.",
+          "vo": ""
+        }
+      ],
+      "audio": "Punchy two-note beat with a hard hit on each toggle; transitions land exactly on the drum.",
+      "caption": "Same letters, different wool.\nCream reads bright and beachy. Brown reads deeper and a little more city.\nWhich are you? Cream or brown, comment below.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#CustomEmbroidery",
+        "#Personalized",
+        "#CustomHat",
+        "#Initials",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#ThisOrThat"
+      ],
+      "cta": "Comment cream or brown",
+      "story": "3 frames: poll 'Cream / Brown' / slider 'How sure are you?' / link sticker to Studio",
+      "asset": {
+        "template": "cover",
+        "photo": "cowboy-la-brown",
+        "headline": "Cream or Brown?",
+        "sub": "Same letters. Watch what the wool does.",
+        "tag": "This or That"
+      }
+    },
+    {
+      "day": 18,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "product",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "The NY fedora, cream",
+      "hook": "The NY fedora in cream.",
+      "concept": "A clean product hero for the NY fedora that points to its new dedicated product page.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Cream NY fedora on bone, front three-quarter, gold label just visible on the brim, soft shadow.",
+          "onscreen": "NY Fedora — $140",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "The NY fedora in cream.\nA city monogram on 100% wool, gold silk inside, leather band with a metal button.\n$140. It has its own page now → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy",
+        "#NewYork"
+      ],
+      "cta": "Shop the NY fedora → link in bio",
+      "story": "3 frames: product shot / swipe-up style link sticker to the NY fedora page / quiz 'Which detail is under the brim?'",
+      "asset": {
+        "template": "product",
+        "photo": "fedora-ny-cream",
+        "headline": "The NY Fedora",
+        "sub": "Cream wool, gold silk lining, leather band.",
+        "tag": "Fedora / $140"
+      }
+    },
+    {
+      "day": 19,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "monogram",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Which lettering for which hat",
+      "hook": "Which lettering goes with which hat? Our cheat sheet.",
+      "concept": "Pairing suggestions for silhouette plus lettering style, framed as starting points, not rules.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Split: cream T fedora and brown T cowboy.",
+          "onscreen": "Which lettering for which hat?",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Studio preview: cowboy with Western lettering.",
+          "onscreen": "Cowboy + Western\nFull frontier.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Studio preview: cowboy with Varsity lettering.",
+          "onscreen": "Cowboy + Varsity\nOff-duty.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Studio preview: fedora with Script lettering.",
+          "onscreen": "Fedora + Script\nSoft and personal.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Studio preview: fedora with Serif lettering.",
+          "onscreen": "Fedora + Serif\nSharp and dressed.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Phone with Studio open over a linen backdrop.",
+          "onscreen": "Rules are suggestions.\nPreview everything.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Our cheat sheet for lettering and silhouette.\nCowboy + Western for full frontier. Fedora + Serif when you're dressed up.\nThen break the rules. Preview every combo in Monogram Studio → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#EmbroideredHat",
+        "#MonogramHat",
+        "#Monogram",
+        "#MonogramStudio",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#StyleGuide"
+      ],
+      "cta": "Save the cheat sheet",
+      "story": "3 frames: slide 1 / poll 'Follow the rules or break them?' / link sticker to Studio",
+      "asset": {
+        "template": "split",
+        "photo": "fedora-t-cream",
+        "photo2": "cowboy-t-brown",
+        "headline": "The Cheat Sheet",
+        "sub": "Lettering style meets silhouette. Starting points, not rules.",
+        "tag": "Guide"
+      }
+    },
+    {
+      "day": 20,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "lifestyle",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Watch the brim (noir)",
+      "hook": "Watch the brim.",
+      "concept": "A high-editorial, single-light piece: the brim's hard shadow over the eyes is the whole story. Shootable with one hard light in a dark room.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Black frame. A single hard light snaps on; brim shadow falls across the eyes.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Slow push-in on the face, monogram catching the edge of the light.",
+          "onscreen": "Watch the brim.",
+          "vo": ""
+        },
+        {
+          "t": "6-10s",
+          "shot": "Subject lifts the chin a fraction; the shadow slides off the eyes.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "10-14s",
+          "shot": "Cut to profile; the gold label on the brim glints.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "14-18s",
+          "shot": "Chin drops, shadow returns. Light cuts out.",
+          "onscreen": "Teddy Headwear.",
+          "vo": ""
+        }
+      ],
+      "audio": "Low cinematic drone, a single kick like a heartbeat, near-silence before the light snaps on.",
+      "caption": "One light, one brim, one shadow.\nBrown wool, gold silk inside.\nShop the look → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#HatSeason",
+        "#MensStyle",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#Editorial"
+      ],
+      "cta": "Shop the look → link in bio",
+      "story": "3 frames: BTS of the single-light setup / poll 'Shadow on or off?' / product sticker brown NY cowboy",
+      "asset": {
+        "template": "cover",
+        "photo": "hero-noir",
+        "headline": "Watch the Brim",
+        "sub": "One light. One brim. One shadow.",
+        "tag": "Editorial"
+      }
+    },
+    {
+      "day": 21,
+      "week": 3,
+      "phase": "The Monogram",
+      "pillar": "community",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Pick your city",
+      "hook": "Two weeks of monograms. Time to settle it.",
+      "concept": "A wrap for the Monogram phase that turns the four cities into a vote and nudges toward custom letters.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Woman holding the brim of a cream NY fedora, looking past camera.",
+          "onscreen": "Four cities.\nOne frontier.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "T cowboy on bone.",
+          "onscreen": "T\nTexas.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "F cowboy on bone.",
+          "onscreen": "F\nFlorida.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "NY fedora on bone.",
+          "onscreen": "NY\nNew York.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "LA fedora on bone.",
+          "onscreen": "LA\nLos Angeles.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Studio preview with a blank cursor.",
+          "onscreen": "Or your own letters.\nVote below.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Two weeks of monograms. Time to settle it.\nT, F, NY or LA. Or your own letters from Monogram Studio.\nVote in the comments.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#HatsOfInstagram",
+        "#StyleInspo",
+        "#OOTD",
+        "#CoastalCowboy",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#PickOne"
+      ],
+      "cta": "Vote in the comments",
+      "story": "4 frames: four-option quiz sticker T / F / NY / LA / results reshare / link sticker to the shop",
+      "asset": {
+        "template": "poster",
+        "photo": "life-5",
+        "headline": "Pick Your City",
+        "sub": "T, F, NY, LA, or your own letters.",
+        "tag": "Vote"
+      }
+    },
+    {
+      "day": 22,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Flip it over: the gold silk",
+      "hook": "Flip it over.",
+      "concept": "Opens the craft phase on its signature detail: the custom gold silk lining, shot in macro.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Hand flips a brown cowboy crown-down in one smooth motion.",
+          "onscreen": "Flip it over.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Macro slider move across the gold silk lining.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "6-10s",
+          "shot": "Raking light sweeps the silk; the sheen moves with it.",
+          "onscreen": "Custom silk lining.",
+          "vo": ""
+        },
+        {
+          "t": "10-14s",
+          "shot": "POV shot looking up as the hat lowers onto the head.",
+          "onscreen": "The part you feel first.",
+          "vo": ""
+        },
+        {
+          "t": "14-16s",
+          "shot": "End card: the hat right-side up on bone.",
+          "onscreen": "Every hat. Gold inside.",
+          "vo": ""
+        }
+      ],
+      "audio": "Quiet and tactile: fabric rustle, then a soft low synth swell as the gold catches the light.",
+      "caption": "Flip any Teddy hat over and you'll find this.\nCustom silk lining, in gold, in every hat we make.\nSee the details → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#Embroidery",
+        "#MadeToLast",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#AtlanticCoast",
+        "#JupiterFL",
+        "#Silk"
+      ],
+      "cta": "See the details → link in bio",
+      "story": "3 frames: lining macro / quiz 'What color is the lining in every Teddy hat?' / link sticker to any hat page",
+      "asset": {
+        "template": "cover",
+        "photo": "detail-interior",
+        "headline": "Flip It Over",
+        "sub": "Custom gold silk lining in every hat.",
+        "tag": "The Lining"
+      }
+    },
+    {
+      "day": 23,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Anatomy of a Teddy hat",
+      "hook": "Anatomy of a Teddy hat. Every part, labeled.",
+      "concept": "A labeled diagram-style carousel that names each component so buyers understand the build.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Cream T cowboy on bone with thin gold callout lines to each part.",
+          "onscreen": "Anatomy of a Teddy Hat",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Front of the crown, embroidery in focus.",
+          "onscreen": "The front\nOriginal embroidered artwork.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Close crop of the wool body.",
+          "onscreen": "The body\n100% wool, cream or brown.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Side profile: leather band and metal button.",
+          "onscreen": "The band\nLeather, with a metal button.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Brim close-up: gold woven label.",
+          "onscreen": "The brim\nWoven label, gold Teddy script.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Inside: gold silk.",
+          "onscreen": "The lining\nCustom gold silk.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Inside: the sweatband.",
+          "onscreen": "The sweatband\nAdjustable and breathable.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 8",
+          "shot": "Full hat again, no callouts.",
+          "onscreen": "Now you know what you're wearing.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Every part of a Teddy hat, labeled.\nEmbroidered front, 100% wool body, leather band, woven label, gold silk lining, adjustable sweatband.\nSave it, share it with the friend who asks too many questions.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#Craftsmanship",
+        "#HatDetails",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#Anatomy"
+      ],
+      "cta": "Save and share",
+      "story": "3 frames: slide 1 / quiz 'What's the button made of?' (metal) / link sticker to the shop",
+      "asset": {
+        "template": "detail",
+        "photo": "cowboy-t-cream",
+        "headline": "Anatomy of a Hat",
+        "sub": "Every part of a Teddy hat, labeled.",
+        "tag": "The Build"
+      }
+    },
+    {
+      "day": 24,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Look for the gold",
+      "hook": "Look for the gold.",
+      "concept": "A macro of the woven brim label: small, branded, and easy to recognize once you know it.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Macro of the gold woven Teddy script label on a brown brim, shallow depth of field, warm side light.",
+          "onscreen": "Look for the gold.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Look for the gold.\nOur woven label sits on the brim, gold Teddy script, on every hat.\nSmall detail. Easy to spot once you know it.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#Craftsmanship",
+        "#HatDetails",
+        "#SilkLining",
+        "#WoolHats",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#BrandDetails"
+      ],
+      "cta": "Shop the hats → link in bio",
+      "story": "2 frames: label macro with 'Spot it?' text / emoji slider on the gold",
+      "asset": {
+        "template": "detail",
+        "photo": "detail-label",
+        "headline": "Look for the Gold",
+        "sub": "Gold Teddy script, woven into a label on every brim.",
+        "tag": "The Label"
+      }
+    },
+    {
+      "day": 25,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "The sweatband",
+      "hook": "The part of the hat you feel, not see.",
+      "concept": "Shows the adjustable, breathable sweatband and why fit matters, using the real hat in hand.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Close-up inside the crown, the sweatband in focus.",
+          "onscreen": "The part you feel, not see.",
+          "vo": "This is the part you feel, not see."
+        },
+        {
+          "t": "3-7s",
+          "shot": "Hands show the sweatband adjustment on the real hat.",
+          "onscreen": "Adjustable.",
+          "vo": "It's adjustable,"
+        },
+        {
+          "t": "7-11s",
+          "shot": "Model sets the cream F cowboy on, adjusts once, settles it.",
+          "onscreen": "Set your fit.",
+          "vo": "so you set the fit once."
+        },
+        {
+          "t": "11-15s",
+          "shot": "Model walks along the Atlantic in a light breeze, relaxed.",
+          "onscreen": "Breathable.",
+          "vo": "And it breathes, which matters in Florida."
+        },
+        {
+          "t": "15-18s",
+          "shot": "End card.",
+          "onscreen": "Every hat. Set your fit.",
+          "vo": ""
+        }
+      ],
+      "audio": "Light, airy instrumental with soft claps; natural wind sound mixed underneath.",
+      "caption": "The sweatband is the part of the hat you feel, not see.\nOurs is adjustable and breathable, in every hat.\nSet it once, then forget it's there.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#SilkLining",
+        "#WoolHats",
+        "#Embroidery",
+        "#MadeToLast",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#Fit"
+      ],
+      "cta": "Find your hat → link in bio",
+      "story": "3 frames: sweatband close-up / question box 'Fit questions? Ask us.' / link sticker to the shop",
+      "asset": {
+        "template": "cover",
+        "photo": "cowboy-model",
+        "headline": "The Part You Feel",
+        "sub": "Adjustable, breathable sweatband in every hat.",
+        "tag": "Fit"
+      }
+    },
+    {
+      "day": 26,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "product",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Cream or brown: a field guide",
+      "hook": "Cream or brown? A field guide for the undecided.",
+      "concept": "Practical styling advice for choosing a wool color, ending with the Studio preview as the tiebreaker.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Cream and brown fedoras side by side, crowns facing.",
+          "onscreen": "Cream or brown?\nA field guide.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Cream F fedora on a beach towel.",
+          "onscreen": "Cream\nBright. Reads beach. Lives with linen and white.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Brown F fedora on studio linen.",
+          "onscreen": "Brown\nDeeper. Reads city. Lives with denim and black.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Cream hat with Forest thread in a Studio preview.",
+          "onscreen": "On cream, try Forest or Gold thread.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Brown hat with Gold thread in a Studio preview.",
+          "onscreen": "On brown, try Gold or Cream thread.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Studio toggle mid-switch.",
+          "onscreen": "Still stuck?\nPreview both in Monogram Studio.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "A field guide for the undecided.\nCream is bright and lives with linen. Brown is deeper and lives with denim.\nStill stuck? Preview both in Monogram Studio → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy"
+      ],
+      "cta": "Preview both → link in bio",
+      "story": "3 frames: slide 1 / poll 'Cream / Brown' / link sticker to Studio",
+      "asset": {
+        "template": "product",
+        "photo": "fedora-f-cream",
+        "headline": "Cream or Brown?",
+        "sub": "A field guide to choosing your wool.",
+        "tag": "Field Guide"
+      }
+    },
+    {
+      "day": 27,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Sound on: leather, metal, wool",
+      "hook": "Sound on.",
+      "concept": "An ASMR detail piece: close-miked sounds of the leather band, metal button and wool, cut tight.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Black screen, then a fingertip lands on the leather band.",
+          "onscreen": "Sound on.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Fingertip runs the length of the leather band.",
+          "onscreen": "Leather.",
+          "vo": ""
+        },
+        {
+          "t": "6-9s",
+          "shot": "Fingernail taps the metal button twice.",
+          "onscreen": "Metal.",
+          "vo": ""
+        },
+        {
+          "t": "9-13s",
+          "shot": "Soft hat brush strokes across the brown wool crown.",
+          "onscreen": "Wool.",
+          "vo": ""
+        },
+        {
+          "t": "13-16s",
+          "shot": "Hand sets the brown NY cowboy down on a wooden surface with a soft thud.",
+          "onscreen": "Silk inside.",
+          "vo": ""
+        },
+        {
+          "t": "16-18s",
+          "shot": "End card.",
+          "onscreen": "Teddy Headwear.",
+          "vo": ""
+        }
+      ],
+      "audio": "No music. Close-mic leather, metal and wool sounds only, with a soft tone under the end card.",
+      "caption": "Sound on for this one.\nLeather band. Metal button. 100% wool. Gold silk inside.\nThe brown NY cowboy → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#Craftsmanship",
+        "#HatDetails",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#ASMR"
+      ],
+      "cta": "Shop the brown NY cowboy → link in bio",
+      "story": "2 frames: clip with 'Sound on' sticker / emoji slider 'How satisfying?'",
+      "asset": {
+        "template": "cover",
+        "photo": "cowboy-ny-brown",
+        "headline": "Sound On",
+        "sub": "Leather, metal, wool. Listen closely.",
+        "tag": "ASMR"
+      }
+    },
+    {
+      "day": 28,
+      "week": 4,
+      "phase": "Made to Last",
+      "pillar": "lifestyle",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "Atlantic wind, cream wool",
+      "hook": "Atlantic wind, cream wool.",
+      "concept": "A wide, airy beach portrait with the T fedora. A strong Pinterest pin.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Woman on the beach in the cream T fedora, wind in her clothes, Atlantic behind her, soft overcast light.",
+          "onscreen": "",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Atlantic wind, cream wool, gold silk inside.\nThe T fedora, $140.\nShop it → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#HatSeason",
+        "#MensStyle",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#BeachStyle"
+      ],
+      "cta": "Shop the T fedora → link in bio",
+      "story": "3 frames: photo with location sticker / poll 'Beach hat: cowboy or fedora?' / product sticker T fedora",
+      "asset": {
+        "template": "poster",
+        "photo": "life-4",
+        "headline": "Atlantic Wind",
+        "sub": "The cream T fedora on the coast.",
+        "tag": "Fedora / $140"
+      }
+    },
+    {
+      "day": 29,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "product",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Three ways to set the brim",
+      "hook": "Where you set the brim changes the whole look.",
+      "concept": "A styling how-to: one hat, three brim positions, each with its own mood.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Woman holding the brim of the cream NY fedora, facing camera.",
+          "onscreen": "One hat. Three looks.",
+          "vo": "Where you set the brim changes everything."
+        },
+        {
+          "t": "3-7s",
+          "shot": "Brim level, eyes clear, even light.",
+          "onscreen": "Level: clean and classic.",
+          "vo": "Level. Clean."
+        },
+        {
+          "t": "7-11s",
+          "shot": "Brim tipped low, hard shadow over the eyes.",
+          "onscreen": "Tipped low: the editorial one.",
+          "vo": "Tipped low. Editorial."
+        },
+        {
+          "t": "11-15s",
+          "shot": "Brim pushed back, sun on the face, laughing.",
+          "onscreen": "Pushed back: beach mode.",
+          "vo": "Pushed back. Beach mode."
+        },
+        {
+          "t": "15-18s",
+          "shot": "Quick triptych of all three.",
+          "onscreen": "Fedora $140 · Cowboy $150",
+          "vo": ""
+        }
+      ],
+      "audio": "Upbeat, clean beat with a snap on each brim change; voiceover is quick and dry.",
+      "caption": "One hat, three looks. It's all in the brim.\nLevel for clean. Tipped low for editorial. Pushed back for the beach.\nWhich are you? Shop the NY fedora → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#CustomHat",
+        "#MonogramStudio",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#StylingTips"
+      ],
+      "cta": "Comment level, low or back",
+      "story": "3 frames: three-way quiz sticker / reshare a favorite / product sticker NY fedora",
+      "asset": {
+        "template": "cover",
+        "photo": "life-5",
+        "headline": "Set the Brim",
+        "sub": "One hat, three looks. It's all in the brim.",
+        "tag": "How to Wear"
+      }
+    },
+    {
+      "day": 30,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Up close: the embroidery",
+      "hook": "Get closer. The embroidery is original artwork.",
+      "concept": "Macro photography of each monogram's stitching, framing the embroidery as artwork.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Brown LA fedora, front-on, embroidery sharp.",
+          "onscreen": "Up close: the embroidery.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Macro of the T stitching.",
+          "onscreen": "T",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Macro of the F stitching.",
+          "onscreen": "F",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Macro of the NY stitching.",
+          "onscreen": "NY",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Macro of the LA stitching.",
+          "onscreen": "LA",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Studio preview of custom letters.",
+          "onscreen": "Original artwork, stitched in.\nOr bring your own letters.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Get closer.\nEvery monogram is original embroidered artwork, stitched into wool.\nT, F, NY, LA, or your own letters in Monogram Studio → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#Embroidery",
+        "#MadeToLast",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#AtlanticCoast",
+        "#JupiterFL"
+      ],
+      "cta": "Build your own → link in bio",
+      "story": "3 frames: macro reel of the four monograms / quiz 'Which one is stitched in your head?' / link sticker to Studio",
+      "asset": {
+        "template": "detail",
+        "photo": "fedora-la-brown",
+        "headline": "Up Close",
+        "sub": "Original embroidered artwork on every monogram.",
+        "tag": "Embroidery"
+      }
+    },
+    {
+      "day": 31,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Made to be worn",
+      "hook": "Made to last means made to be worn.",
+      "concept": "A typographic brand statement for the craft phase, set over a subtle lining image.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Forest green field with the gold silk lining photo faded behind it; centered gold type.",
+          "onscreen": "Made to be worn. A lot.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Made to last means made to be worn.\nWool, silk, leather, metal. Nothing on this hat is just for show.\nSee every detail → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#Craftsmanship",
+        "#HatDetails",
+        "#FloridaBeaches",
+        "#PalmBeachCounty"
+      ],
+      "cta": "See every detail → link in bio",
+      "story": "2 frames: statement graphic / question box 'Where has your hat been?'",
+      "asset": {
+        "template": "quote",
+        "photo": "detail-interior",
+        "headline": "Made to Be Worn",
+        "sub": "Wool, silk, leather, metal. Nothing just for show.",
+        "tag": "Made to Last"
+      }
+    },
+    {
+      "day": 32,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "lifestyle",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "One hat, three settings",
+      "hook": "Beach. Studio. Dinner. Same hat.",
+      "concept": "One model, one brown LA cowboy, three settings, joined by hat-over-lens wipes.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Morning beach: model in the brown LA cowboy, sea behind.",
+          "onscreen": "Beach.",
+          "vo": ""
+        },
+        {
+          "t": "3-5s",
+          "shot": "She lifts the hat toward the lens; it covers the frame (wipe).",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "5-9s",
+          "shot": "Hat pulls away to reveal her seated on the studio linen set.",
+          "onscreen": "Studio.",
+          "vo": ""
+        },
+        {
+          "t": "9-11s",
+          "shot": "Another hat-over-lens wipe.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "11-16s",
+          "shot": "Evening outfit, warm interior light, hat on.",
+          "onscreen": "Dinner.",
+          "vo": ""
+        },
+        {
+          "t": "16-19s",
+          "shot": "End card.",
+          "onscreen": "Brown LA cowboy · $150",
+          "vo": ""
+        }
+      ],
+      "audio": "Smooth, warm groove with a soft whoosh on each wipe.",
+      "caption": "Beach in the morning, studio at noon, dinner after dark.\nSame hat the whole way: the LA cowboy in brown.\n$150 → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#HatSeason",
+        "#MensStyle",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#OneHatThreeWays"
+      ],
+      "cta": "Shop the LA cowboy → link in bio",
+      "story": "3 frames: BTS of the wipe transition / poll 'Which look?' / product sticker LA cowboy",
+      "asset": {
+        "template": "cover",
+        "photo": "life-3",
+        "headline": "Same Hat, All Day",
+        "sub": "Beach, studio, dinner. One brown LA cowboy.",
+        "tag": "Cowboy / $150"
+      }
+    },
+    {
+      "day": 33,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Care for your hat",
+      "hook": "Wool takes care of you. Here's how to return the favor.",
+      "concept": "Simple, general wool-hat care habits. Practical and highly saveable.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Cream F fedora resting on its crown on a wooden shelf.",
+          "onscreen": "How to care for your hat.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Hands lifting the hat by the brim.",
+          "onscreen": "Pick it up by the brim.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Hat resting upside down on its crown.",
+          "onscreen": "Rest it upside down on the crown, or on a hook.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Soft brush gliding over the wool.",
+          "onscreen": "Brush off dust with a soft hat brush.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Hat on a car seat, red X graphic.",
+          "onscreen": "Keep it out of hot cars and away from direct heat.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Hat on a hook by an open window.",
+          "onscreen": "Caught in the rain? Let it air dry, away from heat.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Bone background, gold type.",
+          "onscreen": "Questions? DM us.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "A few habits that keep wool looking right.\nHandle by the brim, rest it on the crown, brush it, and keep it away from heat.\nSave this. Questions? DM us.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#SilkLining",
+        "#WoolHats",
+        "#Embroidery",
+        "#MadeToLast",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#HatCare"
+      ],
+      "cta": "Save this, DM questions",
+      "story": "3 frames: slide 1 / question box 'Hat care questions?' / answers reshared",
+      "asset": {
+        "template": "product",
+        "photo": "fedora-f-cream",
+        "headline": "Hat Care 101",
+        "sub": "Simple habits that keep wool looking right.",
+        "tag": "Care Guide"
+      }
+    },
+    {
+      "day": 34,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "product",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "The LA cowboy, brown",
+      "hook": "The LA cowboy, in brown.",
+      "concept": "A crisp product hero for the brown LA cowboy and its new product page.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Brown LA cowboy on bone, three-quarter view, leather band and gold label in frame.",
+          "onscreen": "LA Cowboy — $150",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "The LA cowboy in brown.\n100% wool, gold silk lining, leather band, metal button.\n$150 on its own page → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#CustomCowboyHat",
+        "#EmbroideredHat",
+        "#UnisexHats",
+        "#HatStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy",
+        "#LosAngeles"
+      ],
+      "cta": "Shop the LA cowboy → link in bio",
+      "story": "2 frames: product image / product sticker LA cowboy",
+      "asset": {
+        "template": "product",
+        "photo": "cowboy-la-brown",
+        "headline": "The LA Cowboy",
+        "sub": "Brown wool, gold silk lining, leather band.",
+        "tag": "Cowboy / $150"
+      }
+    },
+    {
+      "day": 35,
+      "week": 5,
+      "phase": "Made to Last",
+      "pillar": "craft",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Four details, fifteen seconds",
+      "hook": "Every detail on a Teddy hat in 15 seconds. Then something new.",
+      "concept": "A fast recap of the craft phase that closes on a gold silk tease for the apparel drop.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Gold woven label macro.",
+          "onscreen": "01 Woven label",
+          "vo": ""
+        },
+        {
+          "t": "3-6s",
+          "shot": "Leather band and metal button.",
+          "onscreen": "02 Leather band",
+          "vo": ""
+        },
+        {
+          "t": "6-9s",
+          "shot": "Sweatband inside the crown.",
+          "onscreen": "03 Sweatband",
+          "vo": ""
+        },
+        {
+          "t": "9-12s",
+          "shot": "Gold silk lining.",
+          "onscreen": "04 Gold silk",
+          "vo": ""
+        },
+        {
+          "t": "12-15s",
+          "shot": "A loose length of gold silk slides out of frame, off the hat.",
+          "onscreen": "That gold is going somewhere new.",
+          "vo": ""
+        },
+        {
+          "t": "15-17s",
+          "shot": "Black end card.",
+          "onscreen": "[drop date]",
+          "vo": ""
+        }
+      ],
+      "audio": "Tight percussive countdown on each detail, then the beat stops and a single sustained note holds under the tease.",
+      "caption": "Two weeks of details in 15 seconds.\nLabel, band, sweatband, silk.\nAnd that gold silk? It's about to go somewhere new. Turn on post notifications.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#HatMaking",
+        "#DetailsMatter",
+        "#Craftsmanship",
+        "#HatDetails",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#ComingSoon"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "3 frames: silk tease clip / countdown sticker '[drop date]' / question box 'Guess what's coming?'",
+      "asset": {
+        "template": "cover",
+        "photo": "detail-label",
+        "headline": "Fifteen Seconds",
+        "sub": "Every detail. Then something new.",
+        "tag": "Coming Soon"
+      }
+    },
+    {
+      "day": 36,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Tease: something's being stitched",
+      "hook": "Something's being stitched.",
+      "concept": "The first apparel tease: a tight crop of gold embroidery on forest green fabric, no product shown.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Extreme close crop of gold embroidered script on forest green fabric, so tight the garment can't be identified.",
+          "onscreen": "Something's being stitched.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Something new is being stitched.\nSame colors. Same script. Not a hat.\n[drop date]. Turn on post notifications.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#WesternWear",
+        "#Hoodie",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#ComingSoon"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "3 frames: the crop / countdown sticker '[drop date]' / question box 'What do you think it is?'",
+      "asset": {
+        "template": "quote",
+        "photo": "apparel-hoodie",
+        "headline": "Something's Being Stitched",
+        "sub": "Same colors. Same script. Not a hat.",
+        "tag": "Coming Soon"
+      }
+    },
+    {
+      "day": 37,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Tease: four colors in the dark",
+      "hook": "Forest. Bone. Saddle. Gold.",
+      "concept": "A moody texture tease: fabrics in the brand colors under one hard light, never a full product.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Dark frame; hard light reveals cream corduroy ribs in extreme close-up.",
+          "onscreen": "Bone.",
+          "vo": ""
+        },
+        {
+          "t": "3-6s",
+          "shot": "Forest green fabric folds, gold thread just visible.",
+          "onscreen": "Forest.",
+          "vo": ""
+        },
+        {
+          "t": "6-9s",
+          "shot": "Saddle brown knit, cream stitching edging into light.",
+          "onscreen": "Saddle.",
+          "vo": ""
+        },
+        {
+          "t": "9-12s",
+          "shot": "Gold silk ripples through the beam.",
+          "onscreen": "Gold.",
+          "vo": ""
+        },
+        {
+          "t": "12-15s",
+          "shot": "Light cuts out.",
+          "onscreen": "The apparel drop.",
+          "vo": ""
+        },
+        {
+          "t": "15-17s",
+          "shot": "End card.",
+          "onscreen": "[drop date]",
+          "vo": ""
+        }
+      ],
+      "audio": "Slow, low cinematic pulse with a rising tone and a hard cut to silence on the end card.",
+      "caption": "Forest. Bone. Saddle. Gold.\nThe colors you know, on something new.\nThe apparel drop, [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#WesternWear",
+        "#Hoodie",
+        "#WildRag",
+        "#TruckerHat",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#ComingSoon"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "3 frames: texture stills one per frame / countdown sticker '[drop date]'",
+      "asset": {
+        "template": "cover",
+        "photo": "apparel-cord",
+        "headline": "Four Colors",
+        "sub": "Forest. Bone. Saddle. Gold. Something new.",
+        "tag": "Coming Soon"
+      }
+    },
+    {
+      "day": 38,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Tease: the palette",
+      "hook": "Four colors. Eight new pieces. Here's the palette.",
+      "concept": "A design-forward palette carousel that hints at each piece without showing it in full.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Cropped saddle brown fabric with cream embroidery edge.",
+          "onscreen": "Four colors.\nOne frontier.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Forest green swatch with gold thread detail.",
+          "onscreen": "Forest\nSomething hooded. Something mesh.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Bone swatch with green script edge.",
+          "onscreen": "Bone\nSomething you'll wear every day. Something you'll carry.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Saddle brown swatch.",
+          "onscreen": "Saddle\nSomething for cool nights.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Gold silk swatch.",
+          "onscreen": "Gold\nThe lining, worn on the outside.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "All four swatches stacked.",
+          "onscreen": "Eight pieces.\n[drop date].",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "The palette for the apparel drop.\nForest, bone, saddle, gold. Eight new pieces, same Teddy script.\nGuess one piece in the comments. [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#WildRag",
+        "#TruckerHat",
+        "#GraphicTee",
+        "#Streetwear",
+        "#AtlanticCoast",
+        "#JupiterFL"
+      ],
+      "cta": "Guess a piece in the comments",
+      "story": "3 frames: palette slide / quiz 'Which color are you?' / countdown sticker",
+      "asset": {
+        "template": "quote",
+        "photo": "apparel-crew",
+        "headline": "The Palette",
+        "sub": "Forest, bone, saddle, gold. Eight new pieces.",
+        "tag": "Coming Soon"
+      }
+    },
+    {
+      "day": 39,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Tease: the lining, worn outside",
+      "hook": "You know the gold silk inside every hat. Soon you can wear it outside.",
+      "concept": "A close tease of the Silk Wild Rag next to a hat's gold lining, showing they match.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Gold silk scarf knotted loosely, laid against the open crown of a hat so the matching gold silk lining is visible beside it.",
+          "onscreen": "The lining, worn outside.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "You know the gold silk inside every hat.\nSoon you can wear it on the outside.\n[drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#GraphicTee",
+        "#Streetwear",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#ComingSoon"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "2 frames: the image / countdown sticker '[drop date]'",
+      "asset": {
+        "template": "detail",
+        "photo": "apparel-rag",
+        "headline": "Worn Outside",
+        "sub": "The gold silk lining, now for your neck.",
+        "tag": "Coming Soon"
+      }
+    },
+    {
+      "day": 40,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Reveal: the apparel drop",
+      "hook": "Eight new pieces. Here's every one.",
+      "concept": "The full reveal: each piece drops into frame on the beat, then on-body cuts.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Model pulls the Frontier Hoodie over his head; hard cut as his face appears.",
+          "onscreen": "The apparel drop.",
+          "vo": ""
+        },
+        {
+          "t": "2-8s",
+          "shot": "Overhead on bone: each of the 8 pieces drops into frame on a beat, laid flat.",
+          "onscreen": "Tees · Hoodie · Crewneck · Trucker · Snapback · Wild Rag · Tote",
+          "vo": ""
+        },
+        {
+          "t": "8-13s",
+          "shot": "On-body cuts: Saddle Crewneck, Monogram Tee, Corduroy Snapback, Silk Wild Rag.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "13-17s",
+          "shot": "Macro on the gold embroidered script on forest green.",
+          "onscreen": "Same script. New frontier.",
+          "vo": ""
+        },
+        {
+          "t": "17-20s",
+          "shot": "End card.",
+          "onscreen": "[drop date] · teddyheadwear.com",
+          "vo": ""
+        }
+      ],
+      "audio": "Confident mid-tempo beat with a hard hit for every piece that lands; ends on a ringing chord.",
+      "caption": "The apparel drop.\nTwo tees, a hoodie, a crewneck, a trucker, a corduroy snapback, a silk wild rag and a canvas tote.\nAll in Teddy colors. All with the script. [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#WesternWear",
+        "#Hoodie",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#NewCollection"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "4 frames: the reveal clip / quiz 'Which piece first?' / countdown sticker / question box 'Questions about the drop?'",
+      "asset": {
+        "template": "cover",
+        "photo": "apparel-hoodie",
+        "headline": "The Apparel Drop",
+        "sub": "Eight new pieces in Teddy colors.",
+        "tag": "Reveal"
+      }
+    },
+    {
+      "day": 41,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "The lineup, with prices",
+      "hook": "Every piece in the apparel drop, with prices.",
+      "concept": "A clean catalog of all eight pieces so people can plan before launch.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Faded black Teddy Script Tee, flat on bone.",
+          "onscreen": "The Apparel Drop\n[drop date]",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Script Tee and Monogram Tee side by side.",
+          "onscreen": "Teddy Script Tee — $45\nFaded black, gold T.\nMonogram Tee — $45\nBone, green Teddy script.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Frontier Hoodie, folded.",
+          "onscreen": "Frontier Hoodie — $95\nForest green, gold embroidered script.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Saddle Crewneck, folded.",
+          "onscreen": "Saddle Crewneck — $85\nSaddle brown, cream T embroidery.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Teddy Trucker and Corduroy Snapback.",
+          "onscreen": "Teddy Trucker — $40\nForest green mesh, gold script.\nCorduroy Snapback — $45\nCream cord, gold script.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Silk Wild Rag next to a hat's lining.",
+          "onscreen": "Silk Wild Rag — $55\nGold silk, matches the hat lining.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Canvas Tote on sand.",
+          "onscreen": "Canvas Tote — $35\nBone canvas, green script.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 8",
+          "shot": "All eight on bone, overhead.",
+          "onscreen": "Eight pieces. [drop date].",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Every piece in the apparel drop.\nTees at $45, the Frontier Hoodie at $95, the Saddle Crewneck at $85, caps from $40, the Silk Wild Rag at $55 and the Canvas Tote at $35.\nSave this and plan your order. [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#WesternWear",
+        "#Hoodie",
+        "#WildRag",
+        "#TruckerHat",
+        "#JupiterFL",
+        "#FloridaStyle"
+      ],
+      "cta": "Save to plan your order",
+      "story": "3 frames: slide 8 / poll 'Hoodie or Crewneck?' / countdown sticker",
+      "asset": {
+        "template": "product",
+        "photo": "tee",
+        "headline": "The Lineup",
+        "sub": "Eight pieces, tees to tote. From $35.",
+        "tag": "From $35"
+      }
+    },
+    {
+      "day": 42,
+      "week": 6,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Frontier Hoodie",
+      "hook": "The Frontier Hoodie.",
+      "concept": "Hero product post for the flagship apparel piece.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Forest green Frontier Hoodie on bone, gold embroidered script centered and sharp.",
+          "onscreen": "Frontier Hoodie — $95",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "The Frontier Hoodie.\nForest green, gold embroidered Teddy script.\n$95. Part of the apparel drop, [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#WildRag",
+        "#TruckerHat",
+        "#GraphicTee",
+        "#Streetwear",
+        "#PalmBeachCounty",
+        "#FloridaCowboy"
+      ],
+      "cta": "Turn on post notifications",
+      "story": "2 frames: hoodie macro / countdown sticker",
+      "asset": {
+        "template": "product",
+        "photo": "apparel-hoodie",
+        "headline": "Frontier Hoodie",
+        "sub": "Forest green, gold embroidered script.",
+        "tag": "Hoodie / $95"
+      }
+    },
+    {
+      "day": 43,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Wild Rag: three ways to tie it",
+      "hook": "Three ways to wear the Silk Wild Rag.",
+      "concept": "A practical tutorial for the gold silk scarf: easy to shoot, highly saveable.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "The gold Silk Wild Rag unfolds in hand.",
+          "onscreen": "Three ways to wear it.",
+          "vo": "Three ways to wear the wild rag."
+        },
+        {
+          "t": "3-9s",
+          "shot": "Fold into a triangle, drape at the front of the neck, tie a simple knot behind.",
+          "onscreen": "01 The classic",
+          "vo": "Classic: triangle, front drape, knot at the back."
+        },
+        {
+          "t": "9-15s",
+          "shot": "Roll into a band, tie a short knot at the side of the neck.",
+          "onscreen": "02 The short knot",
+          "vo": "Short knot: roll it, tie it off to the side."
+        },
+        {
+          "t": "15-21s",
+          "shot": "Tie it around the handle of the Canvas Tote.",
+          "onscreen": "03 Off the neck",
+          "vo": "Or tie it on your tote."
+        },
+        {
+          "t": "21-24s",
+          "shot": "Wild rag next to a hat's gold lining.",
+          "onscreen": "Matches the lining. $55",
+          "vo": ""
+        }
+      ],
+      "audio": "Easy, light instrumental with a gentle shuffle; calm, practical voiceover.",
+      "caption": "Three ways to wear the Silk Wild Rag.\nClassic drape, short side knot, or tied to your tote.\nGold silk to match the lining in every hat. $55, [drop date].",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#GraphicTee",
+        "#Streetwear",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#HowTo"
+      ],
+      "cta": "Save the tutorial",
+      "story": "3 frames: each tie as a separate story clip / poll 'Which tie?'",
+      "asset": {
+        "template": "cover",
+        "photo": "apparel-rag",
+        "headline": "Three Ways to Tie",
+        "sub": "The Silk Wild Rag, gold silk to match the lining.",
+        "tag": "Wild Rag $55"
+      }
+    },
+    {
+      "day": 44,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Launch: the drop is live",
+      "hook": "The apparel drop is live.",
+      "concept": "Launch-day Reel: fast, confident, every piece on body, ends on the site.",
+      "script": [
+        {
+          "t": "0-2s",
+          "shot": "Bold text on forest green.",
+          "onscreen": "It's live.",
+          "vo": ""
+        },
+        {
+          "t": "2-6s",
+          "shot": "Quick cuts: Script Tee, Monogram Tee, Frontier Hoodie, Saddle Crewneck on body.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "6-10s",
+          "shot": "Caps: Teddy Trucker tossed into frame, Corduroy Snapback caught.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "10-14s",
+          "shot": "Model in a cream cowboy and Frontier Hoodie on the beach, wild rag at the neck.",
+          "onscreen": "Hat to hoodie.",
+          "vo": ""
+        },
+        {
+          "t": "14-18s",
+          "shot": "Screen recording of the apparel page scrolling.",
+          "onscreen": "Shop the apparel drop",
+          "vo": ""
+        },
+        {
+          "t": "18-20s",
+          "shot": "End card.",
+          "onscreen": "teddyheadwear.com",
+          "vo": ""
+        }
+      ],
+      "audio": "High-energy, driving beat with a twangy guitar lead; fast cuts on every hit.",
+      "caption": "The apparel drop is live.\nTees, a hoodie, a crewneck, two caps, a silk wild rag and a canvas tote.\nShop it now → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#WesternWear",
+        "#Hoodie",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#NewCollection"
+      ],
+      "cta": "Shop the drop → link in bio",
+      "story": "5 frames: 'It's live' graphic / product stickers for hoodie, crewneck, tees / link sticker to the apparel page / question box 'What did you grab?'",
+      "asset": {
+        "template": "cover",
+        "photo": "tee",
+        "headline": "It's Live",
+        "sub": "The apparel drop is on teddyheadwear.com now.",
+        "tag": "Now Live"
+      }
+    },
+    {
+      "day": 45,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Head to toe: hat + apparel pairings",
+      "hook": "Hat to hoodie. Five full looks.",
+      "concept": "Outfit formulas that pair each hat with apparel to encourage full-look orders.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Split: brown T cowboy and Saddle Crewneck.",
+          "onscreen": "Hat to hoodie.\nFive looks.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Brown T cowboy with the Saddle Crewneck.",
+          "onscreen": "Brown T Cowboy + Saddle Crewneck",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Cream NY fedora with the Monogram Tee.",
+          "onscreen": "Cream NY Fedora + Monogram Tee",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Cream F cowboy, Frontier Hoodie, Silk Wild Rag.",
+          "onscreen": "Cream F Cowboy + Frontier Hoodie + Wild Rag",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Teddy Trucker, Script Tee, Canvas Tote.",
+          "onscreen": "Teddy Trucker + Script Tee + Tote",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Corduroy Snapback with the Saddle Crewneck.",
+          "onscreen": "Corduroy Snapback + Saddle Crewneck",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "All pieces from the five looks laid out on bone.",
+          "onscreen": "Build the full look → link in bio",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Hat to hoodie, five full looks.\nBrown cowboy with the Saddle Crewneck is our pick for cool nights.\nWhich would you wear? Shop the full look → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#WesternWear",
+        "#Hoodie",
+        "#WildRag",
+        "#TruckerHat",
+        "#FloridaCowboy",
+        "#JupiterFlorida"
+      ],
+      "cta": "Comment 1–5",
+      "story": "3 frames: look 4 full screen / quiz 'Pick a look 1–4' / link sticker to the shop",
+      "asset": {
+        "template": "split",
+        "photo": "cowboy-t-brown",
+        "photo2": "apparel-crew",
+        "headline": "Hat to Hoodie",
+        "sub": "Five full looks from the hats and the apparel drop.",
+        "tag": "Styling"
+      }
+    },
+    {
+      "day": 46,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "The caps: trucker and cord",
+      "hook": "For off-hat days.",
+      "concept": "A split post for the two caps: the Teddy Trucker and the Corduroy Snapback.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Split on bone: forest green Teddy Trucker on the left, cream Corduroy Snapback on the right, gold script on both.",
+          "onscreen": "For Off-Hat Days",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "For off-hat days.\nThe Teddy Trucker in forest green mesh, $40. The Corduroy Snapback in cream cord, $45.\nGold script on both → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#WildRag",
+        "#TruckerHat",
+        "#GraphicTee",
+        "#Streetwear",
+        "#AtlanticCoast",
+        "#JupiterFL",
+        "#Snapback"
+      ],
+      "cta": "Shop the caps → link in bio",
+      "story": "3 frames: split image / poll 'Mesh or cord?' / product stickers for both caps",
+      "asset": {
+        "template": "split",
+        "photo": "snapbacks",
+        "photo2": "apparel-cord",
+        "headline": "For Off-Hat Days",
+        "sub": "Teddy Trucker and Corduroy Snapback, gold script on both.",
+        "tag": "$40 / $45"
+      }
+    },
+    {
+      "day": 47,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Fit check: two people, four looks",
+      "hook": "Two people. One pile of apparel. Four looks.",
+      "concept": "Two models trade pieces in quick, throw-and-catch transitions. Fun, social, easy to shoot on one backdrop.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Two models on the linen backdrop, apparel pile at their feet.",
+          "onscreen": "Fit check.",
+          "vo": ""
+        },
+        {
+          "t": "3-7s",
+          "shot": "Model A throws the Frontier Hoodie across frame; Model B catches it and is wearing it after the cut.",
+          "onscreen": "Look 1",
+          "vo": ""
+        },
+        {
+          "t": "7-11s",
+          "shot": "Model B tosses the Corduroy Snapback back; Model A now in snapback + Monogram Tee.",
+          "onscreen": "Look 2",
+          "vo": ""
+        },
+        {
+          "t": "11-15s",
+          "shot": "Saddle Crewneck swap, cream cowboy added.",
+          "onscreen": "Look 3",
+          "vo": ""
+        },
+        {
+          "t": "15-19s",
+          "shot": "Wild rag tied on, Script Tee, brown fedora.",
+          "onscreen": "Look 4",
+          "vo": ""
+        },
+        {
+          "t": "19-22s",
+          "shot": "Both standing side by side in final looks.",
+          "onscreen": "Which one? Comment 1–4.",
+          "vo": ""
+        }
+      ],
+      "audio": "Bouncy, upbeat track with a whoosh on every throw; cut on the catch.",
+      "caption": "Two people, one pile of apparel, four looks.\nHoodie, snapback, crewneck, wild rag, mixed with the hats.\nWhich look wins? Comment 1–4.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#GraphicTee",
+        "#Streetwear",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#FitCheck"
+      ],
+      "cta": "Comment 1–4",
+      "story": "3 frames: BTS outtakes / quiz 'Best look?' / link sticker to the apparel page",
+      "asset": {
+        "template": "cover",
+        "photo": "apparel-crew",
+        "headline": "Fit Check",
+        "sub": "Two people, four looks, one apparel drop.",
+        "tag": "Styling"
+      }
+    },
+    {
+      "day": 48,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "The beach bag, packed",
+      "hook": "What goes in the Canvas Tote on a Jupiter beach day.",
+      "concept": "A what's-in-my-bag carousel built around the Canvas Tote, mixing apparel and a hat.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Bone Canvas Tote on the sand, green script facing camera.",
+          "onscreen": "The beach bag, packed.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Teddy Script Tee folded on a towel.",
+          "onscreen": "Teddy Script Tee — for the walk back.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Gold Silk Wild Rag tied on the tote handle.",
+          "onscreen": "Silk Wild Rag — tied on, until sundown.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Cream cowboy hat resting on the tote.",
+          "onscreen": "A cream cowboy — for the sun.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Sunscreen, sunglasses and a paperback spilling out.",
+          "onscreen": "The essentials.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Tote on a shoulder walking toward the water.",
+          "onscreen": "Canvas Tote — $35",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "What's in the bag on a Jupiter beach day.\nScript Tee for the walk back, Wild Rag tied on, cream cowboy for the sun.\nThe Canvas Tote, $35 → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#TheApparelDrop",
+        "#TeddyApparel",
+        "#WesternWear",
+        "#Hoodie",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#BeachDay"
+      ],
+      "cta": "Shop the tote → link in bio",
+      "story": "3 frames: slide 1 / question box 'What's in your beach bag?' / product sticker tote",
+      "asset": {
+        "template": "poster",
+        "photo": "apparel-tote",
+        "headline": "The Beach Bag",
+        "sub": "What's in the Canvas Tote on a Jupiter beach day.",
+        "tag": "Tote / $35"
+      }
+    },
+    {
+      "day": 49,
+      "week": 7,
+      "phase": "The Apparel Drop",
+      "pillar": "apparel",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "The Monogram Tee",
+      "hook": "The Monogram Tee.",
+      "concept": "A clean product post for the bone Monogram Tee to close out the drop phase.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Bone Monogram Tee flat on linen, green Teddy script sharp, a cream fedora placed at the corner of the frame.",
+          "onscreen": "Monogram Tee — $45",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "The Monogram Tee.\nBone, with green Teddy script.\n$45. Goes with every hat we make → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#WesternWear",
+        "#Hoodie",
+        "#WildRag",
+        "#TruckerHat",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#GraphicTee"
+      ],
+      "cta": "Shop the tee → link in bio",
+      "story": "2 frames: tee close-up / product sticker Monogram Tee",
+      "asset": {
+        "template": "product",
+        "photo": "apparel-tee-bone",
+        "headline": "The Monogram Tee",
+        "sub": "Bone tee, green Teddy script.",
+        "tag": "Tee / $45"
+      }
+    },
+    {
+      "day": 50,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "community",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Show us how you wear it",
+      "hook": "Tag us. We want to see where your hat goes.",
+      "concept": "Kicks off the UGC phase: polaroids drop onto the sand one by one, ending with the ask and the campaign tag.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "A polaroid of a hat on the beach drops onto the sand.",
+          "onscreen": "Worn in.",
+          "vo": ""
+        },
+        {
+          "t": "3-7s",
+          "shot": "More polaroids land: a fedora, a brim shadow, a hoodie.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "7-11s",
+          "shot": "A hand writes '#WornInTeddy' on the white border of a blank polaroid.",
+          "onscreen": "#WornInTeddy",
+          "vo": ""
+        },
+        {
+          "t": "11-15s",
+          "shot": "Hand places the blank polaroid on top of the stack.",
+          "onscreen": "Your photo goes here.",
+          "vo": ""
+        },
+        {
+          "t": "15-18s",
+          "shot": "End card.",
+          "onscreen": "Tag @TeddyHeadwear",
+          "vo": ""
+        }
+      ],
+      "audio": "Warm, nostalgic acoustic loop with the soft click of a polaroid shutter on each drop.",
+      "caption": "Show us how you wear it.\nBeach, city, wherever: tag @TeddyHeadwear and add our Worn In tag below.\nWe'll be resharing our favorites in stories.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#OOTD",
+        "#CoastalCowboy",
+        "#EverydayStyle",
+        "#WesternStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy",
+        "#WornInTeddy"
+      ],
+      "cta": "Tag @TeddyHeadwear + #WornInTeddy",
+      "story": "3 frames: the polaroid clip / 'Add yours' sticker with prompt 'Your hat, worn in' / question box 'Where does yours go?'",
+      "asset": {
+        "template": "cover",
+        "photo": "life-9",
+        "headline": "Show Us Yours",
+        "sub": "Tag @TeddyHeadwear and #WornInTeddy.",
+        "tag": "#WornInTeddy"
+      }
+    },
+    {
+      "day": 51,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "lifestyle",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Five ways to wear a cowboy hat off the ranch",
+      "hook": "You don't need a ranch. Five ways to wear a cowboy hat.",
+      "concept": "Styling carousel aimed at the hesitant first-time buyer, using beach and studio looks.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Man on the beach in the cream T cowboy.",
+          "onscreen": "No ranch required.\nFive ways to wear it.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Beach: shirtless or linen shirt, cream cowboy.",
+          "onscreen": "01 Beach: linen and bare feet.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "White tee and straight denim, brown cowboy.",
+          "onscreen": "02 Weekend: white tee, denim.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Frontier Hoodie with cream cowboy.",
+          "onscreen": "03 Cool night: hoodie, cowboy.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Dark coat, brown NY cowboy, brim low.",
+          "onscreen": "04 City: dark coat, brim low.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Wild rag at the neck, saddle crewneck, cream cowboy.",
+          "onscreen": "05 Full frontier: wild rag, crewneck.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "Cowboy lineup on bone.",
+          "onscreen": "Cowboy hats — $150\nFind yours → link in bio",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "You don't need a ranch to wear a cowboy hat.\nBeach, weekend, cool night, city, full frontier. Five ways, swipe through.\nSave your favorite, then find your hat → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#EverydayStyle",
+        "#HatsOfInstagram",
+        "#CoastalCowboy",
+        "#BeachCowboy",
+        "#SouthFlorida",
+        "#AtlanticCoast",
+        "#CowboyStyle"
+      ],
+      "cta": "Save your favorite",
+      "story": "3 frames: slide 1 / quiz 'Which look are you?' / link sticker to cowboy hats",
+      "asset": {
+        "template": "poster",
+        "photo": "life-1",
+        "headline": "No Ranch Required",
+        "sub": "Five ways to wear a cowboy hat off the ranch.",
+        "tag": "Styling"
+      }
+    },
+    {
+      "day": 52,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "community",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Wear it in",
+      "hook": "Wear it in.",
+      "concept": "A simple, emotional statement post that supports the UGC push.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "A polaroid of a Teddy hat lying on the sand, slightly sun-faded, with the ocean edge in the corner.",
+          "onscreen": "Wear it in.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Wear it in.\nSalt, sun, late nights, early mornings. That's what it's for.\nShow us yours: tag @TeddyHeadwear.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#WornInTeddy",
+        "#HowIWearIt",
+        "#HatsOfInstagram",
+        "#StyleInspo",
+        "#FloridaStyle",
+        "#FloridaBeaches"
+      ],
+      "cta": "Post yours with #WornInTeddy",
+      "story": "3 frames: the image / 'Add yours' sticker / reshare of a tagged post (with permission) or a BTS shot if none yet",
+      "asset": {
+        "template": "quote",
+        "photo": "life-9",
+        "headline": "Wear It In",
+        "sub": "Salt, sun, late nights. That's what it's for.",
+        "tag": "#WornInTeddy"
+      }
+    },
+    {
+      "day": 53,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "lifestyle",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "Golden hour, full frontier",
+      "hook": "Golden hour on the Atlantic. Hat, rag, hoodie.",
+      "concept": "A slow-motion, golden-hour piece showing the full head-to-toe Teddy look on the beach.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Low sun flare over the water; silhouette walks into frame.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "3-8s",
+          "shot": "Slow motion: surfer in the cream cowboy pulls the Frontier Hoodie on as the wind picks up.",
+          "onscreen": "Golden hour.",
+          "vo": ""
+        },
+        {
+          "t": "8-12s",
+          "shot": "Hands tie the gold Silk Wild Rag at the neck.",
+          "onscreen": "",
+          "vo": ""
+        },
+        {
+          "t": "12-16s",
+          "shot": "Close-up: brim casts a hard shadow across the eyes, sun behind.",
+          "onscreen": "Full frontier.",
+          "vo": ""
+        },
+        {
+          "t": "16-20s",
+          "shot": "Wide: he walks off down the waterline.",
+          "onscreen": "Teddy Headwear.",
+          "vo": ""
+        }
+      ],
+      "audio": "Slow, warm, reverb-soaked guitar with distant surf; no beat until a soft swell at the end.",
+      "caption": "Golden hour on the Atlantic.\nCream cowboy, Frontier Hoodie, Silk Wild Rag.\nShop the full look → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#HatSeason",
+        "#MensStyle",
+        "#WomensStyle",
+        "#EditorialStyle",
+        "#FloridaCowboy",
+        "#JupiterFlorida",
+        "#GoldenHour"
+      ],
+      "cta": "Shop the full look → link in bio",
+      "story": "3 frames: sunset still / product stickers hat, hoodie, wild rag / slider 'Golden hour rating'",
+      "asset": {
+        "template": "cover",
+        "photo": "life-6",
+        "headline": "Golden Hour",
+        "sub": "Cream cowboy, Frontier Hoodie, Silk Wild Rag.",
+        "tag": "Full Look"
+      }
+    },
+    {
+      "day": 54,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "community",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Drop your letters",
+      "hook": "Comment your letters. We'll build a few in Monogram Studio.",
+      "concept": "A participation post: followers comment letters, style and thread, and we render favorites for Day 55.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Monogram Studio screen with a blinking cursor.",
+          "onscreen": "Drop your letters.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Graphic: '1–3 characters' with example letters.",
+          "onscreen": "Step 1\nYour letters, 1–3 characters.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Four lettering styles shown small.",
+          "onscreen": "Step 2\nScript, Varsity, Serif or Western.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Five thread swatches.",
+          "onscreen": "Step 3\nWhite, Gold, Cream, Forest or Black.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Cowboy and fedora, cream and brown.",
+          "onscreen": "Step 4\nCowboy or fedora, cream or brown.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Example comment format on bone.",
+          "onscreen": "Comment like this:\nABC / Western / Gold / Brown cowboy",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Drop your letters in the comments.\nLetters, style, thread, hat. Like this: ABC / Western / Gold / Brown cowboy.\nWe'll build a few of them in Monogram Studio and post them this week.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#OOTD",
+        "#CoastalCowboy",
+        "#EverydayStyle",
+        "#WesternStyle",
+        "#AtlanticCoast",
+        "#JupiterFL",
+        "#Monogram"
+      ],
+      "cta": "Comment your build",
+      "story": "3 frames: slide 6 / question box 'Your build?' / link sticker to Studio for anyone who can't wait",
+      "asset": {
+        "template": "quote",
+        "photo": "studio",
+        "headline": "Drop Your Letters",
+        "sub": "Comment your build. We'll make a few in the Studio.",
+        "tag": "Your Turn"
+      }
+    },
+    {
+      "day": 55,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "monogram",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "We built your letters",
+      "hook": "You commented. We built them.",
+      "concept": "Screen recording of the team entering real follower comments from Day 54 into Monogram Studio, one after another.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Screenshot of the Day 54 comment section, scrolling.",
+          "onscreen": "You commented.",
+          "vo": ""
+        },
+        {
+          "t": "3-8s",
+          "shot": "Comment highlight: '@[handle]' build appears; Studio types it in.",
+          "onscreen": "@[handle] · [letters] / [style] / [thread]",
+          "vo": ""
+        },
+        {
+          "t": "8-13s",
+          "shot": "Second comment build, cowboy toggled to fedora.",
+          "onscreen": "@[handle] · [letters] / [style] / [thread]",
+          "vo": ""
+        },
+        {
+          "t": "13-18s",
+          "shot": "Third build, cream toggled to brown.",
+          "onscreen": "@[handle] · [letters] / [style] / [thread]",
+          "vo": ""
+        },
+        {
+          "t": "18-22s",
+          "shot": "Rapid montage of four more builds.",
+          "onscreen": "We built them.",
+          "vo": ""
+        },
+        {
+          "t": "22-25s",
+          "shot": "End card.",
+          "onscreen": "Build yours → link in bio",
+          "vo": ""
+        }
+      ],
+      "audio": "Upbeat, clicky beat with a satisfying pop each time a build renders.",
+      "caption": "You commented, we built them in Monogram Studio.\nThanks to everyone who dropped their letters.\nYour turn to build one for real → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WoolHat",
+        "#CowboyHat",
+        "#EmbroideredHat",
+        "#MonogramHat",
+        "#Monogram",
+        "#MonogramStudio",
+        "#FloridaBeaches",
+        "#PalmBeachCounty",
+        "#Community"
+      ],
+      "cta": "Build yours → link in bio",
+      "story": "4 frames: each featured build as its own frame tagging the commenter (with permission) / link sticker to Studio",
+      "asset": {
+        "template": "cover",
+        "photo": "studio",
+        "headline": "We Built Yours",
+        "sub": "Your comments, rendered in Monogram Studio.",
+        "tag": "Community"
+      }
+    },
+    {
+      "day": 56,
+      "week": 8,
+      "phase": "Worn In",
+      "pillar": "product",
+      "format": "Static",
+      "platforms": [
+        "Instagram",
+        "Pinterest"
+      ],
+      "title": "The T fedora, brown",
+      "hook": "The T fedora, in brown.",
+      "concept": "A product hero for the brown T fedora, pinned for Pinterest search.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Brown T fedora on bone, side three-quarter, the leather band and metal button catching light.",
+          "onscreen": "T Fedora — $140",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "The T fedora in brown.\n100% wool, gold silk lining, leather band with a metal button.\n$140 → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#CowboyHat",
+        "#Fedora",
+        "#WoolCowboyHat",
+        "#WoolFedora",
+        "#CustomHat",
+        "#MonogramStudio",
+        "#JupiterFlorida",
+        "#SouthFlorida",
+        "#Texas"
+      ],
+      "cta": "Shop the T fedora → link in bio",
+      "story": "2 frames: product image / product sticker T fedora",
+      "asset": {
+        "template": "product",
+        "photo": "fedora-t-brown",
+        "headline": "The T Fedora",
+        "sub": "Brown wool, gold silk lining, leather band.",
+        "tag": "Fedora / $140"
+      }
+    },
+    {
+      "day": 57,
+      "week": 9,
+      "phase": "Worn In",
+      "pillar": "lifestyle",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "A Jupiter Saturday",
+      "hook": "A Saturday in Jupiter, in one hat.",
+      "concept": "A slice-of-life day in Jupiter shot on a phone gimbal: coffee, beach, golden hour. No businesses named.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "Morning: hand picks a cream T fedora off a hook by the door.",
+          "onscreen": "Saturday.",
+          "vo": ""
+        },
+        {
+          "t": "3-7s",
+          "shot": "Coffee in hand, walking a sunny sidewalk.",
+          "onscreen": "Coffee.",
+          "vo": ""
+        },
+        {
+          "t": "7-12s",
+          "shot": "Beach: woman in the cream T fedora by the water, wind in her hair.",
+          "onscreen": "Beach.",
+          "vo": ""
+        },
+        {
+          "t": "12-16s",
+          "shot": "Hat on the sand next to the Canvas Tote and Silk Wild Rag.",
+          "onscreen": "Nap.",
+          "vo": ""
+        },
+        {
+          "t": "16-20s",
+          "shot": "Golden hour, walking back, hat in hand.",
+          "onscreen": "Home.",
+          "vo": ""
+        },
+        {
+          "t": "20-22s",
+          "shot": "End card.",
+          "onscreen": "Jupiter, Florida.",
+          "vo": ""
+        }
+      ],
+      "audio": "Laid-back acoustic groove with natural ambient sound (waves, footsteps) mixed in.",
+      "caption": "A Saturday in Jupiter, start to finish.\nCoffee, the beach, a nap on the sand, home at golden hour.\nThe cream T fedora came the whole way. Link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#Fedora",
+        "#ModernWestern",
+        "#HatSeason",
+        "#MensStyle",
+        "#WomensStyle",
+        "#EditorialStyle",
+        "#JupiterFL",
+        "#FloridaStyle",
+        "#Saturday"
+      ],
+      "cta": "Shop the T fedora → link in bio",
+      "story": "3 frames: morning clip / question box 'What's your Saturday?' / product sticker T fedora",
+      "asset": {
+        "template": "cover",
+        "photo": "life-4",
+        "headline": "A Jupiter Saturday",
+        "sub": "Coffee, beach, golden hour. One hat.",
+        "tag": "Day in Life"
+      }
+    },
+    {
+      "day": 58,
+      "week": 9,
+      "phase": "Worn In",
+      "pillar": "community",
+      "format": "Carousel",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Build a set for someone",
+      "hook": "Who's this for? Five sets for five kinds of people.",
+      "concept": "Hat-plus-apparel sets mapped to personalities, ending on Monogram Studio for gifting someone else's initials.",
+      "script": [
+        {
+          "t": "Slide 1",
+          "shot": "Split: cream LA fedora and Silk Wild Rag.",
+          "onscreen": "Build a set.\nFive kinds of people.",
+          "vo": ""
+        },
+        {
+          "t": "Slide 2",
+          "shot": "Cream F cowboy + Canvas Tote.",
+          "onscreen": "The beach regular\nCream F cowboy + Canvas Tote",
+          "vo": ""
+        },
+        {
+          "t": "Slide 3",
+          "shot": "Brown NY fedora + Saddle Crewneck.",
+          "onscreen": "The city one\nBrown NY fedora + Saddle Crewneck",
+          "vo": ""
+        },
+        {
+          "t": "Slide 4",
+          "shot": "Teddy Trucker + Teddy Script Tee.",
+          "onscreen": "The low-key one\nTeddy Trucker + Script Tee",
+          "vo": ""
+        },
+        {
+          "t": "Slide 5",
+          "shot": "Cream LA fedora + Silk Wild Rag.",
+          "onscreen": "The dressed-up one\nCream LA fedora + Silk Wild Rag",
+          "vo": ""
+        },
+        {
+          "t": "Slide 6",
+          "shot": "Studio preview with someone else's initials.",
+          "onscreen": "The one who has everything\nTheir initials, in Monogram Studio",
+          "vo": ""
+        },
+        {
+          "t": "Slide 7",
+          "shot": "All sets on bone.",
+          "onscreen": "Tag who you'd build one for.",
+          "vo": ""
+        }
+      ],
+      "audio": "Optional Instagram music: understated instrumental (soft acoustic or slow lo-fi drums), no vocals, so the slides do the talking.",
+      "caption": "Five sets for five kinds of people.\nBeach regular, city one, low-key one, dressed-up one, and the one who has everything (put their initials on it).\nTag who you'd build one for.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#ModernWestern",
+        "#WesternStyle",
+        "#OOTD",
+        "#CoastalCowboy",
+        "#EverydayStyle",
+        "#PalmBeachCounty",
+        "#FloridaCowboy",
+        "#GiftIdeas"
+      ],
+      "cta": "Tag who it's for",
+      "story": "3 frames: slide 6 / quiz 'Which one are you?' / link sticker to Studio",
+      "asset": {
+        "template": "split",
+        "photo": "fedora-la-cream",
+        "photo2": "apparel-rag",
+        "headline": "Build a Set",
+        "sub": "Five sets for five kinds of people.",
+        "tag": "Sets"
+      }
+    },
+    {
+      "day": 59,
+      "week": 9,
+      "phase": "Worn In",
+      "pillar": "community",
+      "format": "Static",
+      "platforms": [
+        "Instagram"
+      ],
+      "title": "Thanks for riding along",
+      "hook": "Thanks for riding along.",
+      "concept": "A thank-you statement post near the end of the 60 days, pointing back to the UGC tag.",
+      "script": [
+        {
+          "t": "Image",
+          "shot": "Forest green field, the hero brand photo faded behind, gold Teddy script at center.",
+          "onscreen": "Thanks for riding along.",
+          "vo": ""
+        }
+      ],
+      "audio": "No audio needed for the feed post. If you add music on Instagram, keep it low and warm: slow acoustic guitar, no vocals.",
+      "caption": "Thanks for riding along.\nA new site, Monogram Studio, the apparel drop, and a lot of your photos.\nKeep tagging @TeddyHeadwear. We're just getting started.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#WesternStyle",
+        "#TeddyHats",
+        "#EverydayStyle",
+        "#WornInTeddy",
+        "#HowIWearIt",
+        "#SouthFlorida",
+        "#AtlanticCoast"
+      ],
+      "cta": "Keep tagging #WornInTeddy",
+      "story": "4 frames: reshare 3 tagged posts (with permission) / 'Thank you' frame",
+      "asset": {
+        "template": "quote",
+        "photo": "hero",
+        "headline": "Thanks for Riding Along",
+        "sub": "Keep tagging @TeddyHeadwear and #WornInTeddy.",
+        "tag": "Thank You"
+      }
+    },
+    {
+      "day": 60,
+      "week": 9,
+      "phase": "Worn In",
+      "pillar": "product",
+      "format": "Reel",
+      "platforms": [
+        "Instagram",
+        "TikTok"
+      ],
+      "title": "60 days in 20 seconds",
+      "hook": "60 days in 20 seconds.",
+      "concept": "A recap montage of the best shots from all five phases, ending on Monogram Studio and the site.",
+      "script": [
+        {
+          "t": "0-3s",
+          "shot": "The brim-lift shot from Day 1.",
+          "onscreen": "60 days.",
+          "vo": ""
+        },
+        {
+          "t": "3-7s",
+          "shot": "Monogram Studio: letters typing, styles flipping.",
+          "onscreen": "The Monogram.",
+          "vo": ""
+        },
+        {
+          "t": "7-11s",
+          "shot": "Macro: silk, label, leather band, sweatband.",
+          "onscreen": "Made to Last.",
+          "vo": ""
+        },
+        {
+          "t": "11-15s",
+          "shot": "Apparel reveal drops and fit-check catch.",
+          "onscreen": "The Apparel Drop.",
+          "vo": ""
+        },
+        {
+          "t": "15-18s",
+          "shot": "Polaroids and golden hour.",
+          "onscreen": "Worn In.",
+          "vo": ""
+        },
+        {
+          "t": "18-21s",
+          "shot": "End card on forest green.",
+          "onscreen": "A new frontier. Build yours.",
+          "vo": ""
+        }
+      ],
+      "audio": "Builds from the Day 1 guitar motif into a full, confident beat; ends on a single ringing chord.",
+      "caption": "60 days in 20 seconds.\nA new site, Monogram Studio, the details, the apparel drop and the way you wear it.\nA new frontier. Build yours → link in bio.",
+      "hashtags": [
+        "#TeddyHeadwear",
+        "#ANewFrontier",
+        "#TeddyHats",
+        "#WoolHat",
+        "#WoolCowboyHat",
+        "#WoolFedora",
+        "#CustomHat",
+        "#MonogramStudio",
+        "#FloridaStyle",
+        "#FloridaBeaches",
+        "#Recap"
+      ],
+      "cta": "Build yours → link in bio",
+      "story": "3 frames: recap clip / poll 'Favorite moment: Studio or apparel?' / link sticker to the site",
+      "asset": {
+        "template": "cover",
+        "photo": "hero",
+        "headline": "60 Days In",
+        "sub": "Studio, craft, apparel, and how you wear it.",
+        "tag": "Recap"
+      }
+    }
+  ]
+}
