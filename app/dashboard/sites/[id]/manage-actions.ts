@@ -264,6 +264,23 @@ export async function savePageSeo(siteId: string, pageId: string, _prev: Setting
   return { saved: true }
 }
 
+// A page kept exactly as on the old site moves to the SaySites design, so
+// it can be edited section by section (its words are already there).
+export async function switchToSaySitesDesign(siteId: string, pageId: string, _prev: SettingsState, _form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  const page = (await store.pagesForSite(site.id)).find((p) => p.id === pageId)
+  if (!page?.classic) return { error: 'That page already uses the SaySites design.' }
+  const { classic: _old, ...rest } = page
+  await store.savePage({ ...rest, updatedAt: new Date().toISOString() }, 'owner', user.id, 'Moved to the SaySites design')
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    const draft = { ...state.draft, pages: state.draft.pages.map((p) => (p.id === page.id ? (({ classic: _c, ...r }) => r)(p) : p)) }
+    await store.saveSofieState(site.id, { ...state, draft })
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: true }
+}
+
 // ---------------------------------------------------------------------------
 // Products
 // ---------------------------------------------------------------------------

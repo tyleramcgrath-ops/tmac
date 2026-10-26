@@ -118,6 +118,8 @@ export interface Store {
   mediaForSite(siteId: string): Promise<Media[]>
   // The file itself, for serving. Not scoped: ids are unguessable and files are public.
   mediaFile(id: string): Promise<{ mime: string; data: Buffer } | null>
+  // A file a kept page uses (an old photo, a font), served at /u/<id>.
+  addAsset(siteId: string, mime: string, data: Buffer): Promise<string>
   deleteMedia(siteId: string, id: string): Promise<void>
   addMessage(m: NewMessage): Promise<Message>
   messagesForSite(siteId: string, limit?: number): Promise<Message[]>
@@ -168,6 +170,10 @@ export interface Store {
   leagueSites(day: string): Promise<LeagueSite[]>
   // Free redesign previews. `who` is a hash of the requester, for limits.
   savePreview(p: Preview, who: string): Promise<void>
+  // A browser check of the preview's exact copy (lib/redesign offersCopy).
+  recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>): Promise<boolean>
+  // An unclaimed preview rebuilt in place (same id, same links).
+  replacePreview(p: Preview): Promise<boolean>
   preview(id: string): Promise<Preview | null>
   previewCount(since: Date, who?: string): Promise<number>
   // Marks a preview claimed; false when someone already claimed it.
@@ -353,6 +359,9 @@ CREATE TABLE IF NOT EXISTS ss_media (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_media_site_idx ON ss_media (site_id, created_at DESC);
+-- 'asset': a file a kept page of their old site uses (lib/classic-assets),
+-- served like a photo but not listed with the owner's photos.
+ALTER TABLE ss_media ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'photo';
 CREATE TABLE IF NOT EXISTS ss_visits (
   site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
   day DATE NOT NULL,
@@ -614,7 +623,7 @@ class PgStore implements Store {
   }
   async mediaForSite(siteId: string) {
     const rows = await this.q<{ id: string; site_id: string; mime: string; width: number; height: number; alt: string; bytes: number; created_at: string }>(
-      'SELECT id, site_id, mime, width, height, alt, octet_length(data) AS bytes, created_at FROM ss_media WHERE site_id = $1 ORDER BY created_at DESC',
+      "SELECT id, site_id, mime, width, height, alt, octet_length(data) AS bytes, created_at FROM ss_media WHERE site_id = $1 AND kind = 'photo' ORDER BY created_at DESC",
       [siteId]
     )
     return rows.map((r) => ({ id: r.id, siteId: r.site_id, mime: r.mime, width: r.width, height: r.height, alt: r.alt, bytes: Number(r.bytes), createdAt: new Date(r.created_at).toISOString() }))
@@ -622,6 +631,11 @@ class PgStore implements Store {
   async mediaFile(id: string) {
     const r = (await this.q<{ mime: string; data: Buffer }>('SELECT mime, data FROM ss_media WHERE id = $1', [id]))[0]
     return r ?? null
+  }
+  async addAsset(siteId: string, mime: string, data: Buffer) {
+    const id = randomUUID().replace(/-/g, '')
+    await this.q("INSERT INTO ss_media (id, site_id, mime, width, height, alt, data, kind) VALUES ($1,$2,$3,0,0,'',$4,'asset')", [id, siteId, mime, data])
+    return id
   }
   async deleteMedia(siteId: string, id: string) {
     await this.q('DELETE FROM ss_media WHERE id = $1 AND site_id = $2', [id, siteId])
@@ -690,6 +704,12 @@ class PgStore implements Store {
   async preview(id: string) {
     const r = (await this.q<{ data: Preview }>("SELECT data FROM ss_previews WHERE id = $1 AND created_at > now() - interval '30 days'", [id]))[0]
     return r ? r.data : null
+  }
+  async recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>) {
+    return (await this.q("UPDATE ss_previews SET data = jsonb_set(data, '{asIsCheck}', $2::jsonb) WHERE id = $1 RETURNING id", [id, JSON.stringify(check)])).length > 0
+  }
+  async replacePreview(p: Preview) {
+    return (await this.q("UPDATE ss_previews SET data = $2 WHERE id = $1 AND NOT (data ? 'claimed') RETURNING id", [p.id, p])).length > 0
   }
   async claimPreview(id: string, by: string, siteId: string) {
     const r = await this.q("UPDATE ss_previews SET data = jsonb_set(data, '{claimed}', $2::jsonb) WHERE id = $1 AND NOT (data ? 'claimed') RETURNING id", [id, JSON.stringify({ by, siteId })])
@@ -1151,8 +1171,14 @@ export class MemoryStore implements Store {
     return [...this.media.values()].filter((x) => x.meta.siteId === siteId).map((x) => ({ ...x.meta })).reverse()
   }
   async mediaFile(id: string) {
-    const x = this.media.get(id)
+    const x = this.media.get(id) ?? this.assets.get(id)
     return x ? { mime: x.meta.mime, data: x.data } : null
+  }
+  private assets = new Map<string, { meta: { siteId: string; mime: string }; data: Buffer }>()
+  async addAsset(siteId: string, mime: string, data: Buffer) {
+    const id = randomUUID().replace(/-/g, '')
+    this.assets.set(id, { meta: { siteId, mime }, data })
+    return id
   }
   async deleteMedia(siteId: string, id: string) {
     const x = this.media.get(id)
@@ -1166,6 +1192,7 @@ export class MemoryStore implements Store {
     this.sofie.delete(siteId)
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
     for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
+    for (const [id, x] of this.assets) if (x.meta.siteId === siteId) this.assets.delete(id)
     for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
     for (const [k, site] of this.photos) if (site === siteId) this.photos.delete(k)
     this.logos.delete(siteId)
@@ -1235,6 +1262,18 @@ export class MemoryStore implements Store {
   async preview(id: string) {
     const r = this.previews.get(id)
     return r ? structuredClone(r.p) : null
+  }
+  async recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>) {
+    const r = this.previews.get(id)
+    if (!r) return false
+    r.p.asIsCheck = structuredClone(check)
+    return true
+  }
+  async replacePreview(p: Preview) {
+    const r = this.previews.get(p.id)
+    if (!r || r.p.claimed) return false
+    r.p = structuredClone(p)
+    return true
   }
   async claimPreview(id: string, by: string, siteId: string) {
     const r = this.previews.get(id)

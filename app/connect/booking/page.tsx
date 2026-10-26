@@ -5,7 +5,7 @@ import '../../home.css'
 import '../connect.css'
 
 const TITLE = 'Add a Book Online button to your website'
-const DESCRIPTION = 'Already take bookings with Square, Calendly, Vagaro, Booksy, Acuity or OpenTable? Paste your booking link and a Book online button appears on every page of your SaySites website.'
+const DESCRIPTION = 'Take bookings with Square, Calendly, Vagaro, Booksy, Acuity or OpenTable? Paste your link and a Book online button appears on every page of your site.'
 
 export const metadata: Metadata = {
   title: { absolute: `${TITLE} | SaySites` },

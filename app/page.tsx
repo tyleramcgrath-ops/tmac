@@ -8,6 +8,7 @@ import { ClosingSay, SayBox } from '@/components/SayBox'
 import { TalkForm } from '@/components/TalkForm'
 import { PRICES, TRIAL_DAYS } from '@/lib/billing'
 import { TEMPLATES } from '@/lib/templates'
+import { JsonLd, ORG } from '@/components/JsonLd'
 import './home.css'
 
 // saysites.com: website building for small businesses, with Sofie at the
@@ -184,6 +185,21 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ s
   const store = PRICES.store
   return (
     <div className="home">
+      <JsonLd data={[
+        { '@context': 'https://schema.org', ...ORG },
+        { '@context': 'https://schema.org', '@type': 'WebSite', '@id': 'https://saysites.com/#website', name: 'SaySites', url: 'https://saysites.com/', publisher: { '@id': 'https://saysites.com/#org' } },
+        {
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          name: 'SaySites',
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Web',
+          url: 'https://saysites.com/',
+          description: 'Build and change your small-business website by saying what you want. Hosting, SEO and an online store included.',
+          offers: { '@type': 'Offer', price: String(site.month), priceCurrency: 'USD', url: 'https://saysites.com/pricing' },
+          publisher: { '@id': 'https://saysites.com/#org' },
+        },
+      ]} />
       <header className="nav">
         <div className="wrap">
           <Logo />

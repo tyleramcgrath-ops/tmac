@@ -43,7 +43,9 @@ export function checkSpeed(page: RenderedPage): SpeedResult {
 
   // No render-blocking external stylesheets, and no fonts but our own hosted
   // heading font (preloaded, font-display: optional, so it never delays text).
-  if (/<link\b[^>]*rel="stylesheet"/i.test(html)) issues.push({ code: 'blocking-stylesheet', message: 'The page loads an external stylesheet, which blocks rendering.' })
+  // A stylesheet after the page's content (the redesign's fonts) doesn't hold
+  // up the first paint; one in the head does.
+  if (/<link\b[^>]*rel="stylesheet"/i.test(html.split(/<body\b/i)[0])) issues.push({ code: 'blocking-stylesheet', message: 'The page loads an external stylesheet, which blocks rendering.' })
   const faces = css.match(/@font-face\{[^}]*\}/gi) ?? []
   const foreign = faces.filter((f) => !/src:url\(\/media\/fonts\/[\w-]+\.woff2\)/.test(f) || !/font-display:optional/.test(f))
   if (/@import/i.test(css) || foreign.length || faces.length > 1) issues.push({ code: 'font-or-import', message: 'The CSS imports another file or downloads a font.' })
