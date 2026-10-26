@@ -302,6 +302,321 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'charlotte-law-firm-website-design',
+    title: 'Charlotte Law Firm Website Design: NC Bar Ad Rules',
+    description: 'Plan a Charlotte law firm website under North Carolina Rules 7.1 to 7.4: specialist claims, testimonials, lead services, SC lawyers and Mecklenburg courts.',
+    kind: 'guide',
+    summary: [
+      'North Carolina lets a lawyer say “specialist” only when certified by the State Bar or an accredited body, and the certifier must be named (Rule 7.2(c)). Everyone else can say a practice “concentrates in” or “is limited to” a field.',
+      'Every page that markets the firm must carry the name and contact details of at least one lawyer or firm responsible for it (Rule 7.2(d)).',
+      'Client testimonials about results need a conspicuous disclaimer at the beginning and end, and testimonials may never mention dollar amounts (2012 Formal Ethics Opinion 1).',
+      'A website is not solicitation in North Carolina, but live calls to strangers are, and online referral platforms must meet Rule 7.4’s disclosure conditions.',
+      'The Charlotte metro reaches into three South Carolina counties, so lawyers not licensed in North Carolina must say so on the site (Rule 7.1, Comment 8).',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1507810670121-b08efd787765?auto=format&fit=crop&w=1600&q=75', alt: 'Charlotte’s Uptown skyline at sunset under heavy storm clouds lit pink and orange, with tree-lined neighborhoods in the foreground' },
+    body: `A Charlotte law firm website is governed by Rules 7.1 through 7.4 of the North Carolina Rules of Professional Conduct, and two of those rules shape a site more than any design choice. Rule 7.2(c) allows the words “specialist” or “specializes” only for lawyers certified by the North Carolina State Bar or an accredited certifying organization, with that organization named. Rule 7.2(d) requires every communication about your services to include the name and contact information of at least one lawyer or firm responsible for it. Add the State Bar’s opinion on testimonials, which bans dollar amounts in client quotes, and you have the three places Charlotte firm sites most often go wrong.
+
+This guide takes each rule in turn, links to the State Bar’s own text, and then turns to what is particular to Charlotte: a metro area that crosses into South Carolina, a single courthouse on East 4th Street that handles most local matters, a court system that went digital in 2023, and a client base where about one resident in four speaks a language other than English at home. It is planning guidance, not an ethics opinion, so take close calls to North Carolina ethics counsel.
+
+![Looking straight down at a tall tower with a stepped crown in Uptown Charlotte, surrounded by rooftops, parking decks and a few trees](https://images.unsplash.com/photo-1523844203081-56a85e95590c?auto=format&fit=crop&w=1200&q=75)
+
+## Which North Carolina rules cover a law firm website?
+
+Four rules do the work, all amended most recently on April 21, 2021:
+
+- **[Rule 7.1](https://www.ncbar.gov/for-lawyers/ethics/rules-of-professional-conduct/rule-71-communications-concerning-a-lawyers-services)** sets the standard for everything you publish: no false or misleading communication about the lawyer or the lawyer’s services. Its comments cover firm names, multi-state firms, out-of-state lawyers and dramatized video.
+- **[Rule 7.2](https://www.ncbar.gov/for-lawyers/ethics-and-governing-rules/rules-of-professional-conduct/71-76-information-about-legal-services/72-communications-concerning-a-lawyers-services-specific-rules/)** holds the specific rules: paying for recommendations, specialist claims and the responsible-lawyer requirement.
+- **[Rule 7.3](https://www.ncbar.gov/for-lawyers/ethics-and-governing-rules/rules-of-professional-conduct/71-76-information-about-legal-services/73-direct-contact-with-potential-clients/)** covers direct contact with potential clients.
+- **[Rule 7.4](https://www.ncbar.gov/for-lawyers/ethics-and-governing-rules/rules-of-professional-conduct/71-76-information-about-legal-services/74-intermediary-organizations/)** covers intermediary organizations: referral services, advertising cooperatives, matching services and online marketing platforms.
+
+Rule 7.5 is reserved. North Carolina’s text does not require an “advertising material” label on a website, and it sets no fixed waiting period after an accident. If you are adapting a site built for another state, check every disclaimer against these four rules rather than carrying it over by habit.
+
+## What counts as misleading on a North Carolina firm site?
+
+Rule 7.1 names three kinds of misleading statements: a material misrepresentation of fact or law, a true statement that leaves out a fact needed to keep it from misleading, and three named examples. Those examples are statements likely to create unjustified expectations about results, statements implying results can be reached by means that break the rules or the law, and comparisons with other lawyers’ services that can’t be factually substantiated.
+
+Comment 2 adds a test worth applying to every headline: a truthful statement still misleads if there is a substantial likelihood it will lead a reasonable person to a specific conclusion about the lawyer that has no reasonable factual foundation. It also flags statements that suggest a reader must take action when none is required. A banner such as “You have only days to protect your claim” on a general page fails that test when it isn’t true of the reader’s situation.
+
+Comment 3 says past results can mislead if presented as if other clients will get the same, and that “the inclusion of an appropriate disclaimer or qualifying language may preclude a finding” that a statement is misleading. In practice:
+
+- **Results pages:** describe the kind of matter and what drove the outcome, and put a plain note beside the results, not buried at the bottom, that each matter turns on its own facts.
+- **“Charlotte’s best” or “top-rated”:** in [RPC 135](https://www.ncbar.gov/for-lawyers/ethics-and-governing-rules/ethics-opinions/opinions/rpc-135/), a 1992 opinion about a referral service, the State Bar said describing participating lawyers as “the best” would appear to be misleading. Unless you can substantiate a comparison, describe what you do instead.
+- **Video:** Comment 10 says a dramatization of a fictional case needs a conspicuous statement at the beginning and the end that it is a dramatization and does not show real events or people. That applies to an embedded video on your home page as much as to a TV spot.
+
+## Can a Charlotte lawyer say “specialist” on a website?
+
+Only if certified. Rule 7.2(c) says a lawyer may not state or imply that they specialize, or are a specialist, in a field unless certified by the North Carolina State Bar, by an organization the State Bar has accredited, or by an ABA-accredited organization under procedures the State Bar endorses, and “the name of the certifying organization is clearly identified in the communication.” Comment 7 explains why: the word implies an objective body has confirmed advanced knowledge and experience.
+
+The State Bar currently certifies [specialists in 14 areas](https://www.ncbar.gov/for-the-public/finding-a-lawyer/legal-specialists): appellate practice, bankruptcy, child welfare, criminal law, elder law, estate planning and probate, family law, immigration, privacy and information security, real property, Social Security disability, trademark, utilities and workers’ compensation. Its page on [marketing your certification](https://www.ncbar.gov/for-lawyers/bar-programs/legal-specialization/for-board-certified-specialists/marketing-your-certification/) suggests wording such as:
+
+> Board Certified Specialist in Family Law
+
+A lawyer without certification still has honest options. Comment 8 says lawyers may describe their practice without the word “specialize,” as long as the description is truthful, and may indicate a “concentration,” “interest” or “limitation.” “Our practice is limited to workers’ compensation claims” is fine. “Workers’ comp specialists” on the home page is not, unless a named lawyer holds the certification and the certifier is identified. Watch page titles and image alt text too: the rule covers anything that states or implies specialization, and a page title like “Charlotte DWI Specialists” states it.
+
+## What has to appear on every page?
+
+Rule 7.2(d) requires that any communication made under the rule “include the name and contact information of at least one lawyer or law firm responsible for its content.” Comment 9 says contact information can be a website address, phone number, email address or physical office location. A firm website usually meets this through its header or footer, but check the pieces that travel on their own:
+
+- **Landing pages for ads,** which are often built outside the main site and stripped of the footer.
+- **Downloadable guides and checklists,** which get forwarded without the page around them.
+- **Social posts and short videos** cut from longer content.
+
+The simplest fix is a footer line that names the firm and the responsible lawyer with a phone number and office address, on every template. Comment 1 also confirms what you may publish freely: names and contact details, the services you offer, how fees are set (including specific prices and payment or credit arrangements), foreign language ability, references and, with their consent, clients you regularly represent.
+
+![A brick-walled courtyard in Charlotte with café tables and strings of lights overhead, glass office towers rising behind it](https://images.unsplash.com/photo-1588945703487-7c04af3414f5?auto=format&fit=crop&w=1200&q=75)
+
+## Can a North Carolina firm use client testimonials?
+
+Yes, with limits set out in [2012 Formal Ethics Opinion 1](https://www.ncbar.gov/for-lawyers/ethics-and-governing-rules/ethics-opinions/opinions/2012-formal-ethics-opinion-1/), adopted July 20, 2012. The opinion separates testimonials into kinds:
+
+1. **Testimonials about service,** such as “The lawyer was very knowledgeable” or “The attorney was very patient,” may be used without a disclaimer.
+2. **Testimonials that refer to results,** such as charges being dismissed or medical bills being paid, can create unjustified expectations. Those that refer generally to results may be used with an appropriate disclaimer, which must be conspicuous and appear or be spoken at the beginning and end of the communication.
+3. **Specific dollar amounts** in client testimonials are prohibited.
+
+For a website, that means a reviews section needs editing before it goes live. Pull quotes that mention settlement figures, even when the client wrote them. Place the results disclaimer above and below any testimonial block that refers to outcomes, rather than once in the footer. And keep the words real: a testimonial you paraphrase or improve is no longer the client’s, and Rule 7.1 still applies to it.
+
+## Is a law firm website “solicitation” in North Carolina?
+
+No. Comment 1 to Rule 7.3 says communications directed to the general public, such as billboards, internet banner ads, websites and television commercials, are not solicitation, and neither are responses to requests for information or automatically generated responses to electronic searches.
+
+What Rule 7.3(b) restricts is live, person-to-person contact to seek employment when a significant motive is the lawyer’s financial gain, unless the person is a lawyer, has a family, close personal or prior professional relationship with the lawyer, or routinely uses that type of legal service for business. Comment 2 defines live contact as in-person, face-to-face or real-time phone or video contact. Chat rooms, text messages and written messages the person can easily ignore are outside that definition, though Rule 7.3(c) still bars any solicitation of someone who has said they don’t want it, or that involves coercion, duress or harassment.
+
+For intake, the line is clear enough to write into a staff checklist. When a person fills in your form or starts a chat, you are responding to a request, and you may call them back. Buying a list of recent accident reports and having staff cold-call those people is live solicitation of strangers. And any “please stop contacting me” ends the contact, in every channel.
+
+## Can a Charlotte firm pay for leads or referral platforms?
+
+Rule 7.2(b) bars giving anything of value for recommending your services, with exceptions for the reasonable cost of advertising, the usual charges of a qualifying intermediary organization or prepaid legal plan, buying a practice under Rule 1.17, and nominal thank-you gifts not tied to referrals. Comment 3 lists what advertising costs include: directory listings, online ads, domain registrations, sponsorships and paying website designers and other marketing vendors.
+
+Comment 5 deals with lead generators. You may pay for leads, including online leads, if the generator does not recommend you, the payment complies with the fee-division and independence rules, and its communications comply with Rule 7.1. You may not pay one that implies it is recommending you, implies the referral is unpaid, or suggests it analyzed the person’s legal problem to choose a lawyer.
+
+Rule 7.4 goes further than many states for platforms that match consumers with lawyers. Before and while you take part, you must make reasonable efforts to ensure the organization does not control your professional judgment, does not solicit improperly, discloses its inclusion criteria and any payments by lawyers or fees to clients at the start of the client’s interaction, and is not owned or directed by your firm, and that the referral arrangement is fully disclosed to the client at the start of the client’s interaction with you. If you learn it falls short and it won’t fix the problem, Rule 7.4(c) says you must withdraw. Read a platform’s consumer pages before you sign up, and keep a short note of what you checked.
+
+## What should Charlotte firms with South Carolina lawyers say?
+
+The Charlotte-Concord-Gastonia metropolitan area includes Chester, Lancaster and York counties in South Carolina, according to [HUD’s market profile](https://www.huduser.gov/portal/periodicals/USHMC/reg/CharlotteConcordGastoniaNC-SC-HMP-January24.pdf), so many Charlotte clients live or were hurt across the state line, and many firms employ lawyers licensed in South Carolina. Three comments to Rule 7.1 apply:
+
+- **Comment 6:** a firm with offices in several jurisdictions may use the same name in each, but must identify its lawyers with any jurisdictional limits.
+- **Comment 8:** a firm may employ a lawyer licensed elsewhere but not in North Carolina only for work that doesn’t need a North Carolina license, and that lawyer’s communications for the firm must state where they are licensed and that they are not licensed in North Carolina.
+- **Comment 9:** a firm with an office in another jurisdiction is an interstate law firm and must register with the State Bar.
+
+On the site, that means each attorney profile lists the states where the lawyer is admitted, a lawyer admitted only in South Carolina says plainly that they are not licensed in North Carolina, and a firm with a Rock Hill or Fort Mill office describes which lawyers practice from it. South Carolina has its own advertising rules, so a page aimed at York County clients should be checked against those as well.
+
+## Which Charlotte courts should your practice pages mention?
+
+Most Charlotte matters run through one building: the [Mecklenburg County Courthouse at 832 East 4th Street](https://www.nccourts.gov/assets/inline-files/building_guide_final.pdf). The building guide places district criminal courtrooms on the first floor, magistrate courtrooms on the second, superior criminal courts on the fifth, civil courts on the sixth, and family and juvenile courts on the eighth, with the clerk’s civil, criminal and estates offices spread across several floors. A page that tells a nervous client which floor their hearing is likely on, and where the family court self-serve center is, answers a question a generic page skips.
+
+Mecklenburg also moved to eCourts on [October 9, 2023](https://www.nccourts.gov/news/tag/press-release/ecourts-is-now-live-in-mecklenburg-county). Attorneys file through eFiling, and anyone can use the portal to search cases by name, find court dates and view case information, and pay fines and fees. A criminal or traffic page can point clients to the portal to confirm their court date, and a family law page can mention Guide & File, the courts’ free tool for preparing documents in certain case types, while explaining when a lawyer is worth having.
+
+![Sunlight flaring off the stepped crown of a downtown Charlotte tower and the glass offices around it](https://images.unsplash.com/photo-1631625066472-c0093bae039e?auto=format&fit=crop&w=1200&q=75)
+
+## Should a Charlotte firm publish pages in Spanish?
+
+Look at who you serve. The Census Bureau’s [QuickFacts for Charlotte](https://www.census.gov/quickfacts/fact/table/charlottecitynorthcarolina/PST045224) shows 17.5 percent of residents are Hispanic or Latino, 18.7 percent were born outside the United States, and 24.1 percent of people five and older speak a language other than English at home (2020 to 2024). For immigration, family, criminal, workers’ compensation and injury practices, that is a large share of potential clients.
+
+If you translate, translate the required pieces too. The certifier’s name next to a specialist claim, the results disclaimer, fee terms and the not-licensed-in-North-Carolina notice all need to appear in the Spanish version, because Rule 7.1 judges a statement in Spanish exactly as it judges one in English. Comment 1 to Rule 7.2 lets you advertise foreign language ability, so say which lawyer or staff member speaks Spanish and when they are available. Give each language its own page, linked to its English counterpart, so Google can show the right version ([localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)).
+
+## How should a Charlotte firm handle its Google Business Profile?
+
+Google says local results depend mostly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Its [Business Profile guidelines](https://support.google.com/business/answer/3038177) require that a business make in-person contact with customers at its listed address during its stated hours, and that the business name match the real-world name. For a Charlotte firm:
+
+- **One profile per staffed office.** An Uptown office and a Ballantyne office that both meet clients can each have one. A virtual office you never visit can’t.
+- **No keywords in the name.** “Smith Law, Charlotte Car Accident Lawyers” is a name change Google can suspend you for, unless that is the firm’s legal name.
+- **Matching details.** The address, phone and hours on each profile should match that office’s page on your site.
+- **Reviews checked against the testimonial opinion.** Google reviews on Google are the client’s words on Google’s platform, but if you quote them on your own site, the rules on results and dollar amounts apply to your page.
+
+## What pages should a Charlotte law firm website have?
+
+1. **Home page** stating who you help, in which practice areas, with the responsible firm and contact details in the footer.
+2. **A page per practice area,** with fees explained (flat, hourly or contingent, and which costs the client may still owe), and “specialist” only where a named certification backs it.
+3. **Attorney profiles** listing every state of admission, any certification with the certifier named, languages spoken and the courts the lawyer appears in.
+4. **A results page** only with context for each entry and the disclaimer placed beside it.
+5. **Testimonials** edited to remove dollar amounts, with the results disclaimer at the start and end of any block that mentions outcomes.
+6. **Office pages** for each staffed location, plus a page explaining any South Carolina practice and who handles it.
+7. **A “going to court in Mecklenburg” page** for criminal, traffic and family practices: the courthouse, the floors, the eCourts portal.
+8. **Spanish pages** for the practice areas your clients need, with every required element translated.
+9. **A contact form** that asks how the person prefers to be reached and only what a conflict check needs.
+
+Don’t build a set of near-identical pages for every nearby town with only the name changed. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages made to rank for similar searches that lead to essentially the same content as doorway abuse. Write a page about Gastonia or Concord only when you have something true and specific to say, such as which courthouse handles cases there.
+
+## A pre-launch checklist for North Carolina
+
+- No “specialist,” “specializes” or “specialty” anywhere, including titles and alt text, unless a named lawyer is certified and the certifier is named.
+- “Concentrates in” or “limited to” used accurately for everyone else.
+- Responsible firm or lawyer named with contact details on every page, landing page and download.
+- Results shown with context and a nearby disclaimer.
+- Testimonials free of dollar amounts; results-related ones disclaimed at the beginning and end.
+- No unsubstantiated comparisons or “best” claims.
+- Dramatized video labeled at the start and end.
+- Lawyers not licensed in North Carolina identified as such, with their licensing state.
+- Lead generators checked against Rule 7.2, Comment 5, and referral platforms against Rule 7.4.
+- Intake staff trained on Rule 7.3: callbacks only to people who asked, no cold calls to strangers, “stop” honored at once.
+- Structured data that describes only what is visible on the page ([Google’s structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Charlotte law firm website
+
+A SaySites law firm site starts from the page plan above: practice area pages, attorney profiles, office pages and a consultation form with intake questions that include the other party’s name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish. You change the site by saying what you want in plain words, such as “add ‘Board Certified Specialist in Family Law, North Carolina State Bar’ under Dana’s name,” and every change waits as a draft until you approve it. Certifications, results and testimonials come only from you; SaySites invents none of them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your North Carolina site yourself, or [request a free redesign](/redesign) to see your current site rebuilt before you decide. For more reading, see [what we found testing 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites), [how Google decides which local businesses to show](/blog/how-google-picks-local-businesses) and how a neighboring Southern state handles the same questions in our [Atlanta law firm website guide](/blog/atlanta-law-firm-website-design).`,
+    faq: [
+      { q: 'Can a North Carolina lawyer call themselves a specialist on a website?', a: 'Only when certified. Rule 7.2(c) allows “specialist” or “specializes” for lawyers certified by the North Carolina State Bar, a State Bar-accredited organization or an ABA-accredited organization the State Bar endorses, and the certifier must be named. Lawyers without certification may truthfully say their practice concentrates in, or is limited to, a field.' },
+      { q: 'Does a North Carolina law firm website need a disclaimer?', a: 'There is no single required website disclaimer. Rule 7.1, Comment 3, says qualifying language can keep results from being misleading, so place one beside results. Testimonials that refer to results need a conspicuous disclaimer at the beginning and end under 2012 Formal Ethics Opinion 1, and every page must name a responsible lawyer or firm with contact details.' },
+      { q: 'Can a Charlotte firm show settlement amounts in client reviews?', a: 'Not in testimonials. 2012 Formal Ethics Opinion 1 prohibits specific dollar amounts in client testimonials, even when the client wrote them. Testimonials about service, like a lawyer’s patience, need no disclaimer. Reports of results in your own words are judged under Rule 7.1 and should carry context and a nearby note that outcomes depend on each matter’s facts.' },
+      { q: 'Is there a waiting period before contacting an accident victim in North Carolina?', a: 'Rule 7.3 sets no fixed number of days. It bars live, person-to-person solicitation of strangers for financial gain at any time, and any solicitation of someone who has asked not to be contacted or that involves coercion, duress or harassment. Calling back a person who filled in your website form is answering a request, not solicitation.' },
+      { q: 'How should a Charlotte firm list a lawyer licensed only in South Carolina?', a: 'Rule 7.1, Comment 8, requires that lawyer’s communications for the firm to state where they are licensed and that they are not licensed in North Carolina, and their work must be limited to matters that don’t need a North Carolina license. Put this on the profile page, and note that a firm with an office in another state must register with the State Bar.' },
+      { q: 'Can a North Carolina law firm pay an online referral or lead service?', a: 'Yes, within limits. Rule 7.2 allows paying for leads if the service doesn’t recommend you or imply it chose you after analyzing the person’s problem. Platforms that match consumers with lawyers fall under Rule 7.4, which requires disclosures to consumers and clients at the start, and withdrawal if the platform won’t fix a problem.' },
+      { q: 'What does a SaySites website for a Charlotte law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['North Carolina Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Charlotte, North Carolina'],
+    published: '2026-10-26',
+    status: 'published',
+  },
+  {
+    slug: 'austin-electrician-website-design',
+    title: 'Austin Electrician Websites: TDLR License Ad Rules',
+    description: 'What an Austin electrician’s website must show under Texas TDLR rules, plus City of Austin registration, permits and Austin Energy rebate pages.',
+    kind: 'guide',
+    summary: [
+      'Texas requires a licensed electrical contractor’s name and license number on advertising meant to bring in electrical work (16 TAC §73.51(e)), and a website isn’t on the list of exemptions. Show “TECL” and your number by the phone number.',
+      'The same rule bars misrepresenting the need for work, so “your panel is a fire hazard” copy has to be true of the job, not a scare line.',
+      'The City of Austin tells homeowners to check that a trade contractor is registered with the City and pulls its own permits. Say on your site that you do both.',
+      'Austin Energy’s rebates have their own rules: the home EV charger rebate is paid to the customer after installation, and most other rebates require a participating contractor. Explain the real steps on a dedicated page.',
+      'About 30 percent of Austin residents speak a language other than English at home, so Spanish service pages can be worth building if your team can serve those calls.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1588993608283-7f0eda4438be?auto=format&fit=crop&w=1600&q=75', alt: 'The Congress Avenue Bridge crossing Lady Bird Lake straight toward downtown Austin’s towers on a clear morning' },
+    body: `An Austin electrician’s website has a legal job and a sales job. The legal job comes from the Texas Department of Licensing and Regulation (TDLR): advertising meant to bring in electrical work must show the contractor’s name and license number, and nothing on the site may misrepresent the need for work. The sales job is local. Austin homeowners are told by their own city to check that a contractor is registered with the City and pulls its own permits, and many of them arrive with questions about Austin Energy’s rebates. A site that answers both, with your license number beside your phone number on every page, gives a careful customer what they need to call.
+
+This guide covers the Texas rules first, with each one linked to its source, then the Austin pieces: City registration and permits, Austin Energy programs, language, service areas, Google Business Profile and a page plan. It is general information, not legal advice. TDLR answers questions about a particular license or ad.
+
+![An installer in a bright green shirt wiring an open disconnect box and panel mounted on a stucco wall, with wires running down from the enclosure](https://images.unsplash.com/photo-1660330589487-39cc0177ba89?auto=format&fit=crop&w=1200&q=75)
+
+## Does Texas require a license number on an electrician’s website?
+
+The rule is [16 Texas Administrative Code §73.51](https://www.law.cornell.edu/regulations/texas/16-Tex-Admin-Code-SS-73-51), which lists an electrical contractor’s responsibilities. Subsection (e) says advertising intended to solicit electrical business, including business cards, must show the contractor’s name and license number. It then lists exemptions: nationwide TV ads that offer license numbers on request, phone book listings with only a name, address and phone number, trade ads by manufacturers or distributors, telephone solicitations where the caller states the contractor complies with state licensing, promotional items of nominal value, and signs at the permanent business location.
+
+A contractor’s own website is not on that list, and its purpose is to bring in electrical work. Treat it as advertising and put the name and number on it. The most useful place is the header or footer of every page, next to the phone number, because people land on service pages from search and may never see your home page. Use the same prefix TDLR requires on your trucks: §73.51(d) says the number on a contractor’s vehicle must be preceded by “TECL,” and TDLR’s [compliance guide](https://www.tdlr.texas.gov/ELECTRICIANS/compliance-guide.htm) notes that electrical sign contractors use “TSCL” and residential appliance installation contractors use “TICL.”
+
+A footer line that does the job:
+
+> [Your business name], Texas electrical contractor license TECL [your number]. Regulated by the Texas Department of Licensing and Regulation.
+
+Two habits keep it consistent. Use the license number exactly as TDLR lists it, and link to TDLR’s [license search](https://www.tdlr.texas.gov/LicenseSearch/) so a customer can check it in one tap. And when photos of your vans appear on the site, make sure the lettering shows the same name and number, because §73.51(d) requires both on each side of every business vehicle, in contrasting letters at least two inches high.
+
+## What can’t an Austin electrician say on a website?
+
+Section 73.51(b) applies to anyone performing or offering electrical work. It requires safe and proper installation and service, and it bars misrepresenting the need for services or their nature, making fraudulent promises, and making false statements to get a contract. All of a contractor’s electrical work must be performed by licensed individuals.
+
+On a website, that rule reaches further than people expect:
+
+- **Scare copy.** “If your home has an older panel, it’s a fire waiting to happen” is a claim about the need for work. If it isn’t true of the reader’s home, it misrepresents that need. Write instead about what you check during an inspection and what you tell the customer afterward.
+- **“Licensed electricians on every job.”** That is a promise the rule already requires, so keep it true, including on jobs a helper or apprentice works under supervision. Describe the arrangement plainly.
+- **Prices and timing.** “Same-day panel upgrades” is a fraudulent promise if the job needs a permit and inspection that can’t happen the same day. Say what you can do the same day, such as the assessment and the written estimate.
+- **Design work.** Section 73.51(c) says only a licensed master electrician or an authorized design professional may design an electrical system. If your site offers “design and install,” say who does the design.
+
+## What about insurance and estimates?
+
+TDLR’s [electrical contractor license page](https://www.tdlr.texas.gov/electricians/apply/businesses/contractor-elec.htm) lists the general liability minimums a contractor needs: $300,000 per occurrence, $600,000 aggregate and $300,000 aggregate for products and completed operations. It also requires a master electrician of record, who may be the owner. If your site says “fully insured,” those are the floors the phrase implies, and you can state your actual coverage if you prefer to be specific.
+
+Estimates are where websites and paperwork meet. Section 73.51(f) requires the contractor’s name, address, phone number and license number on all proposals, invoices and written contracts, along with TDLR’s regulatory notice giving the agency’s mailing address, phone numbers and website. If your site sends quotes by email, offers an online estimate, or lets customers download a proposal, build that information into the template once so it is on every document, not just the ones you remember.
+
+## How do City of Austin registration and permits fit on a website?
+
+The City gives homeowners a short checklist in [How to Select a Contractor](https://www.austintexas.gov/development-services/how-select-contractor). It tells them to ask for proof of a current license and insurance, says trade contractors such as electricians “must be registered with the City of Austin before performing any work,” and warns them to “be wary of a contractor who asks you to obtain a permit on their behalf.” It also suggests checking permits through the Austin Build + Connect public search.
+
+Your website can answer each of those before the customer asks:
+
+1. **Registration.** Trade contractors must update their City [contractor registration](https://www.austintexas.gov/development-services/contractor-registration) annually with their trade license information. State that you are registered with the City of Austin, and keep it true.
+2. **Permits.** The City’s [list of permit types](https://www.austintexas.gov/page/types-permits) says you must be registered as a contractor before applying for stand-alone electrical permits such as repairs and upgrades. Say that you pull the permits for your jobs and schedule the inspections.
+3. **Outside city limits.** The same list has separate permits for new construction and solar in Austin’s extraterritorial jurisdiction (ETJ). If you work there, a sentence on your service-area page explaining that permits can differ just outside the city limits shows you know the ground.
+4. **Generators and solar.** The City’s auxiliary power permit is required for any generation facility that interfaces with Austin Energy’s distribution system, and solar systems connected to that system have their own permits. A standby generator page or a solar page that mentions the permit sets honest expectations about timing.
+
+One more state change is worth a line on a service page. TDLR adopted the [2026 National Electrical Code](https://www.tdlr.texas.gov/news/rulemaking/2026/09/01/commission-adopts-rules-12/) as the state electrical code, effective September 1, 2026, with a limited exception for GFCI protection on certain outdoor outlets. Customers don’t need the code section, but “we work to the current code and the City’s inspection requirements” is a reassurance you can make if it’s true.
+
+![A tall, narrow electrical panel with a row of white circuit breakers above neatly looped blue wires on a terminal rail](https://images.unsplash.com/photo-1576446470246-499c738d1c8e?auto=format&fit=crop&w=1200&q=75)
+
+## How should an Austin electrician explain Austin Energy rebates?
+
+Rebates bring people to electricians’ websites, and they are easy to describe wrongly. Austin Energy’s [home charging page](https://austinenergy.com/green-power/plug-in-austin/home-charging) offers a rebate of up to $500 or 50 percent of the purchase price for a Power Partner EV compatible Level 2 station, for customers who get their electricity from Austin Energy, own or lease a plug-in EV and enroll in Power Partner EV. The station must be new and installed at the applicant’s address, chargers must be UL, ETL or cETL listed, and the customer applies online after installation with the receipt, account number, charger details and vehicle VIN. Funding is limited, rebates aren’t guaranteed until approved, and the page notes the offer can change.
+
+That gives you an honest page structure for EV chargers:
+
+- **Who qualifies:** Austin Energy customers, so say plainly that homes served by another utility won’t qualify for this rebate.
+- **What you do:** load assessment, permit, installation, inspection, and a receipt with everything the customer needs to apply.
+- **What the customer does:** enrolls in Power Partner EV and submits the application after installation.
+- **What you don’t promise:** approval or timing. Austin Energy says inclusion in its installer directory is not an endorsement, so don’t write “Austin Energy approved.”
+
+Other programs work differently. Austin Energy’s [participating contractor page](https://austinenergy.com/en/contractors/become-contractor/contractors) says most of its rebate and incentive programs require work by a participating contractor, and solar rebates have a separate participating solar contractor application. Contractors register as a City vendor and then apply to each program, and they agree to Austin Energy’s code of conduct. If you are a participating contractor for a program, say which one. If you aren’t, don’t imply it, and tell customers which rebates your work does and doesn’t qualify for.
+
+## Should an Austin electrician offer pages in Spanish?
+
+It depends on who calls you and who can answer. The Census Bureau’s [QuickFacts for Austin](https://www.census.gov/quickfacts/fact/table/austincitytexas/PST045224) puts the city’s population at 1,002,632 (July 2025 estimate), with 31.9 percent of residents Hispanic or Latino and 30.3 percent of people five and older speaking a language other than English at home (2020 to 2024). Its owner-occupied housing rate is 43.4 percent, so a large share of your customers may be renters or landlords, which is worth a line on your contact form: who owns the property and who can approve the work.
+
+If someone on your team speaks Spanish and answers the phone, Spanish pages for your main services can help those customers choose you. Translate the license line and the TDLR notice along with the service description, keep each language on its own page linked to its English counterpart ([localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions)), and say when a Spanish speaker is available. If nobody can take a Spanish call, a translated page sets up a disappointing first conversation, so wait until you can.
+
+## How should a service-area page work in Austin?
+
+The Austin area is a patchwork for an electrician: the City of Austin with its own registration and permits, the ETJ just outside it, and nearby cities with their own permit processes. That patchwork is exactly the kind of real, useful detail a service-area page should hold.
+
+Build one service-area page that lists where you work and, for each area, what is actually different: which permit office handles the job, whether Austin Energy rebates apply there, and how far ahead you usually schedule. Don’t create a page per suburb with the same text and a new town name. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call pages made to rank for similar searches that funnel visitors to essentially the same content doorway abuse. A separate town page is worth writing only when you have something true and specific to say about working there.
+
+![A worker in a cap and orange vest drilling into the wall of a wood-clad building to mount a fixture beside a window](https://images.unsplash.com/photo-1646640381839-02748ae8ddf0?auto=format&fit=crop&w=1200&q=75)
+
+## How should an Austin electrician set up a Google Business Profile?
+
+Most electricians are service-area businesses: they go to the customer. Google’s [service area guidance](https://support.google.com/business/answer/9157481) says to hide your address if you don’t serve customers there and to set the areas you serve instead, and its [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for the business’s real-world name, without added keywords. Google says local results depend mostly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)).
+
+For an Austin electrician, that means:
+
+- **The name on your trucks and license,** not “Austin Electrician 24/7 Panel Upgrades.”
+- **A primary category that matches your main work,** with added categories only for services you really offer.
+- **Service areas that match your website’s service-area page,** so the two tell the same story.
+- **Real reviews, asked for the same way every time,** and never paid for or filtered.
+
+## What pages should an Austin electrician website have?
+
+1. **Home page:** who you are, the kinds of jobs you take, your license line and a tap-to-call button.
+2. **One page per main service:** panel upgrades, EV chargers, standby generators, rewiring, lighting, troubleshooting. Each says what the job involves, whether it needs a permit, and what the customer should expect on the day.
+3. **An EV charger page** built around the Austin Energy rebate steps above, if you do that work.
+4. **A solar or generator page,** if you do that work, that mentions the City’s permits for systems connected to the grid.
+5. **Residential and commercial,** split if you do both.
+6. **A service-area page** with the permit and rebate differences by area.
+7. **An about page** with your master electrician of record, your City registration and your insurance, stated accurately.
+8. **A contact form** that asks the job type, the address or ZIP, whether the customer owns the property, and the best time to call.
+
+Every page should load quickly on a phone, where many customers will first find you. Google explains how it measures that in its [Core Web Vitals](https://web.dev/articles/vitals) guidance.
+
+## A pre-launch checklist for a Texas electrician
+
+- Business name and “TECL” license number on every page, by the phone number (16 TAC §73.51(e)).
+- A link to TDLR’s license search.
+- Truck photos that show the name and license number as §73.51(d) requires.
+- No copy that overstates the need for work, promises what a permit schedule can’t deliver, or claims design work without a master electrician or design professional.
+- Insurance described accurately.
+- Estimate and invoice templates with the license number and TDLR notice (§73.51(f)).
+- City of Austin registration and permit practice stated, and kept true.
+- Austin Energy rebates described with the customer’s real steps, no promised approval and no implied endorsement.
+- Spanish pages only if someone can serve Spanish-speaking callers.
+- One service-area page with real local differences, not a page per suburb.
+- Structured data that matches what visitors see on the page ([Google’s structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites helps Austin electricians
+
+A SaySites electrician site is built around the pages above: a page for each service, a service-area page, a request form on every page and a call button that works with one tap on a phone. The business is described to search engines as an [Electrician](https://schema.org/Electrician), and no page is published until it passes a 95+ speed check. Requests land in your leads pipeline, where you can call or text back, add notes and mark jobs won. You change the site by typing what you want, for example “put TECL and our license number next to the phone number on every page,” and the change waits as a draft until you publish it. SaySites never adds a license number, insurance detail, rebate status or review you didn’t give it.
+
+The Site plan is $15 a month with hosting included ([websites for electricians](/websites-for/electricians), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build it yourself, or [request a free redesign](/redesign) to see your current site rebuilt first. For more, read [how a service-area business shows Google where it works](/blog/service-area-business-google), [whether your website is fast enough](/blog/is-your-website-fast-enough) and how California’s rules compare in our [San Diego electrician website guide](/blog/san-diego-electrician-website-design).`,
+    faq: [
+      { q: 'Does a Texas electrician have to show a license number on a website?', a: 'Texas rule 16 TAC §73.51(e) requires a contractor’s name and license number on advertising meant to solicit electrical business. Its exemptions cover things like phone book listings with only a name, address and phone, and signs at the business location, but not a contractor’s own website. Showing “TECL” and the number beside your phone number on every page is the safe approach.' },
+      { q: 'What does TECL mean on an Austin electrician’s website?', a: 'TECL is the prefix Texas requires before an electrical contractor’s license number on business vehicles under 16 TAC §73.51(d). Using the same prefix on your website keeps it consistent with your trucks and helps customers search the number on TDLR’s license lookup. Electrical sign contractors use TSCL and residential appliance installation contractors use TICL.' },
+      { q: 'Does an electrician need to register with the City of Austin?', a: 'Yes. The City says trade contractors, electricians included, must be registered with the City of Austin before performing any work, and must update the registration each year with their state license information. Contractors must be registered before applying for stand-alone electrical permits, and the City warns homeowners about contractors who ask them to pull permits themselves.' },
+      { q: 'Can an electrician promise customers the Austin Energy EV charger rebate?', a: 'No. Austin Energy pays the home charger rebate, up to $500 or 50 percent of the station’s price, to customers who meet its conditions and apply after installation, and says rebates aren’t guaranteed until approved. Explain the steps and supply a complete receipt, but don’t promise approval or imply Austin Energy endorses you.' },
+      { q: 'Should an Austin electrician make a page for every suburb?', a: 'Only when each page has something true and specific to say. Google’s spam policies treat near-identical pages made to rank for similar searches as doorway abuse. One service-area page that explains real differences, such as which permit office handles a job and where Austin Energy rebates apply, serves customers better than a stack of copies.' },
+      { q: 'What insurance does a Texas electrical contractor need?', a: 'TDLR lists general liability minimums of $300,000 per occurrence, $600,000 aggregate and $300,000 aggregate for products and completed operations. For workers’ compensation, a contractor submits proof of coverage, a certificate to self-insure, or a statement electing not to carry it. If your website says you are insured, make sure it matches your actual policy.' },
+      { q: 'How much does a SaySites website for an Austin electrician cost?', a: 'The Site plan is $15 a month with hosting and a 7-day free trial. It includes a page per service, a service-area page, a request form on every page, tap-to-call, a leads pipeline and Electrician structured data. You can also send your current site for a free redesign and see it rebuilt before deciding.' },
+    ],
+    about: ['Texas Department of Licensing and Regulation', 'Electrical contractor advertising', 'Electrician websites', 'Austin, Texas'],
+    published: '2026-10-26',
+    status: 'published',
+  },
+  {
     slug: 'new-jersey-law-firm-website-design',
     title: 'New Jersey Law Firm Website Design: NJ Ad Rules',
     description: 'Plan a New Jersey law firm website under RPC 7.1 to 7.4: monthly website captures, award disclaimers, fee wording, certified attorney titles and keyword ads.',
