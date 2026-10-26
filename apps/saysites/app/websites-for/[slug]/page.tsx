@@ -7,6 +7,7 @@ import { LAW_RESEARCH } from '@/lib/law-research'
 import { MarketingShell } from '@/components/MarketingShell'
 import { INDUSTRIES, industry } from '@/lib/industries'
 import { GUIDES } from '@/lib/industries/guides'
+import { TOPICS } from '@/lib/topics'
 import { photosFor } from '@/lib/photos'
 import { SHOWCASE_INFO } from '@/lib/showcase'
 import '../../home.css'
@@ -28,6 +29,8 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
   const info = SHOWCASE_INFO[i.example]
   const others = INDUSTRIES.filter((o) => o.slug !== i.slug)
   const guide = GUIDES[i.slug]
+  // The evergreen guide for this kind of business, with every article on it.
+  const hub = TOPICS.find((t) => t.industries.includes(i.slug))
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -155,6 +158,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
                 <div className="ind-guide-body">{g.body.split(/\n\s*\n/).map((para, k) => <p key={k}>{para}</p>)}</div>
               </div>
             ))}
+            {hub && <p className="ind-guide-more"><a href={`/guides/${hub.slug}`}>Read the full {hub.name.toLowerCase()} guide, with every article on the subject →</a></p>}
           </div>
         </section>
       )}

@@ -4,6 +4,7 @@ import { MarketingShell } from '@/components/MarketingShell'
 import { photosFor } from '@/lib/photos'
 import { SHOWCASE, SHOWCASE_INFO } from '@/lib/showcase'
 import { BUSINESS_TYPES } from '@/lib/starter'
+import { JsonLd, breadcrumbs } from '@/components/JsonLd'
 import '../home.css'
 
 export const metadata: Metadata = {
@@ -23,6 +24,7 @@ export default function TemplatesPage() {
   const entries = Object.keys(SHOWCASE_INFO).map((sub) => ({ sub, ...SHOWCASE_INFO[sub], site: SHOWCASE[sub].site }))
   return (
     <MarketingShell>
+      <JsonLd data={breadcrumbs([['Home', '/'], ['Examples', '/templates']])} />
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Templates</p>

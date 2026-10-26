@@ -26,6 +26,7 @@ export function SiteNav({ home = false, light = false }: { home?: boolean; light
           {INDUSTRY_LINKS.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
         </div>
       </details>
+      <a className="hide-sm" href="/guides">Guides</a>
       <a className="hide-sm" href="/blog">Blog</a>
       <a href="/login">Log in</a>
       <a className={`b ${home || light ? 'b-light' : 'b-dark'} b-sm`} href="/signup">Start free</a>

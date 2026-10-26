@@ -1335,7 +1335,7 @@ describe('SaySites: import skips archives and listings', async () => {
 
 describe('SaySites: free redesign preview', async () => {
   const { detectBusiness, guessType, nearestPalette } = await import('../apps/saysites/lib/detect')
-  const { buildPreview, claimFromPreview } = await import('../apps/saysites/lib/redesign')
+  const { buildPreview, claimFromPreview, offersCopy } = await import('../apps/saysites/lib/redesign')
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebSite', name: 'x' }, { '@type': 'LegalService', name: 'Smith & Lee Law', telephone: '(555) 010-2000', address: { '@type': 'PostalAddress', streetAddress: '1 Main St', addressLocality: 'Dayton', addressRegion: 'OH', postalCode: '45402' } }] })
   const home = `<html><head><title>Injury Lawyers in Dayton | Smith & Lee Law</title><meta name="theme-color" content="#1b4d7a"><script type="application/ld+json">${ld}</script></head><body><header><nav><a href="/car-accidents/">Car accidents</a><a href="/contact-us/">Contact</a></nav></header><main><h1>Injury Lawyers in Dayton, OH</h1><p>${'We help injured people in Dayton get the answers they need. '.repeat(6)}</p></main><script src="/a.js"></script><script src="/b.js"></script></body></html>`
   const car = `<html><head><title>CAR ACCIDENT LAWYERS | Smith & Lee Law</title></head><body><main><h1>CAR ACCIDENT LAWYERS</h1><h2>After a crash</h2><p>${'What to do after a car accident in Ohio, step by step, in plain English. '.repeat(8)}</p></main></body></html>`
@@ -1351,29 +1351,55 @@ describe('SaySites: free redesign preview', async () => {
     expect(nearestPalette('#777777')).toBe('slate')
   })
 
-  it('rebuilds the site without AI, keeps addresses, and reports before and after', async () => {
+  it('keeps their site exactly as it is, builds a redesign from their own words, and reports before and after', async () => {
     const p = await buildPreview('smithlee.example', get, '0123456789abcdef')
     expect(p.site.business.name).toBe('Smith & Lee Law')
-    const h1 = [...walk(p.pages.find((x) => x.slug === '')!.body)].find((e) => e.type === 'heading' && e.level === 1)
-    expect(h1 && 'text' in h1 && h1.text).toBe('Injury Lawyers in Dayton, OH')
+    // Their site as it is: their own markup, without its scripts, at the
+    // same addresses.
+    expect(p.asIs).toBe(true)
+    const home = p.pages.find((x) => x.slug === '')!
+    expect(home.classic?.html).toContain('<h1>Injury Lawyers in Dayton, OH</h1>')
+    expect(home.classic?.html).not.toMatch(/<script\b(?![^>]*ld\+json)/)
+    expect(home.classic?.html).toContain('href="/car-accidents"')
     const imported = p.pages.find((x) => x.slug === 'car-accidents')!
     expect(imported.status).toBe('published')
-    // /contact-us didn't load, so nothing points at it.
-    expect(p.redirects).toEqual([])
+    expect(imported.classic?.html).toContain('CAR ACCIDENT LAWYERS')
+    // The redesign: their menu's practice area gets its own page, written
+    // from their page about it; the old address points there.
+    const fresh = p.fresh!
+    const service = fresh.pages.find((x) => x.slug === 'practice-areas/car-accidents')!
+    expect([...walk(service.body)].some((e) => e.type === 'text' && e.text.startsWith('What to do after a car accident in Ohio'))).toBe(true)
+    expect(fresh.redirects).toContainEqual({ from: '/car-accidents', to: '/practice-areas/car-accidents', status: 301 })
     expect(p.before.scripts).toBe(2)
     expect(p.after.scripts).toBe(0)
     expect(p.after.speedPass).toBe(true)
     expect(p.after.seoErrors).toBe(0)
+    // The copy is only offered (and claimed) once a browser check passed.
+    expect(offersCopy(p)).toBe(false)
+    // Without a passed check, what's claimed is the redesign: our designs,
+    // never a copy of their old pages.
+    expect(claimFromPreview(p, 'user_1', 'smith-lee-law').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
+    expect(fresh.pages.find((x) => x.slug === '')!.classic?.design).toBe(true)
+    expect(offersCopy({ ...p, asIsCheck: { desktop: 99, phone: 96, passed: false, at: '' } })).toBe(false)
+    p.asIsCheck = { desktop: 99.4, phone: 98.1, passed: true, at: '2026-10-22T00:00:00Z' }
+    expect(offersCopy(p)).toBe(true)
     // Claiming makes it the owner's, with imported pages as drafts.
     const c = claimFromPreview(p, 'user_1', 'smith-lee-law')
     expect(c.site.orgId).toBe('user_1')
     expect(c.pages.find((x) => x.slug === 'car-accidents')!.status).toBe('draft')
+    expect(c.pages.find((x) => x.slug === '')!.classic).toBeDefined()
     expect(new Set(c.pages.map((x) => x.id)).size).toBe(c.pages.length)
+    expect(claimFromPreview(p, 'user_1', 'smith-lee-law', 'fresh').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     const store = new MemoryStore()
     await store.savePreview(p, 'who')
     expect(await store.previewCount(new Date(Date.now() - 1000), 'who')).toBe(1)
+    expect(await store.recordPreviewCheck(p.id, { desktop: 90, phone: 90, passed: false, at: '' })).toBe(true)
+    expect((await store.preview(p.id))!.asIsCheck?.passed).toBe(false)
+    expect(await store.replacePreview({ ...p, asIsCheck: undefined })).toBe(true)
     expect(await store.claimPreview(p.id, 'user_1', c.site.id)).toBe(true)
     expect(await store.claimPreview(p.id, 'user_2', 'other')).toBe(false)
+    // A claimed preview is never rebuilt over.
+    expect(await store.replacePreview(p)).toBe(false)
   })
 })
 
@@ -1884,33 +1910,6 @@ describe('SaySites: photos load straight from Unsplash', () => {
 })
 
 describe('SaySites: redesign looks like the owner’s current site', () => {
-  it('reads their hero photo, logo, own photos and hero words', async () => {
-    const { readLook, matchPhotos, fullSize } = await import('../apps/saysites/lib/lookalike')
-    const html = `<html><body>
-      <header><img src="/wp-content/uploads/WNW_Logo-300x87.png" alt="WNW Legal"></header>
-      <div class="hero-info" style="background-image: url(https://firm.com/uploads/1.jpg)"><h2>WHEN YOU NEED A WIN</h2><p>Behind every case is a story worth fighting for, and we make sure yours is heard.</p></div>
-      <img width="535" height="535" src="https://firm.com/uploads/paul.jpg" alt="Portrait of R. Paul Williams">
-      <img width="700" height="467" src="https://firm.com/uploads/car.jpg" alt="Front-end collision damage after a car accident">
-      <img width="700" height="467" src="https://firm.com/uploads/nursing.jpg" alt="Empty nursing home wheelchair">
-      <img width="40" height="40" src="https://firm.com/uploads/icon.png" alt="Phone icon">
-    </body></html>`
-    const look = readLook(html, 'https://firm.com/', 'Williams Newman Williams')
-    expect(look.hero?.src).toBe('https://firm.com/uploads/1.jpg')
-    expect(look.photoHero).toBe(true)
-    expect(look.logo).toBe('https://firm.com/wp-content/uploads/WNW_Logo-300x87.png')
-    expect(look.heroLine).toBe('When you need a win')
-    expect(look.heroText).toMatch(/^Behind every case/)
-    // Landscape photos first, headshots last, icons never.
-    expect(look.photos.map((p) => p.src.split('/').pop())).toEqual(['car.jpg', 'nursing.jpg', 'paul.jpg'])
-    expect(matchPhotos(look.photos, ['Nursing Home Abuse', 'Car Accidents'])[0].src).toMatch(/nursing/)
-    expect(fullSize('https://a.com/x/photo-300x200.jpg')).toBe('https://a.com/x/photo.jpg')
-    // A hero photo set by a stylesheet rule on the first section wins over
-    // later inline backgrounds.
-    const css = '.intro{color:red} .grid .sliderhome{background-image:url(https://firm.com/uploads/team-on-steps.jpg) !important}'
-    const styled = readLook('<body><div class="av-grid sliderhome"><h2>Hi</h2></div><div style="background-image:url(https://firm.com/uploads/gavel.jpg)"></div></body>', 'https://firm.com/', 'Firm', css)
-    expect(styled.hero?.src).toBe('https://firm.com/uploads/team-on-steps.jpg')
-  })
-
   it('says plainly when a site has a security check, and never tries to get past it', async () => {
     const { buildPreview } = await import('../apps/saysites/lib/redesign')
     const captcha = '<html><head><meta http-equiv="refresh" content="0;/.well-known/sgcaptcha/?r=%2F"></head></html>'
@@ -1918,9 +1917,8 @@ describe('SaySites: redesign looks like the owner’s current site', () => {
     await expect(buildPreview('protected-firm.com', get)).rejects.toThrow(/security check/)
   })
 
-  it('finds the town, the kind of business and real services on older sites', async () => {
+  it('finds the town and the kind of business on older sites', async () => {
     const { detectBusiness, cityInText } = await import('../apps/saysites/lib/detect')
-    const { menuServices } = await import('../apps/saysites/lib/redesign')
     const html = `<title>Pacific Legal Support:</title><h1>Pacific Legal Support</h1>
       <a href="index.html">Home</a><a href="messenger.html">Messenger Service</a><a href="rates.html">Messenger Rates</a>
       <a href="process.html">Process Service</a><a href="inv.html">Investigations</a><a href="contact.html">Contact Us</a><a href="login.asp">Client/Agent Login</a>
@@ -1929,80 +1927,208 @@ describe('SaySites: redesign looks like the owner’s current site', () => {
     expect(d.name).toBe('Pacific Legal Support')
     expect(d.type).toBe('lawyer')
     expect([d.city, d.region]).toEqual(['Seattle', 'WA'])
-    expect(menuServices(html)).toEqual(['Messenger Service', 'Process Service', 'Investigations'])
     expect(cityInText('Nothing about a town here')).toBeNull()
   })
 })
 
-describe('SaySites: redesign preview, their site as it is', async () => {
-  const { mirrorPage, readChrome } = await import('../apps/saysites/lib/mirror')
-  const { Styles } = await import('../apps/saysites/lib/css-lite')
-  const { parseHtml } = await import('../apps/saysites/lib/dom')
-  const { buildPreview, claimFromPreview } = await import('../apps/saysites/lib/redesign')
+describe('SaySites: redesign preview, their site exactly as it is', async () => {
+  const { classicPage, pruneCss, usedTokens, scriptedCarousels, replaceKeptWords, withSeo, keptText } = await import('../apps/saysites/lib/classic')
+  const { buildPreview, claimFromPreview, writtenFrom, tidyName, placeFromText } = await import('../apps/saysites/lib/redesign')
+  const { handleFormPost, CLASSIC_CSP } = await import('../apps/saysites/lib/serve')
+  const { keepClassicAssets, oldHostFiles } = await import('../apps/saysites/lib/classic-assets')
   const { claimPath, CLAIM_CODE } = await import('../apps/saysites/lib/urls')
-  const css = `.dark{background:#111111;color:#ffffff}.lazy-bg{background-image:none!important}.band{background-image:url(/img/band.jpg)}
-    .cols h1{color:#224554;text-align:center}.gold{color:#fab81f}@media (max-width:600px){.cols h1{color:red}}.only-mobile{display:none}`
-  const html = `<html><body><header class="site-header"><img class="logo" src="/logo.png" alt="Firm"><nav><ul><li><a href="/about/">About</a></li><li><a href="/contact-us/">Contact</a></li><li class="menu-button"><a href="tel:5550102000">Call now</a></li></ul></nav></header>
-    <div class="slider"><div class="ls-slide"><img class="ls-bg" src="https://cdn.example/hero.jpg" alt=""><div style="font-size:50px">We fight for you</div></div><div class="ls-slide"><img class="ls-bg" src="https://cdn.example/second.jpg" alt=""><div style="font-size:50px">Second slide</div></div></div>
-    <section class="cols"><div class="col-md-8"><h1>Injury lawyers</h1><p><strong class="gold">Our process</strong></p><ul><li>We listen</li><li>We act</li></ul></div><div class="col-md-4"><img src="https://cdn.example/team.jpg" width="600" height="400" alt="Our team"></div></section>
-    <section class="dark"><h2>Free consultation</h2><a class="btn" href="/contact-us/">Call us</a><a class="btn" href="/missing/">Read more</a></section>
-    <section class="band lazy-bg"><h2>Another title</h2></section>
-    <div class="only-mobile"><p>Phone copy</p></div>
-    <footer><p>Disclaimer: past results do not guarantee a similar outcome in your case.</p></footer></body></html>`
-  const link = (h: string) => (h.startsWith('tel:') ? h : h.startsWith('/') ? `/${h.replace(/^\/|\/$/g, '')}`.replace(/^\/$/, '/') : undefined)
-  const st = new Styles(css, 'https://firm.example/')
-  const ctx = { url: 'https://firm.example/', name: 'Firm', styles: st, idBase: 'home', link, used: new Set<string>() }
+  const css = `.hero{background:#123456}.unused-thing{color:red}@media (max-width:600px){.hero{padding:4px}.nowhere{margin:0}}@font-face{font-family:Brand;src:url(fonts/brand.woff2)}@font-face{font-family:Gone;src:url(gone.woff2)}h1{font-family:Brand}.bg{background:url(img/bg.jpg)}`
+  const page = `<!doctype html><html class="no-js"><head><title>Old title</title><meta name="description" content="Old words">
+    <link rel="stylesheet" href="/theme.css"><link rel="preload" as="style" href="/late.css" onload="this.rel='stylesheet'">
+    <script src="/jquery.js"></script><script>track()</script><script type="application/ld+json">{"@type":"LegalService"}</script></head>
+    <body><header><a href="/">Home</a><a href="/about-us/">About</a><a href="javascript:void(0)" onclick="openMenu()">Menu</a></header>
+    <section class="hero et_animated elementor-invisible" data-aos="fade-up"><h1>We fight for you</h1><span class="late-used">!</span>
+    <img class="lazyload" src="data:image/gif;base64,R0lGOD" data-src="/uploads/team.jpg" alt="Our team"><noscript><img src="/uploads/team.jpg" alt="Our team"></noscript>
+    <div class="bg" data-bg="/uploads/band.jpg"></div>
+    <form action="https://forms.example/submit" target="_blank"><input name="your-name"><input name="your-email"><textarea name="your-message"></textarea></form>
+    <p>${'Real words about the firm and how it helps people. '.repeat(8)}</p></section></body></html>`
+  const files: Record<string, string> = { 'https://firm.example/theme.css': css, 'https://firm.example/late.css': '.late-rule{color:blue} .hero .late-used{color:green}' }
+  const get = async (u: string) => (files[u] ? { url: u, status: 200, type: 'text/css', body: files[u] } : null)
+  const link = (u: string) => (u === 'https://firm.example/about-us/' ? '/about' : u === 'https://firm.example/' ? '/' : undefined)
 
-  it('keeps their sections in order: slider photo, columns, colours, one H1', () => {
-    const { body, h1 } = mirrorPage(html, ctx, '#222222', 'Firm')
-    expect(h1).toBe('Injury lawyers')
-    // The first slide only, as a photo hero with its words.
-    expect(body[0].backgroundImage?.src).toBe('https://cdn.example/hero.jpg')
-    const all = body.flatMap((c) => [...walk([c])])
-    const texts = all.filter((e) => e.type === 'heading').map((e) => ('text' in e ? e.text : ''))
-    expect(texts).toContain('We fight for you')
-    expect(texts).not.toContain('Second slide')
-    expect(all.filter((e) => e.type === 'heading' && e.level === 1)).toHaveLength(1)
-    // A bold line is a heading, in its own colour; desktop colours only.
-    const process = all.find((e) => e.type === 'heading' && e.text === 'Our process')
-    expect(process && process.style?.color).toBe('#fab81f')
-    const h = all.find((e) => e.type === 'heading' && e.text === 'Injury lawyers')
-    expect(h?.style?.color).toBe('#224554')
-    // Two-thirds and one-third columns keep their shares.
-    const row = body[1].children[0]
-    expect(row.type === 'container' && row.children.map((c) => c.style?.grow)).toEqual([8, 4])
-    // A dark band stays dark with light words; a lazy-loaded background shows.
-    expect(body[2].style?.background).toBe('#111111')
-    expect(body[2].style?.color).toBe('#ffffff')
-    expect(body[3].backgroundImage?.src).toBe('https://firm.example/img/band.jpg')
-    expect(JSON.stringify(body)).not.toContain('Phone copy')
+  it('keeps their markup and styles, without scripts, with lazy photos and hidden content showing', async () => {
+    const c = await classicPage(page, 'https://firm.example/', get, new Map(), { link, formAction: '/__form' })
+    expect(c.faithful).toBe(true)
+    // No script of any kind; JSON-LD is data and stays.
+    expect(c.html).not.toMatch(/<script\b(?![^>]*ld\+json)/i)
+    expect(c.html).toContain('application/ld+json')
+    expect(c.html).not.toMatch(/onclick|onload|javascript:/i)
+    // Their stylesheets, inline and trimmed to what the page uses.
+    expect(c.html).toContain('.hero{background:#123456}')
+    expect(c.html).not.toContain('unused-thing')
+    expect(c.html).not.toContain('.nowhere')
+    expect(c.html).toMatch(/@media \(max-width:600px\)\{\.hero\{padding:4px\}\}/)
+    expect(c.html).toContain('url("https://firm.example/fonts/brand.woff2")')
+    expect(c.html).not.toContain('gone.woff2')
+    expect(c.html).toContain('url("https://firm.example/img/bg.jpg")')
+    // A stylesheet loaded late by a script is part of the look (trimmed too).
+    expect(c.html).toContain('.hero .late-used{color:green}')
+    expect(c.html).not.toContain('late-rule')
+    expect(c.html).not.toMatch(/<link\b[^>]*stylesheet/i)
+    // The real photo, once; lazy backgrounds and scroll effects show.
+    expect(c.html).toContain('src="https://firm.example/uploads/team.jpg"')
+    expect(c.html.match(/uploads\/team\.jpg/g)).toHaveLength(1)
+    expect(c.html).toContain("background-image:url('https://firm.example/uploads/band.jpg')")
+    expect(c.html.slice(c.html.indexOf('<body'))).not.toMatch(/et_animated|elementor-invisible|data-aos|lazyload\b/)
+    // Links go to the pages' new addresses; forms send to SaySites.
+    expect(c.html).toContain('href="/about"')
+    expect(c.html).toContain('action="/__form"')
+    expect(c.html).toContain('<input type="hidden" name="form" value="classic">')
+    expect(c.html).not.toContain('forms.example')
   })
 
-  it('reads their header: logo, menu and call button', () => {
-    const chrome = readChrome(parseHtml(html), st, 'https://firm.example/', 'Firm', link)
-    expect(chrome.logo).toBe('https://firm.example/logo.png')
-    expect(chrome.nav.map((n) => n.label)).toEqual(['About', 'Contact'])
-    expect(chrome.cta).toEqual({ label: 'Call now', href: 'tel:5550102000' })
-    expect(chrome.footerNote).toMatch(/past results/)
+  it('only offers a copy that will look the same', async () => {
+    const wix = await classicPage(`<html><head><link rel="stylesheet" href="https://static.parastorage.com/x.css"></head><body>${'<p>Words here for the page. </p>'.repeat(20)}</body></html>`, 'https://w.example/', get, new Map(), { link })
+    expect(wix.faithful).toBe(false)
+    const thin = await classicPage('<html><body><div id="root"></div></body></html>', 'https://a.example/', get, new Map(), { link })
+    expect(thin.reasons.join(' ')).toMatch(/JavaScript/)
+    // A carousel styled by classes its script adds.
+    expect(scriptedCarousels('#reviews .slick-slide{width:33%}', usedTokens('<div id="reviews"><div>a</div></div>'))).toEqual(['#reviews'])
+    expect(scriptedCarousels('#reviews .slick-slide{width:33%}', usedTokens('<div id="reviews"><div class="slick-slide">a</div></div>'))).toEqual([])
+    expect(pruneCss('a:hover{color:red}.x::before{content:""}.y:not(.z){color:blue}', usedTokens('<a></a><i class="x"></i>'))).toBe('a:hover{color:red}.x::before{content:""}')
   })
 
-  it('builds both versions; buttons to pages we did not read go to contact', async () => {
-    const pages: Record<string, string> = { 'https://firm.example/': html, 'https://firm.example/contact-us/': `<html><head><title>Contact the firm today</title></head><body><main><h1>Contact us</h1><p>${'Call or write and we will answer the same day, every day. '.repeat(4)}</p></main></body></html>` }
-    const get = async (u: string) => (pages[u] ? { url: u, status: 200, type: 'text/html', body: pages[u] } : u.endsWith('.css') ? null : null)
-    const p = await buildPreview('firm.example', get, 'aaaaaaaaaaaaaaaa')
-    expect(p.fresh).toBeDefined()
-    expect(p.pages.some((x) => x.slug === 'contact')).toBe(true)
-    const buttons = p.pages.flatMap((x) => [...walk(x.body)]).filter((e) => e.type === 'button')
-    expect(buttons.map((b) => b.type === 'button' && b.href)).toEqual(['/contact', '/contact'])
-    expect(p.after.seoErrors).toBe(0)
-    expect(p.after.speedPass).toBe(true)
-    // The fresh redesign has every page and every word, in a new design.
-    expect(p.fresh!.pages.map((x) => x.slug)).toEqual(p.pages.map((x) => x.slug))
-    const words = (pages: typeof p.pages) => pages.flatMap((x) => [...walk(x.body)]).filter((e) => e.type === 'text').map((e) => e.type === 'text' && e.text)
-    expect(words(p.fresh!.pages)).toEqual(words(p.pages))
-    expect(p.fresh!.site.globals.radius).toBe(14)
-    expect(claimFromPreview(p, 'u', 'firm', 'fresh').pages.length).toBe(p.fresh!.pages.length)
-    expect(claimFromPreview(p, 'u', 'firm').pages.length).toBe(p.pages.length)
+  it('changes words in the text only, and sets the Google title and description', () => {
+    const html = '<html><head><title>Old</title><meta name="description" content="Old words"><style>.call:after{content:"Call 555"}</style></head><body><p class="Call 555">Call (561) 555-0100 now</p><a href="tel:+15615550100">(561) 555-0100</a></body></html>'
+    const r = replaceKeptWords(html, '(561) 555-0100', '(561) 555-0199')
+    expect(r.count).toBe(3)
+    expect(r.html).toContain('Call (561) 555-0199 now')
+    expect(r.html).toContain('href="tel:+15615550199"')
+    expect(r.html).toContain('class="Call 555"')
+    expect(r.html).toContain('content:"Call 555"')
+    expect(keptText(r.html)).toBe('Call (561) 555-0199 now (561) 555-0199')
+    const seo = withSeo(html, { title: 'Probate lawyers in Delray Beach', description: 'Plain "answers".', noindex: true })
+    expect(seo).toContain('<title>Probate lawyers in Delray Beach</title>')
+    expect(seo).toContain('<meta name="description" content="Plain &quot;answers&quot;.">')
+    expect(seo).toContain('<meta name="robots" content="noindex">')
+  })
+
+  it('serves a kept page as it is, with scripts blocked, and takes its form', async () => {
+    const c = await classicPage(page, 'https://firm.example/', get, new Map(), { link, formAction: '/__form' })
+    const store = new MemoryStore()
+    const user = await store.createUser({ email: 'k@example.com', name: 'K', passwordHash: 'x' })
+    const built = buildStarterSite({ name: 'Firm', type: 'lawyer', city: 'Dayton', region: 'OH', services: [], palette: 'ocean' }, `org_${user.id}`, 'firm-k')
+    const pages = built.pages.map((p) => (p.slug === '' ? { ...p, classic: { html: c.html } } : p))
+    await store.createSite(user.id, built.site, pages)
+    const bundle = { site: built.site, pages, redirects: [] }
+    const res = serveSitePath(bundle, [], { preview: true, basePath: '/redesign/abc/site' })
+    expect(res.headers.get('content-security-policy')).toBe(CLASSIC_CSP)
+    expect(CLASSIC_CSP).toContain("script-src 'none'")
+    const html = await res.text()
+    expect(html).toContain('<h1>We fight for you</h1>')
+    expect(html).toContain('href="/redesign/abc/site/about"')
+    expect(html).toContain(`<title>${pages[0].seo.title}</title>`)
+    const body = new URLSearchParams({ form: 'classic', 'your-name': 'Sam Lee', 'your-email': 'sam@example.com', 'your-message': 'I need help with a will', 'case-type': 'Estate' })
+    const sent = await handleFormPost(bundle, new Request('https://firm-k.saysites.com/__form', { method: 'POST', body, headers: { referer: 'https://firm-k.saysites.com/', 'content-type': 'application/x-www-form-urlencoded' } }), { preview: false }, store)
+    expect(sent.status).toBe(303)
+    expect(sent.headers.get('location')).toBe('/#sent')
+    const msgs = await store.messagesForSite(built.site.id)
+    expect(msgs[0]).toMatchObject({ name: 'Sam Lee', email: 'sam@example.com', page: '/' })
+    expect(msgs[0].body).toBe('I need help with a will\n\ncase type: Estate')
+    const trap = await handleFormPost(bundle, new Request('https://firm-k.saysites.com/__form', { method: 'POST', body: new URLSearchParams({ form: 'classic', email: 'x@x.co', ak_hp_textarea: 'spam' }), headers: { 'content-type': 'application/x-www-form-urlencoded' } }), { preview: false }, store)
+    expect(trap.status).toBe(303)
+    expect(await store.messagesForSite(built.site.id)).toHaveLength(1)
+  })
+
+  it('copies the old host’s photos and fonts when the copy is claimed', async () => {
+    const store = new MemoryStore()
+    const html = '<img src="https://www.firm.example/uploads/a.jpg"><div style="background-image:url(\'https://firm.example/uploads/b.webp\')"></div><style>@font-face{src:url("https://firm.example/fonts/f.woff2")}</style><img src="https://cdn.other.example/c.jpg"><a href="https://firm.example/about.pdf">x</a>'
+    const pages = [{ ...samplePages[0], classic: { html } }]
+    expect(oldHostFiles(pages, 'firm.example').sort()).toEqual(['https://firm.example/fonts/f.woff2', 'https://firm.example/uploads/b.webp', 'https://www.firm.example/uploads/a.jpg'])
+    const got = await keepClassicAssets(store, pages[0].siteId, 'firm.example', pages, async (u) => ({ type: u.endsWith('.woff2') ? 'font/woff2' : 'image/jpeg', data: Buffer.from(u) }))
+    expect(got.copied).toBe(3)
+    const out = got.pages[0].classic!.html
+    expect(out).not.toContain('firm.example/uploads')
+    expect(out).toContain('https://cdn.other.example/c.jpg')
+    const id = out.match(/\/u\/([a-f0-9]{32})/)![1]
+    expect((await store.mediaFile(id))?.data.length).toBeGreaterThan(0)
+    // Kept files aren't listed with the owner's photos.
+    expect(await store.mediaForSite(pages[0].siteId)).toEqual([])
+  })
+
+  it('Sofie changes a kept page’s words, and moves it to the SaySites design only when asked', async () => {
+    const built = buildStarterSite({ name: 'Firm', type: 'lawyer', city: 'Dayton', region: 'OH', services: [], palette: 'ocean' }, 'o', 'firm-s')
+    const pages = built.pages.map((p) => (p.slug === '' ? { ...p, classic: { html: '<html><body><h1>We fight for you</h1></body></html>' } } : p))
+    const ws = new Workspace({ site: built.site, pages })
+    const firstId = pages[0].body[0].id
+    expect(await runTool(ws, 'update_element', { page: 'home', id: firstId, fields_json: '{}', summary: 'x' })).toMatch(/kept exactly as it looked/)
+    expect(await runTool(ws, 'replace_words', { page: 'home', find: 'We fight for you', replace: 'We stand with you', summary: 'Headline' })).toBe('Done.')
+    expect(ws.snapshot().pages[0].classic!.html).toContain('<h1>We stand with you</h1>')
+    expect(await runTool(ws, 'replace_words', { page: 'home', find: 'Nope', replace: 'x', summary: 'x' })).toMatch(/isn't on that page/)
+    expect(await runTool(ws, 'use_saysites_design', { page: 'home', summary: 'New look' })).toBe('Done.')
+    expect(ws.snapshot().pages[0].classic).toBeUndefined()
+  })
+
+  it('writes the redesign’s service pages from their words, with clean names and their town', () => {
+    expect(tidyName('FAMILY LAW LAWYER NEAR WELLINGTON, FL')).toBe('Family law')
+    expect(tidyName('Florida Estate Planning')).toBe('Florida estate planning')
+    expect(tidyName('Car Accident Attorneys in Dayton, OH')).toBe('Car accident')
+    expect(placeFromText('Our office in Delray Beach, FL serves Delray Beach, Florida and Boca Raton, FL.')).toEqual({ city: 'Delray Beach', region: 'FL' })
+    expect(placeFromText('No town here')).toBeNull()
+    const w = writtenFrom('Probate', { title: 't', description: '', h1: 'Probate', blocks: [
+      { kind: 'p', text: 'Probate is the court process for settling an estate after someone dies. We guide families through it.' },
+      { kind: 'h2', text: 'How long does probate take?' }, { kind: 'p', text: 'Most estates take six to twelve months, depending on the court.' },
+      { kind: 'h2', text: 'What we do' }, { kind: 'li', text: 'File the petition' }, { kind: 'li', text: 'Notify creditors' },
+    ] })!
+    expect(w.summary).toBe('Probate is the court process for settling an estate after someone dies. We guide families through it.')
+    expect(w.faq).toEqual([{ q: 'How long does probate take?', a: 'Most estates take six to twelve months, depending on the court.' }])
+    expect(w.sections).toEqual([{ heading: 'What we do', body: '• File the petition\n\n• Notify creditors' }])
+  })
+
+  it('builds the redesign from their practice areas menu, and only offers it with enough of their substance', async () => {
+    const area = (h: string) => `<html><head><title>${h} | Gold Law</title></head><body><main><h1>${h} lawyers in Tampa</h1><p>${`${h} cases are what we do every day, and we explain each step before it happens. `.repeat(4)}</p><h2>What does a ${h.toLowerCase()} case cost?</h2><p>We tell you the fee for a ${h.toLowerCase()} case in writing before any work begins.</p></main></body></html>`
+    const home = `<html><head><title>Gold Law | Tampa Injury Lawyers</title></head><body><header class="site-header"><ul><li><a href="/">Home</a></li><li><a href="/practice-areas/">Practice Areas</a><ul><li><a href="/car-accidents/">Car Accidents</a></li><li><a href="/dog-bites/">Dog Bites</a></li><li><a href="/slip-and-fall/">Slip and Fall</a></li></ul></li><li><a href="/our-blog/">Blog</a></li><li><a href="/contact/">Contact</a></li></ul></header><h1>Tampa injury lawyers</h1><p>${'Gold Law helps injured people across Tampa, FL. '.repeat(8)}</p><p>© 2026 Gold Law Group, P.A. | All rights reserved</p></body></html>`
+    const files: Record<string, string> = { 'https://goldlaw.example/': home, 'https://goldlaw.example/car-accidents/': area('Car accident'), 'https://goldlaw.example/dog-bites/': area('Dog bite'), 'https://goldlaw.example/slip-and-fall/': area('Slip and fall') }
+    const p = await buildPreview('goldlaw.example', async (u) => (files[u] ? { url: u, status: 200, type: 'text/html', body: files[u] } : null), 'cccccccccccccccc')
+    expect(p.detected.name).toBe('Gold Law Group, P.A.')
+    expect(p.freshReady).toBe(true)
+    const slugs = p.fresh!.pages.map((x) => x.slug)
+    expect(slugs).toEqual(expect.arrayContaining(['practice-areas/car-accidents', 'practice-areas/dog-bites', 'practice-areas/slip-and-fall']))
+    expect(slugs.some((x) => /blog|contact\//.test(x) && x.startsWith('practice-areas'))).toBe(false)
+    const faq = [...walk(p.fresh!.pages.find((x) => x.slug === 'practice-areas/dog-bites')!.body)].find((e) => e.type === 'faq')
+    expect(faq && faq.type === 'faq' && faq.items[0]).toEqual({ question: 'What does a dog bite case cost?', answer: 'We tell you the fee for a dog bite case in writing before any work begins.' })
+    expect(p.fresh!.site.business.area).toBeDefined()
+  })
+
+  it('records a browser check of the copy only with the check token, and offers the copy only if it passed', async () => {
+    const { recordCheck, offersCopy, COPY_PASS } = await import('../apps/saysites/lib/redesign')
+    const store = new MemoryStore()
+    const getStore = () => store
+    const p = await buildPreview('smithlee2.example', async (u) => (u === 'https://smithlee2.example/' ? { url: u, status: 200, type: 'text/html', body: `<html><body><h1>Injury lawyers</h1><p>${'We help injured people in Dayton every day. '.repeat(8)}</p></body></html>` } : null), 'dddddddddddddddd')
+    await getStore().savePreview(p, 'who')
+    const send = async (body: unknown, auth?: string) => {
+      const r = await recordCheck(store, 'dddddddddddddddd', auth ? `Bearer ${auth}` : '', body)
+      return { status: r.status, json: async () => r.body }
+    }
+    delete process.env.PREVIEW_CHECK_TOKEN
+    expect((await send({ desktop: 100, phone: 100 }, 'x'.repeat(30))).status).toBe(403)
+    process.env.PREVIEW_CHECK_TOKEN = 'a'.repeat(32)
+    expect((await send({ desktop: 100, phone: 100 }, 'b'.repeat(32))).status).toBe(403)
+    expect((await send({ desktop: 'lots', phone: 100 }, 'a'.repeat(32))).status).toBe(400)
+    const low = await send({ desktop: 99.2, phone: COPY_PASS - 0.5 }, 'a'.repeat(32))
+    expect(await low.json()).toMatchObject({ passed: false })
+    expect(offersCopy((await getStore().preview('dddddddddddddddd'))!)).toBe(false)
+    expect(await (await send({ desktop: 99.2, phone: 98 }, 'a'.repeat(32))).json()).toMatchObject({ passed: true })
+    expect(offersCopy((await getStore().preview('dddddddddddddddd'))!)).toBe(true)
+    delete process.env.PREVIEW_CHECK_TOKEN
+  })
+
+  it('offers only the redesign when their site can’t be copied exactly', async () => {
+    const home = `<html><head><title>Firm | Tampa</title><link rel="stylesheet" href="/s.css"></head><body><header><a href="/wills/">Wills</a></header><h1>Tampa estate lawyers</h1><div id="reviews"><div>One</div><div>Two</div></div><p>${'Helping families in Tampa, FL plan ahead. '.repeat(8)}</p></body></html>`
+    const pagesBy: Record<string, string> = { 'https://firm2.example/': home, 'https://firm2.example/s.css': '#reviews .slick-slide{float:left}' }
+    const p = await buildPreview('firm2.example', async (u) => (pagesBy[u] ? { url: u, status: 200, type: u.endsWith('.css') ? 'text/css' : 'text/html', body: pagesBy[u] } : null), 'bbbbbbbbbbbbbbbb')
+    expect(p.asIs).toBe(false)
+    expect(p.asIsReasons?.join(' ')).toMatch(/carousel/)
+    // One service isn't enough of theirs for a redesign worth showing.
+    expect(p.freshReady).toBe(false)
+    expect(p.pages.some((x) => x.classic && !x.classic.design)).toBe(false)
+    expect(p.site.business.area).toBeDefined()
+    expect(claimFromPreview(p, 'u', 'firm2').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     expect(claimPath('aaaaaaaaaaaaaaaaf')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=fresh')
     expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaa')).toBe(true)
   })
@@ -2459,5 +2585,126 @@ describe('SaySites: hosting health', async () => {
     H.recordSchedulerRun(2)
     H.recordSchedulerRun(0, 'boom')
     expect(H.schedulerRuns().slice(-2)).toMatchObject([{ sent: 2 }, { sent: 0, error: 'boom' }])
+  })
+})
+
+describe('SaySites: the redesign’s own designs, from their real photos, results and reviews', async () => {
+  const { readAssets } = await import('../apps/saysites/lib/redesign-assets')
+  const { showcaseHome, showcasePage, accentFor, LOOKS } = await import('../apps/saysites/lib/redesign-design')
+  const { placeFromText } = await import('../apps/saysites/lib/redesign')
+  const home = `<html><body>
+    <div class="hero" style="background-image:url('/up/home-hero-1920.jpg')"></div>
+    <div class="hero" style="background-image:url('/up/home-hero-mobile.jpg')"></div>
+    <div class="results"><div class="item"><div class="amount"><span>$20</span><span>Million</span></div><div class="d">Settlement for a trucking collision</div></div>
+    <div class="item"><div class="amount"><span>$4.2</span><span>Million</span></div><div class="d">Verdict for a crash victim</div></div>
+    <div class="item"><div class="amount"><span>$900</span></div><div class="d">Too small to be a result</div></div></div>
+    <img src="/up/Partner-Edward-Piasta_22_5739-1000x1000-1.jpg" alt="Edward Piasta Atlanta personal injury lawyer" width="1000" height="1000">
+    <img src="/up/Partner-Michael-Wlker_22_5446.jpg" alt="Michael Walker Atlanta personal injury lawyer" width="1000" height="1000">
+    <img src="/up/Vehicle-Accidents.jpg" alt="Vehicle Accidents" width="1200" height="800">
+    <div class="awards"><img src="/up/super-lawyers.png" alt="Super Lawyers"><img src="/up/istock-office.jpg" alt="" width="1200"></div>
+    <div class="testimonial"><p>Ed and Mike are the cream of the crop for injury cases. I recommend them highly.</p><strong>Joel Williams</strong></div>
+    <div class="testimonial"><p>Este bufete de abogados hace un trabajo sensacional, te trata con amabilidad y respeto.</p><strong>Ana</strong></div>
+    <div class="testimonial"><p>They answered every call and explained every step of my case to me clearly.</p><strong>Spanish</strong></div>
+  </body></html>`
+  const a = readAssets([{ html: home, url: 'https://firm.example/' }])
+
+  it('reads their results (largest first), people, reviews and awards, and nothing else', () => {
+    expect(a.results).toEqual([
+      { amount: '$20M', label: 'Settlement for a trucking collision' },
+      { amount: '$4.2M', label: 'Verdict for a crash victim' },
+    ])
+    // A misspelt file name takes the name from the photo's description.
+    expect(a.portraits.map((p) => [p.name, p.role])).toEqual([['Edward Piasta', 'Partner'], ['Michael Walker', 'Partner']])
+    expect(a.portraits.some((p) => /Vehicle/.test(p.name))).toBe(false)
+    // One banner, though their site has a size for each screen.
+    expect(a.photos.filter((p) => /home-hero/.test(p.src))).toHaveLength(1)
+    expect(a.photos.find((p) => /home-hero/.test(p.src))?.banner).toBe(true)
+    expect(a.badges.map((b) => b.alt)).toEqual(['Super Lawyers'])
+    // Reviews in English, named only when the name is a name.
+    expect(a.reviews).toEqual([
+      { quote: 'Ed and Mike are the cream of the crop for injury cases. I recommend them highly.', name: 'Joel Williams' },
+      { quote: 'They answered every call and explained every step of my case to me clearly.', name: 'A client' },
+    ])
+  })
+
+  it('lays out a firm in each look with only their facts, no scripts and a working form', () => {
+    const firm = {
+      pairing: 0, name: 'Piasta Walker Hagenbush, LLC', kind: 'Personal injury lawyers', headline: 'Atlanta injury lawyers <who> fight', lede: 'We take cases to trial.',
+      phone: '(404) 996-1296', city: 'Atlanta', region: 'GA', freeConsult: true, brand: '#ff0000',
+      nav: [{ label: 'Practice Areas', href: '/practice-areas', children: [{ label: 'Truck accidents', href: '/practice-areas/truck-accidents' }] }, { label: 'Contact', href: '/contact' }],
+      services: [{ name: 'Truck accidents', href: '/practice-areas/truck-accidents', summary: 'Trucking companies cut corners.' }],
+      about: { heading: 'About the firm', paragraphs: ['Founded by two trial lawyers who met at a national firm.'] },
+      team: a.portraits.map((p) => ({ name: p.name, role: p.role ?? 'Attorney', photo: p.src })),
+      assets: a, formAction: '/__form', schemaType: 'LegalService',
+    }
+    const pages = LOOKS.map((look) => showcaseHome({ ...firm, look, hero: a.photos.find((p) => p.banner) }))
+    for (const [i, html] of pages.entries()) {
+      expect(html).toContain(`<html lang="en" class="${LOOKS[i]}">`)
+      // No scripts but the business details Google reads.
+      expect(html.match(/<script\b[^>]*>/g)).toEqual(['<script type="application/ld+json">'])
+      expect(html).toContain('Atlanta injury lawyers &lt;who&gt; fight')
+      expect(html).toContain('$20M')
+      expect(html).toContain('Joel Williams')
+      expect(html).toContain('<input type="hidden" name="form" value="classic">')
+      expect(html).toContain('action="/__form"')
+      expect(html).toContain('href="tel:+14049961296"')
+      // Results are shown with the usual caution.
+      expect(html).toContain('Past results do not guarantee')
+      expect(html).not.toMatch(/undefined|NaN|\[object/)
+    }
+    // Their own questions on the home page, marked up for Google, and a
+    // picture for shared links.
+    const withFaq = showcaseHome({ ...firm, look: 'gazette', faq: [{ q: 'How long do I have to file?', a: 'Georgia gives you two years from the injury in most cases.' }] })
+    expect(withFaq).toContain('<summary>How long do I have to file?</summary>')
+    expect(withFaq).toMatch(/"@type":"FAQPage"/)
+    expect(withFaq).toMatch(/<meta property="og:title" content="Atlanta injury lawyers &lt;who&gt; fight">/)
+    expect(showcaseHome({ ...firm, look: 'noir' })).not.toMatch(/FAQPage|What people ask us/)
+    const inner = showcasePage({ ...firm, look: 'gazette' }, { path: '/practice-areas/truck-accidents', kicker: 'Practice areas', title: 'Truck accidents', blocks: [{ kind: 'h2', text: 'Why it matters' }, { kind: 'p', text: '• First thing' }, { kind: 'p', text: '• Second thing' }], faq: [{ q: 'How long?', a: 'It depends.' }] })
+    expect(inner).toContain('<ul><li>First thing</li><li>Second thing</li></ul>')
+    expect(inner).toContain('<summary>How long?</summary>')
+    expect(inner).toContain('aria-current="page"')
+    // A service page tells Google what the service is and who provides it.
+    expect(inner).toMatch(/"@type":"Service","name":"Truck accidents"/)
+    expect(inner).toMatch(/"@type":"FAQPage"/)
+  })
+
+  it('measures the photos it leads with, and drops ones that don’t load', async () => {
+    const { imageSize, measurePhotos } = await import('../apps/saysites/lib/redesign-assets')
+    const png = Buffer.alloc(32)
+    png.writeUInt32BE(0x89504e47, 0)
+    png.writeUInt32BE(800, 16)
+    png.writeUInt32BE(1400, 20)
+    expect(imageSize(png)).toEqual({ width: 800, height: 1400 })
+    const jpeg = Buffer.from([0xff, 0xd8, 0xff, 0xe0, 0, 4, 0, 0, 0xff, 0xc0, 0, 17, 8, 0x02, 0xbc, 0x07, 0x80, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+    expect(imageSize(jpeg)).toEqual({ width: 1920, height: 700 })
+    const measured = await measurePhotos(structuredClone(a), async (url) => (/home-hero/.test(url) ? { type: 'image/png', data: png } : null))
+    // The "banner" is really tall, and the photos that didn't load are gone.
+    expect(measured.photos.find((p) => /home-hero/.test(p.src))).toMatchObject({ width: 800, height: 1400 })
+    expect(measured.photos.some((p) => /Partner-Edward/.test(p.src))).toBe(false)
+  })
+
+  it('never passes the firm’s own words off as a client’s review', () => {
+    const r = readAssets([{ url: 'https://elk.example/', html: `<html><body>
+      <div class="testimonial"><p>When you hire Elk + Elk, your problem is our number one concern. We will out-work every opponent for you.</p><strong>Cheryl Krider</strong></div>
+      <div class="testimonial"><p>¡Gran experiencia! A pesar de que yo estaba débil, ellos trabajaron siempre conmigo.</p><strong>Ana</strong></div>
+      <div class="reviews"><p>Bill was very kind to me and always called back when I called him.</p><p>They handled my claim quickly and kept me informed the whole way.</p><strong>Lulu</strong></div>
+    </body></html>` }])
+    // The firm's marketing and the Spanish review are left out; with two
+    // reviews in one box, the name can't be matched to either, so no name.
+    expect(r.reviews).toEqual([{ quote: 'Bill was very kind to me and always called back when I called him.', name: 'A client' }])
+  })
+
+  it('reads their slogan from their banner, never a review, an announcement or a call to action', () => {
+    const page = (banner: string) => readAssets([{ url: 'https://elk.example/', html: `<html><head><title>Ohio Injury Lawyers | Elk + Elk, Every Client. Every Day.</title></head><body>${banner}</body></html>` }]).slogan
+    expect(page('<div class="banner"><p class="banner-top">Ohio Personal Injury Attorneys</p><p class="banner-bottom">Every Client.<br> Every Da<span>y</span>.<i>&reg;</i></p></div>')).toBe('Every Client. Every Day.')
+    expect(page('<div class="hero-slider"><div class="review"><p class="hero-name">-Paul W.</p></div><p class="hero-cta">Call for a free consultation</p></div>')).toBeUndefined()
+    expect(page('<div class="top-banner"><p>LOCAL TO TACOMA. SERVING ALL OF WASHINGTON.</p></div><video class="hero-video">Your browser does not support the video tag.</video>')).toBeUndefined()
+  })
+
+  it('calms their brand colour and never mistakes a firm’s “P.A.” for Pennsylvania', () => {
+    const { accent } = accentFor('atelier', '#ff0000')
+    expect(accent).not.toBe('#ff0000')
+    expect(parseInt(accent.slice(1, 3), 16)).toBeLessThan(200)
+    expect(placeFromText('Christopher P. Taylor, PA serves Delray Beach, FL and Boca Raton, FL. Delray Beach, FL', 'Christopher P. Taylor, P.A.')).toEqual({ city: 'Delray Beach', region: 'FL' })
   })
 })

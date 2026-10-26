@@ -2,13 +2,15 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import { KIND_LABEL, publishedArticles, readingMinutes, type ArticleKind } from '@/lib/articles'
 import { getStore } from '@/lib/store'
+import { TOPICS } from '@/lib/topics'
+import { JsonLd, breadcrumbs } from '@/components/JsonLd'
 import '../home.css'
 import './blog.css'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Guides and news on getting found in Google and AI answers',
+  title: 'Website, SEO and AI Search Guides for Businesses',
   description: 'Plain-English guides for law firms, medical practices and local businesses on Google search, AI Overviews and AI answers, plus SaySites news.',
   alternates: { canonical: '/blog', types: { 'application/rss+xml': '/blog/rss.xml' } },
 }
@@ -23,6 +25,10 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
 
   return (
     <MarketingShell>
+      <JsonLd data={[
+        { '@context': 'https://schema.org', '@type': 'Blog', name: 'SaySites blog', url: 'https://saysites.com/blog', publisher: { '@type': 'Organization', name: 'SaySites', url: 'https://saysites.com/' }, blogPost: all.slice(0, 20).map((a) => ({ '@type': 'BlogPosting', headline: a.title, url: `https://saysites.com/blog/${a.slug}`, datePublished: a.published })) },
+        breadcrumbs([['Home', '/'], ['Blog', '/blog']]),
+      ]} />
       <section className="page-hero blog-hero">
         <div className="wrap">
           <p className="kicker">Blog</p>
@@ -52,6 +58,10 @@ export default async function BlogPage({ searchParams }: { searchParams: Promise
               ))}
             </ol>
           )}
+          <nav className="blog-topics" aria-label="Guides by subject">
+            <h2>Guides by subject</h2>
+            <ul>{TOPICS.map((t) => <li key={t.slug}><a href={`/guides/${t.slug}`}>{t.name}</a></li>)}</ul>
+          </nav>
           <p className="blog-rss"><a href="/blog/rss.xml">Follow by RSS</a></p>
         </div>
       </section>

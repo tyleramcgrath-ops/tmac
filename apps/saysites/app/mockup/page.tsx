@@ -5,7 +5,7 @@ import '../home.css'
 
 export const metadata: Metadata = {
   title: 'Free homepage mockup',
-  description: 'Tell us your website and we’ll send you a picture of your homepage redesigned on SaySites: fast, mobile-first and yours to change by just saying it. Free, no account.',
+  description: 'Tell us your website and we’ll send you a picture of your homepage redesigned on SaySites: fast, mobile-first and easy to change. Free, no account.',
   alternates: { canonical: '/mockup' },
 }
 

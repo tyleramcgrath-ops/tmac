@@ -11,6 +11,7 @@
 // or undoes it; nothing reaches the live site without that step.
 
 import Anthropic from '@anthropic-ai/sdk'
+import { keptText, replaceKeptWords } from './classic'
 import { ContainerSchema, ElementSchema, PageSchema, ProductSchema, SiteSchema, pagePath, type Container, type Element, type Page, type Site } from './schema'
 import { checkPage } from './seo'
 import { vibeCheck } from './vibe'
@@ -168,8 +169,9 @@ export class Workspace {
 
   // Runs one edit against a copy of a page, keeps it only if the page still
   // validates.
-  private editPage(slug: string, summary: string, edit: (page: Page) => void) {
+  private editPage(slug: string, summary: string, edit: (page: Page) => void, onKept = false) {
     const current = this.page(slug)
+    if (current.classic && !onKept) throw new ToolError(`The ${current.slug ? `/${current.slug}` : 'home'} page ${current.classic.design ? 'has a custom design' : 'is kept exactly as it looked on the owner\'s old site'}, so its sections can't be edited one by one. Use replace_words to change its words, or use_saysites_design (only if the owner wants a new look for that page) and then edit it.`)
     const draft = structuredClone(current)
     edit(draft)
     const parsed = PageSchema.safeParse(draft)
@@ -228,10 +230,33 @@ export class Workspace {
   }
 
   updateSeo(slug: string, title: string, description: string, summary: string) {
-    this.editPage(slug, summary, (page) => {
-      if (title) page.seo.title = title
-      if (description) page.seo.description = description
-    })
+    this.editPage(
+      slug,
+      summary,
+      (page) => {
+        if (title) page.seo.title = title
+        if (description) page.seo.description = description
+      },
+      true
+    )
+  }
+
+  // Words on a page kept exactly as on the old site (lib/classic): every
+  // place the words appear in the page's text, never inside its code.
+  replaceWords(slug: string, find: string, replace: string, summary: string) {
+    const current = this.page(slug)
+    if (!current.classic) throw new ToolError('That page uses the SaySites design; change it with update_element.')
+    const { html, count } = replaceKeptWords(current.classic.html, find, replace)
+    if (!count) throw new ToolError(`"${find}" isn't on that page's text exactly as written. Check the spelling and capitals.`)
+    this.editPage(slug, summary, (page) => (page.classic = { ...current.classic!, html }), true)
+  }
+
+  // The page leaves its old look for the SaySites design (already built
+  // from its words, or the redesign's version of it).
+  useSaySitesDesign(slug: string, summary: string) {
+    const current = this.page(slug)
+    if (!current.classic) throw new ToolError('That page already uses the SaySites design.')
+    this.editPage(slug, summary, (page) => delete page.classic, true)
   }
 
   addPage(input: { slug: string; name: string; title: string; description: string; body: unknown[]; addToNav: boolean }, summary: string) {
@@ -665,6 +690,18 @@ SOFIE_TOOLS.push({
 })
 
 SOFIE_TOOLS.push({
+  name: 'replace_words',
+  description: 'Change words on a page kept exactly as it was on the owner\'s old site (pages marked "kept" in the JSON). Replaces every place `find` appears in the page\'s text with `replace`, keeping the design as it is. Use the exact words as they appear on the page; for a phone number, change each way it\'s written.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { page: { type: 'string', description: 'The page slug, or "home".' }, find: { type: 'string' }, replace: { type: 'string' }, summary }, required: ['page', 'find', 'replace', 'summary'] },
+})
+
+SOFIE_TOOLS.push({
+  name: 'use_saysites_design',
+  description: 'Move a kept page (one exactly as it looked on the owner\'s old site) to the SaySites design, so its sections can be edited one by one. Its words come across; its old look goes. Only when the owner wants a new look for that page or asks for a change replace_words can\'t make (a new section, a photo, a layout change); say what will change first.',
+  input_schema: { type: 'object', additionalProperties: false, properties: { page: { type: 'string', description: 'The page slug, or "home".' }, summary }, required: ['page', 'summary'] },
+})
+
+SOFIE_TOOLS.push({
   name: 'remove_product',
   description: 'Remove a product from the shop by its id (from site.store.products). Only when the owner asks.',
   input_schema: { type: 'object', additionalProperties: false, properties: { id: { type: 'string' }, summary }, required: ['id', 'summary'] },
@@ -744,6 +781,12 @@ export async function runTool(ws: Workspace, name: string, input: Record<string,
       case 'remove_product':
         ws.removeProduct(str('id'), s)
         break
+      case 'replace_words':
+        ws.replaceWords(str('page'), str('find'), str('replace'), s)
+        break
+      case 'use_saysites_design':
+        ws.useSaySitesDesign(str('page'), s)
+        break
       case 'add_amazon_products':
         return await ws.addAmazon(Array.isArray(input.links) ? input.links.map(String) : [], s)
       case 'add_page':
@@ -783,6 +826,8 @@ const PHOTO_LIST = Object.entries(PHOTOS)
 export const SOFIE_SYSTEM = `You are Sofie, the website assistant inside SaySites, a website builder for small local businesses. The person you are talking to owns the business and is usually not technical. You change their website by calling tools; you never write HTML.
 
 How owners talk: most are busy American small-business owners. They write fast and blunt, skip punctuation, make typos, swear, vent and say things like "this looks like shit, fix it" or "just do it". That is normal, not rudeness: never lecture, never comment on their language, never get formal or defensive. Read it as "I want this, now" and do it right away. Keep replies short and plain, like a sharp friend who handles it: what you did, in a sentence or two. Swearing never goes onto their website; the site always reads professional for their customers.
+
+Kept pages: some sites were moved from the owner's old website exactly as they looked (pages marked "kept"). Their look is the owner's own; keep it. Change their words with replace_words. Only move a kept page to the SaySites design (use_saysites_design) when the owner wants a new look or a change words alone can't make, and tell them first that the page's look will change.
 
 How to work:
 - Do what they ask, fully, in as few tool calls as makes sense. If a request is ambiguous in a way that matters (which page, what the new wording should say, a fact you don't know), ask one short question instead of guessing.
@@ -839,6 +884,14 @@ export function createMessage(client: Anthropic, params: CreateParams): Promise<
   return create.call(client.beta.messages, params)
 }
 
+// A kept page's markup is the old site's code: Sofie sees its words, not
+// the code (or the SaySites design waiting behind it).
+function forSofie(p: Page): unknown {
+  if (!p.classic) return p
+  const { classic, body: _body, ...rest } = p
+  return { ...rest, kept: `${classic.design ? 'A custom design.' : 'Exactly as on the old site.'} Change words with replace_words; use_saysites_design for anything else.`, text: keptText(classic.html).slice(0, 6000) }
+}
+
 export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[]; message: string; client?: Anthropic; photos?: { src: string; alt: string; width: number; height: number }[]; taken?: Set<string>; finder?: PhotoFinder; amazon?: AmazonLookup; budgetMicros?: number }): Promise<SofieResult> {
   // New API accounts hit rate limits quickly; the SDK waits and retries
   // (respecting retry-after) a few times before giving up.
@@ -856,7 +909,7 @@ export async function askSofie(input: { snapshot: Snapshot; history: ChatTurn[];
   messages.push({
     role: 'user',
     content: [
-      { type: 'text', text: `Today is ${new Date().toISOString().slice(0, 10)}. The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages })}` },
+      { type: 'text', text: `Today is ${new Date().toISOString().slice(0, 10)}. The website as it is right now (JSON):\n${JSON.stringify({ site: ws.site, pages: ws.pages.map(forSofie) })}` },
       ...(input.photos?.length
         ? [{ type: 'text' as const, text: `The owner's own uploaded photos. Prefer these over stock photos when they fit (use src, alt, width and height exactly):\n${JSON.stringify(input.photos.slice(0, 40))}` }]
         : []),

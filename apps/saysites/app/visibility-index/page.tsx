@@ -8,8 +8,8 @@ import '../home.css'
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'The SaySites Index: organic visibility of local businesses, weekly',
-  description: 'A weekly measure of how findable local businesses on SaySites are in Google search, by trade: earned through fast pages, accurate details and useful content, not paid ads.',
+  title: 'The SaySites Index: Local Business Visibility',
+  description: 'A weekly measure of how findable local businesses on SaySites are in Google search, by trade, earned through fast pages and useful content, not ads.',
   alternates: { canonical: '/visibility-index' },
 }
 

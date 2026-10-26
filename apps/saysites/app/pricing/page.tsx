@@ -2,20 +2,32 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import { ClassicPlans } from '@/components/ClassicPlans'
 import { PricingPlans } from '@/components/PricingPlans'
-import { PRICES } from '@/lib/billing'
+import { PLAN_NAMES, PLANS, PRICES } from '@/lib/billing'
+import { JsonLd, ORG, breadcrumbs } from '@/components/JsonLd'
 import '../home.css'
 
 export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
-  title: 'Pricing',
-  description: `Small-business websites from $${PRICES.site.month} a month and online stores from $${PRICES.store.month}, with Sofie, hosting, SEO and leads included and 0% of your sales. Law firm plans from $${PRICES.lawstarter.month}. No setup fee, no contract.`,
+  title: `Pricing: Websites from $${PRICES.site.month} a Month, No Setup Fee`,
+  description: `Small-business websites from $${PRICES.site.month} a month and online stores from $${PRICES.store.month}, with hosting, SEO and Sofie included. Law firm plans from $${PRICES.lawstarter.month}. No setup fee.`,
   alternates: { canonical: '/pricing' },
 }
 
 export default function PricingPage() {
   return (
     <MarketingShell>
+      <JsonLd data={[
+        {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: 'SaySites website plans',
+          description: 'Websites and online stores for small businesses and law firms, with hosting, SEO and Sofie included. No setup fee.',
+          brand: { '@type': 'Brand', name: 'SaySites' },
+          offers: PLANS.map((p) => ({ '@type': 'Offer', name: PLAN_NAMES[p], price: String(PRICES[p].month), priceCurrency: 'USD', priceSpecification: { '@type': 'UnitPriceSpecification', price: String(PRICES[p].month), priceCurrency: 'USD', unitText: 'MONTH' }, url: 'https://saysites.com/pricing', seller: { '@id': ORG['@id'] } })),
+        },
+        breadcrumbs([['Home', '/'], ['Pricing', '/pricing']]),
+      ]} />
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Pricing</p>
