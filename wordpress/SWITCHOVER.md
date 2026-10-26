@@ -260,3 +260,8 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 ## v6.21.2 — Taste of Tampa banner on the Elevate Dinner page
 - The hero on /elevate-dinner2026/ now shows the "Taste of Tampa" banner (EnVue, Geotab, Bosch) taken from the
   Google Form header. It ships with the theme at `assets/images/elevate-dinner-2026-banner.webp`.
+
+## v6.22 — Geotab-campaign copy of the GO Focus Plus page
+- New page at **/gofocusplus-demo-geotab/**. It matches /gofocusplus-demo50/ but tags its leads
+  `source=gofocusplus-demo-geotab`, so these sign-ups stay separate on /get-in-touch/. All four GO Focus Plus
+  offer pages are built from one template, so any change to the offer shows up on all of them.
