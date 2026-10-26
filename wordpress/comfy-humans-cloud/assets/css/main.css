@@ -144,19 +144,19 @@ p{margin:0}
   box-shadow:inset 0 0 0 1px rgba(255,255,255,.9);transition:transform .3s cubic-bezier(.3,1.6,.5,1),background .2s}
 .mood-tabs button:hover{transform:translateY(-2px)}
 .mood-tabs button[aria-pressed="true"]{background:var(--ink);color:#fff;transform:scale(1.04)}
-.products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.product{border-radius:36px;background:#fff;padding:14px;box-shadow:0 18px 44px rgba(70,70,170,.12);display:flex;flex-direction:column;gap:14px;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
-.product:hover{transform:scale(.98)}
+.moods .products{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.moods .product{border-radius:36px;background:#fff;padding:14px;box-shadow:0 18px 44px rgba(70,70,170,.12);display:flex;flex-direction:column;gap:14px;transition:transform .45s cubic-bezier(.3,1.6,.5,1)}
+.moods .product:hover{transform:scale(.98)}
 .swatch{aspect-ratio:4/3;max-width:100%;border-radius:26px;position:relative;overflow:hidden}
 .swatch::before{content:"";position:absolute;inset:0;opacity:.55;mix-blend-mode:soft-light;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='3'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
 .swatch .shape{position:absolute;left:50%;top:54%;width:46%;aspect-ratio:1;translate:-50% -50%;border-radius:42% 58% 50% 50%/55% 45% 55% 45%;background:rgba(255,255,255,.4);box-shadow:inset -10px -14px 0 rgba(0,0,0,.06)}
 .swatch .label{position:absolute;left:14px;top:14px;font-family:var(--f-data);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.8)}
-.product-info{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:0 8px 6px}
-.product-info h3{font-size:22px;line-height:1.15}
-.product-info p{font-size:14.5px;color:var(--ink-soft)}
-.price{font-family:var(--f-data);font-size:15px;font-weight:500;white-space:nowrap;padding-top:4px}
-.add{margin:0 8px 6px;padding:13px;border-radius:999px;border:0;background:var(--sky-mid);color:var(--ink);font-weight:700;font-family:inherit;font-size:15px;cursor:pointer;transition:background .2s}
+.moods .product-info{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:0 8px 6px}
+.moods .product-info h3{font-size:22px;line-height:1.15}
+.moods .product-info p{font-size:14.5px;color:var(--ink-soft)}
+.moods .price{font-family:var(--f-data);font-size:15px;font-weight:500;white-space:nowrap;padding-top:4px}
+.moods .add{margin:0 8px 6px;padding:13px;border-radius:999px;border:0;background:var(--sky-mid);color:var(--ink);font-weight:700;font-family:inherit;font-size:15px;cursor:pointer;transition:background .2s}
 .add:hover{background:var(--butter)}
 .add.added{background:var(--mint)}
 
@@ -185,13 +185,13 @@ footer{padding-block:40px 50px}
   .forecast-card{grid-template-columns:1fr 1fr}
   .forecast-card .head{grid-column:1/-1}
   .reading{border-left:0;border-top:1px solid var(--line)}
-  .reasons,.products{grid-template-columns:1fr 1fr}
+  .reasons,.moods .products{grid-template-columns:1fr 1fr}
   .reason:nth-child(3n+2){translate:none}
 }
 @media (max-width:620px){
   body{font-size:16px}
   .nav{gap:10px;padding-left:18px}.logo{font-size:20px}.logo svg{width:26px}.bag{padding:10px 14px}
-  .reasons,.products{grid-template-columns:1fr}
+  .reasons,.moods .products{grid-template-columns:1fr}
   .tag.t1{left:0}.tag.t2{right:0}
   .vs-left{padding:38px 28px}.vs-table{padding:18px 18px}
   .close-cloud{padding:56px 22px 40px;border-radius:120px 120px 40px 40px}

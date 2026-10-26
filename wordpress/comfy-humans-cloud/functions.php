@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'CHC_VERSION', '1.0.0' );
+define( 'CHC_VERSION', '1.0.1' );
 
 /**
  * Theme supports, menus and WooCommerce.
@@ -62,6 +62,7 @@ remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wr
 remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
 remove_action( 'woocommerce_sidebar', 'woocommerce_get_sidebar', 10 );
 add_filter( 'loop_shop_columns', function () { return 3; } );
+add_filter( 'woocommerce_show_page_title', '__return_false' ); // The page band above already shows the title.
 
 /**
  * Number of items in the bag, for the header button.
@@ -85,11 +86,15 @@ add_filter( 'woocommerce_add_to_cart_fragments', 'chc_bag_fragment' );
 /**
  * "Add to bag" instead of "Add to cart".
  */
-function chc_add_to_bag_text() {
+function chc_add_to_bag_text( $text, $product = null ) {
+	// Affiliate (external) products link out to the store that sells them, so keep their own button text.
+	if ( $product && $product->is_type( 'external' ) ) {
+		return $text;
+	}
 	return __( 'Add to bag', 'comfy-humans-cloud' );
 }
-add_filter( 'woocommerce_product_add_to_cart_text', 'chc_add_to_bag_text' );
-add_filter( 'woocommerce_product_single_add_to_cart_text', 'chc_add_to_bag_text' );
+add_filter( 'woocommerce_product_add_to_cart_text', 'chc_add_to_bag_text', 10, 2 );
+add_filter( 'woocommerce_product_single_add_to_cart_text', 'chc_add_to_bag_text', 10, 2 );
 
 /**
  * Customizer: everything on the home page that is a claim about the business
