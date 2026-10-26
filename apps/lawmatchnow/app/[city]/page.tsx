@@ -13,7 +13,7 @@ import { PRACTICE_AREAS } from '@/lib/content/practice-areas'
 import { CITIES, CITY_COORDS, cityBySlug, citiesInState, stateByCode } from '@/lib/geo'
 import { cityLocal } from '@/lib/law/cities'
 import { ctxFor, glanceRows, topicsFor } from '@/lib/law/topics'
-import { abs } from '@/lib/site'
+import { abs, clip } from '@/lib/site'
 
 type Props = { params: Promise<{ city: string }>; searchParams: Promise<{ page?: string }> }
 export const revalidate = 3600
@@ -27,7 +27,7 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const loc = cityLocal(c.slug)
   return {
     title: `${c.name}, ${c.state} Lawyers: Find an Attorney`,
-    description: `Find ${c.name}, ${st.name} attorneys by legal issue. Local courts${loc?.county ? ` in ${loc.county}` : ''}, free legal aid, the bar referral service and the ${st.name} laws that apply to your case.`.slice(0, 300),
+    description: clip(`Find ${c.name}, ${st.name} attorneys by legal issue. Local courts${loc?.county ? ` in ${loc.county}` : ''}, free legal aid, the bar referral service and the ${st.name} laws that apply to your case.`),
     alternates: { canonical: `/${c.slug}` },
     robots: pageParam((await searchParams).page) > 1 ? { index: false, follow: true } : undefined,
     ...(loc?.photo ? { openGraph: { images: [{ url: `https://images.unsplash.com/photo-${loc.photo.id}?w=1200&h=630&fit=crop&q=72`, width: 1200, height: 630, alt: loc.photo.alt }] } } : {}),

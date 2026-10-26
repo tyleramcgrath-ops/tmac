@@ -5,7 +5,7 @@
 import type { PhotoKey } from '@/lib/photos'
 import type { State } from '@/lib/geo'
 import { type Fact, FIELDS, type FieldKey, fact } from './facts'
-import { due } from './answers'
+import { due, noCite, periodOf } from './answers'
 
 export type Ctx = { s: State; f: (k: FieldKey) => Fact | null }
 export const ctxFor = (s: State): Ctx => ({ s, f: (k) => fact(s.code, k) })
@@ -247,7 +247,7 @@ export const TOPICS: Topic[] = [
         body: ({ s, f }) => {
           const pd = f('divorce.propertyDivision')
           return [
-            has(pd, /^Community/i) && `${s.name} is a community property state. Property and debts acquired during the marriage generally belong to both spouses equally and are usually divided 50/50, while property owned before the marriage or received as a gift or inheritance usually stays separate.`,
+            has(pd, /^Community/i) && `${s.name} is a community property state. Property and debts acquired during the marriage generally belong to both spouses equally${s.code === 'TX' ? '; in a divorce, Texas courts divide them in a way that is "just and right", which isn’t always 50/50' : ' and are generally split evenly in a divorce'}, while property owned before the marriage or received as a gift or inheritance usually stays separate.`,
             has(pd, /^Equitable/i) && `${s.name} uses equitable distribution. Marital property is divided fairly, which isn’t always equally. Courts look at factors such as each spouse’s income and earning capacity, the length of the marriage and each spouse’s contributions, including homemaking.`,
             pd?.detail,
           ]
@@ -470,6 +470,178 @@ export const TOPICS: Topic[] = [
     ],
     practices: ['employment-law'],
     photo: 'signing',
+  },
+  {
+    slug: 'marriage-laws',
+    name: 'Marriage Laws',
+    heading: (s) => `${s.name} Marriage Laws`,
+    description: ({ s, f }) => `${s.name} marriage law: common-law marriage ${lc(v(f('marriage.commonLaw')))}${f('marriage.minAge') ? `; minimum age to marry: ${lc(v(f('marriage.minAge')))}` : ''}. Statutes cited.`,
+    fields: ['marriage.commonLaw', 'marriage.minAge', 'divorce.propertyDivision', 'divorce.residency'],
+    lead: 'marriage.commonLaw',
+    answer: ({ s, f }) => {
+      const cl = f('marriage.commonLaw')
+      const rule = has(cl, /^Recognized/i) ? `${s.name} recognizes common-law marriage` : has(cl, /^Only/i) ? `${s.name} recognizes a common-law marriage only if it was ${lc(v(cl)).replace(/^only if /, '')}` : `${s.name} does not allow new common-law marriages`
+      return `${rule}${cited(cl)}${f('marriage.minAge') ? `. The minimum age to marry is ${lc(v(f('marriage.minAge')))}${cited(f('marriage.minAge'))}` : ''}.`
+    },
+    sections: [
+      {
+        h: ({ s }) => `Common-law marriage in ${s.name}`,
+        body: ({ s, f }) => [
+          f('marriage.commonLaw') && `${s.name}: ${lc(v(f('marriage.commonLaw')))}${cited(f('marriage.commonLaw'))}. ${f('marriage.commonLaw')!.detail ?? ''}`,
+          'Where it is recognized, a common-law marriage generally requires that the couple agreed to be married, lived together and held themselves out to others as married. Living together for a set number of years is not enough on its own, in any state.',
+          `A valid common-law marriage formed in a state that allows it is usually recognized everywhere, including in ${s.name}. Once it exists, it is a real marriage: ending it takes a divorce, and it carries the same property, support and inheritance rights.`,
+        ],
+      },
+      {
+        h: ({ s }) => `Getting married in ${s.name}`,
+        body: ({ s, f }) => [
+          f('marriage.minAge') && `Minimum age: ${lc(v(f('marriage.minAge')))}${cited(f('marriage.minAge'))}. ${f('marriage.minAge')!.detail ?? ''}`,
+          `Couples get a license from the county clerk and have the marriage solemnized by an authorized officiant. A prenuptial agreement signed before the wedding can change how ${s.name}'s property rules apply if the marriage ends.`,
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`Is ${s.name} a common-law marriage state?`, f('marriage.commonLaw') && `${v(f('marriage.commonLaw'))}${cited(f('marriage.commonLaw'))}. ${f('marriage.commonLaw')!.detail ?? ''}`.trim()),
+      ...faq(`What is the legal age to get married in ${s.name}?`, f('marriage.minAge') && `${v(f('marriage.minAge'))}${cited(f('marriage.minAge'))}. ${f('marriage.minAge')!.detail ?? ''}`.trim()),
+      { q: 'How long do you have to live together to be common-law married?', a: 'No state sets a number of years. Where common-law marriage exists, what matters is the agreement to be married, living together, and presenting yourselves to others as a married couple.' },
+    ],
+    practices: ['family-law'],
+    photo: 'signing',
+  },
+  {
+    slug: 'squatters-rights',
+    name: "Squatters' Rights",
+    heading: (s) => `${s.name} Squatters' Rights and Adverse Possession`,
+    description: ({ s, f }) => `${s.name} squatters' rights: adverse possession takes ${lc(v(f('property.adversePossession')))}${f('property.squatterRemoval') ? `; removing a squatter: ${lc(noCite(v(f('property.squatterRemoval'))))}` : ''}. Statutes cited.`,
+    fields: ['property.adversePossession', 'property.squatterRemoval'],
+    lead: 'property.adversePossession',
+    answer: ({ s, f }) => `In ${s.name}, a squatter can claim ownership through adverse possession only after ${periodOf(v(f('property.adversePossession')), 'open, continuous possession')}${cited(f('property.adversePossession'))}${f('property.squatterRemoval') ? `. To remove a squatter: ${lc(noCite(v(f('property.squatterRemoval'))))}${cited(f('property.squatterRemoval'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `Adverse possession in ${s.name}`,
+        body: ({ s, f }) => [
+          f('property.adversePossession') && `${s.name}: ${lc(v(f('property.adversePossession')))}${cited(f('property.adversePossession'))}. ${f('property.adversePossession')!.detail ?? ''}`,
+          'To win title by adverse possession, the occupier generally must prove possession that was actual, open and notorious, exclusive, hostile (without the owner’s permission) and continuous for the full statutory period. Missing any element defeats the claim, and courts read these rules strictly.',
+          'Owners protect themselves by inspecting vacant property, posting no-trespassing signs, giving written permission for any use they allow (which defeats “hostility”), and acting quickly when someone moves in.',
+        ],
+      },
+      {
+        h: ({ s }) => `Removing a squatter in ${s.name}`,
+        body: ({ s, f }) => [
+          f('property.squatterRemoval') && `${noCite(v(f('property.squatterRemoval')))}${cited(f('property.squatterRemoval'))}. ${f('property.squatterRemoval')!.detail ?? ''}`,
+          'Don’t change the locks, cut utilities or remove a squatter’s belongings on your own: if the occupant is treated as a tenant, self-help can make the owner liable. Call the police first, and use the court process when they won’t act.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`How long does a squatter have to live in a property to claim it in ${s.name}?`, f('property.adversePossession') && `${v(f('property.adversePossession'))}${cited(f('property.adversePossession'))}. ${f('property.adversePossession')!.detail ?? ''}`.trim()),
+      ...faq(`How do you get rid of a squatter in ${s.name}?`, f('property.squatterRemoval') && `${noCite(v(f('property.squatterRemoval')))}${cited(f('property.squatterRemoval'))}. ${f('property.squatterRemoval')!.detail ?? ''}`.trim()),
+      { q: 'Is squatting a crime?', a: 'Entering or staying in someone else’s property without permission is usually trespass, and several states have made squatting or using false leases a specific crime. But until the owner acts, a squatter may not be removed on sight, which is why the removal process matters.' },
+    ],
+    practices: ['real-estate'],
+    photo: 'columns',
+  },
+  {
+    slug: 'at-will-employment',
+    name: 'At-Will Employment and Non-Competes',
+    heading: (s) => `${s.name} At-Will Employment and Non-Compete Laws`,
+    description: ({ s, f }) => `${s.name} employment law: ${lc(v(f('employment2.atWill')))} employment${f('employment2.nonCompete') ? `; non-compete agreements: ${lc(v(f('employment2.nonCompete')))}` : ''}. When you can be fired, and whether a non-compete binds you, with the law cited.`,
+    fields: ['employment2.atWill', 'employment2.nonCompete', 'employment.discriminationDeadline', 'final-pay.fired'],
+    lead: 'employment2.atWill',
+    answer: ({ s, f }) => `${has(f('employment2.atWill'), /^At-will/i) ? `${s.name} is an at-will employment state: an employer can generally fire an employee for any reason that isn't illegal, or no reason, with no notice` : `${s.name} is not an at-will state: after a probation period, an employer needs good cause to fire an employee`}${cited(f('employment2.atWill'))}${f('employment2.nonCompete') ? `. Non-compete agreements: ${lc(v(f('employment2.nonCompete')))}${cited(f('employment2.nonCompete'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `At-will employment in ${s.name}`,
+        body: ({ s, f }) => [
+          f('employment2.atWill') && `${s.name}: ${lc(v(f('employment2.atWill')))}${cited(f('employment2.atWill'))}. ${f('employment2.atWill')!.detail ?? ''}`,
+          'At-will has limits everywhere. A firing is illegal when it is based on race, sex, religion, national origin, age, disability or another protected trait; when it retaliates for reporting discrimination, safety violations or wage theft, filing a workers’ comp claim or taking protected leave; or when it breaks an employment contract or union agreement.',
+          f('employment.discriminationDeadline') && `To challenge a discriminatory firing, a charge must usually be filed within ${lc(v(f('employment.discriminationDeadline')))}${cited(f('employment.discriminationDeadline'))}.`,
+        ],
+      },
+      {
+        h: ({ s }) => `Non-compete agreements in ${s.name}`,
+        body: ({ s, f }) => [
+          f('employment2.nonCompete') && `${v(f('employment2.nonCompete'))}${cited(f('employment2.nonCompete'))}. ${f('employment2.nonCompete')!.detail ?? ''}`,
+          'Where non-competes are allowed, courts generally enforce them only if they protect a legitimate business interest and are reasonable in length, geography and the work they restrict. Non-solicitation and confidentiality agreements are separate and are enforced more often.',
+          'Before you sign a non-compete or turn down a job because of one, have an employment lawyer read it; a narrow reading or a state law change can make a big difference.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`Is ${s.name} an at-will state?`, f('employment2.atWill') && `${v(f('employment2.atWill'))}${cited(f('employment2.atWill'))}. ${f('employment2.atWill')!.detail ?? ''}`.trim()),
+      ...faq(`Are non-compete agreements enforceable in ${s.name}?`, f('employment2.nonCompete') && `${v(f('employment2.nonCompete'))}${cited(f('employment2.nonCompete'))}. ${f('employment2.nonCompete')!.detail ?? ''}`.trim()),
+      { q: 'Can I be fired without a reason?', a: 'In an at-will state, usually yes, as long as the real reason isn’t illegal (discrimination or retaliation) and no contract or union agreement requires cause. If the stated reason seems like a cover for an illegal one, talk to an employment lawyer quickly, because charge deadlines are short.' },
+    ],
+    practices: ['employment-law'],
+    photo: 'library',
+  },
+  {
+    slug: 'expungement-laws',
+    name: 'Expungement Laws',
+    heading: (s) => `${s.name} Expungement and Record Sealing Laws`,
+    description: ({ s, f }) => `${s.name} record clearing: misdemeanors ${lc(v(f('records.misdemeanorWait')))}${f('records.felonyWait') ? `; felonies ${lc(v(f('records.felonyWait')))}` : ''}${f('records.autoClear') ? `; Clean Slate: ${lc(v(f('records.autoClear')))}` : ''}. Statutes cited.`,
+    fields: ['records.misdemeanorWait', 'records.felonyWait', 'records.autoClear'],
+    lead: 'records.misdemeanorWait',
+    answer: ({ s, f }) => `In ${s.name}, clearing a misdemeanor conviction: ${lc(v(f('records.misdemeanorWait')))}${cited(f('records.misdemeanorWait'))}${f('records.felonyWait') ? `; a lower-level felony: ${lc(v(f('records.felonyWait')))}${cited(f('records.felonyWait'))}` : ''}${f('records.autoClear') ? `. Automatic clearing: ${lc(v(f('records.autoClear')))}${cited(f('records.autoClear'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `Clearing a conviction in ${s.name}`,
+        body: ({ s, f }) => [
+          f('records.misdemeanorWait') && `Misdemeanors: ${lc(v(f('records.misdemeanorWait')))}${cited(f('records.misdemeanorWait'))}. ${f('records.misdemeanorWait')!.detail ?? ''}`,
+          f('records.felonyWait') && `Felonies: ${lc(v(f('records.felonyWait')))}${cited(f('records.felonyWait'))}. ${f('records.felonyWait')!.detail ?? ''}`,
+          'States use different words (expungement, sealing, set-aside, nondisclosure) with different effects: some destroy the record, others only hide it from the public and most employers. Serious violent and sex offenses are usually excluded, and new arrests during the waiting period can restart the clock.',
+        ],
+      },
+      {
+        h: () => 'Automatic record clearing',
+        body: ({ s, f }) => [
+          f('records.autoClear') && `${s.name}: ${lc(v(f('records.autoClear')))}${cited(f('records.autoClear'))}. ${f('records.autoClear')!.detail ?? ''}`,
+          'Arrests that didn’t lead to a conviction and dismissed charges can often be cleared sooner, sometimes right away. A lawyer can pull your full record, confirm eligibility and file the petition, which is often worth it because a mistake can mean starting over.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`How long until a misdemeanor can be expunged in ${s.name}?`, f('records.misdemeanorWait') && `${v(f('records.misdemeanorWait'))}${cited(f('records.misdemeanorWait'))}. ${f('records.misdemeanorWait')!.detail ?? ''}`.trim()),
+      ...faq(`Can a felony be expunged in ${s.name}?`, f('records.felonyWait') && `${v(f('records.felonyWait'))}${cited(f('records.felonyWait'))}. ${f('records.felonyWait')!.detail ?? ''}`.trim()),
+      ...faq(`Does ${s.name} have a Clean Slate law?`, f('records.autoClear') && `${v(f('records.autoClear'))}${cited(f('records.autoClear'))}. ${f('records.autoClear')!.detail ?? ''}`.trim()),
+    ],
+    practices: ['criminal-defense'],
+    photo: 'gavel',
+  },
+  {
+    slug: 'lemon-laws',
+    name: 'Lemon Laws',
+    heading: (s) => `${s.name} Lemon Law`,
+    description: ({ s, f }) => `${s.name} lemon law: ${lc(v(f('lemon.attempts')))}${f('lemon.daysOut') ? ` or ${lc(v(f('lemon.daysOut')))} out of service` : ''}${f('lemon.coverage') ? `, within ${lc(v(f('lemon.coverage')))}` : ''}. Used cars: ${lc(v(f('lemon.usedCars')) || 'see guide')}. Statutes cited.`,
+    fields: ['lemon.attempts', 'lemon.daysOut', 'lemon.coverage', 'lemon.usedCars'],
+    lead: 'lemon.attempts',
+    answer: ({ s, f }) => `A new car is presumed a lemon in ${s.name} after ${lc(v(f('lemon.attempts')))}${cited(f('lemon.attempts'))}${f('lemon.daysOut') ? `, or ${lc(v(f('lemon.daysOut')))} in the shop${cited(f('lemon.daysOut'))}` : ''}${f('lemon.coverage') ? `, during ${lc(v(f('lemon.coverage')))}${cited(f('lemon.coverage'))}` : ''}.`,
+    sections: [
+      {
+        h: ({ s }) => `When is a car a lemon in ${s.name}?`,
+        body: ({ s, f }) => [
+          f('lemon.attempts') && `Repair attempts: ${lc(v(f('lemon.attempts')))}${cited(f('lemon.attempts'))}. ${f('lemon.attempts')!.detail ?? ''}`,
+          f('lemon.daysOut') && `Days out of service: ${lc(v(f('lemon.daysOut')))}${cited(f('lemon.daysOut'))}. ${f('lemon.daysOut')!.detail ?? ''}`,
+          f('lemon.coverage') && `Covered period: ${lc(v(f('lemon.coverage')))}${cited(f('lemon.coverage'))}. ${f('lemon.coverage')!.detail ?? ''}`,
+          `The defect must substantially impair the car's use, value or safety. If the manufacturer can't fix it within those limits, ${s.name} law generally entitles you to a replacement or a refund, minus a deduction for use.`,
+        ],
+      },
+      {
+        h: () => 'Used cars and how to bring a claim',
+        body: ({ s, f }) => [
+          f('lemon.usedCars') && `Used cars: ${lc(v(f('lemon.usedCars')))}${cited(f('lemon.usedCars'))}. ${f('lemon.usedCars')!.detail ?? ''}`,
+          `Keep every repair order, showing the dates in and out and the problem reported, and send the manufacturer written notice. Many states require a manufacturer arbitration step first. Lemon laws usually make the manufacturer pay the buyer's attorney fees, so many ${s.name} lemon law lawyers charge nothing up front.`,
+          'Federal law (the Magnuson-Moss Warranty Act) also covers broken warranties on cars and other products, including used cars sold with a written warranty.',
+        ],
+      },
+    ],
+    faqs: ({ s, f }) => [
+      ...faq(`How many repair attempts make a car a lemon in ${s.name}?`, f('lemon.attempts') && `${v(f('lemon.attempts'))}${cited(f('lemon.attempts'))}. ${f('lemon.attempts')!.detail ?? ''}`.trim()),
+      ...faq(`Does ${s.name} have a lemon law for used cars?`, f('lemon.usedCars') && `${v(f('lemon.usedCars'))}${cited(f('lemon.usedCars'))}. ${f('lemon.usedCars')!.detail ?? ''}`.trim()),
+      { q: 'Do I need a lawyer for a lemon law claim?', a: 'Not always, but it helps: manufacturers know the process well, and most lemon laws make them pay the consumer’s attorney fees when the consumer wins, so lemon law lawyers often take cases at no cost to the buyer.' },
+    ],
+    practices: ['consumer-protection'],
+    photo: 'justice',
   },
   {
     slug: 'dui-laws',
