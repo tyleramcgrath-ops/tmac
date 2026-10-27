@@ -303,6 +303,333 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'columbus-law-firm-website-design',
+    title: 'Columbus Law Firm Websites: What Ohio’s Rules Require',
+    description: 'Plan a Columbus law firm website under Ohio Rules 7.1 to 7.5: the 2024 specialist change, trade names, keyword ads, lead services and Franklin County courts.',
+    kind: 'guide',
+    summary: [
+      'Every Ohio lawyer communication, website pages included, must name at least one responsible lawyer or firm and give an office address (Prof.Cond.R. 7.2(c)).',
+      'Since April 15, 2024, an Ohio lawyer may claim to be a specialist when certified by any certifying organization, as long as the page names it (Rule 7.4(e)). The Supreme Court no longer designates the fields.',
+      'A website is not a solicitation in Ohio, but targeted emails and texts are, and they need the “ADVERTISING MATERIAL” or “ADVERTISEMENT ONLY” label plus extra disclosures within 30 days of an accident (Rule 7.3).',
+      'The Board of Professional Conduct has said buying another lawyer’s name as a search keyword is misleading (Advisory Opinion 2021-04), and a 2026 opinion lets a firm use a trade name online if the full legal entity name appears on the site.',
+      'Most Columbus matters run through a few blocks of South High Street, so pages that explain which courthouse and which floor answer real client questions.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1721269592869-31f51014236b?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Columbus, Ohio office towers at sunset under a sky of scattered clouds' },
+    body: `A Columbus law firm website is lawyer advertising under Rules 7.1 to 7.5 of the Ohio Rules of Professional Conduct, and three of those rules shape the site more than any design decision. Rule 7.2(c) says every communication must include the name and office address of at least one lawyer or law firm responsible for its content. Rule 7.4(e) lets you call a lawyer a specialist only if the lawyer is certified and the page names the certifying organization. Rule 7.1 forbids anything false, misleading or “nonverifiable,” which is the word that catches most “best” and “top” claims. Get those three right, add the Board of Professional Conduct’s opinions on keyword ads and trade names, and most of the legal risk on an Ohio firm site is handled.
+
+This guide walks through each rule with links to the Supreme Court of Ohio’s own text, then turns to what is specific to Columbus: a legal district concentrated on a few blocks of South High Street, the busiest municipal court in the state, and a city where the state’s highest court and a federal court sit within walking distance of each other. It is planning help for firm owners and marketers, not an ethics opinion. Close calls belong with Ohio ethics counsel or the Board’s staff.
+
+## Which Ohio rules apply to a law firm website?
+
+The [Ohio Rules of Professional Conduct](https://www.supremecourt.ohio.gov/docs/LegalResources/Rules/ProfConduct/profConductRules.pdf), as amended effective January 1, 2026, cover lawyer marketing in five rules. The advertising rules themselves have changed at different times: Rules 7.1 to 7.3 were last amended in 2015, Rule 7.5 in 2020 and Rule 7.4 in 2024, while the 2026 amendment added a new Rule 8.6 rather than changing marketing rules.
+
+- **Rule 7.1** is the general standard: no false, misleading or nonverifiable communication about the lawyer or the lawyer’s services.
+- **Rule 7.2** allows advertising in written, recorded or electronic form, limits paying anyone for recommendations, and requires the responsible lawyer or firm with an office address.
+- **Rule 7.3** governs solicitation: live contact, and targeted written or electronic messages.
+- **Rule 7.4** covers how you describe fields of practice and when “specialist” is allowed.
+- **Rule 7.5** covers firm names, trade names, and lawyers in multi-state firms.
+
+The comments matter as much as the rule text. Several of the points below come from the comments, which is where Ohio explains how the rules apply to websites, search results and lead services.
+
+## What does Rule 7.1 mean for results, fees and “best” claims?
+
+Ohio’s version of Rule 7.1 adds a word most states don’t use: a communication may not be “nonverifiable.” That matters on a website, where it is tempting to call a firm “Columbus’s most trusted” or “the toughest defense team in Ohio.” If no one can check the claim, it is a problem under the rule before anyone asks whether it is true.
+
+Past results get more careful treatment. Comment 3 says a truthful report of results can still mislead if it creates “an unjustified expectation” that a new client will get the same outcome, and that “an appropriate disclaimer or qualifying language may preclude” that finding. In practice:
+
+- Describe each result with context: the type of case, what was disputed, and what the result was.
+- Put the qualifying note next to the results, not in a footer link nobody opens.
+- Don’t present a single large outcome as typical.
+
+Comment 4 is unusually specific about fees. It says describing fees as “cut-rate,” “lowest,” “giveaway,” “below cost,” “discount” or “special” is misleading. A “discount consultation” banner or a “special flat fee this month” headline runs straight into that comment. State the fee plainly instead: “Flat fee of [amount] for an uncontested dissolution, court costs not included” is clear and checkable.
+
+> **Watch out:** Ohio’s rule has no flat ban on client testimonials, but the Board of Professional Conduct has treated testimonials about outcomes with caution, and quoting a settlement or verdict amount in a testimonial is the riskiest version. Read the Board’s opinions on testimonials in its [advisory opinion index](https://www.bpc.ohio.gov/advisory-opinions) before you publish client quotes, and keep dollar figures out of them.
+
+![A bridge crossing a river with downtown Columbus, Ohio towers rising behind the far bank](https://images.unsplash.com/photo-1654115480554-e1a1b24cfd63?auto=format&fit=crop&w=1200&q=75)
+
+## Does every page need a responsible lawyer and an office address?
+
+Yes. Rule 7.2(c) says any communication under the rules “shall include the name and office address of at least one lawyer or law firm responsible for its content.” For a website, the simplest way to comply is a footer on every page with the firm’s full name and its office address. That covers the home page, each practice area page, blog posts, landing pages built for ads, and downloadable guides.
+
+Two details catch firms out. First, landing pages made for paid search or social ads often strip out the footer to “reduce distractions”; those pages still need the name and address. Second, firms with more than one office should list at least one real office address on every page, then give each staffed office its own page. The address you list should be a place where the firm actually practices, which also lines up with what Google asks of a Business Profile (more on that below).
+
+## Can a Columbus lawyer say “specialist” on a website?
+
+The answer changed in 2024. Before then, Ohio allowed specialist claims only for fields the Supreme Court had designated and only through certifiers its Commission on Certification of Attorneys as Specialists had accredited. The Court’s [2024 amendment](https://www.supremecourt.ohio.gov/ruleamendments/documents/Certification%20of%20Attorneys%20as%20Specialists%20%28Final%29.pdf), adopted February 27 and effective April 15, 2024, removed both limits. As [Court News Ohio reported](https://courtnewsohio.gov/happening/2024/ruleAmendAttySpecialization_030624.asp), the rule now allows any organization to certify, including organizations the Commission has not accredited, and leaves the choice of fields to the certifying organizations.
+
+What remains is Rule 7.4(e): a lawyer “shall not state or imply that a lawyer is a specialist” unless the lawyer has been certified and the communication “clearly identifies the name of the certifying organization.” So on a website:
+
+- “Certified Specialist in Workers’ Compensation, Ohio State Bar Association” is the shape to follow: the claim and the certifier together, every time.
+- Watch implied claims. “Specialist,” “specializing in” and “expert” in page titles, headings, image alt text and the firm’s Google Business Profile description all count as communications.
+- For everyone else, Rule 7.4(a) allows you to say a lawyer practices in, limits practice to, or concentrates in a field. “Our practice is limited to estate planning and probate” is accurate and useful.
+
+Older guidance, including a 2021 Board opinion that treated claims in non-designated fields as misleading, predates the amendment. Check the Board’s opinion status before relying on anything written before April 2024.
+
+## How do trade names and firm names work on an Ohio website?
+
+Ohio dropped its ban on trade names in 2020. Rule 7.5 now allows a firm name, including a trade name, as long as it doesn’t violate Rule 7.1 and isn’t misleading about who the lawyers are. Comment 1 even says a firm may be designated by a distinctive website address. A Board opinion from 2020 confirmed that trade names are acceptable when they are not false, misleading or unverifiable, as [Court News Ohio summarized](https://www.courtnewsohio.gov/happening/2020/bpcOpinions_100920.asp).
+
+The newest guidance is [Advisory Opinion 2026-02](https://ohioadvop.org/wp-content/uploads/2026/06/Adv.-Op.-2026-02-Board-Final.pdf), issued June 5, 2026. Firms organized as an LPA, LLC or LLP must use the entity designation the Supreme Court’s rules require. The Board said a firm may use a registered trade name in marketing and on its website without repeating that designation every time, “provided that the full legal entity name, including the entity designation, is disclosed within the same medium.” A website footer reading “Scioto Injury Law is a trade name of Example & Partners Co., LPA” does that job, and it sits naturally beside the Rule 7.2(c) name and address.
+
+Rule 7.5 also has rules for multi-state firms and lawyers. A firm with offices in other states must make clear which listed lawyers are not licensed in Ohio. If a Columbus firm has a lawyer licensed only in Kentucky or Indiana, that lawyer’s profile should say so plainly.
+
+## Can a firm bid on another lawyer’s name in Google Ads?
+
+No. In [Advisory Opinion 2021-04](https://courtnewsohio.gov/happening/2021/BPCAdvisoryOpins_062121.asp), the Board said buying a competing lawyer’s name as a search keyword, so your ad appears when someone searches for that lawyer, is “an act intended to deceive” and a false, misleading or nonverifiable communication. Columbus is a market where many people search for a firm by name after hearing it on the radio or from a friend, so the temptation is real. Bid on practice areas and places instead, and write the ad for the problem the person has.
+
+## What can you pay for: lead services, directories and web design?
+
+Rule 7.2(b) says a lawyer “shall not give anything of value to a person for recommending the lawyer’s services,” with exceptions for the reasonable cost of advertising, legal service plans, lawyer referral services that meet the Supreme Court’s rules, and the sale of a practice. Comment 5A explains how that applies online. Lawyers may pay for “website designers” and “domain-name registrations,” and may pay for “generating client leads, including Internet-based client leads, provided the lead generator does not recommend the lawyer.”
+
+The test is what the lead service tells the consumer. A service may not imply that it is recommending the lawyer, that it made the referral without being paid, or that it “has analyzed a person’s legal problems.” Before you sign with a lead service or a directory with “matching,” read its consumer-facing pages and ask:
+
+1. Does it say, or suggest, that it chose you as the best lawyer for the person?
+2. Does it say it reviewed or evaluated the person’s case?
+3. Does it hide the fact that lawyers pay to appear?
+
+A yes to any of these is a reason to walk away. Comment 5 also notes that reciprocal referral agreements are prohibited.
+
+## Is a website a solicitation in Ohio?
+
+Usually not. Comment 1 to Rule 7.3 says a website, an Internet ad, or results “automatically generated in response to Internet searches” typically are not solicitations, because the person chose to look. The solicitation rules start to matter when the firm reaches out:
+
+- **Live contact.** Rule 7.3(a) bars in-person, live telephone and “real-time electronic contact” to solicit work for pecuniary gain, except with other lawyers and people with a family, close personal or prior professional relationship. Calling back someone who filled in your form is answering a request, not solicitation.
+- **Targeted emails, texts and letters.** Rule 7.3(c) requires these to disclose how the lawyer learned of the person’s legal need, disclaim any “predetermined evaluation” of the case, and carry “ADVERTISING MATERIAL” or “ADVERTISEMENT ONLY” in the text, on any envelope, and at the start and end of any recorded or electronic message.
+- **Accident and disaster victims.** Under Rule 7.3(e), a solicitation sent within thirty days of an accident or disaster that could lead to a personal injury or wrongful death claim must include the full “UNDERSTANDING YOUR RIGHTS” statement the rule sets out.
+- **Civil defendants.** Rule 7.3(d) requires the lawyer to verify on the court docket that the person has been served before soliciting them, with an exception for bankruptcy debtors.
+
+For a website, the practical point is the intake flow. If the site feeds an email or text sequence to people who have not asked to hear from you, that sequence is a solicitation and needs the labels. Automatic replies to people who contacted you first are a different matter, but keep them factual and free of promises.
+
+![Downtown Columbus high-rise buildings beside a bridge on a clear day](https://images.unsplash.com/photo-1578455451341-4abd1a00567e?auto=format&fit=crop&w=1200&q=75)
+
+## Why the Columbus court map belongs on your site
+
+Columbus has an unusual legal geography: most of the courts a local client will face are a short walk apart, and people search for them by name. Pages that explain where a case will be heard, and what happens there, answer questions clients ask before they hire anyone.
+
+| Court | What it handles | Where |
+|---|---|---|
+| Franklin County Court of Common Pleas, General Division | Felonies and larger civil cases | [345 S. High St.](https://www.ohiolegalhelp.org/resource/franklin-county-common-pleas-court) |
+| Domestic Relations and Juvenile Branch | Divorce, dissolution, custody, juvenile | [373 S. High St., 4th floor](https://drj.fccourts.org/Court-Services/E-Filing) |
+| Probate Court | Estates, guardianships, trusts, adoptions | [373 S. High St., 22nd floor](https://probate.franklincountyohio.gov/About/Court-Information) |
+| Tenth District Court of Appeals | Appeals from Franklin County | [373 S. High St., 24th floor](https://www.tenthdistrictcourt.org/About/Contact) |
+| Franklin County Municipal Court | Misdemeanors, traffic, smaller civil cases, evictions, environmental cases | [375 S. High St.](https://fcmcclerk.com/history) |
+| Supreme Court of Ohio | Ohio’s highest court | Thomas J. Moyer Ohio Judicial Center, 65 S. Front St. |
+| U.S. District Court, Southern District of Ohio | Federal cases, Eastern Division | [Joseph P. Kinneary U.S. Courthouse, 85 Marconi Blvd.](https://www.ohsd.uscourts.gov/content/columbus) |
+
+The [Franklin County Municipal Court](https://www.franklincountymunicourt.org/Home) describes itself as the largest and busiest municipal court in Ohio, with 15 judges and 10 magistrates and a separate Environmental Division. For criminal, traffic, landlord-tenant and small business practices, a page that explains what a first appearance there looks like is often more useful to a worried reader than another paragraph about the firm’s values.
+
+The [Clerk of Courts](https://clerk.franklincountyohio.gov/Legal-Divisions) lists its divisions and its e-File system, and the Domestic Relations and Juvenile branch accepts filings through its own [eFiling portal](https://drj.fccourts.org/Court-Services/E-Filing). A family law page that tells a client which documents they will sign and how filings reach the court sets expectations before the first meeting.
+
+Clients can also check a lawyer’s license themselves. The Supreme Court’s [Attorney Directory Search](https://www.supremecourt.ohio.gov/AttorneySearch/#/search) is public; linking to it from attorney profiles is a small signal of confidence.
+
+## How should a Columbus firm set up its Google Business Profile?
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Its [Business Profile guidelines](https://support.google.com/business/answer/3038177) require that the name on the profile be the business’s real-world name and that the business be staffed at the listed address during stated hours. For an Ohio firm, those guidelines and the professional rules pull in the same direction:
+
+- **Use the name you actually practice under.** If you use a trade name, use it consistently on the profile, the site, signage and letterhead, and keep the full entity name on the site as Opinion 2026-02 describes.
+- **No keywords in the name.** “Example Law Columbus Divorce Lawyers” is keyword stuffing under Google’s rules unless it is your legal name.
+- **One profile per staffed office.** A Downtown office and a Dublin or Westerville office that both meet clients can each have a profile; a mail drop cannot.
+- **Description and services.** The “specialist” rule applies here too. Name the certifier or use “concentrates in.”
+- **Matching details.** The address, phone and hours on each profile should match that office’s page on the site exactly.
+
+## What pages should a Columbus law firm website have?
+
+1. **A home page** that says who you help and with what, with the responsible lawyer or firm and office address in the footer.
+2. **One page per practice area,** written for the person with that problem: what happens next, what it costs and how fees work (flat, hourly or contingent, and which costs the client still pays). For help writing these, see [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+3. **Attorney profiles** listing each state of admission, any certification with the certifier named, the courts the lawyer appears in, and a link to the Supreme Court’s directory.
+4. **Court pages** for the courts your clients will face, especially Municipal Court and the Domestic Relations branch.
+5. **Office pages** for each staffed location, with directions and parking for South High Street.
+6. **A results page** only if you can give each result context, with the qualifying note beside it.
+7. **Pages in another language** where your clients need them. If your intake calls show demand for Spanish or another language, translate the practice pages, including every required element, rather than a single “we speak Spanish” line.
+8. **A contact form** that asks only what a conflict check and a callback need, and says how soon you respond.
+
+Skip the set of near-identical pages for Hilliard, Grove City, Gahanna and every other suburb with only the name swapped. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages made to rank for similar searches that funnel to essentially the same content as doorway pages. Write a suburban page only when there is something true and specific to say, such as which mayor’s court or municipal court hears traffic cases there.
+
+![Two colleagues reviewing documents together at an office desk](https://images.unsplash.com/photo-1758611972678-bc3b29b4718f?auto=format&fit=crop&w=1200&q=75)
+
+## An Ohio pre-launch checklist
+
+- [ ] The responsible lawyer or firm and an office address appear on every page, landing page and download (Rule 7.2(c)).
+- [ ] No “specialist,” “specializes” or “expert” unless the lawyer is certified and the certifier is named beside it (Rule 7.4(e)).
+- [ ] No unverifiable superlatives such as “best,” “top” or “most trusted.”
+- [ ] Fees described plainly, with none of the words Comment 4 to Rule 7.1 lists, like “discount” or “special.”
+- [ ] Results shown with context and a qualifying note next to them.
+- [ ] Testimonials checked against the Board’s opinions, with no dollar amounts.
+- [ ] Trade name, if used, paired with the full legal entity name somewhere on the site (Opinion 2026-02).
+- [ ] Lawyers not licensed in Ohio identified on their profiles (Rule 7.5).
+- [ ] No ads bought on other lawyers’ names (Opinion 2021-04).
+- [ ] Lead services and directories checked against Comment 5A: no implied recommendation, no claim to have evaluated the case.
+- [ ] Follow-up emails or texts to people who did not contact you labeled under Rule 7.3(c), with the Rule 7.3(e) statement inside 30 days of an accident.
+- [ ] Structured data describes only what is visible on the page ([Google’s structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Columbus law firm website
+
+A SaySites law firm site starts from the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose intake questions include the other party’s name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish. You change the site by saying what you want in plain words, such as “add ‘Certified Specialist in Family Relations Law, Ohio State Bar Association’ under Maria’s name” or “put our full LPA name in the footer next to the address,” and every change waits as a draft until you approve it. Certifications, results and testimonials come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Ohio site yourself, or [request a free redesign](/redesign) to see your current site rebuilt before you decide. Before launch, run through our [law firm website checklist](/blog/law-firm-website-checklist), read [what we found testing 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites), and compare a neighboring state’s rules in our [Philadelphia law firm website guide](/blog/philadelphia-law-firm-website-design).`,
+    faq: [
+      { q: 'Can an Ohio lawyer call themselves a specialist on a website?', a: 'Yes, if certified. Since April 15, 2024, Rule 7.4(e) allows a specialist claim when the lawyer has been certified by a certifying organization and the page clearly names that organization. The Supreme Court no longer limits the fields or requires its Commission’s accreditation. Lawyers without certification can say their practice is limited to, or concentrates in, a field.' },
+      { q: 'What must appear on every page of an Ohio law firm website?', a: 'Rule 7.2(c) requires the name and office address of at least one lawyer or law firm responsible for the content. A footer with the firm’s full name and office address on every page, including ad landing pages and blog posts, covers it. If you use a trade name, the 2026-02 opinion says the full legal entity name should also appear on the site.' },
+      { q: 'Can an Ohio law firm use a trade name like “Buckeye Injury Law”?', a: 'Yes. Ohio removed its trade name ban in 2020, so Rule 7.5 allows trade names that are not false or misleading about who the lawyers are. Under Advisory Opinion 2026-02, a firm organized as an LPA, LLC or LLP can use the trade name on its website without repeating the entity designation each time, as long as the full legal name appears somewhere on the site.' },
+      { q: 'Is it allowed to buy a competitor lawyer’s name as a Google Ads keyword in Ohio?', a: 'No. The Board of Professional Conduct said in Advisory Opinion 2021-04 that buying another lawyer’s name as a keyword so your ad shows for searches of that name is an act intended to deceive and a misleading communication. Bid on practice areas and places, and write ads about the reader’s problem.' },
+      { q: 'Do Ohio law firm emails to accident victims need special labels?', a: 'Yes, when they are targeted solicitations. Rule 7.3(c) requires “ADVERTISING MATERIAL” or “ADVERTISEMENT ONLY” at the start and end of electronic messages, plus how you learned of the person’s need and a disclaimer of any predetermined evaluation. Within thirty days of an accident, Rule 7.3(e) adds the full “Understanding Your Rights” statement. Replies to people who contacted you first are not solicitations.' },
+      { q: 'Can an Ohio firm pay for online leads?', a: 'Yes, within Rule 7.2. Comment 5A allows paying for Internet-based leads if the lead generator does not recommend the lawyer, does not suggest it referred the person without being paid, and does not claim to have analyzed the person’s legal problem. Read what the service tells consumers before you sign, and avoid reciprocal referral agreements.' },
+      { q: 'What does a SaySites website for a Columbus law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign to see your current site rebuilt before deciding.' },
+    ],
+    about: ['Ohio Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Columbus, Ohio'],
+    published: '2026-10-27',
+    status: 'published',
+  },
+  {
+    slug: 'las-vegas-hvac-website-design',
+    title: 'Las Vegas HVAC Website Design: NSCB Advertising Rules',
+    description: 'What a Las Vegas HVAC website must show under NRS 624.720, how C-21 licenses, permits and NV Energy programs fit in, and pages built for 110-degree days.',
+    kind: 'guide',
+    summary: [
+      'Nevada law says all advertising by a licensed contractor must include the company name and the license number, and the statute counts anything “on the Internet” as advertising (NRS 624.720).',
+      'Penalties are serious: administrative fines from $1,000 to $50,000 per violation, criminal charges, and the Board can have the phone number in an unlawful ad disconnected.',
+      'Heating and air work in Nevada falls under the C-21 Refrigeration and Air-Conditioning classification, and its maintenance subclass excludes replacing complete condenser assemblies, so say only what your license covers.',
+      'Las Vegas averages about 78 days a year at 100°F or hotter, so the site has to work for a stressed homeowner on a phone: emergency call, honest timing, and what to do while they wait.',
+      'Pages about permits, NV Energy programs and the refrigerant change answer questions customers already ask, and link out to the official source.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1579379449399-1adec896a7ed?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of a Las Vegas neighborhood with curving streets, tile roofs and backyard swimming pools' },
+    body: `A Las Vegas HVAC company website has to carry your company name and your Nevada contractor license number, because NRS 624.720 says “all advertising by a licensed contractor must include the name of the contractor’s company and the number of the contractor’s license,” and the statute’s definition of advertising includes anything “on the Internet.” The simplest way to comply is to put both in the header or footer of every page, so no page, landing page or blog post is ever without them. After that, the website’s job is practical: say truthfully what your C-21 license allows, help a homeowner check you out in a minute, and work on a phone in a heat wave, when the person reading it may have a house at 90 degrees inside.
+
+This guide links each legal point to the Nevada statute, regulation or Contractors Board page it comes from, then covers what is particular to the Las Vegas Valley: the heat, the permit rules in the City of Las Vegas and unincorporated Clark County, NV Energy’s programs, and the refrigerant change homeowners keep hearing about. It is a guide for business owners, not legal advice. The Nevada State Contractors Board and the statutes have the final word.
+
+## What does Nevada law require on an HVAC contractor’s website?
+
+The rule is in [NRS 624.720](https://www.leg.state.nv.us/NRS/NRS-624.html), part of Nevada’s contractor licensing chapter. Four parts of it shape a website:
+
+- **You can’t advertise without a license in the right classification.** Subsection 1 makes it unlawful to “advertise as a contractor unless the person has a license in the appropriate classification.”
+- **Name and number in all advertising.** Subsection 4 requires the company name and the license number in all advertising by a licensed contractor.
+- **The number must be yours and valid.** Subsection 5 makes it unlawful to advertise with a license number that “does not correspond to a valid license issued to that person.” A number borrowed from a partner company, or one that has lapsed, is a violation.
+- **The Internet counts.** Subsection 8 defines advertising to include, without limit, signs, cards, vehicle markings, directories, publications, broadcast and anything “on the Internet.”
+
+The Contractors Board says the same thing in plain terms on its [advertising requirements page](https://www.nvcontractorsboard.com/resources/advertising-requirements/): “all forms of business advertisements must display your license number clearly.” Its list of examples includes vehicles, business cards, letterhead, signs, directories and your website, which it calls “the digital front door to your business.” The statute doesn’t name social media, but its definition is open-ended and covers anything on the Internet, so treat your Facebook page, Instagram profile and online ads the same way.
+
+> **Tip:** Put the license number in the site’s header bar beside the phone number, and again in the footer next to the company’s legal name. A homeowner who wants to check you will find it without scrolling, and you never have to remember to add it to a new page.
+
+## What happens if the license number is missing or wrong?
+
+Nevada takes unlicensed advertising seriously, and the penalties apply to licensed contractors who leave the number off as well as to unlicensed operators. Under the same chapter:
+
+1. **Fines.** [NRS 624.710](https://www.leg.state.nv.us/NRS/NRS-624.html) lets the Board impose an administrative fine of “not less than $1,000 and not more than $50,000” for each violation of the advertising rules.
+2. **Criminal charges.** NRS 624.750 makes a violation a misdemeanor for a first offense, a gross misdemeanor for a second and a category E felony for a third or later offense.
+3. **Phone disconnection.** After a hearing, the Board can order the advertising stopped and the phone number in it disconnected. If the order isn’t followed within five days, the Board can ask the Public Utilities Commission of Nevada to have the number cut off.
+
+That last point is worth sitting with: for most HVAC companies the phone number is the business. The Board’s [unlawful advertising page](https://www.nvcontractorsboard.com/investigations/unlawful-advertising/) restates the rule and explains how to report it.
+
+## What should an HVAC website say about the C-21 license?
+
+Heating and air work in Nevada falls under Classification C-21, Refrigeration and Air-Conditioning, defined in [NAC 624.380](https://www.leg.state.nv.us/NAC/NAC-624.html). It has subclassifications: C-21a Refrigeration, C-21b Air-Conditioning, C-21c Sheet Metal, C-21d Maintenance and C-21e Solar Air-Conditioning. The difference matters on a website because the services you list are advertising too. The C-21d maintenance subclass, for example, excludes “the replacement of complete condenser assemblies on remote systems, air handlers.” A company holding only that subclass shouldn’t have a page promising full system replacements.
+
+Practical ways to keep the site honest:
+
+- **List services your license covers.** If ductwork fabrication or solar air-conditioning isn’t in your license, leave it off or say you partner with a licensed company and name who does the work.
+- **Name the classification on the About page.** “Nevada contractor license 0000000, C-21 Refrigeration and Air-Conditioning” tells a careful homeowner exactly what to check.
+- **Link to the Board’s license search.** The [Contractors Board website](https://www.nvcontractorsboard.com) links to its public contractor license search, where a homeowner can confirm your number, classification and status.
+
+Bids and contracts carry more detail than ads. [NAC 624.640](https://www.leg.state.nv.us/NAC/NAC-624.html) requires the license number and any monetary limit in all bids and contracts. You don’t need the monetary limit on the website, but a downloadable estimate form or a “request a quote” confirmation that works like a bid should carry it.
+
+![Two workers in red shirts on a commercial rooftop beside rows of outdoor air conditioning condensing units and ductwork](https://images.unsplash.com/photo-1642749776312-aa42ce20c9f5?auto=format&fit=crop&w=1200&q=75)
+
+## What homeowner protections should the site explain?
+
+Homeowners in Nevada have real protections when they hire a licensed contractor, and explaining them is a strong reason for a reader to choose a licensed company over the cheapest number on a flyer.
+
+- **Residential Recovery Fund.** The Board’s [Residential Recovery Fund](https://www.nvcontractorsboard.com/residential-recovery-fund/) can compensate owner-occupants of single-family homes harmed by a licensed contractor’s work, with awards that “cannot exceed $40,000” and a complaint deadline of four years after the work is completed. The Board says the fund “is not available to homeowners who hire unlicensed contractors.”
+- **Home Improvement Bill of Rights.** The Board’s [homeowner guidance](https://www.nvcontractorsboard.com/resources/home-improvement-bill-of-rights/) tells consumers to hire only licensed contractors, get three bids, avoid paying cash and require the contractor to pull the building permit.
+- **Residential contract rules.** For contracts on owner-occupied single-family homes signed on or after October 1, 2023, [NRS 624.970](https://www.leg.state.nv.us/NRS/NRS-624.html) requires the license number and monetary limit in the contract, caps the deposit at $1,000 or 10 percent of the contract price, whichever is less (with exceptions for bonded work), and requires change orders in writing.
+
+A short “Hiring a licensed HVAC contractor in Nevada” page that explains these, in your words with links to the Board, is useful to the reader and sets you apart from operators who would rather the customer didn’t ask.
+
+## How does Las Vegas heat change what the website needs to do?
+
+Summers in the Las Vegas Valley are long and severe, and the official records show it. The National Weather Service’s [Las Vegas temperature overview](https://www.weather.gov/media/vef/Temperature%20Overview.pdf) lists the all-time record high as 120°F on July 7, 2024, and a normal July high of 104.5°F. Its [count of days by temperature](https://www.weather.gov/media/vef/Number%20of%20Days%20With%20A%20Specific%20Temperature.pdf) puts the normal at 78.2 days a year at 100°F or above and 9.4 days at 110°F or above.
+
+Heat is also a health issue here. The [Southern Nevada Health District’s 2025 heat report](https://media.southernnevadahealthdistrict.org/download/heat-death-report-final-2025.pdf) counted 284 heat-associated deaths in 2025, down from 513 in 2024, with deaths and heat-related emergency visits peaking in August. A broken air conditioner in July isn’t a convenience problem for an older customer.
+
+That shapes the website:
+
+- **A tap-to-call button that never scrolls away.** On a phone, the call button should be visible on every screen.
+- **Honest timing.** If you can’t promise same-day service in a heat wave, say how you triage: households with infants, older adults or medical needs first, for example, if that is your real practice.
+- **What to do while waiting.** A short page on safe steps (check the breaker and thermostat, replace a clogged filter, keep blinds closed, go somewhere cool if the house becomes dangerous) helps the reader and shows you know the work. Link to the health district for heat safety rather than giving medical advice.
+- **Summer-ready forms.** A request form with three or four fields that works with one thumb beats a long form nobody finishes in a hot car.
+
+## What do renters and landlords need to know?
+
+Many Las Vegas calls come from tenants and property managers, and Nevada law has specific rules here. [NRS 118A.290](https://www.leg.state.nv.us/NRS/NRS-118A.html) requires air-conditioning that a landlord supplies or is required to supply to be “maintained in good repair.” NRS 118A.380 gives tenants remedies if the landlord doesn’t restore air-conditioning within 48 hours, excluding weekends and holidays, after written notice. If you serve property managers, a page explaining how you handle rental calls, how you bill the owner, and how quickly you can respond is worth having. Don’t interpret the statute for tenants beyond what it says; link to it and suggest they speak with the landlord or a lawyer.
+
+## Do Las Vegas HVAC replacements need a permit?
+
+Generally yes, and saying so on your site builds trust. The City of Las Vegas guide [“When Do I Need a Permit?”](https://files.lasvegasnevada.gov/building-safety/When-Do-I-Need-a-Permit.pdf) says a permit is required to “install or change any part of a heating or cooling system,” with exemptions for portable units, filter changes and replacing minor parts that don’t change the equipment’s approval. In unincorporated Clark County, which covers much of the valley including Paradise, Spring Valley, Enterprise and Summerlin South, the Department of Building and Fire Prevention’s [permit page](https://www.clarkcountynv.gov/government/departments/building___fire_prevention/plan_submittal/do-i-need-a-permit) says a permit is needed to replace any mechanical system. Henderson and North Las Vegas run their own building departments, so check each jurisdiction you serve.
+
+On the website, a sentence on each replacement page such as “We pull the permit and schedule the inspection with the City of Las Vegas or Clark County, depending on your address” answers a question careful buyers ask, and echoes what the Contractors Board tells homeowners to require.
+
+![A white outdoor air conditioning condenser sitting on the edge of a flat roof against a clear blue sky](https://images.unsplash.com/photo-1681042803902-f79c240d8f03?auto=format&fit=crop&w=1200&q=75)
+
+## Which NV Energy programs and tax rules should the site mention?
+
+Customers ask about money, and a page that answers accurately, with links, is better than a vague “ask about rebates” banner. Check these each season, because programs change:
+
+- **Smart thermostats.** NV Energy’s PowerShift program offers, under its [participation agreement](https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/smart-thermostat/ParticipationAgreement.pdf), a standard smart thermostat at no charge or a premium one at a discount, with no-cost installation, for customers who enroll in the program and its summer energy-saving events.
+- **Duct sealing and insulation.** NV Energy’s [2026 home improvement rebate requirements](https://www.nvenergy.com/publish/content/dam/nvenergy/brochures_arch/save-with-powershift/home-improvements/Rebates-and-Requirments.pdf) list rebates for duct sealing and attic insulation for homes with whole-house electric cooling, with paperwork due within 180 days. If you do duct work, explain the program and who files the paperwork.
+- **The federal credit has ended.** The IRS says the [Energy Efficient Home Improvement Credit](https://www.irs.gov/credits-deductions/energy-efficient-home-improvement-credit) can be claimed for improvements made through December 31, 2025. Remove any “tax credit” claims for 2026 installations from your site.
+
+## How should the site explain the refrigerant change?
+
+Homeowners hear that “the old refrigerant is banned” and worry about their system. The accurate picture is more limited. The EPA’s 2023 technology transition rule barred installing new residential air conditioning and heat pump systems that use refrigerants with a global warming potential above 700, which includes R-410A, starting January 1, 2025, and an interim rule gave equipment made or imported before 2025 until January 1, 2026. In 2026, EPA signed a [final rule](https://www.epa.gov/system/files/documents/2026-05/12166-02-oar_ttrr_pre-pub-version.pdf) that removes the installation deadline for that pre-2025 equipment, while leaving the rules for replacement condensing units unchanged.
+
+On your site, keep it simple and true: existing R-410A systems can keep running and be serviced, new systems use the newer refrigerants, and you will explain the options for a specific home at the estimate. Link to EPA rather than predicting prices.
+
+![A modern black digital thermostat with a round dial mounted on a light wall](https://images.unsplash.com/photo-1774876549476-254b00a5d648?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a Las Vegas HVAC website have?
+
+1. **A home page** with the company name, Nevada license number and classification, phone, and the areas you serve, above the fold on a phone.
+2. **One page per service:** AC repair, system replacement, heat pumps, maintenance plans, duct sealing, thermostats. Describe what is included, how long it takes and what the customer should expect.
+3. **An emergency page** for summer breakdowns, with honest response times and what to do while waiting.
+4. **A service-area page** naming the jurisdictions you work in and noting that permits go through the right building department. Google’s guidance on [service-area businesses](https://support.google.com/business/answer/9157481) explains how to show areas on your Business Profile without listing a home address.
+5. **A licensing and homeowner rights page** with your license details, the Board’s license search and the Residential Recovery Fund.
+6. **A rentals page** if you serve property managers.
+7. **A rebates and refrigerant page** with links to NV Energy, the IRS and EPA, reviewed every spring.
+8. **Spanish pages** for your core services if your callers ask for them, with the license number and company name translated in place.
+
+Don’t build a separate page for every ZIP code with the town name swapped. Google’s [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical location pages as doorway pages. A page for Henderson is worth writing only if you have something specific to say, such as a different permit office, and real jobs there.
+
+## A Nevada pre-launch checklist for HVAC websites
+
+- [ ] Company name and Nevada license number on every page, including ad landing pages and downloads (NRS 624.720(4)).
+- [ ] The number shown matches your own active license (NRS 624.720(5)).
+- [ ] Same name and number on Facebook, Instagram, your Google Business Profile and online ads.
+- [ ] Services listed match your C-21 subclassifications.
+- [ ] Bid and estimate documents carry the license number and monetary limit (NAC 624.640).
+- [ ] A link to the Contractors Board’s license search.
+- [ ] No 2026 federal tax credit claims; NV Energy program details checked against the current pages.
+- [ ] Permit language that names the right building department for each area.
+- [ ] Tap-to-call on every screen and a short request form.
+- [ ] Structured data that describes only what is visible on the page ([Google’s structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Las Vegas HVAC website
+
+SaySites builds heating and air websites around the page plan above: a page for each service, a service-area page, a tap-to-call number and a job request form, in a contractor layout with a request bar and a call band. The slim bar above the header is a natural home for your license line, and the footer carries your company name. The site is described to search engines as an HVACBusiness, and no page goes live until it passes a 95+ speed check. Requests land in a leads pipeline where you can call, text, add notes and follow each one through to a booked job. To change something, you type it in plain words, such as “add ‘Nevada license 0000000, C-21’ to the top bar on every page” or “add a page about NV Energy’s duct sealing rebate,” and you see the change as a draft before it goes live. License numbers, prices and reviews come only from you.
+
+The Site plan is $15 a month with hosting included and your own domain connected ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your site ready before next summer, or [request a free redesign](/redesign) to see your current site rebuilt first. For more, see our [home service website checklist](/blog/home-service-website-checklist), how to [show Google where you work without a storefront](/blog/service-area-business-google), and how another desert city handles the same questions in our [Phoenix HVAC website guide](/blog/phoenix-hvac-website-design).`,
+    faq: [
+      { q: 'Does a Nevada HVAC contractor have to show the license number on its website?', a: 'Yes. NRS 624.720 requires all advertising by a licensed contractor to include the company name and license number, and it defines advertising to include anything on the Internet. The Contractors Board’s own advertising page names websites as one of the places the number must appear. Putting it in the header or footer of every page is the simplest way to comply.' },
+      { q: 'What is the penalty for advertising without a license number in Nevada?', a: 'The Board can impose administrative fines from $1,000 to $50,000 for each violation under NRS 624.710. A violation is also a crime under NRS 624.750, starting as a misdemeanor and rising to a felony for repeat offenses. After a hearing, the Board can also order the phone number in the advertisement disconnected.' },
+      { q: 'Which Nevada license classification covers HVAC work?', a: 'Classification C-21, Refrigeration and Air-Conditioning, under NAC 624.380. Its subclasses are C-21a Refrigeration, C-21b Air-Conditioning, C-21c Sheet Metal, C-21d Maintenance and C-21e Solar Air-Conditioning. The maintenance subclass excludes replacing complete condenser assemblies and air handlers, so a company should only advertise the work its own classification allows.' },
+      { q: 'Do I need a permit to replace an air conditioner in Las Vegas?', a: 'Generally yes. The City of Las Vegas says a permit is required to install or change any part of a heating or cooling system, apart from portable units, filter changes and minor parts. Unincorporated Clark County requires a permit to replace a mechanical system. Henderson and North Las Vegas have their own building departments, so the permit office depends on the address.' },
+      { q: 'Can homeowners still claim a federal tax credit for a new AC or heat pump?', a: 'Not for 2026 installations. The IRS says the Energy Efficient Home Improvement Credit applies to improvements made through December 31, 2025. NV Energy still runs its own programs, including smart thermostats through PowerShift and rebates for duct sealing and insulation, so point customers to those pages and check the details each season.' },
+      { q: 'Is R-410A banned for air conditioners in Las Vegas?', a: 'Not for existing systems, which can keep running and be serviced. Federal rules barred installing new residential systems with high global warming potential refrigerants such as R-410A from 2025, and a 2026 EPA rule removes the installation deadline for equipment made before 2025. Explain the options for each home at the estimate and link to EPA.' },
+      { q: 'What does a SaySites website for a Las Vegas HVAC company cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting and your own domain included. It comes with service pages, a service-area page, tap-to-call, a job request form, HVACBusiness structured data and a leads pipeline. You can also request a free redesign to see your current site rebuilt before you decide.' },
+    ],
+    about: ['Nevada contractor licensing', 'Contractor advertising', 'HVAC company websites', 'Las Vegas, Nevada'],
+    published: '2026-10-27',
+    status: 'published',
+  },
+  {
     slug: 'charlotte-law-firm-website-design',
     title: 'Charlotte Law Firm Website Design: NC Bar Ad Rules',
     description: 'Plan a Charlotte law firm website under North Carolina Rules 7.1 to 7.4: specialist claims, testimonials, lead services, SC lawyers and Mecklenburg courts.',
