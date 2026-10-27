@@ -1,0 +1,698 @@
+/* The entrance, sensor lighting, room depth and the orbiting glass cards.
+   Loaded after globals.css. Lighting runs once, from the moment you click
+   "Enter the studio" (the .entered class), and settles into the lit room. */
+
+/* ---------- Entrance ---------- */
+.door-seam {
+  pointer-events: none;
+}
+.entrance-nameplate {
+  z-index: 6;
+}
+.opening .entrance-architecture {
+  animation: none;
+}
+
+/* ---------- The room ---------- */
+.office-environment {
+  transition: none;
+  inset: -2.5%;
+  transform: perspective(1800px) translate3d(calc(var(--px) * -16px), calc(var(--py) * -10px), 0)
+    rotateY(calc(var(--px) * -1.1deg)) rotateX(calc(var(--py) * 0.7deg)) scale(1.02);
+}
+.office-plate {
+  filter: brightness(0.07) saturate(0.5);
+}
+
+.room-lights {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.room-lights > * {
+  position: absolute;
+}
+/* Each zone is the lit room, masked to the area one bank of lights reaches. */
+.zone {
+  inset: 0;
+  background: url(/art/studio-office.webp) 0 0 / 100% 100% no-repeat;
+  opacity: 1;
+}
+.zone-floor {
+  -webkit-mask: radial-gradient(ellipse 70% 26% at 50% 96%, #000 35%, #0000 100%);
+  mask: radial-gradient(ellipse 70% 26% at 50% 96%, #000 35%, #0000 100%);
+  filter: brightness(0.75);
+}
+.zone-pillar-l,
+.zone-pillar-r {
+  -webkit-mask: radial-gradient(ellipse 10% 46% at var(--x) 52%, #000 30%, #0000 100%);
+  mask: radial-gradient(ellipse 10% 46% at var(--x) 52%, #000 30%, #0000 100%);
+  filter: brightness(0.9);
+}
+.zone-pillar-l {
+  --x: 14%;
+}
+.zone-pillar-r {
+  --x: 86%;
+}
+.zone-ceiling {
+  -webkit-mask: radial-gradient(ellipse 62% 34% at 50% 6%, #000 40%, #0000 100%);
+  mask: radial-gradient(ellipse 62% 34% at 50% 6%, #000 40%, #0000 100%);
+}
+.zone-full {
+  opacity: 1;
+}
+/* A spotlight on the desk that stays on as an accent once the room is lit */
+.zone-desk {
+  -webkit-mask: radial-gradient(ellipse 30% 20% at 50% 63%, #000 20%, #0000 100%);
+  mask: radial-gradient(ellipse 30% 20% at 50% 63%, #000 20%, #0000 100%);
+  filter: brightness(1.35) saturate(1.1);
+  opacity: 0.5;
+}
+
+.beam {
+  top: 3%;
+  left: 50%;
+  width: 24%;
+  height: 64%;
+  transform: translateX(-50%) rotate(var(--r, 0deg));
+  transform-origin: 50% 0;
+  background: linear-gradient(#ffe2aa38, #ffe2aa10 62%, #0000);
+  clip-path: polygon(45% 0, 55% 0, 100% 100%, 0 100%);
+  filter: blur(7px);
+  mix-blend-mode: screen;
+  opacity: 0.55;
+}
+.beam-b {
+  --r: 16deg;
+  left: 40%;
+  width: 14%;
+  opacity: 0.3;
+}
+.beam-c {
+  --r: -16deg;
+  left: 60%;
+  width: 14%;
+  opacity: 0.3;
+}
+
+.motes {
+  inset: 0;
+  opacity: 1;
+}
+.motes b {
+  position: absolute;
+  border-radius: 50%;
+  background: #fff0cf;
+  box-shadow: 0 0 6px #ffdca0;
+  opacity: 0;
+  animation: mote-drift linear infinite;
+}
+
+.glints {
+  inset: 0 20% 70%;
+  mix-blend-mode: screen;
+}
+.glints b {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #fff6dd;
+  box-shadow: 0 0 8px 2px #ffd98a88;
+  opacity: 0.15;
+  animation: twinkle 4.5s ease-in-out infinite;
+}
+
+/* Light that follows you around the room */
+.room-torch {
+  position: fixed;
+  z-index: -2;
+  left: 0;
+  top: 0;
+  width: 52vmax;
+  height: 52vmax;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe7bb66, #ffd49a22 35%, #0000 65%);
+  mix-blend-mode: soft-light;
+  opacity: 0.9;
+  transform: translate3d(50vw, 60vh, 0) translate(-50%, -50%);
+}
+
+/* ---------- The switch-on sequence (only after you enter) ---------- */
+.entered .zone-floor { animation: sensor-on 0.9s 0.85s both; }
+.entered .zone-pillar-l { animation: sensor-on 0.9s 1.35s both; }
+.entered .zone-pillar-r { animation: sensor-on 0.9s 1.55s both; }
+.entered .zone-ceiling { animation: sensor-on 1s 1.95s both; }
+.entered .zone-full { animation: daylight 1.9s 2.55s cubic-bezier(0.3, 0, 0.2, 1) both; }
+.entered .zone-desk { animation: desk-on 2.8s 3.35s both; }
+.entered .beam { animation: beam-in 1.6s 3.55s both; }
+.entered .motes { animation: fade-up 2.5s 3.8s both; }
+.entered .glints b { animation: glint-on 0.5s calc(2s + var(--d)) both, twinkle 4.5s calc(2.6s + var(--d)) ease-in-out infinite; }
+.entered .room-torch { animation: fade-up 2s 3.6s both; }
+.room-lights .zone,
+.beam,
+.motes,
+.room-torch {
+  opacity: 0;
+}
+.entered .room-lights .zone-floor,
+.entered .room-lights .zone-pillar-l,
+.entered .room-lights .zone-pillar-r,
+.entered .room-lights .zone-ceiling,
+.entered .room-lights .zone-full,
+.entered .motes,
+.entered .room-torch {
+  opacity: 1;
+}
+.entered .room-lights .zone-desk {
+  opacity: 0.5;
+}
+.entered .beam {
+  opacity: 0.55;
+}
+.entered .beam-b,
+.entered .beam-c {
+  opacity: 0.3;
+}
+/* Reduced motion: the room is simply lit. */
+.reduced .room-lights .zone,
+.reduced .motes {
+  opacity: 1;
+}
+.reduced .room-lights .zone-desk {
+  opacity: 0.5;
+}
+
+@keyframes sensor-on {
+  0% { opacity: 0; }
+  7% { opacity: 0.85; }
+  12% { opacity: 0.08; }
+  19% { opacity: 0.95; }
+  24% { opacity: 0.35; }
+  34%, 100% { opacity: 1; }
+}
+@keyframes daylight {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes desk-on {
+  0% { opacity: 0; }
+  8% { opacity: 1; }
+  12% { opacity: 0.2; }
+  20%, 60% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+@keyframes beam-in {
+  from { opacity: 0; filter: blur(16px); }
+  to { filter: blur(7px); }
+}
+@keyframes fade-up {
+  from { opacity: 0; }
+}
+@keyframes glint-on {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0.2; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.15; transform: scale(0.6); }
+  50% { opacity: 0.9; transform: scale(1.3); }
+}
+@keyframes mote-drift {
+  0% { opacity: 0; transform: translate3d(0, 0, 0); }
+  20% { opacity: 0.75; }
+  80% { opacity: 0.5; }
+  100% { opacity: 0; transform: translate3d(18px, -70px, 0); }
+}
+
+/* ---------- Compass ---------- */
+.compass-mount {
+  filter: drop-shadow(0 26px 40px #000a) drop-shadow(0 0 34px #d49b3b55);
+}
+
+/* ---------- Orbiting glass cards ---------- */
+.orbit-field {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.orbit-filaments {
+  position: absolute;
+  inset: 0;
+  z-index: 12;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke-width: 1;
+  stroke-dasharray: 2 7;
+  pointer-events: none;
+  animation: filament-run 14s linear infinite;
+  filter: drop-shadow(0 0 3px #ffd98a88);
+}
+@keyframes filament-run {
+  to { stroke-dashoffset: -180; }
+}
+
+.orbit-card {
+  --depth: 1;
+  --mx: 30%;
+  --my: 0%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 25;
+  width: clamp(200px, 15.5vw, 252px);
+  padding: 0;
+  text-align: left;
+  color: #f4ecd8;
+  pointer-events: auto;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(152deg, #ffffff26, #ffffff08 34%, #0000 60%, #ffe8c014),
+    linear-gradient(#0a121acc, #070d13b3);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid #fff1d64a;
+  box-shadow:
+    inset 0 1px 0 #ffffff59,
+    inset 0 -1px 0 #0000003d,
+    inset 0 0 28px #ffffff0d,
+    0 34px 70px -24px #000c,
+    0 0 46px #ffd68c1c;
+  will-change: transform, opacity;
+  transition: border-color 0.4s, box-shadow 0.4s, background 0.4s;
+}
+/* Cards on the far side of the orbit sit in shadow */
+.orbit-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  background: #02060a;
+  opacity: calc((1 - var(--depth)) * 0.5);
+}
+/* Glass edge: bright top rim, fading down the sides */
+.orbit-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  pointer-events: none;
+  padding: 1px;
+  background: linear-gradient(170deg, #fff8e8cc, #fff2d522 30%, #0000 60%, #bff4ee55);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+}
+.orbit-card-film {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  background: conic-gradient(from var(--sheen, 0deg) at 35% 25%, #ffb47800, #ffc78c26, #8ce6ff1f, #c8a0ff19, #ffb47800);
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+.orbit-card-light {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx) var(--my), #ffffff40, #ffffff10 26%, #0000 50%);
+  mix-blend-mode: screen;
+  opacity: 0.5;
+  transition: opacity 0.4s;
+}
+.card-top,
+.card-emblem,
+.card-screen,
+.card-caption {
+  position: relative;
+  z-index: 1;
+}
+.orbit-card:hover,
+.orbit-card:focus-visible {
+  border-color: #ffeec2a8;
+  background:
+    linear-gradient(152deg, #ffffff33, #ffffff0c 34%, #0000 60%, #ffe8c01c),
+    linear-gradient(#0c1620d9, #08101ac2);
+  box-shadow:
+    inset 0 1px 0 #ffffff80,
+    inset 0 -1px 0 #0000003d,
+    inset 0 0 30px #ffffff14,
+    0 40px 80px -24px #000d,
+    0 0 60px #ffd68c40;
+}
+.orbit-card:hover .orbit-card-light,
+.orbit-card:focus-visible .orbit-card-light {
+  opacity: 1;
+}
+.orbit-card:focus-visible {
+  outline: 2px solid #f5d68b;
+  outline-offset: 4px;
+}
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px;
+  font-size: 7.5px;
+  letter-spacing: 0.22em;
+  color: #fff0d2b8;
+  border-bottom: 1px solid #fff0d21f;
+  white-space: nowrap;
+}
+.card-top > i {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, #fff0d244, #0000);
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: #8fffe0;
+  box-shadow: 0 0 8px #8fffe0;
+  animation: live 2.4s ease-in-out infinite;
+}
+@keyframes live {
+  50% { opacity: 0.35; box-shadow: 0 0 2px #8fffe0; }
+}
+
+.card-emblem {
+  position: relative;
+  display: grid;
+  place-items: center;
+  height: 92px;
+  margin: 6px 10px 0;
+}
+.card-emblem::before,
+.card-emblem::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+.card-emblem::before {
+  width: 64px;
+  height: 64px;
+  background: radial-gradient(circle at 35% 30%, #ffffff3a, #ffffff08 55%, #0000 70%);
+  border: 1px solid #fff2d555;
+  box-shadow: inset 0 0 18px #ffe0a022, 0 0 24px #ffd68c22;
+}
+.card-emblem::after {
+  width: 82px;
+  height: 82px;
+  border: 1px dashed #fff2d52e;
+  animation: emblem-turn 28s linear infinite;
+}
+@keyframes emblem-turn {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.card-emblem > span {
+  position: relative;
+  font: 34px "Cormorant Garamond", Georgia, serif;
+  color: #fff6e0;
+  text-shadow: 0 0 18px #ffd68c99;
+}
+
+.card-caption {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px 16px;
+}
+.card-caption strong {
+  display: block;
+  font: 400 25px/1.02 "Cormorant Garamond", Georgia, serif;
+  color: #fff8e9;
+  text-shadow: 0 1px 10px #0008;
+}
+.card-caption small {
+  display: block;
+  margin-top: 6px;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #f4ead2b0;
+}
+.work-card .card-caption small {
+  margin: 0 0 5px;
+  font-size: 8px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.card-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #fff0d24d;
+  font-size: 13px;
+  color: #ffe9b8;
+  transition: background 0.3s, transform 0.3s;
+}
+.orbit-card:hover .card-arrow {
+  background: #ffe9b826;
+  transform: translate(2px, -2px);
+}
+
+.work-card {
+  width: clamp(212px, 17vw, 284px);
+}
+.card-screen {
+  position: relative;
+  display: block;
+  aspect-ratio: 1.6;
+  margin: 8px 8px 0;
+  border-radius: 11px;
+  overflow: hidden;
+  background: #081a23;
+  box-shadow: 0 0 0 1px #fff0d226, 0 10px 24px -10px #000c;
+}
+.card-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: saturate(0.85) brightness(0.92);
+  transition: filter 0.4s, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.card-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, #ffffff2e, #ffffff00 38%), linear-gradient(#0000 60%, #0006);
+  pointer-events: none;
+}
+.orbit-card:hover .card-screen img {
+  filter: none;
+  transform: scale(1.04);
+}
+
+@media (max-width: 760px) {
+  .orbit-card,
+  .work-card {
+    width: min(56vw, 250px);
+    border-radius: 14px;
+  }
+  .card-screen {
+    margin: 6px 6px 0;
+    border-radius: 8px;
+  }
+  .card-emblem {
+    height: 70px;
+  }
+  .card-emblem::before {
+    width: 50px;
+    height: 50px;
+  }
+  .card-emblem::after {
+    width: 64px;
+    height: 64px;
+  }
+  .card-emblem > span {
+    font-size: 27px;
+  }
+  .card-caption strong {
+    font-size: 19px;
+  }
+  .card-caption small {
+    font-size: 9px;
+  }
+  .card-top {
+    font-size: 6px;
+    height: 28px;
+    padding: 0 10px;
+  }
+  .card-arrow {
+    width: 24px;
+    height: 24px;
+  }
+  .room-torch {
+    display: none;
+  }
+}
+
+/* The interface surfaces once there's light to see it by. Backwards fill only,
+   so later transitions (like the intro hiding on awaken) still run. */
+.entered .studio-header,
+.entered .studio-intro,
+.entered .activate-compass,
+.entered .desk-inscription,
+.entered .studio-footer {
+  animation: fade-up 1.4s 2.7s backwards;
+}
+
+/* ---------- Card details ---------- */
+/* A point of light that runs around the card's edge */
+@property --run {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.orbit-card-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background: conic-gradient(from var(--run), #0000 0 62%, #ffe2a066 72%, #fff6dd 78%, #a8fff2aa 82%, #0000 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: calc(0.25 + var(--depth) * 0.75);
+  filter: drop-shadow(0 0 4px #ffd98a);
+  animation: edge-run 5.5s linear infinite;
+}
+.orbit-card:nth-child(odd) .orbit-card-edge {
+  animation-duration: 7s;
+  animation-direction: reverse;
+}
+@keyframes edge-run {
+  to { --run: 360deg; }
+}
+.card-index {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 14px;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  color: #fff0d28c;
+}
+.service-card .card-index {
+  top: 44px;
+}
+.work-card .card-top > span:last-child {
+  display: none;
+}
+.work-card .card-top {
+  padding-right: 64px;
+}
+/* Depth: the emblem or screenshot floats above the glass as the card turns */
+.card-emblem,
+.card-screen {
+  transform: translate3d(calc(var(--ty, 0) * 0.45px), calc(var(--tx, 0) * -0.45px), 0);
+}
+.card-caption {
+  transform: translate3d(calc(var(--ty, 0) * -0.15px), calc(var(--tx, 0) * 0.15px), 0);
+}
+
+/* ---------- Phones ---------- */
+.orbit-swipe {
+  display: none;
+}
+.touch-lights {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+.touch-lights i {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  background: radial-gradient(circle, #fff1cf55, #ffd99a1f 30%, #0000 62%);
+  mix-blend-mode: soft-light;
+  animation: touch-light 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.touch-lights i::after {
+  content: "";
+  position: absolute;
+  inset: 46%;
+  border-radius: 50%;
+  border: 1px solid #ffe9bd88;
+  animation: touch-ring 0.9s ease-out forwards;
+}
+@keyframes touch-light {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+@keyframes touch-ring {
+  from { inset: 49%; opacity: 1; }
+  to { inset: 30%; opacity: 0; }
+}
+
+@media (max-width: 760px) {
+  /* Cormorant now loads and sets wider than the old fallback */
+  .studio-brand {
+    font-size: 18px;
+    letter-spacing: 0.1em;
+  }
+  .awakened .compass-mount {
+    top: 34%;
+    width: 64%;
+    height: 30%;
+  }
+  .collection-heading {
+    top: 12.5%;
+  }
+  .orbit-swipe {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+    bottom: 15%;
+    z-index: 19;
+    touch-action: none;
+    pointer-events: auto;
+  }
+  .orbit-card {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .orbit-filaments {
+    stroke-width: 0.8;
+  }
+  .card-index {
+    top: 9px;
+    right: 10px;
+    font-size: 6px;
+  }
+  .work-card .card-top {
+    padding-right: 48px;
+  }
+  .service-card .card-index {
+    top: 37px;
+  }
+}

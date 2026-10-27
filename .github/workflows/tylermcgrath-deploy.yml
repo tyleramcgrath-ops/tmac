@@ -1,0 +1,107 @@
+# Builds the tylermcgrath.com portfolio (a static Next.js export) and puts the
+# contents of out/ straight into the SiteGround document root over SSH. No
+# Node runtime on the server: SiteGround just serves the files.
+#
+# Needs these repository secrets (Settings → Secrets and variables → Actions):
+#   SG_SSH_HOST      SiteGround SSH host, e.g. ssh.tylermcgrath.com or the server name
+#   SG_SSH_PORT      SiteGround's SSH port (18765 unless Site Tools says otherwise)
+#   SG_SSH_USER      the SSH username from Site Tools → Devs → SSH Keys Manager
+#   SG_SSH_KEY       the private key for that user (no passphrase)
+#   SG_DOC_ROOT      optional; defaults to www/tylermcgrath.com/public_html
+name: tylermcgrath.com deploy
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/tylermcgrath/**']
+  workflow_dispatch:
+    inputs:
+      flush_only:
+        description: 'Only clear the SiteGround cache and verify (no build or upload)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tylermcgrath-deploy
+  cancel-in-progress: false
+
+env:
+  APP_DIR: apps/tylermcgrath
+  DOC_ROOT: ${{ secrets.SG_DOC_ROOT || 'www/tylermcgrath.com/public_html' }}
+  SSH_PORT: ${{ secrets.SG_SSH_PORT || '18765' }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build
+        if: ${{ !inputs.flush_only }}
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          npm ci
+          npm run build
+
+      # The site only works when these sit at the top of the document root.
+      - name: Check the export
+        if: ${{ !inputs.flush_only }}
+        working-directory: ${{ env.APP_DIR }}
+        run: |
+          for p in index.html _next art projects; do
+            test -e "out/$p" || { echo "out/$p is missing"; exit 1; }
+          done
+          grep -o '\\"b\\":\\"[^\\"]*' out/index.html | head -1 | sed 's/.*\\"//' > ../../build-id.txt
+          echo "Build ID: $(cat ../../build-id.txt)"
+          test -s ../../build-id.txt
+
+      - name: Set up SSH
+        env:
+          SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
+          SG_SSH_HOST: ${{ secrets.SG_SSH_HOST }}
+        run: |
+          test -n "$SG_SSH_KEY" && test -n "$SG_SSH_HOST" || { echo "SG_SSH_KEY / SG_SSH_HOST secrets are not set"; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SG_SSH_KEY" > ~/.ssh/sg && chmod 600 ~/.ssh/sg
+          ssh-keyscan -p "$SSH_PORT" "$SG_SSH_HOST" >> ~/.ssh/known_hosts
+          printf 'Host sg\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/sg\n' \
+            "$SG_SSH_HOST" "$SSH_PORT" "${{ secrets.SG_SSH_USER }}" > ~/.ssh/config
+
+      - name: Back up the current document root
+        if: ${{ !inputs.flush_only }}
+        run: |
+          ssh sg "mkdir -p ~/backups && tar czf ~/backups/tylermcgrath-\$(date -u +%Y%m%d-%H%M%S).tgz -C \"\$(dirname $DOC_ROOT)\" \"\$(basename $DOC_ROOT)\" && ls -1t ~/backups/tylermcgrath-*.tgz | tail -n +11 | xargs -r rm --"
+
+      # Contents of out/ go directly into public_html (trailing slash), never a
+      # subfolder. Server-only files SiteGround or other tools keep there stay.
+      - name: Upload
+        if: ${{ !inputs.flush_only }}
+        run: |
+          rsync -az --delete \
+            --exclude '.htaccess' --exclude '.well-known/' --exclude 'cgi-bin/' \
+            "$APP_DIR/out/" "sg:$DOC_ROOT/"
+
+      - name: Flush SiteGround cache
+        run: ssh sg "site-tools-client domain-all update id=1 flush_cache=1"
+
+      - name: Install Chromium
+        run: npx -y playwright@1.56.1 install --with-deps chromium
+
+      - name: Verify the live site
+        run: |
+          npm i --no-save --prefix /tmp/pw playwright@1.56.1
+          NODE_PATH=/tmp/pw/node_modules node scripts/verify-tylermcgrath.cjs "$(cat build-id.txt 2>/dev/null)" shots
+
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tylermcgrath-screenshots
+          path: shots/
+          if-no-files-found: ignore
