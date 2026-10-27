@@ -2,7 +2,8 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
-import lightClicks from "@/lib/lightClicks";
+import { enableTilt, tilt } from "@/lib/motion";
+import * as sfx from "@/lib/sound";
 import projects, { type Project } from "@/lib/projects";
 import type { CompassState } from "./Compass";
 import OrbitField, { type OrbitItem } from "./OrbitField";
@@ -59,7 +60,6 @@ export default function Studio() {
   const [awake, setAwake] = useState(false);
   const [waking, setWaking] = useState(false);
   const [page, setPage] = useState(0);
-  const [compact, setCompact] = useState(false);
   const [filter, setFilter] = useState("All");
   const [hovering, setHovering] = useState(false);
   const [paused, setPaused] = useState(false);
@@ -69,14 +69,16 @@ export default function Studio() {
   const [mode, setMode] = useState<"studio" | "work">("studio");
   const [cycle, setCycle] = useState<CompassState>("idle");
   const [voice, setVoice] = useState(true);
+  const [sound, setSound] = useState(true);
   const [pulse, setPulse] = useState(0);
   const room = useRef<HTMLDivElement>(null);
   const torch = useRef<HTMLDivElement>(null);
+  const ripples = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const dialog = useRef<HTMLDivElement>(null);
   const returnFocus = useRef<Element | null>(null);
 
-  const perPage = compact ? 2 : 4;
+  const perPage = 4;
   const shown = ordered.filter((p) => filter === "All" || p.group === filter);
   const pages = Math.ceil(shown.length / perPage);
   const slice = shown.slice((page % pages) * perPage, (page % pages) * perPage + perPage);
@@ -84,6 +86,7 @@ export default function Studio() {
 
   function open(p: Panel) {
     returnFocus.current = document.activeElement;
+    sfx.chime();
     setPanel(p);
   }
   function close() {
@@ -101,8 +104,10 @@ export default function Studio() {
   }
   function directCompass() {
     setPulse((p) => p + 1);
+    sfx.buzz(14);
     setCycle((c) => {
       const next = CYCLE[(CYCLE.indexOf(c) + 1) % CYCLE.length];
+      sfx.compass(CYCLE.indexOf(next));
       say(CYCLE_LINES[next]!);
       return next;
     });
@@ -111,7 +116,12 @@ export default function Studio() {
     if (opening) return;
     setOpening(true);
     setEntered(true);
-    if (voice && !reduced) lightClicks();
+    // Audio and tilt both need this tap to unlock on phones.
+    sfx.unlock();
+    enableTilt();
+    sfx.doors();
+    if (!reduced) sfx.lights();
+    sfx.ambience(reduced ? 0.2 : 3);
     say("Welcome to Tyler McGrath's portfolio. The studio is open. Click the Compass to find a direction.");
     setTimeout(() => {
       setArrived(true);
@@ -123,6 +133,8 @@ export default function Studio() {
     setWaking(true);
     setCycle("idle");
     setPulse((p) => p + 1);
+    sfx.awaken();
+    sfx.buzz(20);
     say("The Compass is awake. Choose a direction.");
   }
 
@@ -131,7 +143,6 @@ export default function Studio() {
     const sm = matchMedia("(max-width: 760px)");
     const sync = () => {
       setReduced(rm.matches);
-      setCompact(sm.matches);
       setPage(0);
     };
     sync();
@@ -154,7 +165,7 @@ export default function Studio() {
     if (reduced) return;
     let raf = 0;
     let tx = 0, ty = 0, x = 0, y = 0;
-    let lx = innerWidth / 2, ly = innerHeight * 0.6, cx = lx, cy = ly;
+    let lx = -1, ly = -1, cx = innerWidth / 2, cy = innerHeight * 0.6;
     const move = (e: PointerEvent) => {
       if (e.pointerType === "touch") return;
       tx = (e.clientX / innerWidth - 0.5) * 2;
@@ -164,10 +175,17 @@ export default function Studio() {
     };
     const tick = () => {
       if (!paused) {
+        // No mouse on a phone: the room leans with the phone instead.
+        if (tilt.has && lx === -1) {
+          tx = tilt.x;
+          ty = tilt.y;
+        }
         x += (tx - x) * 0.05;
         y += (ty - y) * 0.05;
-        cx += (lx - cx) * 0.12;
-        cy += (ly - cy) * 0.12;
+        if (lx !== -1) {
+          cx += (lx - cx) * 0.12;
+          cy += (ly - cy) * 0.12;
+        }
         room.current?.style.setProperty("--px", x.toFixed(4));
         room.current?.style.setProperty("--py", y.toFixed(4));
         torch.current?.style.setProperty("transform", `translate3d(${cx}px, ${cy}px, 0) translate(-50%, -50%)`);
@@ -226,11 +244,12 @@ export default function Studio() {
 
   const compassState: CompassState = awake ? (waking ? "wake" : hovering ? "hover" : cycle) : "sleep";
 
-  const serviceItems: OrbitItem[] = SERVICES.slice(compact ? (page % 2) * 2 : 0, compact ? (page % 2) * 2 + 2 : 4).map((s) => ({
+  const serviceItems: OrbitItem[] = SERVICES.map((s) => ({
     key: s.key,
     className: "service-card",
     onClick: () => {
       if (s.key === "work") {
+        sfx.chime();
         setMode("work");
         setPage(0);
       } else open(s.key as Panel);
@@ -280,6 +299,15 @@ export default function Studio() {
 
   return (
     <main
+      onPointerDown={(e) => {
+        // On a phone, a tap sends light through the room where you touched.
+        if (e.pointerType !== "touch" || reduced || !ripples.current) return;
+        const r = document.createElement("i");
+        r.style.left = `${e.clientX}px`;
+        r.style.top = `${e.clientY}px`;
+        r.addEventListener("animationend", () => r.remove());
+        ripples.current.append(r);
+      }}
       className={`studio ${entered ? "entered" : ""} ${arrived ? "arrived" : ""} ${opening ? "door-opening" : ""} ${awake ? "awakened" : "resting"} ${waking ? "waking" : ""} ${roomLoaded ? "room-loaded" : ""} ${reduced ? "reduced" : ""} compass-${compassState}`}
     >
       <div className="studio-content" inert={!arrived}>
@@ -318,6 +346,7 @@ export default function Studio() {
           <div className="ceiling-response" />
         </div>
         <div className="room-torch" ref={torch} aria-hidden="true" />
+        <div className="touch-lights" ref={ripples} aria-hidden="true" />
 
         <header className="studio-header">
           <div className="studio-location">
@@ -438,17 +467,15 @@ export default function Studio() {
                   </>
                 )}
               </div>
-              {(mode === "work" || compact) && (
+              {mode === "work" && (
                 <div className="console-pager">
-                  <button aria-label="Previous signals" onClick={() => setPage((p) => (p + (mode === "work" ? pages : 2) - 1) % (mode === "work" ? pages : 2))}>
+                  <button aria-label="Previous signals" onClick={() => setPage((p) => (p + pages - 1) % pages)}>
                     ←
                   </button>
                   <span>
-                    {mode === "work"
-                      ? `${(page % pages) * perPage + 1}—${Math.min(((page % pages) + 1) * perPage, shown.length)} / ${shown.length}`
-                      : `${(page % 2) + 1} / 2`}
+                    {`${(page % pages) * perPage + 1}—${Math.min(((page % pages) + 1) * perPage, shown.length)} / ${shown.length}`}
                   </span>
-                  <button aria-label="Next signals" onClick={() => setPage((p) => (p + 1) % (mode === "work" ? pages : 2))}>
+                  <button aria-label="Next signals" onClick={() => setPage((p) => (p + 1) % pages)}>
                     →
                   </button>
                 </div>
@@ -472,6 +499,17 @@ export default function Studio() {
               }}
             >
               {voice ? "◖ Voice" : "◖ Voice off"}
+            </button>
+            <button
+              aria-label={sound ? "Mute studio sound" : "Enable studio sound"}
+              aria-pressed={sound}
+              onClick={() => {
+                sfx.unlock();
+                sfx.setSound(!sound);
+                setSound(!sound);
+              }}
+            >
+              {sound ? "♪ Sound" : "♪ Sound off"}
             </button>
             <button aria-label={paused ? "Resume Compass motion" : "Pause Compass motion"} aria-pressed={paused} onClick={() => setPaused(!paused)}>
               {paused ? "▷ Resume" : "Ⅱ Pause"}

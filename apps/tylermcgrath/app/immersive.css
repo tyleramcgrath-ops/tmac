@@ -329,7 +329,10 @@
   opacity: 0.5;
   transition: opacity 0.4s;
 }
-.orbit-card > :not(.orbit-card-film):not(.orbit-card-light) {
+.card-top,
+.card-emblem,
+.card-screen,
+.card-caption {
   position: relative;
   z-index: 1;
 }
@@ -504,7 +507,7 @@
 @media (max-width: 760px) {
   .orbit-card,
   .work-card {
-    width: 44vw;
+    width: min(56vw, 250px);
     border-radius: 14px;
   }
   .card-screen {
@@ -553,4 +556,143 @@
 .entered .desk-inscription,
 .entered .studio-footer {
   animation: fade-up 1.4s 2.7s backwards;
+}
+
+/* ---------- Card details ---------- */
+/* A point of light that runs around the card's edge */
+@property --run {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.orbit-card-edge {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  border-radius: inherit;
+  padding: 1.5px;
+  pointer-events: none;
+  background: conic-gradient(from var(--run), #0000 0 62%, #ffe2a066 72%, #fff6dd 78%, #a8fff2aa 82%, #0000 90%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: calc(0.25 + var(--depth) * 0.75);
+  filter: drop-shadow(0 0 4px #ffd98a);
+  animation: edge-run 5.5s linear infinite;
+}
+.orbit-card:nth-child(odd) .orbit-card-edge {
+  animation-duration: 7s;
+  animation-direction: reverse;
+}
+@keyframes edge-run {
+  to { --run: 360deg; }
+}
+.card-index {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 14px;
+  font-size: 7.5px;
+  letter-spacing: 0.2em;
+  color: #fff0d28c;
+}
+.service-card .card-index {
+  top: 44px;
+}
+.work-card .card-top > span:last-child {
+  display: none;
+}
+.work-card .card-top {
+  padding-right: 64px;
+}
+/* Depth: the emblem or screenshot floats above the glass as the card turns */
+.card-emblem,
+.card-screen {
+  transform: translate3d(calc(var(--ty, 0) * 0.45px), calc(var(--tx, 0) * -0.45px), 0);
+}
+.card-caption {
+  transform: translate3d(calc(var(--ty, 0) * -0.15px), calc(var(--tx, 0) * 0.15px), 0);
+}
+
+/* ---------- Phones ---------- */
+.orbit-swipe {
+  display: none;
+}
+.touch-lights {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+  overflow: hidden;
+}
+.touch-lights i {
+  position: absolute;
+  width: 70vmax;
+  height: 70vmax;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0.1);
+  background: radial-gradient(circle, #fff1cf55, #ffd99a1f 30%, #0000 62%);
+  mix-blend-mode: soft-light;
+  animation: touch-light 1.3s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+}
+.touch-lights i::after {
+  content: "";
+  position: absolute;
+  inset: 46%;
+  border-radius: 50%;
+  border: 1px solid #ffe9bd88;
+  animation: touch-ring 0.9s ease-out forwards;
+}
+@keyframes touch-light {
+  to { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+}
+@keyframes touch-ring {
+  from { inset: 49%; opacity: 1; }
+  to { inset: 30%; opacity: 0; }
+}
+
+@media (max-width: 760px) {
+  /* Cormorant now loads and sets wider than the old fallback */
+  .studio-brand {
+    font-size: 18px;
+    letter-spacing: 0.1em;
+  }
+  .awakened .compass-mount {
+    top: 34%;
+    width: 64%;
+    height: 30%;
+  }
+  .collection-heading {
+    top: 12.5%;
+  }
+  .orbit-swipe {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 44%;
+    bottom: 15%;
+    z-index: 19;
+    touch-action: none;
+    pointer-events: auto;
+  }
+  .orbit-card {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  .orbit-filaments {
+    stroke-width: 0.8;
+  }
+  .card-index {
+    top: 9px;
+    right: 10px;
+    font-size: 6px;
+  }
+  .work-card .card-top {
+    padding-right: 48px;
+  }
+  .service-card .card-index {
+    top: 37px;
+  }
 }

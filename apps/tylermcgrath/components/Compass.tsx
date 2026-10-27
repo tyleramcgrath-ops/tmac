@@ -8,6 +8,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Component, useEffect, useMemo, useRef, type ReactNode } from "react";
 import * as THREE from "three";
+import { tilt } from "@/lib/motion";
 
 export type CompassState =
   | "sleep"
@@ -169,14 +170,18 @@ function Instrument({ state, pulseKey, live }: { state: CompassState; pulseKey: 
     const rect = gl.domElement.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
+    // A mouse wins; on a phone, tilting it moves a virtual cursor instead.
+    const aim = cursor.seen
+      ? { x: cursor.x, y: cursor.y, on: true }
+      : { x: cx + tilt.x * innerWidth * 0.45, y: cy + tilt.y * innerHeight * 0.35, on: tilt.has };
     let dx = 0;
     let dy = 0;
-    if (cursor.seen) {
-      dx = (cursor.x - cx) / (innerWidth / 2);
-      dy = (cursor.y - cy) / (innerHeight / 2);
+    if (aim.on) {
+      dx = (aim.x - cx) / (innerWidth / 2);
+      dy = (aim.y - cy) / (innerHeight / 2);
     }
     const dist = Math.hypot(dx, dy);
-    const energy = THREE.MathUtils.clamp(1 - dist / 0.9, 0, 1);
+    const energy = cursor.seen ? THREE.MathUtils.clamp(1 - dist / 0.9, 0, 1) : 0.15;
     L.energy = THREE.MathUtils.damp(L.energy, energy, 3, dt);
     const boost = L.energy * 0.35 + L.pulse * 0.6;
 
@@ -192,8 +197,8 @@ function Instrument({ state, pulseKey, live }: { state: CompassState; pulseKey: 
 
     // The needle points at the cursor, on a spring that overshoots a little.
     // (stiffness 60, damping ratio about 0.6; drifts slowly when there's no cursor)
-    if (cursor.seen && dist > 0.06) {
-      const want = Math.atan2(-(cursor.y - cy), cursor.x - cx) - Math.PI / 2;
+    if (aim.on && dist > 0.06) {
+      const want = Math.atan2(-(aim.y - cy), aim.x - cx) - Math.PI / 2;
       const diff = Math.atan2(Math.sin(want - st.needle), Math.cos(want - st.needle));
       st.needleV += (60 * diff - 9.3 * st.needleV) * dt;
     } else {
