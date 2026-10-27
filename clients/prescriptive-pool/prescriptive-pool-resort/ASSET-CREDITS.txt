@@ -1,0 +1,11 @@
+IMAGES
+- logo.png / logo-light.png: client-supplied Prescriptive Pool Service logo.
+  White background removed; logo-light.png has the black lettering switched to white for dark backgrounds.
+- hero-desert-pool.jpg, lounge-sunset.jpg, trig-bennett.jpg, service-*.jpg:
+  taken from the client-supplied Resort Living mockup, upscaled (EDSR super-resolution).
+  Mockup text was removed from the hero image.
+- spin-touch.jpg: cropped from the client-supplied "Make the switch" flyer.
+
+FONTS (SIL Open Font License, license files in assets/fonts)
+- DM Serif Display, DM Serif Text — Colophon Foundry / Google Fonts
+- Manrope — Mikhail Sharanda / Google Fonts
