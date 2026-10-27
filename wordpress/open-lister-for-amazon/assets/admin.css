@@ -59,3 +59,15 @@
 .ola-idea { background: #fff; border: 1px solid #dcdcde; border-radius: 6px; padding: 12px; }
 .ola-idea h3 { margin: 0 0 8px; font-size: 14px; }
 .ola-idea-item { display: flex; gap: 8px; margin-bottom: 8px; }
+
+.ola-setup { max-width: 860px; }
+.ola-setup .ola-lead { font-size: 14px; }
+.ola-card { background: #fff; border: 1px solid #dcdcde; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+.ola-card h2 { margin-top: 0; display: flex; align-items: center; gap: 10px; }
+.ola-step { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; border-radius: 50%; background: #2271b1; color: #fff; font-size: 14px; }
+.ola-steps li { margin-bottom: 12px; }
+.ola-steps li p { margin: 6px 0 0; }
+.ola-success { border-color: #68de7c; background: #f0fbf2; }
+.ola-detected th { text-align: left; padding: 4px 12px 4px 0; font-weight: 600; }
+.ola-detected input { width: 32em; max-width: 100%; }
+.ola-tick { display: inline-block; width: 1.5em; color: #0a5c1d; font-weight: 700; }
