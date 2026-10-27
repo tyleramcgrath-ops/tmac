@@ -6,7 +6,8 @@
 #   SG_SSH_HOST      SiteGround SSH host, e.g. ssh.tylermcgrath.com or the server name
 #   SG_SSH_PORT      SiteGround's SSH port (18765 unless Site Tools says otherwise)
 #   SG_SSH_USER      the SSH username from Site Tools → Devs → SSH Keys Manager
-#   SG_SSH_KEY       the private key for that user (no passphrase)
+#   SG_SSH_KEY       the private key for that user
+#   SG_SSH_PASSPHRASE  the key's password, if it has one (SiteGround's do)
 #   SG_DOC_ROOT      optional; defaults to www/tylermcgrath.com/public_html
 name: tylermcgrath.com deploy
 
@@ -66,13 +67,30 @@ jobs:
         env:
           SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
           SG_SSH_HOST: ${{ secrets.SG_SSH_HOST }}
+          SG_SSH_USER: ${{ secrets.SG_SSH_USER }}
+          SG_SSH_PASSPHRASE: ${{ secrets.SG_SSH_PASSPHRASE }}
         run: |
-          test -n "$SG_SSH_KEY" && test -n "$SG_SSH_HOST" || { echo "SG_SSH_KEY / SG_SSH_HOST secrets are not set"; exit 1; }
+          test -n "$SG_SSH_KEY" && test -n "$SG_SSH_HOST" && test -n "$SG_SSH_USER" || { echo "SG_SSH_KEY / SG_SSH_HOST / SG_SSH_USER secrets are not set"; exit 1; }
           mkdir -p ~/.ssh
-          printf '%s\n' "$SG_SSH_KEY" > ~/.ssh/sg && chmod 600 ~/.ssh/sg
+          # Keys pasted into the secrets form can pick up Windows line endings.
+          printf '%s\n' "$SG_SSH_KEY" | tr -d '\r' > ~/.ssh/sg && chmod 600 ~/.ssh/sg
+          # SiteGround's key generator requires a password; CI can't type one,
+          # so unlock the key with SG_SSH_PASSPHRASE when it's set.
+          if ! ssh-keygen -y -P "" -f ~/.ssh/sg > /dev/null 2>&1; then
+            if [ -n "$SG_SSH_PASSPHRASE" ]; then
+              ssh-keygen -p -P "$SG_SSH_PASSPHRASE" -N "" -f ~/.ssh/sg > /dev/null || { echo "SG_SSH_PASSPHRASE doesn't unlock SG_SSH_KEY"; exit 1; }
+            else
+              echo "SG_SSH_KEY is password-protected, or isn't a whole private key."
+              echo "Add the key's password as the secret SG_SSH_PASSPHRASE, or paste the full private key (BEGIN and END lines included)."
+              exit 1
+            fi
+          fi
+          echo "Key fingerprint (SiteGround's SSH Keys Manager should list a key with this fingerprint, authorized):"
+          ssh-keygen -lf ~/.ssh/sg
           ssh-keyscan -p "$SSH_PORT" "$SG_SSH_HOST" >> ~/.ssh/known_hosts
-          printf 'Host sg\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/sg\n' \
-            "$SG_SSH_HOST" "$SSH_PORT" "${{ secrets.SG_SSH_USER }}" > ~/.ssh/config
+          printf 'Host sg\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/sg\n  IdentitiesOnly yes\n  BatchMode yes\n' \
+            "$SG_SSH_HOST" "$SSH_PORT" "$SG_SSH_USER" > ~/.ssh/config
+          ssh sg true || { echo "SiteGround refused the key: check SG_SSH_USER is the SSH username shown with the key, and that the key is authorized in SSH Keys Manager."; exit 1; }
 
       - name: Back up the current document root
         if: ${{ !inputs.flush_only }}
