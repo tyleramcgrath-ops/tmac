@@ -3,6 +3,16 @@
 Tyler McGrath's portfolio ("The Studio"): a static Next.js export served by
 SiteGround from `public_html`. There's no Node runtime in production.
 
+- `components/Studio.tsx`: the page (doors, room, panels, narration)
+- `components/Compass.tsx`: the 3D Compass (three.js via react-three-fiber).
+  It eases between states, faces the cursor and points its needle at it.
+- `components/OrbitField.tsx`: the glass cards orbiting the Compass
+- `app/globals.css`: the original stylesheet; `app/immersive.css` adds the
+  sensor-light entrance, room depth and the glass cards
+- `lib/lightClicks.ts`: the light-switch sounds; `lib/projects.ts`: the 20 sites
+
+Run it locally with `npm install && npm run dev`.
+
 ## Deploys
 
 `.github/workflows/tylermcgrath-deploy.yml` runs on every push to main that
@@ -23,8 +33,6 @@ to just clear the cache and re-check the live site.
 
 ## One-time setup
 
-- Put the project's source (package.json, app/, public/ and so on) in this
-  folder. `next.config` needs `output: 'export'`.
 - In SiteGround Site Tools → Devs → SSH Keys Manager, create a key and note
   the host, port and username. Add the repository secrets `SG_SSH_HOST`,
   `SG_SSH_PORT`, `SG_SSH_USER` and `SG_SSH_KEY` (the private key). Add

@@ -9,7 +9,8 @@ const path = require('path');
 
 const expected = process.argv[2];
 const dir = process.argv[3] || 'shots';
-const urls = ['https://tylermcgrath.com/', 'https://www.tylermcgrath.com/'];
+// VERIFY_URLS (comma-separated) checks another copy, e.g. a local build.
+const urls = (process.env.VERIFY_URLS || 'https://tylermcgrath.com/,https://www.tylermcgrath.com/').split(',');
 const cards = ['About Tyler', 'Marketing & SEO', 'Selected Work', 'Let’s Connect'];
 
 async function check(browser, url, tag) {
@@ -50,7 +51,8 @@ async function check(browser, url, tag) {
   await page.waitForTimeout(1500);
   if ((await spoken()).length === before) failures.push('Compass click did nothing');
 
-  await page.getByText('Selected Work', { exact: true }).first().click({ force: true });
+  // The card may be on the far side of its orbit, behind the Compass.
+  await page.locator('button', { hasText: 'Selected Work' }).first().dispatchEvent('click');
   await page.waitForTimeout(3000);
   const shots = await page.locator('img[src*="/projects/"]').evaluateAll((els) => els.filter((e) => e.complete && e.naturalWidth > 0).length);
   if (shots === 0) failures.push('Selected Work shows no websites');
@@ -66,7 +68,7 @@ async function check(browser, url, tag) {
   const browser = await chromium.launch();
   let failed = false;
   for (const [i, url] of urls.entries()) {
-    const failures = await check(browser, url, i === 0 ? 'apex' : 'www');
+    const failures = await check(browser, url, ['apex', 'www'][i] ?? `site-${i}`);
     console.log(failures.length ? `FAIL ${url}\n  ${failures.join('\n  ')}` : `OK   ${url}`);
     failed ||= failures.length > 0;
   }
