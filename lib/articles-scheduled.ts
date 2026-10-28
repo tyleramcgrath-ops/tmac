@@ -303,6 +303,336 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'new-orleans-law-firm-website-design',
+    title: 'New Orleans Law Firm Websites: Louisiana Ad Rules',
+    description: 'Plan a New Orleans law firm website under Louisiana Rules 7.1 to 7.10: required disclosures, the filing exemption, past results, certification, Spanish pages.',
+    kind: 'guide',
+    summary: [
+      'A Louisiana law firm website does not have to be filed with the LSBA (Rule 7.8(g)), but it must still follow the advertising rules. Exempt does not mean compliant.',
+      'Every firm site must list every jurisdiction where its lawyers are licensed and at least one bona fide office location by city or town (Rule 7.6(b)).',
+      'Websites count as information provided on request (Rule 7.9), so factually verifiable past results are allowed on the site without the "Results May Vary" disclaimer that ads need, as long as they are not misleading.',
+      'Only lawyers certified by the Louisiana Board of Legal Specialization, another state bar with comparable standards, or a qualifying organization may say "certified" or "board certified," and the certifier must be named.',
+      'Paid search, social and banner ads that link to your site are not covered by the website exemption, so check whether each one needs a filing number.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1640583430339-f83d93e77413?auto=format&fit=crop&w=1600&q=75', alt: 'Wrought iron balconies hung with ferns and flower baskets on a red brick corner building in the French Quarter of New Orleans' },
+    body: `A New Orleans law firm website has to satisfy Louisiana's own version of the lawyer advertising rules, Rules 7.1 to 7.10, and those rules are numbered and worded differently from the ABA model most states copy. The short version: your website is exempt from the Louisiana State Bar Association's filing and review process, but it is not exempt from the rules. Rule 7.6(b) requires every firm site to list all jurisdictions where its lawyers are licensed and at least one bona fide office location. Rule 7.9 then treats the site as information provided on request, which changes how you can show past results. And the rules on testimonials, portrayals, certification and trade names in Rule 7.2 still apply to everything on the page.
+
+This guide walks through each requirement with links to the rule text, then covers what is specific to building a site for clients in Orleans Parish and the surrounding parishes: the court map, the languages people search in, and why a firm in a civil-law state should write its practice pages differently. It is planning help for firm owners and marketers, not an ethics opinion. The LSBA's Ethics Counsel answers questions about specific ads, and close calls belong there.
+
+## Do Louisiana lawyers have to file their website with the bar?
+
+No. Rule 7.8 lists communications that are exempt from the filing and review requirement of Rule 7.7, and subdivision (g) names "computer-accessed communications as described in subdivision (b) of Rule 7.6," which means websites and home pages ([Louisiana Rules of Professional Conduct, LADB compilation](https://www.ladb.org/docs/Publication/ROPC/ROPC.pdf)). The LSBA's own handbook puts it plainly: "a law firm's website does not need to be filed," but it "must still otherwise comply with Rule 7.6," and it may be filed voluntarily ([LSBA Lawyer Advertising Handbook, second edition](https://www.lsba.org/documents/LawyerAdvertising/LawyerAdHandbook.pdf)).
+
+There is history behind that exemption. In 2009 a federal judge in the Eastern District of Louisiana blocked the filing requirement as applied to internet advertising while upholding other parts of the rules, and the LSBA summarizes the case on its [rule history page](https://www.lsba.org/LawyerAdvertising/LawyerAdvertisingPre.aspx). The current text took effect January 1, 2022, under a [Louisiana Supreme Court order](https://www.lasc.org/press_room/press_releases/2021/2021-14-Order_Amending_LA_Professional_Rules_of_Conduct_Attorney_Advertising_Rules.pdf) that added the filing-number requirement for non-exempt ads and the past-results disclaimer.
+
+The LSBA's [lawyer advertising page](https://www.lsba.org/LawyerAdvertising/) carries the warning every firm should read before launch: "exempt" does not necessarily mean "compliant." The exemption only means nobody at the bar reviews your site before it goes live. The responsibility for getting it right stays with the lawyers.
+
+### What does need a filing number?
+
+The exemption covers your website and home pages. It does not obviously cover the ads that send people there. Rule 7.1 lists "computer-accessed communications" among public media, and paid search text ads, social media ads and display banners are advertisements in their own right. Unless an ad's content stays within the safe-harbor list in Rule 7.2(b), Rule 7.7 requires it to be filed no later than when it first runs, and Rule 7.2(a)(3) requires the filing number to appear in it.
+
+The [LSBA filing page](https://www.lsba.org/LawyerAdvertising/LawyerAdvertisingFiling.aspx) lists the fees: $175 per advertisement for a regular filing or an advance advisory opinion, $275 for a late filing, and a reduced fee for newly admitted lawyers. Filings are made online and are not accepted by email or fax. If your marketing plan includes a steady stream of ads, budget for the filings and keep the filing numbers with the ad copy. Neither the rules nor the handbook spells out how each kind of online ad is treated, so ask Ethics Counsel before a campaign starts rather than after.
+
+## What must every Louisiana law firm website show?
+
+Rule 7.6(b) sets three conditions for every website "controlled, sponsored, or authorized by a lawyer or law firm" that has information about the firm's services.
+
+1. **Every jurisdiction where your lawyers are licensed.** Not just Louisiana. If a partner is also admitted in Mississippi or Texas, the site says so. The simplest place is each attorney's profile plus a line in the footer.
+2. **At least one bona fide office location**, given by city or town under Rule 7.2(a)(2). A bona fide office is a physical location where at least one lawyer is "regularly and routinely present." A virtual office or a mail drop does not qualify. If the firm has no bona fide office, the site gives the city or town of the lawyer's primary registration statement address.
+3. **Compliance with Rule 7.9**, because a website counts as information provided on request. Rule 7.9(a) says that information must still comply with Rule 7.2 unless Rule 7.9 provides otherwise.
+
+Rule 7.2(a)(1) adds that advertisements must include the full name of at least one lawyer responsible for their content. A footer with the responsible lawyer's full name, every office by city, and the jurisdictions of admission covers most of this on every page, including landing pages built for ads.
+
+![A row of French Quarter townhouses with iron galleries, green shutters and an American flag on a quiet New Orleans street](https://images.unsplash.com/photo-1594437001318-2b5c7a9c7291?auto=format&fit=crop&w=1200&q=75)
+
+## Can a New Orleans firm show case results on its website?
+
+Yes, and Louisiana is one of the states where the website rule is more flexible than the ad rule. In a filed advertisement, Rule 7.2(c)(1)(D) treats a reference to past results as misleading unless it carries a disclaimer such as "Results May Vary" or "Past Results are not a Guarantee of Future Success."
+
+A website is different. Because Rule 7.6(b)(3) treats it as information provided on request, Rule 7.9(b)(3) applies: it may contain "factually verifiable statements concerning past results obtained by the lawyer or law firm," as long as they are not false, misleading or deceptive alone or in context. The LSBA handbook confirms these statements "are not required to be accompanied by disclaimers," and adds that "best practices may warrant inclusion" of one anyway.
+
+Our advice is to follow the best practice. A short caution next to each result costs nothing, and it keeps the page safe if a piece of it is reused in an ad, a social post or an email, where the disclaimer is required. Write each result so it can be checked: the type of matter, the parish or court if the client agrees, the year, and whether the figure is a verdict or a settlement. A bare list of large numbers is the kind of page most likely to mislead.
+
+## What about testimonials, actors and stock photos?
+
+These parts of Rule 7.2 apply to websites through Rule 7.9(a), and they are where firm sites most often go wrong.
+
+- **Paid testimonials or endorsements** must disclose the payment (Rule 7.2(c)(1)(H)).
+- **Portrayals.** A non-client portraying a client, or scenes that are not authentic other than still images, need a disclaimer, and a still image is a problem if it is misleading because it was altered or because of how it is used (Rule 7.2(c)(1)(I)). The handbook's examples of disclaimers include "Non-Client Paid Actor" and "Dramatization."
+- **A non-lawyer portraying a lawyer**, or a fictional firm, is not allowed at all (Rule 7.2(c)(1)(J)). A stock photo of a model in a suit captioned with your name crosses that line. Use real photos of your lawyers.
+- **Nicknames and mottos** that state or imply an ability to obtain results are prohibited (Rule 7.2(c)(1)(L)). Think twice about taglines that promise a win.
+- **Comparisons** with other lawyers must be factually substantiated (Rule 7.2(c)(1)(G)), which rules out "the best" and "the toughest" unless you can prove it.
+- **Pages that look like court filings** are prohibited (Rule 7.2(c)(1)(K)), so avoid designs that imitate a pleading or a court notice.
+
+> **Watch out:** Rule 7.2(c)(1)(M) bars advertising a willingness to make advances or loan guarantees to clients. Remove any "we can help with your bills while you wait" language from injury pages.
+
+## Who can say "specialist" or "board certified" in Louisiana?
+
+Louisiana separates the two words. Under Rule 7.2(c)(5), a lawyer may say they are a "specialist" or "specialize in" a field, subject to the general rule against false and misleading statements. "Certified" and "board certified" are reserved for three cases:
+
+1. **Certified by the Louisiana Board of Legal Specialization.** The page should name the Board as the certifying organization. The Board's [specialization page](https://www.lsba.org/Specialization/) lists the areas where it has certified specialists, including family law, estate planning and administration, tax law, appellate practice, and business and consumer bankruptcy law.
+2. **Certified by another organization.** The lawyer must comply with Section 6.2 of the Plan of Legal Specialization and give the organization's full name every time the certification is mentioned. Organizations accredited by the American Bar Association are exempt from Section 6.2.
+3. **Certified by another state bar** whose standards the Louisiana Board finds reasonably comparable, with that state bar named.
+
+On an attorney profile, put the certification and the certifier in the same sentence. A badge in the sidebar with the organization's name only in the image file is easy to miss and hard for search engines to read.
+
+## How do fees, referrals and contingency contracts work on the site?
+
+Three rules catch fee pages.
+
+- **Costs and expenses.** Any fee information, including "no fee unless we recover," must say whether the client will be liable for costs and expenses in addition to the fee (Rule 7.2(c)(6)). Put that sentence directly under the fee line, not on a separate page.
+- **Advertised fees are binding.** A specific fee or range must be honored for at least ninety days from the date last advertised, unless the ad states a shorter period (Rule 7.2(c)(7)). If you post a flat fee for a simple will, update the page the day it changes.
+- **Sample contracts.** Rule 7.9(b)(2) says that when information provided on request includes a contingency fee contract, each page must be marked "SAMPLE" at the top, in print as large as the largest print in the contract, with "DO NOT SIGN" on the client signature line. If your website offers a downloadable contingency agreement, mark it that way.
+
+If you expect to refer some matters to another firm, Rule 7.9(c) presumes a statement that you will handle that type of case is misleading without a qualification. Say on the page that some matters may be referred.
+
+## Do Spanish or Vietnamese pages need their own disclaimers?
+
+Yes. Rule 7.2(c)(9) requires any words or statements the rules require to appear in the same language as the advertisement, and in each language if more than one is used. A Spanish practice page needs its office location, jurisdictions and any caution next to results in Spanish, not just in the English footer. Rule 7.2(c)(10) adds that required disclosures must be clear, conspicuous and clearly associated with the item they qualify.
+
+Language pages are worth the work in this market. The Louisiana Fourth Circuit Court of Appeal, which hears appeals from Orleans, Plaquemines and St. Bernard parishes, says in its [language access plan](https://www.la4th.org/downloads/Language%20Access/COA4%20Language%20Access%20Plan%20-%20Final.pdf) that its most commonly encountered non-English languages are Spanish, Vietnamese, French and Chinese. If your intake calls show clients who would rather read in one of those languages, translate the practice pages they need in full, written by a fluent speaker, rather than adding one "se habla español" line. Mark each version with its language so search engines show the right one ([Google: localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions)).
+
+## Which courts should a New Orleans firm explain?
+
+People searching for a lawyer often want to know where their case will be heard and what happens there. A firm that answers that clearly gives readers a reason to stay. The main venues for New Orleans clients:
+
+| Court | What it hears | Where to send readers |
+| --- | --- | --- |
+| Orleans Parish Civil District Court | Civil cases including injury, contract, property and family matters in its divisions | [Civil District Court](https://www.orleanscivildistrictcourt.org) |
+| Orleans Parish Criminal District Court | Felony and state misdemeanor cases | [Criminal District Court](https://www.criminalcourt.org/home.html) |
+| Louisiana Fourth Circuit Court of Appeal | Appeals from Orleans, Plaquemines and St. Bernard parishes | [Fourth Circuit](https://www.la4th.org) |
+| Louisiana Fifth Circuit Court of Appeal | Appeals from Jefferson, St. Charles, St. James and St. John the Baptist parishes | [Fifth Circuit](https://www.fifthcircuit.org) |
+| U.S. District Court, Eastern District of Louisiana | Federal cases from 13 parishes including Orleans, Jefferson and St. Tammany | [E.D. La.](https://www.laed.uscourts.gov) |
+
+The appeal districts come from state law ([La. R.S. 13:312](https://www.legis.la.gov/Legis/LawPrint.aspx?d=77438)). One practical point for injury and insurance firms: a client hurt in Metairie and a client hurt in Mid-City may end up in different district and appellate courts, so a practice page that says "we handle cases across the metro area" is less useful than one that explains which court is likely for which parish. Write that once, accurately, on a page about the courts, and link to it from each practice page.
+
+## Why civil-law terms belong on your practice pages
+
+Louisiana's private law is built on the [Louisiana Civil Code](https://www.legis.la.gov/Legis/Laws_Toc.aspx?folder=67), and many of the words clients will hear from a Louisiana lawyer are not the words they will read on national legal sites. Succession instead of probate. Community property and the community regime in a divorce. Usufruct when a surviving spouse keeps the use of a home. Prescription where other states say statute of limitations. Forced heirship for some children.
+
+That gap is an opportunity for a local firm. Someone who just heard "succession" from a relative searches the word, and a national page about probate does not answer them. A practice page that uses the Louisiana term, explains it in a sentence, and then answers the questions people ask about it ("Do I need a lawyer to open a succession in Orleans Parish?") is more useful than a generic page. Google's guidance on [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether content provides original information and demonstrates first-hand expertise. Explaining how a Louisiana process actually works is exactly that. Keep it general, date it, and avoid anything a reader could mistake for advice on their own case.
+
+![A lawyer in a grey suit reviews a document on a tablet with a client across a white office table](https://images.unsplash.com/photo-1758518730264-9235a1e5416b?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a New Orleans law firm website
+
+1. **Home page** that says what kinds of cases you take, for whom, and where, with the phone number and a short form above the fold.
+2. **One page per practice area**, written for the person with the problem: what happens first, what it usually involves in Louisiana, what to bring to a consultation.
+3. **Attorney profiles** with real photos, education, every jurisdiction of admission and any certification with its certifier named.
+4. **An office page per bona fide office**, with the street address, parking and transit directions. New Orleans clients ask about parking downtown and in the CBD.
+5. **A courts page** that explains the venues above in plain words.
+6. **A results page** written as factually verifiable statements with context, and a caution beside them.
+7. **Language pages** where your intake shows the need, translated in full with every required statement.
+8. **A contact form** that asks for the other party's name for a conflict check, and says not to send confidential details yet.
+
+Skip the near-identical pages for Metairie, Kenner, Slidell and every other town with only the name swapped. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead to essentially the same content as doorway pages. A separate page for the Northshore makes sense only if you have a staffed office there or something true to say, such as which courthouse hears those cases.
+
+If you already have a site and are not sure how it measures up, our [free redesign](/redesign) shows your current site rebuilt with your own words and details, so you can compare before you change anything.
+
+## Google Business Profile for New Orleans firms
+
+Your Google Business Profile has its own rules, and they fit neatly with Louisiana's bona fide office idea. Google asks for a precise, accurate address or service area, says P.O. boxes or mailboxes at remote locations are not acceptable, and has separate guidance for individual practitioners such as lawyers who want their own profiles alongside the firm's ([Google Business Profile guidelines](https://support.google.com/business/answer/3038177)). The firm's profile name should be its real-world name, with no added keywords like "Best Injury Lawyer New Orleans." Keep the name, address and phone on the profile identical to the footer of your site, and link each office profile to that office's page, not the home page.
+
+Google explains that local results are based mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). A website that clearly explains your practice areas, offices and courts supports the relevance part. No one can promise a position, and you should be wary of anyone who does.
+
+## A Louisiana pre-launch checklist
+
+- [ ] Every jurisdiction where the firm's lawyers are licensed appears on the site (Rule 7.6(b)(1)).
+- [ ] At least one bona fide office location is shown by city or town (Rules 7.6(b)(2) and 7.2(a)(2)).
+- [ ] The full name of at least one responsible lawyer appears on the site and on every ad landing page (Rule 7.2(a)(1)).
+- [ ] Results are factually verifiable, given context, and carry a caution beside them.
+- [ ] Paid testimonials disclose payment; actors and dramatizations are labeled; no non-lawyer portrays a lawyer.
+- [ ] "Certified" appears only with a qualifying certification and the certifier named.
+- [ ] Fee statements say whether the client pays costs and expenses (Rule 7.2(c)(6)).
+- [ ] Any downloadable contingency contract is marked SAMPLE and DO NOT SIGN (Rule 7.9(b)(2)).
+- [ ] Spanish, Vietnamese or other language pages repeat every required statement in that language (Rule 7.2(c)(9)).
+- [ ] Each paid search, social or display ad has been checked for whether it needs filing and a filing number.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a New Orleans law firm website
+
+A SaySites law firm site starts from the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose intake questions include the other party's name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish.
+
+You change the site by saying what you want in plain words, such as "add 'Admitted in Louisiana and Mississippi' under Renee's photo" or "put 'Board Certified in Family Law, Louisiana Board of Legal Specialization' on Marc's profile," and each change waits as a draft until you approve it. Results, certifications and testimonials come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Louisiana site yourself, or [request a free redesign](/redesign) to see your current site rebuilt before you decide. Before launch, run through our [law firm website checklist](/blog/law-firm-website-checklist), read [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls), and compare a neighboring state's rules in our [Houston law firm website guide](/blog/houston-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a Louisiana law firm have to file its website with the LSBA?', a: 'No. Rule 7.8(g) exempts websites described in Rule 7.6(b) from filing and review, and the LSBA handbook confirms a firm website does not need to be filed. The site must still follow the rules, including listing every jurisdiction where your lawyers are licensed and a bona fide office location. You may file it voluntarily if you want the Committee to review it.' },
+      { q: 'Do results on a Louisiana law firm website need a disclaimer?', a: 'Not strictly. Websites are information provided on request under Rule 7.9, and Rule 7.9(b)(3) allows factually verifiable statements about past results that are not misleading. The LSBA handbook says no disclaimer is required but best practice may call for one. Ads are different: past results in an ad need a disclaimer such as Results May Vary.' },
+      { q: 'Can a Louisiana lawyer say they are board certified on their website?', a: 'Only with a qualifying certification. Rule 7.2(c)(5) allows certified or board certified for lawyers certified by the Louisiana Board of Legal Specialization, by another state bar with comparable standards, or by an organization that meets Section 6.2 of the Plan of Legal Specialization. The certifying organization must be named. Specialist is allowed if it is not misleading.' },
+      { q: 'Do Google Ads for a New Orleans law firm need an LSBA filing number?', a: 'Possibly. The filing exemption in Rule 7.8(g) covers websites and home pages, not the ads that point to them. A paid search or social ad with content beyond the Rule 7.2(b) safe-harbor list may need to be filed under Rule 7.7 and show its filing number. The rules do not address each ad format, so confirm with LSBA Ethics Counsel.' },
+      { q: 'What does a Louisiana law firm website need in the footer?', a: 'A practical footer lists the full name of at least one responsible lawyer, every bona fide office by city or town with its address, and every jurisdiction where the firm lawyers are licensed. That covers Rules 7.2(a) and 7.6(b) on every page, including ad landing pages and blog posts, without repeating the details in each article.' },
+      { q: 'Should a New Orleans firm have Spanish or Vietnamese pages?', a: 'If your clients need them. The Fourth Circuit Court of Appeal lists Spanish, Vietnamese, French and Chinese as the non-English languages it most often encounters. Rule 7.2(c)(9) requires every required statement to appear in each language used, so translate the whole page, including the office location, jurisdictions and any results caution, not just the headline.' },
+      { q: 'How much does a SaySites website for a New Orleans law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign to see your current site rebuilt with your own content first.' },
+    ],
+    about: ['Louisiana Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'New Orleans, Louisiana'],
+    published: '2026-10-28',
+    status: 'published',
+  },
+  {
+    slug: 'nashville-dental-practice-website-design',
+    title: 'Nashville Dental Websites: Tennessee Ad Rules',
+    description: 'Build a Nashville dental practice website under Tennessee Board of Dentistry Rule 0460-02-.10: titles, specialties, fee offers, testimonials and patient photos.',
+    kind: 'guide',
+    summary: [
+      'In Tennessee a dental website is an advertisement under Rule 0460-02-.10, so it must give the practice or dentist name, address and phone number and use a title such as DDS, DMD or Dentist.',
+      'A dentist who gives health care information on a website they control must prominently display their full name and type of license (Rule 0460-01-.19(2)(f)).',
+      'Only Board-certified specialists may use "specialist" or "practice limited to." A general dentist who advertises implants, braces or root canals must say "the services are being performed or provided by a general dentist" just as conspicuously.',
+      'Advertised fees must be honored for the period stated, or 30 days if none is stated, and add-on services with extra fees must be named in the offer.',
+      'Keep a copy of every version of every page for two years, and have proof on file for every claim before it goes live.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1780906621697-d513649d13d6?auto=format&fit=crop&w=1600&q=75', alt: 'The twin-spired AT&T Building rising above the signs and rooftop bars of Lower Broadway in downtown Nashville' },
+    body: `A Nashville dental practice website counts as an advertisement under the Tennessee Board of Dentistry's advertising rule, Rule 0460-02-.10, which defines advertising as informational communication to the public "in any manner designed to attract public attention to the practice of a dentist." That rule decides much of what goes on the site: the practice's name, address and phone number on every page, a dental title such as DDS or DMD for every dentist named, careful wording around specialties, offers that you can honor, and patient stories and photos you have permission to use. A second rule, in the Board's teledentistry chapter, requires a dentist who gives health care information on a website they control to prominently display their full name and type of license.
+
+This guide goes through those rules with links to the text, then turns to what makes a site work for patients in Nashville: TennCare's adult dental benefit, the languages families speak here, tracking on appointment pages, and setting up Google Business Profile for a practice with several dentists. It is planning help for practice owners and office managers, not legal advice. The Board, or a health care attorney, is the place for close calls.
+
+## Which Tennessee rules apply to a dental website?
+
+Three parts of the Board's rules do most of the work.
+
+- **Rule 0460-02-.10, Advertising** covers fees, content, specialty claims, record keeping and titles ([Tenn. Comp. R. & Regs. 0460-02-.10](https://www.law.cornell.edu/regulations/tennessee/Tenn-Comp-R-Regs-0460-02-.10)). Breaking it is unprofessional conduct that can lead to discipline under T.C.A. 63-5-124.
+- **Rule 0460-01-.19, Teledentistry** includes the website name and license rule quoted above, in subsection (2)(f) ([Tenn. Comp. R. & Regs. 0460-01-.19](https://www.law.cornell.edu/regulations/tennessee/Tenn-Comp-R-Regs-0460-01-.19)).
+- **Rule 0460-01-.13** adopts the American Dental Association's Principles of Ethics and Code of Professional Conduct "as it may, from time to time, be amended" ([Tenn. Comp. R. & Regs. 0460-01-.13](https://www.law.cornell.edu/regulations/tennessee/Tenn-Comp-R-Regs-0460-01-.13)). The current [ADA Code](https://www.ada.org/-/media/project/ada-organization/ada/ada-org/files/about/principles/2026_code_of_ethics_complete.pdf) has an advisory opinion saying dentists have an ethical obligation to make sure their websites are truthful, and that search engine optimization techniques should comport with the ADA Principles.
+
+The advertising rule was last amended in 2008, before most practices ran their own websites, so some of its language talks about broadcast and publication. The obligations still apply to web pages, social profiles and online ads, because all of them are designed to attract public attention to a dental practice.
+
+## What has to appear on every page?
+
+Start with the footer and the header, because these carry the identification rules on every page without repeating them in each article.
+
+1. **Name, address and telephone number.** Rule 0460-02-.10(4)(p) makes it unprofessional to leave out "the corporation, partnership or individual licensee's name and address and telephone number in any advertisement."
+2. **A dental title for each dentist.** Rule 0460-02-.10(7) requires every licensee to use "Dentist," "Doctor of Dental Surgery," "D.D.S.," "Doctor of Dental Medicine" or "D.M.D." in every advertisement. Leaving it out is treated as omitting a material fact. "Dr. Patel" on its own is not enough; "Priya Patel, DDS" is.
+3. **Full name and type of license.** Under Rule 0460-01-.19(2)(f), the dentist's full name and type of license should be prominently displayed. A doctors page with each dentist's full name and "Licensed dentist, Tennessee" or the specialty license, plus a line in the footer, handles it.
+
+### Trade names and multi-dentist practices
+
+Many Nashville practices use a trade name such as a neighborhood name plus "Dental." Rule 0460-02-.10(4)(p) allows that, but a practice that advertises under a trade name, or otherwise does not list every licensee at a location, must provide a list of all licensees at that location on request and keep a directory of them conspicuously displayed in the office. A "Meet the dentists" page that names everyone who practices at each location makes the request easy to meet online, too.
+
+Two more rules matter when dentists come and go. A former dentist's name cannot be used after thirty days unless the person retired or died and that status is disclosed (Rule 0460-02-.10(4)(r)). And the site must not state or imply that one dentist provides all the services when another licensee performs some of them (Rule 0460-02-.10(4)(s)). If a periodontist visits twice a month to place implants, the implant page should say so.
+
+![A bright, modern dental office waiting room with black chairs along a white wall, a potted tree and a framed sign](https://images.unsplash.com/photo-1762625570087-6d98fca29531?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist advertise implants, braces or root canals?
+
+Yes, but carefully. Tennessee recognizes twelve dental specialties, listed in Rule 0460-02-.06: dental anesthesiology, dental public health, endodontics, oral and maxillofacial radiology, oral and maxillofacial surgery, oral and maxillofacial pathology, oral medicine, orofacial pain, orthodontics and dentofacial orthopedics, pediatric dentistry, periodontics and prosthodontics ([Tenn. Comp. R. & Regs. 0460-02-.06](https://www.law.cornell.edu/regulations/tennessee/Tenn-Comp-R-Regs-0460-02-.06)).
+
+Rule 0460-02-.10(5) then sets three limits:
+
+- **"Specialist," "specialty," "specializing" and "practice limited to"** may only be used by a dentist certified by the Board in one of those branches.
+- **A general dentist** who offers specialty-type care may advertise it, but must not use those words, and the ad must "Contain the statement 'the services are being performed or provided by a general dentist'," shown as conspicuously as the branch of dentistry advertised. On a web page, that means near the heading for implants or orthodontics in a similar size, not in grey type at the bottom of the page.
+- **Fellowships and diplomate status** from national organizations that are not recognized specialty boards may be mentioned only with the disclaimer "This area of practice is not recognized as a specialty by the Tennessee Board of Dentistry," shown as conspicuously as the credential. "Board Certified" can only be used with a recognized specialty.
+
+This is where many dental sites drift out of line, often because a template or a marketing vendor wrote "implant specialist" or "Invisalign specialist" on a general practice's page. Read every service page and every image caption for those words before launch.
+
+> **Tip:** Write specialty-type service pages around what the patient needs to know: who does the procedure in your office, how many visits it usually takes, what affects the cost, and when you refer out. That is more useful to a patient than a list of credentials, and it keeps you inside the rule.
+
+## How can a Tennessee dentist advertise fees and new-patient offers?
+
+Rule 0460-02-.10(3) allows fee advertising with conditions that a website can meet if it is kept up to date.
+
+| Kind of offer | What the rule requires |
+| --- | --- |
+| Fixed fee (for example, a cleaning and exam) | Presumed to include every recognized component needed to complete the service, unless the page says otherwise. |
+| Range of fees | Must disclose the factors that determine the actual fee. |
+| Discounted fee | Must really be lower than your usual fee, with the same quality, components and materials. |
+| Related services with extra fees | Must be identified in the same advertisement. |
+| How long the price lasts | Honored for the whole period the ad states, or 30 days from the last publication if no period is stated. |
+
+Two practical points follow. A website is "published" for as long as the page is live, so a stale new-patient special can keep binding you; put an end date on every offer and take it down when it ends. And if your offer covers a cleaning but x-rays cost extra, say so next to the price. The rule also says something offered expressly free of charge is not a "discounted fee," but the rest of the rule, including the ban on bait and switch in Rule 0460-02-.10(4)(n), still applies to a free consultation.
+
+## What can a dental website say in reviews, results and photos?
+
+Rule 0460-02-.10(4) lists what counts as unprofessional, and several items map directly onto common website sections.
+
+- **Testimonials** that attest to the quality or competence of a service must be reasonably verifiable (4)(f). Use reviews from real patients, keep a record of where each came from, and never edit their words.
+- **Before-and-after photos and patient stories** need the patient's consent first, because communicating personally identifiable facts or information about a patient without consent is prohibited (4)(h). A full-face photo is identifiable even without a name. Get written consent that covers the website, and keep it with the image.
+- **Results and statistics** must not create an unjustified expectation about results (4)(g) and (4)(l). "Most patients finish in about a year" needs records behind it; "perfect smiles guaranteed" cannot be backed by anything.
+- **Superiority claims** such as "the best dentist in Nashville" are a problem when they cannot be substantiated (4)(a).
+- **Procedures with significant risks**, such as sedation or surgical procedures, need a realistic assessment of safety and the availability of alternatives when the page describes their benefits (4)(k).
+- **Fear-based copy** that makes excessive or unfair appeals to anxiety is prohibited (4)(e), which rules out pages that try to frighten patients into booking.
+
+Rule 0460-02-.10(6) adds two record-keeping duties that are easy to forget online. Every advertisement must be kept for two years from its last publication and made available to the Board on request, so save a dated copy each time a page or offer changes. And at the time an ad is placed, the dentist must already have the information that would prove every claim in it. The rule also says ads are presumed to be approved by the dentist named in them, and partners and officers are jointly responsible. A marketing company may write the page, but the license on the line is yours.
+
+![A dentist holding a panoramic x-ray up to a light box to review a patient's teeth and roots](https://images.unsplash.com/photo-1588776814546-1ffcf47267a5?auto=format&fit=crop&w=1200&q=75)
+
+## What do Nashville patients look for on a dental website?
+
+Patients usually want four answers before they call: whether you take their insurance, whether you can see them soon, where you are and how to park, and whether they will feel comfortable. Answer those on the home page and on each location page, then let the service pages go deeper.
+
+### Insurance and TennCare
+
+Since January 1, 2023, TennCare has covered dental services for adults enrolled in the program, not only children ([TennCare dental benefits manager](https://www.tn.gov/tenncare/providers/dental-benefits-manager.html)). If your practice accepts TennCare, say so clearly on an insurance page and name the dental benefits manager as TennCare currently lists it, because families search for exactly that. If you do not accept it, say that too. A clear no saves your front desk a phone call and saves the patient a wasted trip.
+
+### Languages
+
+Nashville is home to more than 20,000 Kurds, one of the largest Kurdish communities in the United States, according to a [Voice of America report](https://www.voanews.com/a/nashville-honors-50-years-of-kurdish-community-in-the-united-states/8209670.html) from October 2026. If someone on your team speaks Kurdish, Spanish or Arabic, put it on the site where patients look for it: the home page, the contact page and each dentist's profile. If you add full pages in another language, translate them properly, keep the required name, address, phone and title on them, and mark each version so search engines show the right one ([Google: localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions)).
+
+### Accessibility
+
+A patient who cannot use your booking form on a screen reader is a patient who calls someone else. The Department of Justice's guidance says businesses open to the public must provide full and equal enjoyment of their goods and services, and it points to the Web Content Accessibility Guidelines as a helpful standard, while noting there is no detailed regulation for private businesses' websites ([ADA.gov: guidance on web accessibility](https://www.ada.gov/resources/web-guidance/)). Clear contrast, real text instead of text inside images, labeled form fields and keyboard access cover most of it.
+
+If you want to see how your own site handles these points, our [free redesign](/redesign) rebuilds your current site with your own content, so you can compare the two side by side before you change anything.
+
+## Tracking pixels and appointment forms
+
+Many dental sites carry advertising pixels and analytics on every page, including appointment requests and patient portals. The Department of Health and Human Services published guidance on online tracking technologies under HIPAA. In June 2024 a federal court in Texas vacated the part of that guidance about unauthenticated public pages, but HHS's page still says tracking technologies on user-authenticated pages "generally have access to PHI" ([HHS: use of online tracking technologies](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html)).
+
+The safe habits are simple. Keep advertising pixels off portals and forms that collect health details. Ask only for what you need to call the patient back: name, phone, email, new or returning patient, insurance carrier and a preferred time. Tell people on the form not to send detailed health information. And talk with your privacy officer or counsel before adding any new tracking tool.
+
+## Google Business Profile for dental practices
+
+Google's guidelines treat dentists as individual practitioners and allow a practitioner profile to include a title or degree. They also say a practitioner should not have multiple profiles to cover all of their specializations. Where several practitioners work at one location, the practice should have its own profile for the location, separate from each practitioner's, and a practitioner's profile should include only the practitioner's name ([Google Business Profile guidelines](https://support.google.com/business/answer/3038177)). Keep the practice name exactly as patients see it on your sign, with no added keywords.
+
+On the website, describe the practice in structured data with the most specific type available. Google's documentation asks for the most specific LocalBusiness subtype ([Google: local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business)), and for a dental office that is [Dentist](https://schema.org/Dentist). Make sure the name, address, phone and hours in the markup match the page and your profile exactly. Google explains that local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)); nobody can promise you a position in them.
+
+## A page plan for a Nashville dental website
+
+1. **Home page** with what you offer, who you see (children, adults, nervous patients), insurance in one line, the phone number and a short appointment form.
+2. **Doctors page** with each dentist's full name, DDS or DMD, type of license, education and any Board-certified specialty.
+3. **One page per service** that patients search for: cleanings and exams, fillings, crowns, implants, clear aligners, emergency visits, children's dentistry. Specialty-type pages carry the general dentist statement where it applies.
+4. **Insurance and payment page** listing plans accepted, TennCare status, financing and how estimates work.
+5. **Location pages** for each office, with parking, transit and hours. A practice in The Gulch has different parking questions from one in Antioch.
+6. **New patient page** with forms, what to bring and what the first visit includes.
+7. **Offers page**, if you run them, with dates, inclusions and exclusions.
+8. **Language pages** only where your team can serve patients in that language.
+
+Avoid making a separate page for Brentwood, Franklin, Hermitage and every nearby town with the same text and a different name. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe that pattern as doorway pages. A second location page is worth writing when you have a second office.
+
+## A Tennessee pre-launch checklist
+
+- [ ] Practice or dentist name, address and phone number on every page (Rule 0460-02-.10(4)(p)).
+- [ ] Every dentist named with DDS, DMD or Dentist (Rule 0460-02-.10(7)).
+- [ ] Each dentist's full name and type of license prominently shown (Rule 0460-01-.19(2)(f)).
+- [ ] No "specialist," "specializing" or "practice limited to" unless Board certified in that specialty.
+- [ ] General dentist statement shown as conspicuously as each specialty-type service.
+- [ ] Fellowships and diplomate titles paired with the required disclaimer; no "Board Certified" outside a recognized specialty.
+- [ ] Every fee offer has an end date, its inclusions and any add-on fees.
+- [ ] Written consent on file for every patient photo and story; reviews traceable to real patients.
+- [ ] Dated copies of every page and offer kept for two years, with proof for each claim.
+- [ ] No advertising pixels on appointment forms or portals that collect health details.
+- [ ] Structured data matches what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Nashville dental website
+
+A SaySites site for a dental practice starts with the pages above, marks the practice up as a [Dentist](https://schema.org/Dentist) in structured data, and includes a new patient appointment form whose questions stop at new or returning patient, insurance provider and best time, with a note asking patients not to send detailed medical information. A Book online button can send patients straight to the booking page you already use. Sites can be written in English or Spanish, and no page goes live until it passes a 95+ speed check.
+
+You make changes by saying them in your own words, such as "add 'the services are being performed or provided by a general dentist' under the implants heading" or "end the new patient special on December 31," and each change waits as a draft until you approve it. Reviews, credentials and before-and-after photos come only from you; SaySites never invents them.
+
+The Site plan is $15 a month after a 7-day free trial ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start your free trial](/signup) and build the site yourself, or [request a free redesign](/redesign) of your current site first. For more, work through our [medical practice website checklist](/blog/medical-practice-website-checklist) and compare another state's rules in our [Atlanta dental website guide](/blog/atlanta-dental-practice-website-design).`,
+    faq: [
+      { q: 'What must a Tennessee dental website include?', a: 'Rule 0460-02-.10 requires the practice or dentist name, address and telephone number in every advertisement, and a title such as Dentist, DDS or DMD for each dentist named. Rule 0460-01-.19(2)(f) adds that a dentist giving health care information on a website they control must prominently display their full name and type of license. A clear footer and doctors page cover most of it.' },
+      { q: 'Can a general dentist in Tennessee call themselves an implant specialist?', a: 'No. Only a dentist certified by the Board in a recognized specialty may use specialist, specialty, specializing or practice limited to. A general dentist may offer and advertise implant care, but the page must state that the services are being performed or provided by a general dentist, as conspicuously as the service itself, under Rule 0460-02-.10(5).' },
+      { q: 'How long must a Tennessee dentist honor an advertised price?', a: 'For the whole period stated in the advertisement. If no period is stated, Rule 0460-02-.10(3)(e) says the fee must be honored for thirty days from the last date of publication or until the next scheduled publication, whichever is later. On a website, give every offer an end date and remove it when it expires, so an old price does not keep running.' },
+      { q: 'Can a Nashville dental practice post before-and-after photos?', a: 'Yes, with the patient consent first. Rule 0460-02-.10(4)(h) prohibits communicating personally identifiable facts or information about a patient without consent, and a face is identifiable. Keep written consent that covers website use, show typical outcomes rather than only the best, and avoid captions that create an unjustified expectation about results.' },
+      { q: 'How long should a Tennessee dentist keep copies of website pages?', a: 'Rule 0460-02-.10(6)(c) requires every advertisement to be kept for two years from its last date of publication and made available to the Board on request. Because web pages change often, save a dated copy or PDF each time a page, offer or ad changes, and keep the information that backs up each claim alongside it.' },
+      { q: 'Does a Tennessee dental website need to mention TennCare?', a: 'No rule requires it, but patients look for it. TennCare has covered dental services for enrolled adults since January 1, 2023. If you accept TennCare, say so on your insurance page and name the dental benefits manager TennCare currently lists. If you do not accept it, saying so plainly saves patients and your front desk a phone call.' },
+      { q: 'How much does a SaySites website for a Nashville dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a doctors page, a new patient appointment form, Dentist structured data, a booking button that links to the scheduler you already use, and hosting. You can also request a free redesign to see your current site rebuilt with your own content before deciding.' },
+    ],
+    about: ['Tennessee Board of Dentistry', 'Dental advertising', 'Dental practice websites', 'Nashville, Tennessee'],
+    published: '2026-10-28',
+    status: 'published',
+  },
+  {
     slug: 'columbus-law-firm-website-design',
     title: 'Columbus Law Firm Websites: What Ohio’s Rules Require',
     description: 'Plan a Columbus law firm website under Ohio Rules 7.1 to 7.5: the 2024 specialist change, trade names, keyword ads, lead services and Franklin County courts.',
