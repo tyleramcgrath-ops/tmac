@@ -12,12 +12,12 @@ export function previewPath(site: Pick<Site, 'subdomain'>): string {
 }
 
 // Claiming a redesign preview after signing up or in. The claim code is the
-// preview's id, with an "f" on the end for the fresh redesign rather than
-// the site as it is.
-export const CLAIM_CODE = /^[a-f0-9]{16}f?$/
+// preview's id, with an "f" on the end for the fresh redesign or an "r" for
+// the site rebuilt in SaySites' own design, rather than the site as it is.
+export const CLAIM_CODE = /^[a-f0-9]{16}[fr]?$/
 
 export function claimPath(code: string): string {
-  return `/redesign/${code.slice(0, 16)}/claim${code.endsWith('f') ? '?v=fresh' : ''}`
+  return `/redesign/${code.slice(0, 16)}/claim${code.endsWith('f') ? '?v=fresh' : code.endsWith('r') ? '?v=rebuilt' : ''}`
 }
 
 // Approving a site the SaySites team built: the code in the link.
