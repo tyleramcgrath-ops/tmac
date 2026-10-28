@@ -738,8 +738,26 @@ export async function rebuildPreview(id: string, url: string, get: Fetcher = saf
 // drafts, as in a move, until the domain is switched over.
 // The owner picks which version: their site as it is (the default) or the
 // fresh redesign.
-export function claimFromPreview(p: Preview, orgId: string, subdomain: string, version: 'as-is' | 'fresh' = 'as-is'): { site: Site; pages: Page[]; redirects: Redirect[] } {
-  const from = (version === 'fresh' || !offersCopy(p)) && p.fresh ? p.fresh : p
+// The versions a preview can offer: their site exactly as it is, the
+// hand-made redesign, and their pages rebuilt in SaySites' own design (the
+// pages under the redesign, which Sofie edits like any SaySites page).
+export type PreviewVersion = 'as-is' | 'fresh' | 'rebuilt'
+
+// The redesign and the rebuilt site need enough of their own substance
+// (REDESIGN_NEEDS); previews made before the redesign existed have neither.
+export function offersFresh(p: Pick<Preview, 'asIs' | 'fresh' | 'freshReady'>): boolean {
+  return p.asIs !== undefined && !!p.fresh && p.freshReady !== false
+}
+
+// Their pages in SaySites' own design: the redesign's pages without the
+// hand-made layer on top.
+export function rebuiltOf(p: Pick<Preview, 'fresh'>): { site: Site; pages: Page[]; redirects: Redirect[] } | undefined {
+  if (!p.fresh) return undefined
+  return { site: p.fresh.site, pages: p.fresh.pages.map((pg) => (pg.classic?.design ? (({ classic: _c, ...rest }) => rest)(pg) : pg)), redirects: p.fresh.redirects }
+}
+
+export function claimFromPreview(p: Preview, orgId: string, subdomain: string, version: PreviewVersion = 'as-is'): { site: Site; pages: Page[]; redirects: Redirect[] } {
+  const from = version === 'rebuilt' && p.fresh ? rebuiltOf(p)! : (version === 'fresh' || !offersCopy(p)) && p.fresh ? p.fresh : p
   const siteId = `site_${randomUUID()}`
   const site: Site = { ...structuredClone(from.site), id: siteId, orgId, subdomain, updatedAt: new Date().toISOString() }
   const pages = from.pages.map((pg) => ({ ...structuredClone(pg), id: `page_${randomUUID()}`, siteId, status: pg.source ? ('draft' as const) : pg.status }))
