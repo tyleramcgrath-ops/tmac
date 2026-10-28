@@ -30,6 +30,7 @@ const projects: Project[] = [
   { id: "18", name: "Charleston Popeye Charters", domain: "charlestonpopeyecharters.com", url: "https://charlestonpopeyecharters.com", group: "Lifestyle", category: "Fishing charters", image: "/projects/charlestonpopeyecharters.com-site.jpg" },
   { id: "19", name: "Kinoko", domain: "eatkinoko.com", url: "https://eatkinoko.com", group: "Lifestyle", category: "Food & dining", image: "/projects/eatkinoko.com-site.jpg" },
   { id: "20", name: "EEC", domain: "eec-fl.com", url: "https://eec-fl.com", group: "Websites", category: "Business & services", image: "/projects/eec-fl.com-site.jpg" },
+  { id: "21", name: "Prescriptive Pool Service", domain: "prescriptivepoolservice.com", url: "https://prescriptivepoolservice.com", group: "Websites", category: "Pool service", image: "/projects/prescriptivepoolservice.com-site.jpg" },
 ];
 
 export default projects;

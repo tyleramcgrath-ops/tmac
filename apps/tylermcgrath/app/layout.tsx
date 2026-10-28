@@ -1,11 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./immersive.css";
+import projects from "@/lib/projects";
 
 const SITE = "https://tylermcgrath.com";
 const TITLE = "Tyler McGrath — SEO & Digital Growth Leader | The Studio";
 const DESCRIPTION =
-  "Tyler McGrath has 14+ years in SEO, GEO and AEO. Step into his studio to explore web design, marketing and 20 websites built for growth.";
+  `Tyler McGrath has 14+ years in SEO, GEO and AEO. Step into his studio to explore web design, marketing and ${projects.length} websites built for growth.`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),

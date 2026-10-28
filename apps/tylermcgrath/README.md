@@ -12,7 +12,7 @@ SiteGround from `public_html`. There's no Node runtime in production.
   sensor-light entrance, room depth and the glass cards
 - `lib/sound.ts`: all sound, synthesised with Web Audio (room tone, doors,
   light relays, card ticks, chimes, the Compass); `lib/motion.ts`: phone tilt
-- `lib/projects.ts`: the 20 sites
+- `lib/projects.ts`: the website collection (counts on the page follow it)
 
 Run it locally with `npm install && npm run dev`.
 
