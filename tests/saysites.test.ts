@@ -1335,7 +1335,7 @@ describe('SaySites: import skips archives and listings', async () => {
 
 describe('SaySites: free redesign preview', async () => {
   const { detectBusiness, guessType, nearestPalette } = await import('../apps/saysites/lib/detect')
-  const { buildPreview, claimFromPreview, offersCopy } = await import('../apps/saysites/lib/redesign')
+  const { buildPreview, claimFromPreview, offersCopy, offersFresh, rebuiltOf } = await import('../apps/saysites/lib/redesign')
   const ld = JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebSite', name: 'x' }, { '@type': 'LegalService', name: 'Smith & Lee Law', telephone: '(555) 010-2000', address: { '@type': 'PostalAddress', streetAddress: '1 Main St', addressLocality: 'Dayton', addressRegion: 'OH', postalCode: '45402' } }] })
   const home = `<html><head><title>Injury Lawyers in Dayton | Smith & Lee Law</title><meta name="theme-color" content="#1b4d7a"><script type="application/ld+json">${ld}</script></head><body><header><nav><a href="/car-accidents/">Car accidents</a><a href="/contact-us/">Contact</a></nav></header><main><h1>Injury Lawyers in Dayton, OH</h1><p>${'We help injured people in Dayton get the answers they need. '.repeat(6)}</p></main><script src="/a.js"></script><script src="/b.js"></script></body></html>`
   const car = `<html><head><title>CAR ACCIDENT LAWYERS | Smith & Lee Law</title></head><body><main><h1>CAR ACCIDENT LAWYERS</h1><h2>After a crash</h2><p>${'What to do after a car accident in Ohio, step by step, in plain English. '.repeat(8)}</p></main></body></html>`
@@ -1390,6 +1390,15 @@ describe('SaySites: free redesign preview', async () => {
     expect(c.pages.find((x) => x.slug === '')!.classic).toBeDefined()
     expect(new Set(c.pages.map((x) => x.id)).size).toBe(c.pages.length)
     expect(claimFromPreview(p, 'user_1', 'smith-lee-law', 'fresh').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
+    // The third choice: their pages rebuilt in SaySites' own design, with no
+    // hand-made layer and no copy of their old pages, same addresses.
+    expect(offersFresh(p)).toBe(p.freshReady !== false)
+    const rebuilt = claimFromPreview(p, 'user_1', 'smith-lee-law', 'rebuilt')
+    expect(rebuilt.pages.some((x) => x.classic)).toBe(false)
+    expect(rebuilt.pages.map((x) => x.slug)).toEqual(fresh.pages.map((x) => x.slug))
+    expect(rebuilt.redirects).toEqual(fresh.redirects)
+    expect(rebuiltOf(p)!.pages.find((x) => x.slug === '')!.body.length).toBeGreaterThan(0)
+    expect(fresh.pages.find((x) => x.slug === '')!.classic?.design).toBe(true)
     const store = new MemoryStore()
     await store.savePreview(p, 'who')
     expect(await store.previewCount(new Date(Date.now() - 1000), 'who')).toBe(1)
@@ -2130,6 +2139,9 @@ describe('SaySites: redesign preview, their site exactly as it is', async () => 
     expect(p.site.business.area).toBeDefined()
     expect(claimFromPreview(p, 'u', 'firm2').pages.some((x) => x.classic && !x.classic.design)).toBe(false)
     expect(claimPath('aaaaaaaaaaaaaaaaf')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=fresh')
+    expect(claimPath('aaaaaaaaaaaaaaaar')).toBe('/redesign/aaaaaaaaaaaaaaaa/claim?v=rebuilt')
+    expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaar')).toBe(true)
+    expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaax')).toBe(false)
     expect(CLAIM_CODE.test('aaaaaaaaaaaaaaaa')).toBe(true)
   })
 })

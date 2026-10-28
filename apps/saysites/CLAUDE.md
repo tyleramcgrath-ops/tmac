@@ -254,6 +254,13 @@ than it, and neither ships if it doesn't. A preview (`lib/redesign.ts`) has:
   substance** (`REDESIGN_NEEDS`: 3+ services, 2+ written from their pages,
   `freshReady`); otherwise SaySites' general wording would be most of it,
   which isn't better than their site. Outreach skips those prospects.
+- **"Your site, rebuilt"** (the owner, October 28, 2026: "what happened to the
+  option of having it redesigned or us rebuilding a better version"): the
+  owner always gets a choice. Beside the redesign, every preview offers their
+  pages in SaySites' own starter design (`rebuiltOf`: the redesign's pages
+  without the hand-made layer, served at /redesign/<id>/rebuilt, claimed with
+  `?v=rebuilt` or claim code suffix "r"). Same gate as the redesign
+  (`offersFresh`). The preview page also links "Or have us build it for you".
 - A preview showing neither says so and offers to build from their details.
   Previews made before this (no `asIs` field) rebuild themselves in place
   on their next view (`rebuildPreview`, same id and links).

@@ -3,12 +3,19 @@ import { notFound } from 'next/navigation'
 import { MarketingShell } from '@/components/MarketingShell'
 import { after } from 'next/server'
 import { audit } from '@/lib/audit'
-import { offersCopy, rebuildPreview } from '@/lib/redesign'
+import { offersCopy, offersFresh, rebuildPreview, rebuiltOf, type PreviewVersion } from '@/lib/redesign'
+import { renderPage } from '@/lib/render'
 import { typeLabel } from '@/lib/detect'
 import { getStore } from '@/lib/store'
 import '../../home.css'
 
 export const metadata: Metadata = { title: 'Your free redesign', robots: { index: false } }
+
+const VERSION_LABEL: Record<PreviewVersion, [string, string]> = {
+  'as-is': ['Your site, as it is', 'Exactly as it looks today'],
+  fresh: ['A fresh redesign', 'Same content, a new look'],
+  rebuilt: ['Your site, rebuilt', 'Your pages in our design, change anything by asking'],
+}
 
 const LOCAL = /LocalBusiness|LegalService|Attorney|Plumber|Electrician|HVACBusiness|RoofingContractor|LandscapingBusiness|HousekeepingService|AutoRepair|Dentist|HairSalon|BeautySalon|Restaurant|Bakery|CafeOrCoffeeShop|Store/
 
@@ -23,21 +30,30 @@ export default async function RedesignReport({ params, searchParams }: { params:
   // address, same links); meanwhile they show nothing of the old versions.
   const legacy = p.asIs === undefined && !p.claimed
   if (legacy) after(() => rebuildPreview(id, p.url).catch((e) => console.error('[redesign] rebuild failed', e)))
-  // Two versions, each shown only when it's right: their site exactly as it
-  // is (once a browser check has confirmed it matches their site), and a
-  // redesign with enough of their own substance to be better than it.
+  // Up to three versions, each shown only when it's right: their site
+  // exactly as it is (once a browser check has confirmed it matches their
+  // site), a hand-made redesign, and their pages rebuilt in SaySites' own
+  // design. The last two need enough of their own substance to be better
+  // than their site. The owner always gets a choice when there is one.
   const asIs = !legacy && offersCopy(p)
-  const freshOk = !legacy && !!p.fresh && p.freshReady !== false
-  const fresh = freshOk && (!asIs || (await searchParams).v === 'fresh')
-  const showing = asIs || freshOk
-  const src = `/redesign/${id}/${fresh ? 'fresh' : 'site'}`
-  const claim = `/redesign/${id}/claim${fresh && asIs ? '?v=fresh' : ''}`
-  const { before: b, after: a, detected: d } = p
-  const kept = !fresh ? p.pages.find((pg) => pg.slug === '')?.classic : undefined
+  const freshOk = !legacy && offersFresh(p)
+  const versions: PreviewVersion[] = [...(asIs ? ['as-is' as const] : []), ...(freshOk ? ['fresh' as const, 'rebuilt' as const] : [])]
+  const asked = (await searchParams).v
+  const view: PreviewVersion | undefined = versions.find((v) => v === asked) ?? versions[0]
+  const fresh = view === 'fresh'
+  const showing = !!view
+  const src = `/redesign/${id}/${view === 'fresh' ? 'fresh' : view === 'rebuilt' ? 'rebuilt' : 'site'}`
+  const claim = `/redesign/${id}/claim${view && view !== 'as-is' ? `?v=${view}` : ''}`
+  const { before: b, detected: d } = p
+  const kept = view === 'as-is' ? p.pages.find((pg) => pg.slug === '')?.classic : undefined
   const copy = kept ? audit(kept.html) : undefined
+  // The rebuilt version is measured from its own home page.
+  const rebuilt = view === 'rebuilt' ? rebuiltOf(p) : undefined
+  const rebuiltHome = rebuilt?.pages.find((pg) => pg.slug === '')
+  const a = rebuilt && rebuiltHome ? { ...p.after, ...audit(renderPage(rebuilt.site, rebuiltHome, rebuilt.pages).html) } : p.after
   const host = p.url.replace(/^https?:\/\//, '')
-  const shownPages = fresh && p.fresh ? p.fresh.pages : p.pages
-  const shownRedirects = fresh && p.fresh ? p.fresh.redirects : p.redirects
+  const shownPages = view !== 'as-is' && p.fresh ? p.fresh.pages : p.pages
+  const shownRedirects = view !== 'as-is' && p.fresh ? p.fresh.redirects : p.redirects
   const imported = shownPages.filter((pg) => pg.source).length
   const same = shownPages.filter((pg) => pg.source && new URL(pg.source).pathname.replace(/\/+$/, '') === `/${pg.slug}`).length
   // Their site as it is keeps their own design and code, minus the scripts
@@ -68,19 +84,20 @@ export default async function RedesignReport({ params, searchParams }: { params:
         <div className="wrap">
           <p className="kicker">Your free redesign, {host}</p>
           <h1>Here’s {d.name} on SaySites.</h1>
-          {showing && <p>{fresh ? 'A fresh design, made from your own pages and words' : 'Your site exactly as it looks today: the same pages, words, photos and design, without the scripts that slow it down'}: {imported} page{imported === 1 ? '' : 's'} carried over{same ? `, ${same} at exactly the same address` : ''}{shownRedirects.length ? `, and ${shownRedirects.length} redirect${shownRedirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>}
+          {showing && <p>{fresh ? 'A fresh design, made from your own pages and words' : view === 'rebuilt' ? 'Your site rebuilt on SaySites: your own pages and words in our design, fast and built for phones, and you can change any of it by asking Sofie' : 'Your site exactly as it looks today: the same pages, words, photos and design, without the scripts that slow it down'}: {imported} page{imported === 1 ? '' : 's'} carried over{same ? `, ${same} at exactly the same address` : ''}{shownRedirects.length ? `, and ${shownRedirects.length} redirect${shownRedirects.length === 1 ? '' : 's'} so old links keep working` : ''}.</p>}
           {legacy ? (
             <p className="rd-note">We’ve improved free previews since this one was made, and it’s being rebuilt now. Refresh in a minute to see the new version.</p>
           ) : !showing ? (
             <p className="rd-note">We read your site, but we couldn’t find enough of your services on it to redesign it well, and we only show a redesign that’s better than your site. You can build yours from your business details in about two minutes instead.</p>
           ) : !asIs ? (
-            <p className="rd-note">{p.asIs === false ? 'Parts of your current site are drawn by scripts, so a copy of it wouldn’t look exactly the same, and we only show exact copies. Here’s the redesign, made from your own pages and words.' : 'An exact copy of your current site appears here once our check confirms it looks the same as your site. Here’s the redesign, made from your own pages and words.'}</p>
+            <p className="rd-note">{p.asIs === false ? 'Parts of your current site are drawn by scripts, so a copy of it wouldn’t look exactly the same, and we only show exact copies.' : 'An exact copy of your current site appears here once our check confirms it looks the same as your site.'} Pick the version you like below: a fresh redesign, or your site rebuilt on SaySites.</p>
           ) : null}
           <div className="ind-actions">
             {showing ? (
               <>
                 <a className="b b-dark" href={claim}>{fromOutreach ? 'Claim it, first month free' : 'Claim this site free'}</a>
                 <a className="tplrow-link" href={src} target="_blank" rel="noopener">Open the full preview ↗</a>
+                <a className="tplrow-link" href="/#talk">Or have us build it for you</a>
               </>
             ) : !legacy ? (
               <a className="b b-dark" href="/signup">Build it from your details</a>
@@ -91,16 +108,14 @@ export default async function RedesignReport({ params, searchParams }: { params:
 
       {showing && <section className="ind-sec" style={{ paddingTop: 0 }}>
         <div className="wrap">
-          {freshOk && asIs && (
+          {versions.length > 1 && (
             <nav className="rd-switch" aria-label="Choose a version">
-              <a href={`/redesign/${id}`} aria-current={fresh ? undefined : 'page'}>
-                <strong>Your site, as it is</strong>
-                <span>Exactly as it looks today</span>
-              </a>
-              <a href={`/redesign/${id}?v=fresh`} aria-current={fresh ? 'page' : undefined}>
-                <strong>A fresh redesign</strong>
-                <span>Same content, a new look</span>
-              </a>
+              {versions.map((v) => (
+                <a key={v} href={`/redesign/${id}${v === versions[0] ? '' : `?v=${v}`}`} aria-current={v === view ? 'page' : undefined}>
+                  <strong>{VERSION_LABEL[v][0]}</strong>
+                  <span>{VERSION_LABEL[v][1]}</span>
+                </a>
+              ))}
             </nav>
           )}
           <div className="frame redesign-frame">
