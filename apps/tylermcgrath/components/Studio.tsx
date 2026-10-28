@@ -11,7 +11,7 @@ import OrbitField, { type OrbitItem } from "./OrbitField";
 const Compass = dynamic(() => import("./Compass"), { ssr: false });
 
 // Pinned to the front of Selected Work.
-const FEATURED = ["saysites.com", "tamarindomarketing.com", "esenciascr.com", "wehaverehabs.com"];
+const FEATURED = ["prescriptivepoolservice.com", "saysites.com", "tamarindomarketing.com", "esenciascr.com", "wehaverehabs.com"];
 const ordered: Project[] = [
   ...FEATURED.map((d) => projects.find((p) => p.domain === d)!),
   ...projects.filter((p) => !FEATURED.includes(p.domain)),
@@ -20,7 +20,7 @@ const ordered: Project[] = [
 const SERVICES = [
   { key: "about", title: "About Tyler", label: "THE PERSON BEHIND THE WORK", symbol: "TM", copy: "14+ years in search and digital growth." },
   { key: "marketing", title: "Marketing & SEO", label: "STRATEGY · SEARCH · AI", symbol: "◎", copy: "SEO, GEO, AEO and digital growth." },
-  { key: "work", title: "Selected Work", label: "20 DIGITAL DESTINATIONS", symbol: "◈", copy: "Explore websites across industries." },
+  { key: "work", title: "Selected Work", label: `${projects.length} DIGITAL DESTINATIONS`, symbol: "◈", copy: "Explore websites across industries." },
   { key: "contact", title: "Let’s Connect", label: "YOUR NEXT DIRECTION", symbol: "↗", copy: "Start a conversation about your business." },
 ];
 
@@ -366,7 +366,7 @@ export default function Studio() {
             <button onClick={() => open("seo")}>SEO &amp; AI Search</button>
             <button onClick={() => open("marketing")}>Marketing</button>
             <button onClick={() => open("index")}>
-              The portfolio <sup>20</sup>
+              The portfolio <sup>{projects.length}</sup>
             </button>
             <a href={MMG} target="_blank" rel="noopener noreferrer">
               Connect ↗
@@ -554,7 +554,7 @@ export default function Studio() {
                 </>
               ) : (
                 <>
-                  <span className="studio-eyebrow">TWENTY DIGITAL DESTINATIONS</span>
+                  <span className="studio-eyebrow">{projects.length} DIGITAL DESTINATIONS</span>
                   <h2 id="studio-dialog-title">
                     The work.
                     <br />
