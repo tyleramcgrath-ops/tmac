@@ -1,7 +1,7 @@
 {
  "gl": "us",
  "hl": "en",
- "note": "The seismometer network: 8 verticals (\"fault lines\") x 6 keywords. Each vertical mixes YMYL, commercial and informational intent so a quake in one corner of Google shows up as one fault line lighting up. Edit freely; a new keyword seeds on its first sweep and starts measuring on its second.",
+ "note": "The seismometer network: 8 verticals (\"fault lines\") x 6 keywords. Each vertical mixes YMYL, commercial and informational intent so a quake in one corner of Google shows up as one fault line lighting up. Edit freely; a new keyword seeds on its first sweep and starts measuring on its second. Local-intent keywords carry a fixed \"location\": without one Google picks a different city per request and those results swing wildly.",
  "stations": [
   {
    "id": "health-1",
@@ -96,32 +96,38 @@
   {
    "id": "local-1",
    "vertical": "local",
-   "keyword": "emergency plumber near me"
+   "keyword": "emergency plumber near me",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "local-2",
    "vertical": "local",
-   "keyword": "roof repair cost"
+   "keyword": "roof repair cost",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "local-3",
    "vertical": "local",
-   "keyword": "personal injury lawyer"
+   "keyword": "personal injury lawyer",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "local-4",
    "vertical": "local",
-   "keyword": "hvac repair near me"
+   "keyword": "hvac repair near me",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "local-5",
    "vertical": "local",
-   "keyword": "dentist open on saturday"
+   "keyword": "dentist open on saturday",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "local-6",
    "vertical": "local",
-   "keyword": "how much does a kitchen remodel cost"
+   "keyword": "how much does a kitchen remodel cost",
+   "location": "Chicago, Illinois, United States"
   },
   {
    "id": "travel-1",
