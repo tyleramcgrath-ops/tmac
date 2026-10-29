@@ -1,0 +1,247 @@
+{
+ "gl": "us",
+ "hl": "en",
+ "note": "The seismometer network: 8 verticals (\"fault lines\") x 6 keywords. Each vertical mixes YMYL, commercial and informational intent so a quake in one corner of Google shows up as one fault line lighting up. Edit freely; a new keyword seeds on its first sweep and starts measuring on its second.",
+ "stations": [
+  {
+   "id": "health-1",
+   "vertical": "health",
+   "keyword": "symptoms of vitamin d deficiency"
+  },
+  {
+   "id": "health-2",
+   "vertical": "health",
+   "keyword": "how to lower blood pressure naturally"
+  },
+  {
+   "id": "health-3",
+   "vertical": "health",
+   "keyword": "best treatment for lower back pain"
+  },
+  {
+   "id": "health-4",
+   "vertical": "health",
+   "keyword": "is intermittent fasting safe"
+  },
+  {
+   "id": "health-5",
+   "vertical": "health",
+   "keyword": "signs of a concussion in adults"
+  },
+  {
+   "id": "health-6",
+   "vertical": "health",
+   "keyword": "how much sleep do adults need"
+  },
+  {
+   "id": "finance-1",
+   "vertical": "finance",
+   "keyword": "best high yield savings account"
+  },
+  {
+   "id": "finance-2",
+   "vertical": "finance",
+   "keyword": "how to improve credit score fast"
+  },
+  {
+   "id": "finance-3",
+   "vertical": "finance",
+   "keyword": "roth ira vs traditional ira"
+  },
+  {
+   "id": "finance-4",
+   "vertical": "finance",
+   "keyword": "how much house can i afford"
+  },
+  {
+   "id": "finance-5",
+   "vertical": "finance",
+   "keyword": "best credit cards for travel"
+  },
+  {
+   "id": "finance-6",
+   "vertical": "finance",
+   "keyword": "what is a good debt to income ratio"
+  },
+  {
+   "id": "ecommerce-1",
+   "vertical": "ecommerce",
+   "keyword": "best running shoes for flat feet"
+  },
+  {
+   "id": "ecommerce-2",
+   "vertical": "ecommerce",
+   "keyword": "best robot vacuum"
+  },
+  {
+   "id": "ecommerce-3",
+   "vertical": "ecommerce",
+   "keyword": "best noise cancelling headphones"
+  },
+  {
+   "id": "ecommerce-4",
+   "vertical": "ecommerce",
+   "keyword": "best air fryer"
+  },
+  {
+   "id": "ecommerce-5",
+   "vertical": "ecommerce",
+   "keyword": "best mattress for side sleepers"
+  },
+  {
+   "id": "ecommerce-6",
+   "vertical": "ecommerce",
+   "keyword": "best budget laptop for students"
+  },
+  {
+   "id": "local-1",
+   "vertical": "local",
+   "keyword": "emergency plumber near me"
+  },
+  {
+   "id": "local-2",
+   "vertical": "local",
+   "keyword": "roof repair cost"
+  },
+  {
+   "id": "local-3",
+   "vertical": "local",
+   "keyword": "personal injury lawyer"
+  },
+  {
+   "id": "local-4",
+   "vertical": "local",
+   "keyword": "hvac repair near me"
+  },
+  {
+   "id": "local-5",
+   "vertical": "local",
+   "keyword": "dentist open on saturday"
+  },
+  {
+   "id": "local-6",
+   "vertical": "local",
+   "keyword": "how much does a kitchen remodel cost"
+  },
+  {
+   "id": "travel-1",
+   "vertical": "travel",
+   "keyword": "best time to visit japan"
+  },
+  {
+   "id": "travel-2",
+   "vertical": "travel",
+   "keyword": "things to do in lisbon"
+  },
+  {
+   "id": "travel-3",
+   "vertical": "travel",
+   "keyword": "cheap flights to hawaii"
+  },
+  {
+   "id": "travel-4",
+   "vertical": "travel",
+   "keyword": "how to get tsa precheck"
+  },
+  {
+   "id": "travel-5",
+   "vertical": "travel",
+   "keyword": "best beaches in mexico"
+  },
+  {
+   "id": "travel-6",
+   "vertical": "travel",
+   "keyword": "packing list for europe"
+  },
+  {
+   "id": "tech-1",
+   "vertical": "tech",
+   "keyword": "how to screenshot on windows"
+  },
+  {
+   "id": "tech-2",
+   "vertical": "tech",
+   "keyword": "best password manager"
+  },
+  {
+   "id": "tech-3",
+   "vertical": "tech",
+   "keyword": "how to speed up my computer"
+  },
+  {
+   "id": "tech-4",
+   "vertical": "tech",
+   "keyword": "what is a vpn"
+  },
+  {
+   "id": "tech-5",
+   "vertical": "tech",
+   "keyword": "how to factory reset iphone"
+  },
+  {
+   "id": "tech-6",
+   "vertical": "tech",
+   "keyword": "best project management software"
+  },
+  {
+   "id": "food-1",
+   "vertical": "food",
+   "keyword": "easy chicken breast recipes"
+  },
+  {
+   "id": "food-2",
+   "vertical": "food",
+   "keyword": "how to make sourdough starter"
+  },
+  {
+   "id": "food-3",
+   "vertical": "food",
+   "keyword": "banana bread recipe"
+  },
+  {
+   "id": "food-4",
+   "vertical": "food",
+   "keyword": "how long to boil eggs"
+  },
+  {
+   "id": "food-5",
+   "vertical": "food",
+   "keyword": "best way to cook salmon"
+  },
+  {
+   "id": "food-6",
+   "vertical": "food",
+   "keyword": "vegetarian meal prep ideas"
+  },
+  {
+   "id": "howto-1",
+   "vertical": "howto",
+   "keyword": "how to remove a stripped screw"
+  },
+  {
+   "id": "howto-2",
+   "vertical": "howto",
+   "keyword": "how to write a resume"
+  },
+  {
+   "id": "howto-3",
+   "vertical": "howto",
+   "keyword": "how to get rid of fruit flies"
+  },
+  {
+   "id": "howto-4",
+   "vertical": "howto",
+   "keyword": "how to tie a tie"
+  },
+  {
+   "id": "howto-5",
+   "vertical": "howto",
+   "keyword": "how to unclog a drain without a plunger"
+  },
+  {
+   "id": "howto-6",
+   "vertical": "howto",
+   "keyword": "how to start a small business"
+  }
+ ]
+}
