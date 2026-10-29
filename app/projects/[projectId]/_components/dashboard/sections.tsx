@@ -1,0 +1,782 @@
+'use client'
+
+// Sidebar sections for the project Command Center. Every section renders from
+// the project's real latest-scan analytics (passed in) — the same derived data
+// the old dashboard used, now sourced from persisted scans instead of client
+// state. Rankings uses the live /api/rankings endpoint (keyed, honest fallback).
+
+import { useCallback, useEffect, useState } from 'react'
+import {
+  Radar, FileText, Plug, Download, Printer, Check, AlertTriangle, Info,
+  ExternalLink, Loader2, Gauge, Network, ShieldCheck, TrendingUp, Trash2, Plus, X, type LucideIcon,
+} from 'lucide-react'
+import {
+  type Analytics, type PageResult, type PageSpeed, type Severity, type Dup,
+  pathOf, scoreColor, gradeInfo,
+} from './analytics'
+import { KeywordIntelligence } from './keywords'
+import { LinkEquity } from './link-equity'
+import { AiLandscape } from './ai-landscape'
+import { InternalLinksPanel, type LinkTarget } from '../InternalLinksPanel'
+import { BulkFixBar } from '../BulkFixBar'
+import {
+  api, ApiError,
+  type RankSnapshotDTO, type TrackedKeywordDTO,
+  type AiCitationSnapshotDTO, type TrackedAiQueryDTO,
+  type BacklinkSnapshotDTO, type CompetitorRankComparisonDTO,
+} from '../../../../lib/client'
+
+const TONE: Record<string, string> = { critical: 'text-[var(--rf-red)]', warning: 'text-[var(--rf-amber)]', info: 'text-[var(--rf-blue-bright)]' }
+
+/* ── shared primitives ──────────────────────────────────────────────────── */
+
+function CountUp({ value, className }: { value: number; className?: string }) {
+  return <span className={className}>{value.toLocaleString()}</span>
+}
+
+export function Ring({ value, size = 128, thick = 10 }: { value: number; size?: number; thick?: number }) {
+  const r = size / 2 - thick; const c = 2 * Math.PI * r; const offset = c - (value / 100) * c; const g = gradeInfo(value)
+  return (
+    <div className="relative" style={{ width: size, height: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`} className="h-full w-full -rotate-90">
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(148,173,224,0.12)" strokeWidth={thick} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="url(#rfRing2)" strokeWidth={thick} strokeLinecap="round" strokeDasharray={c} strokeDashoffset={offset} style={{ transition: 'stroke-dashoffset 1s cubic-bezier(0.2,0.7,0.2,1)' }} />
+        <defs><linearGradient id="rfRing2" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stopColor="#2f6bff" /><stop offset="100%" stopColor="#22d3ee" /></linearGradient></defs>
+      </svg>
+      <div className="absolute inset-0 grid place-items-center text-center"><div><CountUp value={value} className="text-3xl font-semibold text-white" /><span className="block text-[10px] font-semibold uppercase tracking-wider" style={{ color: g.color }}>Grade {g.letter}</span></div></div>
+    </div>
+  )
+}
+
+function Donut({ segments, size = 132 }: { segments: { label: string; value: number; color: string }[]; size?: number }) {
+  const total = segments.reduce((s, x) => s + x.value, 0) || 1
+  const r = size / 2 - 9; const c = 2 * Math.PI * r; let acc = 0
+  return (
+    <div className="flex items-center gap-4">
+      <div className="relative shrink-0" style={{ width: size, height: size }}>
+        <svg viewBox={`0 0 ${size} ${size}`} className="h-full w-full -rotate-90">
+          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="rgba(148,173,224,0.10)" strokeWidth="9" />
+          {segments.map((s, i) => { const frac = s.value / total; const dash = frac * c; const el = <circle key={i} cx={size / 2} cy={size / 2} r={r} fill="none" stroke={s.color} strokeWidth="9" strokeDasharray={`${dash} ${c - dash}`} strokeDashoffset={-acc} />; acc += dash; return el })}
+        </svg>
+        <div className="absolute inset-0 grid place-items-center"><div className="text-center"><span className="text-xl font-semibold text-white">{total}</span><span className="block text-[9px] uppercase tracking-wider text-[var(--rf-faint)]">pages</span></div></div>
+      </div>
+      <ul className="space-y-1.5 text-xs">
+        {segments.map((s) => <li key={s.label} className="flex items-center gap-2 text-[var(--rf-muted)]"><span className="h-2.5 w-2.5 rounded-sm" style={{ background: s.color }} /><span className="text-white">{s.value}</span> {s.label}</li>)}
+      </ul>
+    </div>
+  )
+}
+
+function Stat({ label, numeric, value, tone = 'white', icon: Icon }: { label: string; numeric?: number; value?: string; tone?: string; icon?: LucideIcon }) {
+  return (
+    <div className="rf-card rf-card-hover p-4">
+      <div className="flex items-center justify-between"><p className="text-[11px] text-[var(--rf-faint)]">{label}</p>{Icon && <Icon className="h-3.5 w-3.5 text-[var(--rf-faint)]" />}</div>
+      <p className={`mt-1 text-xl font-semibold ${tone === 'white' ? 'text-white' : tone}`}>{numeric != null ? <CountUp value={numeric} /> : value}</p>
+    </div>
+  )
+}
+
+function SevIcon({ s }: { s: Severity }) { return s === 'info' ? <Info className={`h-4 w-4 ${TONE.info}`} /> : <AlertTriangle className={`h-4 w-4 ${TONE[s]}`} /> }
+
+function Card({ title, right, children, className = '' }: { title?: string; right?: React.ReactNode; children: React.ReactNode; className?: string }) {
+  return <div className={`rf-card overflow-hidden ${className}`}>{title && <div className="flex items-center justify-between border-b border-[var(--rf-card-line)] px-4 py-2.5"><span className="text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{title}</span>{right}</div>}<div className="p-4">{children}</div></div>
+}
+
+function LinkList({ title, rows, empty = 'Nothing here — nice.' }: { title: string; rows: [string, string, string][]; empty?: string }) {
+  return (
+    <div className="rf-card overflow-hidden">
+      <div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{title}</div>
+      <div className="divide-y divide-[var(--rf-card-line)]">
+        {rows.length === 0 ? <p className="px-4 py-6 text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> {empty}</p> : rows.map(([path, meta, url], i) => <a key={url + i} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 px-4 py-2.5 text-sm hover:bg-white/[0.02]"><span className="truncate text-[var(--rf-muted)]">{path}</span><span className="shrink-0 rf-mono text-[11px] text-[var(--rf-faint)]">{meta}</span></a>)}
+      </div>
+    </div>
+  )
+}
+
+function CatBars({ categories }: { categories: Analytics['categories'] }) {
+  const items: [string, number][] = [['Technical', categories.technical], ['Content', categories.content], ['Schema', categories.schema], ['AI Readiness', categories.ai]]
+  return <div className="grid gap-x-6 gap-y-2.5 sm:grid-cols-2">{items.map(([label, score]) => <div key={label}><div className="mb-1 flex items-center justify-between text-xs"><span className="text-[var(--rf-muted)]">{label}</span><span className="rf-mono text-white">{score}</span></div><div className="h-2 overflow-hidden rounded-full bg-white/[0.05]"><div className="h-full rounded-full bg-gradient-to-r from-[var(--rf-blue)] to-[var(--rf-cyan)]" style={{ width: `${score}%`, transition: 'width 0.9s cubic-bezier(0.2,0.7,0.2,1)' }} /></div></div>)}</div>
+}
+
+function CoreWebVitals({ ps }: { ps: PageSpeed | null }) {
+  if (!ps || !ps.available) return null
+  const tone = (v: number | null, good: number, ok: number, invert = false) => v == null ? 'text-[var(--rf-faint)]' : invert ? (v >= good ? 'text-[var(--rf-green)]' : v >= ok ? 'text-[var(--rf-amber)]' : 'text-[var(--rf-red)]') : (v <= good ? 'text-[var(--rf-green)]' : v <= ok ? 'text-[var(--rf-amber)]' : 'text-[var(--rf-red)]')
+  const cells: [string, string, string][] = [['Performance', ps.performance != null ? `${ps.performance}` : '—', tone(ps.performance, 90, 50, true)], ['LCP', ps.lcpMs != null ? `${(ps.lcpMs / 1000).toFixed(1)}s` : '—', tone(ps.lcpMs, 2500, 4000)], ['CLS', ps.cls != null ? ps.cls.toFixed(3) : '—', tone(ps.cls != null ? ps.cls * 1000 : null, 100, 250)], ['INP', ps.inpMs != null ? `${Math.round(ps.inpMs)}ms` : '—', tone(ps.inpMs, 200, 500)]]
+  return <div className="rf-card overflow-hidden"><div className="flex items-center gap-2 border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]"><Gauge className="h-4 w-4 text-[var(--rf-cyan)]" /> Core Web Vitals <span className="text-[var(--rf-faint)]">· homepage · {ps.strategy}</span></div><div className="grid grid-cols-2 sm:grid-cols-4">{cells.map(([k, v, c]) => <div key={k} className="border-r border-[var(--rf-card-line)] p-4 text-center last:border-r-0"><p className={`text-2xl font-semibold ${c}`}>{v}</p><p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">{k}</p></div>)}</div></div>
+}
+
+/* ── Overview ───────────────────────────────────────────────────────────── */
+
+export function Overview({ a, pages, pageSpeed, domain, onGo }: { a: Analytics; pages: PageResult[]; pageSpeed: PageSpeed | null; domain: string; onGo: (s: string) => void }) {
+  const g = gradeInfo(a.siteScore)
+  const quickWins = a.issues.filter((i) => i.severity !== 'info').slice(0, 6)
+  return (
+    <div className="space-y-4">
+      <div className="rf-card rf-topline relative overflow-hidden p-5 sm:p-6">
+        <div className="rf-glow pointer-events-none absolute -right-16 -top-16 h-52 w-52 opacity-50" />
+        <div className="flex flex-col items-center gap-6 sm:flex-row">
+          <Ring value={a.siteScore} size={132} />
+          <div className="min-w-0 flex-1">
+            <p className="rf-mono text-[11px] uppercase tracking-[0.18em] text-[var(--rf-faint)]">Site health</p>
+            <h1 className="mt-1 truncate text-2xl font-semibold text-white">{domain || 'your site'}</h1>
+            <p className="mt-1 text-sm text-[var(--rf-muted)]">Grade <span className="font-semibold" style={{ color: g.color }}>{g.letter}</span> · {pages.length} pages analyzed · {a.severityTotals.critical} critical issue{a.severityTotals.critical !== 1 ? 's' : ''}</p>
+            <div className="mt-4"><CatBars categories={a.categories} /></div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Critical issues" numeric={a.severityTotals.critical} tone={TONE.critical} icon={AlertTriangle} />
+        <Stat label="Indexable" value={`${pages.length - a.totals.nonIndexable}/${pages.length}`} tone="text-[var(--rf-green)]" icon={ShieldCheck} />
+        <Stat label="Orphan pages" numeric={a.links.orphans.length} tone={a.links.orphans.length ? TONE.amber : 'text-[var(--rf-green)]'} icon={Network} />
+        <Stat label="Avg. words / page" numeric={a.totals.avgWordCount} icon={FileText} />
+      </div>
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card title="Page score distribution"><Donut segments={[{ label: 'Excellent (90+)', value: a.distribution.excellent, color: '#34d399' }, { label: 'Good (70–89)', value: a.distribution.good, color: '#22d3ee' }, { label: 'Fair (50–69)', value: a.distribution.fair, color: '#fbbf24' }, { label: 'Poor (<50)', value: a.distribution.poor, color: '#fb6a6a' }]} /></Card>
+        <Card title="Issues by category">
+          <div className="space-y-2.5">
+            {a.issuesByCategory.slice(0, 6).map((c) => { const max = a.issuesByCategory[0]?.count || 1; return (
+              <div key={c.category}><div className="mb-1 flex items-center justify-between text-xs"><span className="text-[var(--rf-muted)]">{c.category}</span><span className="rf-mono text-white">{c.count}</span></div><div className="h-2 overflow-hidden rounded-full bg-white/[0.05]"><div className="h-full rounded-full bg-gradient-to-r from-[var(--rf-blue)] to-[var(--rf-cyan)]" style={{ width: `${(c.count / max) * 100}%` }} /></div></div>) })}
+          </div>
+        </Card>
+      </div>
+
+      <CoreWebVitals ps={pageSpeed} />
+
+      <div className="grid gap-4 lg:grid-cols-2">
+        <Card title="Quick wins" right={<button onClick={() => onGo('audit')} className="text-[11px] text-[var(--rf-blue-bright)] hover:text-white">All issues →</button>}>
+          <ul className="space-y-1.5">
+            {quickWins.length === 0 ? <li className="text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> No priority issues.</li> : quickWins.map((i, idx) => <li key={idx} className="flex items-start justify-between gap-2 text-sm"><span className="flex items-start gap-2"><SevIcon s={i.severity} /><span className="text-[var(--rf-text)]">{i.title}</span></span><span className="shrink-0 rf-mono text-[11px] text-[var(--rf-faint)]">{i.affectedPages}p</span></li>)}
+          </ul>
+        </Card>
+        <Card title="Lowest-scoring pages" right={<button onClick={() => onGo('audit')} className="text-[11px] text-[var(--rf-blue-bright)] hover:text-white">Details →</button>}>
+          <div className="space-y-1.5">
+            {[...pages].sort((x, y) => x.overall - y.overall).slice(0, 6).map((p) => <a key={p.url} href={p.url} target="_blank" rel="noopener noreferrer" className="flex items-center justify-between gap-3 text-sm hover:opacity-80"><span className="truncate text-[var(--rf-muted)]">{pathOf(p.url)}</span><span className={`rf-mono font-semibold ${scoreColor(p.overall)}`}>{p.overall}</span></a>)}
+          </div>
+        </Card>
+      </div>
+    </div>
+  )
+}
+
+/* ── Site Audit ─────────────────────────────────────────────────────────── */
+
+export function Audit({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  const [filter, setFilter] = useState<'all' | Severity>('all')
+  const [selected, setSelected] = useState<PageResult | null>(null)
+  const issues = filter === 'all' ? a.issues : a.issues.filter((i) => i.severity === filter)
+  return (
+    <div className="space-y-4">
+      <BulkFixBar projectId={projectId} label="Fix everything" />
+      <div className="flex flex-wrap gap-2">{(['all', 'critical', 'warning', 'info'] as const).map((f) => <button key={f} onClick={() => setFilter(f)} className={`rounded-lg px-3 py-1.5 text-xs font-medium capitalize ${filter === f ? 'bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]' : 'rf-btn-ghost'}`}>{f}{f !== 'all' ? ` (${a.severityTotals[f]})` : ''}</button>)}</div>
+      <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Issues ({issues.length})</div><div className="divide-y divide-[var(--rf-card-line)]">{issues.length === 0 ? <p className="px-4 py-6 text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> No issues in this filter.</p> : issues.map((i, idx) => <div key={idx} className="flex items-start justify-between gap-3 px-4 py-3"><span className="flex items-start gap-3 text-sm"><SevIcon s={i.severity} /><span><span className="text-[var(--rf-text)]">{i.title}</span><span className="block text-[11px] text-[var(--rf-faint)]">{i.category}</span></span></span><span className="shrink-0 rf-mono text-[11px] text-[var(--rf-muted)]">{i.affectedPages} page{i.affectedPages > 1 ? 's' : ''}</span></div>)}</div></div>
+      <PagesTable pages={pages} onSelect={setSelected} />
+      {selected && <PageDrawer page={selected} onClose={() => setSelected(null)} />}
+    </div>
+  )
+}
+
+function PagesTable({ pages, onSelect }: { pages: PageResult[]; onSelect: (p: PageResult) => void }) {
+  return (
+    <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">Crawled pages ({pages.length}) · click a row for fixes</div><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Page</th><th className="px-4 py-2 font-medium">Score</th><th className="px-4 py-2 font-medium">Words</th><th className="px-4 py-2 font-medium">Schema</th><th className="px-4 py-2 font-medium">Issues</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{[...pages].sort((x, y) => x.overall - y.overall).map((p) => <tr key={p.url} onClick={() => onSelect(p)} className="cursor-pointer hover:bg-white/[0.03]"><td className="max-w-[240px] truncate px-4 py-2.5 text-[var(--rf-muted)]">{pathOf(p.url)}</td><td className={`px-4 py-2.5 rf-mono font-semibold ${scoreColor(p.overall)}`}>{p.overall}</td><td className="px-4 py-2.5 text-[var(--rf-muted)]">{p.wordCount.toLocaleString()}</td><td className="px-4 py-2.5">{p.schemaTypes.length > 0 ? <Check className="h-4 w-4 text-[var(--rf-green)]" /> : <span className="text-[var(--rf-faint)]">—</span>}</td><td className="px-4 py-2.5 rf-mono text-[var(--rf-muted)]">{p.fixes.length}{p.fixes.filter((f) => f.severity === 'critical').length > 0 && <span className="text-[var(--rf-red)]"> ({p.fixes.filter((f) => f.severity === 'critical').length})</span>}</td></tr>)}</tbody></table></div></div>
+  )
+}
+
+// Page detail, opened by clicking a row in PagesTable. Presented as a large
+// CENTERED modal: it used to slide in as a 448px full-height panel pinned to
+// the right edge, which made the score tiles and the fix list cramped and
+// easy to miss entirely. Escape and a backdrop click both close it.
+function PageDrawer({ page, onClose }: { page: PageResult; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose() }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [onClose])
+
+  const scores: [string, number][] = [
+    ['Overall', page.overall],
+    ['Technical', page.scores.technical],
+    ['Content', page.scores.content],
+    ['Schema', page.scores.schema],
+  ]
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm sm:p-8" onClick={onClose}>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={`Page detail: ${pathOf(page.url)}`}
+        className="rf-card rf-topline flex max-h-[88vh] w-full max-w-4xl flex-col overflow-hidden"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex items-center justify-between gap-3 border-b border-[var(--rf-card-line)] px-6 py-4">
+          <div className="min-w-0">
+            <p className="text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">Page detail</p>
+            <p className="truncate text-base font-semibold text-white">{pathOf(page.url)}</p>
+          </div>
+          <button onClick={onClose} aria-label="Close page detail" className="rf-btn-ghost grid h-9 w-9 shrink-0 place-items-center rounded-lg"><X className="h-4 w-4" /></button>
+        </div>
+        <div className="overflow-y-auto px-6 py-5">
+          <div className="grid grid-cols-2 gap-3 text-center sm:grid-cols-4">
+            {scores.map(([k, v]) => (
+              <div key={k} className="rf-card px-3 py-4">
+                <p className={`text-3xl font-semibold ${scoreColor(v)}`}>{v}</p>
+                <p className="mt-1 text-xs text-[var(--rf-faint)]">{k}</p>
+              </div>
+            ))}
+          </div>
+          <a href={page.url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-flex items-center gap-1.5 text-sm text-[var(--rf-blue-bright)] hover:text-white">Open page <ExternalLink className="h-3.5 w-3.5" /></a>
+          <h4 className="mt-7 text-base font-semibold text-white">Fixes for this page ({page.fixes.length})</h4>
+          <ul className="mt-3 space-y-2">
+            {page.fixes.length === 0 ? (
+              <li className="text-sm text-[var(--rf-green)]"><Check className="mr-1 inline h-4 w-4" /> Clean — no issues.</li>
+            ) : (
+              page.fixes.map((f, i) => (
+                <li key={i} className="flex items-start gap-3 rounded-lg border border-[var(--rf-card-line)] bg-white/[0.02] px-4 py-3 text-sm">
+                  <SevIcon s={f.severity} />
+                  <span>
+                    <span className="text-[15px] text-[var(--rf-text)]">{f.title}</span>
+                    <span className="mt-0.5 block text-xs text-[var(--rf-faint)]">{f.category}</span>
+                  </span>
+                </li>
+              ))
+            )}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ── Content ────────────────────────────────────────────────────────────── */
+
+export function Content({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  const thin = pages.filter((p) => p.wordCount < 300); const noSchema = pages.filter((p) => p.schemaTypes.length === 0); const titleIssues = pages.filter((p) => p.titleLength < 30 || p.titleLength > 60); const noH1 = pages.filter((p) => p.h1Count !== 1)
+  return (
+    <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['content']} label="Fix content issues" />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Duplicate titles" numeric={a.duplicates.titles.length} tone={a.duplicates.titles.length ? TONE.critical : 'text-[var(--rf-green)]'} />
+        <Stat label="Duplicate metas" numeric={a.duplicates.metas.length} tone={a.duplicates.metas.length ? TONE.warning : 'text-[var(--rf-green)]'} />
+        <Stat label="Thin pages (<300w)" numeric={thin.length} tone={thin.length ? TONE.warning : 'text-[var(--rf-green)]'} />
+        <Stat label="Missing schema" numeric={noSchema.length} tone={noSchema.length ? TONE.warning : 'text-[var(--rf-green)]'} />
+      </div>
+      {a.duplicates.titles.length > 0 && <DupCard title="Duplicate title tags" dups={a.duplicates.titles} />}
+      {a.duplicates.metas.length > 0 && <DupCard title="Duplicate meta descriptions" dups={a.duplicates.metas} />}
+      <LinkList title="Thinnest content — expand first" rows={[...pages].sort((x, y) => x.wordCount - y.wordCount).slice(0, 10).map((p) => [pathOf(p.url), `${p.wordCount.toLocaleString()} words`, p.url])} />
+      <div className="grid gap-3 lg:grid-cols-2">
+        <LinkList title="Title length issues" rows={titleIssues.slice(0, 10).map((p) => [pathOf(p.url), `${p.titleLength}c`, p.url])} empty="All titles well-sized." />
+        <LinkList title="H1 issues" rows={noH1.slice(0, 10).map((p) => [pathOf(p.url), `${p.h1Count} H1`, p.url])} empty="Every page has one H1." />
+      </div>
+    </div>
+  )
+}
+
+function DupCard({ title, dups }: { title: string; dups: Dup[] }) {
+  return (
+    <div className="rf-card overflow-hidden"><div className="border-b border-[var(--rf-card-line)] px-4 py-2.5 text-xs font-semibold uppercase tracking-wider text-[var(--rf-muted)]">{title} ({dups.length})</div><div className="divide-y divide-[var(--rf-card-line)]">{dups.slice(0, 8).map((d, i) => <div key={i} className="px-4 py-3"><p className="truncate text-sm text-[var(--rf-text)]">“{d.value || '(empty)'}”</p><p className="mt-1 text-[11px] text-[var(--rf-faint)]">{d.pages.length} pages: {d.pages.slice(0, 3).map((u) => pathOf(u)).join(', ')}{d.pages.length > 3 ? '…' : ''}</p></div>)}</div></div>
+  )
+}
+
+/* ── Internal Links ─────────────────────────────────────────────────────── */
+
+export function Links({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  // Merge orphans + no-outbound-link pages into one actionable fix list —
+  // a page can be both, and either reason is fixed the same way (link it to
+  // a few other real pages on the site).
+  const targets: LinkTarget[] = (() => {
+    const byUrl = new Map<string, LinkTarget>()
+    for (const p of a.links.orphans) byUrl.set(p.url, { url: p.url, title: p.title, reason: 'no inbound links' })
+    for (const p of pages.filter((p) => p.internalTargets.length === 0)) {
+      const existing = byUrl.get(p.url)
+      byUrl.set(p.url, { url: p.url, title: p.title, reason: existing ? 'no inbound or outbound links' : 'no outbound links' })
+    }
+    return [...byUrl.values()]
+  })()
+
+  return (
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Orphan pages" numeric={a.links.orphans.length} tone={a.links.orphans.length ? TONE.critical : 'text-[var(--rf-green)]'} icon={Network} />
+        <Stat label="No outbound links" numeric={a.links.noInternalLinks} tone={a.links.noInternalLinks ? TONE.warning : 'text-[var(--rf-green)]'} />
+        <Stat label="Avg. inbound links" value={String(a.links.avgInbound)} icon={TrendingUp} />
+        <Stat label="Most-linked page" value={a.links.topLinked[0] ? `${a.links.topLinked[0].count}` : '—'} tone="text-[var(--rf-cyan)]" />
+      </div>
+      {/* Structure first (who is unreachable), then value (who deserves the
+          authority). The second question is the one that moves rankings. */}
+      <InternalLinksPanel projectId={projectId} targets={targets} />
+      <LinkEquity projectId={projectId} />
+      <LinkList title="Most-linked pages (internal authority)" rows={a.links.topLinked.map((t) => [pathOf(t.url), `${t.count} inbound`, t.url])} empty="Run an audit to map internal links." />
+    </div>
+  )
+}
+
+/* ── Indexability ───────────────────────────────────────────────────────── */
+
+export function Indexability({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  return (
+    <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['technical', 'indexability']} label="Fix indexability issues" />
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <Stat label="Indexable pages" value={`${pages.length - a.totals.nonIndexable}/${pages.length}`} tone="text-[var(--rf-green)]" icon={ShieldCheck} />
+        <Stat label="Noindex" numeric={a.index.noindex.length} tone={a.index.noindex.length ? TONE.critical : 'text-[var(--rf-green)]'} />
+        <Stat label="Non-canonical" numeric={a.index.nonCanonical.length} tone={a.index.nonCanonical.length ? TONE.warning : 'text-[var(--rf-green)]'} />
+        <Stat label="Mixed content" numeric={a.index.mixed.length} tone={a.index.mixed.length ? TONE.critical : 'text-[var(--rf-green)]'} />
+      </div>
+      <LinkList title="Noindex pages (won't rank)" rows={a.index.noindex.slice(0, 12).map((p) => [pathOf(p.url), 'noindex', p.url])} empty="No noindex pages." />
+      <LinkList title="Canonical points elsewhere" rows={a.index.nonCanonical.slice(0, 12).map((p) => [pathOf(p.url), '→ ' + pathOf(p.canonical), p.url])} empty="All canonicals are self-referencing." />
+      <div className="grid gap-3 lg:grid-cols-2">
+        <LinkList title="Mixed content (http on https)" rows={a.index.mixed.slice(0, 10).map((p) => [pathOf(p.url), 'insecure assets', p.url])} empty="No mixed content." />
+        <LinkList title="Non-200 responses" rows={a.index.nonOk.slice(0, 10).map((p) => [pathOf(p.url), String(p.status || 'error'), p.url])} empty="Every page returned 200." />
+      </div>
+    </div>
+  )
+}
+
+/* ── Structured Data ────────────────────────────────────────────────────── */
+
+export function Schema({ a, pages, projectId }: { a: Analytics; pages: PageResult[]; projectId: string }) {
+  const covered = a.totals.pagesWithSchema; const pct = Math.round((covered / pages.length) * 100)
+  const recommended = ['Organization', 'WebSite', 'BreadcrumbList', 'Article', 'FAQPage', 'Product']
+  const present = new Set(a.schemaCoverage.map((s) => s.type))
+  return (
+    <div className="space-y-4">
+      <BulkFixBar projectId={projectId} categories={['schema']} label="Fix structured data" />
+      <div className="grid gap-4 lg:grid-cols-[260px_1fr]">
+        <div className="rf-card flex flex-col items-center justify-center p-6"><Ring value={pct} /><p className="mt-3 text-xs text-[var(--rf-muted)]">{covered}/{pages.length} pages have schema</p></div>
+        <Card title="Schema types found">
+          {a.schemaCoverage.length === 0 ? <p className="text-sm text-[var(--rf-muted)]">No structured data found across the site. Adding schema unlocks rich results and AI citations.</p> : <div className="flex flex-wrap gap-2">{a.schemaCoverage.map((s) => <span key={s.type} className="inline-flex items-center gap-1.5 rounded-full bg-[var(--rf-blue)]/10 px-3 py-1 text-xs text-[var(--rf-blue-bright)]">{s.type} <span className="rf-mono text-[var(--rf-faint)]">{s.count}</span></span>)}</div>}
+        </Card>
+      </div>
+      <Card title="Recommended schema coverage">
+        <ul className="grid gap-2 sm:grid-cols-2">{recommended.map((t) => <li key={t} className="flex items-center gap-2 text-sm">{present.has(t) ? <Check className="h-4 w-4 text-[var(--rf-green)]" /> : <span className="h-1.5 w-1.5 rounded-full bg-[var(--rf-amber)]" />}<span className={present.has(t) ? 'text-[var(--rf-text)]' : 'text-[var(--rf-muted)]'}>{t}</span>{!present.has(t) && <span className="text-[11px] text-[var(--rf-faint)]">missing</span>}</li>)}</ul>
+      </Card>
+    </div>
+  )
+}
+
+/* ── Rankings (live /api/rankings, honest fallback) ─────────────────────── */
+
+interface RankResp { available: boolean; note?: string; rows?: { keyword: string; position: number | null; url: string | null }[]; summary?: { tracked: number; top3: number; top10: number; avg: number | null } }
+export function Rankings({ domain, projectId }: { domain: string; projectId: string }) {
+  const [kw, setKw] = useState(''); const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle'); const [resp, setResp] = useState<RankResp | null>(null); const [error, setError] = useState<string | null>(null)
+  // Bumped whenever the keyword table adds a tracked keyword, so the rank
+  // tracking panel below re-reads instead of showing a stale list.
+  const [trackedRev, setTrackedRev] = useState(0)
+  const track = async () => {
+    const keywords = kw.split('\n').map((k) => k.trim()).filter(Boolean)
+    if (!domain.trim()) { setError('This project has no domain set.'); setStatus('error'); return }
+    if (keywords.length === 0) { setError('Add at least one keyword.'); setStatus('error'); return }
+    setStatus('loading'); setError(null)
+    try { const res = await fetch('/api/rankings', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ domain, keywords }) }); const json = await res.json(); if (!res.ok) { setError(json?.error ?? 'Failed.'); setStatus('error'); return } setResp(json); setStatus('done') } catch { setError('Network error.'); setStatus('error') }
+  }
+  return (
+    <div className="space-y-6">
+      {/* Everything Google already knows about this site's keywords, first —
+          it is real observed data over 28 days. The manual SERP check below is
+          a point-in-time spot check, useful but far narrower. */}
+      <KeywordIntelligence projectId={projectId} onTrack={() => setTrackedRev((n) => n + 1)} />
+
+      <div className="rf-card p-4"><p className="text-sm font-semibold text-white">Check keyword rankings now</p><p className="mt-1 text-xs text-[var(--rf-muted)]">One keyword per line. Live Google positions for <span className="text-white">{domain || 'your domain'}</span>.</p><textarea value={kw} onChange={(e) => setKw(e.target.value)} rows={4} placeholder={'best crm software\nai crm tools'} className="rf-card mt-3 w-full resize-y bg-transparent p-3 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none" /><button onClick={track} disabled={status === 'loading'} className="rf-btn-primary mt-3 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">{status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Checking…</> : 'Check positions'}</button>{error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}</div>
+      {status === 'done' && resp && !resp.available && <ConnectNote title="Live rank tracking needs a SERP API key" note={resp.note} envVar="SERPAPI_KEY" />}
+      {status === 'done' && resp?.available && resp.rows && <>
+        <div className="grid grid-cols-3 gap-3"><Stat label="Tracked" numeric={resp.summary?.tracked ?? 0} /><Stat label="Top 10" numeric={resp.summary?.top10 ?? 0} tone={TONE.info} /><Stat label="Avg. position" value={resp.summary?.avg != null ? String(resp.summary.avg) : '—'} tone="text-[var(--rf-green)]" /></div>
+        <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Keyword</th><th className="px-4 py-2 font-medium">Position</th><th className="px-4 py-2 font-medium">URL</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{resp.rows.map((r) => <tr key={r.keyword} className="hover:bg-white/[0.02]"><td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td><td className="px-4 py-2.5 rf-mono font-semibold text-white">{r.position != null ? `#${r.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td><td className="max-w-[240px] truncate px-4 py-2.5">{r.url ? <a href={r.url} target="_blank" rel="noopener noreferrer" className="text-[var(--rf-muted)] hover:text-white">{pathOf(r.url)}</a> : <span className="text-[var(--rf-faint)]">—</span>}</td></tr>)}</tbody></table></div></div>
+      </>}
+      <RankingHistory projectId={projectId} refreshKey={trackedRev} />
+      <CompetitorRankComparison projectId={projectId} />
+    </div>
+  )
+}
+
+/* ── Rank tracking history (trend over time, not just point-in-time) ─────── */
+
+function Sparkline({ points }: { points: (number | null)[] }) {
+  const known = points.filter((p): p is number => p != null)
+  if (known.length < 2) return <span className="text-[11px] text-[var(--rf-faint)]">Not enough history yet</span>
+  const w = 160, h = 32, pad = 3
+  const min = Math.min(...known), max = Math.max(...known)
+  const span = Math.max(1, max - min)
+  const step = (w - pad * 2) / (points.length - 1)
+  // Lower rank position is better — invert Y so an improving trend visibly rises.
+  const y = (v: number) => pad + ((v - min) / span) * (h - pad * 2)
+  let path = ''
+  points.forEach((p, i) => {
+    if (p == null) return
+    const cmd = path === '' ? 'M' : 'L'
+    path += `${cmd}${(pad + i * step).toFixed(1)},${y(p).toFixed(1)} `
+  })
+  return (
+    <svg width={w} height={h} className="overflow-visible">
+      <path d={path.trim()} fill="none" stroke="var(--rf-blue-bright)" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  )
+}
+
+function RankingHistory({ projectId, refreshKey = 0 }: { projectId: string; refreshKey?: number }) {
+  const [keywords, setKeywords] = useState<TrackedKeywordDTO[] | null>(null)
+  const [snapshots, setSnapshots] = useState<RankSnapshotDTO[]>([])
+  const [newKeyword, setNewKeyword] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState<string | null>(null)
+
+  const load = useCallback(async () => {
+    try {
+      const [{ keywords }, { snapshots }] = await Promise.all([api.listTrackedKeywords(projectId), api.rankingHistory(projectId)])
+      setKeywords(keywords)
+      setSnapshots(snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load rank history.')
+    }
+  }, [projectId])
+  // refreshKey changes when the keyword table above tracks something new.
+  useEffect(() => { void load() }, [load, refreshKey])
+
+  async function add() {
+    const keyword = newKeyword.trim()
+    if (!keyword) return
+    setBusy('add'); setError('')
+    try { await api.addTrackedKeyword(projectId, keyword); setNewKeyword(''); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not add keyword.') }
+    finally { setBusy(null) }
+  }
+  async function remove(id: string) {
+    setBusy(id); setError('')
+    try { await api.removeTrackedKeyword(projectId, id); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not remove keyword.') }
+    finally { setBusy(null) }
+  }
+  async function checkNow(keyword: string) {
+    setBusy(keyword); setError('')
+    try { await api.checkTrackedKeywordNow(projectId, keyword); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check position.') }
+    finally { setBusy(null) }
+  }
+
+  if (keywords === null) return null
+
+  return (
+    <div className="rf-card p-4">
+      <div className="flex items-center gap-2"><TrendingUp className="h-4 w-4 text-[var(--rf-blue-bright)]" /><p className="text-sm font-semibold text-white">Rank tracking history</p></div>
+      <p className="mt-1 text-xs text-[var(--rf-muted)]">Track keywords once and every future check — manual or scheduled (see Automation) — builds real position history over time.</p>
+      <div className="mt-3 flex gap-2">
+        <input
+          value={newKeyword}
+          onChange={(e) => setNewKeyword(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && void add()}
+          placeholder="Add a keyword to track"
+          className="rf-card flex-1 bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
+        />
+        <button onClick={add} disabled={busy === 'add' || !newKeyword.trim()} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold disabled:opacity-60">
+          {busy === 'add' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />} Track
+        </button>
+      </div>
+      {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+
+      {keywords.length === 0 ? (
+        <p className="mt-4 text-sm text-[var(--rf-muted)]">No keywords tracked yet. Add one above to start building history.</p>
+      ) : (
+        <div className="mt-4 space-y-2">
+          {keywords.map((k) => {
+            const rows = snapshots.filter((s) => s.keyword === k.keyword)
+            const latest = rows[rows.length - 1]
+            return (
+              <div key={k.id} className="flex items-center justify-between gap-4 rounded-lg border border-[var(--rf-card-line)] px-3 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-white">{k.keyword}</p>
+                  <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">
+                    {latest ? `Last checked ${new Date(latest.checkedAt).toLocaleDateString()} — ${latest.position != null ? `#${latest.position}` : 'not ranking'}` : 'Never checked'}
+                    {' · '}{rows.length} check{rows.length === 1 ? '' : 's'}
+                  </p>
+                </div>
+                <Sparkline points={rows.map((r) => r.position)} />
+                <div className="flex shrink-0 gap-1.5">
+                  <button onClick={() => void checkNow(k.keyword)} disabled={busy === k.keyword} className="rf-btn-ghost rounded-md px-2.5 py-1 text-[11px] font-medium disabled:opacity-60">
+                    {busy === k.keyword ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Check now'}
+                  </button>
+                  <button onClick={() => void remove(k.id)} disabled={busy === k.id} className="rf-btn-ghost rounded-md p-1.5 text-[var(--rf-faint)] hover:text-[var(--rf-red)] disabled:opacity-60">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ── Competitor rank comparison (free) — reuses the same SERP-based live
+   checker against tracked competitor domains, for the keywords already
+   tracked above. No paid competitor-intel API. ─────────────────────────── */
+
+function CompetitorRankComparison({ projectId }: { projectId: string }) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'done' | 'error'>('idle')
+  const [resp, setResp] = useState<CompetitorRankComparisonDTO | null>(null)
+  const [error, setError] = useState<string | null>(null)
+
+  async function run() {
+    setStatus('loading'); setError(null)
+    try {
+      const r = await api.compareCompetitorRankings(projectId)
+      setResp(r)
+      setStatus('done')
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not compare rankings.')
+      setStatus('error')
+    }
+  }
+
+  return (
+    <div className="rf-card p-4">
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-sm font-semibold text-white">Rank vs. competitors</p>
+          <p className="mt-1 text-xs text-[var(--rf-muted)]">Compares live Google positions for your tracked keywords against your tracked competitors — same SERP lookup as "Check positions" above, no paid competitor-intel API.</p>
+        </div>
+        <button onClick={run} disabled={status === 'loading'} className="rf-btn-primary shrink-0 inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold disabled:opacity-70">
+          {status === 'loading' ? <><Loader2 className="h-4 w-4 animate-spin" /> Comparing…</> : 'Compare now'}
+        </button>
+      </div>
+      {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+      {status === 'done' && resp && !resp.available && <ConnectNote title="Live competitor comparison needs a SERP API key" note={resp.note} envVar="SERPAPI_KEY" />}
+      {status === 'done' && resp?.available && resp.rows && (
+        <>
+          <p className="mt-3 text-[11px] text-[var(--rf-faint)]">
+            Comparing {resp.keywordsCompared} of {resp.keywordsTotal} tracked keyword{resp.keywordsTotal === 1 ? '' : 's'} against {resp.competitorsCompared} of {resp.competitorsTotal} tracked competitor{resp.competitorsTotal === 1 ? '' : 's'}.
+          </p>
+          <div className="mt-2 overflow-x-auto rounded-lg border border-[var(--rf-card-line)]">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]">
+                  <th className="px-4 py-2 font-medium">Keyword</th>
+                  <th className="px-4 py-2 font-medium">{resp.domain}</th>
+                  {resp.rows[0]?.competitors.map((c) => <th key={c.label} className="px-4 py-2 font-medium">{c.label}</th>)}
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-[var(--rf-card-line)]">
+                {resp.rows.map((r) => {
+                  const best = Math.min(...[r.us, ...r.competitors.map((c) => c.position)].filter((p): p is number => p != null))
+                  return (
+                    <tr key={r.keyword} className="hover:bg-white/[0.02]">
+                      <td className="px-4 py-2.5 text-[var(--rf-text)]">{r.keyword}</td>
+                      <td className={`px-4 py-2.5 rf-mono font-semibold ${r.us != null && r.us === best ? 'text-[var(--rf-green)]' : 'text-white'}`}>{r.us != null ? `#${r.us}` : <span className="text-[var(--rf-faint)]">—</span>}</td>
+                      {r.competitors.map((c) => (
+                        <td key={c.label} className={`px-4 py-2.5 rf-mono ${c.position != null && c.position === best ? 'text-[var(--rf-green)] font-semibold' : 'text-[var(--rf-muted)]'}`}>{c.position != null ? `#${c.position}` : <span className="text-[var(--rf-faint)]">—</span>}</td>
+                      ))}
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+export function Backlinks({ projectId }: { projectId: string }) {
+  const [configured, setConfigured] = useState<boolean | null>(null)
+  const [snapshots, setSnapshots] = useState<BacklinkSnapshotDTO[]>([])
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+
+  const load = useCallback(async () => {
+    try {
+      const res = await api.getBacklinks(projectId)
+      setConfigured(res.configured)
+      setSnapshots(res.snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load backlink data.')
+    }
+  }, [projectId])
+  useEffect(() => { void load() }, [load])
+
+  async function checkNow() {
+    setBusy(true); setError('')
+    try { await api.checkBacklinksNow(projectId); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check backlinks.') }
+    finally { setBusy(false) }
+  }
+
+  if (configured === null) return null
+  if (!configured) {
+    return <div className="space-y-4"><ConnectNote title="Backlink data needs a provider" note="Connect Majestic (set MAJESTIC_API_KEY in your environment) to see total backlinks, referring domains, and Trust/Citation Flow." envVar="MAJESTIC_API_KEY" /><div className="rf-card p-5"><p className="text-sm font-semibold text-white">What you&apos;ll get here</p><ul className="mt-3 grid gap-2 text-sm text-[var(--rf-muted)] sm:grid-cols-2">{['Total backlinks & referring domains', 'Trust Flow & Citation Flow trend', 'Scheduled or on-demand snapshots'].map((t) => <li key={t} className="flex items-center gap-2"><Check className="h-4 w-4 text-[var(--rf-green)]" /> {t}</li>)}</ul></div></div>
+  }
+
+  const latest = snapshots[0]
+  return (
+    <div className="space-y-4">
+      <div className="rf-card p-4">
+        <div className="flex items-center justify-between">
+          <p className="text-sm font-semibold text-white">Backlink profile</p>
+          <button onClick={() => void checkNow()} disabled={busy} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-xs font-semibold disabled:opacity-60">
+            {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : null} {busy ? 'Checking…' : 'Check now'}
+          </button>
+        </div>
+        {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+        {!latest && <p className="mt-3 text-sm text-[var(--rf-muted)]">No snapshot yet — click "Check now" or enable a schedule in Automation.</p>}
+        {latest && !latest.available && <p className="mt-3 text-sm text-[var(--rf-amber)]">{latest.message ?? 'Last check was unavailable.'}</p>}
+        {latest?.available && (
+          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <Stat label="Backlinks" numeric={latest.totalBacklinks ?? 0} />
+            <Stat label="Referring domains" numeric={latest.referringDomains ?? 0} tone={TONE.info} />
+            <Stat label="Trust Flow" value={latest.trustFlow != null ? String(latest.trustFlow) : '—'} tone="text-[var(--rf-green)]" />
+            <Stat label="Citation Flow" value={latest.citationFlow != null ? String(latest.citationFlow) : '—'} tone="text-[var(--rf-cyan)]" />
+          </div>
+        )}
+        {latest && <p className="mt-3 text-[11px] text-[var(--rf-faint)]">Last checked {new Date(latest.checkedAt).toLocaleString()}</p>}
+      </div>
+      {snapshots.length > 1 && (
+        <div className="rf-card overflow-hidden"><div className="overflow-x-auto"><table className="w-full text-sm"><thead><tr className="text-left text-[11px] uppercase tracking-wider text-[var(--rf-faint)]"><th className="px-4 py-2 font-medium">Checked</th><th className="px-4 py-2 font-medium">Backlinks</th><th className="px-4 py-2 font-medium">Ref. domains</th><th className="px-4 py-2 font-medium">Trust Flow</th></tr></thead><tbody className="divide-y divide-[var(--rf-card-line)]">{snapshots.filter((s) => s.available).map((s) => <tr key={s.id}><td className="px-4 py-2.5 text-[var(--rf-muted)]">{new Date(s.checkedAt).toLocaleDateString()}</td><td className="px-4 py-2.5 rf-mono text-white">{s.totalBacklinks ?? '—'}</td><td className="px-4 py-2.5 rf-mono text-white">{s.referringDomains ?? '—'}</td><td className="px-4 py-2.5 rf-mono text-white">{s.trustFlow ?? '—'}</td></tr>)}</tbody></table></div></div>
+      )}
+    </div>
+  )
+}
+
+/* ── AI citation tracking (real Perplexity checks, honest fallback) ─────── */
+
+export function AiCitations({ projectId }: { projectId: string }) {
+  const [queries, setQueries] = useState<TrackedAiQueryDTO[] | null>(null)
+  // Bumped when the landscape's suggestion list tracks a new prompt, so the
+  // tracked-query list below re-reads instead of going stale.
+  const [promptRev, setPromptRev] = useState(0)
+  const [snapshots, setSnapshots] = useState<AiCitationSnapshotDTO[]>([])
+  const [newQuery, setNewQuery] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState<string | null>(null)
+
+  const load = useCallback(async () => {
+    try {
+      const [{ queries }, { snapshots }] = await Promise.all([api.listTrackedAiQueries(projectId), api.citationHistory(projectId)])
+      setQueries(queries)
+      setSnapshots(snapshots)
+    } catch (e) {
+      setError(e instanceof ApiError ? e.message : 'Could not load AI citation data.')
+    }
+  }, [projectId])
+  useEffect(() => { void load() }, [load, promptRev])
+
+  async function add() {
+    const query = newQuery.trim()
+    if (!query) return
+    setBusy('add'); setError('')
+    try { await api.addTrackedAiQuery(projectId, query); setNewQuery(''); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not add query.') }
+    finally { setBusy(null) }
+  }
+  async function remove(id: string) {
+    setBusy(id); setError('')
+    try { await api.removeTrackedAiQuery(projectId, id); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not remove query.') }
+    finally { setBusy(null) }
+  }
+  async function checkNow(query: string) {
+    setBusy(query); setError('')
+    try { await api.checkTrackedAiQueryNow(projectId, query); await load() }
+    catch (e) { setError(e instanceof ApiError ? e.message : 'Could not check citation.') }
+    finally { setBusy(null) }
+  }
+
+  if (queries === null) return null
+
+  return (
+    <div className="space-y-4">
+      <AiLandscape
+        projectId={projectId}
+        onTrackPrompt={async (prompt) => {
+          await api.addTrackedAiQuery(projectId, prompt)
+          setPromptRev((n) => n + 1)
+        }}
+      />
+
+      <div className="rf-card p-4">
+        <p className="text-sm font-semibold text-white">Track AI-answer citations</p>
+        <p className="mt-1 text-xs text-[var(--rf-muted)]">Add a question people ask AI assistants. Each check asks Perplexity (the only AI engine with a public API that returns real sources) and records whether your domain was cited.</p>
+        <div className="mt-3 flex gap-2">
+          <input
+            value={newQuery}
+            onChange={(e) => setNewQuery(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && void add()}
+            placeholder="e.g. best project management software for startups"
+            className="rf-card flex-1 bg-transparent px-3 py-2 text-sm text-white placeholder:text-[var(--rf-faint)] focus:outline-none"
+          />
+          <button onClick={add} disabled={busy === 'add' || !newQuery.trim()} className="rf-btn-primary inline-flex items-center gap-1.5 rounded-xl px-3 py-2 text-xs font-semibold disabled:opacity-60">
+            {busy === 'add' ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Plus className="h-3.5 w-3.5" />} Track
+          </button>
+        </div>
+        {error && <p className="mt-2 text-xs text-[var(--rf-red)]">{error}</p>}
+      </div>
+
+      {queries.length === 0 ? (
+        <p className="text-sm text-[var(--rf-muted)]">No queries tracked yet. Add one above to start checking.</p>
+      ) : (
+        <div className="space-y-2">
+          {queries.map((q) => {
+            const rows = snapshots.filter((s) => s.query === q.query)
+            const latest = rows[rows.length - 1]
+            const unavailable = latest && !latest.available
+            return (
+              <div key={q.id} className="rf-card flex items-center justify-between gap-4 px-4 py-3">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm text-white">{q.query}</p>
+                  {latest ? (
+                    unavailable ? (
+                      <p className="mt-0.5 text-[11px] text-[var(--rf-amber)]">{latest.message ?? 'Perplexity not connected.'}</p>
+                    ) : (
+                      <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">
+                        Last checked {new Date(latest.checkedAt).toLocaleDateString()} — {latest.cited ? <span className="text-[var(--rf-green)]">cited (source #{latest.position})</span> : <span className="text-[var(--rf-muted)]">not cited</span>}
+                        {' · '}{rows.length} check{rows.length === 1 ? '' : 's'}
+                      </p>
+                    )
+                  ) : (
+                    <p className="mt-0.5 text-[11px] text-[var(--rf-faint)]">Never checked</p>
+                  )}
+                </div>
+                <div className="flex shrink-0 gap-1.5">
+                  <button onClick={() => void checkNow(q.query)} disabled={busy === q.query} className="rf-btn-ghost rounded-md px-2.5 py-1 text-[11px] font-medium disabled:opacity-60">
+                    {busy === q.query ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : 'Check now'}
+                  </button>
+                  <button onClick={() => void remove(q.id)} disabled={busy === q.id} className="rf-btn-ghost rounded-md p-1.5 text-[var(--rf-faint)] hover:text-[var(--rf-red)] disabled:opacity-60">
+                    <Trash2 className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ConnectNote({ title, note, envVar }: { title: string; note?: string; envVar: string }) {
+  return <div className="rf-card rf-topline p-5"><div className="flex items-start gap-3"><span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]"><Plug className="h-5 w-5" /></span><div><p className="text-sm font-semibold text-white">{title}</p><p className="mt-1 text-sm text-[var(--rf-muted)]">{note}</p><p className="mt-2 rf-mono text-xs text-[var(--rf-faint)]">Set <span className="text-[var(--rf-cyan)]">{envVar}</span> in your Vercel environment, then redeploy.</p></div></div></div>
+}
+
+/* ── Reports ────────────────────────────────────────────────────────────── */
+
+export function Reports({ a, pages, domain, pageSpeed }: { a: Analytics; pages: PageResult[]; domain: string; pageSpeed: PageSpeed | null }) {
+  const download = () => { const blob = new Blob([JSON.stringify({ domain, crawledAt: new Date().toISOString(), pagesCrawled: pages.length, ...a, pageSpeed, pages }, null, 2)], { type: 'application/json' }); const url = URL.createObjectURL(blob); const el = document.createElement('a'); el.href = url; el.download = `rankforge-audit-${domain || 'site'}.json`; el.click(); URL.revokeObjectURL(url) }
+  const g = gradeInfo(a.siteScore)
+  return (
+    <div className="space-y-4">
+      <div className="rf-card rf-topline p-5"><p className="text-sm font-semibold text-white">Audit report — {domain || 'your site'}</p><p className="mt-1 text-xs text-[var(--rf-muted)]">Grade <span style={{ color: g.color }}>{g.letter}</span> · {pages.length} pages · {new Date().toLocaleString()}</p><div className="mt-4 flex flex-wrap gap-2"><button onClick={download} className="rf-btn-primary inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold"><Download className="h-4 w-4" /> Export JSON</button><button onClick={() => window.print()} className="rf-btn-ghost inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium"><Printer className="h-4 w-4" /> Print / Save PDF</button></div></div>
+      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4"><Stat label="Site score" numeric={a.siteScore} tone="text-[var(--rf-green)]" /><Stat label="Critical" numeric={a.severityTotals.critical} tone={TONE.critical} /><Stat label="Orphans" numeric={a.links.orphans.length} tone={TONE.amber} /><Stat label="Pages" numeric={pages.length} /></div>
+    </div>
+  )
+}
+
+export function EmptyAudit({ onRun, status, domain }: { onRun: () => void; status: string; domain: string }) {
+  return (
+    <div className="rf-card rf-topline grid place-items-center px-6 py-20 text-center">
+      <span className="rf-pulse grid h-14 w-14 place-items-center rounded-2xl bg-[var(--rf-blue)]/15 text-[var(--rf-blue-bright)]"><Radar className="h-7 w-7" /></span>
+      <p className="mt-4 text-lg font-semibold text-white">Run a full-site audit</p>
+      <p className="mt-1 max-w-sm text-sm text-[var(--rf-muted)]">RankForge will crawl {domain || 'your site'} (sitemap-aware), score every page, and populate every section here.</p>
+      <button onClick={onRun} disabled={status === 'loading'} className="rf-btn-primary mt-5 rounded-xl px-5 py-2.5 text-sm font-semibold disabled:opacity-60">{status === 'loading' ? 'Auditing…' : 'Start audit'}</button>
+    </div>
+  )
+}
