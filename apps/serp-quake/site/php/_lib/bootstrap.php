@@ -17,7 +17,7 @@ function sq_config(): array {
     $loaded = is_file($path) ? require $path : [];
     $cfg = array_merge([
         'db_dsn' => '', 'db_user' => '', 'db_pass' => '',
-        'resend_api_key' => '', 'mail_from' => 'SERP Quake <login@tylermcgrath.com>',
+        'resend_api_key' => '', 'mail_from' => 'SERP Quake <noreply@tylermcgrath.com>',
         'app_origin' => '', 'cookie_path' => '/serp-quake',
         'stripe_secret_key' => '', 'stripe_price_pro' => '', 'stripe_webhook_secret' => '',
         'trial_days' => 7,
@@ -36,11 +36,18 @@ function sq_db(): PDO {
     if ($pdo) return $pdo;
     $c = sq_config();
     if ($c['db_dsn'] === '') throw new RuntimeException('database is not configured');
-    $opts = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC];
+    $dsn = $c['db_dsn'];
+    // 'sqlite:auto' = zero-setup accounts: one SQLite file next to public_html
+    // (beside the config, never inside the web root). MySQL takes over when the
+    // SQ_DB_* secrets are set.
+    if ($dsn === 'sqlite:auto') $dsn = 'sqlite:' . dirname(__DIR__, 4) . '/serp-quake-accounts.sqlite';
+    $opts = [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, PDO::ATTR_TIMEOUT => 5];
     // MySQL reports an UPDATE that writes the same value as 0 rows changed; the
     // session check counts *matched* rows, so ask for those.
-    if (str_starts_with($c['db_dsn'], 'mysql:')) $opts[PDO::MYSQL_ATTR_FOUND_ROWS] = true;
-    $pdo = new PDO($c['db_dsn'], $c['db_user'] ?: null, $c['db_pass'] ?: null, $opts);
+    if (str_starts_with($dsn, 'mysql:')) $opts[PDO::MYSQL_ATTR_FOUND_ROWS] = true;
+    $pdo = new PDO($dsn, $c['db_user'] ?: null, $c['db_pass'] ?: null, $opts);
+    // WAL lets page views read while a sign-in writes.
+    if (str_starts_with($dsn, 'sqlite:')) $pdo->exec('PRAGMA journal_mode = WAL');
     return $pdo;
 }
 

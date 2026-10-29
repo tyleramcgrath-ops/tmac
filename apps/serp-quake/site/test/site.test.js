@@ -155,7 +155,10 @@ test('GitHub Pages build: relative links only, flagged static, demo data include
   const { execFileSync } = require('child_process');
   const out = fs.mkdtempSync(path.join(os.tmpdir(), 'sq-pages-'));
   execFileSync(process.execPath, [path.join(ROOT, 'build-pages.js'), out]);
-  for (const page of ['index.html', 'login.html', 'app.html']) {
+  const login = fs.readFileSync(path.join(out, 'login.html'), 'utf8');
+  assert.match(login, /https:\/\/tylermcgrath\.com\/serp-quake\/login\.html/, 'static sign-in forwards to the real one');
+  assert.match(fs.readFileSync(path.join(out, 'index.html'), 'utf8'), /href="https:\/\/tylermcgrath\.com\/serp-quake\/login\.html\?start=1"/);
+  for (const page of ['index.html', 'app.html']) {
     const html = fs.readFileSync(path.join(out, page), 'utf8');
     assert.ok(html.includes('window.SQ_STATIC'), page + ' is flagged static');
     assert.doesNotMatch(html, /(href|src)="\/(?!\/)/, page + ' has a root-absolute link');

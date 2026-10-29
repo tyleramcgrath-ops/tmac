@@ -6,10 +6,11 @@
 # Reuses the tylermcgrath.com SSH secrets: SG_SSH_HOST, SG_SSH_PORT, SG_SSH_USER,
 # SG_SSH_KEY, SG_SSH_PASSPHRASE, SG_DOC_ROOT (optional).
 #
-# Accounts switch on when these secrets exist (until then the site runs in demo
-# mode: live reading + demo dashboard, sign-in says accounts aren't on yet):
-#   SQ_DB_NAME, SQ_DB_USER, SQ_DB_PASS   a MySQL database + user from Site Tools → Site → MySQL
-#   SQ_RESEND_API_KEY, SQ_MAIL_FROM      sign-in emails (https://resend.com; MAIL_FROM on a verified domain)
+# Accounts work with no extra setup: sign-ins are stored in a SQLite file beside
+# public_html and sign-in links go out through SiteGround's own PHP mail. Optional
+# upgrades, as repo secrets:
+#   SQ_DB_NAME, SQ_DB_USER, SQ_DB_PASS   use a MySQL database instead (Site Tools → Site → MySQL)
+#   SQ_RESEND_API_KEY, SQ_MAIL_FROM      send sign-in links through Resend (more reliable inboxing)
 #   SQ_STRIPE_SECRET_KEY, SQ_STRIPE_PRICE_PRO, SQ_STRIPE_WEBHOOK_SECRET   billing (webhook URL:
 #                                        https://tylermcgrath.com/serp-quake/api/stripe-webhook.php)
 # They're written to serp-quake-config.php NEXT TO public_html, never inside it.
@@ -64,17 +65,17 @@ jobs:
           node -e '
             const e = process.env;
             const cfg = {
-              db_dsn: e.SQ_DB_NAME ? `mysql:host=localhost;dbname=${e.SQ_DB_NAME};charset=utf8mb4` : "",
+              db_dsn: e.SQ_DB_NAME ? `mysql:host=localhost;dbname=${e.SQ_DB_NAME};charset=utf8mb4` : "sqlite:auto",
               db_user: e.SQ_DB_USER || "", db_pass: e.SQ_DB_PASS || "",
               resend_api_key: e.SQ_RESEND_API_KEY || "",
-              mail_from: e.SQ_MAIL_FROM || "SERP Quake <login@tylermcgrath.com>",
+              mail_from: e.SQ_MAIL_FROM || "SERP Quake <noreply@tylermcgrath.com>",
               app_origin: e.SITE_URL, cookie_path: new URL(e.SITE_URL).pathname,
               stripe_secret_key: e.SQ_STRIPE_SECRET_KEY || "", stripe_price_pro: e.SQ_STRIPE_PRICE_PRO || "",
               stripe_webhook_secret: e.SQ_STRIPE_WEBHOOK_SECRET || "",
             };
             const b64 = Buffer.from(JSON.stringify(cfg)).toString("base64");
             require("fs").writeFileSync("serp-quake-config.php", "<?php return json_decode(base64_decode(\x27" + b64 + "\x27), true);\n");
-            console.log("accounts:", cfg.db_dsn ? "on" : "off (no SQ_DB_NAME)", "· email:", cfg.resend_api_key ? "on" : "off", "· billing:", cfg.stripe_secret_key ? "on" : "off");
+            console.log("accounts:", e.SQ_DB_NAME ? "MySQL" : "SQLite", "· email:", cfg.resend_api_key ? "Resend" : "SiteGround PHP mail", "· billing:", cfg.stripe_secret_key ? "on" : "off (no SQ_STRIPE_SECRET_KEY)");
           '
 
       - name: Set up SSH
@@ -117,7 +118,7 @@ jobs:
           curl -fsS "$SITE_URL/" | grep -q 'SERP Quake' || { echo "homepage missing"; exit 1; }
           curl -fsS "$SITE_URL/app.html" | grep -q 'SQ_API' || { echo "dashboard not the SiteGround build"; exit 1; }
           curl -fsS "$SITE_URL/api/pulse.php" | tee /dev/stderr | grep -q '"mood"' || { echo "pulse API not answering"; exit 1; }
-          curl -fsS "$SITE_URL/api/auth/session.php" | tee /dev/stderr | grep -q '"user"' || { echo "session API not answering"; exit 1; }
+          curl -fsS "$SITE_URL/api/auth/session.php" | tee /dev/stderr | grep -q '"accounts":true' || { echo "accounts are not switched on"; exit 1; }
           code=$(curl -s -o /dev/null -w '%{http_code}' "$SITE_URL/api/_lib/bootstrap.php"); echo "_lib → $code"
           # _lib only defines functions (requesting it prints nothing), but it should still be refused.
           test "$code" = 403 || echo "::warning::api/_lib answered $code instead of 403; check that .htaccess is honoured

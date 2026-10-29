@@ -15,19 +15,22 @@ const hasPhp = spawnSync('php', ['-r', 'exit(extension_loaded("pdo_sqlite") ? 0 
 
 test('PHP API: sign-in, trial, paywall, Stripe webhook, sign-out', { skip: !hasPhp && 'php with pdo_sqlite not installed' }, async () => {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'sq-php-'));
-  const dist = path.join(tmp, 'serp-quake');
+  // Mirror SiteGround: <site>/public_html/serp-quake, config + database beside public_html.
+  const site = path.join(tmp, 'site');
+  const dist = path.join(site, 'public_html', 'serp-quake');
   execFileSync(process.execPath, [path.join(ROOT, 'build-pages.js'), '--siteground', dist]);
   const outbox = path.join(tmp, 'outbox'); fs.mkdirSync(outbox);
-  const db = path.join(tmp, 'sq.sqlite');
+  const db = path.join(site, 'serp-quake-accounts.sqlite');
   const port = 3300 + Math.floor(Math.random() * 500);
   const cfg = path.join(tmp, 'config.php');
   fs.writeFileSync(cfg, `<?php return ${JSON.stringify({
-    db_dsn: 'sqlite:' + db, app_origin: `http://localhost:${port}/serp-quake`, mail_outbox: outbox,
+    db_dsn: 'sqlite:auto', app_origin: `http://localhost:${port}/serp-quake`, mail_outbox: outbox,
     stripe_webhook_secret: 'whsec_test', stripe_price_pro: 'price_pro', trial_days: 7,
   }).replace(/^\{/, '[').replace(/\}$/, ']').replace(/":/g, '" =>')};`);
   const env = { ...process.env, SQ_CONFIG: cfg, SQ_DATA_FILE: path.join(ROOT, 'demo-data.json') };
   execFileSync('php', [path.join(dist, 'api', 'migrate.php')], { env });
-  const srv = spawn('php', ['-S', `127.0.0.1:${port}`, '-t', tmp], { env, stdio: 'ignore' });
+  assert.ok(fs.existsSync(db), 'sqlite:auto puts the database beside public_html');
+  const srv = spawn('php', ['-S', `127.0.0.1:${port}`, '-t', path.join(site, 'public_html')], { env, stdio: 'ignore' });
   const base = `http://127.0.0.1:${port}/serp-quake/api/`;
   const sql = (q) => execFileSync('php', ['-r', `$p=new PDO('sqlite:${db}');$p->exec(${JSON.stringify(q)});`]);
   try {

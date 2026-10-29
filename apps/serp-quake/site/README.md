@@ -101,12 +101,15 @@ the pages are identical. `build-pages.js --siteground` builds it, and
 4. It runs `php api/migrate.php` to create the tables, flushes the cache, and checks the live
    pages and APIs.
 
-To switch accounts on, add these repo secrets. Until then the site runs in demo mode.
+Accounts work with nothing extra to set up. Sign-ins are stored in `serp-quake-accounts.sqlite`
+next to `public_html`, and sign-in links go out through SiteGround's PHP `mail()`. The GitHub
+Pages copy sends its Sign in and Start free trial buttons here. These secrets are optional
+upgrades, except Stripe, which is the only way to take payments:
 
 | Secret | What for |
 |---|---|
-| `SQ_DB_NAME`, `SQ_DB_USER`, `SQ_DB_PASS` | A MySQL database and user. Create them in Site Tools → Site → MySQL and give the user all privileges on that database. |
-| `SQ_RESEND_API_KEY`, `SQ_MAIL_FROM` | Sign-in emails (https://resend.com). `SQ_MAIL_FROM` must be on a domain you verified there. |
+| `SQ_DB_NAME`, `SQ_DB_USER`, `SQ_DB_PASS` | Use MySQL instead of SQLite. Create them in Site Tools → Site → MySQL and give the user all privileges on that database. |
+| `SQ_RESEND_API_KEY`, `SQ_MAIL_FROM` | Send sign-in emails through Resend instead (better inboxing, https://resend.com). `SQ_MAIL_FROM` must be on a domain you verified there. |
 | `SQ_STRIPE_SECRET_KEY`, `SQ_STRIPE_PRICE_PRO` | The Upgrade button. The price is a $29/month recurring Price id. |
 | `SQ_STRIPE_WEBHOOK_SECRET` | From a Stripe webhook to `https://tylermcgrath.com/serp-quake/api/stripe-webhook.php`, subscribed to `checkout.session.completed` and `customer.subscription.created`, `customer.subscription.updated` and `customer.subscription.deleted`. |
 
