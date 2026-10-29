@@ -44,7 +44,7 @@ const CONFIG = Object.freeze({
   interferenceShare: 0.2,
   warmupSweeps: 8,          // ~2 days at 6h before an event can be declared
   maxEventDays: 21,         // longer than any confirmed core-update rollout; stops a stuck trigger
-  minOrganic: 7,
+  minOrganic: 5,             // some SERPs (e.g. heavy-feature how-tos) legitimately show only 6 organic results
   maxSameDomain: 6,
 });
 
