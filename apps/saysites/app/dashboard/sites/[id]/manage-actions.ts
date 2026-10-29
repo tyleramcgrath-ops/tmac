@@ -23,6 +23,7 @@ import { canSell, cleanPlan, loadAccess } from '@/lib/billing'
 import { LIMIT_NOTE, costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { DOMAIN_CHECK_PATH, DOMAIN_CHECK_REPLY, cleanDomain } from '@/lib/hosts'
+import { verified } from '@/lib/ownership'
 
 async function ownSite(siteId: string) {
   const user = await requireUser()
@@ -166,7 +167,7 @@ export async function sendForApproval(siteId: string, _prev: HandoffState, form:
   if (!isAdmin(user.email)) return { error: 'Only the SaySites team can send sites for approval.' }
   const plan = cleanPlan(form.get('plan'))
   const code = randomBytes(12).toString('hex')
-  await store.updateSite({ ...site, handoff: { code, plan, sentAt: new Date().toISOString() }, updatedAt: new Date().toISOString() })
+  await store.updateSite({ ...site, handoff: { code, plan, sentAt: new Date().toISOString() }, startedVia: 'team', updatedAt: new Date().toISOString() })
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: 'Link ready. Copy it below and send it to your client.' }
 }
@@ -229,7 +230,9 @@ export async function checkDomain(siteId: string, _prev: DomainState, _form: For
   }
   const www = await reaches(`www.${domain}`)
   const { pendingDomain: _done, ...rest } = site
-  await store.updateSite({ ...rest, customDomain: domain, updatedAt: new Date().toISOString() })
+  // Pointing the business's own domain here proves the site is theirs.
+  const owned = rest.ownership && !rest.ownership.verified && rest.ownership.domain === domain ? { ownership: verified('domain', domain) } : {}
+  await store.updateSite({ ...rest, customDomain: domain, ...owned, updatedAt: new Date().toISOString() })
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return { saved: `Connected. Your site now lives at ${domain}.${www ? '' : ` (www.${domain} isn’t ready yet; it will follow.)`}` }
 }
@@ -261,6 +264,23 @@ export async function savePageSeo(siteId: string, pageId: string, _prev: Setting
   return { saved: true }
 }
 
+// A page kept exactly as on the old site moves to the SaySites design, so
+// it can be edited section by section (its words are already there).
+export async function switchToSaySitesDesign(siteId: string, pageId: string, _prev: SettingsState, _form: FormData): Promise<SettingsState> {
+  const { user, store, site } = await ownSite(siteId)
+  const page = (await store.pagesForSite(site.id)).find((p) => p.id === pageId)
+  if (!page?.classic) return { error: 'That page already uses the SaySites design.' }
+  const { classic: _old, ...rest } = page
+  await store.savePage({ ...rest, updatedAt: new Date().toISOString() }, 'owner', user.id, 'Moved to the SaySites design')
+  const state = await store.sofieState(site.id)
+  if (state.draft) {
+    const draft = { ...state.draft, pages: state.draft.pages.map((p) => (p.id === page.id ? (({ classic: _c, ...r }) => r)(p) : p)) }
+    await store.saveSofieState(site.id, { ...state, draft })
+  }
+  revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
+  return { saved: true }
+}
+
 // ---------------------------------------------------------------------------
 // Products
 // ---------------------------------------------------------------------------
@@ -282,49 +302,6 @@ async function changeSite(siteId: string, fn: (s: Site) => Site) {
   }
   revalidatePath(`/dashboard/sites/${site.id}`, 'layout')
   return next
-}
-
-export async function saveProduct(siteId: string, productId: string, _prev: SettingsState, form: FormData): Promise<SettingsState> {
-  const owner = await ownSite(siteId)
-  if (!canSell(await loadAccess(owner.store, owner.user))) return { error: 'Selling online is on the Store plan. Switch plans on your Account page to add products.' }
-  const name = str(form, 'name', 120)
-  if (!name) return { error: 'Give the product a name.' }
-  const priceText = str(form, 'price', 20).replace(/[$,£€\s]/g, '')
-  if (!/^\d+(\.\d{1,2})?$/.test(priceText)) return { error: 'Enter a price like 24 or 24.50.' }
-  const price = Math.round(Number(priceText) * 100)
-  const buyUrl = str(form, 'buyUrl', 300)
-  if (buyUrl && !/^https:\/\/(buy|checkout)\.stripe\.com\/[\w/-]+$/.test(buyUrl)) return { error: 'The buy link should be a Stripe payment link, like https://buy.stripe.com/abc123.' }
-  const imageSrc = str(form, 'imageSrc', 500)
-  if (imageSrc && !/^(https:\/\/[^\s]+|\/u\/[a-f0-9]{32})$/.test(imageSrc)) return { error: 'The photo needs to be one of your photos or a link starting with https://.' }
-  const description = str(form, 'description', 600)
-  const product: Product = {
-    id: productId === 'new' ? `p-${randomUUID().slice(0, 8)}` : productId,
-    name,
-    price,
-    ...(description ? { description } : {}),
-    ...(imageSrc ? { image: { src: imageSrc, alt: str(form, 'imageAlt', 250) || name } } : {}),
-    ...(buyUrl ? { buyUrl } : {}),
-    ...(form.get('soldOut') ? { soldOut: true } : {}),
-  }
-  try {
-    await changeSite(siteId, (s) => {
-      const list = s.store?.products ?? []
-      const products = productId === 'new' ? [...list, product] : list.map((p) => (p.id === productId ? product : p))
-      return { ...s, store: { currency: s.store?.currency ?? 'USD', products } }
-    })
-  } catch {
-    return { error: 'That product couldn’t be saved. Check the details and try again.' }
-  }
-  return { saved: true }
-}
-
-export async function deleteProduct(siteId: string, productId: string) {
-  await changeSite(siteId, (s) => ({ ...s, store: { currency: s.store?.currency ?? 'USD', products: (s.store?.products ?? []).filter((p) => p.id !== productId) } }))
-}
-
-export async function setCurrency(siteId: string, form: FormData) {
-  const currency = str(form, 'currency', 3) as 'USD'
-  await changeSite(siteId, (s) => ({ ...s, store: { currency, products: s.store?.products ?? [] } }))
 }
 
 // Adds a "Shop" page with every product and puts it in the menu.

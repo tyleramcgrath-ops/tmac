@@ -5,7 +5,10 @@
 // shows a "test mode" notice because that data does not survive a restart.
 // Every site and page is validated against the schema on the way in and out.
 
+import type { AnalyticsRaw } from './analytics'
+import type { DirectoryRaw } from './directory'
 import type { Article } from './articles'
+import type { AmazonKeys } from './amazon'
 import type { Billing } from './billing'
 import { randomUUID } from 'crypto'
 import { Pool } from 'pg'
@@ -13,7 +16,11 @@ import { SHOWCASE } from './showcase'
 import { PageSchema, RedirectSchema, SiteSchema, type Page, type Redirect, type Site } from './schema'
 import type { LeagueSite } from './league'
 import type { Preview } from './redesign'
+import type { Campaign } from './outreach'
+import type { CityReport, Prospect } from './prospects'
 import type { ChatTurn, Snapshot } from './sofie'
+import type { Order, OrderStatus, Stock } from './commerce'
+import type { MockupRequest } from './mockups'
 
 // Sofie's working state for one site: the chat, plus a draft of her edits
 // (with the steps before it, for undo) that is not live until published.
@@ -111,6 +118,8 @@ export interface Store {
   mediaForSite(siteId: string): Promise<Media[]>
   // The file itself, for serving. Not scoped: ids are unguessable and files are public.
   mediaFile(id: string): Promise<{ mime: string; data: Buffer } | null>
+  // A file a kept page uses (an old photo, a font), served at /u/<id>.
+  addAsset(siteId: string, mime: string, data: Buffer): Promise<string>
   deleteMedia(siteId: string, id: string): Promise<void>
   addMessage(m: NewMessage): Promise<Message>
   messagesForSite(siteId: string, limit?: number): Promise<Message[]>
@@ -140,6 +149,10 @@ export interface Store {
   saveCrmState(siteId: string, state: unknown): Promise<void>
   // Every site that has a leads pipeline, for the follow-up scheduler.
   crmSites(): Promise<{ site: Site; state: unknown }[]>
+  // The shop's Amazon Creators API credentials (lib/amazon), kept out of the
+  // site JSON. null clears them.
+  amazonKeys(siteId: string): Promise<AmazonKeys | null>
+  saveAmazonKeys(siteId: string, keys: AmazonKeys | null): Promise<void>
   // Every site, for the monthly results email.
   allSites(): Promise<Site[]>
   siteById(siteId: string): Promise<Site | null>
@@ -157,6 +170,10 @@ export interface Store {
   leagueSites(day: string): Promise<LeagueSite[]>
   // Free redesign previews. `who` is a hash of the requester, for limits.
   savePreview(p: Preview, who: string): Promise<void>
+  // A browser check of the preview's exact copy (lib/redesign offersCopy).
+  recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>): Promise<boolean>
+  // An unclaimed preview rebuilt in place (same id, same links).
+  replacePreview(p: Preview): Promise<boolean>
   preview(id: string): Promise<Preview | null>
   previewCount(since: Date, who?: string): Promise<number>
   // Marks a preview claimed; false when someone already claimed it.
@@ -182,10 +199,48 @@ export interface Store {
   feedback(limit: number): Promise<Feedback[]>
   // Launch-day numbers for the team (admin only): totals, and since a day.
   launchStats(sinceDay: string): Promise<LaunchStats>
+  // The owner's analytics (lib/analytics), from sinceDay (YYYY-MM-DD) on.
+  analytics(sinceDay: string): Promise<AnalyticsRaw>
+  // Every account and site for the team's directory (lib/directory), with
+  // views, calls and leads from sinceDay on.
+  directory(sinceDay: string): Promise<DirectoryRaw>
   // saysites.com's own blog (lib/articles): articles written in the dashboard.
   articles(): Promise<Article[]>
   saveArticle(a: Article): Promise<void>
   deleteArticle(slug: string): Promise<void>
+  // Outreach (lib/outreach, lib/prospects): campaigns, the businesses in
+  // them, and the city reports published from them.
+  campaigns(): Promise<Campaign[]>
+  saveCampaign(c: Campaign): Promise<void>
+  prospects(campaign?: string): Promise<Prospect[]>
+  prospect(id: string): Promise<Prospect | null>
+  prospectByPreview(previewId: string): Promise<Prospect | null>
+  saveProspect(p: Prospect): Promise<void>
+  reports(): Promise<CityReport[]>
+  report(slug: string): Promise<CityReport | null>
+  saveReport(r: CityReport): Promise<void>
+  // The shop (lib/commerce): orders and stock counts.
+  saveOrder(o: Order): Promise<void>
+  order(siteId: string, id: string): Promise<Order | null>
+  // The customer's private order page, and Stripe's checkout, find orders
+  // by these.
+  orderByToken(token: string): Promise<Order | null>
+  orderBySession(session: string): Promise<Order | null>
+  // Newest first.
+  ordersForSite(siteId: string, opts?: { status?: OrderStatus[]; limit?: number }): Promise<Order[]>
+  // Moves an order to paid exactly once and gives it the site's next number
+  // (#1001 on). Null when it was already paid (or isn't there).
+  markOrderPaid(siteId: string, id: string, at: string): Promise<number | null>
+  stock(siteId: string): Promise<Stock>
+  setStock(siteId: string, item: string, qty: number): Promise<void>
+  // Adds (or, negative, takes away) in one step, so two orders at once
+  // can't both take the last one without it showing.
+  adjustStock(siteId: string, deltas: Record<string, number>): Promise<void>
+  // Paid orders per discount code, for usage limits.
+  discountUses(siteId: string): Promise<Record<string, number>>
+  // Free homepage mockup requests (lib/mockups), newest first.
+  saveMockup(r: MockupRequest): Promise<void>
+  mockups(limit?: number): Promise<MockupRequest[]>
 }
 
 export interface LaunchStats {
@@ -304,6 +359,9 @@ CREATE TABLE IF NOT EXISTS ss_media (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE INDEX IF NOT EXISTS ss_media_site_idx ON ss_media (site_id, created_at DESC);
+-- 'asset': a file a kept page of their old site uses (lib/classic-assets),
+-- served like a photo but not listed with the owner's photos.
+ALTER TABLE ss_media ADD COLUMN IF NOT EXISTS kind TEXT NOT NULL DEFAULT 'photo';
 CREATE TABLE IF NOT EXISTS ss_visits (
   site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
   day DATE NOT NULL,
@@ -317,6 +375,11 @@ CREATE TABLE IF NOT EXISTS ss_seo (
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_crm (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_amazon (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
@@ -375,6 +438,24 @@ CREATE TABLE IF NOT EXISTS ss_articles (
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+CREATE TABLE IF NOT EXISTS ss_campaigns (
+  slug TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_prospects (
+  id TEXT PRIMARY KEY,
+  campaign TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_prospects_campaign_idx ON ss_prospects (campaign);
+CREATE INDEX IF NOT EXISTS ss_prospects_preview_idx ON ss_prospects ((data->>'previewId'));
+CREATE TABLE IF NOT EXISTS ss_reports (
+  slug TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
 CREATE TABLE IF NOT EXISTS ss_cache (
   key TEXT PRIMARY KEY,
   data JSONB NOT NULL,
@@ -384,6 +465,34 @@ CREATE TABLE IF NOT EXISTS ss_logo_ideas (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
   data JSONB NOT NULL,
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE TABLE IF NOT EXISTS ss_orders (
+  id TEXT PRIMARY KEY,
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  number INTEGER,
+  token TEXT NOT NULL UNIQUE,
+  session TEXT UNIQUE,
+  status TEXT NOT NULL,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX IF NOT EXISTS ss_orders_site_idx ON ss_orders (site_id, created_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS ss_orders_number_idx ON ss_orders (site_id, number) WHERE number IS NOT NULL;
+CREATE TABLE IF NOT EXISTS ss_order_seq (
+  site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
+  n INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ss_stock (
+  site_id TEXT NOT NULL REFERENCES ss_sites(id) ON DELETE CASCADE,
+  item TEXT NOT NULL,
+  qty INTEGER NOT NULL,
+  PRIMARY KEY (site_id, item)
+);
+CREATE TABLE IF NOT EXISTS ss_mockups (
+  id TEXT PRIMARY KEY,
+  data JSONB NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 CREATE TABLE IF NOT EXISTS ss_sofie (
   site_id TEXT PRIMARY KEY REFERENCES ss_sites(id) ON DELETE CASCADE,
@@ -514,7 +623,7 @@ class PgStore implements Store {
   }
   async mediaForSite(siteId: string) {
     const rows = await this.q<{ id: string; site_id: string; mime: string; width: number; height: number; alt: string; bytes: number; created_at: string }>(
-      'SELECT id, site_id, mime, width, height, alt, octet_length(data) AS bytes, created_at FROM ss_media WHERE site_id = $1 ORDER BY created_at DESC',
+      "SELECT id, site_id, mime, width, height, alt, octet_length(data) AS bytes, created_at FROM ss_media WHERE site_id = $1 AND kind = 'photo' ORDER BY created_at DESC",
       [siteId]
     )
     return rows.map((r) => ({ id: r.id, siteId: r.site_id, mime: r.mime, width: r.width, height: r.height, alt: r.alt, bytes: Number(r.bytes), createdAt: new Date(r.created_at).toISOString() }))
@@ -522,6 +631,11 @@ class PgStore implements Store {
   async mediaFile(id: string) {
     const r = (await this.q<{ mime: string; data: Buffer }>('SELECT mime, data FROM ss_media WHERE id = $1', [id]))[0]
     return r ?? null
+  }
+  async addAsset(siteId: string, mime: string, data: Buffer) {
+    const id = randomUUID().replace(/-/g, '')
+    await this.q("INSERT INTO ss_media (id, site_id, mime, width, height, alt, data, kind) VALUES ($1,$2,$3,0,0,'',$4,'asset')", [id, siteId, mime, data])
+    return id
   }
   async deleteMedia(siteId: string, id: string) {
     await this.q('DELETE FROM ss_media WHERE id = $1 AND site_id = $2', [id, siteId])
@@ -591,6 +705,12 @@ class PgStore implements Store {
     const r = (await this.q<{ data: Preview }>("SELECT data FROM ss_previews WHERE id = $1 AND created_at > now() - interval '30 days'", [id]))[0]
     return r ? r.data : null
   }
+  async recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>) {
+    return (await this.q("UPDATE ss_previews SET data = jsonb_set(data, '{asIsCheck}', $2::jsonb) WHERE id = $1 RETURNING id", [id, JSON.stringify(check)])).length > 0
+  }
+  async replacePreview(p: Preview) {
+    return (await this.q("UPDATE ss_previews SET data = $2 WHERE id = $1 AND NOT (data ? 'claimed') RETURNING id", [p.id, p])).length > 0
+  }
   async claimPreview(id: string, by: string, siteId: string) {
     const r = await this.q("UPDATE ss_previews SET data = jsonb_set(data, '{claimed}', $2::jsonb) WHERE id = $1 AND NOT (data ? 'claimed') RETURNING id", [id, JSON.stringify({ by, siteId })])
     return r.length > 0
@@ -604,6 +724,100 @@ class PgStore implements Store {
   async addFeedback(f: Feedback) {
     await this.q('INSERT INTO ss_feedback (id, data) VALUES ($1,$2)', [f.id, JSON.stringify(f)])
   }
+  async analytics(sinceDay: string) {
+    type Row = { d: Date | string; n: string }
+    const series = (sql: string) => this.q<Row>(sql, [sinceDay])
+    const [signups, sites, leads, visits, previews, talks, ai, bills, totals, top] = await Promise.all([
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_users WHERE created_at >= $1::date GROUP BY 1'),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_sites WHERE created_at >= $1::date GROUP BY 1'),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_messages WHERE created_at >= $1::date GROUP BY 1'),
+      this.q<{ d: Date | string; views: string; calls: string }>("SELECT day AS d, coalesce(sum(views) FILTER (WHERE path <> '#call'), 0) AS views, coalesce(sum(views) FILTER (WHERE path = '#call'), 0) AS calls FROM ss_visits WHERE day >= $1::date GROUP BY 1", [sinceDay]),
+      series('SELECT created_at::date AS d, count(*) AS n FROM ss_previews WHERE created_at >= $1::date GROUP BY 1'),
+      series("SELECT created_at::date AS d, count(*) AS n FROM ss_feedback WHERE created_at >= $1::date AND data->>'page' LIKE 'Let’s talk%' GROUP BY 1"),
+      series('SELECT day AS d, sum(micros) AS n FROM ss_usage WHERE day >= $1::date GROUP BY 1'),
+      this.q<{ data: Billing }>('SELECT data FROM ss_billing'),
+      this.q<Record<string, string>>('SELECT (SELECT count(*) FROM ss_users) AS users, (SELECT count(*) FROM ss_sites) AS sites, (SELECT count(*) FROM ss_sites WHERE custom_domain IS NOT NULL) AS domains, (SELECT count(*) FROM ss_members) AS members'),
+      this.q<{ id: string; name: string | null; subdomain: string; views: string; calls: string; leads: string }>(
+        `SELECT s.id, s.data->'business'->>'name' AS name, s.subdomain,
+          coalesce(v.views, 0) AS views, coalesce(v.calls, 0) AS calls, coalesce(m.leads, 0) AS leads
+         FROM ss_sites s
+         LEFT JOIN (SELECT site_id, sum(views) FILTER (WHERE path <> '#call') AS views, sum(views) FILTER (WHERE path = '#call') AS calls FROM ss_visits WHERE day >= $1::date GROUP BY 1) v ON v.site_id = s.id
+         LEFT JOIN (SELECT site_id, count(*) AS leads FROM ss_messages WHERE created_at >= $1::date GROUP BY 1) m ON m.site_id = s.id
+         WHERE coalesce(v.views, 0) + coalesce(v.calls, 0) + coalesce(m.leads, 0) > 0
+         ORDER BY leads DESC, calls DESC, views DESC LIMIT 10`,
+        [sinceDay],
+      ),
+    ])
+    const day = (d: Date | string) => (typeof d === 'string' ? d.slice(0, 10) : d.toISOString().slice(0, 10))
+    const days = new Map<string, AnalyticsRaw['daily'][number]>()
+    const put = (rows: Row[], k: keyof Omit<AnalyticsRaw['daily'][number], 'day'>) => {
+      for (const r of rows) {
+        const d = day(r.d)
+        const row = days.get(d) ?? { day: d }
+        row[k] = Number(r.n)
+        days.set(d, row)
+      }
+    }
+    put(signups, 'signups')
+    put(sites, 'sites')
+    put(leads, 'leads')
+    put(visits.map((v) => ({ d: v.d, n: v.views })), 'views')
+    put(visits.map((v) => ({ d: v.d, n: v.calls })), 'calls')
+    put(previews, 'previews')
+    put(talks, 'talks')
+    put(ai, 'aiMicros')
+    const t = totals[0] ?? {}
+    return {
+      daily: [...days.values()],
+      billing: bills.map((b) => b.data),
+      totals: { users: Number(t.users ?? 0), sites: Number(t.sites ?? 0), customDomains: Number(t.domains ?? 0), members: Number(t.members ?? 0) },
+      topSites: top.map((r) => ({ id: r.id, name: r.name ?? r.subdomain, subdomain: r.subdomain, views: Number(r.views), leads: Number(r.leads), calls: Number(r.calls) })),
+    }
+  }
+  async directory(sinceDay: string) {
+    type T = Date | string | null
+    const iso = (d: T) => (d == null ? undefined : typeof d === 'string' ? d : d.toISOString())
+    const [users, sites] = await Promise.all([
+      this.q<{ id: string; email: string; name: string; created_at: T; billing: Billing | null }>(
+        'SELECT u.id, u.email, u.name, u.created_at, b.data AS billing FROM ss_users u LEFT JOIN ss_billing b ON b.user_id = u.id ORDER BY u.created_at DESC',
+      ),
+      this.q<{ id: string; owner_id: string; created_at: T; updated_at: T; data: Site; pages: string; published: string; views: string | null; calls: string | null; last_view: T; leads: string | null; leads_all: string | null; last_lead: T; micros: string | null; chats: string | null; last_sofie: T; members: string }>(
+        `SELECT s.id, s.owner_id, s.created_at, s.updated_at, s.data,
+          (SELECT count(*) FROM ss_pages p WHERE p.site_id = s.id) AS pages,
+          (SELECT count(*) FROM ss_pages p WHERE p.site_id = s.id AND p.data->>'status' = 'published') AS published,
+          v.views, v.calls, v.last_view, m.leads, m.leads_all, m.last_lead, a.micros, a.chats, a.last_sofie,
+          (SELECT count(*) FROM ss_members x WHERE x.site_id = s.id) AS members
+         FROM ss_sites s
+         LEFT JOIN (SELECT site_id, sum(views) FILTER (WHERE path <> '#call' AND day >= $1::date) AS views, sum(views) FILTER (WHERE path = '#call' AND day >= $1::date) AS calls, max(day) FILTER (WHERE path <> '#call') AS last_view FROM ss_visits GROUP BY 1) v ON v.site_id = s.id
+         LEFT JOIN (SELECT site_id, count(*) FILTER (WHERE created_at >= $1::date) AS leads, count(*) AS leads_all, max(created_at) AS last_lead FROM ss_messages GROUP BY 1) m ON m.site_id = s.id
+         LEFT JOIN (SELECT site_id, sum(micros) AS micros, sum(messages) AS chats, max(day) AS last_sofie FROM ss_usage GROUP BY 1) a ON a.site_id = s.id
+         ORDER BY s.created_at DESC`,
+        [sinceDay],
+      ),
+    ])
+    return {
+      users: users.map((u) => ({ id: u.id, email: u.email, name: u.name, createdAt: iso(u.created_at) ?? '', billing: u.billing })),
+      sites: sites.map((r) => ({
+        id: r.id,
+        ownerId: r.owner_id,
+        createdAt: iso(r.created_at) ?? '',
+        updatedAt: iso(r.updated_at) ?? '',
+        site: r.data,
+        pages: Number(r.pages),
+        published: Number(r.published),
+        views: Number(r.views ?? 0),
+        calls: Number(r.calls ?? 0),
+        leads: Number(r.leads ?? 0),
+        leadsAll: Number(r.leads_all ?? 0),
+        lastLead: iso(r.last_lead),
+        lastView: iso(r.last_view),
+        aiMicros: Number(r.micros ?? 0),
+        chats: Number(r.chats ?? 0),
+        lastSofie: iso(r.last_sofie),
+        members: Number(r.members),
+      })),
+    }
+  }
   async articles() {
     return (await this.q<{ data: Article }>('SELECT data FROM ss_articles')).map((r) => r.data)
   }
@@ -612,6 +826,36 @@ class PgStore implements Store {
   }
   async deleteArticle(slug: string) {
     await this.q('DELETE FROM ss_articles WHERE slug = $1', [slug])
+  }
+  async campaigns() {
+    return (await this.q<{ data: Campaign }>('SELECT data FROM ss_campaigns ORDER BY updated_at DESC')).map((r) => r.data)
+  }
+  async saveCampaign(c: Campaign) {
+    await this.q('INSERT INTO ss_campaigns (slug, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (slug) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [c.slug, JSON.stringify(c)])
+  }
+  async prospects(campaign?: string) {
+    const rows = campaign
+      ? await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects WHERE campaign = $1 ORDER BY created_at', [campaign])
+      : await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects ORDER BY created_at')
+    return rows.map((r) => r.data)
+  }
+  async prospect(id: string) {
+    return (await this.q<{ data: Prospect }>('SELECT data FROM ss_prospects WHERE id = $1', [id]))[0]?.data ?? null
+  }
+  async prospectByPreview(previewId: string) {
+    return (await this.q<{ data: Prospect }>("SELECT data FROM ss_prospects WHERE data->>'previewId' = $1 LIMIT 1", [previewId]))[0]?.data ?? null
+  }
+  async saveProspect(p: Prospect) {
+    await this.q('INSERT INTO ss_prospects (id, campaign, data) VALUES ($1,$2,$3) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data', [p.id, p.campaign, JSON.stringify(p)])
+  }
+  async reports() {
+    return (await this.q<{ data: CityReport }>('SELECT data FROM ss_reports ORDER BY updated_at DESC')).map((r) => r.data)
+  }
+  async report(slug: string) {
+    return (await this.q<{ data: CityReport }>('SELECT data FROM ss_reports WHERE slug = $1', [slug]))[0]?.data ?? null
+  }
+  async saveReport(r: CityReport) {
+    await this.q('INSERT INTO ss_reports (slug, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (slug) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [r.slug, JSON.stringify(r)])
   }
   async feedback(limit: number) {
     return (await this.q<{ data: Feedback }>('SELECT data FROM ss_feedback ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
@@ -697,6 +941,13 @@ class PgStore implements Store {
   async saveCrmState(siteId: string, state: unknown) {
     await this.q('INSERT INTO ss_crm (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(state)])
   }
+  async amazonKeys(siteId: string) {
+    return ((await this.q<{ data: AmazonKeys }>('SELECT data FROM ss_amazon WHERE site_id = $1', [siteId]))[0]?.data ?? null) as AmazonKeys | null
+  }
+  async saveAmazonKeys(siteId: string, keys: AmazonKeys | null) {
+    if (!keys) await this.q('DELETE FROM ss_amazon WHERE site_id = $1', [siteId])
+    else await this.q('INSERT INTO ss_amazon (site_id, data, updated_at) VALUES ($1,$2,now()) ON CONFLICT (site_id) DO UPDATE SET data = EXCLUDED.data, updated_at = now()', [siteId, JSON.stringify(keys)])
+  }
   async allSites() {
     return (await this.q<{ data: Site }>('SELECT data FROM ss_sites ORDER BY created_at')).map((r) => SiteSchema.parse(r.data))
   }
@@ -753,11 +1004,80 @@ class PgStore implements Store {
     for (const r of visits) out.get(r.site_id)?.visits.push({ day: r.day, views: Number(r.views) })
     return [...out.values()]
   }
+  async saveOrder(o: Order) {
+    await this.q(
+      `INSERT INTO ss_orders (id, site_id, number, token, session, status, data, created_at, updated_at) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,now())
+       ON CONFLICT (id) DO UPDATE SET number = COALESCE(ss_orders.number, EXCLUDED.number), session = EXCLUDED.session, status = EXCLUDED.status, data = EXCLUDED.data, updated_at = now()`,
+      [o.id, o.siteId, o.number ?? null, o.token, o.stripe.session ?? null, o.status, JSON.stringify(o), o.createdAt],
+    )
+  }
+  async order(siteId: string, id: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE site_id = $1 AND id = $2', [siteId, id]))[0])
+  }
+  async orderByToken(token: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE token = $1', [token]))[0])
+  }
+  async orderBySession(session: string) {
+    return toOrder((await this.q<{ data: Order; number: number | null }>('SELECT data, number FROM ss_orders WHERE session = $1', [session]))[0])
+  }
+  async ordersForSite(siteId: string, opts: { status?: OrderStatus[]; limit?: number } = {}) {
+    const rows = await this.q<{ data: Order; number: number | null }>(
+      `SELECT data, number FROM ss_orders WHERE site_id = $1 ${opts.status ? 'AND status = ANY($3)' : ''} ORDER BY created_at DESC LIMIT $2`,
+      opts.status ? [siteId, opts.limit ?? 5000, opts.status] : [siteId, opts.limit ?? 5000],
+    )
+    return rows.map((r) => toOrder(r)!)
+  }
+  async markOrderPaid(siteId: string, id: string, at: string) {
+    await this.q('SELECT 1')
+    const client = await this.pool.connect()
+    try {
+      await client.query('BEGIN')
+      const moved = await client.query("UPDATE ss_orders SET status = 'paid' WHERE site_id = $1 AND id = $2 AND status <> 'paid' RETURNING id", [siteId, id])
+      if (!moved.rowCount) {
+        await client.query('ROLLBACK')
+        return null
+      }
+      const seq = await client.query<{ n: number }>('INSERT INTO ss_order_seq (site_id, n) VALUES ($1, 1001) ON CONFLICT (site_id) DO UPDATE SET n = ss_order_seq.n + 1 RETURNING n', [siteId])
+      const n = seq.rows[0].n
+      await client.query("UPDATE ss_orders SET number = $3, data = data || jsonb_build_object('status', 'paid', 'number', $3::int, 'paidAt', $4::text), updated_at = now() WHERE site_id = $1 AND id = $2", [siteId, id, n, at])
+      await client.query('COMMIT')
+      return n
+    } catch (err) {
+      await client.query('ROLLBACK').catch(() => {})
+      throw err
+    } finally {
+      client.release()
+    }
+  }
+  async stock(siteId: string) {
+    const rows = await this.q<{ item: string; qty: number }>('SELECT item, qty FROM ss_stock WHERE site_id = $1', [siteId])
+    return Object.fromEntries(rows.map((r) => [r.item, r.qty]))
+  }
+  async setStock(siteId: string, item: string, qty: number) {
+    await this.q('INSERT INTO ss_stock (site_id, item, qty) VALUES ($1,$2,$3) ON CONFLICT (site_id, item) DO UPDATE SET qty = EXCLUDED.qty', [siteId, item, qty])
+  }
+  async adjustStock(siteId: string, deltas: Record<string, number>) {
+    for (const [item, d] of Object.entries(deltas)) {
+      if (!d) continue
+      await this.q('INSERT INTO ss_stock (site_id, item, qty) VALUES ($1,$2,$3) ON CONFLICT (site_id, item) DO UPDATE SET qty = ss_stock.qty + EXCLUDED.qty', [siteId, item, d])
+    }
+  }
+  async discountUses(siteId: string) {
+    const rows = await this.q<{ code: string; n: string }>("SELECT data->>'discountCode' AS code, count(*) AS n FROM ss_orders WHERE site_id = $1 AND status = 'paid' AND data ? 'discountCode' GROUP BY 1", [siteId])
+    return Object.fromEntries(rows.map((r) => [r.code, Number(r.n)]))
+  }
+  async saveMockup(r: MockupRequest) {
+    await this.q('INSERT INTO ss_mockups (id, data) VALUES ($1,$2) ON CONFLICT (id) DO UPDATE SET data = EXCLUDED.data', [r.id, JSON.stringify(r)])
+  }
+  async mockups(limit = 200) {
+    return (await this.q<{ data: MockupRequest }>('SELECT data FROM ss_mockups ORDER BY created_at DESC LIMIT $1', [limit])).map((r) => r.data)
+  }
 }
 
 function toUser(r: Record<string, unknown> | undefined): User | null {
   if (!r) return null
   return { id: String(r.id), email: String(r.email), name: String(r.name), passwordHash: String(r.password_hash), createdAt: new Date(r.created_at as string).toISOString() }
+
 }
 
 // ---------------------------------------------------------------------------
@@ -851,8 +1171,14 @@ export class MemoryStore implements Store {
     return [...this.media.values()].filter((x) => x.meta.siteId === siteId).map((x) => ({ ...x.meta })).reverse()
   }
   async mediaFile(id: string) {
-    const x = this.media.get(id)
+    const x = this.media.get(id) ?? this.assets.get(id)
     return x ? { mime: x.meta.mime, data: x.data } : null
+  }
+  private assets = new Map<string, { meta: { siteId: string; mime: string }; data: Buffer }>()
+  async addAsset(siteId: string, mime: string, data: Buffer) {
+    const id = randomUUID().replace(/-/g, '')
+    this.assets.set(id, { meta: { siteId, mime }, data })
+    return id
   }
   async deleteMedia(siteId: string, id: string) {
     const x = this.media.get(id)
@@ -866,9 +1192,13 @@ export class MemoryStore implements Store {
     this.sofie.delete(siteId)
     this.messages = this.messages.filter((m) => m.siteId !== siteId)
     for (const [id, x] of this.media) if (x.meta.siteId === siteId) this.media.delete(id)
+    for (const [id, x] of this.assets) if (x.meta.siteId === siteId) this.assets.delete(id)
     for (const [k, v] of this.visits) if (v.siteId === siteId) this.visits.delete(k)
     for (const [k, site] of this.photos) if (site === siteId) this.photos.delete(k)
     this.logos.delete(siteId)
+    for (const [id, o] of this.orders) if (o.siteId === siteId) this.orders.delete(id)
+    this.stockCounts.delete(siteId)
+    this.orderSeq.delete(siteId)
   }
   async deleteUser(userId: string) {
     for (const [id, s] of this.sites) if (s.ownerId === userId) await this.deleteSite(userId, id)
@@ -933,6 +1263,18 @@ export class MemoryStore implements Store {
     const r = this.previews.get(id)
     return r ? structuredClone(r.p) : null
   }
+  async recordPreviewCheck(id: string, check: NonNullable<Preview['asIsCheck']>) {
+    const r = this.previews.get(id)
+    if (!r) return false
+    r.p.asIsCheck = structuredClone(check)
+    return true
+  }
+  async replacePreview(p: Preview) {
+    const r = this.previews.get(p.id)
+    if (!r || r.p.claimed) return false
+    r.p = structuredClone(p)
+    return true
+  }
   async claimPreview(id: string, by: string, siteId: string) {
     const r = this.previews.get(id)
     if (!r || r.p.claimed) return false
@@ -941,6 +1283,80 @@ export class MemoryStore implements Store {
   }
   async previewCount(since: Date, who?: string) {
     return [...this.previews.values()].filter((r) => r.at > since.getTime() && (!who || r.who === who)).length
+  }
+  async analytics(sinceDay: string) {
+    const days = new Map<string, AnalyticsRaw['daily'][number]>()
+    const add = (d: string, k: keyof Omit<AnalyticsRaw['daily'][number], 'day'>, n = 1) => {
+      if (d < sinceDay) return
+      const row = days.get(d) ?? { day: d }
+      row[k] = (row[k] ?? 0) + n
+      days.set(d, row)
+    }
+    for (const u of this.users.values()) add(u.createdAt.slice(0, 10), 'signups')
+    for (const s of this.sites.values()) if (s.at) add(s.at.slice(0, 10), 'sites')
+    for (const m of this.messages) add(m.createdAt.slice(0, 10), 'leads')
+    for (const v of this.visits.values()) add(v.day, v.path === '#call' ? 'calls' : 'views', v.views)
+    for (const p of this.previews.values()) add(new Date(p.at).toISOString().slice(0, 10), 'previews')
+    for (const f of this.notes) if (f.page.startsWith('Let’s talk')) add(f.at.slice(0, 10), 'talks')
+    for (const [k, u] of this.usage) add(k.split('|')[1], 'aiMicros', u.micros)
+    const per = new Map<string, { views: number; calls: number; leads: number }>()
+    const bump = (id: string, k: 'views' | 'calls' | 'leads', n: number) => {
+      const r = per.get(id) ?? { views: 0, calls: 0, leads: 0 }
+      r[k] += n
+      per.set(id, r)
+    }
+    for (const v of this.visits.values()) if (v.day >= sinceDay) bump(v.siteId, v.path === '#call' ? 'calls' : 'views', v.views)
+    for (const m of this.messages) if (m.createdAt.slice(0, 10) >= sinceDay) bump(m.siteId, 'leads', 1)
+    const sites = [...this.sites.values()]
+    return {
+      daily: [...days.values()],
+      billing: [...this.bills.values()],
+      totals: { users: this.users.size, sites: sites.length, customDomains: sites.filter((s) => s.site.customDomain).length, members: this.members.length },
+      topSites: [...per]
+        .flatMap(([id, r]) => {
+          const s = this.sites.get(id)
+          return s ? [{ id, name: s.site.business.name, subdomain: s.site.subdomain, ...r }] : []
+        })
+        .sort((a, b) => b.leads - a.leads || b.calls - a.calls || b.views - a.views)
+        .slice(0, 10),
+    }
+  }
+  async directory(sinceDay: string) {
+    const pages = [...this.pages.values()]
+    const visits = [...this.visits.values()]
+    const usage = [...this.usage].map(([k, u]) => ({ site: k.split('|')[0], day: k.split('|')[1], ...u }))
+    const max = (xs: string[]) => xs.reduce<string | undefined>((m, x) => (!m || x > m ? x : m), undefined)
+    return {
+      users: [...this.users.values()].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).map((u) => ({ id: u.id, email: u.email, name: u.name, createdAt: u.createdAt, billing: this.bills.get(u.id) ?? null })),
+      sites: [...this.sites.values()]
+        .sort((a, b) => (b.at ?? '').localeCompare(a.at ?? ''))
+        .map(({ ownerId, site, at }) => {
+          const mine = pages.filter((p) => p.siteId === site.id)
+          const v = visits.filter((x) => x.siteId === site.id)
+          const m = this.messages.filter((x) => x.siteId === site.id)
+          const u = usage.filter((x) => x.site === site.id)
+          const sum = (xs: typeof v) => xs.reduce((n, x) => n + x.views, 0)
+          return {
+            id: site.id,
+            ownerId,
+            createdAt: at ?? site.updatedAt,
+            updatedAt: site.updatedAt,
+            site: structuredClone(site),
+            pages: mine.length,
+            published: mine.filter((p) => p.status === 'published').length,
+            views: sum(v.filter((x) => x.day >= sinceDay && x.path !== '#call')),
+            calls: sum(v.filter((x) => x.day >= sinceDay && x.path === '#call')),
+            lastView: max(v.filter((x) => x.path !== '#call').map((x) => x.day)),
+            leads: m.filter((x) => x.createdAt.slice(0, 10) >= sinceDay).length,
+            leadsAll: m.length,
+            lastLead: max(m.map((x) => x.createdAt)),
+            aiMicros: u.reduce((n, x) => n + x.micros, 0),
+            chats: u.reduce((n, x) => n + x.messages, 0),
+            lastSofie: max(u.map((x) => x.day)),
+            members: this.members.filter((x) => x.siteId === site.id).length,
+          }
+        }),
+    }
   }
   private posts = new Map<string, Article>()
   async articles() {
@@ -951,6 +1367,41 @@ export class MemoryStore implements Store {
   }
   async deleteArticle(slug: string) {
     this.posts.delete(slug)
+  }
+  private camps = new Map<string, Campaign>()
+  async campaigns() {
+    return [...this.camps.values()].reverse().map((c) => structuredClone(c))
+  }
+  async saveCampaign(c: Campaign) {
+    this.camps.delete(c.slug)
+    this.camps.set(c.slug, structuredClone(c))
+  }
+  private prosp = new Map<string, Prospect>()
+  async prospects(campaign?: string) {
+    return [...this.prosp.values()].filter((p) => !campaign || p.campaign === campaign).map((p) => structuredClone(p))
+  }
+  async prospect(id: string) {
+    const p = this.prosp.get(id)
+    return p ? structuredClone(p) : null
+  }
+  async prospectByPreview(previewId: string) {
+    const p = [...this.prosp.values()].find((x) => x.previewId === previewId)
+    return p ? structuredClone(p) : null
+  }
+  async saveProspect(p: Prospect) {
+    this.prosp.set(p.id, structuredClone(p))
+  }
+  private reps = new Map<string, CityReport>()
+  async reports() {
+    return [...this.reps.values()].reverse().map((r) => structuredClone(r))
+  }
+  async report(slug: string) {
+    const r = this.reps.get(slug)
+    return r ? structuredClone(r) : null
+  }
+  async saveReport(r: CityReport) {
+    this.reps.delete(r.slug)
+    this.reps.set(r.slug, structuredClone(r))
   }
   private notes: Feedback[] = []
   async addFeedback(f: Feedback) {
@@ -1038,6 +1489,14 @@ export class MemoryStore implements Store {
   async saveCrmState(siteId: string, state: unknown) {
     this.crm.set(siteId, JSON.parse(JSON.stringify(state)))
   }
+  private amazon = new Map<string, AmazonKeys>()
+  async amazonKeys(siteId: string) {
+    return this.amazon.get(siteId) ?? null
+  }
+  async saveAmazonKeys(siteId: string, keys: AmazonKeys | null) {
+    if (keys) this.amazon.set(siteId, { ...keys })
+    else this.amazon.delete(siteId)
+  }
   async allSites() {
     return [...this.sites.values()].map((s) => s.site)
   }
@@ -1108,6 +1567,64 @@ export class MemoryStore implements Store {
     }
     return out
   }
+
+  private orders = new Map<string, Order>()
+  private orderSeq = new Map<string, number>()
+  private stockCounts = new Map<string, Stock>()
+  async saveOrder(o: Order) {
+    const old = this.orders.get(o.id)
+    this.orders.set(o.id, JSON.parse(JSON.stringify({ ...o, number: old?.number ?? o.number })))
+  }
+  async order(siteId: string, id: string) {
+    const o = this.orders.get(id)
+    return o && o.siteId === siteId ? structuredClone(o) : null
+  }
+  async orderByToken(token: string) {
+    const o = [...this.orders.values()].find((x) => x.token === token)
+    return o ? structuredClone(o) : null
+  }
+  async orderBySession(session: string) {
+    const o = [...this.orders.values()].find((x) => x.stripe.session === session)
+    return o ? structuredClone(o) : null
+  }
+  async ordersForSite(siteId: string, opts: { status?: OrderStatus[]; limit?: number } = {}) {
+    return [...this.orders.values()]
+      .filter((o) => o.siteId === siteId && (!opts.status || opts.status.includes(o.status)))
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, opts.limit ?? 5000)
+      .map((o) => structuredClone(o))
+  }
+  async markOrderPaid(siteId: string, id: string, at: string) {
+    const o = this.orders.get(id)
+    if (!o || o.siteId !== siteId || o.status === 'paid') return null
+    const n = (this.orderSeq.get(siteId) ?? 1000) + 1
+    this.orderSeq.set(siteId, n)
+    this.orders.set(id, { ...o, status: 'paid', number: n, paidAt: at })
+    return n
+  }
+  async stock(siteId: string) {
+    return { ...(this.stockCounts.get(siteId) ?? {}) }
+  }
+  async setStock(siteId: string, item: string, qty: number) {
+    this.stockCounts.set(siteId, { ...(this.stockCounts.get(siteId) ?? {}), [item]: qty })
+  }
+  async adjustStock(siteId: string, deltas: Record<string, number>) {
+    const s = { ...(this.stockCounts.get(siteId) ?? {}) }
+    for (const [item, d] of Object.entries(deltas)) s[item] = (s[item] ?? 0) + d
+    this.stockCounts.set(siteId, s)
+  }
+  async discountUses(siteId: string) {
+    const out: Record<string, number> = {}
+    for (const o of this.orders.values()) if (o.siteId === siteId && o.status === 'paid' && o.discountCode) out[o.discountCode] = (out[o.discountCode] ?? 0) + 1
+    return out
+  }
+  private mockupList: MockupRequest[] = []
+  async saveMockup(r: MockupRequest) {
+    this.mockupList = [r, ...this.mockupList.filter((x) => x.id !== r.id)]
+  }
+  async mockups(limit = 200) {
+    return this.mockupList.slice(0, limit).map((x) => ({ ...x }))
+  }
 }
 
 // ---------------------------------------------------------------------------
@@ -1127,4 +1644,9 @@ export function getStore(): Store {
 // the same security and quiets the warning.
 export function pgUrl(url: string): string {
   return url.replace(/([?&]sslmode=)(require|prefer|verify-ca)\b/, '$1verify-full')
+}
+
+function toOrder(r: { data: Order; number: number | null } | undefined): Order | null {
+  if (!r) return null
+  return { ...r.data, ...(r.number !== null && r.number !== undefined ? { number: r.number } : {}) }
 }

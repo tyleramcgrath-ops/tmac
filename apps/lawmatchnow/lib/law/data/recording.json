@@ -1,0 +1,821 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is illegal to use a device to hear or record an oral conversation, in person or by phone, without the consent of a party to the conversation, so a participant may record.",
+"cite": "Alaska Stat. § 42.20.310(a)(1)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=42.20.310&secEnd=42.20.310",
+"verified": true
+},
+"penalty": {
+"value": "Class A misdemeanor, up to 1 year",
+"detail": "Violating the eavesdropping or communications-divulging statutes is a class A misdemeanor, punishable by up to one year in jail.",
+"cite": "Alaska Stat. § 42.20.330",
+"source": "https://law.justia.com/codes/alaska/title-42/chapter-20/article-4/section-42-20-330",
+"verified": true
+}
+},
+"AL": {
+"consent": {
+"value": "One-party consent",
+"detail": "Recording a private communication is criminal eavesdropping only if done without the consent of at least one person engaged in the communication.",
+"cite": "Ala. Code §§ 13A-11-30(1), 13A-11-31",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=13A-11-30",
+"verified": true
+},
+"penalty": {
+"value": "Class A misdemeanor, up to 1 year",
+"detail": "Criminal eavesdropping is a Class A misdemeanor, punishable by up to one year in jail; installing an eavesdropping device on private property without the owner's permission is a separate felony (§ 13A-11-33).",
+"cite": "Ala. Code §§ 13A-11-31(b), 13A-5-7(a)(1)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=13A-11-31",
+"verified": true
+}
+},
+"AR": {
+"consent": {
+"value": "One-party consent",
+"detail": "Intercepting and recording a phone, oral, or wireless communication is lawful if the recorder is a party to it or one party has given prior consent.",
+"cite": "Ark. Code Ann. § 5-60-120(a)",
+"source": "https://law.justia.com/codes/arkansas/title-5/subtitle-6/chapter-60/subchapter-1/section-5-60-120",
+"verified": true
+},
+"penalty": {
+"value": "Class A misdemeanor, up to 1 year",
+"detail": "Any violation of the interception-and-recording statute is a Class A misdemeanor (up to one year in jail).",
+"cite": "Ark. Code Ann. § 5-60-120(b)",
+"source": "https://law.justia.com/codes/arkansas/title-5/subtitle-6/chapter-60/subchapter-1/section-5-60-120",
+"verified": true
+}
+},
+"AZ": {
+"consent": {
+"value": "One-party consent",
+"detail": "Intercepting a conversation or wire/electronic communication is a crime unless done by a party to it or with the consent of a party.",
+"cite": "Ariz. Rev. Stat. §§ 13-3005(A), 13-3012(9)",
+"source": "https://azleg.gov/ars/13/03005.htm",
+"verified": true
+},
+"penalty": {
+"value": "Class 5 felony",
+"detail": "Unlawfully intercepting a wire, electronic, or oral communication is a class 5 felony.",
+"cite": "Ariz. Rev. Stat. § 13-3005(A)",
+"source": "https://azleg.gov/ars/13/03005.htm",
+"verified": true
+}
+},
+"CA": {
+"consent": {
+"value": "All-party consent",
+"detail": "Recording a confidential communication, in person or by phone, without the consent of all parties is a crime.",
+"cite": "Cal. Penal Code § 632(a)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632",
+"verified": true
+},
+"penalty": {
+"value": "Misdemeanor or felony (wobbler), fine up to $2,500",
+"detail": "A violation is punishable by a fine of up to $2,500 per violation, up to one year in county jail or a state prison term, or both; repeat offenders face fines up to $10,000 per violation.",
+"cite": "Cal. Penal Code § 632(a)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PEN&sectionNum=632",
+"verified": true
+}
+},
+"CO": {
+"consent": {
+"value": "One-party consent",
+"detail": "Wiretapping and eavesdropping are crimes only when done without the consent of a sender/receiver or of at least one principal party to the conversation.",
+"cite": "Colo. Rev. Stat. §§ 18-9-303, 18-9-304",
+"source": "https://law.justia.com/codes/colorado/title-18/article-9/part-3/section-18-9-304",
+"verified": true
+},
+"penalty": {
+"value": "Class 2 misdemeanor",
+"detail": "Both wiretapping and eavesdropping are class 2 misdemeanors (reclassified effective March 1, 2022).",
+"cite": "Colo. Rev. Stat. §§ 18-9-303(2), 18-9-304(2)",
+"source": "https://law.justia.com/codes/colorado/title-18/article-9/part-3/section-18-9-303",
+"verified": true
+}
+},
+"CT": {
+"consent": {
+"value": "Mixed",
+"detail": "Criminally, recording a conversation or phone call is eavesdropping only if done without the consent of at least one party (one-party), but a civil statute makes anyone who records a telephone call without the knowledge/consent of all parties liable for damages (all-party for phone calls).",
+"cite": "Conn. Gen. Stat. §§ 53a-187, 53a-189; § 52-570d",
+"source": "https://cga.ct.gov/PS99/rpt/olr/htm/99-R-0987.htm",
+"verified": true
+},
+"penalty": {
+"value": "Class D felony",
+"detail": "Eavesdropping (unlawful wiretapping or mechanical overhearing of a conversation) is a class D felony, punishable by up to 5 years in prison.",
+"cite": "Conn. Gen. Stat. § 53a-189",
+"source": "https://law.justia.com/codes/connecticut/title-53a/chapter-952/section-53a-189",
+"verified": true
+}
+},
+"DC": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is not unlawful to intercept a wire or oral communication if you are a party to it or one party has given prior consent, unless done for a criminal or tortious purpose.",
+"cite": "D.C. Code § 23-542(b)(3)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/23-542",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception, disclosure, or use is punishable by up to 5 years in prison and/or a fine up to the amount set in § 22-3571.01.",
+"cite": "D.C. Code § 23-542(a)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/23-542",
+"verified": true
+}
+},
+"DE": {
+"consent": {
+"value": "Mixed",
+"detail": "Delaware's wiretap law allows a party to a conversation (or someone with one party's consent) to record it, but its separate violation-of-privacy statute prohibits intercepting a private communication, including a private conversation, without the consent of all parties.",
+"cite": "Del. Code Ann. tit. 11, §§ 2402(c)(4), 1335(a)(4)",
+"source": "https://delcode.delaware.gov/title11/c024/sc01",
+"verified": true
+},
+"penalty": {
+"value": "Class E felony",
+"detail": "Violating the wiretap statute is a class E felony with a fine of up to $10,000; violation of privacy under § 1335 is a class A misdemeanor.",
+"cite": "Del. Code Ann. tit. 11, § 2402(b); § 1335",
+"source": "https://delcode.delaware.gov/title11/c024/sc01",
+"verified": true
+}
+},
+"FL": {
+"consent": {
+"value": "All-party consent",
+"detail": "Intercepting or recording a wire, oral (in-person), or electronic communication is lawful only when all parties to the communication have given prior consent.",
+"cite": "Fla. Stat. § 934.03(1), (2)(d)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/934.03",
+"verified": true
+},
+"penalty": {
+"value": "Third-degree felony",
+"detail": "Unlawful interception or disclosure is a third-degree felony; a narrow first-offense exception for certain unscrambled radio communications is a first-degree misdemeanor.",
+"cite": "Fla. Stat. § 934.03(4)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/934.03",
+"verified": true
+}
+},
+"GA": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person may record a wire, oral, or electronic communication if they are a party to it or one of the parties has given prior consent.",
+"cite": "O.C.G.A. § 16-11-66(a)",
+"source": "https://law.justia.com/codes/georgia/title-16/chapter-11/article-3/part-1/section-16-11-66",
+"verified": true
+},
+"penalty": {
+"value": "Felony, 1 to 5 years",
+"detail": "Violating the wiretapping/eavesdropping statutes is a felony punishable by 1 to 5 years in prison, a fine up to $10,000, or both.",
+"cite": "O.C.G.A. § 16-11-69",
+"source": "https://law.justia.com/codes/georgia/title-16/chapter-11/article-3/part-1/section-16-11-69",
+"verified": true
+}
+},
+"HI": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, oral, or electronic communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "Haw. Rev. Stat. § 803-42(b)(3)(A)",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0803/HRS_0803-0042.htm",
+"verified": true
+},
+"penalty": {
+"value": "Class C felony",
+"detail": "Unlawful interception or disclosure under the wiretap statute is a class C felony (up to 5 years).",
+"cite": "Haw. Rev. Stat. § 803-42(a)",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol14_Ch0701-0853/HRS0803/HRS_0803-0042.htm",
+"verified": true
+}
+},
+"IA": {
+"consent": {
+"value": "One-party consent",
+"detail": "Iowa's interception law allows a party to a communication, or someone with a party's consent, to record it, and its eavesdropping law exempts a sender, recipient, or person openly present and participating.",
+"cite": "Iowa Code §§ 808B.2(2)(c), 727.8(3)(a)",
+"source": "https://www.legis.iowa.gov/docs/code/808B.2.pdf",
+"verified": true
+},
+"penalty": {
+"value": "Class D felony",
+"detail": "Unlawful interception of a wire, oral, or electronic communication is a class D felony; electronic or mechanical eavesdropping under § 727.8 is a serious misdemeanor.",
+"cite": "Iowa Code §§ 808B.2(1), 727.8(2)",
+"source": "https://www.legis.iowa.gov/docs/code/808B.2.pdf",
+"verified": true
+}
+},
+"ID": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is lawful to intercept a wire, electronic, or oral communication when one of the parties has given prior consent.",
+"cite": "Idaho Code § 18-6702(2)(d)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title18/t18ch67/sect18-6702",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception or disclosure is a felony punishable by up to 5 years in prison, a fine up to $5,000, or both.",
+"cite": "Idaho Code § 18-6702(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title18/t18ch67/sect18-6702",
+"verified": true
+}
+},
+"IL": {
+"consent": {
+"value": "All-party consent",
+"detail": "It is eavesdropping to surreptitiously record a private conversation, even one you are part of, without the consent of all other parties.",
+"cite": "720 ILCS 5/14-2(a)(1)-(2)",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/072000050K14-2.htm",
+"verified": true
+},
+"penalty": {
+"value": "Class 4 felony",
+"detail": "Eavesdropping is a Class 4 felony for a first offense and a Class 3 felony for subsequent offenses; recording on-duty police, prosecutors, or judges is a Class 3 felony.",
+"cite": "720 ILCS 5/14-4",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/072000050K14-4.htm",
+"verified": true
+}
+},
+"IN": {
+"consent": {
+"value": "One-party consent",
+"detail": "Indiana's wiretap law makes it a crime to intercept a telephonic or electronic communication only when neither the sender nor the receiver has consented, so a party may record.",
+"cite": "Ind. Code §§ 35-31.5-2-176, 35-33.5-5-5",
+"source": "https://statecodesfiles.justia.com/indiana/2016/title-35/article-33.5/chapter-5/chapter-5.pdf",
+"verified": true
+},
+"penalty": {
+"value": "Level 5 felony",
+"detail": "Knowingly or intentionally intercepting a communication in violation of the wiretap article is unlawful interception, a Level 5 felony (1 to 6 years).",
+"cite": "Ind. Code § 35-33.5-5-5(b)",
+"source": "https://statecodesfiles.justia.com/indiana/2016/title-35/article-33.5/chapter-5/chapter-5.pdf",
+"verified": true
+}
+},
+"KS": {
+"consent": {
+"value": "One-party consent",
+"detail": "Breach of privacy covers intercepting a private message without the consent of the sender or receiver, so a party to the communication may record it.",
+"cite": "Kan. Stat. Ann. § 21-6101(a)(1)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch21/021_061_0001.html",
+"verified": true
+},
+"penalty": {
+"value": "Class A nonperson misdemeanor",
+"detail": "Breach of privacy by intercepting or divulging communications is a class A nonperson misdemeanor (up to 1 year).",
+"cite": "Kan. Stat. Ann. § 21-6101(b)(1)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch21/021_061_0001.html",
+"verified": true
+}
+},
+"KY": {
+"consent": {
+"value": "One-party consent",
+"detail": "'Eavesdrop' means recording a wire or oral communication of others without the consent of at least one party, so a participant may record.",
+"cite": "Ky. Rev. Stat. § 526.010",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=19948",
+"verified": true
+},
+"penalty": {
+"value": "Class D felony",
+"detail": "Eavesdropping is a Class D felony (1 to 5 years).",
+"cite": "Ky. Rev. Stat. § 526.020",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=19949",
+"verified": true
+}
+},
+"LA": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "La. Rev. Stat. § 15:1303(C)(4)",
+"source": "https://legis.la.gov/Legis/Law.aspx?d=78938",
+"verified": true
+},
+"penalty": {
+"value": "Felony, 2 to 10 years at hard labor",
+"detail": "Violators face a fine up to $10,000 and 2 to 10 years imprisonment at hard labor.",
+"cite": "La. Rev. Stat. § 15:1303(B)",
+"source": "https://legis.la.gov/Legis/Law.aspx?d=78938",
+"verified": true
+}
+},
+"MA": {
+"consent": {
+"value": "All-party consent",
+"detail": "It is a crime to secretly record any wire or oral communication unless you have prior authority from all parties.",
+"cite": "Mass. Gen. Laws ch. 272, § 99(B)(4), (C)(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleI/Chapter272/Section99",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is punishable by a fine up to $10,000, up to 5 years in state prison or 2.5 years in a house of correction, or both.",
+"cite": "Mass. Gen. Laws ch. 272, § 99(C)(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIV/TitleI/Chapter272/Section99",
+"verified": true
+}
+},
+"MD": {
+"consent": {
+"value": "All-party consent",
+"detail": "A person may record a wire, oral, or electronic communication only if they are a party to it and all parties have given prior consent.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 10-402(c)(3)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=10-402",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Violating the wiretap law is a felony punishable by up to 5 years in prison, a fine up to $10,000, or both.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 10-402(b)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=10-402",
+"verified": true
+}
+},
+"ME": {
+"consent": {
+"value": "One-party consent",
+"detail": "'Intercept' excludes the sender or receiver of a communication, a person within normal hearing range, and anyone given authority by the sender or receiver, so a participant may record.",
+"cite": "Me. Rev. Stat. tit. 15, § 709(4)",
+"source": "https://legislature.maine.gov/statutes/15/title15sec709.html",
+"verified": true
+},
+"penalty": {
+"value": "Class C crime",
+"detail": "Intentionally intercepting a wire or oral communication is a Class C crime (up to 5 years).",
+"cite": "Me. Rev. Stat. tit. 15, § 710(1)",
+"source": "https://legislature.maine.gov/statutes/15/title15sec710.html",
+"verified": true
+}
+},
+"MI": {
+"consent": {
+"value": "Mixed",
+"detail": "The eavesdropping statute bars recording private discourse 'of others' without the permission of all persons engaged, but Michigan courts (Sullivan v. Gray, 1982) read it to apply only to third parties, so a participant may generally record their own conversation.",
+"cite": "Mich. Comp. Laws §§ 750.539a(2), 750.539c; Sullivan v. Gray, 324 N.W.2d 58 (Mich. Ct. App. 1982)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-750-539c",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 2 years",
+"detail": "Illegal eavesdropping is a felony punishable by up to 2 years in prison, a fine up to $2,000, or both.",
+"cite": "Mich. Comp. Laws § 750.539c",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-750-539c",
+"verified": true
+}
+},
+"MN": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has consented, unless the purpose is criminal or tortious.",
+"cite": "Minn. Stat. § 626A.02, subd. 2(d)",
+"source": "https://www.revisor.mn.gov/statutes/cite/626A.02",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is punishable by up to 5 years in prison, a fine up to $20,000, or both.",
+"cite": "Minn. Stat. § 626A.02, subd. 4(a)",
+"source": "https://www.revisor.mn.gov/statutes/cite/626A.02",
+"verified": true
+}
+},
+"MO": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person may intercept a wire (telephone) communication if they are a party to it or one party has consented, unless the purpose is criminal or tortious.",
+"cite": "Mo. Rev. Stat. § 542.402.2(3)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=542.402",
+"verified": true
+},
+"penalty": {
+"value": "Class E felony",
+"detail": "Illegal wiretapping is a class E felony (up to 4 years).",
+"cite": "Mo. Rev. Stat. § 542.402.1",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=542.402",
+"verified": true
+}
+},
+"MS": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a communication if they are a party to it or one party has given prior consent, unless the purpose is criminal, tortious, or otherwise injurious.",
+"cite": "Miss. Code Ann. § 41-29-531(e)",
+"source": "https://codes.findlaw.com/ms/title-41-public-health/ms-code-sect-41-29-531/",
+"verified": true
+},
+"penalty": {
+"value": "Misdemeanor, up to 1 year",
+"detail": "Unlawful interception is a misdemeanor punishable by up to 1 year in county jail and/or a fine up to $10,000; a violation of § 41-29-511 is a felony punishable by up to 5 years.",
+"cite": "Miss. Code Ann. § 41-29-533",
+"source": "https://codes.findlaw.com/ms/title-41-public-health/ms-code-sect-41-29-533/",
+"verified": true
+}
+},
+"MT": {
+"consent": {
+"value": "All-party consent",
+"detail": "It is a crime to record a conversation with a hidden device without the knowledge of all parties, except recordings of public officials/employees performing official duties, speakers at public meetings, or persons given warning.",
+"cite": "Mont. Code Ann. § 45-8-213(1)(c), (2)(a)",
+"source": "https://mca.legmt.gov/bills/mca/title_0450/chapter_0080/part_0020/section_0130/0450-0080-0020-0130.html",
+"verified": true
+},
+"penalty": {
+"value": "Misdemeanor, up to 6 months",
+"detail": "Violating privacy in communications is punishable by a fine up to $500, up to 6 months in county jail, or both.",
+"cite": "Mont. Code Ann. § 45-8-213(4)(a)",
+"source": "https://mca.legmt.gov/bills/mca/title_0450/chapter_0080/part_0020/section_0130/0450-0080-0020-0130.html",
+"verified": true
+}
+},
+"NC": {
+"consent": {
+"value": "One-party consent",
+"detail": "Intercepting a wire, oral, or electronic communication is a crime only if done without the consent of at least one party to the communication.",
+"cite": "N.C. Gen. Stat. § 15A-287(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-287.html",
+"verified": true
+},
+"penalty": {
+"value": "Class H felony",
+"detail": "Unlawful interception or disclosure is a Class H felony.",
+"cite": "N.C. Gen. Stat. § 15A-287(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_15A/GS_15A-287.html",
+"verified": true
+}
+},
+"ND": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is a defense that the person was a party to the communication or one party gave prior consent, unless the recording was made to commit a crime or other unlawful harm.",
+"cite": "N.D. Cent. Code § 12.1-15-02(3)(c)",
+"source": "https://ndlegis.gov/cencode/t12-1c15.pdf",
+"verified": true
+},
+"penalty": {
+"value": "Class C felony",
+"detail": "Intercepting a wire or oral communication with a device is a class C felony (up to 5 years).",
+"cite": "N.D. Cent. Code § 12.1-15-02(1)",
+"source": "https://ndlegis.gov/cencode/t12-1c15.pdf",
+"verified": true
+}
+},
+"NE": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has consented, unless the purpose is criminal or tortious.",
+"cite": "Neb. Rev. Stat. § 86-290(2)(c)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=86-290",
+"verified": true
+},
+"penalty": {
+"value": "Class IV felony",
+"detail": "Unlawful interception is a Class IV felony (up to 2 years), with lesser penalties for certain first-offense radio interceptions.",
+"cite": "Neb. Rev. Stat. § 86-290(1)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=86-290",
+"verified": true
+}
+},
+"NH": {
+"consent": {
+"value": "All-party consent",
+"detail": "Intercepting a telecommunication or oral communication without the consent of all parties is a crime.",
+"cite": "N.H. Rev. Stat. Ann. § 570-A:2(I)",
+"source": "https://gc.nh.gov/rsa/html/LVIII/570-A/570-A-2.htm",
+"verified": true
+},
+"penalty": {
+"value": "Class B felony",
+"detail": "Recording without all-party consent is a class B felony (up to 7 years); it is reduced to a misdemeanor if the person was a party to the communication or had one party's prior consent.",
+"cite": "N.H. Rev. Stat. Ann. § 570-A:2(I), (I-a)",
+"source": "https://gc.nh.gov/rsa/html/LVIII/570-A/570-A-2.htm",
+"verified": true
+}
+},
+"NJ": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has given prior consent.",
+"cite": "N.J. Stat. Ann. § 2A:156A-4(d)",
+"source": "https://codes.findlaw.com/nj/title-2a-administration-of-civil-and-criminal-justice/nj-st-sect-2a-156a-4/",
+"verified": true
+},
+"penalty": {
+"value": "Third-degree crime",
+"detail": "Unlawful interception, disclosure, or use is a crime of the third degree (3 to 5 years).",
+"cite": "N.J. Stat. Ann. § 2A:156A-3",
+"source": "https://codes.findlaw.com/nj/title-2a-administration-of-civil-and-criminal-justice/nj-st-sect-2a-156a-3/",
+"verified": true
+}
+},
+"NM": {
+"consent": {
+"value": "One-party consent",
+"detail": "Interference with communications covers reading, taking, or copying a telephone or telegraph communication without the consent of a sender or intended recipient, so a party may record a call.",
+"cite": "N.M. Stat. Ann. § 30-12-1(C)",
+"source": "https://codes.findlaw.com/nm/chapter-30-criminal-offenses/nm-st-sect-30-12-1/",
+"verified": true
+},
+"penalty": {
+"value": "Misdemeanor",
+"detail": "Interference with communications is a misdemeanor.",
+"cite": "N.M. Stat. Ann. § 30-12-1",
+"source": "https://codes.findlaw.com/nm/chapter-30-criminal-offenses/nm-st-sect-30-12-1/",
+"verified": true
+}
+},
+"NV": {
+"consent": {
+"value": "Mixed",
+"detail": "In-person conversations may be recorded with the consent of one participant, but the Nevada Supreme Court has read the wiretap statute to require the consent of all parties before recording a telephone call.",
+"cite": "Nev. Rev. Stat. §§ 200.650, 200.620; Lane v. Allstate Ins. Co., 969 P.2d 938 (Nev. 1998)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-200.html",
+"verified": true
+},
+"penalty": {
+"value": "Category D felony",
+"detail": "Willfully and knowingly violating NRS 200.620-200.650 is a category D felony (1 to 4 years), plus civil liability.",
+"cite": "Nev. Rev. Stat. § 200.690(1)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-200.html",
+"verified": true
+}
+},
+"NY": {
+"consent": {
+"value": "One-party consent",
+"detail": "'Mechanical overhearing' and 'wiretapping' are crimes only when done without the consent of at least one party (or of the sender or receiver), so a participant may record.",
+"cite": "N.Y. Penal Law §§ 250.00, 250.05",
+"source": "https://www.nysenate.gov/legislation/laws/PEN/250.00",
+"verified": true
+},
+"penalty": {
+"value": "Class E felony",
+"detail": "Eavesdropping is a class E felony (up to 4 years).",
+"cite": "N.Y. Penal Law § 250.05",
+"source": "https://www.nysenate.gov/legislation/laws/PEN/250.05",
+"verified": true
+}
+},
+"OH": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person may intercept a wire, oral, or electronic communication if they are a party to it or one party has consented, unless the purpose is criminal, tortious, or otherwise injurious.",
+"cite": "Ohio Rev. Code § 2933.52(B)(4)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2933.52",
+"verified": true
+},
+"penalty": {
+"value": "Fourth-degree felony",
+"detail": "Interception of wire, oral, or electronic communications is a felony of the fourth degree.",
+"cite": "Ohio Rev. Code § 2933.52(C)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2933.52",
+"verified": true
+}
+},
+"OK": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, oral, or electronic communication if they are a party to it or one party has given prior consent, unless the purpose is criminal.",
+"cite": "Okla. Stat. tit. 13, § 176.4(5)",
+"source": "https://www.oklegislature.gov/cf_pdf/2023-24%20INT/hB/HB2326%20INT.PDF",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is a felony punishable by a fine of not less than $5,000, up to 5 years in prison, or both.",
+"cite": "Okla. Stat. tit. 13, § 176.3",
+"source": "https://www.oklegislature.gov/cf_pdf/2023-24%20INT/hB/HB2326%20INT.PDF",
+"verified": true
+}
+},
+"OR": {
+"consent": {
+"value": "Mixed",
+"detail": "Phone and radio communications may be recorded with the consent of one participant, but recording an in-person conversation is illegal unless all participants are specifically informed that it is being recorded.",
+"cite": "Or. Rev. Stat. § 165.540(1)(a), (1)(c)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors165.html",
+"verified": true
+},
+"penalty": {
+"value": "Class A misdemeanor",
+"detail": "Violating the recording statute is a Class A misdemeanor (up to 364 days).",
+"cite": "Or. Rev. Stat. § 165.540(9)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors165.html",
+"verified": true
+}
+},
+"PA": {
+"consent": {
+"value": "All-party consent",
+"detail": "Recording a wire, electronic, or oral communication is lawful only if all parties have given prior consent.",
+"cite": "18 Pa. Cons. Stat. § 5704(4)",
+"source": "https://codes.findlaw.com/pa/title-18-pacsa-crimes-and-offenses/pa-csa-sect-18-5704/",
+"verified": true
+},
+"penalty": {
+"value": "Third-degree felony",
+"detail": "Unlawful interception, disclosure, or use is a felony of the third degree (up to 7 years).",
+"cite": "18 Pa. Cons. Stat. § 5703",
+"source": "https://codes.findlaw.com/pa/title-18-pacsa-crimes-and-offenses/pa-csa-sect-18-5703/",
+"verified": true
+}
+},
+"RI": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "R.I. Gen. Laws § 11-35-21(c)(3)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE11/11-35/11-35-21.htm",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception, disclosure, or use is punishable by up to 5 years in prison.",
+"cite": "R.I. Gen. Laws § 11-35-21(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE11/11-35/11-35-21.htm",
+"verified": true
+}
+},
+"SC": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person may intercept a wire, oral, or electronic communication if they are a party to it or one party has given prior consent.",
+"cite": "S.C. Code Ann. § 17-30-30(C)",
+"source": "https://www.scstatehouse.gov/code/t17c030.php",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is a felony punishable by up to 5 years in prison, a fine up to $5,000, or both.",
+"cite": "S.C. Code Ann. §§ 17-30-20, 17-30-50(A)",
+"source": "https://www.scstatehouse.gov/code/t17c030.php",
+"verified": true
+}
+},
+"SD": {
+"consent": {
+"value": "One-party consent",
+"detail": "Overhearing or recording a communication or conversation with an eavesdropping device is a crime only if done without the consent of a sender/receiver or a party to the conversation.",
+"cite": "S.D. Codified Laws § 23A-35A-20",
+"source": "https://sdlegislature.gov/Statutes/23A-35A-20",
+"verified": true
+},
+"penalty": {
+"value": "Class 5 felony",
+"detail": "Unlawful eavesdropping is a Class 5 felony (up to 5 years).",
+"cite": "S.D. Codified Laws § 23A-35A-20",
+"source": "https://sdlegislature.gov/Statutes/23A-35A-20",
+"verified": true
+}
+},
+"TN": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, oral, or electronic communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "Tenn. Code Ann. § 39-13-601(b)(5)",
+"source": "https://codes.findlaw.com/tn/title-39-criminal-offenses/tn-code-sect-39-13-601/",
+"verified": true
+},
+"penalty": {
+"value": "Class D felony",
+"detail": "A violation of § 39-13-601(a) is a Class D felony (2 to 12 years).",
+"cite": "Tenn. Code Ann. § 39-13-602",
+"source": "https://codes.findlaw.com/tn/title-39-criminal-offenses/tn-code-sect-39-13-602/",
+"verified": true
+}
+},
+"TX": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is a defense that a person not acting under color of law was a party to the communication or had one party's prior consent, unless the recording was made to commit an unlawful act.",
+"cite": "Tex. Penal Code § 16.02(c)(4)",
+"source": "https://texas.public.law/statutes/tex._penal_code_section_16.02",
+"verified": true
+},
+"penalty": {
+"value": "Second-degree felony",
+"detail": "Unlawful interception, use, or disclosure is generally a felony of the second degree (2 to 20 years), with lower grades for certain radio communications.",
+"cite": "Tex. Penal Code § 16.02",
+"source": "https://texas.public.law/statutes/tex._penal_code_section_16.02",
+"verified": true
+}
+},
+"UT": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "Utah Code § 77-23a-4",
+"source": "https://le.utah.gov/xcode/Title77/Chapter23A/77-23a-S4.html",
+"verified": true
+},
+"penalty": {
+"value": "Third-degree felony",
+"detail": "A violation is a third-degree felony (up to 5 years), with a lesser grade for certain first-offense radio interceptions.",
+"cite": "Utah Code § 77-23a-4(1)",
+"source": "https://le.utah.gov/xcode/Title77/Chapter23A/77-23a-S4.html",
+"verified": true
+}
+},
+"VA": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is not a crime to intercept a wire, electronic, or oral communication if you are a party to it or one party has given prior consent.",
+"cite": "Va. Code Ann. § 19.2-62(B)(2)",
+"source": "https://law.lis.virginia.gov/vacode/19.2-62/",
+"verified": true
+},
+"penalty": {
+"value": "Class 6 felony",
+"detail": "Unlawful interception, disclosure, or use is a Class 6 felony.",
+"cite": "Va. Code Ann. § 19.2-62(A)",
+"source": "https://law.lis.virginia.gov/vacode/19.2-62/",
+"verified": true
+}
+},
+"VT": {
+"consent": {
+"value": "One-party consent",
+"detail": "Vermont has no state wiretap or eavesdropping statute, so the federal one-party rule applies: a party to a conversation, or someone with one party's consent, may record it unless the purpose is criminal or tortious.",
+"cite": "18 U.S.C. § 2511(2)(d)",
+"source": "https://www.law.cornell.edu/uscode/text/18/2511",
+"verified": true
+},
+"penalty": {
+"value": "No state statute (federal felony, up to 5 years)",
+"detail": "Vermont has no criminal recording statute; illegal interception is prosecuted under federal law, punishable by up to 5 years in prison and a fine.",
+"cite": "18 U.S.C. § 2511(4)(a)",
+"source": "https://www.law.cornell.edu/uscode/text/18/2511",
+"verified": true
+}
+},
+"WA": {
+"consent": {
+"value": "All-party consent",
+"detail": "Recording a private communication or private conversation without first obtaining the consent of all participants is unlawful.",
+"cite": "Wash. Rev. Code § 9.73.030(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=9.73.030",
+"verified": true
+},
+"penalty": {
+"value": "Gross misdemeanor",
+"detail": "Violating the recording statute is a gross misdemeanor (up to 364 days).",
+"cite": "Wash. Rev. Code § 9.73.080(1)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=9.73.080",
+"verified": true
+}
+},
+"WI": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person not acting under color of law may intercept a wire, electronic, or oral communication if they are a party to it or one party has consented, unless the purpose is criminal or tortious.",
+"cite": "Wis. Stat. § 968.31(2)(c)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/968/31",
+"verified": true
+},
+"penalty": {
+"value": "Class H felony",
+"detail": "Unlawful interception is a Class H felony.",
+"cite": "Wis. Stat. § 968.31(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/968/31",
+"verified": true
+}
+},
+"WV": {
+"consent": {
+"value": "One-party consent",
+"detail": "It is lawful to intercept a wire, oral, or electronic communication if you are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "W. Va. Code § 62-1D-3(e)",
+"source": "https://code.wvlegislature.gov/62-1D-3/",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is a felony punishable by up to 5 years in prison, a fine up to $10,000, or both.",
+"cite": "W. Va. Code § 62-1D-3(b)",
+"source": "https://code.wvlegislature.gov/62-1D-3/",
+"verified": true
+}
+},
+"WY": {
+"consent": {
+"value": "One-party consent",
+"detail": "A person may intercept a wire, oral, or electronic communication if they are a party to it or one party has given prior consent, unless the purpose is criminal or tortious.",
+"cite": "Wyo. Stat. Ann. § 7-3-702(b)(iv)",
+"source": "https://wyoleg.gov/statutes/compress/title07.pdf",
+"verified": true
+},
+"penalty": {
+"value": "Felony, up to 5 years",
+"detail": "Unlawful interception is a felony punishable by up to 5 years in prison, a fine up to $1,000, or both.",
+"cite": "Wyo. Stat. Ann. § 7-3-702(f)",
+"source": "https://wyoleg.gov/statutes/compress/title07.pdf",
+"verified": true
+}
+}
+}
+}

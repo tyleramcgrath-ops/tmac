@@ -4,7 +4,7 @@ import { GUIDELINES, GUIDELINES_REVIEWED } from '@/lib/guidelines'
 import '../home.css'
 
 export const metadata: Metadata = {
-  title: 'Built to Google’s guidelines, kept up to date for every site',
+  title: 'Built to Google’s Guidelines, Kept Up to Date',
   description: 'How every SaySites website follows Google Search Essentials, spam policies and page experience guidelines, and why a Google change reaches every site at once.',
   alternates: { canonical: '/google-guidelines' },
 }

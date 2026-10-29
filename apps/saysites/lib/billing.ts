@@ -12,20 +12,22 @@ export const TRIAL_DAYS = 7
 const DAY = 24 * 3600 * 1000
 
 export type BillingStatus = 'trial' | 'active' | 'past_due' | 'canceled' | 'comp'
-export type Plan = 'site' | 'store' | 'law' | 'lawpro'
-export const PLANS: readonly Plan[] = ['site', 'store', 'law', 'lawpro']
+export type Plan = 'site' | 'store' | 'lawstarter' | 'law' | 'lawpro'
+export const PLANS: readonly Plan[] = ['site', 'store', 'lawstarter', 'law', 'lawpro']
 
 // What each plan is called where owners see it.
-export const PLAN_NAMES: Record<Plan, string> = { site: 'Site', store: 'Store', law: 'Law Firm', lawpro: 'Law Firm, built for you' }
+export const PLAN_NAMES: Record<Plan, string> = { site: 'Site', store: 'Store', lawstarter: 'Law Firm Starter', law: 'Law Firm', lawpro: 'Law Firm, built for you' }
 export type Interval = 'month' | 'year'
 
 // The prices, in dollars. Yearly is two months free. Each plan/interval is
 // its own Stripe price (env below); only the monthly Site price is required.
-// Law firms are the main business: they build their own site (Law Firm),
-// or the SaySites team builds it and they approve it (built for you).
+// Law firms are the main business: they build their own site (Law Firm
+// Starter, or Law Firm with the paid Google and AI lookups), or the SaySites
+// team builds it and they approve it (built for you).
 export const PRICES: Record<Plan, Record<Interval, number>> = {
   site: { month: 15, year: 150 },
   store: { month: 25, year: 250 },
+  lawstarter: { month: 79, year: 790 },
   law: { month: 299, year: 2990 },
   lawpro: { month: 599, year: 5990 },
 }
@@ -33,6 +35,7 @@ export const PRICES: Record<Plan, Record<Interval, number>> = {
 const PRICE_ENV: Record<Plan, Record<Interval, string>> = {
   site: { month: 'STRIPE_PRICE_ID', year: 'STRIPE_PRICE_SITE_YEARLY' },
   store: { month: 'STRIPE_PRICE_STORE', year: 'STRIPE_PRICE_STORE_YEARLY' },
+  lawstarter: { month: 'STRIPE_PRICE_LAW_STARTER', year: 'STRIPE_PRICE_LAW_STARTER_YEARLY' },
   law: { month: 'STRIPE_PRICE_LAW', year: 'STRIPE_PRICE_LAW_YEARLY' },
   lawpro: { month: 'STRIPE_PRICE_LAW_BUILT', year: 'STRIPE_PRICE_LAW_BUILT_YEARLY' },
 }
@@ -40,6 +43,14 @@ const PRICE_ENV: Record<Plan, Record<Interval, string>> = {
 export function priceId(plan: Plan, interval: Interval): string | undefined {
   return process.env[PRICE_ENV[plan][interval]] || undefined
 }
+
+// The Stripe lookup key for a plan's price, used when its env var isn't set:
+// checkout finds (or creates) the price in Stripe by this key, at PRICES.
+export const lookupKey = (plan: Plan, interval: Interval) => `saysites_${plan}_${interval}`
+
+// Plans checkout can sell without an env price: the newest, created in
+// Stripe on first use.
+export const AUTO_PRICED: readonly Plan[] = ['lawstarter']
 
 // Which plan a Stripe price is, from the env above.
 export function planForPrice(id: string | null | undefined): { plan: Plan; interval: Interval } | null {

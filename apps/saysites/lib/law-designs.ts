@@ -517,39 +517,32 @@ function classic(x: LawHomeInput): Container[] {
   const band = x.photo()
   return [
     {
+      // A full-width photo behind the headline, darkened so the words read.
       id: 'hero',
       type: 'container',
       tag: 'section',
       layout: 'flex',
       align: 'center',
       boxed: true,
-      style: { padding: { desktop: { top: 112, right: 24, bottom: 56, left: 24 }, mobile: { top: 56, right: 20, bottom: 32, left: 20 } }, gap: { desktop: 18 }, textAlign: { desktop: 'center' } },
+      backgroundImage: { src: x.hero.src, width: x.hero.width, height: x.hero.height, overlay: 0.72, overlayStyle: 'full', priority: true },
+      style: { background: '#16130f', padding: { desktop: { top: 150, right: 24, bottom: 150, left: 24 }, tablet: { top: 112, right: 24, bottom: 112, left: 24 }, mobile: { top: 72, right: 20, bottom: 72, left: 20 } }, gap: { desktop: 20 }, textAlign: { desktop: 'center' } },
       children: [
-        kicker('hero-kicker', x.place),
-        { id: 'hero-title', type: 'heading', level: 1, text: x.headline, style: { fontSize: { desktop: 74, tablet: 56, mobile: 40 }, maxWidth: 940 } },
-        { id: 'hero-text', type: 'text', text: x.intro, style: { color: 'muted', fontSize: { desktop: 20, mobile: 17 }, maxWidth: 660 } },
+        kicker('hero-kicker', x.place, 'accent'),
+        { id: 'hero-title', type: 'heading', level: 1, text: x.headline, style: { color: '#ffffff', fontSize: { desktop: 76, tablet: 56, mobile: 40 }, maxWidth: 960 } },
+        { id: 'hero-text', type: 'text', text: x.intro, style: { color: '#e9e4dc', fontSize: { desktop: 20, mobile: 17 }, maxWidth: 680 } },
         {
           id: 'hero-actions',
           type: 'container',
           layout: 'flex',
           direction: { desktop: 'row' },
           justify: 'center',
-          style: { gap: { desktop: 12 }, margin: { desktop: { top: 12, right: 0, bottom: 0, left: 0 } } },
+          style: { gap: { desktop: 12 }, margin: { desktop: { top: 14, right: 0, bottom: 0, left: 0 } } },
           children: [
             { id: 'hero-cta', type: 'button', label: v(x).request, href: '/contact', variant: 'primary' },
-            ...(x.phone ? [{ id: 'hero-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'outline' as const }] : []),
+            ...(x.phone ? [{ id: 'hero-call', type: 'button' as const, label: `Call ${x.phone}`, href: tel(x.phone), variant: 'outline' as const, style: { color: '#ffffff', border: '#ffffff' } }] : []),
           ],
         },
       ],
-    },
-    {
-      id: 'hero-photo',
-      type: 'container',
-      tag: 'section',
-      layout: 'flex',
-      boxed: true,
-      style: { padding: { desktop: { top: 0, right: 24, bottom: 96, left: 24 }, mobile: { top: 0, right: 20, bottom: 56, left: 20 } } },
-      children: [img('hero-img', x.hero, 2.5, 0, true)],
     },
     {
       id: 'lw-areas',

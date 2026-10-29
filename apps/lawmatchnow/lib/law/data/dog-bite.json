@@ -1,0 +1,837 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Alaska has no dog-bite statute; an owner is liable for injuries stemming from a dangerous tendency the owner knew or should have known about (negligence claims also available).",
+"cite": "Hale v. O'Neill, 492 P.2d 101 (Alaska 1971)",
+"source": "https://www.courtlistener.com/opinion/1166041/hale-v-oneill/",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "Alaska Stat. § 09.10.070(a)(2)",
+"source": "https://akleg.gov/basis/statutes.asp?media=print&secStart=09.10.070&secEnd=09.10.070",
+"verified": true
+}
+},
+"AL": {
+"liability": {
+"value": "Mixed",
+"detail": "An owner is strictly liable for an unprovoked bite or injury only when the victim is lawfully on the owner's property (or was chased off it by the dog); elsewhere, the victim must show the owner knew or should have known of the dog's dangerous propensity.",
+"cite": "Ala. Code § 3-6-1; Allen v. Whitehead, 423 So. 2d 835 (Ala. 1982)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=3-6-1",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date of the injury.",
+"cite": "Ala. Code § 6-2-38(l)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=6-2-38",
+"verified": true
+}
+},
+"AR": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Arkansas has no dog-bite statute; to recover without proving negligence, the victim must show the dog had vicious or dangerous propensities that the owner knew or should have known about.",
+"cite": "Hamby v. Haskins, 275 Ark. 385 (1982); Bradley v. Hendricks, 251 Ark. 733 (1972)",
+"source": "https://www.courtlistener.com/opinion/1774634/hamby-v-haskins/",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from the date of the injury.",
+"cite": "Ark. Code Ann. § 16-56-105",
+"source": "https://law.justia.com/codes/arkansas/title-16/subtitle-5/chapter-56/subchapter-1/section-16-56-105",
+"verified": true
+}
+},
+"AZ": {
+"liability": {
+"value": "Mixed",
+"detail": "An owner is strictly liable for a bite to anyone in a public place or lawfully on private property (including the owner's), and is fully responsible for any injury a dog causes while at large; non-bite injuries from a dog that is not at large fall back on negligence/knowledge rules.",
+"cite": "Ariz. Rev. Stat. §§ 11-1025(A), 11-1020",
+"source": "https://azleg.gov/ars/11/01025.htm",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date the cause of action accrues.",
+"cite": "Ariz. Rev. Stat. § 12-542(1)",
+"source": "https://azleg.gov/ars/12/00542.htm",
+"verified": true
+}
+},
+"CA": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable for dog bites suffered by anyone in a public place or lawfully on private property, regardless of the dog's history; injuries not caused by a bite (e.g., knock-downs) require proof of negligence or known dangerous propensity.",
+"cite": "Cal. Civ. Code § 3342(a)",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=3342",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date of the injury.",
+"cite": "Cal. Civ. Proc. Code § 335.1",
+"source": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CCP&sectionNum=335.1",
+"verified": true
+}
+},
+"CO": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable only for economic damages when a dog bite causes serious bodily injury or death to someone lawfully on public or private property; other cases require proof of negligence or known dangerous propensity.",
+"cite": "Colo. Rev. Stat. § 13-21-124(2)",
+"source": "https://law.justia.com/codes/colorado/title-13/damages-and-limitations-on-actions/article-21/part-1/section-13-21-124",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual for most negligence claims.",
+"cite": "Colo. Rev. Stat. §§ 13-80-102(1)(a), 13-80-101(1)(n)",
+"source": "https://law.justia.com/codes/colorado/title-13/limitation-of-actions/article-80/section-13-80-102",
+"verified": true
+}
+},
+"CT": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog's owner or keeper is liable for any damage the dog does to a person's body or property, unless the victim was trespassing, committing another tort, or teasing, tormenting, or abusing the dog.",
+"cite": "Conn. Gen. Stat. § 22-357",
+"source": "https://cga.ct.gov/PS95/rpt/olr/htm/95-R-1224.htm",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from when the injury is sustained or discovered; no action more than 3 years after the act or omission.",
+"cite": "Conn. Gen. Stat. § 52-584",
+"source": "https://law.justia.com/codes/connecticut/title-52/chapter-926/section-52-584",
+"verified": true
+}
+},
+"DC": {
+"liability": {
+"value": "One-bite rule",
+"detail": "D.C. has no strict-liability dog statute; liability rests on the owner's knowledge of a vicious propensity or negligence, but if a dog injures someone while at large, the owner's lack of knowledge of its vicious propensity does not by itself excuse a finding of negligence.",
+"cite": "D.C. Code § 8-1808(a)(2)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/8-1808",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual; D.C. applies the residual 3-year period to negligence claims.",
+"cite": "D.C. Code § 12-301(8)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/12-301",
+"verified": true
+}
+},
+"DE": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog owner is liable for any injury, death, or loss to person or property caused by the dog, unless the victim was trespassing or committing a crime on the owner's property, committing a crime against a person, or teasing, tormenting, or abusing the dog.",
+"cite": "Del. Code Ann. tit. 16, § 3053F",
+"source": "https://delcode.delaware.gov/title16/c030f/sc04/index.html",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date the injury was sustained.",
+"cite": "Del. Code Ann. tit. 10, § 8119",
+"source": "https://delcode.delaware.gov/title10/c081",
+"verified": true
+}
+},
+"FL": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog owner is liable for any damage the dog does to a person, and separately for bites to anyone in a public place or lawfully on private property, regardless of the dog's past behavior; the victim's own negligence reduces damages.",
+"cite": "Fla. Stat. §§ 767.01(1), 767.04",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/767.04",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date of injury, for negligence claims accruing after March 24, 2023 (4 years before, under HB 837).",
+"cite": "Fla. Stat. § 95.11(5)(a)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2025/95.11",
+"verified": true
+}
+},
+"GA": {
+"liability": {
+"value": "One-bite rule",
+"detail": "An owner of a vicious or dangerous dog who, through careless management or letting it go at liberty, causes injury to an unprovoking person may be liable; the victim must generally show the owner knew of the dog's dangerous propensity, but proof the dog was off-leash in violation of a local leash ordinance satisfies the vicious-propensity element.",
+"cite": "O.C.G.A. § 51-2-7",
+"source": "https://law.justia.com/codes/georgia/title-51/chapter-2/section-51-2-7",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date of the injury.",
+"cite": "O.C.G.A. § 9-3-33",
+"source": "https://law.justia.com/codes/georgia/title-9/chapter-3/article-2/section-9-3-33",
+"verified": true
+}
+},
+"HI": {
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (discovery rule applies).",
+"cite": "Haw. Rev. Stat. § 657-7",
+"source": "https://capitol.hawaii.gov/hrscurrent/Vol13_Ch0601-0676/HRS0657/HRS_0657-0007.htm",
+"verified": true
+}
+},
+"IA": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog owner is liable for all damages done by the dog when it is attacking or attempting to bite a person, unless the injured person was doing an unlawful act that directly contributed to the injury.",
+"cite": "Iowa Code § 351.28",
+"source": "https://www.legis.iowa.gov/docs/code/351.28.pdf",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "Iowa Code § 614.1(2)",
+"source": "https://legis.iowa.gov/docs/code/614.1.pdf",
+"verified": true
+}
+},
+"ID": {
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date of the injury.",
+"cite": "Idaho Code § 5-219(4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title5/T5CH2/SECT5-219",
+"verified": true
+}
+},
+"IL": {
+"liability": {
+"value": "Strict liability",
+"detail": "If a dog, without provocation, attacks, attempts to attack, or injures a person who is peaceably conducting themselves where they may lawfully be, the owner is liable for the full amount of the injury.",
+"cite": "510 ILCS 5/16",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/051000050K16.htm",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "735 ILCS 5/13-202",
+"source": "https://ilga.gov/Documents/legislation/ilcs/documents/073500050K13-202.htm",
+"verified": true
+}
+},
+"IN": {
+"liability": {
+"value": "Mixed",
+"detail": "Strict liability applies only when an unprovoked dog bites a person who is acting peaceably where they are required to be to perform a duty under state or federal law or postal regulations (e.g., mail carriers, utility or public workers); other victims must prove negligence or the owner's knowledge of dangerous propensities.",
+"cite": "Ind. Code § 15-20-1-3",
+"source": "https://law.justia.com/codes/indiana/title-15/article-20/chapter-1/section-15-20-1-3",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "Ind. Code § 34-11-2-4(a)(1)",
+"source": "https://law.justia.com/codes/indiana/title-34/article-11/chapter-2/section-34-11-2-4",
+"verified": true
+}
+},
+"KS": {
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from substantial injury or when injury becomes reasonably ascertainable; 10-year outer limit from the act.",
+"cite": "Kan. Stat. Ann. § 60-513(a)(4), (b)",
+"source": "https://ksrevisor.gov/statutes/chapters/ch60/060_005_0013.html",
+"verified": true
+}
+},
+"KY": {
+"liability": {
+"value": "Strict liability",
+"detail": "Any owner whose dog is found to have caused damage to a person, livestock, or other property is responsible for that damage; Kentucky courts read this as strict liability.",
+"cite": "Ky. Rev. Stat. § 258.235(4)",
+"source": "https://statecodesfiles.justia.com/kentucky/2024/chapter-258/section-258-235/section-258-235.pdf",
+"verified": true
+},
+"deadline": {
+"value": "1 year",
+"years": 1,
+"detail": "Dog bite injury claims fall under Kentucky's one-year personal injury limitations period, running from the date of injury.",
+"cite": "KRS 413.140(1)(a)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58050",
+"verified": true
+}
+},
+"LA": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog owner is strictly liable for injuries to persons or property caused by the dog that the owner could have prevented and that did not result from the victim's provocation.",
+"cite": "La. Civ. Code art. 2321",
+"source": "https://www.legis.la.gov/LEGIS/Law.aspx?d=109384",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the day injury is sustained, for injuries on or after July 1, 2024 (1 year before, under Act 423 of 2024).",
+"cite": "La. Civ. Code art. 3493.1",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=1386443",
+"verified": true
+}
+},
+"MA": {
+"liability": {
+"value": "Strict liability",
+"detail": "If a dog does any damage to a person or property, the owner or keeper is liable unless the victim was trespassing, committing another tort, or teasing, tormenting, or abusing the dog.",
+"cite": "Mass. Gen. Laws ch. 140, § 155",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter140/Section155",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (discovery rule applies).",
+"cite": "Mass. Gen. Laws ch. 260, § 2A",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartIII/TitleV/Chapter260/Section2A",
+"verified": true
+}
+},
+"MD": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable for injuries a dog causes while running at large (with trespass, crime, and provocation exceptions); otherwise, proof that the dog caused injury creates a rebuttable presumption that the owner knew or should have known of its dangerous propensities.",
+"cite": "Md. Code, Cts. & Jud. Proc. § 3-1901",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=3-1901",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (discovery rule applies).",
+"cite": "Md. Code, Cts. & Jud. Proc. § 5-101",
+"source": "https://mgaleg.maryland.gov/mgawebsite/laws/StatuteText?article=gcj&section=5-101",
+"verified": true
+}
+},
+"ME": {
+"liability": {
+"value": "Mixed",
+"detail": "If a dog injures a person who is not on the owner's or keeper's premises, the owner or keeper is liable without proof of negligence; injuries on the owner's premises require proof of negligence.",
+"cite": "Me. Rev. Stat. tit. 7, § 3961",
+"source": "https://legislature.maine.gov/statutes/7/title7sec3961.html",
+"verified": true
+},
+"deadline": {
+"value": "6 years",
+"years": 6,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 6 years from accrual, under Maine's general civil limitations period.",
+"cite": "Me. Rev. Stat. tit. 14, § 752",
+"source": "https://legislature.maine.gov/statutes/14/title14sec752.html",
+"verified": true
+}
+},
+"MI": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable when their dog bites a person without provocation who is on public property or lawfully on private property; non-bite injuries require proof of negligence or known dangerous propensity.",
+"cite": "Mich. Comp. Laws § 287.351",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-287-351",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from the date of injury.",
+"cite": "Mich. Comp. Laws § 600.5805(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-600-5805",
+"verified": true
+}
+},
+"MN": {
+"liability": {
+"value": "Strict liability",
+"detail": "If a dog, without provocation, attacks or injures a person acting peaceably where they may lawfully be, the owner (including anyone harboring or keeping the dog) is liable for the full amount of the injury.",
+"cite": "Minn. Stat. § 347.22",
+"source": "https://www.revisor.mn.gov/statutes/cite/347.22",
+"verified": true
+},
+"deadline": {
+"value": "6 years",
+"years": 6,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 6 years from accrual, for negligence causing injury (intentional torts are shorter).",
+"cite": "Minn. Stat. § 541.05, subd. 1(5)",
+"source": "https://revisor.mn.gov/statutes/cite/541.05",
+"verified": true
+}
+},
+"MO": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable when their dog bites, without provocation, a person on public property or lawfully on private property, and for property or livestock damage; non-bite injuries fall under negligence or known-propensity rules.",
+"cite": "Mo. Rev. Stat. § 273.036",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=273.036",
+"verified": true
+},
+"deadline": {
+"value": "5 years",
+"years": 5,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 5 years from accrual (when damage is sustained and ascertainable).",
+"cite": "Mo. Rev. Stat. § 516.120(4)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=516.120",
+"verified": true
+}
+},
+"MS": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Mississippi has no dog-bite statute; the victim must show the dog previously exhibited a dangerous propensity that the owner knew or reasonably should have known about, so that an attack was foreseeable.",
+"cite": "Poy v. Grayson, 273 So. 2d 491 (Miss. 1973)",
+"source": "https://courts.ms.gov/images/Opinions/CO125717.pdf",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual; latent injuries accrue on discovery.",
+"cite": "Miss. Code Ann. § 15-1-49",
+"source": "https://law.justia.com/codes/mississippi/title-15/chapter-1/section-15-1-49",
+"verified": true
+}
+},
+"MT": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable for unprovoked bites only when the bite happens in a public place or lawfully on private property within an incorporated city or town; elsewhere, common-law knowledge/negligence rules apply.",
+"cite": "Mont. Code Ann. § 27-1-715",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0010/part_0070/section_0150/0270-0010-0070-0150.html",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual of the claim.",
+"cite": "Mont. Code Ann. § 27-2-204(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0270/chapter_0020/part_0020/section_0040/0270-0020-0020-0040.html",
+"verified": true
+}
+},
+"NC": {
+"liability": {
+"value": "One-bite rule",
+"detail": "North Carolina has no general strict-liability dog-bite statute; outside of statutory exceptions, the victim must show the owner knew or should have known of the dog's dangerous propensity (or negligence), but owners of dogs classified as 'dangerous' are strictly liable for injuries the dog inflicts.",
+"cite": "N.C. Gen. Stat. § 67-4.4",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_67/GS_67-4.4.html",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from when bodily harm becomes apparent; 10-year outer limit from the defendant's last act.",
+"cite": "N.C. Gen. Stat. § 1-52(5), (16)",
+"source": "https://ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_1/GS_1-52.html",
+"verified": true
+}
+},
+"ND": {
+"deadline": {
+"value": "6 years",
+"years": 6,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 6 years from accrual, for injury to the person not otherwise provided for.",
+"cite": "N.D. Cent. Code § 28-01-16(5)",
+"source": "https://ndlegis.gov/cencode/T28C01.pdf",
+"verified": true
+}
+},
+"NE": {
+"liability": {
+"value": "Strict liability",
+"detail": "Dog owners are liable for all damages to any non-trespasser bitten by the dog, and for damages from the dog killing, wounding, injuring, worrying, or chasing any person.",
+"cite": "Neb. Rev. Stat. § 54-601(1)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=54-601",
+"verified": true
+},
+"deadline": {
+"value": "4 years",
+"years": 4,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 4 years from accrual, for injury to the rights of the plaintiff not arising on contract.",
+"cite": "Neb. Rev. Stat. § 25-207(3)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=25-207",
+"verified": true
+}
+},
+"NH": {
+"liability": {
+"value": "Strict liability",
+"detail": "A person harmed by a dog they do not own or keep may recover from the dog's owner or keeper, unless the injured person was committing a trespass or other tort; the statute is not limited to bites.",
+"cite": "N.H. Rev. Stat. Ann. § 466:19",
+"source": "https://gc.nh.gov/rsa/html/XLV/466/466-19.htm",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from the act or omission, or from discovery of the injury and its cause if not discoverable sooner.",
+"cite": "N.H. Rev. Stat. Ann. § 508:4(I)",
+"source": "https://law.justia.com/codes/new-hampshire/title-lii/chapter-508/section-508-4",
+"verified": true
+}
+},
+"NJ": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable when their dog bites someone in a public place or lawfully on private property, regardless of the dog's history; non-bite injuries require proof of negligence or known dangerous propensity.",
+"cite": "N.J. Stat. Ann. § 4:19-16",
+"source": "https://codes.findlaw.com/nj/title-4-agriculture-and-domestic-animals/nj-st-sect-4-19-16/",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (discovery rule applies).",
+"cite": "N.J. Stat. Ann. § 2A:14-2(a)",
+"source": "https://lis.njleg.state.nj.us/nxt/gateway.dll/statutes/1/112/308",
+"verified": true
+}
+},
+"NM": {
+"liability": {
+"value": "One-bite rule",
+"detail": "New Mexico has no dog-bite statute; an owner is liable if the owner knew or should have known the dog was vicious or had a tendency to be vicious, and negligence claims are also recognized.",
+"cite": "UJI 13-506 NMRA; Smith v. Village of Ruidoso, 994 P.2d 50 (N.M. Ct. App. 1999)",
+"source": "https://www.2keller.com/library/new-mexico-dog-bite-laws.cfm",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (generally the date of injury).",
+"cite": "N.M. Stat. Ann. § 37-1-8",
+"source": "https://law.justia.com/codes/new-mexico/chapter-37/article-1/section-37-1-8",
+"verified": true
+}
+},
+"NV": {
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "Nev. Rev. Stat. § 11.190(4)(e)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-011.html",
+"verified": true
+}
+},
+"NY": {
+"liability": {
+"value": "One-bite rule",
+"detail": "An owner is strictly liable only if the owner knew or should have known of the dog's vicious propensities; owners of dogs judicially declared dangerous are strictly liable for the victim's medical costs, and since 2025 victims may also sue in ordinary negligence.",
+"cite": "Collier v. Zambito, 1 N.Y.3d 444 (2004); Flanders v. Goodfellow, 2025 NY Slip Op 02261; N.Y. Agric. & Mkts. Law § 123(10)",
+"source": "https://nycourts.gov/reporter/3dseries/2025/2025_02261.htm",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (generally the date of injury).",
+"cite": "N.Y. C.P.L.R. 214(5)",
+"source": "https://nysenate.gov/legislation/laws/CVP/214",
+"verified": true
+}
+},
+"OH": {
+"liability": {
+"value": "Strict liability",
+"detail": "The owner, keeper, or harborer of a dog is liable for any injury, death, or loss the dog causes, unless the victim was trespassing or committing a crime on the owner's property, committing a crime against a person, or teasing, tormenting, or abusing the dog there.",
+"cite": "Ohio Rev. Code § 955.28(B)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-955.28",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the date the injury occurs (special accrual rules for exposure claims).",
+"cite": "Ohio Rev. Code § 2305.10(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-2305.10",
+"verified": true
+}
+},
+"OK": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are liable for the full amount of damages when their dog, without provocation, bites or injures a person who is where they have a lawful right to be, but the statute does not apply in rural areas or in cities and towns without city or village U.S. mail delivery.",
+"cite": "Okla. Stat. tit. 4, §§ 42.1, 42.3",
+"source": "https://law.justia.com/codes/oklahoma/title-4/section-4-42-1",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual, for injury to the rights of another not arising on contract.",
+"cite": "Okla. Stat. tit. 12, § 95(A)(3)",
+"source": "https://oklegislature.gov/ok_statutes/completetitles/os12.pdf?section=12-95",
+"verified": true
+}
+},
+"OR": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Oregon has no general strict-liability dog-bite statute; owners are liable if they knew or had reason to know of the dog's dangerous propensity, and keepers of dogs a court has found 'potentially dangerous' are strictly liable for economic damages from later injuries.",
+"cite": "Westberry v. Blackwell, 282 Or. 129 (1978); Or. Rev. Stat. § 609.115",
+"source": "https://oregon.public.law/statutes/ors_609.115",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (discovery rule applies).",
+"cite": "Or. Rev. Stat. § 12.110(1)",
+"source": "https://oregonlegislature.gov/bills_laws/ors/ors012.html",
+"verified": true
+}
+},
+"PA": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners must pay the full cost of a victim's medical treatment from a dog bite or attack regardless of fault, but other damages (pain and suffering, lost wages) require proof of the owner's negligence.",
+"cite": "3 P.S. § 459-502(b)",
+"source": "https://www.lycolaw.org/uploads/opinions/2014-Warner080414a.pdf",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (generally the date of injury).",
+"cite": "42 Pa. Cons. Stat. § 5524(2)",
+"source": "https://legis.state.pa.us/cfdocs/legis/LI/consCheck.cfm?chpt=55&div=0&ttl=42&txtType=HTM",
+"verified": true
+}
+},
+"RI": {
+"liability": {
+"value": "Mixed",
+"detail": "An owner is liable, without proof of knowledge, when the dog bites or injures a person traveling the highway or outside the owner's enclosure; injuries inside the owner's enclosure fall under common-law rules.",
+"cite": "R.I. Gen. Laws § 4-13-16",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE4/4-13/4-13-16.htm",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual, for injuries to the person.",
+"cite": "R.I. Gen. Laws § 9-1-14(b)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE9/9-1/9-1-36.htm",
+"verified": true
+}
+},
+"SC": {
+"liability": {
+"value": "Strict liability",
+"detail": "If a person is bitten or otherwise attacked by a dog while in a public place or lawfully on private property (including the owner's), the owner or keeper is liable for the damages, unless the victim provoked the dog or it was a qualifying police dog.",
+"cite": "S.C. Code Ann. § 47-3-110",
+"source": "https://www.scstatehouse.gov/code/t47c003.php",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (discovery rule applies).",
+"cite": "S.C. Code Ann. § 15-3-530(5)",
+"source": "https://scstatehouse.gov/code/t15c003.php",
+"verified": true
+}
+},
+"SD": {
+"liability": {
+"value": "One-bite rule",
+"detail": "South Dakota has no dog-bite statute; a victim must show the owner knew or should have known of the dog's dangerous propensities, or that injury was reasonably foreseeable under ordinary negligence principles.",
+"cite": "Ridley v. Sioux Empire Pit Bull Rescue, Inc., 2019 S.D. 48; Gehrts v. Batteen, 2001 S.D. 10",
+"source": "https://ujs.sd.gov/media/ohllg2rs/28668_ridley_v_sepr.pdf",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual, for personal injury.",
+"cite": "S.D. Codified Laws § 15-2-14(3)",
+"source": "https://sdlegislature.gov/Statutes/15-2-14",
+"verified": true
+}
+},
+"TN": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners who fail to keep a dog under reasonable control or let it run at large are liable for injuries in a public place or to someone lawfully on another's property, without proof of known dangerous propensities; but on residential, farm, or other noncommercial property, a lawful visitor must prove the owner knew or should have known of the dog's dangerous propensities.",
+"cite": "Tenn. Code Ann. § 44-8-413",
+"source": "https://codes.findlaw.com/tn/title-44-animals-and-animal-husbandry/tn-code-sect-44-8-413/",
+"verified": true
+},
+"deadline": {
+"value": "1 year",
+"years": 1,
+"detail": "The dog-owner liability statute adopts the general personal injury limitations period of § 28-3-104: one year from accrual (two years if criminal charges are brought against the person who caused the injury).",
+"cite": "Tenn. Code Ann. §§ 44-8-413(d), 28-3-104(a)",
+"source": "https://codes.findlaw.com/tn/title-44-animals-and-animal-husbandry/tn-code-sect-44-8-413/",
+"verified": true
+}
+},
+"TX": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Texas has no civil dog-bite statute; an owner is strictly liable only if the owner knew or should have known of the dog's dangerous propensities, and otherwise may be liable for negligent handling.",
+"cite": "Marshall v. Ranne, 511 S.W.2d 255 (Tex. 1974); Bushnell v. Mott (Tex. 2008)",
+"source": "https://www.animallaw.info/cases/caustx2008wl820680.htm",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from the day the cause of action accrues.",
+"cite": "Tex. Civ. Prac. & Rem. Code § 16.003(a)",
+"source": "https://statutes.capitol.texas.gov/Docs/CP/html/CP.16.004.0653.htm",
+"verified": true
+}
+},
+"UT": {
+"liability": {
+"value": "Strict liability",
+"detail": "Every person owning or keeping a dog is liable for injury committed by the dog, without any need to prove the dog was vicious or that the owner knew it.",
+"cite": "Utah Code § 18-1-1",
+"source": "https://le.utah.gov/xcode/Title18/Chapter1/18-1-S1.html",
+"verified": true
+},
+"deadline": {
+"value": "4 years",
+"years": 4,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 4 years from accrual, under the catch-all for relief not otherwise provided for.",
+"cite": "Utah Code § 78B-2-307(4)",
+"source": "https://le.utah.gov/xcode/Title78B/Chapter2/78B-2-S307.html",
+"verified": true
+}
+},
+"VA": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Virginia has no strict-liability dog-bite statute; owners owe a common-law duty of ordinary care, and liability generally turns on the owner's knowledge of a dangerous propensity or negligence (including violation of a leash ordinance).",
+"cite": "Butler v. Frieden, 208 Va. 352, 158 S.E.2d 121 (1967)",
+"source": "https://www.marksandharrison.com/wp-content/uploads/2024/06/MH_Points-of-Law-Summer-2024-Final.pdf",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (the date of injury).",
+"cite": "Va. Code Ann. § 8.01-243(A)",
+"source": "https://law.lis.virginia.gov/vacode/8.01-243",
+"verified": true
+}
+},
+"VT": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Vermont requires proof of the owner's negligence, traditionally based on knowledge of the dog's dangerous propensity, and rejects strict or absolute liability for dog bites.",
+"cite": "Martin v. Christman (Vt. 2014); Hillier v. Noble, 142 Vt. 552 (1983)",
+"source": "https://www.vermontjudiciary.org/sites/default/files/documents/Martin%20v%20Christman.pdf",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from discovery of the injury.",
+"cite": "Vt. Stat. Ann. tit. 12, § 512(4)",
+"source": "https://legislature.vermont.gov/statutes/section/12/023/00512",
+"verified": true
+}
+},
+"WA": {
+"liability": {
+"value": "Mixed",
+"detail": "Owners are strictly liable when their dog bites someone in a public place or lawfully on private property, regardless of the dog's history; non-bite injuries require proof of negligence or known dangerous propensity.",
+"cite": "Wash. Rev. Code § 16.08.040",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=16.08.040",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual (discovery rule applies).",
+"cite": "Wash. Rev. Code § 4.16.080(2)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=4.16.080",
+"verified": true
+}
+},
+"WI": {
+"liability": {
+"value": "Strict liability",
+"detail": "A dog owner is liable for the full amount of damages caused by the dog injuring a person, domestic animal, or property, and for double damages if the owner knew the dog had previously bitten someone hard enough to break skin and cause scarring.",
+"cite": "Wis. Stat. § 174.02(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/174/02",
+"verified": true
+},
+"deadline": {
+"value": "3 years",
+"years": 3,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 3 years from accrual.",
+"cite": "Wis. Stat. § 893.54(1m)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/893.pdf",
+"verified": true
+}
+},
+"WV": {
+"liability": {
+"value": "Mixed",
+"detail": "An owner who lets a dog run at large is liable for any damage it inflicts while at large; other injuries require proof the owner knew of the dog's dangerous propensity or was negligent.",
+"cite": "W. Va. Code § 19-20-13",
+"source": "https://code.wvlegislature.gov/19-20-13/",
+"verified": true
+},
+"deadline": {
+"value": "2 years",
+"years": 2,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 2 years from accrual (discovery rule applies).",
+"cite": "W. Va. Code § 55-2-12(b)",
+"source": "https://code.wvlegislature.gov/55-2-12/",
+"verified": true
+}
+},
+"WY": {
+"liability": {
+"value": "One-bite rule",
+"detail": "Wyoming has no dog-bite statute; owners are strictly liable only if they knew of the dog's dangerous propensities, and otherwise may be liable for failing to use reasonable care to control the dog.",
+"cite": "Borns ex rel. Gannon v. Voss, 2003 WY 74, 70 P.3d 262",
+"source": "https://opencasebook.org/casebooks/9486/resources/3.2.2/",
+"verified": true
+},
+"deadline": {
+"value": "4 years",
+"years": 4,
+"detail": "Dog bite injury claims fall under the general personal injury limitations period: 4 years from accrual, for injury to rights not arising on contract.",
+"cite": "Wyo. Stat. Ann. § 1-3-105(a)(iv)(C)",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}

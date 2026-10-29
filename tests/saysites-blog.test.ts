@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { LAUNCH_ARTICLES, allArticles, checkArticle, headingsOf, publishedArticles, renderBody, slugify } from '../apps/saysites/lib/articles'
+import { SCHEDULED_ARTICLES } from '../apps/saysites/lib/articles-scheduled'
+import { LAUNCH_ARTICLES, allArticles, assertNoDuplicates, bodyWords, checkArticle, headingsOf, imagesOf, publishedArticles, renderBody, safeImage, slugify } from '../apps/saysites/lib/articles'
 import { MemoryStore } from '../apps/saysites/lib/store'
 
 describe('SaySites blog', () => {
@@ -42,6 +43,114 @@ describe('SaySites blog', () => {
     const live = await publishedArticles(store)
     expect(live.some((a) => a.slug === first.slug)).toBe(false)
     expect(live.some((a) => a.slug === 'future-post')).toBe(false)
-    expect(live.length).toBe(LAUNCH_ARTICLES.length - 1)
+    const today = new Date().toISOString().slice(0, 10)
+    expect(live.length).toBe(LAUNCH_ARTICLES.length - 1 + SCHEDULED_ARTICLES.filter((a) => a.published <= today).length)
+  })
+
+  it('writes ahead: checked articles, each hidden until its day', () => {
+    for (const a of SCHEDULED_ARTICLES) {
+      expect(checkArticle(a), a.slug).toBeNull()
+      expect(a.body.split(/\s+/).length, a.slug).toBeGreaterThan(450)
+      // Articles may quote rules about guarantees; SaySites itself never promises results.
+      expect(a.body, a.slug).not.toMatch(/we guarantee|guaranteed (rank|result|lead|traffic)|rank first|more leads|#1 (on|in) google/i)
+      expect(`${a.title} ${a.description} ${a.body}`, a.slug).not.toContain('\u2014')
+    }
+    const slugs = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES].map((a) => a.slug)
+    expect(new Set(slugs).size).toBe(slugs.length)
+  })
+
+  it('daily articles (from 2026-10-12): 2,000+ words, photos with alt text, FAQ and fresh links', () => {
+    const daily = SCHEDULED_ARTICLES.filter((a) => a.published >= '2026-10-12' && a.faq)
+    expect(daily.length).toBeGreaterThanOrEqual(2)
+    for (const a of daily) {
+      expect(bodyWords(a.body).length, a.slug).toBeGreaterThanOrEqual(2000)
+      expect(a.title.length, a.slug).toBeLessThanOrEqual(62)
+      expect(a.description.length, a.slug).toBeGreaterThanOrEqual(120)
+      expect(a.description.length, a.slug).toBeLessThanOrEqual(160)
+      expect(a.hero && safeImage(a.hero.src) && a.hero.alt.length > 15, a.slug).toBeTruthy()
+      const imgs = imagesOf(a)
+      expect(imgs.length, a.slug).toBeGreaterThanOrEqual(3)
+      for (const src of imgs) expect(safeImage(src), src).toBe(true)
+      expect(a.faq!.length, a.slug).toBeGreaterThanOrEqual(5)
+      for (const f of a.faq!) {
+        const w = f.a.split(/\s+/).length
+        expect(w, f.q).toBeGreaterThanOrEqual(40)
+        expect(w, f.q).toBeLessThanOrEqual(80)
+      }
+      for (const href of ['/pricing', '/redesign', '/signup', '/websites-for/']) expect(a.body, `${a.slug} ${href}`).toContain(`](${href}`)
+      expect((a.body.match(/\]\(\/blog\//g) ?? []).length, a.slug).toBeGreaterThanOrEqual(2)
+    }
+  })
+
+  it('renders body photos as lazy figures with escaped alt text, and drops other hosts', () => {
+    const html = renderBody('![A "quoted" <alt>](https://images.unsplash.com/photo-1?w=10)\n\n![x](https://evil.example/p.jpg)')
+    expect(html).toContain('<figure><img src="https://images.unsplash.com/photo-1?w=10" alt="A &quot;quoted&quot; &lt;alt&gt;" width="1200" height="800" loading="lazy" decoding="async"></figure>')
+    expect(html).not.toContain('evil.example')
+  })
+
+  it('duplicate guard: every article is unique (address, title, photos, 5-gram overlap)', () => {
+    const all = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES]
+    expect(() => assertNoDuplicates(all)).not.toThrow()
+    const a = SCHEDULED_ARTICLES[0]
+    expect(() => assertNoDuplicates([...all, { ...a, slug: 'copy-of-it', title: 'A different title here' }])).toThrow(/too similar|photo/)
+    expect(() => assertNoDuplicates([...all, { ...LAUNCH_ARTICLES[1], slug: 'other-slug', body: 'fresh words '.repeat(200) }])).toThrow(/title/)
+    const noPhoto = { ...a, hero: undefined, body: a.body.replace(/^!\[.*$/gm, '') }
+    expect(() => assertNoDuplicates([...all.filter((x) => x.slug !== a.slug), noPhoto, { ...noPhoto, slug: 'near-copy', title: 'Another title entirely' }])).toThrow(/too similar/)
+  })
+})
+
+describe('SaySites: evergreen guides (/guides) and richer articles', async () => {
+  const { TOPICS, articlesFor, topicsOf } = await import('../apps/saysites/lib/topics')
+  const { LAUNCH_ARTICLES, renderBody, headingsOf } = await import('../apps/saysites/lib/articles')
+  const { SCHEDULED_ARTICLES } = await import('../apps/saysites/lib/articles-scheduled')
+  const all = [...LAUNCH_ARTICLES, ...SCHEDULED_ARTICLES]
+
+  it('gives each subject a full guide that links to its sources, with every article filed under one', () => {
+    expect(new Set(TOPICS.map((t) => t.slug)).size).toBe(TOPICS.length)
+    for (const t of TOPICS) {
+      expect(t.title.length, t.slug).toBeLessThanOrEqual(65)
+      expect(t.description.length, t.slug).toBeGreaterThanOrEqual(110)
+      expect(t.description.length, t.slug).toBeLessThanOrEqual(160)
+      expect(headingsOf(t.body).length, t.slug).toBeGreaterThanOrEqual(4)
+      expect(t.body.match(/\]\(https:\/\//g)?.length ?? 0, t.slug).toBeGreaterThanOrEqual(3)
+      expect(t.checklist.length, t.slug).toBeGreaterThanOrEqual(5)
+      expect(t.faq.length, t.slug).toBeGreaterThanOrEqual(3)
+      expect(`${t.title} ${t.description} ${t.body}`, t.slug).not.toContain('—')
+      expect(t.body, t.slug).not.toMatch(/we guarantee|guaranteed (rank|result|lead|traffic)|rank first|#1 (on|in) google/i)
+      expect(articlesFor(t, all).length, t.slug).toBeGreaterThanOrEqual(1)
+    }
+    // Every article belongs to at least one guide, so none is left unlinked.
+    for (const a of all) expect(topicsOf(a).length, a.slug).toBeGreaterThanOrEqual(1)
+  })
+
+  it('renders tables, checklists and tip boxes, escaping what’s in them', () => {
+    const html = renderBody('| Rule | <b>Where</b> |\n|---|---|\n| Disclaimer | Next to results |\n\n- [ ] One\n- [x] Two\n\n> **Watch out:** Rules change.')
+    expect(html).toContain('<div class="post-table"><table><thead><tr><th scope="col">Rule</th><th scope="col">&lt;b&gt;Where&lt;/b&gt;</th></tr></thead><tbody><tr><td>Disclaimer</td><td>Next to results</td></tr></tbody></table></div>')
+    expect(html).toContain('<ul class="post-check"><li>One</li><li class="done">Two</li></ul>')
+    expect(html).toContain('<aside class="post-tip post-tip-warn"><p><strong>Watch out:</strong> Rules change.</p></aside>')
+  })
+})
+
+describe('SaySites: website and SEO glossary (/guides/glossary)', async () => {
+  const { GLOSSARY, GLOSSARY_GROUPS } = await import('../apps/saysites/lib/glossary')
+  const { TOPICS } = await import('../apps/saysites/lib/topics')
+  const pages = new Set(['/connect', '/connect/google-business-profile', '/redesign', '/pricing', ...TOPICS.map((t) => `/guides/${t.slug}`), ...LAUNCH_ARTICLES.map((a) => `/blog/${a.slug}`)])
+
+  it('has unique, anchor-safe slugs and fills every group', () => {
+    expect(new Set(GLOSSARY.map((t) => t.slug)).size).toBe(GLOSSARY.length)
+    for (const t of GLOSSARY) expect(t.slug, t.slug).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+    for (const g of GLOSSARY_GROUPS) expect(GLOSSARY.filter((t) => t.group === g).length, g).toBeGreaterThanOrEqual(3)
+  })
+
+  it('keeps definitions short and plain, with official sources and real internal links', () => {
+    for (const t of GLOSSARY) {
+      const words = t.def.split(/\s+/).length
+      expect(words, t.slug).toBeGreaterThanOrEqual(15)
+      expect(words, t.slug).toBeLessThanOrEqual(60)
+      expect(t.def + t.term, t.slug).not.toMatch(/—/)
+      expect(t.def.toLowerCase(), t.slug).not.toMatch(/(?<!not )guarantee|#1 ranking|rank first/)
+      if (t.source) expect(t.source[1], t.slug).toMatch(/^https:\/\/(developers\.google\.com|support\.google\.com|developers\.openai\.com|www\.ada\.gov|www\.w3\.org|www\.hhs\.gov|www\.ftc\.gov|www\.americanbar\.org)\//)
+      if (t.more) expect(pages.has(t.more[1]), `${t.slug} → ${t.more[1]}`).toBe(true)
+    }
   })
 })

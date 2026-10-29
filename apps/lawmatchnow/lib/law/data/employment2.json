@@ -1,0 +1,716 @@
+{
+"researchedOn": "2026-10-22",
+"states": {
+"AL": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Restraints on a trade are void except listed exceptions, which include reasonable employee non-competes protecting a protectable interest.",
+"cite": "Ala. Code § 8-1-190",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=8-1-190",
+"verified": true
+}
+},
+"AK": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Courts enforce non-competes that are reasonable, and may narrow overbroad ones.",
+"cite": "Data Management, Inc. v. Greene, 757 P.2d 62 (Alaska 1988)",
+"source": "https://www.courtlistener.com/opinion/1350283/data-management-inc-v-greene/",
+"verified": true
+}
+},
+"AZ": {
+"atWill": {
+"value": "At-will",
+"detail": "By statute the employment relationship is severable at the pleasure of either party unless both signed a written contract saying otherwise.",
+"cite": "Ariz. Rev. Stat. § 23-1501",
+"source": "https://azleg.gov/ars/23/01501.htm",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Courts enforce non-competes only if no broader than necessary to protect the employer's legitimate interests.",
+"cite": "Valley Medical Specialists v. Farber, 194 Ariz. 363 (1999)",
+"source": "https://www.courtlistener.com/opinion/1253291/valley-medical-specialists-v-farber/",
+"verified": true
+}
+},
+"AR": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Enforceable if the employer has a protectable business interest and the limits are reasonable; 2 years is presumptively reasonable.",
+"cite": "Ark. Code § 4-75-101",
+"source": "https://codes.findlaw.com/ar/title-4-business-and-commercial-law/ar-code-sect-4-75-101/",
+"verified": true
+}
+},
+"CA": {
+"atWill": {
+"value": "At-will",
+"detail": "An employment with no specified term may be ended at the will of either party on notice to the other.",
+"cite": "Cal. Lab. Code § 2922",
+"source": "https://california.public.law/codes/ca_lab_code_section_2922",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned (most employees)",
+"detail": "Employee non-competes are void, with narrow exceptions such as the sale of a business.",
+"cite": "Cal. Bus. & Prof. Code § 16600",
+"source": "https://california.public.law/codes/ca_bus_and_prof_code_section_16600",
+"verified": true
+}
+},
+"CO": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"CT": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Courts enforce non-competes that are reasonable in time, area, and burden on the employee.",
+"cite": "Scott v. General Iron & Welding Co., 171 Conn. 132 (1976)",
+"source": "https://www.courtlistener.com/opinion/2268855/scott-v-general-iron-welding-co/",
+"verified": true
+}
+},
+"DE": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"DC": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold ($162,164)",
+"detail": "Non-competes are banned for workers earning under $162,164 (2026; $270,274 for medical specialists).",
+"cite": "D.C. Code § 32-581.01 et seq.; DOES 2026 notice",
+"source": "https://does.dc.gov/sites/default/files/dc/sites/does/publication/attachments/2026%20Ban%20on%20Non-Compete%20Clauses.pdf",
+"verified": true
+}
+},
+"FL": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Non-competes are enforceable if in writing, reasonable in time, area and line of business, and supported by a legitimate business interest.",
+"cite": "Fla. Stat. § 542.335",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0500-0599/0542/Sections/0542.335.html",
+"verified": true
+}
+},
+"GA": {
+"atWill": {
+"value": "At-will",
+"detail": "An indefinite hiring may be ended at will by either party.",
+"cite": "O.C.G.A. § 34-7-1",
+"source": "https://codes.findlaw.com/ga/title-34-labor-and-industrial-relations/ga-code-sect-34-7-1/",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Post-employment non-competes are enforceable if reasonable, but only against sales, management, key or professional employees.",
+"cite": "O.C.G.A. § 13-8-53",
+"source": "https://codes.findlaw.com/ga/title-13-contracts/ga-code-sect-13-8-53/",
+"verified": true
+}
+},
+"HI": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (banned for tech workers)",
+"detail": "Non-compete and non-solicit clauses are void for employees of technology businesses; other limited restraints (such as protecting trade secrets) are allowed if reasonable.",
+"cite": "Haw. Rev. Stat. § 480-4(c)-(d)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol11_Ch0476-0490/HRS0480/HRS_0480-0004.htm",
+"verified": true
+}
+},
+"ID": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (key employees only)",
+"detail": "Non-competes are enforceable against key employees and key independent contractors if reasonable in duration, area and scope.",
+"cite": "Idaho Code § 44-2701",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title44/T44CH27/SECT44-2701/",
+"verified": true
+}
+},
+"IL": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold ($75,000)",
+"detail": "Non-competes are void for employees earning $75,000 or less a year (rising to $80,000 on Jan. 1, 2027).",
+"cite": "820 ILCS 90/10",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/082000900K10.htm",
+"verified": true
+}
+},
+"IN": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"IA": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"KS": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Courts enforce non-competes that protect a legitimate business interest and are reasonable.",
+"cite": "Weber v. Tillman, 259 Kan. 457 (1996)",
+"source": "https://www.courtlistener.com/opinion/7969238/weber-v-tillman/",
+"verified": true
+}
+},
+"KY": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"LA": {
+"atWill": {
+"value": "At-will",
+"detail": "An employer may dismiss an employee without giving a reason, and the employee may leave without cause.",
+"cite": "La. Civ. Code art. 2747",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=109812",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, limited (2 years, named parishes)",
+"detail": "Employee non-competes are void unless limited to specified parishes or municipalities where the employer does business and to no more than 2 years.",
+"cite": "La. R.S. 23:921(C)",
+"source": "https://legis.la.gov/legis/Law.aspx?d=155841",
+"verified": true
+}
+},
+"ME": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold (400% of federal poverty level)",
+"detail": "Employers may not require non-competes from employees earning at or below 400% of the federal poverty level.",
+"cite": "Me. Rev. Stat. tit. 26, § 599-A(3)",
+"source": "https://legislature.maine.gov/statutes/26/title26sec599-A.html",
+"verified": true
+}
+},
+"MD": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold (150% of state minimum wage)",
+"detail": "Non-competes are void for employees earning 150% of the state minimum wage or less (and for certain health care and veterinary workers).",
+"cite": "Md. Code, Lab. & Empl. § 3-716",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=3-716&enactments=false",
+"verified": true
+}
+},
+"MA": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (banned for nonexempt employees)",
+"detail": "Non-competes can't be enforced against FLSA-nonexempt workers, students, workers laid off or fired without cause, or those 18 or younger.",
+"cite": "Mass. Gen. Laws ch. 149, § 24L",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter149/Section24L",
+"verified": true
+}
+},
+"MI": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Non-competes protecting reasonable competitive business interests are enforceable if reasonable in duration, area and type of work.",
+"cite": "Mich. Comp. Laws § 445.774a",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-445-774a",
+"verified": true
+}
+},
+"MN": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned (most employees)",
+"detail": "Non-competes are void and unenforceable, except in connection with the sale or dissolution of a business.",
+"cite": "Minn. Stat. § 181.988",
+"source": "https://www.revisor.mn.gov/statutes/cite/181.988",
+"verified": true
+}
+},
+"MS": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"MO": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"MT": {
+"atWill": {
+"value": "Not at-will (good cause required after probation)",
+"detail": "Under the Wrongful Discharge from Employment Act, firing an employee who has finished the probationary period without good cause is wrongful.",
+"cite": "Mont. Code Ann. § 39-2-904(1)(b)",
+"source": "https://archive.legmt.gov/bills/mca/title_0390/chapter_0020/part_0090/section_0040/0390-0020-0090-0040.html",
+"verified": true
+}
+},
+"NE": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"NV": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (banned for hourly workers)",
+"detail": "Non-competes must be supported by consideration and no broader than necessary, and cannot apply to employees paid solely by the hour.",
+"cite": "Nev. Rev. Stat. § 613.195",
+"source": "https://www.leg.state.nv.us/NRS/NRS-613.html",
+"verified": true
+}
+},
+"NH": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with wage threshold (over 200% of federal minimum wage)",
+"detail": "Non-competes are void for low-wage employees earning hourly 200% of the federal minimum wage or less.",
+"cite": "N.H. Rev. Stat. § 275:70-a",
+"source": "https://gc.nh.gov/rsa/html/XXIII/275/275-70-a.htm",
+"verified": true
+}
+},
+"NJ": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Courts enforce non-competes that protect legitimate interests, don't unduly burden the employee and don't harm the public.",
+"cite": "Solari Industries, Inc. v. Malady, 55 N.J. 571 (1970)",
+"source": "https://www.courtlistener.com/opinion/2105373/solari-industries-inc-v-malady/",
+"verified": true
+}
+},
+"NM": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"NY": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "A non-compete is enforced only if it is no greater than needed to protect the employer's legitimate interest, doesn't unduly burden the employee, and doesn't harm the public.",
+"cite": "BDO Seidman v. Hirshberg, 93 N.Y.2d 382 (1999)",
+"source": "https://www.law.cornell.edu/nyctap/I99_0082.htm",
+"verified": true
+}
+},
+"NC": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"ND": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no specified term may be ended at the will of either party on notice.",
+"cite": "N.D. Cent. Code § 34-03-01",
+"source": "https://ndlegis.gov/cencode/t34c03.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned (most employees)",
+"detail": "Contracts restraining anyone from a lawful profession or trade are void, except for sale of a business or dissolution of a partnership.",
+"cite": "N.D. Cent. Code § 9-08-06",
+"source": "https://ndlegis.gov/cencode/t09c08.pdf",
+"verified": true
+}
+},
+"OH": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "A non-compete is enforceable only if no greater than required to protect the employer, not unduly hard on the employee, and not injurious to the public.",
+"cite": "Raimonde v. Van Vlerah, 42 Ohio St.2d 21 (1975), as applied in Kross Acquisition Co. v. Groundworks Ohio, 2024-Ohio-592",
+"source": "https://www.supremecourt.ohio.gov/rod/docs/pdf/1/2024/2024-Ohio-592.pdf",
+"verified": true
+}
+},
+"OK": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned (most employees)",
+"detail": "Former employees may work in the same business; only agreements not to directly solicit established customers are enforceable.",
+"cite": "15 Okla. Stat. § 219A",
+"source": "https://www.oklegislature.gov/OK_Statutes/CompleteTitles/os15.pdf",
+"verified": true
+}
+},
+"OR": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold ($119,541)",
+"detail": "Non-competes are void unless the employee is salaried/exempt, has advance written notice, and earns more than the inflation-adjusted threshold ($119,541 for 2026).",
+"cite": "ORS 653.295; BOLI threshold table",
+"source": "https://www.oregon.gov/boli/employers/Pages/Noncompetition-Agreements.aspx",
+"verified": true
+}
+},
+"PA": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"RI": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (banned for nonexempt and low-wage workers)",
+"detail": "Non-competes can't be enforced against FLSA-nonexempt employees, student interns, workers 18 or younger, or low-wage employees.",
+"cite": "R.I. Gen. Laws § 28-59-3",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-59/28-59-3.htm",
+"verified": true
+}
+},
+"SC": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "A non-compete is enforceable if not against the public interest, reasonably limited in time and territory, and supported by valuable consideration.",
+"cite": "Poole v. Incentives Unlimited, Inc., 345 S.C. 378 (2001)",
+"source": "https://sccourts.org/opinions/htmlfiles/SC/25299.htm",
+"verified": true
+}
+},
+"SD": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no specified term may be ended at the will of either party on notice, unless a statute provides otherwise.",
+"cite": "S.D. Codified Laws § 60-4-4",
+"source": "https://sdlegislature.gov/Statutes/60-4-4",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable (up to 2 years)",
+"detail": "Employees may agree not to compete or solicit customers in a specified area for up to 2 years after termination.",
+"cite": "S.D. Codified Laws § 53-9-11",
+"source": "https://sdlegislature.gov/Statutes/53-9-11",
+"verified": true
+}
+},
+"TN": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold ($70,000)",
+"detail": "A 2026 law bars requiring or enforcing non-competes against employees with annualized pay under $70,000 and presumes post-employment restraints of 2 years or less reasonable.",
+"cite": "2026 Tenn. Pub. Acts ch. 934 (HB 1034)",
+"source": "https://wapp.capitol.tn.gov/apps/BillInfo/Default.aspx?BillNumber=HB1034&GA=114",
+"verified": true
+}
+},
+"TX": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed if reasonable",
+"detail": "Enforceable if ancillary to an otherwise enforceable agreement and reasonable in time, area and scope.",
+"cite": "Tex. Bus. & Com. Code § 15.50",
+"source": "https://texas.public.law/statutes/tex._bus._and_com._code_section_15.50",
+"verified": true
+}
+},
+"UT": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, limited to 1 year",
+"detail": "Post-employment non-competes may not exceed 1 year; healthcare-worker non-competes are banned from May 6, 2026.",
+"cite": "Utah Code § 34-51-201",
+"source": "https://le.utah.gov/xcode/Title34/Chapter51/C34-51-S201_2026050620260506.html",
+"verified": true
+}
+},
+"VT": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"VA": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned for low-wage employees",
+"detail": "Employers may not enter into or enforce non-competes with low-wage employees or health care professionals.",
+"cite": "Va. Code § 40.1-28.7:8",
+"source": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-28.7:8/",
+"verified": true
+}
+},
+"WA": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Allowed, with salary threshold ($126,858.83)",
+"detail": "Non-competes are void for employees earning $126,858.83 or less (2026); a 2026 law bans nearly all non-competes starting June 30, 2027.",
+"cite": "RCW 49.62.020; Laws of 2026, ch. 149 (ESHB 1155)",
+"source": "https://lni.wa.gov/workers-rights/workplace-policies/non-compete-agreements",
+"verified": true
+}
+},
+"WV": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"WI": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+}
+},
+"WY": {
+"atWill": {
+"value": "At-will",
+"detail": "Employment with no fixed term can generally be ended by either the employer or the employee at any time, for any lawful reason.",
+"cite": "Muhl, 'The employment-at-will doctrine: three major exceptions,' Monthly Labor Review (BLS, Jan. 2001), Exhibit 1",
+"source": "https://www.bls.gov/opub/mlr/2001/01/art1full.pdf",
+"verified": true
+},
+"nonCompete": {
+"value": "Banned (most employees)",
+"detail": "Non-competes restricting skilled or unskilled labor are void, except for sale of a business, trade secrets, training-cost recovery, and executive/management personnel.",
+"cite": "Wyo. Stat. § 1-23-108",
+"source": "https://wyoleg.gov/statutes/compress/title01.pdf",
+"verified": true
+}
+}
+}
+}

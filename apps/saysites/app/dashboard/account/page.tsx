@@ -59,10 +59,14 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
               <form action={startPlan} className="stack plan-form">
                 <fieldset className="plan-pick">
                   <legend className="small muted">Choose a plan</legend>
+                  <label>
+                    <input type="radio" name="plan" value="lawstarter" defaultChecked={wanted === 'lawstarter'} />
+                    <span><b>Law Firm Starter</b> ${PRICES.lawstarter.month}/month<small>A complete law firm website you build and change yourself: practice area pages, attorney profiles, consultation requests with intake questions, your leads pipeline, SEO audit and hosting.</small></span>
+                  </label>
                   {priceId('law', 'month') && (
                     <label>
                       <input type="radio" name="plan" value="law" defaultChecked={wanted === 'law'} />
-                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>A law firm website you build and change yourself, with practice area pages, attorney profiles, consultation requests, attorney advertising notices and a weekly Visibility Score.</small></span>
+                      <span><b>Law Firm</b> ${PRICES.law.month}/month<small>Everything in Starter, plus daily Google and AI answer tracking, Citation Gap scans and a much bigger allowance for Sofie.</small></span>
                     </label>
                   )}
                   {priceId('lawpro', 'month') && (
@@ -86,7 +90,7 @@ export default async function AccountPage({ searchParams }: { searchParams: Prom
                   <fieldset className="plan-pick plan-pick-row">
                     <legend className="small muted">Pay</legend>
                     <label><input type="radio" name="interval" value="month" defaultChecked /><span><b>Monthly</b></span></label>
-                    <label><input type="radio" name="interval" value="year" /><span><b>Yearly</b> two months free (${PRICES.site.year} or ${PRICES.store.year} a year)</span></label>
+                    <label><input type="radio" name="interval" value="year" /><span><b>Yearly</b> two months free</span></label>
                   </fieldset>
                 )}
                 <div className="row" style={{ alignItems: 'end' }}>

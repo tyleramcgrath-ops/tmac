@@ -8,7 +8,8 @@ import { currentUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
 import { creditsInUse } from '@/lib/sites'
 import { photoSetFor } from '@/lib/unsplash'
-import { BUSINESS_TYPES, PALETTES, buildStarterSite, type BusinessTypeKey, type Design } from '@/lib/starter'
+import { BUSINESS_TYPES, PALETTES, buildStarterSite, flairFor, subdomainFor, type BusinessTypeKey, type Design } from '@/lib/starter'
+import { LAW_STYLES, lawStyleFor, type LawStyle } from '@/lib/law-designs'
 
 type Ctx = { params: Promise<{ data: string; slug?: string[] }> }
 
@@ -31,9 +32,17 @@ export async function GET(_req: Request, ctx: Ctx) {
   const store = getStore()
   const taken = await store.photosTaken()
   const found = await photoSetFor(store, type, taken)
+  // Seeded exactly as the real build will be (app/actions.ts createSite), so
+  // what the owner sees here is the site they get.
+  const name = s('name', 120).trim() || 'Your business'
+  const seed = subdomainFor(name)
+  const picked = s('lawStyle', 12)
+  const lawStyle = (LAW_STYLES as readonly string[]).includes(picked) ? (picked as LawStyle) : lawStyleFor(seed)
   const { site, pages } = buildStarterSite(
     {
-      name: s('name', 120).trim() || 'Your business',
+      lawStyle,
+      ...(DESIGNS.includes(design) || ['lawyer', 'doctor', 'medspa'].includes(type) ? {} : { flair: flairFor(type as BusinessTypeKey, seed) }),
+      name,
       type: type as BusinessTypeKey,
       city: s('city', 60).trim() || 'Your town',
       region: s('region', 40),

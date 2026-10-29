@@ -1,0 +1,814 @@
+{
+"researchedOn": "2026-10-22",
+"states": {
+"AL": {
+"commonLaw": {
+"value": "Only if formed before Jan. 1, 2017",
+"detail": "No new common-law marriages may be formed on or after Jan. 1, 2017; valid ones formed earlier still count.",
+"cite": "Ala. Code § 30-1-20",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=30-1-20",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "People 16 or 17 need a notarized consent affidavit from a parent or guardian; anyone under 16 cannot marry.",
+"cite": "Ala. Code §§ 30-1-4, 30-1-5",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=30-1-5",
+"verified": true
+}
+},
+"AK": {
+"commonLaw": {
+"value": "Only if formed before Jan. 1, 1964",
+"detail": "Alaska stopped recognizing common-law marriages after Dec. 31, 1963; marriages now require a license and solemnization.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with court approval",
+"detail": "A superior court judge may allow a 16- or 17-year-old to marry after a hearing, finding it is in the minor's best interest, the other party is no more than 3 years older, and parents consent (or withhold consent arbitrarily).",
+"cite": "Alaska Stat. § 25.05.171",
+"source": "https://codes.findlaw.com/ak/title-25-marital-and-domestic-relations/ak-st-sect-25-05-171/",
+"verified": true
+}
+},
+"AZ": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "A marriage may not be contracted by agreement without a ceremony; Arizona requires a license and solemnization.",
+"cite": "Ariz. Rev. Stat. § 25-111",
+"source": "https://azleg.gov/ars/25/00111.htm",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds may marry only with custodial parent consent (or emancipation), and the other spouse can be no more than 3 years older; under 16 is barred.",
+"cite": "Ariz. Rev. Stat. § 25-102",
+"source": "https://azleg.gov/ars/25/00102.htm",
+"verified": true
+}
+},
+"AR": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Arkansas courts have long refused to recognize common-law marriages formed in the state, though valid out-of-state ones are honored.",
+"cite": "SSA POMS GN 00305.075 (state digest); Furth v. Furth, 97 Ark. 272 (1911)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent",
+"detail": "A 17-year-old may marry with a notarized affidavit of consent from parents or guardian and a 5-business-day wait; otherwise 18.",
+"cite": "Ark. Code § 9-11-102",
+"source": "https://codes.findlaw.com/ar/title-9-family-law/ar-code-sect-9-11-102/",
+"verified": true
+}
+},
+"CA": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Consent alone does not create a marriage in California; it must be followed by a license and solemnization.",
+"cite": "Cal. Fam. Code § 300",
+"source": "https://california.public.law/codes/ca_fam_code_section_300",
+"verified": true
+},
+"minAge": {
+"value": "No minimum age with court order",
+"detail": "Until Jan. 1, 2027 there is no fixed minimum; anyone under 18 needs a court order. AB 1267 (signed Sept. 30, 2026) sets 18 with no exceptions starting Jan. 1, 2027.",
+"cite": "Cal. Fam. Code §§ 302, 304; AB 1267 (2026)",
+"source": "https://california.public.law/codes/ca_fam_code_section_302",
+"verified": true
+}
+},
+"CO": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Colorado recognizes common-law marriages, but one formed on or after Sept. 1, 2006 is valid only if both partners were 18 or older.",
+"cite": "C.R.S. § 14-2-109.5",
+"source": "https://colorado.public.law/statutes/crs_14-2-109.5",
+"verified": true
+},
+"minAge": {
+"value": "16 with court approval",
+"detail": "16- and 17-year-olds need a juvenile court order (with a guardian ad litem best-interests review); under 16 cannot marry.",
+"cite": "C.R.S. §§ 14-2-106, 14-2-108",
+"source": "https://colorado.public.law/statutes/crs_14-2-108",
+"verified": true
+}
+},
+"CT": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Connecticut does not recognize common-law marriages formed in the state; a marriage requires a license and solemnization.",
+"cite": "Conn. Gen. Stat. § 46b-22 (annotation: 129 Conn. 432)",
+"source": "https://www.cga.ct.gov/current/pub/chap_815e.htm",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "Both parties must be at least 18; the former exception for 16- and 17-year-olds was repealed in 2023 (P.A. 23-44).",
+"cite": "Conn. Gen. Stat. § 46b-30",
+"source": "https://www.cga.ct.gov/current/pub/chap_815e.htm",
+"verified": true
+}
+},
+"DE": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Delaware does not allow common-law marriages to be formed in the state, though it honors valid out-of-state ones.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No one under 18 may be granted a marriage license in Delaware.",
+"cite": "13 Del. C. § 123",
+"source": "https://delcode.delaware.gov/title13/c001/sc01/index.html",
+"verified": true
+}
+},
+"DC": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "D.C. recognizes common-law marriage based on an express, mutual present-tense agreement to be married followed by cohabitation.",
+"cite": "SSA POMS GN 00305.075 (state digest); East v. East, 536 A.2d 1103 (D.C. 1988)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "The age of consent to marry is 18, and the Clerk may not issue a license to anyone under 18.",
+"cite": "D.C. Code §§ 46-403, 46-411",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/46-411",
+"verified": true
+}
+},
+"FL": {
+"commonLaw": {
+"value": "Only if formed before Jan. 2, 1968",
+"detail": "Common-law marriages entered into after Jan. 1, 1968 are void in Florida; earlier ones remain valid.",
+"cite": "Fla. Stat. § 741.211",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0741/Sections/0741.211.html",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent",
+"detail": "A 17-year-old may marry with written parental consent if the other party is no more than 2 years older; otherwise 18.",
+"cite": "Fla. Stat. § 741.04",
+"source": "http://www.leg.state.fl.us/statutes/index.cfm?App_mode=Display_Statute&URL=0700-0799/0741/Sections/0741.04.html",
+"verified": true
+}
+},
+"GA": {
+"commonLaw": {
+"value": "Only if formed before Jan. 1, 1997",
+"detail": "No common-law marriage may be entered into in Georgia on or after Jan. 1, 1997; earlier ones remain valid.",
+"cite": "O.C.G.A. § 19-3-1.1",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-3-1-1/",
+"verified": true
+},
+"minAge": {
+"value": "17 if emancipated",
+"detail": "A 17-year-old may marry only if legally emancipated (at least 15 days earlier), the other party is no more than 4 years older, and premarital education is completed; under 17 cannot marry.",
+"cite": "O.C.G.A. § 19-3-2",
+"source": "https://codes.findlaw.com/ga/title-19-domestic-relations/ga-code-sect-19-3-2/",
+"verified": true
+}
+},
+"HI": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "A valid Hawaii marriage requires a license and a ceremony performed by an authorized person, so common-law marriages cannot be formed in the state.",
+"cite": "Haw. Rev. Stat. § 572-1(6)-(7)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0572/HRS_0572-0001.htm",
+"verified": true
+},
+"minAge": {
+"value": "15 with family court approval",
+"detail": "The general minimum is 16 with parental consent; a 15-year-old may marry with written family court approval plus parental consent.",
+"cite": "Haw. Rev. Stat. §§ 572-1(2), 572-2",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol12_Ch0501-0588/HRS0572/HRS_0572-0001.htm",
+"verified": true
+}
+},
+"ID": {
+"commonLaw": {
+"value": "Only if formed before Jan. 1, 1996",
+"detail": "Idaho requires a license and solemnization; common-law marriages formed before Jan. 1, 1996 remain valid.",
+"cite": "Idaho Code § 32-201",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH2/SECT32-201/",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds need written parental consent and cannot marry an adult 3 or more years older; under 16 cannot marry.",
+"cite": "Idaho Code § 32-202",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title32/T32CH2/SECT32-202/",
+"verified": true
+}
+},
+"IL": {
+"commonLaw": {
+"value": "Only if formed before July 1, 1905",
+"detail": "Common-law marriages contracted in Illinois after June 30, 1905 are invalid.",
+"cite": "750 ILCS 5/214",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K214.htm",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds may marry with the consent of both parents or a guardian, or with judicial approval.",
+"cite": "750 ILCS 5/203",
+"source": "https://www.ilga.gov/Documents/legislation/ilcs/documents/075000050K203.htm",
+"verified": true
+}
+},
+"IN": {
+"commonLaw": {
+"value": "Only if formed before Jan. 2, 1958",
+"detail": "A common-law marriage entered into in Indiana after Jan. 1, 1958 is void.",
+"cite": "Ind. Code § 31-11-8-5",
+"source": "https://codes.findlaw.com/in/title-31-family-law-and-juvenile-law/in-code-sect-31-11-8-5/",
+"verified": true
+},
+"minAge": {
+"value": "16 with court approval",
+"detail": "A 16- or 17-year-old needs a juvenile court order approving the marriage and emancipating them, and the age gap can't exceed 4 years.",
+"cite": "Ind. Code §§ 31-11-1-4, 31-11-1-5",
+"source": "https://codes.findlaw.com/in/title-31-family-law-and-juvenile-law/in-code-sect-31-11-1-5/",
+"verified": true
+}
+},
+"IA": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Iowa recognizes common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent and court approval",
+"detail": "16- and 17-year-olds need written parental consent plus approval from a district court judge.",
+"cite": "Iowa Code § 595.2",
+"source": "https://www.legis.iowa.gov/docs/code/595.2.pdf",
+"verified": true
+}
+},
+"KS": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Kansas recognizes common-law marriage, but not if either party is under 18.",
+"cite": "K.S.A. § 23-2502",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_025_0002.html",
+"verified": true
+},
+"minAge": {
+"value": "15 with court approval",
+"detail": "A judge may authorize marriage at 15 if in the minor's best interest; 16- and 17-year-olds need parental consent (or a judge's consent).",
+"cite": "K.S.A. § 23-2505(c)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch23/023_025_0005.html",
+"verified": true
+}
+},
+"KY": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Kentucky voids any marriage not solemnized or contracted in the presence of an authorized person or society.",
+"cite": "Ky. Rev. Stat. § 402.020(1)(c)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=47591",
+"verified": true
+},
+"minAge": {
+"value": "17 with court approval",
+"detail": "Marriage under 18 is void except that a 17-year-old with parental consent may petition family or district court for permission to marry.",
+"cite": "Ky. Rev. Stat. §§ 402.020(1)(f), 402.205",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=47597",
+"verified": true
+}
+},
+"LA": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Louisiana requires a marriage ceremony; common-law marriages cannot be formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent and court approval",
+"detail": "A 16- or 17-year-old needs judicial authorization plus written consent of both parents (or tutor/custodian); no marriage under 16.",
+"cite": "La. Children's Code art. 1545",
+"source": "https://www.legis.la.gov/legis/Law.aspx?d=73003",
+"verified": true
+}
+},
+"ME": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Maine does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "A marriage license may not be issued to anyone under 18; the exception for 17-year-olds was repealed in 2025.",
+"cite": "Me. Rev. Stat. tit. 19-A, § 652(8)",
+"source": "https://legislature.maine.gov/statutes/19-A/title19-Asec652.html",
+"verified": true
+}
+},
+"MD": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Maryland does not recognize common-law marriages formed in the state, though it honors valid out-of-state ones.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent",
+"detail": "A 17-year-old may marry with consent of each living parent or guardian (or certain medical/court documentation); under 17 cannot marry.",
+"cite": "Md. Code, Fam. Law § 2-301",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gfl&section=2-301&enactments=false",
+"verified": true
+}
+},
+"MA": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Massachusetts does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No magistrate or minister may solemnize a marriage if either party is under 18.",
+"cite": "Mass. Gen. Laws ch. 207, § 7",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartII/TitleIII/Chapter207/Section7",
+"verified": true
+}
+},
+"MI": {
+"commonLaw": {
+"value": "Only if formed before Jan. 1, 1957",
+"detail": "Consent alone is not enough to create a marriage on and after Jan. 1, 1957; a license and solemnization are required.",
+"cite": "Mich. Comp. Laws § 551.2",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-551-2",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "A marriage may not be contracted by anyone under 18, and such a marriage is void.",
+"cite": "Mich. Comp. Laws § 551.51",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-551-51",
+"verified": true
+}
+},
+"MN": {
+"commonLaw": {
+"value": "Only if formed before Apr. 27, 1941",
+"detail": "Marriages after April 26, 1941 without a license and solemnization are void.",
+"cite": "Minn. Stat. § 517.01",
+"source": "https://www.revisor.mn.gov/statutes/cite/517.01",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "Only a person who has reached 18 can marry; Minnesota ended underage exceptions in 2020.",
+"cite": "Minn. Stat. § 517.02",
+"source": "https://www.revisor.mn.gov/statutes/cite/517.02",
+"verified": true
+}
+},
+"MS": {
+"commonLaw": {
+"value": "Only if formed before Apr. 5, 1956",
+"detail": "Marriages after April 5, 1956 require a license and ceremony or are void; earlier common-law marriages remain valid.",
+"cite": "Miss. Code § 93-1-15",
+"source": "https://codes.findlaw.com/ms/title-93-domestic-relations/ms-code-sect-93-1-15.html",
+"verified": true
+},
+"minAge": {
+"value": "No minimum with court waiver",
+"detail": "Statutory minimums are 17 for males and 15 for females (with parental consent under 21), but a judge may waive the age minimum with parental consent.",
+"cite": "Miss. Code § 93-1-5",
+"source": "https://codes.findlaw.com/ms/title-93-domestic-relations/ms-code-sect-93-1-5.html",
+"verified": true
+}
+},
+"MO": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Missouri law declares common-law marriages null and void.",
+"cite": "Mo. Rev. Stat. § 451.040.5",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=451.040",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No recorder may issue a marriage license to anyone under 18.",
+"cite": "Mo. Rev. Stat. § 451.090",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=451.090",
+"verified": true
+}
+},
+"MT": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Montana's marriage statutes expressly do not invalidate common-law marriages.",
+"cite": "Mont. Code Ann. § 40-1-403",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0010/part_0040/section_0030/0400-0010-0040-0030.html",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent and court approval",
+"detail": "A district court may approve marriage for a 16- or 17-year-old who has parental consent, after required marriage counseling.",
+"cite": "Mont. Code Ann. § 40-1-213",
+"source": "https://archive.legmt.gov/bills/mca/title_0400/chapter_0010/part_0020/section_0130/0400-0010-0020-0130.html",
+"verified": true
+}
+},
+"NE": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Nebraska requires a license and solemnization; common-law marriages formed in the state after 1923 are invalid.",
+"cite": "Neb. Rev. Stat. § 42-104; Ropken v. Ropken, 169 Neb. 352 (1959)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-104",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent",
+"detail": "Both parties must be at least 17; because the age of majority is 19, minors need written parental consent.",
+"cite": "Neb. Rev. Stat. §§ 42-102, 42-105",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=42-102",
+"verified": true
+}
+},
+"NV": {
+"commonLaw": {
+"value": "Only if formed before Mar. 29, 1943",
+"detail": "Nevada requires solemnization; only consent-based marriages in effect before March 29, 1943 remain valid.",
+"cite": "Nev. Rev. Stat. § 122.010",
+"source": "https://www.leg.state.nv.us/NRS/NRS-122.html",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent and court approval",
+"detail": "A 17-year-old needs a parent's or guardian's consent plus district court authorization; under 17 cannot marry.",
+"cite": "Nev. Rev. Stat. § 122.025",
+"source": "https://www.leg.state.nv.us/NRS/NRS-122.html",
+"verified": true
+}
+},
+"NH": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "New Hampshire recognizes a common-law marriage only after one partner dies, if the couple lived together and held themselves out as married for at least 3 years.",
+"cite": "N.H. Rev. Stat. § 457:39",
+"source": "https://gc.nh.gov/rsa/html/XLIII/457/457-39.htm",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No one under 18 can contract a valid marriage (effective Jan. 1, 2025).",
+"cite": "N.H. Rev. Stat. § 457:4",
+"source": "https://gc.nh.gov/rsa/html/XLIII/457/457-4.htm",
+"verified": true
+}
+},
+"NJ": {
+"commonLaw": {
+"value": "Only if formed before Dec. 1, 1939",
+"detail": "Since Dec. 1, 1939 a marriage without a license and authorized ceremony is void.",
+"cite": "N.J. Stat. § 37:1-10",
+"source": "https://codes.findlaw.com/nj/title-37-marriages-and-married-persons/nj-st-sect-37-1-10/",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No marriage or civil union license may be issued to anyone under 18.",
+"cite": "N.J. Stat. § 37:1-6",
+"source": "https://codes.findlaw.com/nj/title-37-marriages-and-married-persons/nj-st-sect-37-1-6/",
+"verified": true
+}
+},
+"NM": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "New Mexico does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "No minimum with court approval",
+"detail": "16- and 17-year-olds need consent of each living parent or a district court order; under 16 requires children's court authorization (only in pregnancy or paternity-support cases).",
+"cite": "N.M. Stat. § 40-1-6",
+"source": "https://codes.findlaw.com/nm/chapter-40-domestic-affairs/nm-st-sect-40-1-6/",
+"verified": true
+}
+},
+"NY": {
+"commonLaw": {
+"value": "Only if formed before Apr. 29, 1933",
+"detail": "New York has not recognized new common-law marriages since Apr. 29, 1933, but honors ones validly formed in other states.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "Any marriage in which either party is under 18 is prohibited.",
+"cite": "N.Y. Dom. Rel. Law § 15-a",
+"source": "https://www.nysenate.gov/legislation/laws/DOM/15-A",
+"verified": true
+}
+},
+"NC": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "A valid North Carolina marriage requires consent expressed before an authorized officiant (or approved religious ceremony), so common-law marriages can't be formed in-state.",
+"cite": "N.C. Gen. Stat. § 51-1",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_51/GS_51-1.html",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds need parental consent or a court order and can marry someone no more than 4 years older; under 16 is unlawful.",
+"cite": "N.C. Gen. Stat. § 51-2",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_51/GS_51-2.html",
+"verified": true
+}
+},
+"ND": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "North Dakota does not recognize common-law marriages formed in the state, but recognizes valid out-of-state ones.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds need the consent of their parents or guardian; no license may issue to anyone under 16.",
+"cite": "N.D. Cent. Code § 14-03-02",
+"source": "https://ndlegis.gov/cencode/t14c03.pdf",
+"verified": true
+}
+},
+"OH": {
+"commonLaw": {
+"value": "Only if formed before Oct. 10, 1991",
+"detail": "Common-law marriages are prohibited on and after Oct. 10, 1991; earlier ones (and valid out-of-state ones) remain valid.",
+"cite": "Ohio Rev. Code § 3105.12",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3105.12",
+"verified": true
+},
+"minAge": {
+"value": "17 with juvenile court approval",
+"detail": "The general age is 18; a 17-year-old may marry only after a juvenile court consents.",
+"cite": "Ohio Rev. Code §§ 3101.01, 3101.04",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-3101.04",
+"verified": true
+}
+},
+"OK": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Oklahoma recognizes common-law marriage where the couple mutually agree to be married, have a permanent, exclusive relationship with cohabitation, and hold themselves out as married.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent (18 starting Nov. 1, 2026)",
+"detail": "Until Nov. 1, 2026, 16- and 17-year-olds may marry with parental consent (under 16 only by court order in limited cases). SB 504 (2026) sets 18 with no exceptions from Nov. 1, 2026.",
+"cite": "43 Okla. Stat. § 3; SB 504 (2026)",
+"source": "https://www.oklegislature.gov/cf_pdf/2025-26%20ENR/SB/SB504%20ENR.PDF",
+"verified": true
+}
+},
+"OR": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Oregon does not allow common-law marriages to be formed in the state, but recognizes ones valid where formed.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "Marriage requires both parties to be at least 18; the parental-consent exception for 17-year-olds was repealed in 2025.",
+"cite": "ORS 106.010 (2025 ed.)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors106.html",
+"verified": true
+}
+},
+"PA": {
+"commonLaw": {
+"value": "Only if formed before Jan. 2, 2005",
+"detail": "No common-law marriage contracted after Jan. 1, 2005 is valid; earlier ones remain valid.",
+"cite": "23 Pa.C.S. § 1103",
+"source": "https://codes.findlaw.com/pa/title-23-pacsa-domestic-relations/pa-csa-sect-23-1103/",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "No marriage license may issue if either applicant is under 18 (since 2020).",
+"cite": "23 Pa.C.S. § 1304(b)",
+"source": "https://codes.findlaw.com/pa/title-23-pacsa-domestic-relations/pa-csa-sect-23-1304/",
+"verified": true
+}
+},
+"RI": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Rhode Island recognizes common-law marriage, which must be proven by clear and convincing evidence.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "A marriage license may be granted only to a person who is at least 18 (since June 7, 2021).",
+"cite": "R.I. Gen. Laws § 15-2-14",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE15/15-2/15-2-14.htm",
+"verified": true
+}
+},
+"SC": {
+"commonLaw": {
+"value": "Only if formed before July 24, 2019",
+"detail": "The S.C. Supreme Court abolished new common-law marriages as of July 24, 2019; ones formed earlier remain valid.",
+"cite": "SSA POMS GN 00305.075 (state digest); Stone v. Thompson, 428 S.C. 79 (2019)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds need a sworn consent affidavit from a parent, relative, or guardian; under 16 cannot get a license.",
+"cite": "S.C. Code § 20-1-250",
+"source": "https://www.scstatehouse.gov/code/t20c001.php",
+"verified": true
+}
+},
+"SD": {
+"commonLaw": {
+"value": "Only if formed before July 1, 1959",
+"detail": "Marriages must be solemnized and recorded; common-law marriages consummated before July 1, 1959 remain valid.",
+"cite": "S.D. Codified Laws § 25-1-29",
+"source": "https://sdlegislature.gov/Statutes/25-1-29",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent or court approval",
+"detail": "The general age is 18 (2026 law); 16- and 17-year-olds may marry with a circuit court order or notarized parental consent, and the age gap can't exceed 4 years.",
+"cite": "S.D. Codified Laws §§ 25-1-9, 25-1-13",
+"source": "https://sdlegislature.gov/Statutes/25-1-13",
+"verified": true
+}
+},
+"TN": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Tennessee does not recognize common-law marriages formed in the state (though a long-cohabiting couple may be estopped from denying a marriage in limited cases).",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "17 with parental consent",
+"detail": "A 17-year-old may marry with sworn parental or guardian consent if the other party is less than 4 years older; no license for anyone under 17.",
+"cite": "Tenn. Code §§ 36-3-105, 36-3-106",
+"source": "https://codes.findlaw.com/tn/title-36-domestic-relations/tn-code-sect-36-3-105/",
+"verified": true
+}
+},
+"TX": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "Texas recognizes informal (common-law) marriage when a couple agrees to be married, lives together in Texas, and represents themselves as married, or signs a declaration.",
+"cite": "Tex. Fam. Code § 2.401",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_2.401",
+"verified": true
+},
+"minAge": {
+"value": "18 (emancipated minors excepted)",
+"detail": "No license may issue to anyone under 18 unless a court has removed the disabilities of minority (emancipation).",
+"cite": "Tex. Fam. Code § 2.101",
+"source": "https://texas.public.law/statutes/tex._fam._code_section_2.101",
+"verified": true
+}
+},
+"UT": {
+"commonLaw": {
+"value": "Recognized",
+"detail": "A court can validate an unsolemnized marriage if the couple cohabited and held themselves out as married, but a 2026 law bars new petitions on or after May 5, 2027.",
+"cite": "Utah Code § 81-2-408",
+"source": "https://le.utah.gov/xcode/Title81/Chapter2/C81-2-S408_2026050620260506.html",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent and court approval",
+"detail": "16- and 17-year-olds need parental or guardian consent plus juvenile court authorization; otherwise marriage under 18 is void.",
+"cite": "Utah Code §§ 81-2-403, 81-2-304",
+"source": "https://le.utah.gov/xcode/Title81/Chapter2/C81-2-S403_2026050620260506.html",
+"verified": true
+}
+},
+"VT": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Vermont does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "A town clerk may not issue a marriage license if either party is under 18.",
+"cite": "18 V.S.A. § 5142",
+"source": "https://legislature.vermont.gov/statutes/section/18/105/05142",
+"verified": true
+}
+},
+"VA": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Virginia does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "The minimum age at which persons may marry is 18.",
+"cite": "Va. Code § 20-48",
+"source": "https://law.lis.virginia.gov/vacode/title20/chapter3/section20-48/",
+"verified": true
+}
+},
+"WA": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Washington does not recognize common-law marriages formed in the state, but recognizes valid out-of-state ones.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "18 (no exceptions)",
+"detail": "Both parties must be 18; any marriage in which a party is under 18 is void.",
+"cite": "RCW 26.04.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=26.04.010",
+"verified": true
+}
+},
+"WV": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "West Virginia does not recognize common-law marriages formed in the state.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent",
+"detail": "16- and 17-year-olds may marry with written parental or guardian consent if the other party is no more than 4 years older.",
+"cite": "W. Va. Code § 48-2-301",
+"source": "https://code.wvlegislature.gov/48-2-301/",
+"verified": true
+}
+},
+"WI": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Wisconsin has not recognized common-law marriages formed in the state since 1917, but honors valid out-of-state ones.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+}
+},
+"WY": {
+"commonLaw": {
+"value": "Not recognized",
+"detail": "Wyoming does not recognize common-law marriages formed in the state, but recognizes ones valid where formed.",
+"cite": "SSA POMS GN 00305.075 (state digest)",
+"source": "https://secure.ssa.gov/poms.nsf/lnx/0200305075",
+"verified": true
+},
+"minAge": {
+"value": "16 with parental consent and court approval",
+"detail": "16- and 17-year-olds need parental consent and approval from a Wyoming judge (unless emancipated); under 16 marriages are void.",
+"cite": "Wyo. Stat. § 20-1-102",
+"source": "https://wyoleg.gov/statutes/compress/title20.pdf",
+"verified": true
+}
+}
+}
+}

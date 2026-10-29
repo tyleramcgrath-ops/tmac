@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import '../home.css'
 
-export const metadata: Metadata = { title: 'Privacy', description: 'What SaySites collects, why, and what we never do with it.', alternates: { canonical: '/privacy' } }
+export const metadata: Metadata = { title: 'Privacy Policy: What SaySites Collects and Why', description: 'What SaySites collects when you and your customers use it, why we collect it, and the things we never do with it, in plain English.', alternates: { canonical: '/privacy' } }
 
 export default function Privacy() {
   return (
-    <MarketingShell>
+    <MarketingShell closing={false}>
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Privacy</p>

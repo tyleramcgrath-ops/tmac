@@ -6,7 +6,7 @@ import '../home.css'
 import './connect.css'
 
 const TITLE = 'Connect your business to your website'
-const DESCRIPTION = 'Start your website from your Google Business Profile, add a Book online button from Square, Calendly or Vagaro, and soon bring in your Google reviews and Instagram and Facebook photos.'
+const DESCRIPTION = 'Start your website from your Google Business Profile, add a Book online button from Square, Calendly or Vagaro, and connect the tools you already use.'
 
 export const metadata: Metadata = {
   title: { absolute: `${TITLE} | SaySites` },

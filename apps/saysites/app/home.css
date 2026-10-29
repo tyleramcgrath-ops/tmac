@@ -491,7 +491,8 @@
 .redesign-frame { border-radius: 14px; overflow: hidden; box-shadow: 0 30px 70px -40px rgba(18, 19, 22, .45); border: 1px solid var(--line); background: #fff; }
 .redesign-frame iframe { display: block; width: 100%; height: min(78vh, 760px); border: 0; background: #fff; }
 .cmp td.cmp-win { color: #2f6b4f; font-weight: 600; }
-.rd-switch { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0 0 18px; max-width: 640px; }
+.page-hero .rd-note { margin: 14px 0 0; font-size: 15px; }
+.rd-switch { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin: 0 0 18px; max-width: 900px; }
 .rd-switch a { display: grid; gap: 2px; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--line); background: #fff; color: var(--ink); text-decoration: none; }
 .rd-switch a span { font-size: 14px; color: var(--ink-mu); }
 .rd-switch a[aria-current] { border-color: var(--ink); box-shadow: inset 0 0 0 1px var(--ink); }
@@ -953,3 +954,120 @@
 .home .gap-ex li { grid-template-columns: minmax(0, 1fr) auto; }
 .home .gap-ex li i { color: var(--ink-mu); }
 @media (max-width: 900px) { .home .gap .standing-in { grid-template-columns: 1fr; } .home .gap .standing-copy { order: -1; } }
+
+/* Plans (components/PricingPlans): homepage #pricing, /pricing, law firms page. */
+.home .pp { display: grid; gap: 48px; }
+.home .pp-label { font-size: 14px; font-weight: 500; color: var(--ink-mu); margin: 0 0 14px; letter-spacing: .01em; }
+.home .pp-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
+.home .pp-plan { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+.home .pp-featured { border-color: var(--ink); box-shadow: 0 24px 60px -36px rgba(18, 19, 22, .45); }
+.home .pp-plan h4 { font-size: 20px; letter-spacing: -0.02em; margin: 0 0 14px; }
+.home .pp-price { display: flex; align-items: baseline; gap: 8px; margin: 0; }
+.home .pp-price b { font-size: 52px; font-weight: 500; letter-spacing: -0.05em; line-height: 1; font-variant-numeric: tabular-nums; }
+.home .pp-price span { color: var(--ink-mu); font-size: 15px; }
+.home .pp-year { margin: 6px 0 16px; color: var(--ink-mu); font-size: 14px; font-variant-numeric: tabular-nums; }
+.home .pp-lede { margin: 0 0 18px; font-size: 16px; }
+.home .pp-plan ul { list-style: none; margin: 0 0 24px; padding: 18px 0 0; border-top: 1px solid var(--line); display: grid; gap: 10px; font-size: 15px; flex: 1; align-content: start; }
+.home .pp-plan li { padding-left: 22px; position: relative; }
+.home .pp-plan li::before { content: ''; position: absolute; left: 2px; top: .62em; width: 10px; height: 1px; background: var(--ink); }
+.home .pp-plan .b { align-self: flex-start; }
+.home .pp-fine { margin: 0; color: var(--ink-mu); font-size: 14px; max-width: 720px; }
+@media (max-width: 760px) { .home .pp-row { grid-template-columns: 1fr; } .home .pp-plan { padding: 22px; } }
+
+/* Law firms page: measured comparison (lib/law-research.ts). */
+.lr-wrap { overflow-x: auto; }
+.lr-cmp { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; border-top: 1px solid var(--ink); }
+.lr-cmp th, .lr-cmp td { text-align: left; padding: 16px 16px 16px 0; border-bottom: 1px solid var(--line); vertical-align: top; font-size: 16px; }
+.lr-cmp thead th { font-size: 13px; font-weight: 500; color: var(--ink-mu); }
+.lr-cmp tbody th { font-weight: 500; }
+.lr-cmp td { color: var(--ink-mu); }
+.lr-cmp td strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 640px) {
+  .lr-cmp, .lr-cmp tbody { display: block; }
+  .lr-cmp thead { display: none; }
+  .lr-cmp tr { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; border-bottom: 1px solid var(--line); padding: 14px 0; }
+  .lr-cmp th, .lr-cmp td { border: 0; padding: 0; font-size: 15px; }
+  .lr-cmp tbody th { grid-column: 1 / -1; margin-bottom: 6px; }
+  .lr-cmp td::before { content: attr(data-l); display: block; font-size: 12px; color: var(--ink-mu); margin-bottom: 2px; }
+}
+.lr-note { margin: 18px 0 0; font-size: 14px; color: var(--ink-mu); max-width: 760px; }
+.home .ag-proof-note { margin: 40px 0 0; padding-top: 20px; border-top: 1px solid var(--line); font-size: 16px; color: var(--ink-mu); max-width: 820px; }
+.home .ag-proof-note a { color: var(--ink); }
+.home .pp-row.pp-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1000px) { .home .pp-row.pp-three { grid-template-columns: 1fr; } }
+
+/* Homepage, Sofie first (October 2026): things owners say and what happens. */
+.home section.sofie { padding: 128px 0; background: var(--paper); }
+.home .says { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.home .says li { padding: 28px 24px 32px 0; border-bottom: 1px solid var(--line); display: grid; align-content: start; gap: 14px; }
+.home .says li:not(:nth-child(4n + 1)) { padding-left: 24px; border-left: 1px solid var(--line); }
+.home .says q { display: block; font-size: 21px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 500; quotes: '“' '”'; text-wrap: balance; }
+.home .says p { margin: 0; color: var(--ink-mu); font-size: 15px; }
+.home .says li { animation: say-in 0.6s ease both; }
+.home .says li:nth-child(2) { animation-delay: 0.06s; }
+.home .says li:nth-child(3) { animation-delay: 0.12s; }
+.home .says li:nth-child(4) { animation-delay: 0.18s; }
+@keyframes say-in { from { transform: translateY(8px); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .home .says li { animation: none; } }
+.home .sofie-rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; margin-top: 56px; }
+.home .sofie-rules h3 { font-size: 18px; margin: 0 0 8px; }
+.home .sofie-rules p { margin: 0; color: var(--ink-mu); }
+.home .price-note { color: var(--ink-mu); font-size: 14px; max-width: 760px; margin: 24px 0 0; }
+@media (max-width: 1000px) {
+  .home .says { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home .says li:not(:nth-child(4n + 1)) { padding-left: 0; border-left: 0; }
+  .home .says li:nth-child(2n) { padding-left: 24px; border-left: 1px solid var(--line); }
+}
+@media (max-width: 600px) {
+  .home section.sofie { padding: 88px 0; }
+  .home .says { grid-template-columns: 1fr; }
+  .home .says li:nth-child(2n) { padding-left: 0; border-left: 0; }
+  .home .sofie-rules { grid-template-columns: 1fr; gap: 22px; margin-top: 40px; }
+}
+
+/* Inner pages in the homepage's look (October 2026): dark nav, dark page
+   hero, then paper sections and the closing say box. */
+.home.inner .nav.solid { background: var(--g0); color: var(--tx); backdrop-filter: none; border-bottom: 1px solid var(--gl); }
+.home.inner .nav.solid .logo { color: var(--tx); }
+.home.inner .nav.solid nav a:not(.b), .home.inner .nav.solid .ag-menu summary { color: var(--mu); }
+.home.inner .nav.solid nav a:not(.b):hover, .home.inner .nav.solid .ag-menu summary:hover, .home.inner .nav.solid .ag-menu[open] summary { color: var(--tx); }
+.home.inner .nav.solid .ag-menu > div { background: var(--g1); box-shadow: inset 0 0 0 1px var(--gl), 0 24px 50px -24px rgba(0, 0, 0, 0.6); }
+.home.inner .nav.solid .ag-menu > div a { color: var(--tx) !important; }
+.home.inner .nav.solid .ag-menu > div a:hover { background: var(--g0); color: var(--tx) !important; }
+.home.inner .page-hero { background: var(--g0); color: var(--tx); padding-bottom: 96px; }
+.home.inner .page-hero + section { padding-top: 96px !important; }
+.home.inner .page-hero .kd-soon { color: var(--tx) !important; }
+.home.inner .page-hero p, .home.inner .page-hero .kicker, .home.inner .page-hero .muted { color: var(--mu); }
+.home.inner .page-hero p strong, .home.inner .page-hero a:not(.b) { color: var(--tx); }
+.home.inner .page-hero .b-dark { background: var(--tx); color: var(--g0); }
+.home.inner .page-hero .b-line { color: var(--tx); box-shadow: inset 0 0 0 1px var(--tx); }
+.home.inner .page-hero .b-line:hover { background: var(--tx); color: var(--g0); }
+@media (max-width: 760px) { .home.inner .page-hero { padding-bottom: 64px; } .home.inner .page-hero + section { padding-top: 64px !important; } }
+
+/* City reports (/reports) */
+.home .rp-table { width: 100%; border-collapse: collapse; font-size: 17px; font-variant-numeric: tabular-nums; }
+.home .rp-table th, .home .rp-table td { text-align: left; padding: 16px 20px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.home .rp-table th { font-weight: 500; }
+.home .rp-table td { font-weight: 600; white-space: nowrap; }
+.home .rp-table tr:last-child th, .home .rp-table tr:last-child td { border-bottom: 0; }
+.home .rp-list { margin: 0; padding: 0 0 0 22px; display: grid; gap: 12px; font-size: 17px; }
+.home .rp-list span { color: var(--ink-mu); margin-left: 6px; }
+.home .rp-list em { font-style: normal; color: var(--ink-mu); margin-left: 6px; font-variant-numeric: tabular-nums; }
+.home .rp-note { color: var(--ink-mu); font-size: 15px; margin-top: 18px; }
+.home .rp-index { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+.home .rp-index a { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; padding: 22px 0; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; font-size: 20px; }
+.home .rp-index a span { color: var(--ink-mu); font-size: 15px; }
+@media (max-width: 600px) { .home .rp-table td { white-space: normal; } }
+
+/* Free homepage mockup request (/mockup), on the dark page hero */
+.home .mockup-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; max-width: 680px; margin: 28px 0 14px; }
+.home .mockup-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: rgba(238, 239, 239, 0.86); }
+.home .mockup-form label em { font-weight: 400; font-style: normal; opacity: .7; }
+.home .mockup-form .wide { grid-column: 1 / -1; }
+.home .mockup-form input, .home .mockup-form textarea { font: 400 16px/1.4 var(--font); color: #fff; background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; padding: 12px 14px; outline: none; }
+.home .mockup-form input:focus, .home .mockup-form textarea:focus { border-color: rgba(255, 255, 255, 0.6); }
+.home .mockup-form button { grid-column: 1 / -1; justify-self: start; }
+.home .mockup-form .redesign-err { grid-column: 1 / -1; margin: 0; color: #ffb4a8; }
+.home .mockup-done { max-width: 640px; margin: 28px 0 14px; padding: 16px 18px; border-radius: 12px; background: rgba(255, 255, 255, 0.1); color: #fff; font-size: 17px; }
+@media (max-width: 560px) { .home .mockup-form { grid-template-columns: 1fr; } }
+.ind-guide-more { margin: 40px 0 0; font-size: 18px; font-weight: 600; }

@@ -17,4 +17,8 @@ export async function register() {
         .catch((e) => recordSchedulerRun(0, e instanceof Error ? e.message : 'failed')),
     10 * 60_000
   ).unref()
+  // Amazon picks: refresh prices and photos (Amazon allows showing a price
+  // for 24 hours). Checks every 6 hours; each item refreshes about daily.
+  const { refreshAllAmazon } = await import('./lib/amazon-sync')
+  setInterval(() => void refreshAllAmazon(getStore()).catch(() => {}), 6 * 3600_000).unref()
 }

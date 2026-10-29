@@ -1,0 +1,10 @@
+[
+ {"vendor":"The Modern Firm","url":"https://www.themodernfirm.com/law-firm-website-design-pricing-guide/","fetched":"2026-10-04","method":"curl","published":true,"quotes":["Simple Websites start at $2,950","Guided Websites start at $7,500","Custom Websites start at $17,500"],"note":"Search-engine snippet showed older figures ($5,950/$9,950); the live page fetched shows the quotes above."},
+ {"vendor":"Justia (Elevate websites)","url":"https://www.justia.com/marketing/elevate/price-calculator/","fetched":"2026-10-04","method":"Firecrawl scrape (curl got HTTP 403)","published":"starting price only","quotes":["Justia Elevate. Law Firm Websites Starting at Only* $82.50/month*. ... *Starting Price When Paid Annually."],"note":"Exact price requires a 7-step calculator plus contact details."},
+ {"vendor":"LawLytics","url":"https://www.lawlytics.com/pricing/ (redirects to /demo/)","fetched":"2026-10-04","method":"Firecrawl scrape","published":false,"quotes":[],"note":"Page is 'Demo & Pricing' - pricing gated behind demo; not published."},
+ {"vendor":"Scorpion","url":"https://www.scorpion.co/legal/ (-> /law-firms/)","fetched":"2026-10-04","method":"Firecrawl scrape","published":false,"quotes":[]},
+ {"vendor":"FindLaw Lawyer Marketing","url":"https://www.lawyermarketing.com/ (-> findlaw.com/lawyer-marketing/)","fetched":"2026-10-04","method":"Firecrawl scrape","published":false,"quotes":[]},
+ {"vendor":"iLawyerMarketing","url":"https://www.ilawyermarketing.com/","fetched":"2026-10-04","method":"Firecrawl scrape (homepage only)","published":false,"quotes":[]},
+ {"vendor":"PaperStreet","url":"https://www.paperstreet.com/","fetched":"2026-10-04","method":"Firecrawl scrape (homepage only); /pricing/ returned 404","published":false,"quotes":["(not website pricing) 'average cost per lead of just $86'"]},
+ {"vendor":"OrangeSky Websites","url":"https://orangeskywebsites.com/frequently-asked-questions/","fetched":"2026-10-04","method":"curl","published":"add-on only","quotes":["We offer optional copywriting services at $149.95 per page."]}
+]

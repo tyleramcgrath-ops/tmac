@@ -92,6 +92,41 @@ export const safeFetch: Fetcher = async (start) => {
   return null
 }
 
+// A file (a photo, a font) from a public address, up to `max` bytes, with
+// the same checks on every redirect.
+export async function safeFetchBytes(start: string, max = 8_000_000): Promise<{ type: string; data: Buffer } | null> {
+  let url = new URL(start)
+  for (let hop = 0; hop < 5; hop++) {
+    try {
+      await assertPublic(url)
+    } catch {
+      return null
+    }
+    const res = await fetch(url, { redirect: 'manual', headers: { 'user-agent': UA }, signal: AbortSignal.timeout(15000) }).catch(() => null)
+    if (!res) return null
+    if (res.status >= 300 && res.status < 400 && res.headers.get('location')) {
+      url = new URL(res.headers.get('location')!, url)
+      continue
+    }
+    if (res.status !== 200 || !res.body) return null
+    const reader = res.body.getReader()
+    const chunks: Uint8Array[] = []
+    let size = 0
+    for (;;) {
+      const { done, value } = await reader.read()
+      if (done) break
+      size += value.byteLength
+      if (size > max) {
+        await reader.cancel()
+        return null
+      }
+      chunks.push(value)
+    }
+    return { type: (res.headers.get('content-type') ?? '').split(';')[0].trim(), data: Buffer.concat(chunks) }
+  }
+  return null
+}
+
 // ---------------------------------------------------------------------------
 // Finding the pages
 // ---------------------------------------------------------------------------

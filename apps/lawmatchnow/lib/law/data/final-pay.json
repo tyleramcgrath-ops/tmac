@@ -1,0 +1,1067 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AL": {
+"fired": {
+"value": "No state law",
+"detail": "Alabama has no state wage-payment law setting a final-pay deadline; employers follow federal rules and their regular payday.",
+"cite": "Ala. Dept. of Labor, Wage and Hour Info",
+"source": "https://labor.alabama.gov/Wage_and_Hour_Info.pdf",
+"verified": true
+},
+"quit": {
+"value": "No state law",
+"detail": "No Alabama statute sets a deadline for employees who quit.",
+"cite": "Ala. Dept. of Labor, Wage and Hour Info",
+"source": "https://labor.alabama.gov/Wage_and_Hour_Info.pdf",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "With no state wage-and-hour law, vacation payout depends entirely on the employer's policy or contract.",
+"cite": "Ala. Dept. of Labor, Wage and Hour Info",
+"source": "https://labor.alabama.gov/Wage_and_Hour_Info.pdf",
+"verified": true
+}
+},
+"AK": {
+"fired": {
+"value": "Within 3 working days",
+"detail": "When the employer ends employment for any reason, final pay is due within three working days.",
+"cite": "Alaska Stat. § 23.05.140(b)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=23.05.140&secEnd=23.05.140",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday at least 3 days after notice",
+"detail": "When the employee quits, pay is due on the next regular payday that is at least three days after the employer receives notice.",
+"cite": "Alaska Stat. § 23.05.140(b)",
+"source": "https://www.akleg.gov/basis/statutes.asp?media=print&secStart=23.05.140&secEnd=23.05.140",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "An employer must pay out vacation only if it has a policy, promise or contract to do so.",
+"cite": "Alaska Dept. of Labor, Wage and Hour FAQ",
+"source": "https://labor.alaska.gov/lss/whfaq.htm",
+"verified": true
+}
+},
+"AZ": {
+"fired": {
+"value": "Within 7 working days or end of next pay period, whichever is sooner",
+"detail": "A discharged employee must be paid within seven working days or by the end of the next regular pay period, whichever comes first.",
+"cite": "Ariz. Rev. Stat. § 23-353(A)",
+"source": "https://www.azleg.gov/ars/23/00353.htm",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who quits must be paid by the regular payday for the pay period in which the termination occurred (by mail if requested).",
+"cite": "Ariz. Rev. Stat. § 23-353(B)",
+"source": "https://www.azleg.gov/ars/23/00353.htm",
+"verified": true
+}
+},
+"AR": {
+"fired": {
+"value": "Next regular payday",
+"detail": "An employer that discharges an employee must pay all wages due by the next regular payday; if not paid within 7 days after that payday, it owes double wages.",
+"cite": "Ark. Code § 11-4-405",
+"source": "https://labor.arkansas.gov/resources/faqs/",
+"verified": true
+}
+},
+"CA": {
+"fired": {
+"value": "Immediately",
+"detail": "A discharged employee must be paid all wages, including accrued vacation, immediately at the time of termination.",
+"cite": "Cal. Lab. Code §§ 201, 227.3",
+"source": "https://www.dir.ca.gov/dlse/faq_paydays.htm",
+"verified": true
+},
+"quit": {
+"value": "Within 72 hours (immediately with 72 hours' notice)",
+"detail": "An employee who quits without notice must be paid within 72 hours; one who gives at least 72 hours' notice must be paid on the last day.",
+"cite": "Cal. Lab. Code § 202",
+"source": "https://www.dir.ca.gov/dlse/faq_paydays.htm",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Vested vacation is wages and cannot be forfeited at termination; 'use it or lose it' policies are illegal, though employers may cap accrual.",
+"cite": "Cal. Lab. Code § 227.3; Suastez v. Plastic Dress-Up Co. (1982)",
+"source": "https://www.dir.ca.gov/dlse/faq_paydays.htm",
+"verified": true
+}
+},
+"CO": {
+"fired": {
+"value": "Immediately",
+"detail": "Wages are due immediately on discharge; if payroll is closed, within 6 hours of its next workday (24 hours if payroll is off-site).",
+"cite": "Colo. Rev. Stat. § 8-4-109(1)(a)",
+"source": "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-08.pdf",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "When an employee quits or resigns, wages are due on the next regular payday.",
+"cite": "Colo. Rev. Stat. § 8-4-109(1)(b)",
+"source": "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-08.pdf",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "If an employer provides paid vacation, it must pay all earned and determinable vacation pay at separation; vacation pay counts as wages.",
+"cite": "Colo. Rev. Stat. § 8-4-101(14)(a)(III)",
+"source": "https://leg.colorado.gov/sites/default/files/images/olls/crs2024-title-08.pdf",
+"verified": true
+}
+},
+"CT": {
+"fired": {
+"value": "Next business day",
+"detail": "A discharged employee must be paid in full no later than the business day after discharge.",
+"cite": "Conn. Gen. Stat. § 31-71c(b)",
+"source": "https://www.cga.ct.gov/current/pub/chap_558.htm",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who quits must be paid in full by the next regular payday.",
+"cite": "Conn. Gen. Stat. § 31-71c(a)",
+"source": "https://www.cga.ct.gov/current/pub/chap_558.htm",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Accrued vacation must be paid only if an employer policy or collective bargaining agreement provides for payment at termination.",
+"cite": "Conn. Gen. Stat. § 31-76k",
+"source": "https://www.cga.ct.gov/current/pub/chap_558.htm",
+"verified": true
+}
+},
+"DE": {
+"fired": {
+"value": "Next regular payday or 3 business days, whichever is later",
+"detail": "Final wages are due by the later of the next regular payday or three business days after the last day worked.",
+"cite": "19 Del. C. § 1103(a)",
+"source": "https://delcode.delaware.gov/title19/c011/index.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or 3 business days, whichever is later",
+"detail": "The same rule applies when an employee quits or resigns.",
+"cite": "19 Del. C. § 1103(a)",
+"source": "https://delcode.delaware.gov/title19/c011/index.html",
+"verified": true
+}
+},
+"DC": {
+"fired": {
+"value": "Next working day",
+"detail": "A discharged employee must be paid by the next working day (4 days if the employee handled the employer's money).",
+"cite": "D.C. Code § 32-1303(1)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/32-1303",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or within 7 days, whichever is earlier",
+"detail": "An employee who quits must be paid by the next regular payday or within 7 days, whichever comes first.",
+"cite": "D.C. Code § 32-1303(2)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/32-1303",
+"verified": true
+}
+},
+"HI": {
+"fired": {
+"value": "Immediately (or next working day)",
+"detail": "A discharged employee must be paid in full at the time of discharge, or by the next working day if immediate payment is impossible.",
+"cite": "Haw. Rev. Stat. § 388-3(a)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol07_Ch0346-0398/HRS0388/HRS_0388-0003.htm",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday (immediately with one pay period's notice)",
+"detail": "An employee who quits is paid by the next regular payday, or at the time of quitting if at least one pay period's notice was given.",
+"cite": "Haw. Rev. Stat. § 388-3(b)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol07_Ch0346-0398/HRS0388/HRS_0388-0003.htm",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "The Hawaii Supreme Court held that unused vacation is not 'wages' that must be paid at separation; payout depends on the employer's policy.",
+"cite": "Casumpang v. ILWU Local 142, 108 Haw. 411 (2005) (annotated under HRS § 388-3)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol07_Ch0346-0398/HRS0388/HRS_0388-0003.htm",
+"verified": true
+}
+},
+"ID": {
+"fired": {
+"value": "Next regular payday or within 10 days, whichever is earlier",
+"detail": "Final wages are due by the earlier of the next regular payday or 10 days (excluding weekends and holidays); within 48 hours if the employee requests it in writing.",
+"cite": "Idaho Code § 45-606(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title45/t45ch6/sect45-606",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or within 10 days, whichever is earlier",
+"detail": "The same rule applies to resignations, including the 48-hour option on written request.",
+"cite": "Idaho Code § 45-606(1)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/title45/t45ch6/sect45-606",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Idaho law does not require vacation pay; any payout depends on the employer's policy, contract or union agreement.",
+"cite": "Idaho Dept. of Labor, Guide to Idaho Labor Laws",
+"source": "https://www.labor.idaho.gov/wp-content/uploads/2024/12/Guide_Idaho-labor-laws_2025.pdf",
+"verified": true
+}
+},
+"IL": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Final compensation must be paid at separation if possible, and no later than the next regularly scheduled payday.",
+"cite": "820 ILCS 115/5",
+"source": "https://ilga.gov/ftp/ILCS/Ch%200820/Act%200115/082001150K5.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who resign.",
+"cite": "820 ILCS 115/5",
+"source": "https://ilga.gov/ftp/ILCS/Ch%200820/Act%200115/082001150K5.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Earned vacation under a contract or policy must be paid out at the final rate of pay, and no policy may forfeit earned vacation at separation.",
+"cite": "820 ILCS 115/5",
+"source": "https://ilga.gov/ftp/ILCS/Ch%200820/Act%200115/082001150K5.html",
+"verified": true
+}
+},
+"IN": {
+"fired": {
+"value": "Next regular payday",
+"detail": "When an employer separates an employee from the payroll, unpaid wages are due on the regular payday for the pay period in which separation occurred.",
+"cite": "Ind. Code § 22-2-9-2(a)",
+"source": "https://law.justia.com/codes/indiana/title-22/article-2/chapter-9/section-22-2-9-2/",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "Employees who leave voluntarily are also paid on the next regular payday (if the employer lacks their address, 10 business days after they provide one).",
+"cite": "Ind. Code §§ 22-2-5-1(b), 22-2-9-2",
+"source": "https://law.justia.com/codes/indiana/title-22/article-2/chapter-9/section-22-2-9-2/",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Accrued vacation is treated as compensation and an employee may be entitled to a pro-rata payout, but conditions in the employer's written policy or contract must be met.",
+"cite": "Indiana state FAQ (vacation pay at separation)",
+"source": "https://faqs.in.gov/hc/en-us/articles/115005216848-When-I-leave-my-employment-is-my-former-employer-required-to-pay-me-for-any-accrued-vacation-time",
+"verified": true
+}
+},
+"IA": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Wages earned up to termination are due by the next regular payday for the period in which they were earned.",
+"cite": "Iowa Code § 91A.4",
+"source": "https://www.legis.iowa.gov/docs/code/91A.4.pdf",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies whether the employee quits or is terminated.",
+"cite": "Iowa Code § 91A.4",
+"source": "https://www.legis.iowa.gov/docs/code/91A.4.pdf",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Vacation must be paid only if due under an agreement or employer policy providing for accrued vacation.",
+"cite": "Iowa Code § 91A.4",
+"source": "https://www.legis.iowa.gov/docs/code/91A.4.pdf",
+"verified": true
+}
+},
+"KS": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Whether discharged or quitting, the employee must be paid by the next regular payday.",
+"cite": "Kan. Stat. § 44-315(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_003_0015.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "Whether discharged or quitting, the employee must be paid by the next regular payday.",
+"cite": "Kan. Stat. § 44-315(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch44/044_003_0015.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Unused vacation is owed only if the employer has a policy or practice of paying it.",
+"cite": "Kansas Dept. of Labor, Workplace Laws FAQ",
+"source": "https://www.dol.ks.gov/employers/workplace-laws/workplace-laws-faqs",
+"verified": true
+}
+},
+"KY": {
+"fired": {
+"value": "Next regular payday or 14 days, whichever is later",
+"detail": "An employee who is discharged must be paid in full by the next normal pay period or 14 days after separation, whichever comes last.",
+"cite": "KRS 337.055",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=32050",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or 14 days, whichever is later",
+"detail": "The same rule applies to employees who leave voluntarily.",
+"cite": "KRS 337.055",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=32050",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Vested vacation pay is defined as wages and must be paid with final wages; whether vacation vests depends on the employer's policy or agreement.",
+"cite": "KRS 337.010(1)(c)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=56806",
+"verified": true
+}
+},
+"LA": {
+"fired": {
+"value": "Next regular payday or within 15 days, whichever is first",
+"detail": "A discharged employee must be paid by the next regular payday or within 15 days of discharge, whichever comes first.",
+"cite": "La. Rev. Stat. § 23:631(A)(1)(a)",
+"source": "https://www.legis.la.gov/legis/Law.aspx?d=83945",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or within 15 days, whichever is first",
+"detail": "An employee who resigns must be paid by the next regular payday for that pay cycle or within 15 days, whichever comes first.",
+"cite": "La. Rev. Stat. § 23:631(A)(1)(b)",
+"source": "https://www.legis.la.gov/legis/Law.aspx?d=83945",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Vacation the employee has earned and is eligible to take under the employer's policy must be paid at separation, and earned vacation cannot be forfeited.",
+"cite": "La. Rev. Stat. § 23:631(D)",
+"source": "https://www.legis.la.gov/legis/Law.aspx?d=83945",
+"verified": true
+}
+},
+"ME": {
+"fired": {
+"value": "Next regular payday",
+"detail": "An employee leaving employment must be paid in full no later than the next established payday.",
+"cite": "26 M.R.S. § 626",
+"source": "https://legislature.maine.gov/statutes/26/title26sec626.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to any employee leaving employment.",
+"cite": "26 M.R.S. § 626",
+"source": "https://legislature.maine.gov/statutes/26/title26sec626.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Unused paid vacation accrued since Jan. 1, 2023 must be paid at separation, except for employers with 10 or fewer employees, public employers, or where a union contract says otherwise.",
+"cite": "26 M.R.S. § 626",
+"source": "https://legislature.maine.gov/statutes/26/title26sec626.html",
+"verified": true
+}
+},
+"MD": {
+"fired": {
+"value": "Next regular payday",
+"detail": "All wages due must be paid on or before the day they would have been paid if employment had continued.",
+"cite": "Md. Code, Lab. & Empl. § 3-505(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=3-505",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to any termination of employment.",
+"cite": "Md. Code, Lab. & Empl. § 3-505(a)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=3-505",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Accrued leave must be paid unless the employer has a written policy limiting payout, told the employee about it at hiring, and the policy denies payment.",
+"cite": "Md. Code, Lab. & Empl. § 3-505(b)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gle&section=3-505",
+"verified": true
+}
+},
+"MA": {
+"fired": {
+"value": "Immediately (day of discharge)",
+"detail": "A discharged employee must be paid in full on the day of discharge.",
+"cite": "Mass. Gen. Laws ch. 149, § 148",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter149/Section148",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who leaves must be paid in full on the next regular payday (or the following Saturday if there is no regular payday).",
+"cite": "Mass. Gen. Laws ch. 149, § 148",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter149/Section148",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Vacation payments due under an oral or written agreement count as wages, so earned vacation must be paid with final wages.",
+"cite": "Mass. Gen. Laws ch. 149, § 148",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXXI/Chapter149/Section148",
+"verified": true
+}
+},
+"MI": {
+"fired": {
+"value": "As soon as the amount can be determined",
+"detail": "A discharged employee must be paid all earned wages immediately, as soon as the amount can with due diligence be determined.",
+"cite": "Mich. Comp. Laws § 408.475(2)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-408-475",
+"verified": true
+},
+"quit": {
+"value": "As soon as the amount can be determined",
+"detail": "An employee who quits must be paid all earned wages as soon as the amount can with due diligence be determined.",
+"cite": "Mich. Comp. Laws § 408.475(1)",
+"source": "https://legislature.mi.gov/Laws/MCL?objectName=mcl-408-475",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Fringe benefits such as vacation are paid at termination only as required by the employer's written contract or written policy.",
+"cite": "Mich. Comp. Laws § 408.473; Michigan LEO guidance",
+"source": "https://www.michigan.gov/en/leo/bureaus-agencies/ber/Wage-and-Hour/payment-of-wages-and-fringe-benefits-act-public-act-390-of-1978/payment-of-fringe-benefits-at-termination",
+"verified": true
+}
+},
+"MN": {
+"fired": {
+"value": "Within 24 hours of demand",
+"detail": "Earned wages are immediately due on discharge upon the employee's demand; the employer is in default if not paid within 24 hours of the demand.",
+"cite": "Minn. Stat. § 181.13(a)",
+"source": "https://www.revisor.mn.gov/statutes/cite/181.13",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday (max 20 days)",
+"detail": "Pay is due on the first regular payday after the last day; if that is less than 5 days away, by the second payday, but never more than 20 calendar days.",
+"cite": "Minn. Stat. § 181.14, subd. 1",
+"source": "https://www.revisor.mn.gov/statutes/cite/181.14",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Minnesota wage law does not directly require payout; the employer's leave policy, contract or union agreement controls.",
+"cite": "Minn. Dept. of Labor & Industry guidance",
+"source": "https://www.dli.mn.gov/business/employment-practices/employment-termination",
+"verified": true
+}
+},
+"MO": {
+"fired": {
+"value": "Day of discharge",
+"detail": "Unpaid wages are due on the day of discharge; if the employee requests payment in writing and it is not received within 7 days, penalty wages accrue.",
+"cite": "Mo. Rev. Stat. § 290.110",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=290.110",
+"verified": true
+},
+"quit": {
+"value": "No state requirement",
+"detail": "Missouri law does not set a deadline for paying final wages to an employee who quits.",
+"cite": "Mo. Dept. of Labor FAQ",
+"source": "https://labor.mo.gov/faqs/knowledge-base/if-employee-quits-his-job-when-are-final-wages-due-him",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Employers need not provide or pay out vacation unless a contract establishes the benefit.",
+"cite": "Mo. Dept. of Labor FAQ",
+"source": "https://labor.mo.gov/faqs/knowledge-base/my-employer-required-pay-me-unused-vacation-if-i-lose-my-job-or-quit",
+"verified": true
+}
+},
+"MT": {
+"fired": {
+"value": "Immediately (or next payday/15 days under written policy)",
+"detail": "An employee separated for cause or laid off must be paid immediately unless a written policy extends payment to the next payday or 15 days, whichever is first.",
+"cite": "Mont. Code Ann. § 39-3-205(2)",
+"source": "https://mca.legmt.gov/bills/mca/title_0390/chapter_0030/part_0020/section_0050/0390-0030-0020-0050.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or 15 days, whichever is first",
+"detail": "Final wages are due on the next regular payday for that pay period or within 15 days of separation, whichever comes first.",
+"cite": "Mont. Code Ann. § 39-3-205(1)",
+"source": "https://mca.legmt.gov/bills/mca/title_0390/chapter_0030/part_0020/section_0050/0390-0030-0020-0050.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Vacation is not mandatory, but once earned under the employer's policy it is wages due at separation; 'use it or lose it' policies are not allowed (caps are).",
+"cite": "Mont. Dept. of Labor & Industry FAQ; Mont. Att'y Gen. Op. 23-56",
+"source": "https://erd.dli.mt.gov/labor-standards/wage-and-hour-payment-act/wage-and-hour-faq",
+"verified": true
+}
+},
+"NE": {
+"fired": {
+"value": "Next regular payday or within 2 weeks, whichever is sooner",
+"detail": "When a private employer separates an employee, unpaid wages are due on the next regular payday or within two weeks, whichever is sooner.",
+"cite": "Neb. Rev. Stat. § 48-1230(4)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-1230",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or within 2 weeks, whichever is sooner",
+"detail": "The same rule applies to any separation from the payroll.",
+"cite": "Neb. Rev. Stat. § 48-1230(4)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-1230",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Earned but unused vacation leave is part of the wages due at separation.",
+"cite": "Neb. Rev. Stat. § 48-1229",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=48-1229",
+"verified": true
+}
+},
+"NV": {
+"fired": {
+"value": "Immediately",
+"detail": "Wages earned and unpaid at discharge are due and payable immediately.",
+"cite": "Nev. Rev. Stat. § 608.020",
+"source": "https://www.leg.state.nv.us/NRS/NRS-608.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or 7 days, whichever is earlier",
+"detail": "An employee who quits must be paid by the regular payday or within seven days, whichever comes first.",
+"cite": "Nev. Rev. Stat. § 608.030",
+"source": "https://www.leg.state.nv.us/NRS/NRS-608.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Nevada has no requirement to pay out unused vacation or paid leave unless the employer's policy or agreement provides for it.",
+"cite": "Nev. Rev. Stat. § 608.0197; Nevada Labor Commissioner guidance",
+"source": "https://labor.nv.gov/uploadedFiles/labornvgov/content/Employer/SB%20312%20Paid%20Leave%20English.pdf",
+"verified": true
+}
+},
+"NH": {
+"fired": {
+"value": "Within 72 hours",
+"detail": "A discharged employee must be paid in full within 72 hours.",
+"cite": "N.H. Rev. Stat. § 275:44(I)",
+"source": "https://www.gc.nh.gov/rsa/html/XXIII/275/275-44.htm",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday (72 hours with one pay period's notice)",
+"detail": "An employee who quits is paid by the next regular payday, or within 72 hours if at least one pay period's notice was given.",
+"cite": "N.H. Rev. Stat. § 275:44(II)",
+"source": "https://www.gc.nh.gov/rsa/html/XXIII/275/275-44.htm",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Paid vacation is not required; vacation pay counts as wages only when it is a matter of employer policy or practice, and the employer's policy controls payout.",
+"cite": "N.H. Rev. Stat. § 275:43(V)",
+"source": "https://www.gc.nh.gov/rsa/html/XXIII/275/275-mrg.htm",
+"verified": true
+}
+},
+"NJ": {
+"fired": {
+"value": "Next regular payday",
+"detail": "When employment ends for any reason, all wages are due by the regular payday for the pay period in which the termination occurred.",
+"cite": "N.J. Stat. § 34:11-4.3",
+"source": "https://www.nj.gov/labor/wageandhour/tools-resources/laws/selectedstatelaborlaws.shtml",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies when an employee quits.",
+"cite": "N.J. Stat. § 34:11-4.3",
+"source": "https://www.nj.gov/labor/wageandhour/tools-resources/laws/selectedstatelaborlaws.shtml",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Vacation pay is not required by New Jersey law; if offered, it must be administered uniformly under the employer's policy or agreement.",
+"cite": "N.J. Dept. of Labor, Wage and Hour FAQs",
+"source": "https://www.nj.gov/labor/wageandhour/support/faqs/wageandhourworkerfaqs.shtml",
+"verified": true
+}
+},
+"NM": {
+"fired": {
+"value": "Within 5 days (10 days for commission/task pay)",
+"detail": "Fixed wages of a discharged employee are due within 5 days of discharge; wages based on tasks, pieces or commissions within 10 days.",
+"cite": "N.M. Stat. § 50-4-4",
+"source": "https://www.nmlegis.gov/Sessions/17%20Regular/bills/senate/SB0109.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee without a fixed-term contract who quits is paid on the next succeeding payday.",
+"cite": "N.M. Stat. § 50-4-5",
+"source": "https://www.nmlegis.gov/Sessions/17%20Regular/bills/senate/SB0109.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "State law does not require vacation pay, but accrued, unused vacation owed under a written company policy is part of the final wages.",
+"cite": "N.M. Dept. of Workforce Solutions, Wage and Hour FAQs",
+"source": "https://www.dws.nm.gov/Portals/0/DM/LaborRelations/Wage_&_Hour_FAQs_06222023.pdf",
+"verified": true
+}
+},
+"NY": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Wages are due by the regular payday for the pay period in which employment ended (by mail if requested).",
+"cite": "N.Y. Lab. Law § 191(3)",
+"source": "https://newyork.public.law/laws/n.y._labor_law_section_191",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies however employment ends.",
+"cite": "N.Y. Lab. Law § 191(3)",
+"source": "https://newyork.public.law/laws/n.y._labor_law_section_191",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Accrued vacation must be paid at termination unless the employer's written policy explicitly provides for forfeiture.",
+"cite": "N.Y. Lab. Law § 198-c; Industrial Board of Appeals decisions",
+"source": "https://industrialappeals.ny.gov/system/files/documents/2020/02/pr-12-062.pdf",
+"verified": true
+}
+},
+"NC": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Employees whose employment ends for any reason must be paid all wages due on or before the next regular payday.",
+"cite": "N.C. Gen. Stat. § 95-25.7",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_95/GS_95-25.7.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to any separation.",
+"cite": "N.C. Gen. Stat. § 95-25.7",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_95/GS_95-25.7.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Employers need not offer vacation, but promised vacation must be paid per company policy; it can be forfeited only if employees were notified in writing of a forfeiture policy.",
+"cite": "N.C. Gen. Stat. § 95-25.12",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_95/GS_95-25.12.html",
+"verified": true
+}
+},
+"ND": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Unpaid wages are due on the regular paydays set in advance; for discharged employees, payment goes by certified mail unless otherwise agreed.",
+"cite": "N.D. Cent. Code § 34-14-03",
+"source": "https://ndlegis.gov/cencode/t34c14.pdf",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies when an employee leaves voluntarily.",
+"cite": "N.D. Cent. Code § 34-14-03",
+"source": "https://ndlegis.gov/cencode/t34c14.pdf",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required",
+"detail": "Accrued paid time off must be paid, except an employer may withhold it from an employee who quits with under 5 days' notice in the first year of employment if this was disclosed in writing at hiring.",
+"cite": "N.D. Cent. Code § 34-14-09.2",
+"source": "https://ndlegis.gov/cencode/t34c14.pdf",
+"verified": true
+}
+},
+"OH": {
+"fired": {
+"value": "Regular payday schedule (no special rule)",
+"detail": "Ohio has no separate final-pay deadline; wages follow the semimonthly schedule (first-half wages by the 1st of the next month, second-half by the 15th).",
+"cite": "Ohio Rev. Code § 4113.15(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4113.15",
+"verified": true
+},
+"quit": {
+"value": "Regular payday schedule (no special rule)",
+"detail": "The same semimonthly schedule applies to employees who quit.",
+"cite": "Ohio Rev. Code § 4113.15(A)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4113.15",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Ohio has no payout statute; courts enforce a clear handbook policy that forfeits unused vacation, but without such a policy accrued vacation can be recovered.",
+"cite": "Broadstock v. Elmwood at the Springs, 2013-Ohio-969 (Ohio Ct. App.)",
+"source": "https://www.supremecourt.ohio.gov/rod/docs/pdf/6/2013/2013-ohio-969.pdf",
+"verified": true
+}
+},
+"OK": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Whether an employee quits or is fired, the final paycheck is due on the next scheduled payday.",
+"cite": "Okla. Stat. tit. 40, § 165.3",
+"source": "https://oklahoma.gov/labor/workplace-rights/protect-your-pay.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who quit.",
+"cite": "Okla. Stat. tit. 40, § 165.3",
+"source": "https://oklahoma.gov/labor/workplace-rights/protect-your-pay.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Vacation payout counts as wages only if a written employer policy (such as a handbook) promises it.",
+"cite": "Okla. Stat. tit. 40, § 165.1 (definition of wages)",
+"source": "https://oklahoma.gov/labor/workplace-rights/protect-your-pay.html",
+"verified": true
+}
+},
+"OR": {
+"fired": {
+"value": "End of the next business day",
+"detail": "When an employer discharges an employee (or by mutual agreement), all wages are due by the end of the first business day after termination.",
+"cite": "Or. Rev. Stat. § 652.140(1)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors652.html",
+"verified": true
+},
+"quit": {
+"value": "Immediately with 48 hours' notice; otherwise within 5 business days or next payday",
+"detail": "With at least 48 hours' notice (excluding weekends and holidays), wages are due immediately; without it, within 5 business days or on the next regular payday, whichever is first.",
+"cite": "Or. Rev. Stat. § 652.140(2)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors652.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "There is no legal requirement to pay out accrued vacation, but employers must honor an established policy or agreement to do so.",
+"cite": "Oregon BOLI guidance",
+"source": "https://www.oregon.gov/boli/workers/pages/holiday-and-vacation-pay.aspx",
+"verified": true
+}
+},
+"PA": {
+"fired": {
+"value": "Next regular payday",
+"detail": "When an employer separates an employee, wages are due no later than the next regular payday (by certified mail if requested).",
+"cite": "43 P.S. § 260.5(a)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/US/HTM/1961/0/0329..HTM",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who quit or resign.",
+"cite": "43 P.S. § 260.5(a)",
+"source": "https://www.legis.state.pa.us/WU01/LI/LI/US/HTM/1961/0/0329..HTM",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Vacation pay is owed only if the employer has a policy or contract to pay it.",
+"cite": "Pa. Dept. of Labor & Industry, Wage FAQs",
+"source": "https://www.pa.gov/agencies/dli/resources/compliance-laws-and-regulations/labor-management-relations/pennsylvania-s-minimum-wage-act/wage-faqs",
+"verified": true
+}
+},
+"RI": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Unpaid wages are due on the next regular payday (within 24 hours if the business is liquidating, merging, or moving out of state).",
+"cite": "R.I. Gen. Laws § 28-14-4(a), (c)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-14/28-14-4.htm",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies whether the employee separates or is separated.",
+"cite": "R.I. Gen. Laws § 28-14-4(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-14/28-14-4.htm",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required (after 1 year of service)",
+"detail": "After at least one year of service, vacation accrued under a policy or agreement becomes wages payable with final wages on the next regular payday.",
+"cite": "R.I. Gen. Laws § 28-14-4(b)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE28/28-14/28-14-4.htm",
+"verified": true
+}
+},
+"SC": {
+"fired": {
+"value": "Within 48 hours or next regular payday (max 30 days)",
+"detail": "When an employee is separated for any reason, wages are due within 48 hours or by the next regular payday, which may not be more than 30 days later.",
+"cite": "S.C. Code § 41-10-50",
+"source": "https://www.scstatehouse.gov/code/t41c010.php",
+"verified": true
+},
+"quit": {
+"value": "Within 48 hours or next regular payday (max 30 days)",
+"detail": "The same rule applies to any separation.",
+"cite": "S.C. Code § 41-10-50",
+"source": "https://www.scstatehouse.gov/code/t41c010.php",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Vacation pay is owed as wages only when it is due under the employer's policy or an employment contract.",
+"cite": "S.C. Code § 41-10-10(2)",
+"source": "https://www.scstatehouse.gov/code/t41c010.php",
+"verified": true
+}
+},
+"SD": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Wages are due by the next regular payday, or as soon after as the employee returns the employer's property.",
+"cite": "S.D. Codified Laws § 60-11-10",
+"source": "https://sdlegislature.gov/api/Statutes/60-11-10.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who quits is paid by the next regular payday, or once employer property is returned.",
+"cite": "S.D. Codified Laws § 60-11-11",
+"source": "https://sdlegislature.gov/api/Statutes/60-11-11.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "South Dakota has no law requiring paid leave; payout is a matter of employer policy or agreement.",
+"cite": "S.D. Dept. of Labor & Regulation",
+"source": "https://dlr.sd.gov/employment_laws/publications/what_need_know_laws.pdf",
+"verified": true
+}
+},
+"TN": {
+"fired": {
+"value": "Next regular payday or 21 days, whichever is later",
+"detail": "Final wages are due by the next regular payday after separation or 21 days after, whichever occurs last.",
+"cite": "Tenn. Code Ann. § 50-2-103(g)",
+"source": "https://www.tn.gov/workforce/employees/labor-laws/labor-laws-redirect/wages-breaks.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday or 21 days, whichever is later",
+"detail": "The same rule applies to employees who quit.",
+"cite": "Tenn. Code Ann. § 50-2-103(g)",
+"source": "https://www.tn.gov/workforce/employees/labor-laws/labor-laws-redirect/wages-breaks.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Unused vacation or PTO must be paid only if the employer's policy or labor agreement specifically requires it.",
+"cite": "Tenn. Code Ann. § 50-2-103(a)(3)",
+"source": "https://www.tn.gov/workforce/employees/labor-laws/labor-laws-redirect/wages-breaks.html",
+"verified": true
+}
+},
+"TX": {
+"fired": {
+"value": "Within 6 calendar days",
+"detail": "An employee who is laid off, fired or otherwise involuntarily separated must be paid within six calendar days of discharge.",
+"cite": "Tex. Lab. Code § 61.014",
+"source": "https://efte.twc.texas.gov/final_pay.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who quits or retires is paid on the next regularly scheduled payday after the resignation takes effect.",
+"cite": "Tex. Lab. Code § 61.014",
+"source": "https://efte.twc.texas.gov/final_pay.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Accrued leave must be paid out only if a written policy or agreement promises it.",
+"cite": "40 Tex. Admin. Code § 821.25",
+"source": "https://efte.twc.texas.gov/accrued_leave_payouts.html",
+"verified": true
+}
+},
+"UT": {
+"fired": {
+"value": "Within 24 hours",
+"detail": "When an employer separates an employee, wages are due immediately and must be paid within 24 hours.",
+"cite": "Utah Code § 34-28-5(1)",
+"source": "https://le.utah.gov/xcode/Title34/Chapter28/34-28-S5.html",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee without a fixed-term contract who resigns is paid on the next regular payday.",
+"cite": "Utah Code § 34-28-5(2)",
+"source": "https://le.utah.gov/xcode/Title34/Chapter28/34-28-S5.html",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Accrued time off is owed at separation only if there is an agreement or policy to pay it.",
+"cite": "Utah Labor Commission wage claim guidance",
+"source": "https://laborcommission.utah.gov/wp-content/uploads/2022/04/EnglishWageIntakeQ_1.pdf",
+"verified": true
+}
+},
+"VT": {
+"fired": {
+"value": "Within 72 hours",
+"detail": "A discharged employee must be paid within 72 hours of discharge.",
+"cite": "21 V.S.A. § 342(c)(2)",
+"source": "https://legislature.vermont.gov/statutes/section/21/005/00342",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "An employee who leaves voluntarily is paid on the next regular payday, or the following Friday if there is no regular payday.",
+"cite": "21 V.S.A. § 342(c)(1)",
+"source": "https://legislature.vermont.gov/statutes/section/21/005/00342",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Employers need not provide or pay out vacation, but are liable for vacation promised in a written agreement or handbook.",
+"cite": "Vt. Dept. of Labor, Summary of Vermont Wage and Hour Laws",
+"source": "https://labor.vermont.gov/sites/labor/files/doc_library/WH-13-Wage-and-Hour-Laws-2019%20.pdf",
+"verified": true
+}
+},
+"VA": {
+"fired": {
+"value": "Next regular payday",
+"detail": "All wages due must be paid on or before the date they would have been paid had employment continued.",
+"cite": "Va. Code § 40.1-29(A)",
+"source": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-29/",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to any termination.",
+"cite": "Va. Code § 40.1-29(A)",
+"source": "https://law.lis.virginia.gov/vacode/title40.1/chapter3/section40.1-29/",
+"verified": true
+}
+},
+"WA": {
+"fired": {
+"value": "End of the pay period",
+"detail": "When employment ends by discharge or voluntary withdrawal, wages are due at the end of the established pay period.",
+"cite": "Rev. Code Wash. § 49.48.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=49.48.010",
+"verified": true
+},
+"quit": {
+"value": "End of the pay period",
+"detail": "The same rule applies to employees who quit.",
+"cite": "Rev. Code Wash. § 49.48.010",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=49.48.010",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "Washington does not require paid vacation or its payout; any payout depends on employer policy or a union contract.",
+"cite": "Wash. L&I guidance",
+"source": "https://www.lni.wa.gov/workers-rights/leave/holiday-vacation-bereavement-leave",
+"verified": true
+}
+},
+"WV": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Discharged employees must be paid on or before the next regular payday on which the wages would otherwise be due.",
+"cite": "W. Va. Code § 21-5-4(b)",
+"source": "https://code.wvlegislature.gov/21-5-4/",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who quit or resign.",
+"cite": "W. Va. Code § 21-5-4(b)",
+"source": "https://code.wvlegislature.gov/21-5-4/",
+"verified": true
+},
+"accruedVacation": {
+"value": "Not required",
+"detail": "The law does not require fringe benefits, but vacation earned and payable at separation under a written company policy is part of final wages.",
+"cite": "W. Va. Code § 21-5-1(l); WV Division of Labor fact sheet",
+"source": "https://labor.wv.gov/media/87/download?inline=",
+"verified": true
+}
+},
+"WI": {
+"fired": {
+"value": "Next regular payday",
+"detail": "A discharged employee must be paid in full by the next regular payday (or within 31 days if earlier under the general pay rule).",
+"cite": "Wis. Stat. § 109.03(2)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/109/03/1",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who quit.",
+"cite": "Wis. Stat. § 109.03(2)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/109/03/1",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Vacation is not required, but if a written vacation policy has no written forfeiture provision, earned unused vacation generally must be paid.",
+"cite": "Wis. Dept. of Workforce Development guidance",
+"source": "https://dwd.wisconsin.gov/er/laborstandards/wages.htm",
+"verified": true
+}
+},
+"WY": {
+"fired": {
+"value": "Next regular payday",
+"detail": "Final wages are due no later than the employer's regularly scheduled payroll date (or as set by a union contract).",
+"cite": "Wyo. Stat. § 27-4-104(a)",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+},
+"quit": {
+"value": "Next regular payday",
+"detail": "The same rule applies to employees who quit.",
+"cite": "Wyo. Stat. § 27-4-104(a)",
+"source": "https://wyoleg.gov/statutes/compress/title27.pdf",
+"verified": true
+},
+"accruedVacation": {
+"value": "Required unless policy says otherwise",
+"detail": "Earned vacation must be paid unless a clear written policy, acknowledged by the employee, denies payout; 'use it or lose it' is allowed only if there was a fair chance to use it.",
+"cite": "Wyo. Stat. § 27-4-507; Wyoming DWS Labor Standards FAQ",
+"source": "https://dws.wyo.gov/dws-division/labor-standards/employers/faq/",
+"verified": true
+}
+}
+}
+}

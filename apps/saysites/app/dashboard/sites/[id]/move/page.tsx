@@ -1,3 +1,5 @@
+import { OwnerCheck } from '@/components/OwnerCheck'
+import { awaitingOwner } from '@/lib/ownership'
 import { notFound } from 'next/navigation'
 import { MoveForm } from '@/components/MoveForm'
 import { requireUser } from '@/lib/session'
@@ -28,8 +30,13 @@ export default async function MovePage({ params, searchParams }: { params: Promi
         </div>
       </div>
 
+      <OwnerCheck site={site} />
       {claimed ? (
-        <p className="notice good"><strong>Your redesigned site is saved.</strong> Your home, services and contact pages are live on your free address, and the pages we brought over are below as drafts. Publish them when you point your domain here.</p>
+        awaitingOwner(site) ? (
+          <p className="notice good"><strong>Your redesigned site is saved, privately.</strong> Confirm you run the business above and it can go live. The pages we brought over are below as drafts; publish them when you point your domain here.</p>
+        ) : (
+          <p className="notice good"><strong>Your redesigned site is saved.</strong> Your home, services and contact pages are live on your free address, and the pages we brought over are below as drafts. Publish them when you point your domain here.</p>
+        )
       ) : (
         <div className="card">
           <MoveForm action={importFromSite.bind(null, site.id)} />

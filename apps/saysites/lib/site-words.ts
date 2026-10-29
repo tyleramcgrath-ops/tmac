@@ -46,6 +46,60 @@ export interface SiteWords {
   notFound: { title: string; heading: string; text: string; home: string; contact: string }
   days: Record<string, string>
   clock: (h: number, m: string) => string
+  shop: ShopWords
+}
+
+// The shop's words: product pages, the cart and the order pages.
+export interface ShopWords {
+  shop: string
+  addToCart: string
+  // Amazon picks (lib/amazon).
+  buyOnAmazon: string
+  seePriceOnAmazon: string
+  onAmazon: string
+  amazonNote: string
+  chooseOptions: string
+  from: string
+  was: string
+  quantity: string
+  onlyLeft: (n: number) => string
+  cart: string
+  yourCart: string
+  emptyCart: string
+  keepShopping: string
+  item: string
+  remove: string
+  update: string
+  subtotal: string
+  discount: string
+  shipping: string
+  tax: string
+  taxAtCheckout: string
+  total: string
+  code: string
+  apply: string
+  howToGet: string
+  zip: string
+  check: string
+  free: string
+  checkout: string
+  checkoutNote: string
+  paused: string
+  thanksTitle: string
+  thanksText: (email: string) => string
+  orderNumber: (n: string) => string
+  processing: string
+  orderTitle: string
+  status: string
+  tracking: string
+  returns: string
+  returnsTitle: string
+  returnsNone: string
+  returnsDays: (days: number, free: boolean) => string
+  shipsTo: string
+  pickupAt: string
+  methods: Record<'ship' | 'express' | 'pickup' | 'delivery' | 'none', string>
+  steps: Record<'placed' | 'unfulfilled' | 'shipped' | 'ready' | 'out' | 'done' | 'refunded', string>
 }
 
 export const WORDS: Record<'en' | 'es', SiteWords> = {
@@ -91,6 +145,56 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     notFound: { title: 'Page not found', heading: 'We couldn’t find that page', text: 'It may have moved, or the link may have a typo. These will get you back on track.', home: 'Go to the home page', contact: 'Contact us' },
     days: { Mo: 'Mon', Tu: 'Tue', We: 'Wed', Th: 'Thu', Fr: 'Fri', Sa: 'Sat', Su: 'Sun' },
+    shop: {
+      shop: 'Shop',
+      addToCart: 'Add to cart',
+      buyOnAmazon: 'Buy on Amazon',
+      seePriceOnAmazon: 'See price on Amazon',
+      onAmazon: 'on Amazon',
+      amazonNote: 'As an Amazon Associate, we earn from qualifying purchases.',
+      chooseOptions: 'Choose options',
+      from: 'From',
+      was: 'Was',
+      quantity: 'Quantity',
+      onlyLeft: (n) => `Only ${n} left`,
+      cart: 'Cart',
+      yourCart: 'Your cart',
+      emptyCart: 'Your cart is empty.',
+      keepShopping: 'Keep shopping',
+      item: 'Item',
+      remove: 'Remove',
+      update: 'Update',
+      subtotal: 'Subtotal',
+      discount: 'Discount',
+      shipping: 'Delivery',
+      tax: 'Tax',
+      taxAtCheckout: 'Any tax is added at checkout.',
+      total: 'Total',
+      code: 'Discount code',
+      apply: 'Apply',
+      howToGet: 'How would you like to get it?',
+      zip: 'ZIP or postal code',
+      check: 'Check',
+      free: 'Free',
+      checkout: 'Check out',
+      checkoutNote: 'You’ll pay securely on Stripe’s checkout page.',
+      paused: 'Online orders are paused for now. Please get in touch to order.',
+      thanksTitle: 'Thank you for your order',
+      thanksText: (email) => (email ? `A confirmation is on its way to ${email}.` : 'Your order is confirmed.'),
+      orderNumber: (n) => `Order ${n}`,
+      processing: 'Your payment is being confirmed. This page will show your order as soon as it is.',
+      orderTitle: 'Your order',
+      status: 'Status',
+      tracking: 'Track your package',
+      returns: 'Returns',
+      returnsTitle: 'Returns and refunds',
+      returnsNone: 'All sales are final. Please get in touch if something is wrong with your order.',
+      returnsDays: (days, free) => `You can return items within ${days} days of delivery${free ? ', free of charge' : ''}.`,
+      shipsTo: 'Ships to',
+      pickupAt: 'Pickup',
+      methods: { ship: 'Shipping', express: 'Express shipping', pickup: 'Pickup', delivery: 'Local delivery', none: 'No delivery needed' },
+      steps: { placed: 'Order placed', unfulfilled: 'Being prepared', shipped: 'Shipped', ready: 'Ready for pickup', out: 'Out for delivery', done: 'Completed', refunded: 'Refunded' },
+    },
     clock: (h, m) => `${h % 12 || 12}${m === '00' ? '' : `:${m}`}${h < 12 ? 'am' : 'pm'}`,
   },
   es: {
@@ -136,6 +240,56 @@ export const WORDS: Record<'en' | 'es', SiteWords> = {
     notFound: { title: 'Página no encontrada', heading: 'No encontramos esa página', text: 'Puede que se haya movido o que el enlace tenga un error. Estas opciones te llevarán de vuelta.', home: 'Ir a la página de inicio', contact: 'Contáctanos' },
     days: { Mo: 'Lun', Tu: 'Mar', We: 'Mié', Th: 'Jue', Fr: 'Vie', Sa: 'Sáb', Su: 'Dom' },
     // Spanish-speaking countries mostly read the 24-hour clock.
+    shop: {
+      shop: 'Tienda',
+      addToCart: 'Añadir al carrito',
+      buyOnAmazon: 'Comprar en Amazon',
+      seePriceOnAmazon: 'Ver precio en Amazon',
+      onAmazon: 'en Amazon',
+      amazonNote: 'En calidad de Afiliado de Amazon, obtenemos ingresos por las compras adscritas que cumplen los requisitos aplicables.',
+      chooseOptions: 'Elegir opciones',
+      from: 'Desde',
+      was: 'Antes',
+      quantity: 'Cantidad',
+      onlyLeft: (n) => `Solo quedan ${n}`,
+      cart: 'Carrito',
+      yourCart: 'Tu carrito',
+      emptyCart: 'Tu carrito está vacío.',
+      keepShopping: 'Seguir comprando',
+      item: 'Artículo',
+      remove: 'Quitar',
+      update: 'Actualizar',
+      subtotal: 'Subtotal',
+      discount: 'Descuento',
+      shipping: 'Entrega',
+      tax: 'Impuestos',
+      taxAtCheckout: 'Los impuestos se añaden al pagar.',
+      total: 'Total',
+      code: 'Código de descuento',
+      apply: 'Aplicar',
+      howToGet: '¿Cómo quieres recibirlo?',
+      zip: 'Código postal',
+      check: 'Comprobar',
+      free: 'Gratis',
+      checkout: 'Pagar',
+      checkoutNote: 'Pagarás de forma segura en la página de pago de Stripe.',
+      paused: 'Los pedidos en línea están en pausa. Contáctanos para hacer un pedido.',
+      thanksTitle: 'Gracias por tu pedido',
+      thanksText: (email) => (email ? `Te enviamos una confirmación a ${email}.` : 'Tu pedido está confirmado.'),
+      orderNumber: (n) => `Pedido ${n}`,
+      processing: 'Estamos confirmando tu pago. Esta página mostrará tu pedido en cuanto esté listo.',
+      orderTitle: 'Tu pedido',
+      status: 'Estado',
+      tracking: 'Seguir tu paquete',
+      returns: 'Devoluciones',
+      returnsTitle: 'Devoluciones y reembolsos',
+      returnsNone: 'Todas las ventas son finales. Contáctanos si hay algún problema con tu pedido.',
+      returnsDays: (days, free) => `Puedes devolver artículos dentro de los ${days} días posteriores a la entrega${free ? ', sin costo' : ''}.`,
+      shipsTo: 'Envíos a',
+      pickupAt: 'Recogida',
+      methods: { ship: 'Envío', express: 'Envío exprés', pickup: 'Recogida', delivery: 'Entrega local', none: 'Sin entrega' },
+      steps: { placed: 'Pedido realizado', unfulfilled: 'En preparación', shipped: 'Enviado', ready: 'Listo para recoger', out: 'En camino', done: 'Completado', refunded: 'Reembolsado' },
+    },
     clock: (h, m) => `${h}:${m}`,
   },
 }

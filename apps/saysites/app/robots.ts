@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
   // deployments stay closed even if they inherit it.
   const production = process.env.SAYSITES_INDEXABLE === '1' && (!process.env.VERCEL_ENV || process.env.VERCEL_ENV === 'production')
   return production
-    ? { rules: [{ userAgent: '*', allow: '/', disallow: ['/dashboard', '/preview/', '/login', '/signup'] }], sitemap: 'https://saysites.com/sitemap.xml' }
+    ? { rules: [{ userAgent: '*', allow: '/', disallow: ['/dashboard', '/preview/', '/login', '/signup', '/mockups/'] }], sitemap: 'https://saysites.com/sitemap.xml' }
     : { rules: [{ userAgent: '*', disallow: '/' }] }
 }

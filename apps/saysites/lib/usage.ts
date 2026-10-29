@@ -53,8 +53,9 @@ export function caps() {
       site: dollars('SAYSITES_SITE_MONTHLY_AI', 5) * 1e6,
       store: dollars('SAYSITES_STORE_MONTHLY_AI', 8) * 1e6,
       comp: dollars('SAYSITES_COMP_MONTHLY_AI', 50) * 1e6,
-      // Law Firm ($299) and Law Firm built for you ($599, where the team
+      // Law Firm Starter ($79), Law Firm ($299) and built for you ($599, where the team
       // builds with Sofie too).
+      lawstarter: dollars('SAYSITES_LAW_STARTER_MONTHLY_AI', 8) * 1e6,
       law: dollars('SAYSITES_LAW_MONTHLY_AI', 25) * 1e6,
       lawpro: dollars('SAYSITES_LAWPRO_MONTHLY_AI', 60) * 1e6,
     },
@@ -82,7 +83,7 @@ const paying = (p: Payer) => p.status === 'active' || p.status === 'past_due' ||
 
 export function monthlyAllowance(p: Payer): number {
   const m = caps().month
-  return p.status === 'comp' ? m.comp : p.plan === 'store' ? m.store : p.plan === 'law' ? m.law : p.plan === 'lawpro' ? m.lawpro : m.site
+  return p.status === 'comp' ? m.comp : p.plan === 'store' ? m.store : p.plan === 'lawstarter' ? m.lawstarter : p.plan === 'law' ? m.law : p.plan === 'lawpro' ? m.lawpro : m.site
 }
 
 // The first day of next month, when a monthly allowance refills.

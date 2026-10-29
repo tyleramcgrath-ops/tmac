@@ -1,9 +1,10 @@
 // "Websites for <trade>" landing pages: medical practices and med spas.
 // Every claim here must match what SaySites actually does today. No booking,
-// ranking or results promises, no prices, and no claims about how health
+// ranking or results promises, prices only from lib/billing.ts, and no claims about how health
 // information is handled: the request form is for contact details and a short
 // note only.
 
+import { PRICES } from '../billing'
 import type { Industry } from './types'
 
 export const MEDICAL_PRACTICES: Industry = {
@@ -53,7 +54,7 @@ export const MEDICAL_PRACTICES: Industry = {
     'Add a banner saying we’re accepting new patients again',
   ],
   faq: [
-    { q: 'How much does a medical practice website cost on SaySites?', a: 'It depends on your services, providers and locations, so we quote after a short conversation. There’s no setup fee and no long-term contract, and your site, content and domain stay yours. Start with a free redesign of your current site or tell us about your practice.' },
+    { q: 'How much does a medical practice website cost on SaySites?', a: `$${PRICES.site.month} a month (or $${PRICES.site.year} a year) on the Site plan, with hosting, your domain, your leads pipeline, call tracking and SEO included. No setup fee and no contract, and your site, content and domain stay yours. Start with a free redesign of your current site to see what you’d get.` },
     { q: 'Can patients book appointments online?', a: 'There’s no online booking system. Patients can call the practice or send an appointment request through the form, which lands in your inbox for your front desk to follow up.' },
     { q: 'Is the request form meant for medical details?', a: 'No. The form is for contact details and a short note, and it asks patients not to send medical details through it. Handle anything clinical through your usual channels.' },
     { q: 'Does the site say what to do in an emergency?', a: 'Yes. Every medical site includes a note that the site isn’t for emergencies and that anyone with an urgent medical need should call 911.' },
@@ -110,7 +111,7 @@ export const MED_SPAS: Industry = {
     'Write a blog post on how to prepare for your first laser session',
   ],
   faq: [
-    { q: 'How much does a med spa website cost on SaySites?', a: 'It depends on your treatments, providers and locations, so we quote after a short conversation. There’s no setup fee and no long-term contract, and your site, content and domain stay yours. Start with a free redesign of your current site or tell us about your med spa.' },
+    { q: 'How much does a med spa website cost on SaySites?', a: `$${PRICES.site.month} a month (or $${PRICES.site.year} a year) on the Site plan, with hosting, your domain, your leads pipeline, call tracking and SEO included. No setup fee and no contract, and your site, content and domain stay yours. Start with a free redesign of your current site to see what you’d get.` },
     { q: 'Can clients book treatments online?', a: 'There’s no online booking system. Clients can call you or send a consultation request through the form, which lands in your inbox for your team to follow up.' },
     { q: 'Is the consultation form meant for medical details?', a: 'No. The form is for contact details and a short note about what the client is interested in, and it asks them not to send medical details through it. Handle health history through your usual intake process.' },
     { q: 'Can we show before and after photos?', a: 'Yes, as long as they’re real photos from your own clients and you have their permission. Each gallery includes a note that results vary from person to person.' },

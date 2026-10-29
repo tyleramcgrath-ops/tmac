@@ -1,5 +1,7 @@
 'use server'
 
+import { isAdmin } from '@/lib/admin'
+import { sofieErrorText } from '@/lib/sofie-errors'
 import { after } from 'next/server'
 import { askSofie, type ChatTurn } from '@/lib/sofie'
 import { requireUser } from '@/lib/session'
@@ -9,6 +11,7 @@ import { loadAccess } from '@/lib/billing'
 import { costMicros, loadSpend, overCap, siteBudget } from '@/lib/usage'
 import { dayString } from '@/lib/visits'
 import { photoSetFor, reportUse, searchPhotos, unsplashReady } from '@/lib/unsplash'
+import { getItems, resolveShortLink } from '@/lib/amazon'
 import type { Page, Site } from '@/lib/schema'
 
 export interface StudioState {
@@ -76,7 +79,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
   const text = message.trim().slice(0, MAX_MESSAGE)
   if (!text || isWorking(state)) return view(state, live)
   if (!process.env.ANTHROPIC_API_KEY) {
-    return view(state, live, 'Sofie isn’t switched on yet: this server has no Anthropic API key. Add ANTHROPIC_API_KEY in the Vercel project settings, then try again.')
+    return view(state, live, 'Sofie isn’t switched on yet: this server has no Anthropic API key. Add ANTHROPIC_API_KEY in SiteGround (Devs → Node.js → Environment variables), restart the app, then try again.')
   }
   const access = await loadAccess(store, user)
   if (access.locked) return view(state, live, 'Your free trial has ended. Start your plan on the Account page and Sofie will pick up right where you left off.')
@@ -94,10 +97,15 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
 
   after(async () => {
     const current = state.draft ?? live
+    // Amazon picks, when the shop has Amazon connected (lib/amazon).
+    const az = current.site.store?.amazon
+    const keys = az ? await store.amazonKeys(site.id) : null
+    const amazon = az && keys ? { lookup: (asins: string[]) => getItems(keys, az.market, az.tag, asins), resolve: (link: string) => resolveShortLink(link) } : undefined
     try {
       const photos = (await store.mediaForSite(site.id)).filter((m) => m.mime !== 'image/svg+xml').map((m) => ({ src: `/u/${m.id}`, alt: m.alt, width: m.width, height: m.height }))
-      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}) })
+      const result = await askSofie({ snapshot: current, history: state.chat, message: text, photos, taken: await store.photosTaken(site.id), budgetMicros, ...(unsplashReady() ? { finder: { search: (q: string) => searchPhotos(store, q), set: (type: string, taken: Set<string>) => photoSetFor(store, type, taken) } } : {}), ...(amazon ? { amazon } : {}) })
       await store.recordUsage(site.id, today, costMicros(result.usage))
+      for (const [item, qty] of Object.entries(result.stock ?? {})) await store.setStock(site.id, item, qty)
       for (const m of result.media) {
         await store.addMedia({ id: m.id, siteId: site.id, mime: m.mime, width: m.width, height: m.height, alt: m.alt }, Buffer.from(m.data, 'utf8'))
       }
@@ -111,7 +119,7 @@ export async function sendToSofie(siteId: string, message: string): Promise<Stud
       })
     } catch (e) {
       console.error('Sofie failed', e)
-      await store.saveSofieState(site.id, { ...started, pending: null, error: 'Sofie couldn’t finish that just now. Please try again in a moment.' })
+      await store.saveSofieState(site.id, { ...started, pending: null, error: sofieErrorText(e, isAdmin(user.email)) })
     }
   })
 
@@ -145,7 +153,7 @@ export async function publishDraft(siteId: string): Promise<StudioState> {
   if ((await loadAccess(store, user)).locked) return view(state, { site, pages }, 'Your free trial has ended. Start your plan on the Account page to publish these changes; they’re saved.')
   const draft = state.draft
   // Only the owner's own site; ids that could point elsewhere are pinned.
-  const nextSite = { ...draft.site, id: site.id, orgId: site.orgId, subdomain: site.subdomain, ...(site.customDomain ? { customDomain: site.customDomain } : {}), pendingDomain: site.pendingDomain, handoff: site.handoff, updatedAt: new Date().toISOString() }
+  const nextSite = { ...draft.site, id: site.id, orgId: site.orgId, subdomain: site.subdomain, ...(site.customDomain ? { customDomain: site.customDomain } : {}), pendingDomain: site.pendingDomain, handoff: site.handoff, ownership: site.ownership, updatedAt: new Date().toISOString() }
   await store.updateSite(nextSite)
   // Pages Sofie added get fresh ids here, so a draft can never write over a
   // page that belongs to another site.

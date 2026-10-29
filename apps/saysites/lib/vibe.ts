@@ -87,11 +87,16 @@ function templatePatterns(): RegExp[] {
   for (const type of Object.keys(BUSINESS_TYPES) as BusinessTypeKey[]) {
     for (const design of designs) {
       for (const services of [[`${SLOT}S1${SLOT}`, `${SLOT}S2${SLOT}`, `${SLOT}S3${SLOT}`, `${SLOT}S4${SLOT}`], []]) {
+       // Every site's home is put together from parts picked per business
+       // (lib/starter uniqueHome), so walk enough variants to see them all.
+       for (let variant = 0; variant < (design ? 4 : 24); variant++) {
+        // With a phone number and, for half the variants, without one.
+        const phone = variant % 2 ? '' : `${SLOT}P${SLOT}`
         const { site, pages } = buildStarterSite(
-          { name: `${SLOT}N${SLOT}`, type, city: `${SLOT}C${SLOT}`, region: `${SLOT}R${SLOT}`, phone: `${SLOT}P${SLOT}`, services, palette: 'ocean', ...(design ? { design } : {}) },
+          { name: `${SLOT}N${SLOT}`, type, city: `${SLOT}C${SLOT}`, region: `${SLOT}R${SLOT}`, phone, services, palette: 'ocean', ...(design ? { design } : {}) },
           'org_t',
           'template',
-          { siteId: 'template', now: '2026-01-01T00:00:00.000Z' }
+          { siteId: 'template', now: '2026-01-01T00:00:00.000Z', variant }
         )
         const texts = [site.tagline ?? '', site.footerNote ?? '', ...pages.flatMap((p) => [...walk(p.body)].flatMap(elementText))]
         for (const t of texts)
@@ -107,6 +112,7 @@ function templatePatterns(): RegExp[] {
               .join('.{1,160}?')
             out.push(new RegExp(`^${src}$`, 'i'))
           }
+       }
       }
     }
   }

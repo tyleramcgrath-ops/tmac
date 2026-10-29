@@ -39,24 +39,38 @@ import {
 } from './schema'
 import { promoActive } from './promote'
 import { breadcrumbs, structuredData } from './seo'
+import { checkoutOpen, isListed, type Stock } from './commerce'
+import { CART_COUNT_PATH, CART_PATH, SHOP_CSS, renderProductBlock, renderProductsGrid } from './shop-render'
+export { formatPrice } from './commerce'
 
 export interface RenderedPage {
   html: string
   css: string
 }
 
-export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page]): RenderedPage {
+export interface RenderOptions {
+  // Stock counts for the shop (lib/commerce), when the site counts stock.
+  stock?: Stock
+  // Request-specific HTML under the page's own content (the cart, an
+  // order); it always needs the shop's styles.
+  inject?: string
+}
+
+export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [page], opts: RenderOptions = {}): RenderedPage {
   t = wordsFor(site.language)
+  stock = opts.stock ?? {}
+  productHeading = page.slug.startsWith('shop/') ? 1 : 2
+  const cartLink = checkoutOpen(site.store) && !!site.store?.products.some(isListed)
   // Question sets are written in English, so only English sites show them.
   intake = site.language === 'es' ? undefined : intakeSet(site.intake?.[page.id])
   // The header's call-to-action is a button even when the page has none.
   const bar = callBar(site)
   // Upcoming events show on the home page, after the owner's own sections.
   const events = page.slug === '' ? eventsHtml(upcomingEvents(site), t) : ''
-  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : []), ...(site.nav.some((n) => n.children?.length) ? ['navdd'] : []), ...(site.business.sameAs?.length ? ['social'] : []), ...(site.chat ? ['chat'] : []), ...(page.slug.includes('/') ? ['bc'] : [])]) + headerColors(site)
+  const css = (events ? EVENTS_CSS : '') + buildCss(site.globals, page.body, [...(site.header?.cta ? ['button', 'btn-primary'] : []), ...(site.header?.topbar ? ['topbar'] : []), ...(promoActive(site) ? ['promo'] : []), ...(bar ? ['callbar'] : []), ...(site.nav.some((n) => n.children?.length) ? ['navdd'] : []), ...(site.business.sameAs?.length ? ['social'] : []), ...(site.chat ? ['chat'] : []), ...(page.slug.includes('/') ? ['bc'] : []), ...(opts.inject ? ['shop', 'button', 'btn-primary', 'btn-outline'] : []), ...(cartLink ? ['cartlink'] : [])]) + headerColors(site)
   const origin = siteOrigin(site)
   const url = origin + pagePath(page)
-  const jsonLd = structuredData(site, page, allPages)
+  const jsonLd = structuredData(site, page, allPages, opts.stock)
 
   const head = [
     '<meta charset="utf-8">',
@@ -85,8 +99,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
   store = site.store
   posts = allPages.filter((p) => p.post && p.status === 'published').sort((a, b) => b.post!.date.localeCompare(a.post!.date))
   const body = [
-    renderHeader(site, page),
-    `<main>${crumbBar(site, page, allPages)}${page.body.map(renderElement).join('')}${events}</main>`,
+    renderHeader(site, page, cartLink),
+    `<main>${crumbBar(site, page, allPages)}${page.body.map(renderElement).join('')}${opts.inject ? `<div class="bx shop-x"><div class="bi">${opts.inject}</div></div>` : ''}${events}</main>`,
     renderFooter(site, photoKeysOn(page.body)),
     chatButton(site),
     bar,
@@ -103,6 +117,8 @@ export function renderPage(site: Site, page: Page, allPages: readonly Page[] = [
 // The site's products, for the products widget. Set per render; rendering is
 // synchronous, so this can't leak between pages.
 let store: Site['store']
+let stock: Stock = {}
+let productHeading: 1 | 2 = 2
 let t: SiteWords = WORDS.en
 let posts: Page[] = []
 // The intake questions for the page being rendered (lib/intake), if any.
@@ -125,7 +141,7 @@ function renderContainer(c: Container): string {
   // Hooks for the shared polish: rows of items (g) and cards (cd).
   const row = c.layout === 'grid' || c.direction?.desktop === 'row'
   const card = !!c.style?.background && !!c.style.borderRadius
-  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}${row && !c.boxed ? ' g' : ''}${card ? ' cd' : ''}`
+  const classes = `${cls(c.id)}${c.boxed ? ' bx' : ''}${bg ? ' hasbg' : ''}${row && !c.boxed ? ' g' : ''}${card ? ' cd' : ''}${c.effect ? ` fx-${c.effect}` : ''}`
   // Boxed: the element spans full width (background bleeds); content sits in
   // an inner box capped at the global container width.
   return c.boxed
@@ -171,7 +187,9 @@ function renderWidget(w: Widget): string {
     case 'form':
       return renderForm(w)
     case 'products':
-      return renderProducts(w)
+      return renderProductsGrid(w, { settings: store, stock, t }, cls(w.id))
+    case 'product':
+      return renderProductBlock(w.productId, { settings: store, stock, t }, cls(w.id), productHeading)
     case 'posts':
       return renderPosts(w)
     case 'gallery': {
@@ -211,31 +229,6 @@ function renderPosts(w: Extract<Widget, { type: 'posts' }>): string {
   return `<div class="pos ${cls(w.id)}">${cards.join('')}</div>`
 }
 
-const SYMBOL: Record<string, string> = { USD: '$', CAD: 'CA$', AUD: 'A$', GBP: '£', EUR: '€' }
-
-export function formatPrice(cents: number, currency: string): string {
-  const whole = cents % 100 === 0
-  return `${SYMBOL[currency] ?? ''}${(cents / 100).toLocaleString('en-US', { minimumFractionDigits: whole ? 0 : 2, maximumFractionDigits: 2 })}`
-}
-
-function renderProducts(w: Extract<Widget, { type: 'products' }>): string {
-  const products = (store?.products ?? []).slice(0, w.limit ?? 100)
-  if (!products.length) return ''
-  const cur = store?.currency ?? 'USD'
-  const cards = products.map((p) => {
-    const img = p.image
-      ? `<img class="pr-img" src="${esc(p.image.src)}"${srcset(p.image.src, 800)} sizes="(max-width: 640px) 100vw, 33vw" alt="${esc(p.image.alt)}" width="800" height="800" loading="lazy" decoding="async">`
-      : `<div class="pr-img pr-none" aria-hidden="true">${esc(p.name.charAt(0))}</div>`
-    const buy = p.soldOut
-      ? `<span class="pr-out">${esc(t.soldOut)}</span>`
-      : p.buyUrl
-        ? `<a class="btn btn-primary pr-buy" href="${esc(p.buyUrl)}" rel="noopener">${esc(t.buyNow)}</a>`
-        : `<a class="btn btn-outline pr-buy" href="/contact">${esc(t.askAboutThis)}</a>`
-    return `<article class="pr">${img}<div class="pr-body"><h3 class="pr-name">${esc(p.name)}</h3>${p.description ? `<p class="pr-desc">${esc(p.description)}</p>` : ''}<div class="pr-foot"><p class="pr-price">${esc(formatPrice(p.price, cur))}</p>${buy}</div></div></article>`
-  })
-  return `<div class="prs ${cls(w.id)}">${cards.join('')}</div>`
-}
-
 const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => string; input: string }> = {
   name: { label: (w) => w.yourName, input: '<input name="name" autocomplete="name" required maxlength="120">' },
   email: { label: (w) => w.email, input: '<input name="email" type="email" autocomplete="email" required maxlength="200">' },
@@ -247,12 +240,15 @@ const FIELD: Record<(typeof FORM_FIELDS)[number], { label: (w: SiteWords) => str
 // "#sent", which reveals the thank-you note through :target, so the cached
 // page never changes. "website" is a honeypot field people never see.
 function renderForm(w: Extract<Widget, { type: 'form' }>): string {
-  const field = (f: (typeof FORM_FIELDS)[number]) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${FIELD[f].input}</label>`
+  const rowed = w.layout === 'row'
+  // In a row the label is read by screen readers and shown as a placeholder.
+  const input = (f: (typeof FORM_FIELDS)[number]) => (rowed ? FIELD[f].input.replace(/^<(input|textarea)/, `<$1 placeholder="${esc(FIELD[f].label(t))}"`).replace(/ rows="5"/, ' rows="1"') : FIELD[f].input)
+  const field = (f: (typeof FORM_FIELDS)[number]) => `<label><span>${esc(FIELD[f].label(t))}${f === 'phone' ? ` <em>(${esc(t.optional)})</em>` : ''}</span>${input(f)}</label>`
   // Intake questions go just before the message box, all optional.
-  const questions = intake ? (intake.note ? `<p class="sform-note">${esc(intake.note)}</p>` : '') + intake.questions.map(intakeField).join('') : ''
+  const questions = intake && !rowed ? (intake.note ? `<p class="sform-note">${esc(intake.note)}</p>` : '') + intake.questions.map(intakeField).join('') : ''
   const fields = w.fields.map((f) => (f === 'message' ? questions + field(f) : field(f))).join('') + (w.fields.includes('message') ? '' : questions)
   return (
-    `<form class="sform ${cls(w.id)}" method="post" action="/__form">` +
+    `<form class="sform${rowed ? ' sform-row' : ''} ${cls(w.id)}" method="post" action="/__form">` +
     `<p class="sform-ok" id="sent" role="status">${esc(w.thanks ?? t.thanks)}</p>` +
     `<input type="hidden" name="form" value="${esc(w.id)}">` +
     `<label class="sform-hp" aria-hidden="true">${esc(t.leaveEmpty)}<input name="website" tabindex="-1" autocomplete="off"></label>` +
@@ -270,7 +266,7 @@ function intakeField(q: IntakeQuestion): string {
   return `<label>${label}<select name="${name}"><option value="">Choose…</option>${options.map(([v, l]) => `<option value="${esc(v)}">${esc(l)}</option>`).join('')}</select></label>`
 }
 
-function renderHeader(site: Site, page: Page): string {
+function renderHeader(site: Site, page: Page, cartLink = false): string {
   const current = pagePath(page)
   // An item with its own pages opens a short list on hover or keyboard
   // focus; tapping it on a phone goes to its page, which lists them all.
@@ -285,14 +281,14 @@ function renderHeader(site: Site, page: Page): string {
   const h = site.header
   const phone = site.business.phone
   const top = h?.topbar
-    ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span>${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</div></div>`
+    ? `<div class="stb"><div class="stb-in"><span>${esc(h.topbar)}</span><span class="stb-c">${site.business.email ? `<a href="mailto:${esc(site.business.email)}">${esc(site.business.email)}</a>` : ''}${phone ? `<a href="${esc(tel(phone))}">${esc(phone)}</a>` : ''}</span></div></div>`
     : ''
   const cta = h?.cta ? `<a class="btn btn-primary sh-cta" href="${esc(h.cta.href)}">${esc(h.cta.label)}</a>` : ''
   const brand = site.business.logo
     ? `<img class="sh-logo" src="${esc(site.business.logo)}" alt="${esc(site.business.name)}" width="252" height="56" loading="lazy" decoding="async">`
     : esc(site.business.name)
   const promo = promoActive(site) && site.promo ? promoBar(site.promo) : ''
-  return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cta}</div></header>`
+  return `<header class="sh">${promo}${top}<div class="sh-in"><a class="sh-brand" href="/">${brand}</a>${links ? `<nav aria-label="${esc(t.mainNav)}">${links}</nav>` : ''}${cartLink ? `<a class="sh-cart" href="${CART_PATH}">${esc(t.shop.cart)}<img src="/${CART_COUNT_PATH}" alt="" width="22" height="22"></a>` : ''}${cta}</div></header>`
 }
 
 // The header's own colours, set after the base styles so they win.
@@ -462,13 +458,14 @@ export function buildCss(g: GlobalStyles, body: readonly Container[], alsoUsed: 
     used.add(el.type === 'container' ? 'container' : el.type)
     if (el.type === 'container') {
       if (el.backgroundImage) used.add('bg')
+      if (el.effect) used.add(`fx-${el.effect}`)
       containerRules(el, byBp)
       el.children.forEach(visit)
     } else {
       if (el.type === 'button') used.add(`btn-${el.variant}`)
       if (el.type === 'image' && el.aspect) used.add('crop')
-      if (el.type === 'form') used.add('button').add('btn-primary')
-      if (el.type === 'products') used.add('button').add('btn-primary').add('btn-outline')
+      if (el.type === 'form') used.add('button').add('btn-primary').add(el.layout === 'row' ? 'form-row' : 'form')
+      if (el.type === 'products' || el.type === 'product') used.add('shop').add('button').add('btn-primary').add('btn-outline')
     }
     if (el.style) styleRules(`.${cls(el.id)}`, el.style, byBp)
   }
@@ -513,7 +510,7 @@ function baseCss(g: GlobalStyles): string {
     face +
     btnCase +
     `:root{${vars}}*,*::before,*::after{box-sizing:border-box}` +
-    `body{margin:0;font-family:var(--f-b);font-size:${g.baseFontSize}px;line-height:1.6;color:var(--c-text);background:var(--c-background)}` +
+    `body{margin:0;font-family:var(--f-b);font-size:${g.baseFontSize}px;line-height:1.6;color:var(--c-text);background:var(--c-background);-webkit-font-smoothing:antialiased}h1,h2,h3{text-wrap:balance}` +
     `h1,h2,h3,h4,h5,h6{font-family:var(--f-h);line-height:1.2;margin:0 0 .5em}${sizes}` +
     `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){${mobile}}` +
     `p{margin:0 0 1em}img{max-width:100%;height:auto;display:block}a{color:var(--c-primary)}` +
@@ -536,7 +533,7 @@ function baseCss(g: GlobalStyles): string {
 function widgetCss(used: Set<string>): string {
   let css = ''
   if (used.has('button')) {
-    css += `.btn{display:inline-block;padding:.8em 1.6em;border-radius:var(--rb);font-weight:600;text-decoration:none;border:1.5px solid transparent;line-height:1.2;text-align:center}`
+    css += `.btn{display:inline-block;padding:.9em 1.75em;border-radius:var(--rb);font-weight:600;text-decoration:none;border:1.5px solid transparent;line-height:1.2;text-align:center;transition:transform .2s}.btn:hover{transform:translateY(-1px)}`
     if (used.has('btn-primary')) css += `.btn-primary{background:var(--c-primary);color:var(--c-background)}`
     if (used.has('btn-secondary')) css += `.btn-secondary{background:var(--c-secondary);color:var(--c-background)}`
     if (used.has('btn-outline')) css += `.btn-outline{border-color:currentColor;color:inherit}`
@@ -544,8 +541,8 @@ function widgetCss(used: Set<string>): string {
   if (used.has('text')) css += `.tx p:last-child{margin-bottom:0}`
   if (used.has('topbar'))
     css +=
-      `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}` +
-      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span{display:none}}`
+      `.stb{background:var(--c-secondary);color:color-mix(in srgb,var(--c-background) 78%,transparent);font-size:.82em}.stb-in{max-width:var(--w);margin:0 auto;padding:7px 24px;display:flex;flex-wrap:wrap;gap:4px 16px;justify-content:space-between}.stb a{color:var(--c-background);font-weight:700;text-decoration:none}.stb-c{display:flex;gap:4px 22px;flex-wrap:wrap}` +
+      `@media (max-width:${BREAKPOINT_MAX_WIDTH.mobile}px){.stb-in>span:first-child,.stb-c a[href^=mailto]{display:none}}`
   if (used.has('promo'))
     css += `.spb{background:var(--c-primary);color:var(--c-background);font-size:.88em;text-align:center}.spb p{max-width:var(--w);margin:0 auto;padding:9px 20px;line-height:1.4}.spb a{color:inherit;text-decoration:none;font-weight:600}.spb a:hover span{margin-left:3px}`
   if (used.has('callbar'))
@@ -575,13 +572,8 @@ function widgetCss(used: Set<string>): string {
       `.pos{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:36px 28px}.po{display:flex;flex-direction:column;gap:8px}` +
       `.po-img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r);margin-bottom:8px}.po time{font-size:.85em;color:var(--c-muted);font-weight:600;letter-spacing:.02em}` +
       `.po-t{font-size:1.35em;margin:0}.po-t a{color:var(--c-text);text-decoration:none}.po-t a:hover{color:var(--c-primary)}.po p{margin:0;color:var(--c-muted)}.po-more{font-weight:600;text-decoration:none;margin-top:4px}.po-none{color:var(--c-muted)}`
-  if (used.has('products'))
-    css +=
-      `.prs{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}.pr{display:flex;flex-direction:column;gap:14px;background:var(--c-surface);border-radius:var(--r);padding:10px 10px 14px}` +
-      `.pr-img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:calc(var(--r) * .7);background:var(--c-background)}.pr-none{display:grid;place-items:center;font:600 3em var(--f-h);color:var(--c-muted)}` +
-      `.pr-body{display:flex;flex-direction:column;gap:4px;flex:1;padding:0 6px}.pr-name{font-size:1.1em;margin:0}.pr-desc{margin:0;color:var(--c-muted);font-size:.92em}` +
-      `.pr-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:12px}.pr-price{margin:0;font-weight:700;color:var(--c-text)}` +
-      `.pr-buy{padding:.55em 1.1em;font-size:.9em;white-space:nowrap}.pr-out{padding:.5em 1em;font-size:.88em;font-weight:600;color:var(--c-muted);border:1.5px solid color-mix(in srgb,var(--c-muted) 45%,transparent);border-radius:var(--rb)}`
+  if (used.has('shop')) css += SHOP_CSS
+  else if (used.has('cartlink')) css += `.sh-cart{display:inline-flex;align-items:center;gap:6px;font-weight:600;text-decoration:none;color:inherit}.sh-cart img{height:22px;width:auto}`
   if (used.has('form'))
     css +=
       `.sform{display:grid;gap:14px;max-width:560px;width:100%}.sform label{display:grid;gap:6px;font-weight:600;font-size:.95em}.sform em{font-weight:400;font-style:normal;color:var(--c-muted)}` +
@@ -589,6 +581,16 @@ function widgetCss(used: Set<string>): string {
       `.sform-note{margin:0;font-size:.9em;color:var(--c-muted)}.sform input:focus,.sform textarea:focus,.sform select:focus{outline:2px solid var(--c-primary);outline-offset:1px;border-color:var(--c-primary)}.sform .btn{justify-self:start;cursor:pointer;font:inherit;font-weight:600}` +
       `.sform-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}` +
       `.sform-ok{display:none;margin:0;padding:14px 16px;border-radius:min(var(--r),10px);background:color-mix(in srgb,var(--c-primary) 12%,var(--c-background));font-weight:600}.sform-ok:target{display:block}`
+  if (used.has('form-row'))
+    css +=
+      `.sform-row{max-width:none;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));align-items:stretch}.sform-row label>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}` +
+      `.sform-row textarea{resize:none;min-height:0;height:100%}.sform-row .btn{justify-self:stretch}.sform-row .sform-ok{grid-column:1/-1}`
+  if (used.has('fx-slant'))
+    css +=
+      `.fx-slant{overflow:hidden}.fx-slant>.hasbg{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}` +
+      `@media (min-width:${BREAKPOINT_MAX_WIDTH.mobile + 1}px){.fx-slant>:nth-child(2){clip-path:polygon(16% 0,100% 0,84% 100%,0 100%);margin:0 -8%;z-index:1}}`
+  if (used.has('fx-glass'))
+    css += `.fx-glass{background:rgb(255 255 255/.12);-webkit-backdrop-filter:blur(16px) saturate(1.2);backdrop-filter:blur(16px) saturate(1.2);border:1px solid rgb(255 255 255/.24);color:#fff}`
   if (used.has('ticker'))
     css +=
       `.tk{overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}` +
@@ -746,6 +748,12 @@ function styleRules(sel: string, s: ElementStyle, byBp: Record<Breakpoint, Rules
   if (s.textTransform) add(d, sel, { 'text-transform': s.textTransform })
   if (s.fontFamily) add(d, sel, { 'font-family': s.fontFamily === 'heading' ? 'var(--f-h)' : 'var(--f-b)' })
   if (s.border) add(d, sel, { border: `1px solid ${color(s.border)}` })
+  if (s.rule) add(d, sel, { 'border-left': `5px solid ${color(s.rule)}`, 'padding-left': '28px' })
+  if (s.line) add(d, sel, { 'border-top': '1px solid color-mix(in srgb,currentColor 16%,transparent)' })
+  if (s.span) {
+    add(d, sel, { 'grid-column': `span ${s.span}` })
+    add(byBp.mobile, sel, { 'grid-column': 'auto' })
+  }
   // Doubled class: beats the parent row's equal-share rule on desktop; the
   // phone layout (stacked) still wins there.
   if (s.grow) add(d, `${sel}${sel}`, { flex: `${s.grow} 1 0` })
@@ -797,7 +805,9 @@ function round(n: number): number {
 export const SHARE_CARD_PATH = '__og'
 export function shareImage(site: Site, page: Page): string {
   const origin = siteOrigin(site)
-  const first = page.seo.ogImage ?? page.post?.image?.src ?? [...walk(page.body)].find((el) => el.type === 'image')?.src
+  // The first photo on the page, whether an image or a section's background.
+  const photo = [...walk(page.body)].map((el) => (el.type === 'image' ? el.src : el.type === 'container' ? el.backgroundImage?.src : undefined)).find(Boolean)
+  const first = page.seo.ogImage ?? page.post?.image?.src ?? photo
   if (!first) return `${origin}/${SHARE_CARD_PATH}?p=${encodeURIComponent(pagePath(page))}`
   // Stock photos come cropped to the 1200 x 630 shape share previews use.
   if (first.startsWith('https://images.unsplash.com/')) {

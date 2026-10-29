@@ -14,6 +14,8 @@ jobs:
         project:
           - .
           - apps/citation-gap
+          - apps/girls-around-the-globe
+          - apps/lawmatchnow
           - apps/north-star-hq
           - apps/reloop
           - apps/saysites
@@ -42,5 +44,20 @@ jobs:
             pnpm install --no-frozen-lockfile
           fi
 
+      - name: Type-check
+        if: matrix.project == 'apps/lawmatchnow'
+        run: pnpm type-check
+
       - name: Build
         run: pnpm build
+
+      - name: Test
+        if: matrix.project == 'apps/girls-around-the-globe'
+        run: pnpm test
+
+      - name: Bar importer tests
+        if: matrix.project == 'apps/lawmatchnow'
+        working-directory: apps/lawmatchnow/tools/bar-import
+        run: |
+          npm ci --no-audit --no-fund
+          npm test

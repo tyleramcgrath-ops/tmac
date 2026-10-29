@@ -2,10 +2,10 @@
 
 import { headers } from 'next/headers'
 import { redirect } from 'next/navigation'
-import { billingReady, cleanInterval, cleanPlan, cleanPromo, newBilling, priceId } from '@/lib/billing'
+import { AUTO_PRICED, PLAN_NAMES, PRICES, billingReady, cleanInterval, cleanPlan, cleanPromo, lookupKey, newBilling, priceId } from '@/lib/billing'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
-import { checkoutUrl, portalUrl } from '@/lib/stripe'
+import { checkoutUrl, ensurePrice, portalUrl } from '@/lib/stripe'
 
 async function origin(): Promise<string> {
   const h = await headers()
@@ -25,11 +25,13 @@ export async function startPlan(form: FormData): Promise<void> {
   if (typed && typed !== current.promo) await store.saveBilling(user.id, { ...current, promo: typed })
   const plan = cleanPlan(form.get('plan'))
   const interval = cleanInterval(form.get('interval'))
-  const price = priceId(plan, interval)
-  // A plan whose Stripe price isn't set up yet can't be bought.
-  if (!price) redirect('/dashboard/account?billing=soon')
+  let price = priceId(plan, interval)
+  // A plan whose Stripe price isn't set up yet can't be bought, unless it's
+  // one checkout can create in Stripe itself.
+  if (!price && !AUTO_PRICED.includes(plan)) redirect('/dashboard/account?billing=soon')
   let url: string
   try {
+    price ??= await ensurePrice({ lookupKey: lookupKey(plan, interval), product: `SaySites ${PLAN_NAMES[plan]}${interval === 'year' ? ' (yearly)' : ''}`, amountCents: PRICES[plan][interval] * 100, interval })
     url = await checkoutUrl({ userId: user.id, email: user.email, customerId: current.customerId, promo, origin: await origin(), price, plan, interval, ...(current.status === 'trial' ? { trialEnd: current.trialEndsAt } : {}) })
   } catch (e) {
     console.error('checkout failed', e)

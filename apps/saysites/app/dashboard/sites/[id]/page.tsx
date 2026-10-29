@@ -1,3 +1,4 @@
+import { OwnerCheck } from '@/components/OwnerCheck'
 import { notFound } from 'next/navigation'
 import { requireUser } from '@/lib/session'
 import { getStore } from '@/lib/store'
@@ -17,8 +18,8 @@ import { loadSpend, monthShare, refillDate } from '@/lib/usage'
 import { Milestones } from '@/components/Milestones'
 import { freshSeoState } from '@/lib/seo-intel'
 
-export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string }> }) {
-  const [{ id }, { new: isNew }] = await Promise.all([params, searchParams])
+export default async function SiteOverview({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ new?: string; owner?: string }> }) {
+  const [{ id }, { new: isNew, owner }] = await Promise.all([params, searchParams])
   const user = await requireUser()
   const store = getStore()
   const site = await store.siteForUser(user.id, id)
@@ -74,6 +75,7 @@ export default async function SiteOverview({ params, searchParams }: { params: P
   return (
     <div className="stack">
       {isNew && <p className="notice good"><strong>Your website is ready.</strong> Have a look, then use Sofie or Settings to make it yours.</p>}
+      <OwnerCheck site={site} note={owner} />
 
       <div className="overview">
         <div className="card preview-card">

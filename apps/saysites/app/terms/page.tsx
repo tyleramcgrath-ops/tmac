@@ -2,11 +2,11 @@ import type { Metadata } from 'next'
 import { MarketingShell } from '@/components/MarketingShell'
 import '../home.css'
 
-export const metadata: Metadata = { title: 'Terms', description: 'The terms for using SaySites.', alternates: { canonical: '/terms' } }
+export const metadata: Metadata = { title: 'Terms of Service', description: 'The terms that apply when you use SaySites to build, host and run your website or online store, written in plain English to be read.', alternates: { canonical: '/terms' } }
 
 export default function Terms() {
   return (
-    <MarketingShell>
+    <MarketingShell closing={false}>
       <section className="page-hero">
         <div className="wrap">
           <p className="kicker">Terms</p>

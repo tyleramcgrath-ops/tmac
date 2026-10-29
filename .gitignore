@@ -71,3 +71,7 @@ apps/citation-gap/test/*.png
 /hero-aeo-lit.png
 /surfaces-band-fixed.png
 /roots-resting.png
+
+# serp-quake local data (live data lives on the serp-quake-data branch)
+apps/serp-quake/data
+apps/serp-quake/demo-data

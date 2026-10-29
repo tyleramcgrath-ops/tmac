@@ -1,0 +1,158 @@
+// State law facts, researched per state with a citation and source for each.
+// Only facts marked verified are ever shown; anything uncertain stays out.
+
+import carAccident from './data/car-accident.json'
+import custody from './data/custody.json'
+import dogBite from './data/dog-bite.json'
+import eviction from './data/eviction.json'
+import finalPay from './data/final-pay.json'
+import lemon from './data/lemon.json'
+import marriage from './data/marriage.json'
+import property from './data/property.json'
+import records from './data/records.json'
+import recording from './data/recording.json'
+import damagesBar from './data/damages-bar.json'
+import divorce from './data/divorce.json'
+import dui from './data/dui.json'
+import employment from './data/employment.json'
+import employment2 from './data/employment2.json'
+import smallClaims from './data/small-claims.json'
+import solCivil from './data/sol-civil.json'
+import solInjury from './data/sol-injury.json'
+import wills from './data/wills.json'
+
+export type Fact = {
+  value: string | null
+  years?: number | null
+  detail?: string
+  cite?: string
+  source?: string
+  verified?: boolean
+  note?: string
+}
+
+type Dataset = { researchedOn: string; states: Record<string, Record<string, Fact>> }
+
+const DATA: Record<string, Dataset> = {
+  'sol-injury': solInjury as Dataset,
+  'sol-civil': solCivil as Dataset,
+  'car-accident': carAccident as Dataset,
+  divorce: divorce as Dataset,
+  dui: dui as Dataset,
+  'small-claims': smallClaims as Dataset,
+  wills: wills as Dataset,
+  employment: employment as Dataset,
+  'damages-bar': damagesBar as Dataset,
+  custody: custody as Dataset,
+  recording: recording as Dataset,
+  'dog-bite': dogBite as Dataset,
+  eviction: eviction as Dataset,
+  'final-pay': finalPay as Dataset,
+  marriage: marriage as Dataset,
+  property: property as Dataset,
+  employment2: employment2 as Dataset,
+  records: records as Dataset,
+  lemon: lemon as Dataset,
+}
+
+/** What each fact is, for table labels and FAQ wording. */
+export const FIELDS = {
+  'sol-injury.personalInjury': { label: 'Personal injury', ask: 'deadline to file a personal injury lawsuit' },
+  'sol-injury.wrongfulDeath': { label: 'Wrongful death', ask: 'deadline to file a wrongful death lawsuit' },
+  'sol-injury.medicalMalpractice': { label: 'Medical malpractice', ask: 'deadline to file a medical malpractice lawsuit' },
+  'sol-injury.propertyDamage': { label: 'Property damage', ask: 'deadline to sue for damage to property' },
+  'sol-civil.writtenContract': { label: 'Written contracts', ask: 'deadline to sue over a written contract' },
+  'sol-civil.oralContract': { label: 'Oral contracts', ask: 'deadline to sue over an oral contract' },
+  'sol-civil.fraud': { label: 'Fraud', ask: 'deadline to sue for fraud' },
+  'sol-civil.defamation': { label: 'Defamation (libel and slander)', ask: 'deadline to sue for defamation' },
+  'sol-civil.debtCollection': { label: 'Debt collection', ask: 'deadline for a creditor to sue on a debt' },
+  'car-accident.faultSystem': { label: 'Insurance system', ask: 'car insurance system' },
+  'car-accident.negligenceRule': { label: 'Shared-fault rule', ask: 'rule when both sides share fault' },
+  'car-accident.minimumLiability': { label: 'Minimum liability insurance', ask: 'minimum car insurance' },
+  'car-accident.pipRequired': { label: 'Personal injury protection (PIP)', ask: 'PIP requirement' },
+  'car-accident.uninsuredMotorist': { label: 'Uninsured motorist coverage', ask: 'uninsured motorist coverage rule' },
+  'car-accident.accidentReport': { label: 'Reporting a crash', ask: 'crash reporting requirement' },
+  'divorce.residency': { label: 'Residency to file', ask: 'residency requirement for divorce' },
+  'divorce.waitingPeriod': { label: 'Waiting period', ask: 'waiting period for a divorce' },
+  'divorce.grounds': { label: 'Grounds', ask: 'grounds for divorce' },
+  'divorce.propertyDivision': { label: 'Property division', ask: 'way property is divided in a divorce' },
+  'divorce.childSupportGuidelines': { label: 'Child support model', ask: 'child support guideline model' },
+  'divorce.legalSeparation': { label: 'Legal separation', ask: 'availability of legal separation' },
+  'custody.childPreference': { label: 'Child’s preference', ask: 'age when a child’s custody preference counts' },
+  'custody.supportEndAge': { label: 'Child support ends at', ask: 'age when child support ends' },
+  'recording.consent': { label: 'Consent to record', ask: 'rule on recording conversations' },
+  'recording.penalty': { label: 'Penalty for illegal recording', ask: 'penalty for recording without consent' },
+  'dog-bite.liability': { label: 'Owner liability', ask: 'dog bite liability rule' },
+  'dog-bite.deadline': { label: 'Deadline to sue', ask: 'deadline to sue for a dog bite' },
+  'eviction.nonpaymentNotice': { label: 'Notice to evict for unpaid rent', ask: 'notice required before an eviction for unpaid rent' },
+  'eviction.monthToMonthNotice': { label: 'Notice to end a month-to-month lease', ask: 'notice to end a month-to-month tenancy' },
+  'eviction.lateFeeCap': { label: 'Late fee limit', ask: 'limit on rent late fees' },
+  'final-pay.fired': { label: 'Final paycheck if fired', ask: 'deadline for a final paycheck after being fired' },
+  'final-pay.quit': { label: 'Final paycheck if you quit', ask: 'deadline for a final paycheck after quitting' },
+  'final-pay.accruedVacation': { label: 'Unused vacation payout', ask: 'rule on paying out unused vacation' },
+  'marriage.commonLaw': { label: 'Common-law marriage', ask: 'rule on common-law marriage' },
+  'marriage.minAge': { label: 'Minimum age to marry', ask: 'minimum age to marry' },
+  'property.adversePossession': { label: 'Adverse possession period', ask: 'time needed for adverse possession' },
+  'property.squatterRemoval': { label: 'Removing a squatter', ask: 'way an owner removes a squatter' },
+  'employment2.atWill': { label: 'At-will employment', ask: 'at-will employment rule' },
+  'employment2.nonCompete': { label: 'Non-compete agreements', ask: 'rule on non-compete agreements' },
+  'records.misdemeanorWait': { label: 'Clearing a misdemeanor', ask: 'wait to clear a misdemeanor conviction' },
+  'records.felonyWait': { label: 'Clearing a felony', ask: 'wait to clear a felony conviction' },
+  'records.autoClear': { label: 'Automatic record clearing', ask: 'automatic record clearing (Clean Slate) rule' },
+  'lemon.attempts': { label: 'Repair attempts', ask: 'repair attempts that make a car a lemon' },
+  'lemon.daysOut': { label: 'Days out of service', ask: 'days out of service that make a car a lemon' },
+  'lemon.coverage': { label: 'Covered period', ask: 'period the lemon law covers' },
+  'lemon.usedCars': { label: 'Used-car protection', ask: 'used-car lemon law' },
+  'custody.custodyFactorsCite': { label: 'Best-interest factors', ask: 'factors courts weigh in custody cases' },
+  'dui.name': { label: 'Name of the offense', ask: 'name for drunk driving' },
+  'dui.bacLimit': { label: 'Legal limit (21+)', ask: 'legal blood alcohol limit' },
+  'dui.under21': { label: 'Limit under 21', ask: 'blood alcohol limit for drivers under 21' },
+  'dui.commercial': { label: 'Commercial drivers', ask: 'blood alcohol limit for commercial drivers' },
+  'dui.refusalSuspension': { label: 'Refusing a breath or blood test (first time)', ask: 'license suspension for refusing a chemical test' },
+  'dui.interlockFirstOffense': { label: 'Ignition interlock, first offense', ask: 'ignition interlock rule for a first offense' },
+  'dui.lookback': { label: 'Look-back period for repeat offenses', ask: 'look-back period for prior DUIs' },
+  'small-claims.smallClaimsLimit': { label: 'Small claims limit', ask: 'small claims limit' },
+  'small-claims.smallClaimsCourt': { label: 'Court that hears small claims', ask: 'court that hears small claims' },
+  'small-claims.lawyersAllowed': { label: 'Lawyers in small claims', ask: 'rule on lawyers in small claims court' },
+  'small-claims.securityDepositReturn': { label: 'Security deposit return deadline', ask: 'deadline for a landlord to return a security deposit' },
+  'small-claims.securityDepositCap': { label: 'Security deposit limit', ask: 'limit on security deposits' },
+  'wills.witnesses': { label: 'Witnesses for a will', ask: 'number of witnesses a will needs' },
+  'wills.holographic': { label: 'Handwritten (holographic) wills', ask: 'rule on handwritten wills' },
+  'wills.selfProving': { label: 'Self-proving affidavit', ask: 'rule on self-proving wills' },
+  'wills.smallEstate': { label: 'Small estate threshold', ask: 'small estate limit for skipping full probate' },
+  'wills.estateTax': { label: 'State estate or inheritance tax', ask: 'state estate or inheritance tax' },
+  'wills.electronicWills': { label: 'Electronic wills', ask: 'rule on electronic wills' },
+  'employment.minimumWage': { label: 'Minimum wage', ask: 'minimum wage' },
+  'employment.tippedWage': { label: 'Tipped minimum cash wage', ask: 'minimum cash wage for tipped workers' },
+  'employment.fairEmploymentAgency': { label: 'Agency for discrimination complaints', ask: 'agency that handles job discrimination complaints' },
+  'employment.discriminationDeadline': { label: 'Deadline to file a discrimination charge', ask: 'deadline to file a job discrimination charge' },
+  'employment.wcInjuryNotice': { label: 'Tell your employer within', ask: 'deadline to report a work injury to your employer' },
+  'employment.wcClaimDeadline': { label: 'File a workers’ comp claim within', ask: 'deadline to file a workers’ compensation claim' },
+  'employment.wcAgency': { label: 'Workers’ comp agency', ask: 'workers’ compensation agency' },
+  'damages-bar.medMalCap': { label: 'Cap on non-economic damages (malpractice)', ask: 'cap on pain-and-suffering damages in malpractice cases' },
+  'damages-bar.meritRequirement': { label: 'Before suing for malpractice', ask: 'pre-suit requirement for malpractice cases' },
+  'damages-bar.punitiveCap': { label: 'Punitive damages', ask: 'limit on punitive damages' },
+  'damages-bar.jointSeveral': { label: 'Joint and several liability', ask: 'rule on joint and several liability' },
+  'damages-bar.barName': { label: 'Licensing body', ask: 'body that licenses lawyers' },
+  'damages-bar.lawyerLookup': { label: 'Check a lawyer’s license', ask: 'way to check a lawyer’s license' },
+  'damages-bar.barReferral': { label: 'Bar lawyer referral service', ask: 'state bar lawyer referral service' },
+} as const
+
+export type FieldKey = keyof typeof FIELDS
+
+/** A verified fact, or null. */
+export function fact(state: string, key: FieldKey): Fact | null {
+  const [set, field] = key.split('.')
+  const f = DATA[set]?.states[state]?.[field]
+  return f && f.verified === true && f.value ? f : null
+}
+
+/** When each dataset was researched, for "last reviewed" dates. */
+export const researchedOn = (key: FieldKey) => DATA[key.split('.')[0]]?.researchedOn ?? '2026-10-20'
+
+/** Every state's verified value for one fact (for 50-state tables and comparisons). */
+export function allStates(key: FieldKey) {
+  return Object.keys(DATA[key.split('.')[0]]?.states ?? {})
+    .map((code) => ({ code, f: fact(code, key) }))
+    .filter((r): r is { code: string; f: Fact } => r.f !== null)
+}

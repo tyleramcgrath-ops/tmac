@@ -1,9 +1,13 @@
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
+import { PricingPlans } from '@/components/PricingPlans'
+import { PRICES } from '@/lib/billing'
+import { LAW_RESEARCH } from '@/lib/law-research'
 import { MarketingShell } from '@/components/MarketingShell'
 import { INDUSTRIES, industry } from '@/lib/industries'
 import { GUIDES } from '@/lib/industries/guides'
+import { TOPICS } from '@/lib/topics'
 import { photosFor } from '@/lib/photos'
 import { SHOWCASE_INFO } from '@/lib/showcase'
 import '../../home.css'
@@ -25,6 +29,8 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
   const info = SHOWCASE_INFO[i.example]
   const others = INDUSTRIES.filter((o) => o.slug !== i.slug)
   const guide = GUIDES[i.slug]
+  // The evergreen guide for this kind of business, with every article on it.
+  const hub = TOPICS.find((t) => t.industries.includes(i.slug))
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -52,7 +58,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <h1>{i.h1}</h1>
             <p>{i.lede}</p>
             <div className="ind-actions">
-              <a className="b b-dark" href="/#talk">Let’s talk</a>
+              <a className="b b-dark" href="/signup">Start free</a>
               <a className="b b-line" href="/redesign">See your current site rebuilt</a>
               <a className="tplrow-link" href={`/preview/${i.example}`}>See a live example</a>
             </div>
@@ -152,6 +158,7 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
                 <div className="ind-guide-body">{g.body.split(/\n\s*\n/).map((para, k) => <p key={k}>{para}</p>)}</div>
               </div>
             ))}
+            {hub && <p className="ind-guide-more"><a href={`/guides/${hub.slug}`}>Read the full {hub.name.toLowerCase()} guide, with every article on the subject →</a></p>}
           </div>
         </section>
       )}
@@ -164,6 +171,35 @@ export default async function IndustryPage({ params }: { params: Promise<{ slug:
             <div><b>95+</b><span>speed score required on every page</span></div>
             <div><b>100%</b><span>yours: your words, photos and domain</span></div>
           </div>
+        </div>
+      </section>
+
+      {i.slug === 'law-firms' && (
+        <section className="ind-sec ind-alt" id="compared">
+          <div className="wrap">
+            <div className="head">
+              <p className="kicker">Measured, not claimed</p>
+              <h2>How SaySites compares with the firm sites that rank today.</h2>
+              <p>We tested {LAW_RESEARCH.sites} law firm websites at the top of Google in {LAW_RESEARCH.date}. Here’s the middle of the pack next to a SaySites site.</p>
+            </div>
+            <div className="lr-wrap">
+              <table className="lr-cmp">
+                <thead><tr><th scope="col">Check</th><th scope="col">Typical top-ranking firm site</th><th scope="col">SaySites</th></tr></thead>
+                <tbody>{LAW_RESEARCH.rows.map((r) => <tr key={r.label}><th scope="row">{r.label}</th><td data-l="Typical firm site">{r.them}</td><td data-l="SaySites"><strong>{r.us}</strong></td></tr>)}</tbody>
+              </table>
+            </div>
+            <p className="lr-note">Middle values from our test; speed figures from a mobile Lighthouse test of {LAW_RESEARCH.lighthouseSample} sites. SaySites figures are our example law firm sites, measured the same way on our own server. <a href={LAW_RESEARCH.article}>How we tested</a>.</p>
+          </div>
+        </section>
+      )}
+
+      <section className="ind-sec" id="pricing">
+        <div className="wrap">
+          <div className="head">
+            <p className="kicker">Pricing</p>
+            <h2>{i.slug === 'law-firms' ? 'One monthly price. Everything a firm needs.' : `From $${PRICES.site.month} a month, everything included.`}</h2>
+          </div>
+          {i.slug === 'law-firms' ? <PricingPlans only="law" /> : <p><a className="b b-dark" href="/pricing">See every plan</a></p>}
         </div>
       </section>
 

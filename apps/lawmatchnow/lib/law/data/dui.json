@@ -1,0 +1,2399 @@
+{
+"researchedOn": "2026-10-20",
+"states": {
+"AK": {
+"name": {
+"value": "DUI",
+"detail": "Driving while under the influence of an alcoholic beverage, inhalant, or controlled substance.",
+"cite": "Alaska Stat. § 28.35.030",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.35.030",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with a blood or breath alcohol concentration of 0.08 or more within four hours of driving.",
+"cite": "Alaska Stat. § 28.35.030(a)(2)",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.35.030",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "Drivers aged 14 to 20 commit an offense by driving after consuming any quantity of alcohol.",
+"cite": "Alaska Stat. § 28.35.280(a)",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.35.280",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial vehicle drivers are guilty of DUI with a blood or breath alcohol concentration of 0.04 or more.",
+"cite": "Alaska Stat. § 28.33.030(a)(2)",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.33.030",
+"verified": true
+},
+"refusalSuspension": {
+"value": "90 days",
+"detail": "A first refusal brings an administrative revocation of at least 90 days; refusal is also a separate crime with penalties matching DUI.",
+"cite": "Alaska Stat. §§ 28.15.165(d), 28.15.181(c)(1), 28.35.032",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.15.165",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "A first DUI conviction requires an ignition interlock for at least 6 months after driving privileges return (waivable in certain remote communities).",
+"cite": "Alaska Stat. § 28.35.030(b)(1)(A), (t)",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.35.030",
+"verified": true
+},
+"lookback": {
+"value": "15 years",
+"detail": "A person is 'previously convicted' if convicted of DUI or refusal within the 15 years before the current offense.",
+"cite": "Alaska Stat. § 28.35.030(w)(4)",
+"source": "https://www.akleg.gov/basis/statutes.asp#28.35.030",
+"verified": true
+}
+},
+"AL": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, controlled substances, or other impairing substances.",
+"cite": "Ala. Code § 32-5A-191",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with a blood alcohol concentration of 0.08 percent or more.",
+"cite": "Ala. Code § 32-5A-191(a)(1)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with 0.02 percent or more alcohol in their blood.",
+"cite": "Ala. Code § 32-5A-191(b)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial motor vehicle drivers may not drive with 0.04 percent or more alcohol in their blood.",
+"cite": "Ala. Code § 32-5A-191(c)(2)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+},
+"refusalSuspension": {
+"value": "90 days",
+"detail": "A first refusal (no prior alcohol/drug contacts in 10 years) brings a 90-day administrative suspension; a conviction also carries a 1-year interlock requirement.",
+"cite": "Ala. Code §§ 32-5-192(c), 32-5A-304(b)(1); 32-5A-191(t)(2)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-304",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+) or aggravating factors",
+"detail": "A first offender must use an interlock for 1 year if BAC was 0.15%+, they refused testing, a child under 14 was aboard, or someone was injured; others may choose one to stay the 90-day suspension.",
+"cite": "Ala. Code § 32-5A-191(e)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Prior DUI convictions within 10 years count for sentencing; after a felony DUI, all later DUIs are felonies regardless of date.",
+"cite": "Ala. Code § 32-5A-191(p)",
+"source": "https://alison.legislature.state.al.us/code-of-alabama?section=32-5A-191",
+"verified": true
+}
+},
+"AR": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated (DUI is the separate underage offense).",
+"cite": "Ark. Code Ann. § 5-65-103",
+"source": "https://www.dfa.arkansas.gov/office/driver-services/dui-dwi-information/dui-dwi-bui-bwi-offenses/",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "A driver with a blood alcohol level of 0.08% or more is considered intoxicated.",
+"cite": "Ark. Code Ann. § 5-65-103",
+"source": "https://www.rogersar.gov/356/DWI-DUI",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a BAC of at least 0.02% but under 0.08% commit Underage DUI.",
+"cite": "Ark. Code Ann. § 5-65-303",
+"source": "https://www.rogersar.gov/356/DWI-DUI",
+"verified": true
+},
+"refusalSuspension": {
+"value": "180 days",
+"detail": "A first refusal brings a 180-day suspension; a second within 5 years brings 2 years.",
+"cite": "Ark. Code Ann. § 5-65-205",
+"source": "https://www.dfa.arkansas.gov/office/driver-services/dui-dwi-information/refusals/",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Since Act 274 of 2021, prior DWIs within 10 years count for repeat-offense jail terms; license-suspension tiers still use 5 years.",
+"cite": "Ark. Code Ann. § 5-65-111 (as amended by Act 274 of 2021)",
+"source": "https://arkleg.state.ar.us/Home/FTPDocument?path=%2FACTS%2F2021R%2FPublic%2FACT274.pdf",
+"verified": true
+}
+},
+"AZ": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of intoxicating liquor or drugs.",
+"cite": "Ariz. Rev. Stat. § 28-1381",
+"source": "https://www.azleg.gov/ars/28/01381.htm",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of 0.08 or more within two hours of driving.",
+"cite": "Ariz. Rev. Stat. § 28-1381(A)(2)",
+"source": "https://www.azleg.gov/ars/28/01381.htm",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "Drivers under 21 may not drive with any spirituous liquor in their body (zero tolerance).",
+"cite": "Ariz. Rev. Stat. § 4-244(34)",
+"source": "https://www.azleg.gov/ars/4/00244.htm",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial motor vehicle drivers (and for-hire/rideshare drivers) are guilty of DUI at 0.04 or more.",
+"cite": "Ariz. Rev. Stat. § 28-1381(A)(4)",
+"source": "https://www.azleg.gov/ars/28/01381.htm",
+"verified": true
+},
+"refusalSuspension": {
+"value": "12 months",
+"detail": "A first refusal brings a 12-month administrative suspension (2 years for a second within 84 months), separate from any criminal case.",
+"cite": "Ariz. Rev. Stat. § 28-1321(B), (D)",
+"source": "https://www.azleg.gov/ars/28/01321.htm",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "After a first DUI conviction involving alcohol, the MVD requires a certified ignition interlock on any vehicle the person drives.",
+"cite": "Ariz. Rev. Stat. § 28-1381(I)(6)",
+"source": "https://www.azleg.gov/ars/28/01381.htm",
+"verified": true
+},
+"lookback": {
+"value": "7 years (84 months)",
+"detail": "A DUI within 84 months of a prior DUI conviction is sentenced as a repeat offense.",
+"cite": "Ariz. Rev. Stat. § 28-1381(K)",
+"source": "https://www.azleg.gov/ars/28/01381.htm",
+"verified": true
+}
+},
+"CA": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol and/or drugs.",
+"cite": "Cal. Veh. Code § 23152",
+"source": "https://california.public.law/codes/vehicle_code_section_23152",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a blood alcohol concentration of 0.08 percent or more.",
+"cite": "Cal. Veh. Code § 23152(b)",
+"source": "https://california.public.law/codes/vehicle_code_section_23152",
+"verified": true
+},
+"under21": {
+"value": "0.01%",
+"detail": "Drivers under 21 may not drive with a BAC of 0.01% or more (license suspension); 0.05% or more is an infraction under § 23140.",
+"cite": "Cal. Veh. Code §§ 23136(a), 23140",
+"source": "https://california.public.law/codes/vehicle_code_section_23136",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is unlawful to drive a commercial motor vehicle with a BAC of 0.04 percent or more.",
+"cite": "Cal. Veh. Code § 23152(d)",
+"source": "https://california.public.law/codes/vehicle_code_section_23152",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year suspension (2-3 year revocation with priors in 10 years), in addition to enhanced criminal penalties if convicted.",
+"cite": "Cal. Veh. Code § 13353(a)(1)",
+"source": "https://california.public.law/codes/vehicle_code_section_13353",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Discretionary (mandatory if injury)",
+"detail": "For a first DUI without injury, a court may order an interlock or the driver may choose an interlock-restricted license; a first DUI causing injury requires one.",
+"cite": "Cal. Veh. Code § 23575.3(h)(1)(A), (h)(2)",
+"source": "https://california.public.law/codes/vehicle_code_section_23575.3",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "A DUI within 10 years of a prior DUI or wet reckless conviction is punished as a repeat offense.",
+"cite": "Cal. Veh. Code §§ 23540, 23546",
+"source": "https://california.public.law/codes/vehicle_code_section_23540",
+"verified": true
+}
+},
+"CO": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence; Colorado also has DUI per se and the lesser DWAI (driving while ability impaired).",
+"cite": "Colo. Rev. Stat. § 42-4-1301",
+"source": "https://colorado.public.law/statutes/crs_42-4-1301",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Driving with a BAC of 0.08 or more at the time of driving or within two hours after is DUI per se.",
+"cite": "Colo. Rev. Stat. § 42-4-1301(2)(a)",
+"source": "https://colorado.public.law/statutes/crs_42-4-1301",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a BAC of 0.02 to 0.05 commit a traffic infraction and face license revocation (UDD).",
+"cite": "Colo. Rev. Stat. §§ 42-4-1301(2)(a.5), 42-2-126",
+"source": "https://colorado.public.law/statutes/crs_42-4-1301",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "The license of a commercial driver with a BAC of 0.04 or more ('excess BAC CDL') is revoked under federal disqualification periods.",
+"cite": "Colo. Rev. Stat. § 42-2-126",
+"source": "https://colorado.public.law/statutes/crs_42-2-126",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year administrative revocation (2 years for a second, 3 for a third).",
+"cite": "Colo. Rev. Stat. § 42-2-126",
+"source": "https://colorado.public.law/statutes/crs_42-2-126",
+"verified": true
+},
+"lookback": {
+"value": "Lifetime",
+"detail": "Colorado counts prior DUI/DWAI convictions regardless of age; a DUI with three or more priors at any time is a felony.",
+"cite": "Colo. Rev. Stat. §§ 42-4-1307(5)-(6), 42-4-1301(1)(a)",
+"source": "https://colorado.public.law/statutes/crs_42-4-1307",
+"verified": true
+}
+},
+"CT": {
+"name": {
+"value": "DUI",
+"detail": "Operating under the influence of liquor or drugs or with an elevated blood alcohol content (often called OUI or DUI).",
+"cite": "Conn. Gen. Stat. § 14-227a",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227a",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "'Elevated blood alcohol content' for drivers 21 and older means 0.08 percent or more by weight.",
+"cite": "Conn. Gen. Stat. § 14-227a(a)",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227a",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "For drivers under 21, an elevated blood alcohol content is 0.02 percent or more, triggering license suspension.",
+"cite": "Conn. Gen. Stat. §§ 14-227b(o), 14-227g",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227b",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "For commercial motor vehicle drivers, an elevated blood alcohol content is 0.04 percent or more.",
+"cite": "Conn. Gen. Stat. § 14-227a(a)",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227a",
+"verified": true
+},
+"refusalSuspension": {
+"value": "45 days + 1 year interlock",
+"detail": "A first refusal brings a 45-day administrative suspension, then a 1-year ignition interlock requirement to drive.",
+"cite": "Conn. Gen. Stat. § 14-227b(i)(1), (i)(2)(C)",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227b",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "A first conviction brings a 45-day suspension, then 1 year of driving only vehicles equipped with an ignition interlock.",
+"cite": "Conn. Gen. Stat. § 14-227a(g)(1)(C)",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227a",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Second and third offense penalties apply when the new violation is within 10 years of a prior conviction.",
+"cite": "Conn. Gen. Stat. § 14-227a(g)(2)-(3)",
+"source": "https://www.cga.ct.gov/2026/sup/chap_248.htm#sec_14-227a",
+"verified": true
+}
+},
+"DC": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol or a drug; D.C. also has the lesser offense of operating while impaired (OWI).",
+"cite": "D.C. Code §§ 50-2206.11, 50-2206.14",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2206.11",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "'Intoxicated' includes having an alcohol concentration of 0.08 grams or more per 100 mL of blood or 210 L of breath.",
+"cite": "D.C. Code § 50-2206.01(9)(A)(i)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2206.01",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "For drivers under 21, any measurable amount of alcohol in blood, breath, or urine means they are legally intoxicated.",
+"cite": "D.C. Code § 50-2206.01(9)(A)(ii)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2206.01",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "For commercial vehicle drivers, an alcohol concentration of 0.04 grams or more means they are legally intoxicated.",
+"cite": "D.C. Code §§ 50-2206.01(9)(B), 50-2206.12",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2206.01",
+"verified": true
+},
+"refusalSuspension": {
+"value": "12 months",
+"detail": "A refusal brings a 12-month revocation of the privilege to drive in D.C.; D.C. license holders may instead be required to enroll in the interlock program.",
+"cite": "D.C. Code § 50-1905(a)(2)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-1905",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "D.C. license holders who commit a first DUI or OWI must enroll in the Ignition Interlock System Program for 6 months.",
+"cite": "D.C. Code § 50-2201.05a(b)(1)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2201.05a",
+"verified": true
+},
+"lookback": {
+"value": "15 years",
+"detail": "A prior offense counts unless the sentence (incarceration, probation, parole) ended more than 15 years before the current arrest.",
+"cite": "D.C. Code § 50-2206.01(17)",
+"source": "https://code.dccouncil.gov/us/dc/council/code/sections/50-2206.01",
+"verified": true
+}
+},
+"DE": {
+"name": {
+"value": "DUI",
+"detail": "Driving a vehicle while under the influence or with a prohibited alcohol or drug content.",
+"cite": "Del. Code Ann. tit. 21, § 4177",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with an alcohol concentration of .08 or more, including within 4 hours after driving.",
+"cite": "Del. Code Ann. tit. 21, § 4177(a)(4)-(5)",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive after consuming alcohol; a BAC of .02 or more is per se evidence of the violation.",
+"cite": "Del. Code Ann. tit. 21, § 4177L(a)",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of .04 or more is a crime and leads to CDL disqualification.",
+"cite": "Del. Code Ann. tit. 21, § 4177M(a)",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal (no DUI or refusal in prior 5 years) brings a 1-year administrative revocation.",
+"cite": "Del. Code Ann. tit. 21, § 2742",
+"source": "https://delcode.delaware.gov/title21/c027/sc03/index.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required only to drive during revocation",
+"detail": "First offenders face a 12-24 month revocation and may drive during it only with an interlock license; IIHS does not list it as a mandatory penalty.",
+"cite": "Del. Code Ann. tit. 21, §§ 4177(e), 4177A(a)(1), 4177C, 4177G",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+},
+"lookback": {
+"value": "10 years (2nd); lifetime (3rd+)",
+"detail": "A second DUI within 10 years is a repeat offense; a third or later DUI is a felony no matter when the priors occurred.",
+"cite": "Del. Code Ann. tit. 21, § 4177(d)(2)-(4)",
+"source": "https://delcode.delaware.gov/title21/c041/sc09/index.html",
+"verified": true
+}
+},
+"FL": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, chemical substances, or controlled substances.",
+"cite": "Fla. Stat. § 316.193",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/316.193",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a blood or breath alcohol level of 0.08 or more.",
+"cite": "Fla. Stat. § 316.193(1)(b)-(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/316.193",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a blood or breath alcohol level of 0.02 or higher face a 6-month administrative license suspension.",
+"cite": "Fla. Stat. § 322.2616(1)(a)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/322.2616",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial vehicle drivers with a blood or breath alcohol level of 0.04 or more are subject to disqualification penalties.",
+"cite": "Fla. Stat. § 322.62",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/322.62",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year administrative suspension (18 months if previously suspended for refusal); a second refusal is also a misdemeanor.",
+"cite": "Fla. Stat. § 322.2615(1)(b)1.a.",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/322.2615",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+)",
+"detail": "An interlock for at least 6 months is mandatory on a first conviction with BAC of 0.15%+ or a minor in the vehicle; otherwise it is discretionary.",
+"cite": "Fla. Stat. § 316.193(2)(c), (4)(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/316.193",
+"verified": true
+},
+"lookback": {
+"value": "5 years (2nd) / 10 years (3rd)",
+"detail": "A second DUI within 5 years brings mandatory jail; a third within 10 years is a felony; a fourth DUI at any time is a felony.",
+"cite": "Fla. Stat. § 316.193(2)(b), (6)(b)-(c)",
+"source": "https://www.flsenate.gov/Laws/Statutes/2026/316.193",
+"verified": true
+}
+},
+"GA": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, drugs, or other intoxicating substances.",
+"cite": "Ga. Code Ann. § 40-6-391",
+"source": "https://dds.georgia.gov/georgia-licenseid/violations-suspensions-revocations/suspension-disqualification-offenses",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "Refusing state-administered chemical testing brings a license suspension of at least 1 year.",
+"cite": "Ga. Code Ann. § 40-5-67.1",
+"source": "https://dds.georgia.gov/georgia-licenseid/violations-suspensions-revocations/violations-and-suspensions-faqs/dui-first",
+"verified": true
+}
+},
+"HI": {
+"name": {
+"value": "OVUII",
+"detail": "Operating a vehicle under the influence of an intoxicant.",
+"cite": "Haw. Rev. Stat. § 291E-61",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0061.htm",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is an offense to drive with .08 or more grams of alcohol per 210 liters of breath or 100 mL of blood.",
+"cite": "Haw. Rev. Stat. § 291E-61(a)(3)-(4)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0061.htm",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with a 'measurable amount' of alcohol, defined as a BAC of .02 up to .08.",
+"cite": "Haw. Rev. Stat. §§ 291E-64(a), 291E-1",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0064.htm",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is a disqualifying offense and prohibited.",
+"cite": "Haw. Rev. Stat. § 286-240",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0286/HRS_0286-0240.htm",
+"verified": true
+},
+"refusalSuspension": {
+"value": "2 years",
+"detail": "A first refusal (no prior contacts in 10 years) brings a 2-year administrative revocation, with an ignition interlock required to drive during it.",
+"cite": "Haw. Rev. Stat. § 291E-41(b)(1), (c)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0041.htm",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "A first conviction brings a 1-to-18-month revocation with an ignition interlock installed on all vehicles operated during the revocation.",
+"cite": "Haw. Rev. Stat. § 291E-61(b)(1)(B)-(C)",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0061.htm",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "An OVUII within 10 years of a prior conviction is punished as a repeat offense; three in 10 years can be habitual (felony) OVUII.",
+"cite": "Haw. Rev. Stat. §§ 291E-61(b), 291E-61.5",
+"source": "https://data.capitol.hawaii.gov/hrscurrent/Vol05_Ch0261-0319/HRS0291E/HRS_0291E-0061.htm",
+"verified": true
+}
+},
+"IA": {
+"name": {
+"value": "OWI",
+"detail": "Operating while intoxicated.",
+"cite": "Iowa Code § 321J.2",
+"source": "https://www.legis.iowa.gov/docs/code/321J.2.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is an offense to operate a motor vehicle with an alcohol concentration of .08 or more.",
+"cite": "Iowa Code § 321J.2(1)(b)",
+"source": "https://www.legis.iowa.gov/docs/code/321J.2.pdf",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with an alcohol concentration of .02 or more (but under .08) face license revocation.",
+"cite": "Iowa Code § 321J.2A",
+"source": "https://www.legis.iowa.gov/docs/code/321J.2A.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Operating a commercial motor vehicle with an alcohol concentration of 0.04 or more brings a 1-year CDL disqualification.",
+"cite": "Iowa Code § 321.208(1)(a)",
+"source": "https://www.legis.iowa.gov/docs/code/321.208.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year administrative revocation (2 years with a prior revocation); a restricted license requires an interlock.",
+"cite": "Iowa Code § 321J.9(1)(a), (2)",
+"source": "https://www.legis.iowa.gov/docs/code/321J.9.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required only for a restricted license",
+"detail": "A first offender who wants a temporary restricted license during the 180-day-to-1-year revocation must install an ignition interlock.",
+"cite": "Iowa Code §§ 321J.2(3)(d), 321J.4(1)",
+"source": "https://www.legis.iowa.gov/docs/code/321J.2.pdf",
+"verified": true
+},
+"lookback": {
+"value": "12 years",
+"detail": "Prior OWI convictions count until they are deleted from the driving record 12 years after conviction.",
+"cite": "Iowa Code §§ 321J.2(8), 321.12(4)",
+"source": "https://www.legis.iowa.gov/docs/code/321.12.pdf",
+"verified": true
+}
+},
+"ID": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, drugs, or other intoxicating substances.",
+"cite": "Idaho Code § 18-8004",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8004/",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of 0.08 or more.",
+"cite": "Idaho Code § 18-8004(1)(a)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8004/",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with an alcohol concentration of at least 0.02 but less than 0.08.",
+"cite": "Idaho Code § 18-8004(1)(d)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8004/",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is unlawful to drive a commercial motor vehicle with an alcohol concentration of 0.04 or more.",
+"cite": "Idaho Code § 18-8004(1)(b)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8004/",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a $250 civil penalty, a 1-year absolute suspension, and 1 year of interlock after the suspension ends.",
+"cite": "Idaho Code § 18-8002(3)(a)-(d), (4)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8002/",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "After a 30-day absolute suspension, a first offender must install an interlock within 10 days and keep it until 1 year after the suspension ends, unless excused.",
+"cite": "Idaho Code § 18-8005(1)(d)-(e)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8005/",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "A second DUI within 10 years is a repeat offense; a DUI with two or more priors within 10 years is a felony.",
+"cite": "Idaho Code § 18-8005(4), (6)",
+"source": "https://legislature.idaho.gov/statutesrules/idstat/Title18/T18CH80/SECT18-8005/",
+"verified": true
+}
+},
+"IL": {
+"name": {
+"value": "DUI",
+"detail": "Driving while under the influence of alcohol, other drugs, or intoxicating compounds.",
+"cite": "625 ILCS 5/11-501",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K11-501",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of 0.08 or more.",
+"cite": "625 ILCS 5/11-501(a)(1)",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K11-501",
+"verified": true
+},
+"under21": {
+"value": "0.00% (zero tolerance)",
+"detail": "Drivers under 21 with any alcohol (a concentration above 0.00) face license suspension under the zero-tolerance law.",
+"cite": "625 ILCS 5/11-501.8",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K11-501.8",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Operating a commercial motor vehicle with an alcohol concentration of 0.04 or more brings at least a 12-month CDL disqualification.",
+"cite": "625 ILCS 5/6-514(a)(2)",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K6-514",
+"verified": true
+},
+"refusalSuspension": {
+"value": "12 months",
+"detail": "A first offender who refuses testing gets a 12-month statutory summary suspension (3 years for non-first offenders).",
+"cite": "625 ILCS 5/6-208.1(a)(1), (a)(3)",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K6-208.1",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Optional (required only to drive during suspension)",
+"detail": "First offenders may drive during the summary suspension only with a Monitoring Device Driving Permit and an interlock; interlock is mandatory for 5 years after a second conviction.",
+"cite": "625 ILCS 5/6-206.1; 5/11-501.01(e)",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K6-206.1",
+"verified": true
+},
+"lookback": {
+"value": "Lifetime",
+"detail": "Illinois counts prior DUIs regardless of age; a third DUI at any time is a Class 2 felony.",
+"cite": "625 ILCS 5/11-501(d)(2)(B)",
+"source": "https://www.ilga.gov/legislation/ilcs/fulltext.asp?DocName=062500050K11-501",
+"verified": true
+}
+},
+"IN": {
+"name": {
+"value": "OWI",
+"detail": "Operating a vehicle while intoxicated.",
+"cite": "Ind. Code § 9-30-5",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Driving with a blood alcohol concentration above the .08 legal limit is a criminal offense.",
+"cite": "Ind. Code § 9-30-5-1",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "Refusing a chemical test brings a 1-year suspension (2 years with a prior OWI conviction).",
+"cite": "Ind. Code § 9-30-6-9",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Discretionary",
+"detail": "Indiana does not require interlocks for first offenders; a court may order one, for example as a condition of specialized driving privileges.",
+"cite": "Ind. Code §§ 9-30-5-16, 9-30-16",
+"source": "https://www.in.gov/bmv/licenses-permits-ids/files/drivers-manual.pdf",
+"verified": true
+}
+},
+"KS": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol or drugs.",
+"cite": "Kan. Stat. Ann. § 8-1567",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_015_0067.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of 0.08 or more, including as measured within three hours of driving.",
+"cite": "Kan. Stat. Ann. § 8-1567(a)(1)-(2)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_015_0067.html",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "It is unlawful for anyone under 21 to drive with a breath or blood alcohol content of .02 or greater.",
+"cite": "Kan. Stat. Ann. § 8-1567a(a)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_015_0067a.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is commercial DUI.",
+"cite": "Kan. Stat. Ann. § 8-2,144",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_002_0144.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year suspension followed by 2 years of interlock-only driving; refusal can also be prosecuted separately.",
+"cite": "Kan. Stat. Ann. § 8-1014(a)(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_010_0014.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "After a 30-day suspension, a first offender is restricted to interlock-equipped vehicles for 180 days (1 year if BAC was 0.15%+).",
+"cite": "Kan. Stat. Ann. §§ 8-1014(b), 8-1015(b)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_010_0015.html",
+"verified": true
+},
+"lookback": {
+"value": "Lifetime (since July 1, 2001)",
+"detail": "All DUI convictions or diversions occurring on or after July 1, 2001 count when deciding whether an offense is a repeat.",
+"cite": "Kan. Stat. Ann. § 8-1567(i)(1)",
+"source": "https://www.ksrevisor.gov/statutes/chapters/ch08/008_015_0067.html",
+"verified": true
+}
+},
+"KY": {
+"name": {
+"value": "DUI",
+"detail": "Operating a motor vehicle under the influence of alcohol or other impairing substances.",
+"cite": "Ky. Rev. Stat. § 189A.010",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58145",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to operate a vehicle with an alcohol concentration of 0.08 or more.",
+"cite": "Ky. Rev. Stat. § 189A.010(1)(a)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58145",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not operate a vehicle with an alcohol concentration of 0.02 or more.",
+"cite": "Ky. Rev. Stat. § 189A.010(1)(f)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58145",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "A commercial driver with an alcohol concentration of 0.04 or more is deemed to be driving under the influence and is disqualified.",
+"cite": "Ky. Rev. Stat. § 281A.210(3)-(4)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=14482",
+"verified": true
+},
+"refusalSuspension": {
+"value": "Suspended pending case; 6 months if found to have refused",
+"detail": "Kentucky has no fixed administrative refusal term: the court suspends the license at arraignment, and if the driver is not convicted but refused, for the first-offense period.",
+"cite": "Ky. Rev. Stat. §§ 189A.107, 189A.200(1)(a), 189A.070(1)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=52113",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Optional (only license allowed during suspension)",
+"detail": "A first offender may drive during the suspension only with an ignition interlock license; there is no mandatory interlock penalty for all first offenders.",
+"cite": "Ky. Rev. Stat. §§ 189A.340(1)-(4), 189A.070(1)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=49873",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Repeat-offense penalties apply to DUI offenses within a 10-year period; a fourth within 10 years is a felony.",
+"cite": "Ky. Rev. Stat. § 189A.010(5), (10)",
+"source": "https://apps.legislature.ky.gov/law/statutes/statute.aspx?id=58145",
+"verified": true
+}
+},
+"LA": {
+"name": {
+"value": "OWI (DWI)",
+"detail": "Operating a vehicle while impaired; commonly called DWI.",
+"cite": "La. Rev. Stat. § 14:98",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=78751",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to operate a vehicle with a blood alcohol concentration of 0.08 percent or more.",
+"cite": "La. Rev. Stat. § 14:98(A)(1)(b)",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=78751",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 commit underage operating while impaired with a BAC of 0.02 percent or more.",
+"cite": "La. Rev. Stat. § 14:98.6",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=919569",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers with an alcohol concentration of 0.04 percent or more face CDL disqualification.",
+"cite": "La. Rev. Stat. § 32:414.2",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=88399",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year administrative suspension (2 years with a prior refusal).",
+"cite": "La. Rev. Stat. § 32:667(B)(2)(a)",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=88506",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses (if on probation)",
+"detail": "As a probation condition, a first offender may drive for at least 6 months only in an interlock-equipped vehicle; 0.20%+ BAC also requires one during suspension.",
+"cite": "La. Rev. Stat. § 14:98.1(A)(1)(d), (A)(3)(c)",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=78752",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Prior impaired-driving convictions older than 10 years do not count, excluding time spent incarcerated, on probation or parole, or awaiting trial.",
+"cite": "La. Rev. Stat. § 14:98(C)(3)",
+"source": "https://www.legis.la.gov/Legis/Law.aspx?d=78751",
+"verified": true
+}
+},
+"MA": {
+"name": {
+"value": "OUI",
+"detail": "Operating under the influence of intoxicating liquor or drugs.",
+"cite": "Mass. Gen. Laws ch. 90, § 24",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to operate a motor vehicle with a blood alcohol percentage of eight one-hundredths (0.08) or greater.",
+"cite": "Mass. Gen. Laws ch. 90, § 24(1)(a)(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a BAC of 0.02 or greater have their license suspended for 180 days (longer if under 18).",
+"cite": "Mass. Gen. Laws ch. 90, §§ 24(1)(f)(2), 24P",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24P",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Operating a commercial motor vehicle with an alcohol concentration of 0.04 or more is a disqualifying offense.",
+"cite": "Mass. Gen. Laws ch. 90F, § 9",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90F/Section9",
+"verified": true
+},
+"refusalSuspension": {
+"value": "180 days",
+"detail": "A first refusal by a driver 21+ with no prior OUI brings a 180-day suspension; under-21 drivers and repeat offenders face longer terms.",
+"cite": "Mass. Gen. Laws ch. 90, § 24(1)(f)(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Not required (only for some hardship licenses)",
+"detail": "Massachusetts does not require interlocks for first offenders; the registrar may require one on a hardship license if BAC was 0.15%+.",
+"cite": "Mass. Gen. Laws ch. 90, § 24(1)(c)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24",
+"verified": true
+},
+"lookback": {
+"value": "Lifetime",
+"detail": "Any prior OUI conviction or alcohol-program assignment, no matter how old, counts toward repeat-offense penalties.",
+"cite": "Mass. Gen. Laws ch. 90, § 24(1)(a)(1)",
+"source": "https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXIV/Chapter90/Section24",
+"verified": true
+}
+},
+"MD": {
+"name": {
+"value": "DUI / DWI",
+"detail": "Driving under the influence of alcohol (DUI) and the lesser offense of driving while impaired by alcohol (DWI).",
+"cite": "Md. Code, Transp. § 21-902",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=21-902",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Driving 'under the influence of alcohol per se' means having an alcohol concentration of 0.08 or more.",
+"cite": "Md. Code, Transp. §§ 11-174.1(a), 21-902(a)(1)(ii)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=11-174.1",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "Licenses of drivers under 21 carry an alcohol restriction barring driving with any alcohol in the blood.",
+"cite": "Md. Code, Transp. § 16-113(b)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=16-113",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is a disqualifying offense.",
+"cite": "Md. Code, Transp. § 16-812",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=16-812",
+"verified": true
+},
+"refusalSuspension": {
+"value": "270 days",
+"detail": "A first test refusal brings a 270-day administrative suspension (2 years for a second); the driver may instead join the Ignition Interlock Program.",
+"cite": "Md. Code, Transp. § 16-205.1(b)(1)(i)5",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=16-205.1",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all DUI first offenses",
+"detail": "Anyone convicted of DUI or DUI per se (or given probation before judgment) must complete the Ignition Interlock Program, 6 months for a first time.",
+"cite": "Md. Code, Transp. § 16-404.1(d)(1)(i)1, (d)(3)(i)",
+"source": "https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gtr&section=16-404.1",
+"verified": true
+}
+},
+"ME": {
+"name": {
+"value": "OUI",
+"detail": "Operating under the influence of intoxicants.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2411",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2411.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to operate a motor vehicle with an alcohol level of 0.08 grams or more per 100 mL of blood or 210 L of breath.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2411(1-A)(A)",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2411.html",
+"verified": true
+},
+"under21": {
+"value": "0.00% (any amount)",
+"detail": "Licenses of drivers under 21 carry the condition that they not drive with an alcohol level above 0.00; violation brings suspension.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2472(1), (3)",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2472.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "A commercial vehicle operator with an alcohol level of 0.04 or more faces testing and disqualification under the commercial implied-consent law.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2523",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2523.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "275 days",
+"detail": "A first refusal brings a 275-day suspension (18 months for a second); refusal also increases criminal penalties if convicted.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2521(6)",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2521.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Not required (incentivized)",
+"detail": "Maine does not mandate an interlock for first offenders; installing one can shorten the mandatory suspension period.",
+"cite": "Me. Rev. Stat. tit. 29-A, §§ 2411(5), 2508",
+"source": "https://www.iihs.org/research-areas/alcohol-and-drugs/alcohol-interlock-laws-by-state",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Repeat OUI penalties apply based on previous OUI offenses within a 10-year period.",
+"cite": "Me. Rev. Stat. tit. 29-A, § 2411(1-A), (5)",
+"source": "https://legislature.maine.gov/statutes/29-A/title29-Asec2411.html",
+"verified": true
+}
+},
+"MI": {
+"name": {
+"value": "OWI",
+"detail": "Operating while intoxicated (also the lesser offense of operating while visibly impaired).",
+"cite": "Mich. Comp. Laws § 257.625",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to operate a vehicle with an alcohol content of 0.08 grams or more; 0.17 or more is 'high BAC' OWI with tougher penalties.",
+"cite": "Mich. Comp. Laws § 257.625(1)(b)-(c)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not operate with an alcohol content of 0.02 or more (but under 0.08) or with any bodily alcohol content.",
+"cite": "Mich. Comp. Laws § 257.625(6)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Operating a commercial motor vehicle with an alcohol content of 0.04 or more (but under 0.08) is a separate misdemeanor.",
+"cite": "Mich. Comp. Laws § 257.625m(1)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625m",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal brings a 1-year license suspension (2 years for a refusal within 7 years of a prior), plus 6 points.",
+"cite": "Mich. Comp. Laws § 257.625f",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625f",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.17%+) to drive",
+"detail": "First offenders convicted of high-BAC OWI (0.17%+) may drive on a restricted license only with an interlock; otherwise a court may order one as a probation condition.",
+"cite": "Mich. Comp. Laws §§ 257.319(8)(h), 257.625(24)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-319",
+"verified": true
+},
+"lookback": {
+"value": "7 years (2nd); lifetime (3rd)",
+"detail": "A second OWI within 7 years is a repeat offense; a third OWI is a felony regardless of how long ago the priors occurred.",
+"cite": "Mich. Comp. Laws § 257.625(9)",
+"source": "https://www.legislature.mi.gov/Laws/MCL?objectName=mcl-257-625",
+"verified": true
+}
+},
+"MN": {
+"name": {
+"value": "DWI",
+"detail": "Driving while impaired.",
+"cite": "Minn. Stat. § 169A.20",
+"source": "https://www.revisor.mn.gov/statutes/cite/169A.20",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with an alcohol concentration of 0.08 or more at the time of driving or within two hours.",
+"cite": "Minn. Stat. § 169A.20, subd. 1(5)",
+"source": "https://www.revisor.mn.gov/statutes/cite/169A.20",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "It is a crime for anyone under 21 to drive after consuming alcohol while physical evidence of consumption is present in their body.",
+"cite": "Minn. Stat. § 169A.33",
+"source": "https://www.revisor.mn.gov/statutes/cite/169A.33",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is DWI.",
+"cite": "Minn. Stat. § 169A.20, subd. 1(6)",
+"source": "https://www.revisor.mn.gov/statutes/cite/169A.20",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "With no qualified prior incident in 20 years, a refusal brings at least a 1-year revocation; test refusal is also a separate crime.",
+"cite": "Minn. Stat. §§ 171.178, subd. 3(1); 169A.20, subd. 2",
+"source": "https://www.revisor.mn.gov/statutes/cite/171.178",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Not required (optional to drive)",
+"detail": "Interlock is mandatory for repeat offenders; first offenders may choose the interlock program to regain driving privileges during revocation.",
+"cite": "Minn. Stat. §§ 171.178, subd. 8; 171.306",
+"source": "https://www.revisor.mn.gov/statutes/cite/171.178",
+"verified": true
+},
+"lookback": {
+"value": "10 years (criminal); 20 years (license)",
+"detail": "Prior impaired-driving incidents within 10 years enhance criminal charges; four in 10 years is a felony. License revocation tiers look back 20 years.",
+"cite": "Minn. Stat. §§ 169A.03, subd. 22; 169A.24; 171.178",
+"source": "https://www.revisor.mn.gov/statutes/cite/169A.03",
+"verified": true
+}
+},
+"MO": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated; Missouri also has driving with excessive blood alcohol content (BAC).",
+"cite": "Mo. Rev. Stat. §§ 577.010, 577.012",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=577.010",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Driving with eight-hundredths of one percent or more alcohol by weight is the offense of excessive blood alcohol content.",
+"cite": "Mo. Rev. Stat. § 577.012.1(1)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=577.012",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 stopped with a BAC of 0.02% or more face administrative license suspension.",
+"cite": "Mo. Rev. Stat. § 302.505.1",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=302.505",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04% or more is a disqualifying offense.",
+"cite": "Mo. Rev. Stat. § 302.700.2(18)(a)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=302.700",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "Refusing a chemical test brings an immediate 1-year license revocation, separate from any criminal DWI case.",
+"cite": "Mo. Rev. Stat. §§ 577.041, 302.574",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=302.574",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+)",
+"detail": "A first offender whose BAC was 0.15% or more (or who caused damage or injury) must use an interlock for at least 6 months after reinstatement.",
+"cite": "Mo. Rev. Stat. § 302.304.17",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=302.304",
+"verified": true
+},
+"lookback": {
+"value": "5 years (2nd); lifetime (3rd+)",
+"detail": "A 'prior offender' has one intoxication-related offense within 5 years; persistent, aggravated, and chronic offender tiers count priors regardless of age.",
+"cite": "Mo. Rev. Stat. § 577.001(18), (20)",
+"source": "https://revisor.mo.gov/main/OneSection.aspx?section=577.001",
+"verified": true
+}
+},
+"MS": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of intoxicating liquor or other impairing substances.",
+"cite": "Miss. Code Ann. § 63-11-30",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a blood alcohol concentration of .08% or more (for drivers 21 and older).",
+"cite": "Miss. Code Ann. § 63-11-30(1)(d)(i)",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with a blood alcohol concentration of .02% or more.",
+"cite": "Miss. Code Ann. § 63-11-30(1)(d)(ii)",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial vehicle drivers may not drive with a blood alcohol concentration of .04% or more.",
+"cite": "Miss. Code Ann. § 63-11-30(1)(d)(iii)",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "90 days",
+"detail": "A first refusal (no prior DUI conviction or nonadjudication) brings a 90-day administrative suspension, in addition to DUI penalties; 1 year with a prior.",
+"cite": "Miss. Code Ann. §§ 63-11-23(1), 63-11-30(4)",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Optional (interlock-restricted license)",
+"detail": "A first offense brings a 120-day suspension; the driver may instead drive on an interlock-restricted license, so an interlock is not mandatory.",
+"cite": "Miss. Code Ann. §§ 63-11-30(2)(a)(iv), 63-11-31, 63-11-23",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+},
+"lookback": {
+"value": "5 years",
+"detail": "Second and third DUI offense penalties apply when the offenses were committed within a 5-year period.",
+"cite": "Miss. Code Ann. § 63-11-30(2)(b)-(c)",
+"source": "https://billstatus.ls.state.ms.us/documents/2024/pdf/HB/0200-0299/HB0292SG.pdf",
+"verified": true
+}
+},
+"MT": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol or drugs (Montana also has a separate per se offense).",
+"cite": "Mont. Code Ann. § 61-8-1002",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0020/0610-0080-0100-0020.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive a noncommercial vehicle with an alcohol concentration of 0.08 or more.",
+"cite": "Mont. Code Ann. § 61-8-1002(1)(b)",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0020/0610-0080-0100-0020.html",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with an alcohol concentration of 0.02 or more.",
+"cite": "Mont. Code Ann. § 61-8-1002(1)(e)(i)",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0020/0610-0080-0100-0020.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is unlawful to drive a commercial motor vehicle with an alcohol concentration of 0.04 or more.",
+"cite": "Mont. Code Ann. § 61-8-1002(1)(c)",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0020/0610-0080-0100-0020.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "6 months",
+"detail": "A first refusal brings a 6-month suspension with no restricted license (1 year for a repeat within 5 years).",
+"cite": "Mont. Code Ann. §§ 61-8-1016, 61-8-1032",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0320/0610-0080-0100-0320.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Discretionary",
+"detail": "For a first DUI, the court may require an ignition interlock (or 24/7 sobriety monitoring) as a condition of a probationary license.",
+"cite": "Mont. Code Ann. § 61-8-1010(1)",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0100/0610-0080-0100-0100.html",
+"verified": true
+},
+"lookback": {
+"value": "10 years (lifetime for 3rd+)",
+"detail": "Prior DUIs count if within 10 years, but for a third or later offense all previous convictions are counted.",
+"cite": "Mont. Code Ann. § 61-8-1011(1)(b)",
+"source": "https://leg.mt.gov/bills/mca/title_0610/chapter_0080/part_0100/section_0110/0610-0080-0100-0110.html",
+"verified": true
+}
+},
+"NC": {
+"name": {
+"value": "DWI",
+"detail": "Impaired driving, commonly called DWI.",
+"cite": "N.C. Gen. Stat. § 20-138.1",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-138.1.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with an alcohol concentration of 0.08 or more at any relevant time after driving.",
+"cite": "N.C. Gen. Stat. § 20-138.1(a)(2)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-138.1.html",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "Drivers under 21 may not drive while consuming alcohol or with any alcohol remaining in their body.",
+"cite": "N.C. Gen. Stat. § 20-138.3(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-138.3.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is a crime to drive a commercial motor vehicle with an alcohol concentration of 0.04 or more.",
+"cite": "N.C. Gen. Stat. § 20-138.2(a)(2)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-138.2.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "12 months",
+"detail": "A willful refusal brings a 12-month license revocation by the DMV, in addition to the immediate 30-day civil revocation.",
+"cite": "N.C. Gen. Stat. § 20-16.2(d)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-16.2.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+)",
+"detail": "A first offender whose alcohol concentration was 0.15 or more must use an ignition interlock for 1 year after license restoration.",
+"cite": "N.C. Gen. Stat. § 20-17.8(a)(1), (c)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-17.8.html",
+"verified": true
+},
+"lookback": {
+"value": "7 years (10 for habitual DWI)",
+"detail": "A prior DWI within 7 years is a grossly aggravating sentencing factor; three or more priors within 10 years make a new DWI a felony (habitual DWI).",
+"cite": "N.C. Gen. Stat. §§ 20-179(c), 20-138.5(a)",
+"source": "https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_20/GS_20-179.html",
+"verified": true
+}
+},
+"ND": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of intoxicating liquor, drugs, or other substances (also actual physical control, APC).",
+"cite": "N.D. Cent. Code § 39-08-01",
+"source": "https://www.ndlegis.gov/cencode/t39c08.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of at least 0.08 percent within two hours of driving.",
+"cite": "N.D. Cent. Code § 39-08-01(1)(a)(1)",
+"source": "https://www.ndlegis.gov/cencode/t39c08.pdf",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with an alcohol concentration of at least 0.02 percent face administrative license suspension.",
+"cite": "N.D. Cent. Code § 39-20-03.1",
+"source": "https://www.ndlegis.gov/cencode/t39c20.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers with an alcohol concentration of at least 0.04 percent face CDL disqualification.",
+"cite": "N.D. Cent. Code § 39-06.2-10.1",
+"source": "https://www.ndlegis.gov/cencode/t39c06-2.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "180 days",
+"detail": "A first refusal (no prior suspension in 7 years) brings a 180-day revocation; 2 years with one prior.",
+"cite": "N.D. Cent. Code § 39-20-04(1)(a)",
+"source": "https://www.ndlegis.gov/cencode/t39c20.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Not required",
+"detail": "North Dakota does not require ignition interlocks for DUI offenders; it relies on the 24/7 sobriety program instead.",
+"cite": "N.D. Cent. Code § 39-08-01(5)",
+"source": "https://www.iihs.org/research-areas/alcohol-and-drugs/alcohol-interlock-laws-by-state",
+"verified": true
+},
+"lookback": {
+"value": "7 years (15 for felony)",
+"detail": "Repeat penalties apply to offenses within 7 years; a fourth or later offense within 15 years is a felony.",
+"cite": "N.D. Cent. Code § 39-08-01(5)(b)-(d)",
+"source": "https://www.ndlegis.gov/cencode/t39c08.pdf",
+"verified": true
+}
+},
+"NE": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcoholic liquor or drugs.",
+"cite": "Neb. Rev. Stat. § 60-6,196",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-6,196",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is a crime to drive with .08 grams or more of alcohol per 100 mL of blood or 210 L of breath.",
+"cite": "Neb. Rev. Stat. § 60-6,196(1)(b)-(c)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-6,196",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with an alcohol concentration of .02 or more (but below .08).",
+"cite": "Neb. Rev. Stat. § 60-6,211.01",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-6,211.01",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers found with .04 or more alcohol face CDL disqualification under the commercial implied-consent law.",
+"cite": "Neb. Rev. Stat. §§ 60-4,164, 60-4,168",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-4,164",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A refusal brings a 1-year administrative license revocation; the driver may apply for an ignition interlock permit. Refusal is also a crime.",
+"cite": "Neb. Rev. Stat. § 60-498.02(1)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-498.02",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses (to drive during revocation)",
+"detail": "A first conviction brings a 6-month revocation (1 year at .15+), and the order requires an ignition interlock permit and device to drive during it.",
+"cite": "Neb. Rev. Stat. § 60-6,197.03(1)-(2)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-6,197.03",
+"verified": true
+},
+"lookback": {
+"value": "15 years",
+"detail": "A 'prior conviction' for sentencing is one for a violation committed within the 15 years before the current offense.",
+"cite": "Neb. Rev. Stat. § 60-6,197.02(1)(a)",
+"source": "https://nebraskalegislature.gov/laws/statutes.php?statute=60-6,197.02",
+"verified": true
+}
+},
+"NH": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated (aggravated DWI is a separate, more serious offense).",
+"cite": "N.H. Rev. Stat. Ann. § 265-A:2",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-2.htm",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is an offense to drive with an alcohol concentration of 0.08 or more.",
+"cite": "N.H. Rev. Stat. Ann. § 265-A:2, I(b)",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-2.htm",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 commit DWI with an alcohol concentration of 0.02 or more.",
+"cite": "N.H. Rev. Stat. Ann. § 265-A:2, I(b)",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-2.htm",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is a CDL-disqualifying offense.",
+"cite": "N.H. Rev. Stat. Ann. § 263:94, I(b)",
+"source": "https://gc.nh.gov/rsa/html/XXI/263/263-94.htm",
+"verified": true
+},
+"refusalSuspension": {
+"value": "180 days",
+"detail": "A first refusal currently brings a 180-day administrative suspension (2 years with a prior); this rises to 9 months on January 1, 2027.",
+"cite": "N.H. Rev. Stat. Ann. § 265-A:14",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-14.htm",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Discretionary (mandatory for aggravated DWI, incl. 0.16%+)",
+"detail": "For a first DWI the court may order an interlock; it is mandatory for aggravated DWI, which includes driving with a BAC of 0.16 or more.",
+"cite": "N.H. Rev. Stat. Ann. §§ 265-A:18, I; 265-A:3, III; 265-A:36, I",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-36.htm",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Second and subsequent offense penalties apply to prior convictions within 10 years of the new offense.",
+"cite": "N.H. Rev. Stat. Ann. § 265-A:18, IV",
+"source": "https://gc.nh.gov/rsa/html/XXI/265-A/265-A-18.htm",
+"verified": true
+}
+},
+"NJ": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated (the NJ MVC also uses 'DUI').",
+"cite": "N.J. Stat. Ann. § 39:4-50",
+"source": "https://pub.njleg.gov/bills/2018/PL19/248_.HTM",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is an offense to operate a motor vehicle with a blood alcohol concentration of 0.08% or more.",
+"cite": "N.J. Stat. Ann. § 39:4-50(a)",
+"source": "https://pub.njleg.gov/bills/2018/PL19/248_.HTM",
+"verified": true
+},
+"under21": {
+"value": "0.01%",
+"detail": "Drivers under 21 with a BAC of 0.01% or more (but under 0.08%) face a 30-90 day suspension, community service, and education.",
+"cite": "N.J. Stat. Ann. § 39:4-50.14",
+"source": "https://www.nj.gov/mvc/pdf/license/drivermanual.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers face disqualification with an alcohol concentration of .04% or more.",
+"cite": "N.J. Stat. Ann. § 39:3-10.13",
+"source": "https://www.nj.gov/mvc/pdf/license/CDL_Manual.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "Interlock required (no fixed suspension)",
+"detail": "A first refusal is a court-imposed penalty: driving privileges are forfeited until an interlock is installed, then kept 9-15 months. NJ has no administrative suspension.",
+"cite": "N.J. Stat. Ann. §§ 39:4-50.4a(a)(1), 39:4-50.17(a)",
+"source": "https://pub.njleg.gov/bills/2018/PL19/248_.HTM",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "Every first offender must install an interlock: 3 months at 0.08-0.10% BAC, longer at 0.10%+, plus forfeiture periods at higher BACs.",
+"cite": "N.J. Stat. Ann. § 39:4-50.17(a)",
+"source": "https://pub.njleg.gov/bills/2018/PL19/248_.HTM",
+"verified": true
+},
+"lookback": {
+"value": "10 years (step-down)",
+"detail": "A second offense more than 10 years after the first is sentenced as a first offense; a third more than 10 years after the second is sentenced as a second.",
+"cite": "N.J. Stat. Ann. § 39:4-50(a)(3)",
+"source": "https://pub.njleg.gov/bills/2018/PL19/248_.HTM",
+"verified": true
+}
+},
+"NM": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated or under the influence of intoxicating liquor or drugs.",
+"cite": "N.M. Stat. Ann. § 66-8-102",
+"source": "https://www.mvd.newmexico.gov/nm-drivers-licenses-ids/dwi-information/",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Drivers 21 and older are subject to revocation and prosecution at an alcohol concentration of .08 or more.",
+"cite": "N.M. Stat. Ann. §§ 66-8-102(C), 66-8-111",
+"source": "https://www.mvd.newmexico.gov/dwi-faq/",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 face license revocation at an alcohol concentration of .02 or more.",
+"cite": "N.M. Stat. Ann. §§ 66-8-102, 66-8-111",
+"source": "https://www.mvd.newmexico.gov/dwi-faq/",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial driver's license holders face revocation at an alcohol concentration of .04 or more.",
+"cite": "N.M. Stat. Ann. §§ 66-8-102, 66-8-111",
+"source": "https://www.mvd.newmexico.gov/dwi-faq/",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal of a chemical test brings a 1-year administrative revocation under the Implied Consent Act.",
+"cite": "N.M. Stat. Ann. § 66-8-111",
+"source": "https://www.mvd.newmexico.gov/nm-drivers-licenses-ids/dwi-information/",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "Everyone convicted of DWI, including first-time offenders, must get an ignition interlock license and install an interlock device.",
+"cite": "N.M. Stat. Ann. §§ 66-8-102, 66-5-33.1",
+"source": "https://www.mvd.newmexico.gov/nm-drivers-licenses-ids/dwi-information/how-to-get-an-interlock/",
+"verified": true
+}
+},
+"NV": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of intoxicating liquor or a controlled substance.",
+"cite": "Nev. Rev. Stat. § 484C.110",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec110",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a concentration of alcohol of 0.08 or more, including when measured within 2 hours of driving.",
+"cite": "Nev. Rev. Stat. § 484C.110(1)(b)-(c)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec110",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with an alcohol concentration of 0.02 or more (but under 0.08) have their license suspended for 90 days.",
+"cite": "Nev. Rev. Stat. §§ 483.461, 483.462",
+"source": "https://www.leg.state.nv.us/NRS/NRS-483.html#NRS483Sec461",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is unlawful to drive a commercial motor vehicle with an alcohol concentration of 0.04 or more.",
+"cite": "Nev. Rev. Stat. § 484C.120(1)(b)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec120",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "Failing to submit to an evidentiary test brings a 1-year revocation (3 years with a prior refusal in 7 years); an interlock privilege may be available.",
+"cite": "Nev. Rev. Stat. § 484C.210(1), (3)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec210",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "A court must order an ignition interlock for 185 days after a first DUI conviction within 7 years, with narrow medical/distance exceptions.",
+"cite": "Nev. Rev. Stat. § 484C.460(1)(a), (2)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec460",
+"verified": true
+},
+"lookback": {
+"value": "7 years",
+"detail": "DUI offenses are counted as first, second, or third offenses based on convictions within 7 years; a third within 7 years is a felony.",
+"cite": "Nev. Rev. Stat. § 484C.400(1)",
+"source": "https://www.leg.state.nv.us/NRS/NRS-484C.html#NRS484CSec400",
+"verified": true
+}
+},
+"NY": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated (DWAI, driving while ability impaired, is a lesser offense).",
+"cite": "N.Y. Veh. & Traf. Law § 1192",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1192",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "No person may drive with .08 of one percent or more by weight of alcohol in the blood (per se DWI).",
+"cite": "N.Y. Veh. & Traf. Law § 1192(2)",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1192",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Under the Zero Tolerance law, drivers under 21 with a BAC of .02 to .07 face administrative license suspension.",
+"cite": "N.Y. Veh. & Traf. Law § 1192-a",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1192-a",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "No one may drive a commercial motor vehicle with a BAC of .04 or more; .04-.06 is a separate per se offense.",
+"cite": "N.Y. Veh. & Traf. Law § 1192(5)",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1192",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A refusal brings an administrative license revocation of at least 1 year (18 months with a prior within 5 years) plus a civil penalty.",
+"cite": "N.Y. Veh. & Traf. Law § 1194(2)(d)",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1194",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "Under Leandra's Law, courts must order an ignition interlock for at least 12 months as a condition of probation or conditional discharge for any DWI.",
+"cite": "N.Y. Veh. & Traf. Law §§ 1193(1)(b)(ii), 1198",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1193",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "A DWI within 10 years of a prior DWI conviction is a felony; DWAI repeat penalties also use 10 years.",
+"cite": "N.Y. Veh. & Traf. Law § 1193(1)(c)",
+"source": "https://newyork.public.law/laws/n.y._vehicle_and_traffic_law_section_1193",
+"verified": true
+}
+},
+"OH": {
+"name": {
+"value": "OVI",
+"detail": "Operating a vehicle under the influence of alcohol and/or drugs.",
+"cite": "Ohio Rev. Code § 4511.19",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4511.19",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is illegal to drive with a blood or breath alcohol concentration of .08 or more; .17 or more is a 'high test' with tougher penalties.",
+"cite": "Ohio Rev. Code § 4511.19(A)(1)(b), (d), (f), (h)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4511.19",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with a concentration of at least .02 but less than .08.",
+"cite": "Ohio Rev. Code § 4511.19(B)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4511.19",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "No one may drive a commercial motor vehicle with an alcohol concentration of .04 or more.",
+"cite": "Ohio Rev. Code § 4506.15(A)(2)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4506.15",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal (no priors in 10 years) brings an administrative license suspension of Class C, which is 1 year.",
+"cite": "Ohio Rev. Code §§ 4511.191(B)(1)(a), 4510.02(B)(3)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4511.191",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.17%+) for limited privileges",
+"detail": "First offenders with a 'high test' (.17+) who receive limited driving privileges must use an interlock; otherwise interlock is optional and earns unlimited privileges.",
+"cite": "Ohio Rev. Code §§ 4510.13(A)(7), 4511.19(G)(1)(a)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4510.13",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "OVI repeat-offense penalties apply to prior convictions within 10 years of the new offense.",
+"cite": "Ohio Rev. Code § 4511.19(G)(1)(b)-(d)",
+"source": "https://codes.ohio.gov/ohio-revised-code/section-4511.19",
+"verified": true
+}
+},
+"OR": {
+"name": {
+"value": "DUII",
+"detail": "Driving while under the influence of intoxicants.",
+"cite": "Or. Rev. Stat. § 813.010",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is DUII to drive with 0.08 percent or more alcohol by weight in the blood, including within two hours after driving.",
+"cite": "Or. Rev. Stat. § 813.010(1)(a), (c)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "For drivers under 21, any amount of alcohol in the blood counts as being under the influence for implied-consent license suspension.",
+"cite": "Or. Rev. Stat. § 813.300(3)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers with 0.04 percent or more alcohol face a 1-year suspension of commercial driving privileges.",
+"cite": "Or. Rev. Stat. § 809.510(3)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors809.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "Refusing a breath or blood test brings a 1-year suspension (3 years with recent priors or diversion); refusal can also bring a fine.",
+"cite": "Or. Rev. Stat. §§ 813.420(1)-(2), 813.430",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "After a first DUII conviction, ODOT requires an interlock for 1 year after the suspension ends (and as a condition of any hardship permit).",
+"cite": "Or. Rev. Stat. § 813.602(1)(a)-(b)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "DUII becomes a Class C felony if the person has three or more DUII convictions in the 10 years before the current offense.",
+"cite": "Or. Rev. Stat. § 813.010(5)(a)",
+"source": "https://www.oregonlegislature.gov/bills_laws/ors/ors813.html",
+"verified": true
+}
+},
+"PA": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol or a controlled substance.",
+"cite": "75 Pa. Cons. Stat. § 3802",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a BAC of 0.08% or more within two hours after driving (0.08-0.10% is 'general impairment').",
+"cite": "75 Pa. Cons. Stat. § 3802(a)(2)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Minors (under 21) may not drive with a BAC of 0.02% or higher within two hours after driving.",
+"cite": "75 Pa. Cons. Stat. § 3802(e)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial vehicle drivers may not drive with a BAC of 0.04% or more (0.02% for school buses and school vehicles).",
+"cite": "75 Pa. Cons. Stat. § 3802(f)(1)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38",
+"verified": true
+},
+"refusalSuspension": {
+"value": "12 months",
+"detail": "A first refusal brings a 12-month suspension (18 months with prior refusal or DUI), plus enhanced criminal penalties if convicted.",
+"cite": "75 Pa. Cons. Stat. § 1547(b)(1)(i)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=15&section=47&subsctn=0",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required if license suspended (BAC 0.10%+ or refusal)",
+"detail": "An interlock is a condition of license restoration whenever a DUI or refusal led to suspension; first offenders at 0.08-0.10% have no suspension and no interlock.",
+"cite": "75 Pa. Cons. Stat. § 3805(a)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Prior DUI convictions, ARD acceptances, or similar dispositions count if within 10 years before the date of the current offense.",
+"cite": "75 Pa. Cons. Stat. § 3806(b)(1)",
+"source": "https://www.palegis.us/statutes/consolidated/view-statute?txtType=HTM&ttl=75&div=0&chapter=38&section=6&subsctn=0",
+"verified": true
+}
+},
+"RI": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of liquor or drugs.",
+"cite": "R.I. Gen. Laws § 31-27-2",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-27/31-27-2.htm",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is an offense to drive with a blood alcohol concentration of .08% or more.",
+"cite": "R.I. Gen. Laws § 31-27-2(b)(1)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-27/31-27-2.htm",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with a BAC of .04% or more is DUI and a CDL-disqualifying offense.",
+"cite": "R.I. Gen. Laws § 31-10.3-31(a)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-10.3/31-10.3-31.htm",
+"verified": true
+},
+"refusalSuspension": {
+"value": "6 months to 1 year",
+"detail": "A first refusal is a civil violation in the Traffic Tribunal with a $200-$500 fine, community service, and a 6-month to 1-year suspension.",
+"cite": "R.I. Gen. Laws § 31-27-2.1(c)(1)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-27/31-27-2.1.htm",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Discretionary",
+"detail": "For a first DUI, the judge may require an ignition interlock and/or blood and urine testing as a condition of driving.",
+"cite": "R.I. Gen. Laws §§ 31-27-2(d)(1), 31-27-2.8",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-27/31-27-2.htm",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Second and subsequent offense penalties apply to violations within a 10-year period.",
+"cite": "R.I. Gen. Laws § 31-27-2(d)(2)",
+"source": "https://webserver.rilegislature.gov/Statutes/TITLE31/31-27/31-27-2.htm",
+"verified": true
+}
+},
+"SC": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence; South Carolina also has the per se offense of driving with an unlawful alcohol concentration (DUAC).",
+"cite": "S.C. Code Ann. §§ 56-5-2930, 56-5-2933",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with an alcohol concentration of eight one-hundredths of one percent or more.",
+"cite": "S.C. Code Ann. § 56-5-2933(A)",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with an alcohol concentration of 0.02 or more have their license suspended.",
+"cite": "S.C. Code Ann. § 56-1-286",
+"source": "https://www.scstatehouse.gov/code/t56c001.php",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "A commercial driver with an alcohol concentration of 0.04 or more must be disqualified from driving a commercial vehicle.",
+"cite": "S.C. Code Ann. §§ 56-1-2110, 56-1-2120(C)",
+"source": "https://www.scstatehouse.gov/code/t56c001.php",
+"verified": true
+},
+"refusalSuspension": {
+"value": "6 months",
+"detail": "With no prior DUI or suspension in 10 years, a refusal brings a 6-month administrative suspension (or an interlock-restricted license).",
+"cite": "S.C. Code Ann. § 56-5-2951(I)(1)(a)",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "The DMV must require an ignition interlock for anyone convicted of DUI or DUAC (unless a .00 breath test), including first offenders.",
+"cite": "S.C. Code Ann. § 56-5-2941(A)(1)",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Only DUI violations within the 10 years preceding the latest violation count as prior offenses.",
+"cite": "S.C. Code Ann. § 56-5-2930(D)",
+"source": "https://www.scstatehouse.gov/code/t56c005.php",
+"verified": true
+}
+},
+"SD": {
+"name": {
+"value": "DUI",
+"detail": "Driving or being in actual physical control of a vehicle while under the influence or with a prohibited blood alcohol level.",
+"cite": "S.D. Codified Laws § 32-23-1",
+"source": "https://sdlegislature.gov/Statutes/32-23-1",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "No person may drive with 0.08 percent or more alcohol by weight in the blood.",
+"cite": "S.D. Codified Laws § 32-23-1(1)",
+"source": "https://sdlegislature.gov/Statutes/32-23-1",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "It is a misdemeanor for anyone under 21 to drive with 0.02 percent or more alcohol in the blood.",
+"cite": "S.D. Codified Laws § 32-23-21(1)",
+"source": "https://sdlegislature.gov/Statutes/32-23-21",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with 0.04 percent or more alcohol brings at least a 1-year CDL disqualification.",
+"cite": "S.D. Codified Laws § 32-12A-36(2)",
+"source": "https://sdlegislature.gov/Statutes/32-12A-36",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "If a refusal is upheld, the Secretary of Public Safety revokes the license for 1 year (a work permit may be available).",
+"cite": "S.D. Codified Laws § 32-23-11",
+"source": "https://sdlegislature.gov/Statutes/32-23-11",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Not required",
+"detail": "South Dakota has no mandatory interlock for first offenders; it relies on the 24/7 sobriety program and court-ordered restrictions.",
+"cite": "S.D. Codified Laws § 32-23-2",
+"source": "https://www.iihs.org/research-areas/alcohol-and-drugs/alcohol-interlock-laws-by-state",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "A prior DUI more than 10 years before the current violation cannot be used to make it a second, third, or subsequent offense.",
+"cite": "S.D. Codified Laws § 32-23-4.1",
+"source": "https://sdlegislature.gov/Statutes/32-23-4.1",
+"verified": true
+}
+},
+"TX": {
+"name": {
+"value": "DWI",
+"detail": "Driving while intoxicated.",
+"cite": "Tex. Penal Code § 49.04",
+"source": "https://statutes.capitol.texas.gov/Docs/PE/htm/PE.49.htm",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "'Intoxicated' includes having an alcohol concentration of 0.08 or more.",
+"cite": "Tex. Penal Code § 49.01(2)(B)",
+"source": "https://texas.public.law/statutes/tex._penal_code_section_49.01",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "A minor (under 21) commits an offense by driving with any detectable amount of alcohol in their system.",
+"cite": "Tex. Alco. Bev. Code § 106.041(a)",
+"source": "https://texas.public.law/statutes/tex._alcoh._bev._code_section_106.041",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "A commercial driver with an alcohol concentration of 0.04 or more while operating a commercial vehicle is disqualified.",
+"cite": "Tex. Transp. Code § 522.081",
+"source": "https://texas.public.law/statutes/tex._transp._code_section_522.081",
+"verified": true
+},
+"refusalSuspension": {
+"value": "180 days",
+"detail": "A first refusal (no prior alcohol contacts in 10 years) brings a 180-day administrative license suspension.",
+"cite": "Tex. Transp. Code § 724.035(a)",
+"source": "https://texas.public.law/statutes/tex._transp._code_section_724.035",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+)",
+"detail": "On community supervision for a first DWI, the court must order an interlock if BAC was 0.15 or more; otherwise it is discretionary (also required for an occupational license).",
+"cite": "Tex. Code Crim. Proc. art. 42A.408(b)-(c)",
+"source": "https://texas.public.law/statutes/tex._code_of_crim._proc._article_42a.408",
+"verified": true
+},
+"lookback": {
+"value": "Lifetime",
+"detail": "Texas enhancement statutes count prior DWI convictions without any time limit; a third DWI is a felony.",
+"cite": "Tex. Penal Code § 49.09(a)-(b)",
+"source": "https://texas.public.law/statutes/tex._penal_code_section_49.09",
+"verified": true
+}
+},
+"UT": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, drugs, or a combination, or with a prohibited alcohol concentration.",
+"cite": "Utah Code § 41-6a-502",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/41-6a-S502.html",
+"verified": true
+},
+"bacLimit": {
+"value": "0.05%",
+"detail": "Utah has the nation's lowest limit: it is DUI to drive with a blood or breath alcohol concentration of .05 grams or greater.",
+"cite": "Utah Code § 41-6a-502(1)",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/41-6a-S502.html",
+"verified": true
+},
+"under21": {
+"value": "Any detectable amount",
+"detail": "Drivers under 21 may not drive with any measurable blood, breath, or urine alcohol concentration ('not a drop').",
+"cite": "Utah Code § 53-3-231(2)(a)",
+"source": "https://le.utah.gov/xcode/Title53/Chapter3/53-3-S231.html",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of .04 grams or more is a CDL-disqualifying offense.",
+"cite": "Utah Code § 53-3-414",
+"source": "https://le.utah.gov/xcode/Title53/Chapter3/53-3-S414.html",
+"verified": true
+},
+"refusalSuspension": {
+"value": "18 months",
+"detail": "Drivers 21+ who refuse a chemical test lose their license for 18 months (36 months with a prior in 10 years); under 21, until age 21 or 2 years.",
+"cite": "Utah Code § 41-6a-521(1)(d)(i)(A)",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/41-6a-S521.html",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required (court may waive on the record)",
+"detail": "A court must require an interlock for anyone convicted of DUI and placed on probation unless it states on the record the device is unnecessary; mandatory if under 21.",
+"cite": "Utah Code § 41-6a-518(2)(a)-(b)",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/41-6a-S518.html",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "A DUI is a repeat offense if there is a prior conviction within 10 years; two or more priors within 10 years make it a third-degree felony.",
+"cite": "Utah Code § 41-6a-502(2)(c)",
+"source": "https://le.utah.gov/xcode/Title41/Chapter6A/41-6a-S502.html",
+"verified": true
+}
+},
+"VA": {
+"name": {
+"value": "DUI / DWI",
+"detail": "Driving while intoxicated; Virginia statutes and courts use DUI and DWI interchangeably.",
+"cite": "Va. Code Ann. § 18.2-266",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-266/",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is unlawful to drive with a blood alcohol concentration of 0.08 percent or more.",
+"cite": "Va. Code Ann. § 18.2-266(i)",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-266/",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a BAC of 0.02% or more (but under 0.08%) lose their license for 1 year and face a fine or community service.",
+"cite": "Va. Code Ann. § 18.2-266.1",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-266.1/",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "It is unlawful to drive a commercial motor vehicle with a BAC of 0.04 percent or more.",
+"cite": "Va. Code Ann. § 46.2-341.24",
+"source": "https://law.lis.virginia.gov/vacode/title46.2/chapter3/section46.2-341.24/",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal is a civil offense: the court suspends the license for 1 year, on top of a 7-day administrative suspension at arrest.",
+"cite": "Va. Code Ann. § 18.2-268.3",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-268.3/",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for a restricted license",
+"detail": "A first offender who receives a restricted license must use an interlock for at least 12 consecutive months without violations; it is not otherwise mandatory.",
+"cite": "Va. Code Ann. § 18.2-270.1(B)",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-270.1/",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Repeat-offense penalties apply to priors within 10 years (stiffer within 5); a third DUI within 10 years is a felony.",
+"cite": "Va. Code Ann. § 18.2-270(B)-(C)",
+"source": "https://law.lis.virginia.gov/vacode/title18.2/chapter7/section18.2-270/",
+"verified": true
+}
+},
+"VT": {
+"name": {
+"value": "DUI",
+"detail": "Operating a vehicle under the influence of intoxicating liquor or drugs.",
+"cite": "Vt. Stat. Ann. tit. 23, § 1201",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01201",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "No one may operate a vehicle on a highway with an alcohol concentration of 0.08 or more.",
+"cite": "Vt. Stat. Ann. tit. 23, § 1201(a)(1)(A)",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01201",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not operate a vehicle with a BAC of 0.02 or more; since July 1, 2025 this is a civil violation under Title 7.",
+"cite": "Vt. Stat. Ann. tit. 7, § 656(b)(1)(E)",
+"source": "https://legislature.vermont.gov/Documents/2026/Docs/ACTS/ACT045/ACT045%20As%20Enacted.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "No one may operate a commercial vehicle with an alcohol concentration of 0.04 or more.",
+"cite": "Vt. Stat. Ann. tit. 23, §§ 1201(a)(1)(C), 1218",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01201",
+"verified": true
+},
+"refusalSuspension": {
+"value": "6 months",
+"detail": "A first refusal brings a 6-month civil suspension; an ignition interlock restricted license may be available during it.",
+"cite": "Vt. Stat. Ann. tit. 23, § 1205",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01205",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Optional (interlock license during suspension)",
+"detail": "First offenders are not required to use an interlock but may drive during the suspension with an ignition interlock restricted driver's license.",
+"cite": "Vt. Stat. Ann. tit. 23, §§ 1205, 1208, 1213",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01213",
+"verified": true
+},
+"lookback": {
+"value": "20 years",
+"detail": "A second offense is a DUI within 20 years of a prior conviction; a third requires two priors, at least one within 20 years.",
+"cite": "Vt. Stat. Ann. tit. 23, § 1210(c)-(d)",
+"source": "https://legislature.vermont.gov/statutes/section/23/013/01210",
+"verified": true
+}
+},
+"WA": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of intoxicating liquor, cannabis, or any drug.",
+"cite": "Wash. Rev. Code § 46.61.502",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.61.502",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "It is DUI to have an alcohol concentration of 0.08 or higher within two hours after driving.",
+"cite": "Wash. Rev. Code § 46.61.502(1)(a)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.61.502",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with an alcohol concentration of at least 0.02 (but below 0.08) within two hours commit a misdemeanor.",
+"cite": "Wash. Rev. Code § 46.61.503",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.61.503",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04 or more is a CDL-disqualifying offense.",
+"cite": "Wash. Rev. Code § 46.25.090(1)(b)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.25.090",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "A first refusal within 7 years brings a 1-year administrative revocation (2 years with a prior incident).",
+"cite": "Wash. Rev. Code § 46.20.3101(1)(a)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.20.3101",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required for all first offenses",
+"detail": "After any DUI conviction, the Department of Licensing restricts the person to interlock-equipped vehicles once the mandatory suspension ends.",
+"cite": "Wash. Rev. Code § 46.20.720(1)(d)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.20.720",
+"verified": true
+},
+"lookback": {
+"value": "7 years (15 for felony)",
+"detail": "Mandatory DUI penalties use priors within 7 years; DUI is a felony with three or more priors within 15 years.",
+"cite": "Wash. Rev. Code §§ 46.61.5055(14), 46.61.502(6)(a)",
+"source": "https://app.leg.wa.gov/RCW/default.aspx?cite=46.61.5055",
+"verified": true
+}
+},
+"WI": {
+"name": {
+"value": "OWI",
+"detail": "Operating while intoxicated (also operating with a prohibited alcohol concentration, PAC).",
+"cite": "Wis. Stat. § 346.63(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/346.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "The prohibited alcohol concentration is 0.08 for drivers with two or fewer priors (more than 0.02 with three or more priors or an interlock order).",
+"cite": "Wis. Stat. § 340.01(46m)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/340.pdf",
+"verified": true
+},
+"under21": {
+"value": "0.00% (absolute sobriety)",
+"detail": "Drivers under the legal drinking age (21) may not drive with an alcohol concentration of more than 0.0.",
+"cite": "Wis. Stat. § 346.63(2m)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/346.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "No one may drive a commercial motor vehicle with an alcohol concentration of 0.04 or more (0.08 or more is OWI/PAC).",
+"cite": "Wis. Stat. § 346.63(5)(a)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/346.pdf",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year",
+"detail": "For a first improper refusal, the court revokes the operating privilege for 1 year (occupational license after 30 days) and orders an interlock.",
+"cite": "Wis. Stat. § 343.305(10)(b)2",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/343.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+) or refusal",
+"detail": "First offenders with a BAC of 0.15 or more, or who refused testing, must be ordered to use an interlock and/or a 24/7 sobriety program.",
+"cite": "Wis. Stat. § 343.301(1g)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/343.pdf",
+"verified": true
+},
+"lookback": {
+"value": "10 years (2nd); lifetime (3rd+)",
+"detail": "A second OWI counts priors within 10 years; for a third or later offense, all prior convictions in the person's lifetime count.",
+"cite": "Wis. Stat. §§ 346.65(2)(am), 343.307(1)",
+"source": "https://docs.legis.wisconsin.gov/statutes/statutes/346.pdf",
+"verified": true
+}
+},
+"WV": {
+"name": {
+"value": "DUI",
+"detail": "Driving under the influence of alcohol, controlled substances, or drugs.",
+"cite": "W. Va. Code § 17C-5-2",
+"source": "https://code.wvlegislature.gov/17C-5-2/",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "Driving in an 'impaired state', which includes an alcohol concentration of eight hundredths of one percent or more, is DUI.",
+"cite": "W. Va. Code § 17C-5-2(a), (e)",
+"source": "https://code.wvlegislature.gov/17C-5-2/",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 with a BAC of 0.02% or more (but under 0.08%) commit a misdemeanor and face license suspension.",
+"cite": "W. Va. Code § 17C-5-2(j)(1)",
+"source": "https://code.wvlegislature.gov/17C-5-2/",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Commercial drivers who refuse testing or test at 0.04% or more are disqualified from operating a commercial vehicle.",
+"cite": "W. Va. Code § 17E-1-15",
+"source": "https://code.wvlegislature.gov/17E-1-15/",
+"verified": true
+},
+"refusalSuspension": {
+"value": "1 year (or 45 days + 1 year interlock)",
+"detail": "After a criminal-court refusal finding, a first refusal brings a 1-year revocation, or 45 days plus 1 year in the Test and Lock interlock program.",
+"cite": "W. Va. Code §§ 17C-5-7, 17C-5-7a",
+"source": "https://code.wvlegislature.gov/17C-5-7a/",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Optional (Test and Lock to shorten revocation)",
+"detail": "First offenders face a 6-month revocation and may join the Motor Vehicle Alcohol Test and Lock (interlock) Program to drive sooner; it is not mandatory.",
+"cite": "W. Va. Code § 17C-5A-3a",
+"source": "https://code.wvlegislature.gov/17C-5A-3a/",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Prior DUI convictions count only if the offense occurred within the 10 years before the current arrest.",
+"cite": "W. Va. Code § 17C-5-2(n)",
+"source": "https://code.wvlegislature.gov/17C-5-2/",
+"verified": true
+}
+},
+"WY": {
+"name": {
+"value": "DWUI",
+"detail": "Driving while under the influence of alcohol or a controlled substance.",
+"cite": "Wyo. Stat. Ann. § 31-5-233",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"bacLimit": {
+"value": "0.08%",
+"detail": "No person may drive with an alcohol concentration of 0.08% or more, including within two hours after driving.",
+"cite": "Wyo. Stat. Ann. § 31-5-233(b)(i)-(ii)",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"under21": {
+"value": "0.02%",
+"detail": "Drivers under 21 may not drive with an alcohol concentration of 0.02% or more, including within two hours after driving.",
+"cite": "Wyo. Stat. Ann. § 31-5-234(b)",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"commercial": {
+"value": "0.04%",
+"detail": "Driving a commercial motor vehicle with an alcohol concentration of 0.04% or more is a CDL-disqualifying offense.",
+"cite": "Wyo. Stat. Ann. § 31-7-305",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"interlockFirstOffense": {
+"value": "Required at high BAC (0.15%+)",
+"detail": "A first offender with an alcohol concentration of 0.15% or more may drive only interlock-equipped vehicles for 6 months.",
+"cite": "Wyo. Stat. Ann. § 31-5-233(f)",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+},
+"lookback": {
+"value": "10 years",
+"detail": "Second and third offense penalties apply to convictions within 10 years of a prior DUI conviction.",
+"cite": "Wyo. Stat. Ann. § 31-5-233(e)",
+"source": "https://wyoleg.gov/statutes/compress/title31.pdf",
+"verified": true
+}
+}
+}
+}
