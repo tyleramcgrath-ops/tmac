@@ -43,6 +43,9 @@ jobs:
         with:
           node-version: '22'
       - run: npm test
+      - name: Product site tests
+        working-directory: apps/serp-quake/site
+        run: npm ci && npm test
 
   scan:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
@@ -91,6 +94,7 @@ jobs:
         if: steps.keys.outputs.ok == 'true'
         run: |
           node apps/serp-quake/bin/quake.js build --data quake-data --out quake-data/index.html
+          node apps/serp-quake/bin/quake.js export --data quake-data --out quake-data/data.json
           {
             echo '```'
             node apps/serp-quake/bin/quake.js status --data quake-data
