@@ -121,5 +121,5 @@ jobs:
           curl -fsS "$SITE_URL/api/auth/session.php" | tee /dev/stderr | grep -q '"accounts":true' || { echo "accounts are not switched on"; exit 1; }
           code=$(curl -s -o /dev/null -w '%{http_code}' "$SITE_URL/api/_lib/bootstrap.php"); echo "_lib → $code"
           # _lib only defines functions (requesting it prints nothing), but it should still be refused.
-          test "$code" = 403 || echo "::warning::api/_lib answered $code instead of 403; check that .htaccess is honoured
+          test "$code" = 403 || echo "::warning::api/_lib answered $code instead of 403; check that .htaccess is honoured"
           echo "Live at $SITE_URL/"
