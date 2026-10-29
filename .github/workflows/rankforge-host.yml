@@ -1,0 +1,55 @@
+# Keeps the rankforge-host branch in step with RankForge (the app at the root of this repo).
+# SiteGround's Node.js hosting builds from the top of a branch and can't be pointed at part of
+# one, so hosting/rankforge-host.sh copies just the app (no apps/, seo-intel/, reports) into
+# rankforge-host, the same way saysites-host and lawmatchnow-host work. See
+# hosting/rankforge/README.md for the Site Tools settings and environment variables.
+name: RankForge host branch
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app/**'
+      - 'ai/**'
+      - 'components/**'
+      - 'lib/**'
+      - 'public/**'
+      - 'package.json'
+      - 'next.config.ts'
+      - 'tsconfig.json'
+      - 'hosting/**'
+      - '.github/workflows/rankforge-host.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: rankforge-host
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Build the host tree
+        run: hosting/rankforge-host.sh "$RUNNER_TEMP/tree" HEAD
+      - name: Commit it to rankforge-host
+        run: |
+          git config user.name "rankforge-host[bot]"
+          git config user.email "rankforge-host@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin rankforge-host >/dev/null; then
+            git worktree add "$RUNNER_TEMP/host" origin/rankforge-host
+          else
+            git worktree add --detach "$RUNNER_TEMP/host" && git -C "$RUNNER_TEMP/host" checkout --orphan rankforge-host
+          fi
+          cd "$RUNNER_TEMP/host"
+          git rm -rqf --ignore-unmatch . && git clean -fdxq
+          cp -R "$RUNNER_TEMP/tree/." .
+          git add -A
+          if git diff --cached --quiet; then echo "rankforge-host is already up to date."; exit 0; fi
+          git commit -qm "RankForge from ${GITHUB_SHA::7}"
+          git push origin HEAD:rankforge-host

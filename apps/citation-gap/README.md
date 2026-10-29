@@ -133,3 +133,30 @@ Rollback at any time: assign `citation-gap.vercel.app` to `dpl_HwoQcbWBd8SumqhQT
 **A green build log is not proof.** It said "integrity verified" for four days while shipping a
 front end four days stale. After any deploy, read the deployed bytes — fetch `/` and confirm its
 sha256 matches `index.html` — and call `/api/render?url=…` against a real page.
+
+## Hosting on SiteGround (Node.js, like SaySites)
+
+Since Vercel paused the team, Citation Gap can run on SiteGround's Node.js hosting.
+`server.js` is one Node process that serves `public/` and runs the handlers in `api/`
+unchanged. It supplies what Vercel used to: the `req`/`res` helpers, the raw body for
+`stripe-webhook.js`, a timer that checks the scan queue every 10 minutes (instead of the daily
+Vercel cron), and pruning of old SiteGround release folders.
+`.github/workflows/citation-gap-host.yml` copies this folder to the `citation-gap-host` branch
+on every merge to main.
+
+Site Tools settings: repository `tyleramcgrath-ops/tmac`, branch `citation-gap-host`, Node 22,
+install `npm install`, build `npm run build`, start `npm start`.
+
+Environment variables (the same ones as the old `citation-gap-web` Vercel project):
+
+| Variable | What for |
+|---|---|
+| `DATABASE_URL` | Neon Postgres: accounts, projects, scans, schedules |
+| `SEARCH_KEY_SECRET` | Encrypts saved search keys. Reuse the old value, or saved keys stop decrypting. |
+| `CRON_SECRET` | Lets the timer and hand-offs run `/api/tick` |
+| `APP_ORIGIN` | This site's URL, used in sign-in links |
+| `RESEND_API_KEY`, `MAIL_FROM` | Sign-in emails |
+| `STRIPE_SECRET_KEY`, `STRIPE_WEBHOOK_SECRET`, `STRIPE_PRICE_PRACTICE`, `STRIPE_PRICE_AGENCY` | Plans. Point the webhook at `/api/stripe-webhook`. |
+| `CHROME_PATH` | Optional. A system Chrome for `/api/render`, if the bundled serverless Chromium won't start on the host. |
+
+Locally: `npm run build && PORT=3000 npm start`.

@@ -6,6 +6,7 @@
   },
   "scripts": {
     "build": "node build.js",
+    "start": "node server.js",
     "seal": "node build.js --seal",
     "test": "node test/build-guard.js && node test/schema.js && node test/auth.js && node test/store.js && node test/keys.js && node test/tick.js && node test/schedule.js && node test/stripe.js && node test/regression.js && node test/front-end.js && node test/scan-flow.js && node test/scan-job.js && node test/history-flow.js && node test/demo-flow.js"
   },
