@@ -257,6 +257,37 @@
     },
   };
 
+  // The public reading, computed in the browser from the published payload.
+  // Mirrors lib/feed.js pulse(); used when the site is served without its API
+  // (the GitHub Pages build sets window.SQ_STATIC).
+  const QuakePulse = {
+    from(data) {
+      const sw = data.sweeps || [];
+      const last = sw[sw.length - 1] || null;
+      const m = last ? (last.m24 != null ? last.m24 : last.m) : null;
+      const cls = (data.scale || []).find((s) => (m || 0) >= s.min) || null;
+      const ongoing = (data.events || []).find((e) => e.ongoing) || null;
+      const t = last ? Date.parse(last.t) : 0;
+      const md = moodOf(m);
+      return {
+        t: last ? last.t : null,
+        mode: data.mode,
+        magnitude: m == null ? null : Math.round(m * 10) / 10,
+        class: cls ? cls.name : null,
+        mood: md.key,
+        line: md.line,
+        calibrating: !!(last && last.calibrating),
+        quake: ongoing ? { since: ongoing.start, peak: Math.round(ongoing.peak * 10) / 10, confirmed: ongoing.confirmed || [] } : null,
+        spark: sw.filter((s) => Date.parse(s.t) >= t - 7 * 864e5).map((s) => (s.m24 != null ? Math.round(s.m24 * 10) / 10 : null)),
+      };
+    },
+    load() {
+      if (window.SQ_STATIC) return fetch(window.SQ_STATIC.dataUrl, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).then(QuakePulse.from);
+      return fetch('/api/pulse', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+    },
+  };
+
   window.Richter = Richter;
   window.Helicorder = Helicorder;
+  window.QuakePulse = QuakePulse;
 })();

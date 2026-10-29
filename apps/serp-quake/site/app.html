@@ -145,6 +145,7 @@
   }
 
   async function boot() {
+    if (!demo && window.SQ_STATIC) { location.replace('/app?demo=1'); return; }
     if (!demo) {
       try { session = await (await fetch('/api/auth/session', { cache: 'no-store' })).json(); } catch (e) { session = null; }
       if (session && session.accounts === false) { location.replace('/app?demo=1'); return; }

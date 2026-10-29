@@ -149,3 +149,18 @@ test('pages only load local scripts and reference files that exist', () => {
     for (const [, href] of html.matchAll(/<link[^>]+rel="stylesheet"[^>]+href="([^"]+)"/g)) assert.ok(/^https:\/\/fonts\.googleapis\.com/.test(href) || fs.existsSync(path.join(ROOT, href)), page + ' styles ' + href);
   }
 });
+
+test('GitHub Pages build: relative links only, flagged static, demo data included', () => {
+  const os = require('os');
+  const { execFileSync } = require('child_process');
+  const out = fs.mkdtempSync(path.join(os.tmpdir(), 'sq-pages-'));
+  execFileSync(process.execPath, [path.join(ROOT, 'build-pages.js'), out]);
+  for (const page of ['index.html', 'login.html', 'app.html']) {
+    const html = fs.readFileSync(path.join(out, page), 'utf8');
+    assert.ok(html.includes('window.SQ_STATIC'), page + ' is flagged static');
+    assert.doesNotMatch(html, /(href|src)="\/(?!\/)/, page + ' has a root-absolute link');
+    assert.doesNotMatch(html, /['"]\/(app|login)\b/, page + ' navigates to a root-absolute path');
+  }
+  assert.ok(fs.existsSync(path.join(out, 'demo-data.json')));
+  fs.rmSync(out, { recursive: true, force: true });
+});
