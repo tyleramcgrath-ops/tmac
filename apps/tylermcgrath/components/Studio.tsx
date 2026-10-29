@@ -22,7 +22,7 @@ const SERVICES = [
   { key: "about", title: "About Tyler", label: "THE PERSON BEHIND THE WORK", symbol: "TM", copy: "14+ years in search and digital growth." },
   { key: "marketing", title: "Marketing & SEO", label: "STRATEGY · SEARCH · AI", symbol: "◎", copy: "SEO, GEO, AEO and digital growth." },
   { key: "work", title: "Selected Work", label: `${projects.length} DIGITAL DESTINATIONS`, symbol: "◈", copy: "Explore websites across industries." },
-  { key: "tools", title: "North Star HQ", label: `HQ · ${tools.length} SEO TOOLS`, symbol: "✧", copy: "The SEO tools I build, around the Compass." },
+  { key: "tools", title: "Tools", label: `${tools.length} SEO TOOLS`, symbol: "✧", copy: "The SEO tools I build, around the Compass." },
   { key: "contact", title: "Let’s Connect", label: "YOUR NEXT DIRECTION", symbol: "↗", copy: "Start a conversation about your business." },
 ];
 
@@ -106,7 +106,7 @@ export default function Studio() {
     window.speechSynthesis.speak(u);
   }
   function directCompass() {
-    // In North Star HQ the Compass is the HQ itself.
+    // On the Tools ring the Compass is North Star HQ itself, the building you walk into.
     if (mode === "tools" && awake) {
       open(`tool:${hub.key}`);
       return;
@@ -506,7 +506,7 @@ export default function Studio() {
                   <>
                     <button onClick={() => open("seo")}>SEO / GEO / AEO</button>
                     <button onClick={() => open("design")}>Web Design</button>
-                    <button onClick={openTools}>North Star HQ</button>
+                    <button onClick={openTools}>Tools</button>
                   </>
                 )}
               </div>

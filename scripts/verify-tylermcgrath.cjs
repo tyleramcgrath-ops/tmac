@@ -11,7 +11,7 @@ const expected = process.argv[2];
 const dir = process.argv[3] || 'shots';
 // VERIFY_URLS (comma-separated) checks another copy, e.g. a local build.
 const urls = (process.env.VERIFY_URLS || 'https://tylermcgrath.com/,https://www.tylermcgrath.com/').split(',');
-const cards = ['About Tyler', 'Marketing & SEO', 'Selected Work', 'North Star HQ', 'Let’s Connect'];
+const cards = ['About Tyler', 'Marketing & SEO', 'Selected Work', 'Tools', 'Let’s Connect'];
 
 async function check(browser, url, tag) {
   const failures = [];
