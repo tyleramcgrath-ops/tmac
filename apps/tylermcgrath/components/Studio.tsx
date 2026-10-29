@@ -5,7 +5,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { enableTilt, tilt } from "@/lib/motion";
 import * as sfx from "@/lib/sound";
 import projects, { type Project } from "@/lib/projects";
-import tools from "@/lib/tools";
+import tools, { hub } from "@/lib/tools";
 import type { CompassState } from "./Compass";
 import OrbitField, { type OrbitItem } from "./OrbitField";
 
@@ -22,7 +22,7 @@ const SERVICES = [
   { key: "about", title: "About Tyler", label: "THE PERSON BEHIND THE WORK", symbol: "TM", copy: "14+ years in search and digital growth." },
   { key: "marketing", title: "Marketing & SEO", label: "STRATEGY · SEARCH · AI", symbol: "◎", copy: "SEO, GEO, AEO and digital growth." },
   { key: "work", title: "Selected Work", label: `${projects.length} DIGITAL DESTINATIONS`, symbol: "◈", copy: "Explore websites across industries." },
-  { key: "tools", title: "SEO Tools", label: `THE LAB · ${tools.length} TOOLS`, symbol: "⌖", copy: "The software I build for search." },
+  { key: "tools", title: "North Star HQ", label: `HQ · ${tools.length} SEO TOOLS`, symbol: "✧", copy: "The SEO tools I build, around the Compass." },
   { key: "contact", title: "Let’s Connect", label: "YOUR NEXT DIRECTION", symbol: "↗", copy: "Start a conversation about your business." },
 ];
 
@@ -85,7 +85,7 @@ export default function Studio() {
   const pages = Math.ceil(shown.length / perPage);
   const slice = shown.slice((page % pages) * perPage, (page % pages) * perPage + perPage);
   const project = typeof panel === "number" ? projects[panel] : null;
-  const tool = typeof panel === "string" && panel.startsWith("tool:") ? tools.find((t) => `tool:${t.key}` === panel) ?? null : null;
+  const tool = typeof panel === "string" && panel.startsWith("tool:") ? [...tools, hub].find((t) => `tool:${t.key}` === panel) ?? null : null;
 
   function open(p: Panel) {
     returnFocus.current = document.activeElement;
@@ -106,6 +106,11 @@ export default function Studio() {
     window.speechSynthesis.speak(u);
   }
   function directCompass() {
+    // In North Star HQ the Compass is the HQ itself.
+    if (mode === "tools" && awake) {
+      open(`tool:${hub.key}`);
+      return;
+    }
     setPulse((p) => p + 1);
     sfx.buzz(14);
     setCycle((c) => {
@@ -457,8 +462,8 @@ export default function Studio() {
         {awake && (
           <>
             <div className="collection-heading">
-              <span className="studio-eyebrow">{waking ? "COMPASS AWAKENING" : mode === "studio" ? "WELCOME TO MY STUDIO" : mode === "tools" ? "THE LAB IS OPEN" : "THE PORTFOLIO IS OPEN"}</span>
-              <p>{mode === "studio" ? "Meet Tyler. Find your next direction." : mode === "tools" ? "The tools I build for search. Pick one." : "Select a signal. Explore the work."}</p>
+              <span className="studio-eyebrow">{waking ? "COMPASS AWAKENING" : mode === "studio" ? "WELCOME TO MY STUDIO" : mode === "tools" ? "NORTH STAR HQ" : "THE PORTFOLIO IS OPEN"}</span>
+              <p>{mode === "studio" ? "Meet Tyler. Find your next direction." : mode === "tools" ? "The tools around the Compass. Click the Compass for HQ." : "Select a signal. Explore the work."}</p>
             </div>
 
             <OrbitField
@@ -494,14 +499,14 @@ export default function Studio() {
                   ))
                 ) : mode === "tools" ? (
                   <>
-                    <button onClick={() => open("seo")}>SEO / GEO / AEO</button>
+                    <button onClick={() => open(`tool:${hub.key}`)}>About HQ</button>
                     <button onClick={() => { sfx.chime(); setMode("work"); setPage(0); }}>Selected Work</button>
                   </>
                 ) : (
                   <>
                     <button onClick={() => open("seo")}>SEO / GEO / AEO</button>
                     <button onClick={() => open("design")}>Web Design</button>
-                    <button onClick={openTools}>SEO Tools</button>
+                    <button onClick={openTools}>North Star HQ</button>
                   </>
                 )}
               </div>
@@ -567,7 +572,7 @@ export default function Studio() {
               </div>
               {tool ? (
                 <>
-                  <span className="studio-eyebrow">THE LAB / {tool.label}</span>
+                  <span className="studio-eyebrow">NORTH STAR HQ / {tool.label}</span>
                   <h2 id="studio-dialog-title">{tool.name}</h2>
                   <p className="dialog-domain">{tool.home}</p>
                   <div className="expertise-detail">
@@ -592,8 +597,16 @@ export default function Studio() {
                     </p>
                   )}
                   <div className="project-switch">
-                    <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + tools.length - 1) % tools.length].key}`)}>← Previous tool</button>
-                    <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + 1) % tools.length].key}`)}>Next tool →</button>
+                    {tool === hub ? (
+                      tools.map((t) => (
+                        <button key={t.key} onClick={() => setPanel(`tool:${t.key}`)}>{t.name} →</button>
+                      ))
+                    ) : (
+                      <>
+                        <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + tools.length - 1) % tools.length].key}`)}>← Previous tool</button>
+                        <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + 1) % tools.length].key}`)}>Next tool →</button>
+                      </>
+                    )}
                   </div>
                 </>
               ) : typeof panel === "string" && panel !== "index" ? (

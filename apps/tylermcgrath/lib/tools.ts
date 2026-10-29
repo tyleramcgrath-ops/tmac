@@ -1,4 +1,6 @@
-// The SEO tools shown in The Lab (the third ring around the Compass).
+// North Star HQ: the Compass is the hub, and these SEO tools orbit it (the
+// third ring, next to Studio and Selected Work). `hub` is North Star HQ itself,
+// opened by clicking the Compass while that ring is showing.
 //
 // status: "live" opens the tool; "offline" still shows the card but says it's
 // coming back instead of sending visitors to an error page. Flip it back to
@@ -58,7 +60,10 @@ const tools: Tool[] = [
     status: "offline",
     home: "citation-gap.vercel.app",
   },
-  {
+];
+
+export const hub: Tool =
+{
     key: "north-star",
     name: "North Star HQ",
     symbol: "✧",
@@ -70,7 +75,6 @@ const tools: Tool[] = [
     url: "https://north-star-hq.vercel.app/",
     status: "offline",
     home: "north-star-hq.vercel.app",
-  },
-];
+  };
 
 export default tools;
