@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in · SERP Quake</title>
+<meta name="description" content="Sign in to SERP Quake with a one-time email link.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f1b16'/%3E%3Cpath d='M4 17h6l2-6 4 12 3-9 2 3h7' fill='none' stroke='%23d6402b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="paper">
+<div class="grain" aria-hidden="true"></div>
+<header class="nav">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 17h6l2-6 4 12 3-9 2 3h9"/></svg></span>SERP&nbsp;Quake</a>
+  <nav><a href="index.html#pricing">Pricing</a><a href="app.html?demo=1" class="signin">Demo</a></nav>
+</header>
+<div class="auth">
+  <div class="auth-main">
+    <form class="auth-card" id="form" novalidate>
+      <p class="eyebrow mono" id="eyebrow">Sign in</p>
+      <h1 id="title">Welcome back to the observatory.</h1>
+      <p class="lede">Enter your email and we'll send a one-time sign-in link. No password to remember. New here? The same link starts your 7-day free trial, no card needed.</p>
+      <div class="field">
+        <label for="email">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@company.com">
+      </div>
+      <button class="btn btn-red" type="submit" id="send" style="width:100%">Email me a sign-in link</button>
+      <div id="msg" role="status"></div>
+      <p class="fine mono">Links work once and expire after 15 minutes.</p>
+    </form>
+  </div>
+  <aside class="auth-side on-dark" aria-hidden="true">
+    <div class="richter-stage" id="richter"></div>
+    <canvas id="drum"></canvas>
+  </aside>
+</div>
+<script>window.SQ_STATIC = {"dataUrl":"https://raw.githubusercontent.com/tyleramcgrath-ops/tmac/serp-quake-data/data.json"};</script>
+<script src="quake-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const q = new URLSearchParams(location.search);
+  const r = Richter.mount($('#richter')); r.set(1.2);
+  Helicorder.mount($('#drum'), { rows: 4, magnitude: 1.5, ink: '#ff6a4d', oldInk: 'rgba(243,236,223,.4)', grid: 'rgba(243,236,223,.06)' });
+  if (q.get('start')) { $('#eyebrow').textContent = '7-day free trial'; $('#title').innerHTML = 'Start watching Google <em>shake</em>.'; }
+
+  const say = (cls, text) => { $('#msg').innerHTML = '<div class="note ' + cls + '">' + text + '</div>'; };
+  const reasons = { expired: 'That link expired. Ask for a new one below.', used: 'That link was already used. If you are not signed in, ask for a new one.', invalid: 'That link is not valid. Ask for a new one below.', error: 'Something went wrong signing you in. Try again.' };
+  if (q.get('signin') && reasons[q.get('signin')]) say('err', reasons[q.get('signin')]);
+
+  if (window.SQ_STATIC) {
+    say('err', 'Accounts open soon. <a href="app.html?demo=1">Explore the demo dashboard</a> in the meantime.');
+    $('#send').disabled = true;
+  } else fetch('/api/auth/session', { cache: 'no-store' }).then((x) => x.json()).then((s) => {
+    if (s.user) location.replace('app.html');
+    if (s.accounts === false) {
+      say('err', 'Accounts are not switched on yet. <a href="app.html?demo=1">Explore the demo dashboard</a> in the meantime.');
+      $('#send').disabled = true;
+    }
+  }).catch(() => {});
+
+  $('#form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = $('#email').value.trim();
+    if (!email) { say('err', 'Enter your email address.'); return; }
+    $('#send').disabled = true; $('#send').textContent = 'Sending…';
+    try {
+      const res = await fetch('/api/auth/link', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) });
+      const j = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(j.error || 'Could not send the link.');
+      say('ok', 'Check your inbox. ' + (j.message || 'A link is on its way.'));
+      r.set(4);
+      setTimeout(() => r.set(1.2), 2400);
+    } catch (err) {
+      say('err', err.message);
+    } finally {
+      $('#send').disabled = false; $('#send').textContent = 'Email me a sign-in link';
+    }
+  });
+})();
+</script>
+</body>
+</html>

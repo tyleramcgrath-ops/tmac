@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SERP Quake: a seismograph for Google updates</title>
+<meta name="description" content="SERP Quake measures how hard Google's rankings are shaking, on an earthquake scale, every 6 hours. Know when an algorithm update hits before your traffic does.">
+<meta property="og:title" content="SERP Quake: feel every Google update before your traffic does">
+<meta property="og:description" content="A live seismograph for Google's algorithm. 48 sensors, an earthquake-style magnitude, and a filter for the poisoned data Google now feeds rank trackers.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f1b16'/%3E%3Cpath d='M4 17h6l2-6 4 12 3-9 2 3h7' fill='none' stroke='%23d6402b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body class="paper" data-mood="zen">
+<div class="grain" aria-hidden="true"></div>
+
+<header class="nav">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 17h6l2-6 4 12 3-9 2 3h9"/></svg></span>SERP&nbsp;Quake</a>
+  <nav>
+    <a href="#how">How it works</a>
+    <a href="#scale">The scale</a>
+    <a href="#pricing">Pricing</a>
+    <a href="login.html" class="signin">Sign in</a>
+    <a href="login.html?start=1" class="btn btn-ink">Start free</a>
+  </nav>
+</header>
+
+<main>
+<!-- ============================================================ hero -->
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow mono"><span class="live-dot"></span> Live Google seismograph</p>
+    <h1>Feel every Google update <em>before</em> your traffic does.</h1>
+    <p class="lede">SERP Quake reads 48 keywords across 8 industries every six hours and turns how hard the results moved into a magnitude, like an earthquake. A normal day is M2. A core update is M7 and up. When the ground shakes, you know first.</p>
+    <div class="cta-row">
+      <a class="btn btn-red" href="login.html?start=1">Start your 7-day free trial</a>
+      <a class="btn btn-ghost" href="app.html?demo=1">See the dashboard →</a>
+    </div>
+    <p class="fine mono">No card for the trial · Readings every 6 hours · Poisoned results filtered out</p>
+  </div>
+
+  <aside class="reading" aria-live="polite">
+    <div class="reading-head mono"><span>Right now</span><span id="pulse-when">connecting…</span></div>
+    <div class="reading-body">
+      <div class="richter-big" id="richter-hero"></div>
+      <div class="readout">
+        <div class="mag mono"><small>M</small><span id="pulse-mag">—</span></div>
+        <div class="mood-chip" id="pulse-chip"><i></i><span id="pulse-class">Listening</span></div>
+        <p class="mood-line" id="pulse-line">Waiting for the latest reading.</p>
+        <svg class="spark" id="pulse-spark" viewBox="0 0 200 40" preserveAspectRatio="none" aria-label="Last 7 days of magnitude"></svg>
+        <p class="spark-cap mono">last 7 days</p>
+      </div>
+    </div>
+    <div class="reading-foot mono" id="pulse-foot">&nbsp;</div>
+  </aside>
+
+  <div class="drum" aria-hidden="true">
+    <canvas id="drum"></canvas>
+    <div class="drum-label mono"><span>SQ-01 · GOOGLE / US-EN · 48 STATIONS</span><span id="drum-m">M —</span></div>
+  </div>
+</section>
+
+<!-- ============================================================ shake it -->
+<section class="ink-section shake on-dark" id="shake">
+  <div class="shake-grid">
+    <div>
+      <p class="eyebrow mono">Try it</p>
+      <h2>What does an algorithm update <em>feel</em> like?</h2>
+      <p class="lede light">Drag the ground. At M2, an ordinary day, rankings drift. By M5 the whole network is shaking twice as hard as normal, and at M8 four times as hard. Richter takes it about as well as you do.</p>
+      <div class="slider-wrap">
+        <input type="range" id="shake-range" min="0" max="10" step="0.1" value="2" aria-label="Magnitude">
+        <div class="ticks mono" aria-hidden="true"><span>0</span><span>2</span><span>4</span><span>6</span><span>8</span><span>10</span></div>
+      </div>
+      <dl class="shake-read mono">
+        <div><dt>Magnitude</dt><dd id="sh-m">M 2.0</dd></div>
+        <div><dt>vs. a normal day</dt><dd id="sh-r">1.0×</dd></div>
+        <div><dt>Class</dt><dd id="sh-c">Background</dd></div>
+      </dl>
+      <p class="shake-note" id="sh-note">Normal daily churn. Rankings drift, nothing to do.</p>
+    </div>
+    <div class="shake-stage">
+      <div class="richter-stage" id="richter-shake"></div>
+      <canvas id="drum-shake"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ poisoning -->
+<section class="problem">
+  <div class="problem-grid">
+    <div>
+      <p class="eyebrow mono">Why now</p>
+      <h2>Google is feeding rank trackers <em>fake results</em>.</h2>
+      <p class="lede">In October 2026 Ahrefs reported that Google has started "poisoning" the results it serves to suspected SERP scrapers, and that 5–20% of results are affected depending on the data provider. Every volatility tool is built on scraped results, and a poisoned result looks exactly like an earthquake: the whole top 10 changes at once.</p>
+      <p class="lede">SERP Quake checks every reading before it counts. If a keyword's results are completely replaced, it searches again, through a second provider when one is available. If the second look matches what was there before, the first was fake and is thrown out. The network reading uses the middle 50% of keywords, so a quarter of them would have to be corrupted in the same direction to move the needle.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b class="mono">5–20%</b><span>of scraped results altered by Google (Ahrefs, Oct 2026)</span></div>
+      <div class="stat"><b class="mono">2×</b><span>looks before a total replacement is believed</span></div>
+      <div class="stat"><b class="mono">25%+</b><span>of keywords would have to be corrupted in the same direction to fake a quake</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ how -->
+<section class="how" id="how">
+  <p class="eyebrow mono">How it works</p>
+  <h2>A real seismograph, pointed at Google.</h2>
+  <ol class="steps">
+    <li><span class="n mono">01</span><h3>48 sensors on 8 fault lines</h3><p>Keywords in health, finance, ecommerce, local, travel, tech, food and how-to, read every six hours. A niche update lights one fault line. A core update lights them all.</p></li>
+    <li><span class="n mono">02</span><h3>Ground motion, four ways</h3><p>How far the order moved, how many clicks changed hands, which new sites broke in, and whether the page layout changed (AI Overview, snippets, local pack).</p></li>
+    <li><span class="n mono">03</span><h3>Against each keyword's normal</h3><p>Some results churn daily and some never move. Each keyword is measured against its own last 30 quiet days, so only unusual shaking counts.</p></li>
+    <li><span class="n mono">04</span><h3>A logarithmic magnitude</h3><p><span class="mono">M = 2 + 3·log₂(R)</span>. A normal day is M2, and every +3 means twice the shaking. A quake is declared the way seismologists do it, with an STA/LTA trigger, and is then checked against Google's own confirmed updates.</p></li>
+  </ol>
+</section>
+
+<!-- ============================================================ preview -->
+<section class="preview">
+  <div class="preview-copy">
+    <p class="eyebrow mono">Inside your account</p>
+    <h2>The whole instrument, with the math showing.</h2>
+    <ul class="ticks-list">
+      <li>The live magnitude and Richter's mood</li>
+      <li>A seismogram with Google's confirmed updates marked</li>
+      <li>Fault lines showing which industries are shaking</li>
+      <li>Every keyword at every reading, colored by how hard it moved</li>
+      <li>A step-by-step worked example of how the latest number was calculated</li>
+      <li>A quake log with peak, length and breadth</li>
+    </ul>
+    <a class="btn btn-ink" href="app.html?demo=1">Open the demo dashboard →</a>
+  </div>
+  <div class="browser" aria-hidden="true">
+    <div class="browser-bar"><i></i><i></i><i></i><span class="mono">serpquake.com/app</span></div>
+    <iframe src="app.html?demo=1&amp;embed=1" title="Dashboard preview" loading="lazy" tabindex="-1"></iframe>
+  </div>
+</section>
+
+<!-- ============================================================ scale -->
+<section class="ink-section" id="scale">
+  <p class="eyebrow mono">The scale</p>
+  <h2>From Background to Historic.</h2>
+  <div class="scale">
+    <div class="sc" style="--c:#3aa883"><b class="mono">0–3</b><h4>Background</h4><p>Normal daily churn.</p><span class="mono">&lt; 1.26×</span></div>
+    <div class="sc" style="--c:#7fb85a"><b class="mono">3–4</b><h4>Minor</h4><p>Above normal, usually nothing.</p><span class="mono">≥ 1.26×</span></div>
+    <div class="sc" style="--c:#e7b53c"><b class="mono">4–5</b><h4>Light</h4><p>Noticeable, often one vertical.</p><span class="mono">≥ 1.59×</span></div>
+    <div class="sc" style="--c:#efa13a"><b class="mono">5–6</b><h4>Moderate</h4><p>Something is rolling out.</p><span class="mono">≥ 2.00×</span></div>
+    <div class="sc" style="--c:#ef8a3a"><b class="mono">6–7</b><h4>Strong</h4><p>Spam, reviews, helpful-content sized.</p><span class="mono">≥ 2.52×</span></div>
+    <div class="sc" style="--c:#e8653a"><b class="mono">7–8</b><h4>Major</h4><p>Core-update territory.</p><span class="mono">≥ 3.17×</span></div>
+    <div class="sc" style="--c:#e2483d"><b class="mono">8–9</b><h4>Great</h4><p>The largest core updates.</p><span class="mono">≥ 4.00×</span></div>
+    <div class="sc" style="--c:#b8312a"><b class="mono">9–10</b><h4>Historic</h4><p>A Florida- or Panda-class reshuffle.</p><span class="mono">≥ 5.04×</span></div>
+  </div>
+  <p class="fine mono light">× = network shaking vs. a normal day. The class names are calibrated against Google's confirmed updates as readings build up.</p>
+</section>
+
+<!-- ============================================================ pricing -->
+<section class="pricing" id="pricing">
+  <p class="eyebrow mono">Pricing</p>
+  <h2>Know before your traffic does.</h2>
+  <div class="tiers">
+    <div class="tier">
+      <h3>Free</h3>
+      <p class="price mono">$0</p>
+      <ul><li>The live magnitude on this page</li><li>Richter's mood</li><li>The last 7 days of the trace</li></ul>
+      <a class="btn btn-ghost" href="#top" onclick="scrollTo({top:0,behavior:'smooth'});return false">You're looking at it</a>
+    </div>
+    <div class="tier tier-pro">
+      <span class="badge mono">7 days free</span>
+      <h3>Pro</h3>
+      <p class="price mono">$29<small>/month</small></p>
+      <ul><li>The full dashboard</li><li>Complete history and quake log</li><li>All 48 keywords at every reading</li><li>Fault lines by industry</li><li>The worked math behind every number</li></ul>
+      <a class="btn btn-red" href="login.html?start=1">Start free trial</a>
+    </div>
+    <div class="tier">
+      <h3>Agency</h3>
+      <p class="price mono">Let's talk</p>
+      <ul><li>Your own keyword network</li><li>Your markets and locations</li><li>Alerts to your Slack</li></ul>
+      <a class="btn btn-ghost" href="mailto:hello@serpquake.com?subject=SERP%20Quake%20Agency">Get in touch</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ faq -->
+<section class="faq">
+  <h2>Questions</h2>
+  <details><summary>How is this different from Semrush Sensor or MozCast?</summary><p>Those sensors use private methods and are built on the same scraped results Google is now altering. SERP Quake shows its arithmetic for every reading, throws out results that look poisoned before measuring, and checks its own quakes against Google's confirmed-update record.</p></details>
+  <details><summary>What does "M7" actually mean?</summary><p>Across the whole keyword network, results moved about 3.2 times harder than on a normal day. The scale is logarithmic, so every +3 is a doubling: M5 is 2×, M8 is 4×.</p></details>
+  <details><summary>Which Google does it watch?</summary><p>United States, English, desktop, unpersonalized. Local keywords are pinned to one city, because without that Google picks a different city on every request and local results swing wildly.</p></details>
+  <details><summary>Does a big quake mean my site was hit?</summary><p>It means rankings moved a lot, not who won or lost. Check your own analytics around the quake. The dashboard shows which industries and keywords moved most.</p></details>
+  <details><summary>How often does it update?</summary><p>Every six hours. Core updates roll out over about two weeks, so that is plenty to catch the first tremor, the peak and the aftershocks.</p></details>
+</section>
+
+<section class="final ink-section on-dark">
+  <div class="final-grid">
+    <div class="richter-final" id="richter-final"></div>
+    <div>
+      <h2>Let Richter do the worrying.</h2>
+      <p class="lede light">Seven days free. No card.</p>
+      <a class="btn btn-red" href="login.html?start=1">Start free trial</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot mono">
+  <span>© SERP Quake</span>
+  <span>Confirmed updates from the <a href="https://status.search.google.com/">Google Search Status Dashboard</a> · Poisoning research: <a href="https://ahrefs.com/blog/serp-data-update/">Ahrefs</a></span>
+</footer>
+
+<script>window.SQ_STATIC = {"dataUrl":"https://raw.githubusercontent.com/tyleramcgrath-ops/tmac/serp-quake-data/data.json"};</script>
+<script src="quake-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const scaleNames = [[9, 'Historic'], [8, 'Great'], [7, 'Major'], [6, 'Strong'], [5, 'Moderate'], [4, 'Light'], [3, 'Minor'], [0, 'Background']];
+  const notes = [[9, 'A once-in-a-decade reshuffle of the whole index.'], [8, 'The largest core updates. Check your traffic daily.'], [7, 'Core-update territory. Rankings are being re-decided.'], [6, 'A confirmed-size update: spam, reviews or helpful content.'], [5, 'Something is rolling out or being tested.'], [4, 'Noticeable, often in a single industry.'], [3, 'Above-normal churn. Usually nothing.'], [0, 'Normal daily churn. Rankings drift, nothing to do.']];
+  const pick = (list, m) => list.find(([min]) => m >= min)[1];
+  const ago = (t) => { const mins = Math.round((Date.now() - Date.parse(t)) / 60000); return mins < 60 ? mins + ' min ago' : mins < 1440 ? Math.round(mins / 60) + 'h ago' : Math.round(mins / 1440) + 'd ago'; };
+
+  // Hero: the live reading.
+  const hero = Richter.mount($('#richter-hero'));
+  const drum = Helicorder.mount($('#drum'), { rows: 7, magnitude: 2 });
+  Richter.mount($('#richter-final')).set(1);
+
+  function setMood(m) {
+    const md = hero.set(m);
+    document.body.dataset.mood = md.key;
+    $('#pulse-chip').style.setProperty('--c', md.color);
+    drum.set(m);
+    return md;
+  }
+
+  function spark(vals) {
+    const el = $('#pulse-spark'); const xs = vals.filter((v) => v != null);
+    if (xs.length < 2) { el.innerHTML = ''; return; }
+    const n = vals.length; let d = ''; let pen = false;
+    vals.forEach((v, i) => { if (v == null) { pen = false; return; } const x = (i / (n - 1)) * 200; const y = 38 - (Math.min(10, v) / 10) * 36; d += (pen ? 'L' : 'M') + x.toFixed(1) + ' ' + y.toFixed(1); pen = true; });
+    el.innerHTML = '<line x1="0" x2="200" y1="' + (38 - 0.2 * 36) + '" y2="' + (38 - 0.2 * 36) + '" class="spark-base"/><path d="' + d + '"/>';
+  }
+
+  QuakePulse.load().then((p) => {
+    if (p.magnitude == null) throw new Error('no reading yet');
+    const md = setMood(p.magnitude);
+    $('#pulse-mag').textContent = p.magnitude.toFixed(1);
+    $('#pulse-class').textContent = (p.class || md.name);
+    $('#pulse-line').textContent = p.line;
+    $('#pulse-when').textContent = 'updated ' + ago(p.t);
+    $('#drum-m').textContent = 'M ' + p.magnitude.toFixed(1);
+    spark(p.spark || []);
+    $('#pulse-foot').textContent = p.quake
+      ? 'Quake in progress since ' + new Date(p.quake.since).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) + ' · peak M' + p.quake.peak.toFixed(1) + (p.quake.confirmed.length ? ' · ' + p.quake.confirmed[0] : '')
+      : p.calibrating ? 'Instrument still calibrating: magnitudes settle after ~2 days of readings' : 'No quake in progress';
+  }).catch(() => {
+    setMood(1.5);
+    $('#pulse-when').textContent = 'feed offline';
+    $('#pulse-line').textContent = 'The live feed is unreachable right now. Richter is waiting for the next reading.';
+  });
+
+  // Shake it.
+  const sr = Richter.mount($('#richter-shake'));
+  const sd = Helicorder.mount($('#drum-shake'), { rows: 5, magnitude: 2, ink: '#ff6a4d', oldInk: 'rgba(243,236,223,.45)', grid: 'rgba(243,236,223,.07)' });
+  const range = $('#shake-range');
+  function shake() {
+    const m = Number(range.value);
+    const md = sr.set(m); sd.set(m);
+    $('#shake').dataset.mood = md.key;
+    $('#sh-m').textContent = 'M ' + m.toFixed(1);
+    $('#sh-r').textContent = Math.pow(2, (m - 2) / 3).toFixed(2) + '×';
+    $('#sh-c').textContent = pick(scaleNames, m);
+    $('#sh-note').textContent = pick(notes, m);
+    range.style.setProperty('--p', (m * 10) + '%');
+  }
+  range.addEventListener('input', shake);
+  shake();
+})();
+</script>
+</body>
+</html>

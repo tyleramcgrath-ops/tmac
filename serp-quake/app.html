@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard · SERP Quake</title>
+<meta name="description" content="The SERP Quake seismograph: live magnitude, history, fault lines and every keyword.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%231f1b16'/%3E%3Cpath d='M4 17h6l2-6 4 12 3-9 2 3h7' fill='none' stroke='%23d6402b' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<style>
+  body.night { --surface: #1d1915; --raised: #262019; --line: rgba(243,236,223,.1); --muted: #9c9283; --pen: #ff6a4d; --band: rgba(243,236,223,.07);
+    --h0: #2a2520; --h1: #3d2a22; --h2: #5a2f24; --h3: #803526; --h4: #a83b29; --h5: #d2482f; --h6: #ef7550; --h7: #ffb48f; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 22px clamp(16px, 4vw, 40px) 80px; }
+  .acct { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--cream-2); }
+  .plan { font-size: 12px; padding: 4px 10px; border-radius: 999px; border: 1px solid var(--line); color: var(--cream); }
+  .plan.trial { border-color: var(--alert); color: var(--alert); }
+  .plan.pro { border-color: var(--zen); color: var(--zen); }
+  .plan.demo { border-color: var(--pen); color: var(--pen); }
+  .linkbtn { background: none; border: 0; color: var(--cream-2); font: inherit; cursor: pointer; text-decoration: underline; padding: 0; }
+  @media (max-width: 700px) { .acct .email { display: none; } }
+  .banner { border-radius: 14px; padding: 12px 16px; margin-bottom: 14px; font-size: 14.5px; border: 1px solid var(--line); background: var(--raised); color: var(--cream-2); }
+  .banner b { color: var(--cream); margin-right: 6px; }
+  .banner.sim { border-left: 4px solid var(--pen); } .banner.warn { border-left: 4px solid var(--alert); }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 20px; padding: 22px; margin-bottom: 16px; position: relative; }
+  .card h2 { font-size: 30px; margin: 0 0 4px; max-width: none; line-height: 1.1; }
+  .card .sub { color: var(--muted); font-size: 14px; margin: 0 0 12px; max-width: 78ch; }
+  .moodcard { display: grid; grid-template-columns: minmax(180px, 290px) minmax(0, 1fr); gap: clamp(18px, 4vw, 44px); align-items: center; overflow: hidden; }
+  .moodcard::before { content: ""; position: absolute; inset: -40%; background: radial-gradient(40% 40% at 20% 50%, color-mix(in srgb, var(--mc, #3aa883) 28%, transparent), transparent 70%); pointer-events: none; transition: background .8s; }
+  @media (max-width: 760px) { .moodcard { grid-template-columns: minmax(0, 1fr); } .moodcard .rqbox { max-width: 220px; margin: 0 auto; } }
+  .moodcard > * { position: relative; }
+  body[data-mood=nervous] .moodcard { --tx: .8px; animation: tremble .3s linear infinite; }
+  body[data-mood=panic] .moodcard { --tx: 2.2px; animation: tremble .15s linear infinite; }
+  .bigm { font: 500 clamp(76px, 10vw, 124px)/.86 var(--mono); letter-spacing: -.06em; }
+  .bigm small { font-size: .3em; letter-spacing: 0; color: var(--muted); vertical-align: 1em; margin-right: 6px; }
+  .moodrow { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 14px 0 6px; }
+  .mood-chip { color: var(--cream); }
+  .moodline { color: var(--cream-2); margin: 0; font-size: 16px; }
+  .stats4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
+  @media (max-width: 900px) { .stats4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  .st { background: var(--raised); border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+  .st .v { font: 600 20px/1.2 var(--mono); color: var(--cream); }
+  .st .k { font-size: 12px; color: var(--muted); }
+  .toolbar { display: flex; gap: 6px; flex-wrap: wrap; margin: 6px 0 12px; }
+  .toolbar button { font: 500 13px var(--mono); padding: 5px 11px; border-radius: 999px; border: 1px solid var(--line); background: var(--raised); color: var(--cream-2); cursor: pointer; }
+  .toolbar button[aria-pressed=true] { color: var(--night); background: var(--cream); border-color: var(--cream); }
+  svg { display: block; width: 100%; overflow: visible; }
+  .lbl { fill: var(--muted); font: 11px var(--mono); }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .sw { width: 18px; height: 3px; border-radius: 2px; display: inline-block; }
+  .swb { width: 14px; height: 10px; border-radius: 2px; display: inline-block; }
+  .grid2 { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; }
+  @media (max-width: 860px) { .grid2 { grid-template-columns: minmax(0, 1fr); } }
+  .fault { display: grid; grid-template-columns: 92px minmax(0, 1fr) 88px; align-items: center; gap: 10px; margin: 8px 0; font-size: 14px; color: var(--cream-2); }
+  .fault .num { font-family: var(--mono); font-size: 13px; text-align: right; color: var(--cream); }
+  .bar { height: 12px; background: var(--h0); border-radius: 4px; position: relative; overflow: hidden; }
+  .bar i { position: absolute; inset: 0 auto 0 0; background: var(--pen); border-radius: 0 4px 4px 0; }
+  .bar s { position: absolute; top: -2px; bottom: -2px; width: 2px; background: var(--cream); opacity: .7; }
+  .heat { overflow-x: auto; }
+  .heat table { border-collapse: separate; border-spacing: 1.5px; font-size: 11.5px; }
+  .heat td { width: 9px; height: 12px; padding: 0; border-radius: 2px; }
+  .heat th { text-align: right; font-weight: 400; color: var(--cream-2); padding-right: 10px; white-space: nowrap; max-width: 240px; overflow: hidden; text-overflow: ellipsis; }
+  .heat tr.vh th { color: var(--pen); font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .1em; padding-top: 8px; text-align: left; }
+  .hatch { background: repeating-linear-gradient(45deg, #4c453c 0 2px, transparent 2px 4px); }
+  table.data { width: 100%; border-collapse: collapse; font-size: 14px; }
+  table.data th, table.data td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); vertical-align: top; color: var(--cream-2); }
+  table.data th { color: var(--muted); font: 600 11px var(--mono); text-transform: uppercase; letter-spacing: .08em; }
+  table.data td.num { font-family: var(--mono); color: var(--cream); }
+  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-right: 6px; vertical-align: -1px; }
+  .step { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; padding: 16px 0; border-top: 1px solid var(--line); }
+  .step .n { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--pen); color: var(--pen); display: grid; place-items: center; font: 600 12px var(--mono); }
+  .step b { font: 400 22px var(--serif); color: var(--cream); }
+  .step p { margin: 4px 0; color: var(--cream-2); font-size: 15px; }
+  .eq { font: 13px var(--mono); background: var(--night); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin: 8px 0; overflow-x: auto; white-space: pre; color: var(--cream); }
+  .why { font-size: 14px; color: var(--muted); } .why b { font: 600 14px var(--sans); color: var(--cream-2); }
+  .tip { position: fixed; pointer-events: none; background: var(--raised); color: var(--cream); border: 1px solid var(--line); border-radius: 10px; padding: 8px 11px; font-size: 12.5px; box-shadow: 0 8px 24px rgba(0,0,0,.4); max-width: 300px; z-index: 60; display: none; }
+  .empty { padding: 60px 0; text-align: center; color: var(--cream-2); }
+  .wall { position: fixed; inset: 0; z-index: 45; display: grid; place-items: center; background: rgba(21,18,14,.72); backdrop-filter: blur(6px); padding: 16px; }
+  .wall .box { max-width: 520px; background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); border-radius: 22px; box-shadow: 12px 12px 0 var(--red); padding: 30px; display: grid; grid-template-columns: 110px minmax(0, 1fr); gap: 20px; align-items: center; }
+  .wall h2 { font-size: 36px; color: var(--ink); max-width: none; margin-bottom: 8px; }
+  .wall p { color: var(--ink-2); margin: 0 0 16px; }
+  body.embed .nav, body.embed .grain { display: none; }
+  body.embed .wrap { padding-top: 14px; }
+</style>
+</head>
+<body class="night" data-mood="zen">
+<div class="grain" aria-hidden="true"></div>
+<header class="nav">
+  <a class="brand" href="index.html"><span class="mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M3 17h6l2-6 4 12 3-9 2 3h9"/></svg></span>SERP&nbsp;Quake</a>
+  <div class="acct" id="acct"></div>
+</header>
+<div class="wrap">
+  <div id="banners"></div>
+  <div id="app"><div class="card empty">Reading the seismograph…</div></div>
+</div>
+<div class="tip" id="tip"></div>
+<script>window.SQ_STATIC = {"dataUrl":"https://raw.githubusercontent.com/tyleramcgrath-ops/tmac/serp-quake-data/data.json"};</script>
+<script src="quake-ui.js"></script>
+<script>
+(function () {
+  'use strict';
+  const $ = (s) => document.querySelector(s);
+  const q = new URLSearchParams(location.search);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const f2 = (x) => (x == null || !isFinite(x) ? '—' : Number(x).toFixed(2));
+  const f1 = (x) => (x == null || !isFinite(x) ? '—' : Number(x).toFixed(1));
+  const pct = (x) => (x == null ? '—' : Math.round(x * 100) + '%');
+  const day = (t) => new Date(t).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+  const when = (t) => new Date(t).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  const tip = $('#tip');
+  function showTip(e, html) { tip.innerHTML = html; tip.style.display = 'block'; const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8); tip.style.left = x + 'px'; tip.style.top = (e.clientY + 14) + 'px'; }
+  function hideTip() { tip.style.display = 'none'; }
+  const sevColor = (m) => Richter.moodOf(m).color;
+  const classify = (scale, m) => scale.find((s) => (m || 0) >= s.min);
+  if (q.get('embed')) document.body.classList.add('embed');
+
+  let D = null; let range = 30; let rq = null; let session = null;
+  const demo = q.has('demo');
+
+  // ------------------------------------------------------------ account
+  function acctHtml() {
+    if (demo || !session || !session.user) {
+      return '<span class="plan demo mono">Demo</span><a class="btn btn-red" href="login.html?start=1" style="padding:10px 16px">Start free trial</a>';
+    }
+    const a = session.access;
+    const chip = a.level === 'pro' ? '<span class="plan pro mono">Pro</span>'
+      : a.level === 'trial' ? '<span class="plan trial mono">Trial · ' + a.daysLeft + ' day' + (a.daysLeft === 1 ? '' : 's') + ' left</span>'
+      : '<span class="plan mono">Trial ended</span>';
+    const up = a.level === 'pro' ? (session.user.hasBilling ? '<button class="linkbtn" id="portal">Billing</button>' : '')
+      : '<button class="btn btn-red" id="upgrade" style="padding:10px 16px">Upgrade · $29/mo</button>';
+    return chip + up + '<span class="email">' + esc(session.user.email) + '</span><button class="linkbtn" id="signout">Sign out</button>';
+  }
+  function bindAcct() {
+    const so = $('#signout'); if (so) so.onclick = async () => { await fetch('/api/auth/session', { method: 'DELETE' }); location.href = '/'; };
+    const up = $('#upgrade'); if (up) up.onclick = () => billing('checkout');
+    const po = $('#portal'); if (po) po.onclick = () => billing('portal');
+  }
+  async function billing(action) {
+    if (session && session.billing === false) { alert('Billing is not switched on yet. Your trial keeps working until then.'); return; }
+    const r = await fetch('/api/stripe?action=' + action, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ plan: 'pro' }) });
+    const j = await r.json().catch(() => ({}));
+    if (j.url) location.href = j.url; else alert(j.error || 'Could not reach billing just now.');
+  }
+
+  async function boot() {
+    if (!demo && window.SQ_STATIC) { location.replace('app.html?demo=1'); return; }
+    if (!demo) {
+      try { session = await (await fetch('/api/auth/session', { cache: 'no-store' })).json(); } catch (e) { session = null; }
+      if (session && session.accounts === false) { location.replace('app.html?demo=1'); return; }
+      if (!session || !session.user) { location.replace('login.html'); return; }
+    }
+    $('#acct').innerHTML = acctHtml(); bindAcct();
+    if (!demo && !session.access.full) return paywall();
+    try {
+      const r = await fetch(demo ? 'demo-data.json' : '/api/data', { cache: 'no-store' });
+      if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'HTTP ' + r.status);
+      D = await r.json();
+      render();
+    } catch (e) {
+      $('#app').innerHTML = '<div class="card empty">Could not load the seismograph: ' + esc(e.message) + '</div>';
+    }
+    if (!demo) setTimeout(boot, 5 * 60 * 1000);
+  }
+
+  async function paywall() {
+    // Show the demo underneath so the wall has something worth paying to see.
+    try { D = await (await fetch('demo-data.json')).json(); render(); } catch (e) {}
+    const w = document.createElement('div');
+    w.className = 'wall';
+    w.innerHTML = '<div class="box"><div id="rq-wall"></div><div><h2>Your free trial has ended.</h2><p>Richter is still watching Google every six hours. Upgrade to Pro to keep seeing the full seismograph, the quake log and every keyword.</p><button class="btn btn-red" id="wall-up">Upgrade to Pro · $29/mo</button></div></div>';
+    document.body.appendChild(w);
+    Richter.mount($('#rq-wall')).set(5.5);
+    $('#wall-up').onclick = () => billing('checkout');
+  }
+
+  // ------------------------------------------------------------ render
+  function render() {
+    const sw = D.sweeps; const latest = sw[sw.length - 1];
+    const b = [];
+    if (D.mode === 'simulated') b.push('<div class="banner sim"><b>Demo data.</b>This seismogram comes from SERP Quake\'s built-in simulator (a quiet month, a spam update, a poisoning storm and a core update) so you can see the instrument at work. Accounts see the live readings.</div>');
+    if (q.get('billing') === 'done') b.push('<div class="banner"><b>Thanks!</b>Your payment is processing. Pro switches on as soon as Stripe confirms it, usually within a minute.</div>');
+    if (latest && latest.interference) b.push('<div class="banner warn"><b>Sensor interference.</b>' + pct(latest.rejectedShare) + ' of the last sweep was rejected as malformed or poisoned, so this sweep is held rather than alarmed on.</div>');
+    if (latest && latest.calibrating) b.push('<div class="banner warn"><b>Calibrating.</b>Each keyword needs a few readings to learn its own normal. Magnitudes settle and quake alerts switch on after about two days.</div>');
+    $('#banners').innerHTML = b.join('');
+    if (!latest || latest.m == null) { $('#app').innerHTML = '<div class="card empty">The first sweep is in: every keyword is seeded. The needle starts moving on the next reading.</div>'; return; }
+    $('#app').innerHTML = [moodHtml(latest), seismoHtml(), '<div class="grid2">' + faultsHtml() + healthHtml() + '</div>', heatHtml(), explainHtml(), eventsHtml()].join('');
+    const m = latest.m24 != null ? latest.m24 : latest.m;
+    rq = Richter.mount($('#rq-main'));
+    const md = rq.set(m);
+    document.body.dataset.mood = md.key;
+    $('.moodcard').style.setProperty('--mc', md.color);
+    drawSeismo(); drawHealth(); bindHeat();
+    document.querySelectorAll('[data-range]').forEach((btn) => btn.addEventListener('click', () => { range = Number(btn.dataset.range); render(); }));
+  }
+
+  function moodHtml(s) {
+    const m = s.m24 != null ? s.m24 : s.m;
+    const c = classify(D.scale, m); const md = Richter.moodOf(m);
+    const ev = D.events.find((e) => e.ongoing);
+    return '<section class="card moodcard"><div class="rqbox" id="rq-main"></div><div>'
+      + '<p class="eyebrow mono" style="margin-bottom:10px">Magnitude · last 24h · ' + esc(when(s.t)) + '</p>'
+      + '<div class="bigm"><small>M</small>' + f1(m) + '</div>'
+      + '<div class="moodrow"><span class="mood-chip" style="--c:' + md.color + '"><i></i>' + esc(c.name) + '</span><span class="mood-chip" style="--c:' + md.color + '"><i></i>Richter is ' + md.name.toLowerCase() + '</span></div>'
+      + '<p class="moodline">' + esc(c.note.charAt(0).toUpperCase() + c.note.slice(1)) + '. ' + esc(md.line) + '</p>'
+      + '<div class="stats4">' + st(f1(s.m), 'This sweep') + st(pct(s.breadth), 'Keywords at 2×+ normal') + st(f2(s.staLta), 'STA/LTA (trigger ≥ ' + D.config.triggerOn + ')')
+      + st(ev ? 'Since ' + day(ev.start) : 'None', ev ? 'Quake in progress · peak M' + f1(ev.peak) : 'Quake in progress') + '</div></div></section>';
+  }
+  const st = (v, k) => '<div class="st"><div class="v">' + v + '</div><div class="k">' + k + '</div></div>';
+
+  function inRange() {
+    const sw = D.sweeps; if (!range) return sw;
+    const end = Date.parse(sw[sw.length - 1].t);
+    return sw.filter((s) => Date.parse(s.t) >= end - range * 864e5);
+  }
+
+  function seismoHtml() {
+    const btn = (d, l) => '<button data-range="' + d + '" aria-pressed="' + (range === d) + '">' + l + '</button>';
+    return '<section class="card"><h2>Seismogram</h2><p class="sub">Each sweep\'s magnitude (thin) and the 24-hour magnitude (bold). Gray bands are updates Google confirmed. Red bands are quakes SERP Quake detected on its own.</p>'
+      + '<div class="toolbar">' + btn(7, '7d') + btn(30, '30d') + btn(90, '90d') + btn(0, 'All') + '</div><div id="seismo"></div>'
+      + '<div class="legend"><span><i class="sw" style="background:var(--pen)"></i>24h magnitude</span><span><i class="sw" style="background:var(--muted);height:1px"></i>single sweep</span><span><i class="swb" style="background:rgba(243,236,223,.16)"></i>Google-confirmed update</span><span><i class="swb" style="background:var(--pen);opacity:.35"></i>Detected quake</span></div></section>';
+  }
+
+  function drawSeismo() {
+    const el = $('#seismo'); const sw = inRange(); if (!sw.length) return;
+    const W = Math.max(320, el.clientWidth); const H = 300; const P = { l: 34, r: 10, t: 24, b: 26 };
+    const t0 = Date.parse(sw[0].t); const t1 = Math.max(t0 + 1, Date.parse(sw[sw.length - 1].t));
+    const x = (t) => P.l + ((Date.parse(t) - t0) / (t1 - t0)) * (W - P.l - P.r);
+    const y = (m) => P.t + (1 - Math.max(0, Math.min(10, m)) / 10) * (H - P.t - P.b);
+    const clip = (a, b2) => [Math.max(P.l, x(a)), Math.min(W - P.r, x(b2))];
+    let g = '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '" role="img" aria-label="Seismogram">';
+    g += '<defs><linearGradient id="fillg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#ff6a4d" stop-opacity=".35"/><stop offset="1" stop-color="#ff6a4d" stop-opacity="0"/></linearGradient></defs>';
+    for (const u of D.confirmed) {
+      const [a, b2] = clip(u.begin, u.end || sw[sw.length - 1].t); if (b2 <= a) continue;
+      g += '<rect x="' + a + '" y="' + P.t + '" width="' + (b2 - a) + '" height="' + (H - P.t - P.b) + '" fill="var(--band)"/><text class="lbl" x="' + (a + 3) + '" y="' + (P.t - 8) + '">' + esc(u.name.replace(/ update$/, '')) + '</text>';
+    }
+    for (const e of D.events) {
+      const [a, b2] = clip(e.start, e.end || sw[sw.length - 1].t); if (b2 <= a) continue;
+      g += '<rect x="' + a + '" y="' + P.t + '" width="' + (b2 - a) + '" height="' + (H - P.t - P.b) + '" fill="var(--pen)" opacity=".07"/><rect x="' + a + '" y="' + (H - P.b - 5) + '" width="' + (b2 - a) + '" height="5" rx="2" fill="var(--pen)"/>';
+    }
+    for (let m = 0; m <= 10; m += 2) g += '<line x1="' + P.l + '" x2="' + (W - P.r) + '" y1="' + y(m) + '" y2="' + y(m) + '" stroke="var(--line)"/><text class="lbl" x="' + (P.l - 8) + '" y="' + (y(m) + 4) + '" text-anchor="end">' + m + '</text>';
+    const span = (t1 - t0) / 864e5; const stepDays = span > 60 ? 14 : span > 20 ? 7 : span > 6 ? 2 : 1;
+    const d0 = new Date(t0); d0.setUTCHours(0, 0, 0, 0);
+    for (let t = d0.getTime(); t <= t1; t += stepDays * 864e5) { if (t < t0) continue; g += '<text class="lbl" x="' + x(new Date(t).toISOString()) + '" y="' + (H - 6) + '" text-anchor="middle">' + day(t) + '</text>'; }
+    const path = (key) => { let d = ''; let pen = false; for (const s of sw) { if (s[key] == null) { pen = false; continue; } d += (pen ? 'L' : 'M') + x(s.t).toFixed(1) + ' ' + y(s[key]).toFixed(1); pen = true; } return d; };
+    const p24 = path('m24');
+    const first = sw.find((s) => s.m24 != null); const lastS = [...sw].reverse().find((s) => s.m24 != null);
+    if (first && lastS) g += '<path d="' + p24 + 'L' + x(lastS.t).toFixed(1) + ' ' + y(0) + 'L' + x(first.t).toFixed(1) + ' ' + y(0) + 'Z" fill="url(#fillg)"/>';
+    g += '<path d="' + path('m') + '" fill="none" stroke="var(--muted)" stroke-width="1" opacity=".7"/><path d="' + p24 + '" fill="none" stroke="var(--pen)" stroke-width="2.5" stroke-linejoin="round"/>';
+    g += '<line id="xh" y1="' + P.t + '" y2="' + (H - P.b) + '" stroke="var(--cream-2)" stroke-opacity=".4" visibility="hidden"/><circle id="xd" r="5" fill="var(--pen)" stroke="var(--surface)" stroke-width="2" visibility="hidden"/>';
+    g += '<rect x="' + P.l + '" y="0" width="' + (W - P.l - P.r) + '" height="' + H + '" fill="transparent" id="hit"/></svg>';
+    el.innerHTML = g;
+    const svg = el.querySelector('svg'); const hit = el.querySelector('#hit');
+    hit.addEventListener('mousemove', (e) => {
+      const r = svg.getBoundingClientRect(); const px = ((e.clientX - r.left) / r.width) * W;
+      let best = sw[0]; for (const s of sw) if (Math.abs(x(s.t) - px) < Math.abs(x(best.t) - px)) best = s;
+      const xh = el.querySelector('#xh'); const xd = el.querySelector('#xd');
+      xh.setAttribute('x1', x(best.t)); xh.setAttribute('x2', x(best.t)); xh.setAttribute('visibility', 'visible');
+      if (best.m24 != null) { xd.setAttribute('cx', x(best.t)); xd.setAttribute('cy', y(best.m24)); xd.setAttribute('visibility', 'visible'); }
+      const conf = D.confirmed.filter((u) => Date.parse(u.begin) <= Date.parse(best.t) && (!u.end || Date.parse(u.end) >= Date.parse(best.t))).map((u) => u.name);
+      showTip(e, '<b>' + when(best.t) + '</b><br>M' + f1(best.m24) + ' · ' + esc(classify(D.scale, best.m24 || 0).name) + ' · Richter ' + Richter.moodOf(best.m24 || 0).name.toLowerCase()
+        + '<br>this sweep M' + f1(best.m) + ' · breadth ' + pct(best.breadth) + (best.inEvent ? '<br><b>Quake in progress</b>' : '') + (conf.length ? '<br>Google: ' + esc(conf.join(', ')) : ''));
+    });
+    hit.addEventListener('mouseleave', () => { hideTip(); el.querySelector('#xh').setAttribute('visibility', 'hidden'); el.querySelector('#xd').setAttribute('visibility', 'hidden'); });
+  }
+
+  function faultsHtml() {
+    const f = D.explain.faults; const max = Math.max(4, ...Object.values(f).map((v) => v.median));
+    const rows = Object.entries(f).sort((a, b) => b[1].median - a[1].median).map(([v, x]) =>
+      '<div class="fault"><span>' + esc(v) + '</span><span class="bar"><i style="width:' + Math.min(100, (x.median / max) * 100) + '%"></i><s style="left:' + (1 / max) * 100 + '%"></s></span><span class="num">' + f2(x.median) + '×' + (x.active ? ' ●' : '') + '</span></div>').join('');
+    return '<section class="card"><h2>Fault lines</h2><p class="sub">Each industry\'s typical keyword, as a multiple of its own normal (tick = 1×, ● = active at ' + D.config.faultTrigger + '×+). Core updates light most of them.</p>' + rows + '</section>';
+  }
+
+  function healthHtml() {
+    const i = D.explain.instrument;
+    return '<section class="card"><h2>Instrument health</h2><p class="sub">Google feeds altered results to suspected scrapers. This is the share of readings SERP Quake rejected per sweep.</p><div id="health"></div>'
+      + '<div class="stats4" style="grid-template-columns:repeat(2,minmax(0,1fr))">' + st(i.measured + '/' + i.stations, 'Keywords measured') + st(i.rejected, 'Rejected this sweep') + st(i.poisonCaught, 'Poisoned reads caught') + st(i.errors, 'Fetch errors') + '</div></section>';
+  }
+  function drawHealth() {
+    const el = $('#health'); const sw = inRange(); if (!el || !sw.length) return;
+    const W = Math.max(280, el.clientWidth); const H = 90; const P = { l: 34, r: 6, t: 8, b: 14 };
+    const t0 = Date.parse(sw[0].t); const t1 = Math.max(t0 + 1, Date.parse(sw[sw.length - 1].t));
+    const max = Math.max(0.3, ...sw.map((s) => s.rejectedShare || 0));
+    const x = (t) => P.l + ((Date.parse(t) - t0) / (t1 - t0)) * (W - P.l - P.r);
+    const y = (v) => P.t + (1 - v / max) * (H - P.t - P.b);
+    let d = ''; sw.forEach((s, k) => { d += (k ? 'L' : 'M') + x(s.t).toFixed(1) + ' ' + y(s.rejectedShare || 0).toFixed(1); });
+    el.innerHTML = '<svg viewBox="0 0 ' + W + ' ' + H + '" height="' + H + '"><line x1="' + P.l + '" x2="' + (W - P.r) + '" y1="' + y(D.config.interferenceShare) + '" y2="' + y(D.config.interferenceShare) + '" stroke="var(--alert)" stroke-dasharray="4 3"/><text class="lbl" x="' + (P.l - 6) + '" y="' + (y(D.config.interferenceShare) + 4) + '" text-anchor="end">' + pct(D.config.interferenceShare) + '</text><text class="lbl" x="' + (P.l - 6) + '" y="' + (y(0) + 4) + '" text-anchor="end">0%</text><path d="' + d + '" fill="none" stroke="var(--pen)" stroke-width="1.5"/></svg>';
+  }
+
+  function heatColor(v) {
+    if (v == null) return 'var(--h0)';
+    const steps = [0.5, 1, 1.5, 2, 3, 4, 6]; let k = 0; while (k < steps.length && v >= steps[k]) k++;
+    return 'var(--h' + k + ')';
+  }
+  function heatHtml() {
+    const sw = D.sweeps.slice(-Math.min(D.sweeps.length, 84));
+    const byV = {}; for (const s of D.stations) (byV[s.vertical] = byV[s.vertical] || []).push(s);
+    let rows = '';
+    for (const [v, list] of Object.entries(byV)) {
+      rows += '<tr class="vh"><th colspan="' + (sw.length + 1) + '">' + esc(v) + '</th></tr>';
+      for (const s of list) {
+        rows += '<tr><th title="' + esc(s.keyword) + '">' + esc(s.keyword) + '</th>';
+        for (let k = 0; k < sw.length; k++) {
+          const x = sw[k].st[s.id]; const isNum = typeof x === 'number';
+          rows += '<td' + (!isNum && (x === 'r' || x === 'e') ? ' class="hatch"' : '') + ' data-i="' + k + '" data-s="' + esc(s.id) + '" style="background-color:' + (isNum ? heatColor(x) : 'transparent') + '"></td>';
+        }
+        rows += '</tr>';
+      }
+    }
+    const leg = [['<0.5×', 0], ['1×', 1], ['1.5×', 2], ['2×', 3], ['3×', 4], ['4×', 5], ['6×+', 7]].map(([l, k]) => '<span><i class="swb" style="background:var(--h' + k + ')"></i>' + l + '</span>').join('');
+    return '<section class="card"><h2>Station array</h2><p class="sub">Every keyword (row) at every reading (column, last ' + sw.length + '), colored by how hard it moved against its own normal. A real update paints whole columns. Poisoning shows up as isolated hatched cells, which are left out of the measurement.</p>'
+      + '<div class="heat" id="heat"><table>' + rows + '</table></div><div class="legend">' + leg + '<span><i class="swb hatch"></i>rejected</span></div></section>';
+  }
+  function bindHeat() {
+    const sw = D.sweeps.slice(-Math.min(D.sweeps.length, 84));
+    const kw = Object.fromEntries(D.stations.map((s) => [s.id, s]));
+    const h = $('#heat'); if (!h) return;
+    h.addEventListener('mousemove', (e) => {
+      const td = e.target.closest('td[data-i]'); if (!td) { hideTip(); return; }
+      const s = sw[Number(td.dataset.i)]; const x = s.st[td.dataset.s];
+      const label = typeof x === 'number' ? f2(x) + '× its normal' : ({ r: 'rejected (malformed or poisoned)', e: 'fetch error', s: 'first reading (seed)' }[x] || 'no reading');
+      showTip(e, '<b>' + esc(kw[td.dataset.s].keyword) + '</b><br>' + when(s.t) + '<br>' + label);
+    });
+    h.addEventListener('mouseleave', hideTip);
+  }
+
+  function explainHtml() {
+    const e = D.explain; const W = D.weights; const C = D.config; const c = e.components;
+    const typ = e.typical; const top = e.mostShaken[0];
+    const A = W.rank * c.rank + W.traffic * c.traffic + W.domain * c.domain + W.feature * c.feature;
+    const faults = Object.entries(e.faults).filter(([, f]) => f.active).map(([v]) => v);
+    const step = (n, t, p, eq, why) => '<div class="step"><div class="n">' + n + '</div><div><b>' + t + '</b><p>' + p + '</p>' + (eq ? '<div class="eq">' + esc(eq) + '</div>' : '') + (why ? '<div class="why">' + why + '</div>' : '') + '</div></div>';
+    return '<section class="card"><h2>How the needle got to M' + f1(e.m24) + '</h2><p class="sub">The latest reading, ' + esc(when(e.t)) + ', worked through with its real numbers.</p>'
+      + step(1, 'Ground motion per keyword', 'Each keyword\'s top 10 is compared with its previous good reading on four measures, each from 0 (identical) to 1 (completely different):',
+        'amplitude = ' + W.rank + '×rank + ' + W.traffic + '×clicks + ' + W.domain + '×domains + ' + W.feature + '×features\ntypical keyword: ' + W.rank + '×' + f2(c.rank) + ' + ' + W.traffic + '×' + f2(c.traffic) + ' + ' + W.domain + '×' + f2(c.domain) + ' + ' + W.feature + '×' + f2(c.feature) + ' ≈ ' + f2(A),
+        '<b>rank</b>: 1 − rank-biased overlap (top-weighted) · <b>clicks</b>: share of click value that changed hands (#1 ≈ ' + Math.round(D.ctr[0] * 100) + '% of clicks) · <b>domains</b>: new sites in the top 10 · <b>features</b>: AI Overview, snippets, local pack and so on.')
+      + step(2, 'Against each keyword\'s own normal', 'Each keyword is divided by the median of its last ' + C.baselineWindow + ' quiet readings (about 30 days). Readings taken during a quake don\'t count toward normal.',
+        (typ ? 'typical: "' + typ.keyword + '"  ' + f2(typ.amplitude) + ' ÷ ' + f2(typ.baseline) + ' = ' + f2(typ.ratio) + '×\n' : '') + (top ? 'most shaken: "' + top.keyword + '"  ' + f2(top.amplitude) + ' ÷ ' + f2(top.baseline) + ' = ' + f2(top.ratio) + '×' : ''), '')
+      + step(3, 'The whole network, robustly', 'The network reading is the average of the middle 50% of keywords, divided by the network\'s own quiet level. A quarter of keywords would have to be corrupted in the same direction to fake a quake.',
+        'R = ' + f2(e.rawR) + ' ÷ ' + f2(e.R0) + ' = ' + f2(e.R), '')
+      + step(4, 'A logarithmic magnitude', 'A normal day is M2, and every +3 doubles the shaking. The headline is the 24-hour magnitude.',
+        'M = 2 + 3·log₂(R)\nthis sweep: 2 + 3·log₂(' + f2(e.R) + ') = ' + f2(e.magnitude) + '\nlast 24h:   2 + 3·log₂(' + f2(e.sta) + ') = ' + f2(e.m24), '')
+      + step(5, 'Is it a quake?', 'A quake is declared when the 24-hour average runs at least ' + C.triggerOn + '× the 14-day quiet average (STA/LTA), at least ' + pct(C.triggerBreadth) + ' of keywords are shaking at 2×+ their normal, and the reading is M' + C.triggerMinMagnitude + ' or higher.',
+        'STA/LTA ' + f2(e.staLta) + ' · breadth ' + pct(e.breadth) + ' · active fault lines: ' + (faults.length ? faults.join(', ') : 'none') + '\n→ ' + (e.inEvent ? 'QUAKE IN PROGRESS' : e.calibrating ? 'calibrating' : 'no quake'), '')
+      + step(6, 'Poisoned readings out first', 'A keyword whose whole top 10 is replaced is searched again. If the second look matches the old results, the first was fake and is thrown out. If 30%+ of keywords flip at once, it\'s treated as a real, violent update.',
+        e.instrument.measured + '/' + e.instrument.stations + ' measured · ' + e.instrument.rejected + ' rejected · ' + e.instrument.poisonCaught + ' poisoned reads caught', '')
+      + '</section>';
+  }
+
+  function eventsHtml() {
+    const ev = D.events.slice().reverse();
+    const rows = ev.map((e) => '<tr><td>' + day(e.start) + ' → ' + (e.end ? day(e.end) : '<b>ongoing</b>') + '</td><td class="num"><span class="dot" style="background:' + sevColor(e.peak) + '"></span>M' + f1(e.peak) + '</td><td>' + esc(e.category) + '</td><td class="num">' + pct(e.peakBreadth) + '</td><td>' + esc(e.faults.join(', ')) + '</td><td>' + (e.confirmed.length ? esc(e.confirmed.join(', ')) : '<span style="color:var(--muted)">not confirmed by Google' + (e.ongoing ? ' (yet)' : '') + '</span>') + '</td></tr>').join('');
+    return '<section class="card"><h2>Quake log</h2><p class="sub">Quakes SERP Quake declared on its own, matched afterwards against Google\'s confirmed updates. Google confirms only some of what it ships.</p>'
+      + (ev.length ? '<div style="overflow-x:auto"><table class="data"><thead><tr><th>When</th><th>Peak</th><th>Class</th><th>Breadth</th><th>Fault lines</th><th>Google confirmed</th></tr></thead><tbody>' + rows + '</tbody></table></div>' : '<p style="color:var(--muted)">No quakes yet. Richter is enjoying the quiet.</p>') + '</section>';
+  }
+
+  addEventListener('resize', () => { if (D && D.sweeps.length) { drawSeismo(); drawHealth(); } });
+  boot();
+})();
+</script>
+</body>
+</html>
