@@ -71,19 +71,6 @@ const tools: Tool[] = [
     status: "offline",
     home: "north-star-hq.vercel.app",
   },
-  {
-    key: "saysites",
-    name: "SaySites",
-    symbol: "◐",
-    label: "WEBSITES THAT RANK",
-    tagline: "Say it, and your website does it.",
-    lead: "Tell Sofie about your business.",
-    body: "Describe your business and watch the website appear, then change anything by saying so. Every site is fast and built to Google's Search Essentials from the first page.",
-    list: ["A full site from a conversation", "SEO foundations built in", "Edit by saying what to change"],
-    url: "https://saysites.com",
-    status: "live",
-    home: "saysites.com",
-  },
 ];
 
 export default tools;
