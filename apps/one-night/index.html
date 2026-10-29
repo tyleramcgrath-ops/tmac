@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>One Night</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one phone-width column; sticky "night clock" header, scrolling screen, fixed bottom tab bar.
+   Single dark theme by choice: the app only exists between dusk and dawn. */
+:root {
+  --night: #0e1230;
+  --night-2: #161b40;
+  --night-3: #1f2552;
+  --line: #2c336a;
+  --ink: #eef0ff;
+  --muted: #a0a7d6;
+  --lamp: #ffb35c;      /* sodium streetlamp: the one accent */
+  --lamp-ink: #2a1600;
+  --dawn: #ff8a7a;
+  --ok: #72d9ab;
+  --warn: #ffd166;
+  --bad: #ff6b7a;
+  --f-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --r: 14px;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  background: var(--night);
+  background-image: radial-gradient(120% 60% at 50% -10%, #232a63 0%, var(--night) 60%);
+  background-attachment: fixed;
+  color: var(--ink);
+  font: 15px/1.5 var(--f-body);
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+button, input, select, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--lamp); outline-offset: 2px; }
+.wrap {
+  max-width: 460px; margin: 0 auto; min-height: 100%;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 calc(96px + env(safe-area-inset-bottom, 0px));
+}
+
+/* Header */
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  background: color-mix(in srgb, var(--night) 88%, transparent);
+  backdrop-filter: blur(10px);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding-block: 14px 12px; border-bottom: 1px solid var(--line);
+}
+.brand { font: 800 22px/1 var(--f-display); letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.moon { width: 18px; height: 18px; border-radius: 50%; box-shadow: inset -5px -2px 0 0 var(--lamp); transform: rotate(-20deg); }
+.clock { text-align: right; }
+.clock .lbl { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.clock .t { font: 500 18px/1.1 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--lamp); }
+.clock.late .t { color: var(--dawn); }
+
+.screen { display: grid; gap: 16px; padding-top: 18px; }
+h1, h2, h3 { font-family: var(--f-display); letter-spacing: -0.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: 30px; line-height: 1.05; font-weight: 800; }
+h2 { font-size: 22px; line-height: 1.15; font-weight: 700; }
+h3 { font-size: 16px; font-weight: 700; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.small { font-size: 13px; }
+.eyebrow { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+.panel { background: var(--night-2); border: 1px solid var(--line); border-radius: var(--r); padding: 16px; display: grid; gap: 12px; }
+.note { border-left: 3px solid var(--lamp); padding: 10px 12px; background: var(--night-2); border-radius: 0 10px 10px 0; font-size: 13px; color: var(--muted); }
+
+.btn { border: 1px solid var(--line); background: var(--night-3); border-radius: 999px; padding: 11px 18px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+.btn:hover { border-color: var(--muted); }
+.btn.primary { background: var(--lamp); color: var(--lamp-ink); border-color: var(--lamp); }
+.btn.primary:hover { filter: brightness(1.06); }
+.btn.danger { background: transparent; border-color: var(--bad); color: var(--bad); }
+.btn.big { padding: 15px 22px; font-size: 16px; }
+.btn.block { width: 100%; }
+.btn:disabled { opacity: .45; cursor: not-allowed; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.row > .btn { flex: 1 1 0; }
+
+.seg { display: flex; background: var(--night-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+.seg button { flex: 1; border: 0; background: transparent; border-radius: 999px; padding: 8px 6px; font-size: 13px; font-weight: 600; color: var(--muted); }
+.seg button[aria-pressed="true"] { background: var(--night-3); color: var(--ink); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* Profile card */
+.card { background: var(--night-2); border: 1px solid var(--line); border-radius: 20px; overflow: hidden; }
+.card .hero { aspect-ratio: 4 / 3; max-width: 100%; display: grid; place-items: center; position: relative; }
+.card .hero .init { font: 800 92px/1 var(--f-display); color: rgba(255,255,255,.92); text-shadow: 0 6px 30px rgba(0,0,0,.25); }
+.card .hero .until { position: absolute; left: 12px; bottom: 12px; background: rgba(14,18,48,.78); border-radius: 999px; padding: 5px 10px; font: 500 12px var(--f-mono); }
+.card .hero .sample { position: absolute; right: 12px; top: 12px; background: rgba(14,18,48,.78); border-radius: 999px; padding: 4px 9px; font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.card .body { padding: 16px; display: grid; gap: 10px; }
+.card .name { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.card .name h2 { font-size: 26px; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; }
+.chip { font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--night-3); border: 1px solid var(--line); color: var(--ink); }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; font-size: 13px; }
+.meta dt { color: var(--muted); }
+.meta dd { margin: 0; min-width: 0; }
+.deck-actions { display: grid; grid-template-columns: 1fr 1.4fr; gap: 10px; }
+.counter { font: 500 12px var(--f-mono); color: var(--muted); text-align: center; }
+
+/* Chat */
+.chat { display: grid; gap: 8px; }
+.msg { max-width: 80%; padding: 9px 13px; border-radius: 16px; font-size: 14px; overflow-wrap: anywhere; }
+.msg.them { background: var(--night-3); border-bottom-left-radius: 4px; justify-self: start; }
+.msg.me { background: var(--lamp); color: var(--lamp-ink); border-bottom-right-radius: 4px; justify-self: end; }
+.msg.sys { justify-self: center; background: none; color: var(--muted); font-size: 12px; text-align: center; max-width: 100%; }
+.composer { display: flex; gap: 8px; }
+.composer input { flex: 1; min-width: 0; background: var(--night-2); border: 1px solid var(--line); border-radius: 999px; padding: 11px 16px; }
+.burn { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); }
+.burn b { font: 500 12px var(--f-mono); color: var(--dawn); }
+.typing { color: var(--muted); font-size: 12px; }
+
+/* Terms */
+.term { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding-block: 10px; border-top: 1px solid var(--line); }
+.term:first-of-type { border-top: 0; }
+.term .lbl { min-width: 0; }
+.term .seg { min-width: 168px; }
+.term .seg button { padding: 6px 4px; font-size: 12px; }
+.term .seg button[data-v="yes"][aria-pressed="true"] { background: color-mix(in srgb, var(--ok) 22%, var(--night-3)); color: var(--ok); }
+.term .seg button[data-v="ask"][aria-pressed="true"] { background: color-mix(in srgb, var(--warn) 18%, var(--night-3)); color: var(--warn); }
+.term .seg button[data-v="no"][aria-pressed="true"]  { background: color-mix(in srgb, var(--bad) 18%, var(--night-3)); color: var(--bad); }
+.locked { font: 500 12px var(--f-mono); color: var(--ok); }
+.sum { display: grid; gap: 10px; }
+.sum ul { margin: 0; padding-left: 18px; display: grid; gap: 2px; }
+.pill { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; }
+.pill.ok { background: color-mix(in srgb, var(--ok) 18%, transparent); color: var(--ok); }
+.pill.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.pill.bad { background: color-mix(in srgb, var(--bad) 18%, transparent); color: var(--bad); }
+
+/* Safety */
+label.f { display: grid; gap: 6px; font-size: 13px; color: var(--muted); }
+label.f input { background: var(--night); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; color: var(--ink); }
+.timer { font: 500 40px/1 var(--f-mono); font-variant-numeric: tabular-nums; }
+.timer.over { color: var(--bad); }
+.out { width: 100%; padding: 18px; border-radius: 16px; border: 0; background: var(--bad); color: #2b0007; font: 800 20px var(--f-display); }
+
+/* Tabs */
+.tabs {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 6;
+  background: color-mix(in srgb, var(--night) 94%, transparent); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--line);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.tabs nav { max-width: 460px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+.tabs button { background: none; border: 0; padding: 10px 4px 12px; display: grid; justify-items: center; gap: 4px; font-size: 12px; font-weight: 600; color: var(--muted); position: relative; }
+.tabs button[aria-current="page"] { color: var(--lamp); }
+.tabs svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.tabs .dot { position: absolute; top: 8px; right: calc(50% - 18px); width: 8px; height: 8px; border-radius: 50%; background: var(--dawn); }
+
+/* Gate */
+.gate { display: grid; gap: 18px; padding-top: 28px; }
+.gate h1 { font-size: 44px; }
+.rules { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+.rules li { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+.rules .ic { width: 28px; height: 28px; border-radius: 50%; background: var(--night-3); display: grid; place-items: center; color: var(--lamp); font: 700 13px var(--f-mono); }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; }
+.check input { width: 20px; height: 20px; accent-color: var(--lamp); margin-top: 1px; flex: none; }
+
+.toast { position: fixed; left: 50%; bottom: calc(84px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--night); padding: 10px 16px; border-radius: 999px; font-weight: 600; font-size: 14px; z-index: 20; max-width: calc(100% - 32px); text-align: center; }
+.pop { animation: pop .35s ease-out; }
+@keyframes pop { from { transform: scale(.97); opacity: .6; } to { transform: none; opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .pop { animation: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top" id="top" hidden>
+    <div class="brand"><span class="moon" aria-hidden="true"></span>One Night</div>
+    <div class="clock" id="clock"><div class="lbl" id="clockLbl">Night ends in</div><div class="t" id="clockT">--:--:--</div></div>
+  </header>
+  <main id="app"></main>
+</div>
+
+<div class="tabs" id="tabs" hidden>
+  <nav aria-label="Sections">
+    <button data-tab="tonight"><svg viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>Tonight</button>
+    <button data-tab="match"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H9l-5 4z"/></svg>Match<span class="dot" id="matchDot" hidden></span></button>
+    <button data-tab="terms"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6z"/><path d="M9 12l2 2 4-4"/></svg>Terms</button>
+    <button data-tab="safety"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 4.5-3.4 8-8 9-4.6-1-8-4.5-8-9V6z"/></svg>Safety</button>
+  </nav>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(() => {
+  // ---------- Sample people (clearly labeled as samples in the UI) ----------
+  const PEOPLE = [
+    { id: "p1", name: "Maya", age: 29, g: "w", pr: "she/her", km: 0.8, until: "2:30 AM", spot: "Rooftop bar, Fulton St", line: "In town for one night. Show me your favorite late-night food spot.", vibes: ["Night owl", "Dancing", "Spontaneous"], into: true, hue: 18,
+      terms: { kiss: "yes", mine: "ask", theirs: "yes", stay: "no", sober: "yes", photos: "no" } },
+    { id: "p2", name: "Jordan", age: 33, g: "m", pr: "he/him", km: 1.4, until: "1:00 AM", spot: "Jazz club, 4th Ave", line: "Good conversation first. Everything else follows.", vibes: ["Live music", "Whiskey", "Slow burn"], into: true, hue: 220,
+      terms: { kiss: "yes", mine: "yes", theirs: "ask", stay: "ask", sober: "yes", photos: "no" } },
+    { id: "p3", name: "Sam", age: 27, g: "nb", pr: "they/them", km: 2.1, until: "3:00 AM", spot: "Karaoke bar, Grand St", line: "Duet partner wanted. Bonus points if you can hit the high notes.", vibes: ["Karaoke", "Playful", "Night owl"], into: false, hue: 290,
+      terms: { kiss: "yes", mine: "no", theirs: "yes", stay: "no", sober: "yes", photos: "no" } },
+    { id: "p4", name: "Elena", age: 35, g: "w", pr: "she/her", km: 3.0, until: "12:30 AM", spot: "Wine bar, Elm St", line: "Early flight tomorrow. Let's make tonight count.", vibes: ["Wine", "Direct", "No small talk"], into: true, hue: 340,
+      terms: { kiss: "yes", mine: "yes", theirs: "no", stay: "no", sober: "yes", photos: "no" } },
+    { id: "p5", name: "Marcus", age: 31, g: "m", pr: "he/him", km: 0.5, until: "2:00 AM", spot: "Pool hall, Bedford Ave", line: "Loser of the first game buys the next round.", vibes: ["Competitive", "Funny", "Spontaneous"], into: false, hue: 160,
+      terms: { kiss: "yes", mine: "yes", theirs: "yes", stay: "ask", sober: "yes", photos: "no" } },
+    { id: "p6", name: "Priya", age: 28, g: "w", pr: "she/her", km: 1.9, until: "1:45 AM", spot: "Cocktail lounge, Park Pl", line: "Celebrating a new job. Come raise a glass.", vibes: ["Celebrating", "Cocktails", "Chatty"], into: true, hue: 45,
+      terms: { kiss: "yes", mine: "ask", theirs: "ask", stay: "no", sober: "yes", photos: "no" } },
+    { id: "p7", name: "Theo", age: 25, g: "m", pr: "he/him", km: 2.6, until: "3:30 AM", spot: "Late-night diner, Main St", line: "Pancakes at 2 AM is a personality trait.", vibes: ["Night owl", "Easygoing", "Foodie"], into: true, hue: 200,
+      terms: { kiss: "yes", mine: "no", theirs: "yes", stay: "ask", sober: "yes", photos: "no" } },
+    { id: "p8", name: "Ren", age: 30, g: "nb", pr: "they/them", km: 1.1, until: "2:15 AM", spot: "Record bar, Water St", line: "Bring a song recommendation. I'll judge you on it.", vibes: ["Vinyl", "Witty", "Slow burn"], into: true, hue: 260,
+      terms: { kiss: "yes", mine: "yes", theirs: "ask", stay: "no", sober: "yes", photos: "no" } },
+  ];
+
+  const TERMS = [
+    { k: "public", label: "Meet somewhere public first", fixed: true },
+    { k: "protect", label: "Protection, every time", fixed: true },
+    { k: "sober", label: "Both sober enough to decide" },
+    { k: "kiss", label: "Kissing" },
+    { k: "mine", label: "Going back to my place" },
+    { k: "theirs", label: "Going back to their place" },
+    { k: "stay", label: "Staying the night" },
+    { k: "photos", label: "Photos or videos" },
+  ];
+
+  const REPLIES = [
+    "Hey! Glad you said yes. Where are you right now?",
+    "Nice. I'm still at {spot}. Want to meet here first? It's busy and the music is good.",
+    "Perfect. I filled out my terms already, take a look when you can.",
+    "See you soon. I'll be near the bar. Look for the {vibe} energy.",
+    "Here! Take your time.",
+  ];
+
+  // ---------- Time: a "night" runs until the next 6:00 AM ----------
+  function nextDawn(now = new Date()) {
+    const d = new Date(now); d.setHours(6, 0, 0, 0);
+    if (now >= d) d.setDate(d.getDate() + 1);
+    return d;
+  }
+  function nightId() { return nextDawn().toISOString().slice(0, 10); }
+  function isNight(now = new Date()) { const h = now.getHours(); return h >= 18 || h < 6; }
+  function fmt(ms) {
+    ms = Math.max(0, ms);
+    const s = Math.floor(ms / 1000), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60), x = s % 60;
+    return [h, m, x].map(n => String(n).padStart(2, "0")).join(":");
+  }
+
+  // ---------- State (kept on this device only, wiped every dawn) ----------
+  const KEY = "one-night-v1";
+  const fresh = () => ({ night: nightId(), adult: false, tab: "tonight", show: "all", idx: 0, liked: [], passed: [], match: null, msgs: [], myTerms: {}, checkin: null, unread: false });
+  let S;
+  try { S = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) { S = null; }
+  let contact = { name: "", phone: "" };
+  try { contact = JSON.parse(localStorage.getItem(KEY + "-contact") || "null") || contact; } catch (e) {}
+  if (!S || S.night !== nightId()) { const adult = S && S.adult; S = fresh(); S.adult = !!adult; }
+  const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); localStorage.setItem(KEY + "-contact", JSON.stringify(contact)); } catch (e) {} };
+
+  const $ = s => document.querySelector(s);
+  const app = $("#app");
+  const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const person = id => PEOPLE.find(p => p.id === id);
+  let toastT;
+  function toast(t) { const el = $("#toast"); el.textContent = t; el.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => el.hidden = true, 2400); }
+
+  // ---------- Screens ----------
+  function gate() {
+    $("#top").hidden = true; $("#tabs").hidden = true;
+    app.innerHTML = `
+      <section class="gate">
+        <div class="brand" style="font-size:18px"><span class="moon"></span>One Night</div>
+        <h1>Tonight only.<br>Gone by sunrise.</h1>
+        <p class="muted">For adults who want one night with someone new and nothing after. Every profile, match and message disappears at 6:00 AM.</p>
+        <ul class="rules">
+          <li><span class="ic">1</span><div><b>One match a night.</b> <span class="muted">Say yes to one person. No juggling, no backups.</span></div></li>
+          <li><span class="ic">2</span><div><b>Terms before you meet.</b> <span class="muted">You each mark what's a yes, a maybe and a no. You only see where you overlap.</span></div></li>
+          <li><span class="ic">3</span><div><b>Public first, always.</b> <span class="muted">First meeting happens somewhere with other people around.</span></div></li>
+          <li><span class="ic">4</span><div><b>A yes can change.</b> <span class="muted">Anyone can stop at any moment. The I'm Out button ends it instantly.</span></div></li>
+        </ul>
+        <div class="panel">
+          <label class="check"><input type="checkbox" id="g18"> I'm 18 or older.</label>
+          <label class="check"><input type="checkbox" id="gonly"> I'm here for one night only, and I'll respect a no or a change of mind.</label>
+          <button class="btn primary big block" id="gGo" disabled>Start my night</button>
+        </div>
+      </section>`;
+    const upd = () => $("#gGo").disabled = !($("#g18").checked && $("#gonly").checked);
+    $("#g18").onchange = upd; $("#gonly").onchange = upd;
+    $("#gGo").onclick = () => { S.adult = true; save(); render(); };
+  }
+
+  function pool() {
+    return PEOPLE.filter(p => S.show === "all" || p.g === S.show)
+      .filter(p => !S.liked.includes(p.id) && !S.passed.includes(p.id));
+  }
+
+  function tonight() {
+    const list = pool();
+    const p = list[0];
+    const night = isNight();
+    let html = `
+      <div><p class="eyebrow">${night ? "Out tonight near you" : "Preview · doors open at 6:00 PM"}</p><h1>Who's out tonight</h1></div>
+      <div class="seg" role="group" aria-label="Show me">
+        ${[["all", "Everyone"], ["w", "Women"], ["m", "Men"], ["nb", "Non-binary"]].map(([v, l]) => `<button data-show="${v}" aria-pressed="${S.show === v}">${l}</button>`).join("")}
+      </div>`;
+    if (S.match) {
+      const m = person(S.match);
+      html += `<div class="panel pop"><span class="pill ok">Matched</span><h2>You and ${esc(m.name)} are on for tonight.</h2>
+        <p class="muted">One match per night keeps it simple. Browsing is paused until dawn or until one of you ends it.</p>
+        <div class="row"><button class="btn primary" data-go="match">Open chat</button><button class="btn" data-go="terms">Check terms</button></div></div>`;
+    } else if (!p) {
+      html += `<div class="panel"><h2>That's everyone nearby.</h2><p class="muted">New people go live through the night. Check back in a bit, or widen who you're shown.</p>
+        <button class="btn" id="reset">Show passed profiles again</button></div>`;
+    } else {
+      html += `
+      <article class="card pop" aria-label="${esc(p.name)}">
+        <div class="hero" style="background:linear-gradient(150deg,hsl(${p.hue} 70% 55%),hsl(${(p.hue + 50) % 360} 60% 32%))">
+          <span class="init" aria-hidden="true">${esc(p.name[0])}</span>
+          <span class="sample">Sample profile</span>
+          <span class="until">Out until ${esc(p.until)}</span>
+        </div>
+        <div class="body">
+          <div class="name"><h2>${esc(p.name)}, ${p.age}</h2><span class="muted small">${esc(p.pr)} · ${p.km} km away</span></div>
+          <p>${esc(p.line)}</p>
+          <div class="chips">${p.vibes.map(v => `<span class="chip">${esc(v)}</span>`).join("")}</div>
+          <dl class="meta"><dt>Right now</dt><dd>${esc(p.spot)}</dd><dt>Looking for</dt><dd>Tonight only</dd></dl>
+        </div>
+      </article>
+      <div class="deck-actions">
+        <button class="btn big" id="pass">Not tonight</button>
+        <button class="btn primary big" id="like">I'm in</button>
+      </div>
+      <p class="counter">${list.length} nearby · ${S.liked.length} said yes to</p>`;
+    }
+    html += `<p class="note">Photos unlock only after you both say yes. Profiles show first names and approximate distance, never your exact location.</p>`;
+    app.innerHTML = `<section class="screen">${html}</section>`;
+
+    app.querySelectorAll("[data-show]").forEach(b => b.onclick = () => { S.show = b.dataset.show; save(); render(); });
+    app.querySelectorAll("[data-go]").forEach(b => b.onclick = () => go(b.dataset.go));
+    if ($("#reset")) $("#reset").onclick = () => { S.passed = []; save(); render(); };
+    if (p && !S.match) {
+      $("#pass").onclick = () => { S.passed.push(p.id); save(); render(); };
+      $("#like").onclick = () => {
+        S.liked.push(p.id);
+        if (p.into) {
+          S.match = p.id; S.unread = true;
+          S.msgs = [{ f: "sys", t: `You matched with ${p.name}. This chat deletes itself at 6:00 AM.` }];
+          setTimeout(() => theyType(), 1600);
+          toast(`It's a match with ${p.name}`);
+        } else toast(`Sent. If ${p.name} says yes too, you'll match.`);
+        save(); render();
+      };
+    }
+  }
+
+  let typing = false;
+  function theyType() {
+    if (!S.match) return;
+    const p = person(S.match);
+    const n = S.msgs.filter(m => m.f === "them").length;
+    if (n >= REPLIES.length) return;
+    typing = true; if (S.tab === "match") render();
+    setTimeout(() => {
+      if (!S.match || S.match !== p.id) { typing = false; return; }
+      typing = false;
+      S.msgs.push({ f: "them", t: REPLIES[n].replace("{spot}", p.spot).replace("{vibe}", p.vibes[0].toLowerCase()) });
+      if (S.tab !== "match") S.unread = true;
+      save(); render();
+    }, 1400);
+  }
+
+  function match() {
+    if (!S.match) {
+      app.innerHTML = `<section class="screen"><div><p class="eyebrow">Your match</p><h1>No one yet tonight</h1></div>
+        <div class="panel"><p class="muted">When you and someone both tap I'm In, your chat opens here. You get one match per night.</p>
+        <button class="btn primary" data-go="tonight">See who's out</button></div></section>`;
+      app.querySelector("[data-go]").onclick = () => go("tonight");
+      return;
+    }
+    const p = person(S.match);
+    app.innerHTML = `<section class="screen">
+      <div class="row" style="justify-content:space-between">
+        <div><p class="eyebrow">Tonight with</p><h1>${esc(p.name)}, ${p.age}</h1></div>
+        <button class="btn danger" id="unmatch">Unmatch</button>
+      </div>
+      <div class="burn"><span>Messages delete at dawn. Screenshots notify both of you.</span><b id="burnT"></b></div>
+      <div class="panel">
+        <div class="chat" id="chat">${S.msgs.map(m => `<div class="msg ${m.f}">${esc(m.t)}</div>`).join("")}</div>
+        ${typing ? `<div class="typing">${esc(p.name)} is typing…</div>` : ""}
+        <form class="composer" id="cf"><input id="ci" autocomplete="off" placeholder="Say something" aria-label="Message"><button class="btn primary">Send</button></form>
+      </div>
+      <div class="panel"><h3>Suggested first stop</h3><p>${esc(p.spot)}</p><p class="muted small">Public, open late, ${p.km} km from you. Meet here before going anywhere private.</p></div>
+    </section>`;
+    $("#cf").onsubmit = e => {
+      e.preventDefault();
+      const t = $("#ci").value.trim(); if (!t) return;
+      S.msgs.push({ f: "me", t }); save(); render();
+      setTimeout(theyType, 500);
+      setTimeout(() => $("#ci") && $("#ci").focus(), 0);
+    };
+    $("#unmatch").onclick = () => endMatch(`You unmatched. ${p.name} can't see you or message you again tonight.`);
+    const c = $("#chat"); c.lastElementChild && c.lastElementChild.scrollIntoView({ block: "nearest" });
+  }
+
+  function endMatch(msg) { S.match = null; S.msgs = []; S.unread = false; save(); toast(msg); go("tonight"); }
+
+  function terms() {
+    const p = S.match && person(S.match);
+    const rows = TERMS.map(t => {
+      if (t.fixed) return `<div class="term"><div class="lbl">${t.label}</div><span class="locked">Required for everyone</span></div>`;
+      const v = S.myTerms[t.k] || "";
+      return `<div class="term"><div class="lbl">${t.label}</div>
+        <div class="seg" role="group" aria-label="${t.label}">
+          ${[["yes", "Yes"], ["ask", "Ask me"], ["no", "No"]].map(([x, l]) => `<button data-k="${t.k}" data-v="${x}" aria-pressed="${v === x}">${l}</button>`).join("")}
+        </div></div>`;
+    }).join("");
+
+    let sum = "";
+    if (p) {
+      const open = TERMS.filter(t => !t.fixed && !S.myTerms[t.k]);
+      if (open.length) {
+        sum = `<div class="panel"><span class="pill warn">${open.length} left to answer</span><p class="muted">Finish yours to see where you and ${esc(p.name)} overlap. You never see their individual answers, only the shared result.</p></div>`;
+      } else {
+        const both = [], talk = [], off = [];
+        TERMS.filter(t => !t.fixed).forEach(t => {
+          const a = S.myTerms[t.k], b = p.terms[t.k];
+          if (a === "no" || b === "no") off.push(t.label);
+          else if (a === "yes" && b === "yes") both.push(t.label);
+          else talk.push(t.label);
+        });
+        sum = `<div class="panel sum pop"><h2>You and ${esc(p.name)}</h2>
+          <div><span class="pill ok">Both yes</span><ul>${both.map(x => `<li>${x}</li>`).join("") || "<li class='muted'>Nothing yet</li>"}</ul></div>
+          <div><span class="pill warn">Talk about it in person</span><ul>${talk.map(x => `<li>${x}</li>`).join("") || "<li class='muted'>Nothing</li>"}</ul></div>
+          <div><span class="pill bad">Off the table</span><ul>${off.map(x => `<li>${x}</li>`).join("") || "<li class='muted'>Nothing</li>"}</ul></div>
+          <p class="muted small">A no from either of you shows as off the table without saying whose it was. This is a starting point, not a contract. Either of you can change your mind at any point tonight.</p></div>`;
+      }
+    }
+    app.innerHTML = `<section class="screen">
+      <div><p class="eyebrow">Before you meet</p><h1>Your terms for tonight</h1></div>
+      <p class="muted">Set these once. They apply to whoever you match with and reset at dawn.</p>
+      <div class="panel" style="gap:0">${rows}</div>
+      ${sum || `<p class="note">Match with someone to see where your terms overlap.</p>`}
+    </section>`;
+    app.querySelectorAll("[data-k]").forEach(b => b.onclick = () => { S.myTerms[b.dataset.k] = b.dataset.v; save(); render(); });
+  }
+
+  function safety() {
+    const c = S.checkin;
+    const left = c ? c.until - Date.now() : 0;
+    app.innerHTML = `<section class="screen">
+      <div><p class="eyebrow">Safety</p><h1>Someone knows where you are</h1></div>
+      <button class="out" id="out">I'm out</button>
+      <p class="muted small" style="margin-top:-8px">Ends your match instantly with a polite exit message, deletes the chat and blocks them for tonight. Emergency? Call <b>911</b>.</p>
+
+      <div class="panel">
+        <h3>Trusted contact</h3>
+        <label class="f">Name<input id="cn" value="${esc(contact.name)}" placeholder="Alex" autocomplete="off"></label>
+        <label class="f">Phone<input id="cp" value="${esc(contact.phone)}" placeholder="(555) 010-2244" inputmode="tel" autocomplete="off"></label>
+        <button class="btn" id="cs">Save contact</button>
+      </div>
+
+      <div class="panel">
+        <h3>Check-in timer</h3>
+        ${c ? `
+          <div class="timer ${left <= 0 ? "over" : ""}" id="ct">${left > 0 ? fmt(left) : "Overdue"}</div>
+          <p class="muted small" id="cmsg">${left > 0
+            ? `If you don't tap I'm OK before this hits zero, ${esc(contact.name || "your contact")} gets your match's first name and your last shared location.`
+            : `Time's up. In the live app ${esc(contact.name || "your contact")} is alerted now. Tap I'm OK if you're fine.`}</p>
+          <div class="row"><button class="btn primary" id="ok">I'm OK</button><button class="btn" id="ext">+30 min</button></div>`
+        : `<p class="muted small">Pick how long until you check in. Miss it and your contact gets an alert.</p>
+          <div class="row">${[1, 2, 3].map(h => `<button class="btn" data-h="${h}">${h} hr</button>`).join("")}</div>`}
+      </div>
+      <p class="note">Prototype: alerts, location sharing and screenshot notices are shown here but not actually sent from this demo.</p>
+    </section>`;
+    $("#out").onclick = () => {
+      if (S.match) endMatch("You're out. They were told you had to leave. Chat deleted.");
+      else toast("No active match right now. You're all good.");
+    };
+    $("#cs").onclick = () => { contact = { name: $("#cn").value.trim(), phone: $("#cp").value.trim() }; save(); toast("Contact saved on this device"); };
+    app.querySelectorAll("[data-h]").forEach(b => b.onclick = () => {
+      if (!contact.name) { toast("Add a trusted contact first"); $("#cn").focus(); return; }
+      S.checkin = { until: Date.now() + b.dataset.h * 3600e3 }; save(); render();
+    });
+    if ($("#ok")) $("#ok").onclick = () => { S.checkin = null; save(); toast("Checked in. Timer cleared."); render(); };
+    if ($("#ext")) $("#ext").onclick = () => { S.checkin.until = Math.max(Date.now(), S.checkin.until) + 1800e3; save(); render(); };
+  }
+
+  // ---------- Shell ----------
+  function go(tab) { S.tab = tab; if (tab === "match") S.unread = false; save(); render(); window.scrollTo(0, 0); }
+  function render() {
+    if (!S.adult) return gate();
+    $("#top").hidden = false; $("#tabs").hidden = false;
+    document.querySelectorAll(".tabs button").forEach(b => b.setAttribute("aria-current", b.dataset.tab === S.tab ? "page" : "false"));
+    $("#matchDot").hidden = !S.unread;
+    ({ tonight, match, terms, safety })[S.tab]();
+    tick();
+  }
+  document.querySelectorAll(".tabs button").forEach(b => b.onclick = () => go(b.dataset.tab));
+
+  function tick() {
+    const now = new Date();
+    if (S.night !== nightId()) { const a = S.adult; S = fresh(); S.adult = a; save(); toast("Sunrise. Last night is gone."); render(); return; }
+    const left = nextDawn(now) - now;
+    const night = isNight(now);
+    $("#clockLbl").textContent = night ? "Night ends in" : "Opens at 6 PM";
+    $("#clockT").textContent = night ? fmt(left) : fmt(new Date(now).setHours(18, 0, 0, 0) - now);
+    $("#clock").classList.toggle("late", night && left < 3600e3);
+    if ($("#burnT")) $("#burnT").textContent = fmt(left);
+    if ($("#ct") && S.checkin) {
+      const l = S.checkin.until - Date.now();
+      if (l <= 0 && !$("#ct").classList.contains("over")) render();
+      else if (l > 0) $("#ct").textContent = fmt(l);
+    }
+  }
+  setInterval(tick, 1000);
+  render();
+})();
+</script>
+</body>
+</html>
