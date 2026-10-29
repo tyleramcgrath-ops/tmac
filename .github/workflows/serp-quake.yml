@@ -47,6 +47,40 @@ jobs:
         working-directory: apps/serp-quake/site
         run: npm ci && npm test
 
+  # Republish the static preview (apps/serp-quake/site/build-pages.js) to
+  # gh-pages under /serp-quake/ whenever the site changes on main. Only that
+  # folder is replaced; the rest of the Pages branch belongs to other sites.
+  pages:
+    if: github.event_name == 'push'
+    needs: test
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and commit to gh-pages/serp-quake
+        run: |
+          git fetch --depth 1 origin gh-pages
+          git worktree add ../ghp origin/gh-pages
+          node apps/serp-quake/site/build-pages.js ../ghp/serp-quake
+          cd ../ghp
+          git config user.name "serp-quake[bot]"
+          git config user.email "serp-quake@users.noreply.github.com"
+          git add serp-quake
+          if git diff --cached --quiet; then echo "No changes to publish."; exit 0; fi
+          git commit -q -m "SERP Quake static preview: rebuild from ${GITHUB_SHA::7}"
+          git push origin HEAD:gh-pages
+      # A push made with GITHUB_TOKEN doesn't trigger other workflows, so ask the
+      # Pages deploy to run explicitly (workflow_dispatch is the allowed exception).
+      - name: Deploy Pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run deploy-pages.yml --ref gh-pages
+
   scan:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest

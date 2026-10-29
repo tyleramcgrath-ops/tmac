@@ -239,7 +239,7 @@
     el.innerHTML = '<line x1="0" x2="200" y1="' + (38 - 0.2 * 36) + '" y2="' + (38 - 0.2 * 36) + '" class="spark-base"/><path d="' + d + '"/>';
   }
 
-  fetch('/api/pulse', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).then((p) => {
+  QuakePulse.load().then((p) => {
     if (p.magnitude == null) throw new Error('no reading yet');
     const md = setMood(p.magnitude);
     $('#pulse-mag').textContent = p.magnitude.toFixed(1);

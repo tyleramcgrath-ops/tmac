@@ -51,7 +51,10 @@
   const reasons = { expired: 'That link expired. Ask for a new one below.', used: 'That link was already used. If you are not signed in, ask for a new one.', invalid: 'That link is not valid. Ask for a new one below.', error: 'Something went wrong signing you in. Try again.' };
   if (q.get('signin') && reasons[q.get('signin')]) say('err', reasons[q.get('signin')]);
 
-  fetch('/api/auth/session', { cache: 'no-store' }).then((x) => x.json()).then((s) => {
+  if (window.SQ_STATIC) {
+    say('err', 'Accounts open soon. <a href="/app?demo=1">Explore the demo dashboard</a> in the meantime.');
+    $('#send').disabled = true;
+  } else fetch('/api/auth/session', { cache: 'no-store' }).then((x) => x.json()).then((s) => {
     if (s.user) location.replace('/app');
     if (s.accounts === false) {
       say('err', 'Accounts are not switched on yet. <a href="/app?demo=1">Explore the demo dashboard</a> in the meantime.');

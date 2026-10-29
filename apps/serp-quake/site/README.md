@@ -71,3 +71,16 @@ isn't on yet. With no Resend, sign-in reports that it can't send.
 `npm test` covers the trial and Pro access rule, the gated data endpoint (401 signed out, 402
 after the trial, 200 for trial and Pro), the public pulse not leaking the instrument, feed
 caching, Stripe signature checks, and that pages load only local scripts.
+
+## GitHub Pages preview
+
+Until the Vercel project exists, a static copy runs at
+**https://tyleramcgrath-ops.github.io/tmac/serp-quake/**. `build-pages.js` builds it: links
+become relative, and `window.SQ_STATIC` tells the pages there's no API. In that copy:
+
+- The homepage reads the live reading straight from `data.json` on the data branch.
+- Sign-in says accounts are coming soon.
+- `/app` shows the demo.
+
+The `pages` job in `serp-quake.yml` republishes it on every site change to `main`, touching
+only the `serp-quake/` folder of the `gh-pages` branch.
