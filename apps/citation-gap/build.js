@@ -41,6 +41,7 @@ const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 // build goes green, the tests go green, and the deployment is rejected afterwards.
 const SHIPPED = [
   'index.html',        // the whole front end: app shell, scanner, marketing homepage
+  'server.js',         // SiteGround: one Node process serving public/ and running api/ (npm start)
   'score.js',          // scoring/history/prompts, shared by the browser and the scan job
   'og.png',            // the social card; rebuilt by tools/make-assets.js, never by hand
   'icon.svg',          // the wordmark's dish, as the favicon

@@ -1,0 +1,29 @@
+# Keeps the citation-gap-host branch in step with apps/citation-gap on main.
+# SiteGround's Node.js hosting builds from the top of a branch and can't be
+# pointed at a subfolder, so citation-gap-host holds just the Citation Gap app.
+name: Citation Gap host branch
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/citation-gap/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: citation-gap-host
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split apps/citation-gap and push it to citation-gap-host
+        run: |
+          git subtree split --prefix apps/citation-gap -b citation-gap-host-new
+          git push origin citation-gap-host-new:citation-gap-host

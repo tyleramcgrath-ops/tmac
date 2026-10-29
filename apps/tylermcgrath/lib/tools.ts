@@ -1,4 +1,4 @@
-// North Star HQ: the Compass is the hub, and these SEO tools orbit it (the
+// Tools: the Compass is North Star HQ, and these SEO tools orbit it (the
 // third ring, next to Studio and Selected Work). `hub` is North Star HQ itself,
 // opened by clicking the Compass while that ring is showing.
 //
