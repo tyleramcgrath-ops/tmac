@@ -84,3 +84,32 @@ become relative, and `window.SQ_STATIC` tells the pages there's no API. In that 
 
 The `pages` job in `serp-quake.yml` republishes it on every site change to `main`, touching
 only the `serp-quake/` folder of the `gh-pages` branch.
+
+## SiteGround (tylermcgrath.com/serp-quake)
+
+SiteGround runs PHP and MySQL, not Node, so `php/` holds a PHP copy of every function in `api/`:
+sign-in links, sessions, the trial and Pro rule, the gated data, the public pulse, and Stripe
+checkout and webhook. It uses the same URLs (with a `.php` ending) and returns the same JSON, so
+the pages are identical. `build-pages.js --siteground` builds it, and
+`.github/workflows/serp-quake-siteground.yml` deploys it on every site change to `main`:
+
+1. It runs the tests and builds `dist/serp-quake/`.
+2. It writes `serp-quake-config.php` from repo secrets and uploads it **next to `public_html`**,
+   never inside it.
+3. It rsyncs only `public_html/serp-quake/`. `tylermcgrath-deploy.yml` now skips that folder, so
+   the portfolio deploy never deletes it.
+4. It runs `php api/migrate.php` to create the tables, flushes the cache, and checks the live
+   pages and APIs.
+
+To switch accounts on, add these repo secrets. Until then the site runs in demo mode.
+
+| Secret | What for |
+|---|---|
+| `SQ_DB_NAME`, `SQ_DB_USER`, `SQ_DB_PASS` | A MySQL database and user. Create them in Site Tools → Site → MySQL and give the user all privileges on that database. |
+| `SQ_RESEND_API_KEY`, `SQ_MAIL_FROM` | Sign-in emails (https://resend.com). `SQ_MAIL_FROM` must be on a domain you verified there. |
+| `SQ_STRIPE_SECRET_KEY`, `SQ_STRIPE_PRICE_PRO` | The Upgrade button. The price is a $29/month recurring Price id. |
+| `SQ_STRIPE_WEBHOOK_SECRET` | From a Stripe webhook to `https://tylermcgrath.com/serp-quake/api/stripe-webhook.php`, subscribed to `checkout.session.completed` and `customer.subscription.created`, `customer.subscription.updated` and `customer.subscription.deleted`. |
+
+`test/php.test.js` runs the PHP API end to end on PHP's built-in server, with SQLite in place of
+MySQL. It covers sign-up, single-use links, the trial, the paywall, forged and signed Stripe
+events, and sign-out.

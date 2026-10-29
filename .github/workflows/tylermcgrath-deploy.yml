@@ -98,12 +98,13 @@ jobs:
           ssh sg "mkdir -p ~/backups && tar czf ~/backups/tylermcgrath-\$(date -u +%Y%m%d-%H%M%S).tgz -C \"\$(dirname $DOC_ROOT)\" \"\$(basename $DOC_ROOT)\" && ls -1t ~/backups/tylermcgrath-*.tgz | tail -n +11 | xargs -r rm --"
 
       # Contents of out/ go directly into public_html (trailing slash), never a
-      # subfolder. Server-only files SiteGround or other tools keep there stay.
+      # subfolder. Server-only files SiteGround or other tools keep there stay,
+      # and so does serp-quake/ (deployed by serp-quake-siteground.yml).
       - name: Upload
         if: ${{ !inputs.flush_only }}
         run: |
           rsync -az --delete \
-            --exclude '.htaccess' --exclude '.well-known/' --exclude 'cgi-bin/' \
+            --exclude '.htaccess' --exclude '.well-known/' --exclude 'cgi-bin/' --exclude 'serp-quake/' \
             "$APP_DIR/out/" "sg:$DOC_ROOT/"
 
       - name: Flush SiteGround cache
