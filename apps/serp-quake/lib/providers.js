@@ -23,7 +23,8 @@ function organicFrom(list) {
 async function viaSerpApi(st, key) {
   const u = 'https://serpapi.com/search.json?engine=google'
     + `&q=${encodeURIComponent(st.keyword)}&api_key=${encodeURIComponent(key)}`
-    + `&gl=${st.gl || 'us'}&hl=${st.hl || 'en'}&num=10&device=desktop&no_cache=true`;
+    + `&gl=${st.gl || 'us'}&hl=${st.hl || 'en'}&num=10&device=desktop&no_cache=true`
+    + (st.location ? `&location=${encodeURIComponent(st.location)}` : '');
   const r = await fetch(u);
   const j = await r.json();
   if (j.error) throw new Error('SerpApi: ' + j.error);
@@ -44,7 +45,7 @@ async function viaSerper(st, key) {
   const r = await fetch('https://google.serper.dev/search', {
     method: 'POST',
     headers: { 'X-API-KEY': key, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ q: st.keyword, gl: st.gl || 'us', hl: st.hl || 'en', num: 10 }),
+    body: JSON.stringify({ q: st.keyword, gl: st.gl || 'us', hl: st.hl || 'en', num: 10, ...(st.location ? { location: st.location } : {}) }),
   });
   const j = await r.json();
   if (j.message && !j.organic) throw new Error('Serper: ' + j.message);

@@ -108,6 +108,10 @@ function malformed(reading) {
   return null;
 }
 
+function querySignature(st) {
+  return [st.keyword, st.gl || 'us', st.hl || 'en', st.location || ''].join('|');
+}
+
 function stationBaseline(history) {
   let xs = history.filter((h) => !h.inEvent).slice(-CONFIG.baselineWindow).map((h) => h.amplitude);
   // Not enough quiet history (a keyword added mid-quake): use everything rather
@@ -129,6 +133,14 @@ async function processSweep(state, stations, readings, t, opts = {}) {
   for (const st of stations) {
     const cur = readings[st.id];
     const slot = state.stations[st.id] || (state.stations[st.id] = { last: null, history: [] });
+    // Changing what a station asks Google (keyword, country, language, city)
+    // makes it a different instrument: start it over instead of reading the
+    // switch as a quake.
+    const sig = querySignature(st);
+    // State saved before signatures existed was always read without a location.
+    const prevSig = slot.sig !== undefined ? slot.sig : slot.last ? querySignature({ ...st, location: '' }) : sig;
+    if (prevSig !== sig) { slot.last = null; slot.history = []; }
+    slot.sig = sig;
     const r = { vertical: st.vertical, keyword: st.keyword };
     results[st.id] = r;
     if (!cur || cur.error) { r.status = 'error'; r.reason = (cur && cur.error) || 'no reading'; continue; }

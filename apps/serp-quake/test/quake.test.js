@@ -152,3 +152,13 @@ test('dashboard build embeds the payload safely', async () => {
   assert.equal(parsed.mode, 'simulated');
   assert.ok(parsed.explain && parsed.explain.R0 > 0);
 });
+
+test('changing a station\'s query (e.g. adding a location) reseeds it instead of reading a quake', async () => {
+  const { sts, state, base, t } = await quietNetwork(20, 20);
+  const moved = sts.map((s, i) => (i === 0 ? { ...s, location: 'Chicago, Illinois, United States' } : s));
+  const readings = {};
+  sts.forEach((s, i) => { readings[s.id] = i === 0 ? serp(L(10, 'chicago')) : serp(base[i].slice(0, 10)); });
+  const sw = await seismo.processSweep(state, moved, readings, new Date(t).toISOString());
+  assert.equal(sw.stations.s0.status, 'seed');
+  assert.equal(state.stations.s0.history.length, 0);
+});
