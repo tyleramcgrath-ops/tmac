@@ -7,7 +7,8 @@
 //   quake status               print the latest reading, with the arithmetic shown
 //   quake calibrate            compare magnitudes inside vs outside Google-confirmed updates
 //   quake build [--out FILE]   write a standalone dashboard.html with the data embedded
-//   quake simulate             fill a data dir with a synthetic 60-day seismogram (no keys needed)
+//   quake export [--out FILE]  write the dashboard payload as JSON (what the product site reads)
+//   quake simulate [--days N]  fill a data dir with a synthetic seismogram (default 60 days, no keys needed)
 //
 // Common flags: --data DIR (default ./data), --stations FILE (default stations.json)
 
@@ -193,7 +194,11 @@ async function main() {
   else if (cmd === 'serve') serve(o);
   else if (cmd === 'status') status(o);
   else if (cmd === 'calibrate') console.log(JSON.stringify(report.calibration(store.load(o.data), store.readConfirmed(o.data)), null, 2));
-  else if (cmd === 'build') {
+  else if (cmd === 'export') {
+    const out = o.out || path.join(o.data, 'data.json');
+    fs.writeFileSync(out, JSON.stringify(buildPayload(o)));
+    console.log('wrote', out);
+  } else if (cmd === 'build') {
     const out = o.out || path.join(o.data, 'index.html');
     fs.writeFileSync(out, dashboardHtml(buildPayload(o)));
     console.log('wrote', out);
@@ -202,7 +207,9 @@ async function main() {
     if (fs.existsSync(path.join(dir, 'sweeps.jsonl')) && modeOf(dir) !== 'simulated') throw new Error(`${dir} already holds live data; pick an empty --data dir.`);
     fs.rmSync(dir, { recursive: true, force: true });
     const stations = loadStations(o.stations);
-    const { state, confirmed } = await simulate(stations, undefined, Number(o.seed || 42));
+    const { DEFAULT_SCENARIO } = require('../lib/simulate');
+    const scenario = o.days ? { ...DEFAULT_SCENARIO, days: Number(o.days) } : DEFAULT_SCENARIO;
+    const { state, confirmed } = await simulate(stations, scenario, Number(o.seed || 42));
     const open = state.events.find((e) => e.ongoing);
     if (open) { state.events = state.events.filter((e) => !e.ongoing); state.event = open; }
     store.save(dir, state, state.sweeps);
@@ -211,7 +218,7 @@ async function main() {
     console.log(`Simulated ${state.sweeps.length} sweeps × ${stations.length} stations into ${dir}; ${state.events.length} events.`);
     for (const e of state.events) console.log(`  ${e.start} → ${e.end}  peak M ${fmt(e.peak)} (${seismo.classify(e.peak).name})`);
   } else {
-    console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(1, 13).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
+    console.log(fs.readFileSync(__filename, 'utf8').split('\n').slice(1, 14).map((l) => l.replace(/^\/\/ ?/, '')).join('\n'));
   }
 }
 
