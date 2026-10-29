@@ -283,9 +283,19 @@
     },
     load() {
       if (window.SQ_STATIC) return fetch(window.SQ_STATIC.dataUrl, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status))).then(QuakePulse.from);
-      return fetch('/api/pulse', { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
+      return fetch(api('pulse'), { cache: 'no-store' }).then((r) => (r.ok ? r.json() : Promise.reject(r.status)));
     },
   };
+
+  // Where the API lives. Vercel: /api/<name>. The SiteGround build sets
+  // window.SQ_API = { base: 'api/', ext: '.php' } so the same pages call the PHP
+  // twins (api/auth/session.php, …) relative to wherever the site is mounted.
+  const api = (p) => {
+    const c = window.SQ_API || { base: '/api/', ext: '' };
+    const i = p.indexOf('?');
+    return c.base + (i < 0 ? p : p.slice(0, i)) + c.ext + (i < 0 ? '' : p.slice(i));
+  };
+  window.SQ = { api };
 
   window.Richter = Richter;
   window.Helicorder = Helicorder;

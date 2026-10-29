@@ -123,7 +123,7 @@
   // ------------------------------------------------------------ account
   function acctHtml() {
     if (demo || !session || !session.user) {
-      return '<span class="plan demo mono">Demo</span><a class="btn btn-red" href="login.html?start=1" style="padding:10px 16px">Start free trial</a>';
+      return '<span class="plan demo mono">Demo</span><a class="btn btn-red" href="https://tylermcgrath.com/serp-quake/login.html?start=1" style="padding:10px 16px">Start free trial</a>';
     }
     const a = session.access;
     const chip = a.level === 'pro' ? '<span class="plan pro mono">Pro</span>'
@@ -134,13 +134,13 @@
     return chip + up + '<span class="email">' + esc(session.user.email) + '</span><button class="linkbtn" id="signout">Sign out</button>';
   }
   function bindAcct() {
-    const so = $('#signout'); if (so) so.onclick = async () => { await fetch('/api/auth/session', { method: 'DELETE' }); location.href = '/'; };
+    const so = $('#signout'); if (so) so.onclick = async () => { await fetch(SQ.api('auth/session'), { method: 'DELETE' }); location.href = './'; };
     const up = $('#upgrade'); if (up) up.onclick = () => billing('checkout');
     const po = $('#portal'); if (po) po.onclick = () => billing('portal');
   }
   async function billing(action) {
     if (session && session.billing === false) { alert('Billing is not switched on yet. Your trial keeps working until then.'); return; }
-    const r = await fetch('/api/stripe?action=' + action, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ plan: 'pro' }) });
+    const r = await fetch(SQ.api('stripe?action=') + action, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ plan: 'pro' }) });
     const j = await r.json().catch(() => ({}));
     if (j.url) location.href = j.url; else alert(j.error || 'Could not reach billing just now.');
   }
@@ -148,14 +148,14 @@
   async function boot() {
     if (!demo && window.SQ_STATIC) { location.replace('app.html?demo=1'); return; }
     if (!demo) {
-      try { session = await (await fetch('/api/auth/session', { cache: 'no-store' })).json(); } catch (e) { session = null; }
+      try { session = await (await fetch(SQ.api('auth/session'), { cache: 'no-store' })).json(); } catch (e) { session = null; }
       if (session && session.accounts === false) { location.replace('app.html?demo=1'); return; }
-      if (!session || !session.user) { location.replace('login.html'); return; }
+      if (!session || !session.user) { location.replace('https://tylermcgrath.com/serp-quake/login.html'); return; }
     }
     $('#acct').innerHTML = acctHtml(); bindAcct();
     if (!demo && !session.access.full) return paywall();
     try {
-      const r = await fetch(demo ? 'demo-data.json' : '/api/data', { cache: 'no-store' });
+      const r = await fetch(demo ? 'demo-data.json' : SQ.api('data'), { cache: 'no-store' });
       if (!r.ok) throw new Error((await r.json().catch(() => ({}))).error || 'HTTP ' + r.status);
       D = await r.json();
       render();
