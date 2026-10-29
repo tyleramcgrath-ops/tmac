@@ -303,6 +303,314 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'detroit-law-firm-website-design',
+    title: 'Detroit Law Firm Websites: Michigan Ad Rules',
+    description: 'Plan a Detroit law firm website under Michigan Rules 7.1 to 7.5: results and client reviews, the responsible-lawyer rule, two-year records and keyword ads.',
+    kind: 'guide',
+    summary: [
+      'Michigan has no bar filing or pre-approval for law firm websites, but Rules 7.1 to 7.5 of the Michigan Rules of Professional Conduct apply to every page.',
+      'The official comment to Rule 7.1 says the ban on creating "unjustified expectations" would ordinarily preclude ads about past results and client endorsements, which is stricter than many states.',
+      'If you advertise under a phone number, web address or trade name, Rule 7.2(d) requires the name and contact information of at least one responsible lawyer, shown on your home page when the ad itself has no room.',
+      'Rule 7.2(b) requires a copy of each advertisement to be kept for two years after it last ran, with a record of when and where it was used, so keep dated copies of your web pages.',
+      'State Bar of Michigan Ethics Opinion RI-385 says you may not buy another lawyer’s or firm’s name as a search keyword without their express consent.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1714276729775-f7d088e5d462?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Detroit towers in late afternoon light, with the stepped Penobscot Building rising above the older office blocks' },
+    body: `A Detroit law firm website is governed by Michigan's Rules of Professional Conduct 7.1 to 7.5, and Michigan's version is short, old-fashioned in places, and stricter than it looks. There is no filing with the State Bar of Michigan and no review before launch. But the official comment to Rule 7.1 says the rule against creating "an unjustified expectation" would ordinarily preclude advertising results obtained for clients and client endorsements. Rule 7.2(d) requires a named, reachable lawyer behind any advertising done under a web address or trade name. Rule 7.2(b) makes you keep copies of your advertising for two years. And a 2022 ethics opinion limits how you can buy search ads.
+
+This guide takes each rule in turn with links to the text, then covers what is particular to building a site for clients in Detroit and Wayne County: the courts people will end up in, the languages they speak, and the questions Michigan's no-fault auto law sends to injury firms. It is planning help for firm owners and marketers, not an ethics opinion. The State Bar of Michigan runs an Ethics Helpline for lawyers, and close calls belong there.
+
+## What do Michigan's advertising rules require on a law firm website?
+
+All five rules are in one short section of the [Michigan Rules of Professional Conduct](https://www.courts.michigan.gov/siteassets/rules-instructions-administrative-orders/rules-of-professional-conduct/michigan-rules-of-professional-conduct.pdf?r=1), published by the Michigan Supreme Court and updated through orders effective January 1, 2026. In plain terms:
+
+1. **Rule 7.1, truthfulness.** Any public communication about your services must not be false, fraudulent, misleading or deceptive. It may not contain a material misrepresentation or leave out a fact needed to keep it from misleading, may not create an unjustified expectation about results, and may not compare your services with other lawyers' unless the comparison can be factually substantiated.
+2. **Rule 7.2, advertising.** You may advertise. You must keep a copy of each advertisement for two years after it last ran, with a record of when and where it was used. You may not pay anyone for recommending you, apart from paying for the advertising itself, a qualifying not-for-profit referral service, or the purchase of a practice. And paragraph (d) adds the responsible-lawyer requirement described below.
+3. **Rule 7.3, solicitation.** Limits on direct contact with people known to need legal help.
+4. **Rule 7.4, fields of practice.** You may say that you do or do not practice in particular fields of law.
+5. **Rule 7.5, firm names.** Trade names are allowed if they do not imply a connection with a government agency or a legal aid organization, and you may say you practice as a partnership only if you do.
+
+Michigan has no counterpart to the long lists of required disclaimers, filing fees and screening committees found in some states. That makes the website easier to launch and easier to get wrong, because nobody looks at it before the public does.
+
+## Can a Detroit firm put case results and client reviews on its website?
+
+This is the question where Michigan differs most from its neighbors. The text of Rule 7.1(b) bars communications "likely to create an unjustified expectation about results the lawyer can achieve." The official comment then says that prohibition "would ordinarily preclude advertisements about results obtained on behalf of a client, such as the amount of a damage award or the lawyer's record in obtaining favorable verdicts, and would ordinarily preclude advertisements containing client endorsements." Its reason: such information "may create the unjustified expectation that similar results can be obtained for others without reference to the specific factual and legal circumstances."
+
+"Ordinarily" is not "always," and comments explain rules rather than add to them. Many Michigan firms do publish results. But a firm that does is relying on context to make the results not misleading, and the burden of getting that right sits with the firm. If you publish results, the practical safeguards are:
+
+- **Give each result its facts.** The type of case, the court or county if the client agrees, the year, and whether it was a verdict or a settlement. A sentence about what made the case unusual tells readers why their case may be different.
+- **Say plainly that results depend on the facts of each case** and that past results do not predict future ones, next to the results, not in the footer.
+- **Show the range, not only the peaks.** A page made only of seven-figure numbers is the clearest example of what the comment warns about.
+- **Treat reviews the same way.** A quote that describes how the firm communicated is a different thing from a quote promising "they will win your case." Choose the first kind, and never edit a client's words.
+
+If your firm is not comfortable with the line, there is a good alternative that the rules plainly allow: explain the process instead. A page that walks through how a Wayne County injury case or custody case usually unfolds shows competence without promising an outcome. When the call is close, ask the [State Bar of Michigan Ethics Helpline](https://www.michbar.org/professional/pro), which gives lawyers non-binding guidance about their own planned conduct.
+
+> **Note:** Leave review markup off your own testimonials either way. Google's review snippet guidelines say that when a business controls the reviews about itself, its pages using LocalBusiness or Organization markup are ineligible for star ratings in search ([Google: review snippet guidelines](https://developers.google.com/search/docs/appearance/structured-data/review-snippet)).
+
+## Who is the "responsible lawyer," and where does that go?
+
+Rule 7.2(d) was added for firms that market under something other than a lawyer's name. It says that for media advertising, "services of a lawyer or law firm that are advertised under the heading of a phone number, web address, icon, or trade name shall identify the name and contact information of at least one lawyer responsible for the content of the advertisement." The identification goes in the ad itself or, if space makes that impractical, "prominently displayed on the home page of the law firm's website and any other website used by the law firm for advertising purposes."
+
+Three practical consequences:
+
+- **Vanity numbers and catchy domains.** If your billboards, radio spots or search ads lead with a number or a web address rather than a lawyer's name, your home page needs a visible line naming a responsible lawyer with contact details. A link to the "Our Team" page is not prominent display.
+- **Landing pages count.** "Any other website used by the law firm for advertising purposes" reaches the separate microsites and landing pages many firms build for campaigns. Put the same line on each.
+- **Trade names.** Rule 7.5(a) allows a trade name if it does not imply a government or legal aid connection. The comment notes a name built on a place, such as a "Springfield Legal Clinic," may need an express disclaimer that it is not a public legal aid agency. A "Detroit Injury Center" style name deserves that sentence near the top of the home page.
+
+The simplest pattern: a short line under the main heading or in a band on the home page, such as "Responsible attorney: [full name], [phone], [email]," repeated on every advertising landing page.
+
+![The Spirit of Detroit statue in front of the Coleman A. Young Municipal Center, with a People Mover train passing on the elevated track](https://images.unsplash.com/photo-1701467401180-b99023157a67?auto=format&fit=crop&w=1200&q=75)
+
+## How long must a Michigan firm keep copies of its website?
+
+Rule 7.2(b): "A copy or recording of an advertisement or communication shall be kept for two years after its last dissemination along with a record of when and where it was used." The comment says the record exists to make enforcement possible.
+
+A website changes constantly, so the sensible approach is a simple archive. Whenever a page that describes your services changes in a meaningful way, save a dated PDF or HTML copy of the old version along with the date range it was live. Do the same for each search, social and display ad and the landing page it pointed to. Two years after a version stops running, you can delete it. If your website platform keeps a history of published versions, export it on a schedule rather than relying on it alone.
+
+## Can you buy another firm's name in Google Ads?
+
+Not in Michigan, without permission. [State Bar of Michigan Ethics Opinion RI-385](https://www.michbar.org/opinions/ethics/numbered_opinions/RI-385), issued November 18, 2022, concludes: "An attorney may not utilize a keyword advertising campaign that involves using the name of another attorney, law firm or attorney's or law firm's tradenames without the express consent of the other attorney or law firm." The committee treated the practice as deceptive conduct under MRPC 8.4(b), even when the ad that appears is not itself misleading, and noted that other states have reached the opposite conclusion.
+
+For your campaigns, that means removing competitor names from keyword lists, including broad-match variations that pull them in, and reviewing search term reports regularly. It also means your ad agency needs a written instruction, because the rules hold the lawyer responsible, not the vendor. Bar opinions are advisory, but this one is direct.
+
+## Can a Michigan lawyer say "specialist" or "certified"?
+
+Michigan's rules do not include a certification provision like those many states adopted from the ABA model. Rule 7.4 simply permits a lawyer to "communicate the fact that the lawyer does or does not practice in particular fields of law," and the comment adds that a lawyer who practices only in certain fields may say so. Anything beyond that, including "specialist," "expert" or "board certified," is judged by Rule 7.1: it must be true, it must not omit facts needed to keep it from misleading, and comparisons with other lawyers must be factually substantiated.
+
+On an attorney profile, the safe pattern is to state the fields you practice ("Our practice is limited to estate planning and probate") and, for any certification, name the certifying organization in the same sentence. Phrases like "Detroit's top-rated" or "the most aggressive" are comparisons, and they need proof you can produce.
+
+Rule 7.1 also covers former judges: a retired or former justice, judge, referee or magistrate may use the title only when it is preceded by "retired" or "former." If a lawyer at your firm left the bench, the profile must read "Former Judge," never "Judge."
+
+## Lawyers licensed in Ohio, Illinois or Ontario
+
+Metro Detroit firms often include lawyers admitted elsewhere. Rule 7.5(b) allows a firm with offices in more than one jurisdiction to use the same name everywhere, but "identification of the lawyers in an office of the firm shall indicate the jurisdictional limitations on those not licensed to practice in the jurisdiction where the office is located." On the website, put each lawyer's admissions on their profile and next to their name wherever lawyers are listed by office. Rule 7.5(d) adds that lawyers who share space but are not partners may not present themselves as a partnership, which matters for "Smith & Jones" style names on shared-office sites.
+
+![The Ambassador Bridge's green tower and suspension cables over the Detroit River, with the Windsor shoreline in the distance](https://images.unsplash.com/photo-1743101446309-1cd7687bf391?auto=format&fit=crop&w=1200&q=75)
+
+## Which courts should a Detroit firm explain to clients?
+
+People who call a lawyer want to know where their case will be heard. A firm that explains this clearly answers a question its competitors usually skip. The main venues for Detroit clients:
+
+| Court | What it hears | Where to send readers |
+| --- | --- | --- |
+| Third Circuit Court (Wayne County) | Civil claims generally above $25,000, and the Family Division | [Third Circuit Court](https://www.3rdcc.org) |
+| 36th District Court (Detroit) | Civil claims up to $25,000, landlord-tenant and small claims up to $7,000, plus criminal and traffic divisions | [36th District Court](https://www.36thdistrictcourtmi.gov) |
+| Wayne County Probate Court | Estates and trusts, guardianships, conservatorships and Mental Health Code cases | [Wayne County Probate Court](https://www.wcpc.us) |
+| Michigan Court of Appeals | Appeals from the trial courts | [Court of Appeals](https://www.courts.michigan.gov/courts/court-of-appeals/) |
+| U.S. District Court, Eastern District of Michigan | Federal cases in the eastern district of the state, which includes Detroit | [E.D. Mich.](https://www.mied.uscourts.gov) |
+
+According to [Michigan Legal Help](https://michiganlegalhelp.org/es/node/682), the Coleman A. Young Municipal Center at 2 Woodward Avenue houses the Third Circuit's Civil Division and Family Division. The 36th District Court's [small claims page](https://www.36thdistrictcourtmi.gov/divisions-departments/general-civil-and-landlord-tenant/small-claims) explains the trade a plaintiff makes there: claims are capped at $7,000 and the plaintiff gives up the right to an attorney. That single fact is worth a paragraph on a consumer, landlord-tenant or small business page, because it tells a reader when hiring you makes sense and when it does not.
+
+Note that suburbs have their own district courts, so a client from Dearborn or Southfield will not be in the 36th. A courts page that says which court serves which city, written once and accurately, is more useful than a dozen near-identical "Dearborn lawyer" and "Livonia lawyer" pages. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe city pages that funnel visitors to the same content as doorway abuse.
+
+## What Detroit injury clients ask about no-fault
+
+For personal injury and auto firms, the 2019 rewrite of Michigan's no-fault auto insurance law shapes the questions clients bring. The law was signed May 30, 2019, and its changes apply to policies issued or renewed after July 1, 2020. Drivers now choose a level of personal injury protection (PIP) medical coverage, from unlimited coverage through $500,000 and $250,000 per person per accident down to lower options, some of which are open only to people with qualifying health coverage, according to the state's [auto insurance FAQ](https://www.michigan.gov/autoinsurance/frequently-asked-questions).
+
+That gives an auto injury page real work to do. A reader who was hit last week wants to know what their PIP level means for their medical bills and whether they can make a claim against the other driver. Explain in general terms how PIP choice works, link to the state's own explanation, and say what to bring to a consultation (the declarations page of the policy, for a start). Keep it general and dated, avoid anything that reads like advice on their particular claim, and never imply an outcome.
+
+## Should a Detroit firm add Arabic or Spanish pages?
+
+If your intake shows the need, yes. The Third Circuit Court's [language access plan](https://3rdcc.org/%5CDocuments%5CAdministration%5COrders%5C2024-19%5ELanguage%20Access%20Plan%5ERescinds%20and%20Replaces%20LAO%202013-26%5E.pdf), citing census data, lists the non-English languages most frequently spoken in its jurisdiction as Arabic, Spanish, "Other Indic" and Chinese. Michigan's rules have no special language provision, so Rule 7.1 governs: a translated page must be as accurate as the English one, and a lawyer who "speaks Arabic" should actually be able to hold a consultation in it.
+
+The minimum is to list each lawyer's languages on their profile and on the contact page. Full translated practice pages go further, if they are written or checked by a fluent speaker and marked with their language so search engines show the right version ([Google: localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions)). A machine-translated page that says something your lawyers would not say is a Rule 7.1 problem in any language.
+
+## A page plan for a Detroit law firm website
+
+1. **Home page** that says what kinds of cases you take, for whom and where, with a phone number, a short form, and the responsible-lawyer line if you advertise under a trade name, number or domain.
+2. **One page per practice area**, written for the person with the problem: what happens first, which court it will likely be in, what it usually involves in Michigan, and what to bring.
+3. **Attorney profiles** with real photos, every jurisdiction of admission, languages spoken, and "Former Judge" where it applies.
+4. **An office page for each office**, with the street address, parking and transit. Downtown clients ask about parking near the courthouses.
+5. **A courts page** covering the venues above and the suburban district courts you appear in.
+6. **Results and reviews, if you use them,** with facts, context and a plain caution beside each, or a process page instead.
+7. **A contact form** that asks for the other party's name for a conflict check and tells people not to send confidential details yet.
+8. **An archive habit**: dated copies of every page version and ad, kept two years after each stops running.
+
+If you already have a site and wonder how it would look rebuilt around this plan, our [free redesign](/redesign) shows your current site redone with your own words and details, so you can compare before you change anything.
+
+![A lawyer in a grey suit shows a contract to a client across a desk in a bright office](https://images.unsplash.com/photo-1758518730327-98070967caab?auto=format&fit=crop&w=1200&q=75)
+
+## Google Business Profile for Detroit firms
+
+Your Google Business Profile follows Google's rules, not the bar's, but the two line up. The profile name must be your real-world firm name, with no added keywords such as "Best Detroit Injury Lawyer." The address must be a real location, not a P.O. box or a mailbox at a remote location, and Google has separate guidance for individual practitioners such as lawyers who want their own profiles ([Google Business Profile guidelines](https://support.google.com/business/answer/3038177)). Keep the name, address and phone on the profile identical to your site's footer, and link each office's profile to that office's page.
+
+Google says local results are based mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). A site that clearly explains your practice areas, offices and courts helps with relevance. Nobody can promise a position in those results, and a vendor who does is making the kind of unsubstantiated claim the bar rules would never let you make.
+
+## A Michigan pre-launch checklist
+
+- [ ] No statement is false or misleading, and nothing leaves out a fact needed to keep it from misleading (Rule 7.1(a)).
+- [ ] Results and reviews, if any, carry facts, context and a caution, or are replaced by a process explanation (Rule 7.1(b) and its comment).
+- [ ] Comparisons with other lawyers ("best," "top") are removed unless you can substantiate them (Rule 7.1(c)).
+- [ ] Retired or former judges are titled "Former" or "Retired" (Rule 7.1).
+- [ ] The home page names a responsible lawyer with contact details if you advertise under a phone number, web address or trade name, and so does each landing page (Rule 7.2(d)).
+- [ ] A dated copy of each page version and each ad is saved, with when and where it ran, for two years (Rule 7.2(b)).
+- [ ] No competitor names are bought as keywords (Ethics Opinion RI-385).
+- [ ] Each lawyer's jurisdictions of admission appear on their profile, with limits shown for those not licensed in Michigan (Rule 7.5(b)).
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Detroit law firm website
+
+A SaySites law firm site starts from the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose intake questions include the other party's name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish, and any lawyer's other languages can go on their profile.
+
+You make every change yourself by saying what you want in plain words, such as "add 'Responsible attorney: Dana Brooks, 313-555-0100' under the home page heading" or "change Judge Ellis to Former Judge Ellis on every page," and each change waits as a draft until you approve it. Results, reviews and certifications come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Michigan site yourself, or [request a free redesign](/redesign) to see your current site rebuilt first. Before launch, work through our [law firm website checklist](/blog/law-firm-website-checklist), read [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls), and see how a neighboring state handles the same questions in our [Columbus law firm website guide](/blog/columbus-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a Michigan law firm have to file its website with the State Bar?', a: 'No. Michigan has no filing or pre-approval process for lawyer websites or ads. The site still has to follow Rules 7.1 to 7.5 of the Michigan Rules of Professional Conduct, and Rule 7.2(b) requires you to keep a copy of each advertisement for two years after it last ran, with a record of when and where it was used.' },
+      { q: 'Can Michigan lawyers post verdicts and settlements online?', a: 'Carefully. Rule 7.1(b) bars statements likely to create an unjustified expectation about results, and the official comment says this would ordinarily preclude advertising results and client endorsements. Firms that publish results should give each one its facts and context and a plain caution that outcomes depend on each case. A page explaining the process is the safer alternative.' },
+      { q: 'What is the responsible-lawyer rule in Michigan?', a: 'Rule 7.2(d) says that when a firm advertises under a phone number, web address, icon or trade name, the ad must name at least one lawyer responsible for its content, with contact information. If the ad has no room, the name and contact details must be shown prominently on the firm home page and on any other website the firm uses for advertising.' },
+      { q: 'Can a Detroit firm bid on a competitor’s name in Google Ads?', a: 'Not without that lawyer’s or firm’s express consent. State Bar of Michigan Ethics Opinion RI-385 from November 2022 concluded that keyword campaigns using another attorney’s or firm’s name or trade name are deceptive under MRPC 8.4(b). Remove competitor names from keyword lists, watch broad-match search terms, and give your agency the instruction in writing.' },
+      { q: 'Can a Michigan lawyer call themselves a specialist?', a: 'Rule 7.4 lets you say which fields you do or do not practice in. Words like specialist, expert or board certified are judged under Rule 7.1, so they must be true and not misleading, and any comparison with other lawyers must be factually substantiated. If you hold a certification, name the certifying organization in the same sentence.' },
+      { q: 'Should a Detroit law firm website be in Arabic or Spanish?', a: 'If your clients need it. The Third Circuit Court’s language access plan lists Arabic, Spanish, Other Indic and Chinese as the most frequently spoken non-English languages in its jurisdiction. At minimum, list each lawyer’s languages on their profile. Full translated pages should be written or checked by a fluent speaker and must be as accurate as the English versions.' },
+      { q: 'How much does a SaySites website for a Detroit law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting, in English or Spanish. You can also request a free redesign and see your current site rebuilt with your own content before deciding.' },
+    ],
+    about: ['Michigan Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Detroit, Michigan'],
+    published: '2026-10-29',
+    status: 'published',
+  },
+  {
+    slug: 'baltimore-roofing-website-design',
+    title: 'Baltimore Roofing Websites: Maryland MHIC Ad Rules',
+    description: 'Plan a Baltimore roofing website under Maryland MHIC rules: license number format, price ad disclosures, deductible offers, City permits and rowhouse roofs.',
+    kind: 'guide',
+    summary: [
+      'Maryland requires every home improvement advertisement, your website included, to show your name and MHIC license number, written as "MHIC No." or "Maryland Home Improvement Commission License No."',
+      'An ad that leaves out the number can draw a $100 civil citation, rising to $300 for a repeat, and a false or misleading ad $300, then $1,000 (COMAR 09.08.06.02).',
+      'Advertised prices that leave out costs needed for the job, or delivery and installation, need a clear statement saying so, and coupons cannot require the homeowner to show them before you give an estimate.',
+      'Offering to pay or waive part of a storm claim deductible with intent to defraud the insurer is a fraudulent insurance act in Maryland, so keep "we cover your deductible" offers off the site.',
+      'Baltimore City lists replacing roof shingles and replacing roof tarring as work exempt from permit, but historic districts need CHAP review and rooftop decks have their own code section.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1611316491868-a683302aa917?auto=format&fit=crop&w=1600&q=75', alt: 'The Baltimore Inner Harbor skyline at dusk, with downtown towers reflected in the still water of the harbor' },
+    body: `A Baltimore roofing website has to do two jobs at once. It has to persuade a homeowner with a leak over the back bedroom to call you, and it has to meet Maryland's home improvement advertising rules, because the state treats your website as an advertisement. The core rule is short: every home improvement ad must show the contractor's name and Maryland Home Improvement Commission (MHIC) license number, and it must not be false, misleading or deceptive. Around it sit rules on advertised prices and coupons, a state law that makes some deductible offers a fraudulent insurance act, and Baltimore City permit and historic-district rules that decide what homeowners will ask you about.
+
+This guide walks through each requirement with links to the official sources, then lays out a page plan for a roofing company working in Baltimore City and the surrounding county. It is practical help for roofers and the people who build their sites, not legal advice. When a question turns on the facts of your business, the MHIC and the City's permit office are the places to ask.
+
+## Does a Baltimore roofer need an MHIC license?
+
+For work on homes, almost always. Maryland's Business Regulation Article defines "home improvement" as the addition to or "alteration, conversion, improvement, modernization, remodeling, repair, or replacement" of a building or part of a building used as a residence ([Md. Code, Bus. Reg. § 8-101](https://mgaleg.maryland.gov/2026RS/Statute_Web/gbr/8-101.pdf)). Repairing or replacing a home's roof is repair or replacement of part of a residence. The state's [OneStop license page](https://onestop.md.gov/licenses/home-improvement-license-5d15409d54f24d03e9997ba5) describes the MHIC as the body that licenses and regulates home improvement contractors and salespersons.
+
+Two exceptions shape some roofers' websites. New home construction is not covered by the MHIC license, and builders of new homes register with the Attorney General's office instead, as the [MHIC's FAQ](https://www.labor.maryland.gov/license/mhic/mhicfaq.shtml) explains. And commercial roofing on buildings that are not residences falls outside the home improvement definition. If you do both residential and commercial work, the residential pages and anything that advertises home roofing need the license number, and the simplest course is to show it on every page.
+
+## What must a Maryland roofing website show?
+
+The MHIC's [advertising requirements page](https://labor.maryland.gov/license/mhic/mhicad.shtml) puts it in one sentence: "Each home improvement advertisement must contain the name and license number of the contractor." Section 8-615 of the Business Regulation Article sets the form. An ad that says you are licensed must give the number as either "Maryland Home Improvement Commission License No. ___" or "MHIC No. ___" ([Md. Code, Bus. Reg. § 8-615](https://mgaleg.maryland.gov/2026RS/Statute_Web/gbr/8-615.pdf)).
+
+On a website, that means:
+
+- **Your name and "MHIC No." with your number in the header or footer of every page.** Footers repeat on every page, including blog posts and landing pages built for ads, which is why they are the safest spot. Many roofers also put it beside the phone number in the header so it shows on a phone without scrolling.
+- **The same name the license is issued to.** If you trade under a shorter name, make sure the licensed name appears too, so a homeowner who checks the number finds the company they hired.
+- **The number in every other place you advertise:** paid search and social ads, your Google Business Profile description, yard signs, truck lettering and printed estimates. The website rule is the easy one; consistency everywhere is the real job.
+
+The MHIC page links to the state's online license search. Put that link on your site next to your number with a line such as "Check our license with the Maryland Home Improvement Commission." It costs nothing, and it answers the question careful homeowners are already asking.
+
+### What happens if the number is missing?
+
+Maryland enforces these rules with civil citations. Under [COMAR 09.08.06.02](https://www.law.cornell.edu/regulations/maryland/Md-Code-Regs-09.08.06.02), failing to include the name or license number in an advertisement is a $100 citation for a first violation and $300 for a second or later one. Publishing a false, misleading or deceptive advertisement is $300, then $1,000. Acting as a contractor without a license from the Commission is $1,500, then $5,000. The amounts are small next to the cost of a lost job, but a citation is a public mark against a company whose whole pitch is trust.
+
+![A roofer in a bright yellow shirt kneels on a shingle roof and drives fasteners with a power nailer on a clear day](https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?auto=format&fit=crop&w=1200&q=75)
+
+## How should a roofer advertise prices and coupons in Maryland?
+
+Price pages and promotions are where roofing sites most often slip. The MHIC's advertising page lists three rules beyond the license number:
+
+1. **Excluded costs.** If an advertised price leaves out costs needed for the product's proper function and appearance, the ad needs a clearly printed explanatory statement. A "roof replacement from $X" headline that excludes tear-off, decking repair or flashing should say so right next to the price.
+2. **Delivery and installation.** If the price does not include a delivery or installation charge, the ad must conspicuously disclose that. For roofers this mostly affects material-only offers, such as a gutter guard price that does not include fitting it.
+3. **Coupons.** A discount coupon may not require the homeowner to present it before you give an estimate or proposal. "Mention this page for 10% off" is fine; "coupon must be shown at the inspection" is not.
+
+The same page notes that the Home Improvement Law, section 8-503(b), bars offering a gift, bonus award, merchandise, trading stamps or a cash loan as an inducement to sign a home improvement contract, and that the Commission does not treat a sale or price reduction as a gift. A seasonal discount is allowed. A free television for signing is not.
+
+> **Tip:** If you show prices at all, show what they include in a short list beside each one. It keeps you within the excluded-cost rule and it filters out calls from people expecting a number you never meant.
+
+## Can a roofing site offer to cover the insurance deductible?
+
+Not in the way some storm-chasing flyers do. Maryland's Insurance Article makes it "a fraudulent insurance act for a contractor offering home repair or remodeling services for damages to a private residence caused by weather" to pay or compensate an insured, or offer or promise to, "with the intent to defraud an insurer," for any part of the insured's deductible, when the work is paid from the policy's proceeds ([Md. Code, Ins. § 27-407.2](https://mgaleg.maryland.gov/2024RS/Statute_Web/gin/27-407.2.pdf)).
+
+On your website, that rules out "We'll pay your deductible," "No out-of-pocket roof replacement" and similar lines on storm damage pages. What you can do is explain the claim process honestly: document the damage with dated photos, call the insurer, meet the adjuster, and get a written estimate. A page that walks a Baltimore homeowner through those steps after a summer thunderstorm or a winter ice dam is useful and builds trust, without promises the law forbids.
+
+Two more consumer rules belong on the storm page. Home improvement sales made at the homeowner's house fall under the Maryland Door-to-Door Sales Act, which gives buyers a cancellation window, as the [MHIC FAQ](https://www.labor.maryland.gov/license/mhic/mhicfaq.shtml) notes. And COMAR 09.08.06.02 lists both demanding payment before a contract is signed and taking more than a one-third deposit at signing as citation offenses. Saying on your site that you never ask for more than one third up front tells homeowners you follow the rules canvassers sometimes ignore.
+
+## Why the Guaranty Fund belongs on your About page
+
+Maryland homeowners have a safety net that only applies to licensed contractors. The MHIC's [Guaranty Fund FAQ](https://labor.maryland.gov/license/mhic/mhicfaqgf.shtml) says the maximum recovery is $30,000 per claimant, or what the homeowner paid the contractor if that is less, and up to $250,000 in total for claims against the same contractor. It is also blunt about the other side: "The Guaranty Fund is not available to homeowners who hire unlicensed contractors."
+
+That is a fact worth explaining in plain words on your About or FAQ page, with a link to the state's page. You are not promising anything; you are telling homeowners about a protection the state provides when they hire a licensed company, and pointing out that you are one. It turns your license number from a legal requirement into a reason to call you.
+
+## Which Baltimore permit rules should your service pages explain?
+
+Homeowners ask about permits before they ask about shingles. Baltimore City publishes a list of [work exempt from permit](https://s3.amazonaws.com/baltimorecity.gov.if-us-east-1/s3fs-public/2026-03/Work%20Exempt%20From%20Permit.pdf) under the Building, Fire, and Related Codes of Baltimore City 2024. For both one- and two-family homes and other buildings, it lists "Replacing roof shingles" and "Replacing roof tarring" as exempt, under the general principle that ordinary repairs which are really maintenance do not need a permit. It also says the exemption does not authorize work that violates the code.
+
+What the list does not cover is just as useful for your pages. Structural roof work, new roof framing and work it does not name are not on it, so a page about structural repairs or new roof systems should tell homeowners that you will confirm with the City whether a permit is needed and pull it where it is. Do not promise "no permit needed" in general terms; describe what the City's list says and link to it.
+
+### Historic districts and CHAP
+
+Baltimore has local historic districts and Landmarks, and the Commission for Historical and Architectural Preservation (CHAP) says exterior work on properties in the city's historic districts and on local Landmarks must be presented to the Commission or its staff for review and approval ([CHAP review requirements](https://www.baltimorecity.gov/chap/about/applications)). A roof that is visible from the street on a rowhouse in a historic district is exterior work. If you do this kind of job regularly, a page explaining that you can help homeowners with CHAP review, and how long it adds to a project, answers a question your competitors usually leave for the first site visit.
+
+### Rooftop decks on flat rowhouse roofs
+
+Rooftop decks are a line of work of their own in Baltimore, and the City's code treats them separately from the roof underneath. The City's code section on [rooftop decks](https://s3.amazonaws.com/baltimorecity.gov.if-us-east-1/s3fs-public/2025-10/rooftop_deck_0.pdf) (Section 1511 of the 2024 Baltimore City codes) sets specific limits: construction documents signed and sealed by a Maryland-licensed architect or engineer, written notice to adjoining owners when the deck is supported by party walls, a deck raised no more than 2 feet above the midpoint plane of the roof surface, and a minimum front setback of 8 feet from the building wall on flat roofs, with zoning setbacks applying on top. If you build decks or the roof membranes under them, a service page that explains those rules in plain words shows homeowners you know the job before they ever meet you.
+
+![Baltimore rooftops and harbor-front buildings seen from a high window at sunset, with the National Aquarium's glass peaks by the water](https://images.unsplash.com/photo-1617409123085-f73b92288a04?auto=format&fit=crop&w=1200&q=75)
+
+## Baltimore City and Baltimore County are separate
+
+A detail that trips up out-of-town marketers: Baltimore City is not part of Baltimore County. They are separate jurisdictions with separate permit offices. The County handles its own applications through its [Permits, Approvals and Inspections department](https://www.baltimorecountymd.gov/departments/pai). If you work in Towson, Catonsville or Dundalk as well as in the City, a service area page can say so honestly and explain that permit questions go to different offices depending on where the house is.
+
+What it should not do is multiply. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe doorway abuse, including regional or city pages that funnel visitors to the same content, and scaled content abuse, where many pages are made mainly to rank. A page for each of twenty ZIP codes with the neighborhood name swapped is exactly that. One good service area page, plus separate pages only where you have something true and different to say, such as a CHAP-heavy neighborhood or a County office, serves homeowners and follows the rules.
+
+## A page plan for a Baltimore roofing website
+
+1. **Home page** with your name, "MHIC No." and number, phone number and a short job request form above the fold, and the main services you actually do.
+2. **One page per service**: roof replacement, roof repair, flat and low-slope roofs, rooftop deck roofing if you do it, gutters, chimney flashing. Each explains what the job involves, what affects cost, and what the City's permit list says about it.
+3. **A storm damage page** that explains the insurance claim steps honestly, with no deductible offers.
+4. **An About page** with your license, a link to the state license search, your insurance, the Guaranty Fund explanation and real photos of your crew.
+5. **A service area page** that names where you work, notes the City and County permit offices, and mentions historic districts if you do CHAP work.
+6. **A prices or estimates page**, if you publish prices, with what each price includes and excludes.
+7. **A gallery of your own jobs**, labeled with the neighborhood and type of roof, never stock photos passed off as your work.
+
+If your current site is missing half of this, a [free redesign](/redesign) shows it rebuilt with your own words and details, so you can see the difference before deciding anything.
+
+![Two roofers stand on a house roof stripped to its plywood decking beside a vent stack, with a third climbing a ladder at the eave](https://images.unsplash.com/photo-1634750009079-6bf7bede038b?auto=format&fit=crop&w=1200&q=75)
+
+## Google Business Profile for a roofer who works at the customer's house
+
+Most roofers serve customers at their homes, so Google treats them as service-area businesses. Google's [service area guidance](https://support.google.com/business/answer/9157481) lets you set the areas you serve and hide your street address if customers do not come to you, and its [profile guidelines](https://support.google.com/business/answer/3038177) require your real business name, with no added keywords such as "Best Baltimore Roofer," and rule out P.O. boxes as addresses. Match the name and phone number on the profile to your website's footer, link the profile to your home page or service area page, and add your MHIC number to the profile description, since that is advertising too.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Clear service pages help with relevance. Reviews help with prominence, and Google's [review tips](https://support.google.com/business/answer/3474122) say you can ask customers for reviews but should not offer incentives for them. Nobody can promise you a spot in the map results.
+
+## A Maryland roofing website checklist
+
+- [ ] Your name and "MHIC No." with your license number appear on every page (Bus. Reg. § 8-615 and the MHIC's advertising rules).
+- [ ] The licensed company name matches the name homeowners see.
+- [ ] A link to the state's license search sits next to the number.
+- [ ] Every advertised price says what it excludes, including installation where relevant.
+- [ ] No coupon has to be shown before an estimate, and no gift is offered for signing.
+- [ ] No page offers to pay or waive an insurance deductible.
+- [ ] Deposits are described as one third or less at signing, and no payment is asked for before a contract.
+- [ ] Permit statements match the City's exempt-work list, with CHAP review mentioned for historic districts.
+- [ ] One honest service area page, no swapped-name ZIP pages.
+- [ ] Gallery photos are your own jobs.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites builds a Baltimore roofing website
+
+SaySites roofing sites use a contractor layout: a photo hero with a request bar, numbered service cards, a "need help?" block and a call band, with a tap-to-call number on every page. Each service gets its own page with its own title. The request form can ask how soon the homeowner needs you, the ZIP code of the job and whether they own or rent, and each request lands in a leads pipeline where you call, text or email them back. Your company is described to search engines as a [RoofingContractor](https://schema.org/RoofingContractor), and no page goes live until it passes a 95+ speed check.
+
+You build and change it yourself by saying what you want in plain words, for example "put MHIC No. and our license number beside the phone number on every page" or "add a page about rooftop deck roofing in Canton," and every change waits as a draft for your approval. Licenses, insurance, warranties, prices and reviews come only from you; nothing is invented.
+
+The Site plan is $15 a month with hosting included ([websites for roofers](/websites-for/roofers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your MHIC number and service pages live this week, or [request a free redesign](/redesign) to see your current site rebuilt first. For more, read our [home service website checklist](/blog/home-service-website-checklist), how to [show Google where you work without a storefront](/blog/service-area-business-google), and how another old East Coast city handles the same questions in our [Philadelphia roofing website guide](/blog/philadelphia-roofing-website-design).`,
+    faq: [
+      { q: 'Do Maryland roofers have to put their MHIC number on their website?', a: 'Yes. The Maryland Home Improvement Commission says each home improvement advertisement must contain the contractor’s name and license number, and a website advertising home roofing is an advertisement. Section 8-615 sets the form as MHIC No. or Maryland Home Improvement Commission License No. followed by the number. Put it in the footer so it appears on every page.' },
+      { q: 'What is the fine for advertising without an MHIC number?', a: 'Under COMAR 09.08.06.02, leaving the name or license number out of an advertisement is a $100 civil citation for a first violation and $300 for a second or later one. A false, misleading or deceptive advertisement is $300, then $1,000, and acting as a contractor without a license is $1,500, then $5,000.' },
+      { q: 'Can a Maryland roofer offer to pay the homeowner’s insurance deductible?', a: 'No. Maryland Insurance Article § 27-407.2 makes it a fraudulent insurance act for a contractor repairing weather damage to a home to pay, or offer or promise to pay, any part of the insured’s deductible with intent to defraud the insurer when the work is paid from the policy. Explain the claim process on your site instead.' },
+      { q: 'Does replacing a roof need a permit in Baltimore City?', a: 'Baltimore City’s list of work exempt from permit includes replacing roof shingles and replacing roof tarring, for one- and two-family homes and other buildings. Structural roof work and work the list does not name may need a permit, and exterior work in local historic districts needs review by CHAP. Check with the City before promising a homeowner either way.' },
+      { q: 'What is the Maryland Home Improvement Guaranty Fund?', a: 'It is a state fund that can compensate homeowners for losses caused by a licensed home improvement contractor. The MHIC says the maximum recovery is $30,000 per claimant and $250,000 in total for claims against one contractor. It is not available to homeowners who hire unlicensed contractors, which is a good reason to explain it on your site.' },
+      { q: 'Should a Baltimore roofer make a page for every neighborhood?', a: 'No. Pages that swap in neighborhood names around the same text are what Google’s spam policies call doorway abuse. Make one honest service area page that names where you work and notes that Baltimore City and Baltimore County have separate permit offices, and add a separate page only when you have something different and true to say.' },
+      { q: 'What does a SaySites roofing website cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting included. It has a page for each service, a tap-to-call number, a job request form, RoofingContractor structured data and a leads pipeline. You can also request a free redesign and see your current site rebuilt with your own details before you decide anything.' },
+    ],
+    about: ['Maryland Home Improvement Commission', 'Contractor advertising', 'Roofing websites', 'Baltimore, Maryland'],
+    published: '2026-10-29',
+    status: 'published',
+  },
+  {
     slug: 'new-orleans-law-firm-website-design',
     title: 'New Orleans Law Firm Websites: Louisiana Ad Rules',
     description: 'Plan a New Orleans law firm website under Louisiana Rules 7.1 to 7.10: required disclosures, the filing exemption, past results, certification, Spanish pages.',
