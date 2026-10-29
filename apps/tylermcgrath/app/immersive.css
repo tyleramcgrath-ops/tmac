@@ -696,3 +696,28 @@
     top: 37px;
   }
 }
+
+/* The Lab: SEO tools orbiting the Compass. Same glass as the service cards;
+   an offline tool's dot goes amber and stops pulsing. */
+.live-dot.is-offline {
+  background: #d9a441;
+  box-shadow: 0 0 10px rgba(217, 164, 65, 0.55);
+  animation: none;
+}
+.tool-card .card-caption small {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.tool-offline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 22px 0 6px;
+  padding: 14px 16px;
+  border: 1px solid rgba(217, 164, 65, 0.35);
+  border-radius: 12px;
+  color: rgba(255, 244, 222, 0.82);
+  font-size: 14px;
+}
