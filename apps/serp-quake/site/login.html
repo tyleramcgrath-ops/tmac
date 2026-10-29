@@ -54,7 +54,7 @@
   if (window.SQ_STATIC) {
     say('err', 'Accounts open soon. <a href="/app?demo=1">Explore the demo dashboard</a> in the meantime.');
     $('#send').disabled = true;
-  } else fetch('/api/auth/session', { cache: 'no-store' }).then((x) => x.json()).then((s) => {
+  } else fetch(SQ.api('auth/session'), { cache: 'no-store' }).then((x) => x.json()).then((s) => {
     if (s.user) location.replace('/app');
     if (s.accounts === false) {
       say('err', 'Accounts are not switched on yet. <a href="/app?demo=1">Explore the demo dashboard</a> in the meantime.');
@@ -68,7 +68,7 @@
     if (!email) { say('err', 'Enter your email address.'); return; }
     $('#send').disabled = true; $('#send').textContent = 'Sending…';
     try {
-      const res = await fetch('/api/auth/link', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) });
+      const res = await fetch(SQ.api('auth/link'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ email }) });
       const j = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(j.error || 'Could not send the link.');
       say('ok', 'Check your inbox. ' + (j.message || 'A link is on its way.'));
