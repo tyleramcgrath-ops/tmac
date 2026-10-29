@@ -1,0 +1,108 @@
+name: SERP Quake seismograph
+
+# Runs the Google-algorithm seismograph (apps/serp-quake) every 6 hours with no
+# server: each run reads every tracked keyword once, appends the sweep to the
+# `serp-quake-data` branch, and rebuilds the dashboard there (index.html).
+#
+# Requires at least one repo secret (Settings -> Secrets and variables -> Actions):
+#   - SERPER_API_KEY   https://serper.dev   (primary if set)
+#   - SERPAPI_KEY      https://serpapi.com  (set both and suspect readings are
+#                                            re-read through the other provider)
+# Optional alert secrets:
+#   - QUAKE_SLACK_WEBHOOK_URL  Slack incoming webhook for quake start/end alerts
+#   - QUAKE_WEBHOOK_URL        any URL that accepts a JSON POST
+#
+# Cost: 48 keywords x 4 sweeps/day ~ 5,800 searches/month, plus a few re-fetches.
+# Edit apps/serp-quake/stations.json or the cron below to trade steadiness for spend.
+# Without a key the scheduled job passes with a warning and does nothing.
+
+on:
+  schedule:
+    - cron: '23 */6 * * *'
+  workflow_dispatch: {}
+  pull_request:
+    paths: ['apps/serp-quake/**', '.github/workflows/serp-quake.yml']
+  push:
+    branches: [main]
+    paths: ['apps/serp-quake/**', '.github/workflows/serp-quake.yml']
+
+concurrency:
+  group: serp-quake-${{ github.event_name == 'pull_request' && github.ref || 'scan' }}
+  cancel-in-progress: false
+
+jobs:
+  test:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/serp-quake
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm test
+
+  scan:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      SERPER_API_KEY: ${{ secrets.SERPER_API_KEY }}
+      SERPAPI_KEY: ${{ secrets.SERPAPI_KEY }}
+      QUAKE_SLACK_WEBHOOK_URL: ${{ secrets.QUAKE_SLACK_WEBHOOK_URL }}
+      QUAKE_WEBHOOK_URL: ${{ secrets.QUAKE_WEBHOOK_URL }}
+    steps:
+      - name: Check a SERP provider is configured
+        id: keys
+        run: |
+          if [ -z "$SERPER_API_KEY" ] && [ -z "$SERPAPI_KEY" ]; then
+            echo "::warning title=SERP Quake not configured::Set the SERPER_API_KEY or SERPAPI_KEY repo secret to start the seismograph."
+            echo "ok=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/checkout@v4
+        if: steps.keys.outputs.ok == 'true'
+
+      - uses: actions/setup-node@v4
+        if: steps.keys.outputs.ok == 'true'
+        with:
+          node-version: '22'
+
+      - name: Check out the data branch
+        if: steps.keys.outputs.ok == 'true'
+        run: |
+          if git ls-remote --exit-code --heads origin serp-quake-data >/dev/null; then
+            git clone --depth 1 --branch serp-quake-data "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" quake-data
+          else
+            mkdir quake-data && cd quake-data && git init -b serp-quake-data
+            git remote add origin "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git"
+          fi
+
+      - name: Sweep every station
+        if: steps.keys.outputs.ok == 'true'
+        run: node apps/serp-quake/bin/quake.js scan --data quake-data
+
+      - name: Rebuild dashboard and summary
+        if: steps.keys.outputs.ok == 'true'
+        run: |
+          node apps/serp-quake/bin/quake.js build --data quake-data --out quake-data/index.html
+          {
+            echo '```'
+            node apps/serp-quake/bin/quake.js status --data quake-data
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Commit the sweep
+        if: steps.keys.outputs.ok == 'true'
+        working-directory: quake-data
+        run: |
+          git config user.name "serp-quake[bot]"
+          git config user.email "serp-quake@users.noreply.github.com"
+          git add -A
+          git commit -q -m "sweep $(date -u +%Y-%m-%dT%H:%MZ)"
+          for i in 1 2 3; do git push origin serp-quake-data && break; sleep $((i * 5)); done
