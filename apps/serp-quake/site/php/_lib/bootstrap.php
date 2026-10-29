@@ -10,6 +10,10 @@
 
 declare(strict_types=1);
 
+// Shortest round-trip floats in JSON (3.8, not 3.7999999999999998): some hosts,
+// SiteGround included, ship serialize_precision = 17.
+ini_set('serialize_precision', '-1');
+
 function sq_config(): array {
     static $cfg = null;
     if ($cfg !== null) return $cfg;
