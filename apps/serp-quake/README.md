@@ -135,7 +135,7 @@ scrapers, with 5–20% of results affected depending on the provider
 scraped SERPs, and a poisoned read looks exactly like an earthquake: the whole top 10 changes.
 So before measuring, each reading goes through these checks:
 
-1. **Malformed** (fewer than 7 results, or more than 6 of 10 from one site): rejected.
+1. **Malformed** (fewer than 5 results, or more than 6 of 10 from one site): rejected.
 2. **Isolated total replacement** (rank ≥ 0.85 and domains ≥ 0.8): re-fetched once, through the
    second provider if both keys are set (a second seismometer at the same station).
    - If the second look matches the old SERP, the first read was poisoned and is replaced.
