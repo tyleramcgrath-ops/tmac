@@ -8,6 +8,7 @@
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Component, useEffect, useMemo, useRef, type ReactNode } from "react";
 import * as THREE from "three";
+import { focus } from "@/lib/focus";
 import { tilt } from "@/lib/motion";
 
 export type CompassState =
@@ -33,6 +34,9 @@ type Profile = {
 };
 
 const P = (color: string, activity: number, brightness: number, core: number, outer: number, middle: number, inner: number, vertical: number, tension: number): Profile => ({ color, activity, brightness, core, outer, middle, inner, vertical, tension });
+
+// The cool HUD light the Compass takes on while locked onto a card.
+const LOCK_COLOR = new THREE.Color("#9ff0ff");
 
 const PROFILES: Record<CompassState, Profile> = {
   sleep: P("#8e8067", 0.04, 0.18, 0.16, 0.002, -0.003, 0.004, 0.05, 0.02),
@@ -60,7 +64,7 @@ if (typeof window !== "undefined") {
   );
 }
 
-type Live = Omit<Profile, "color"> & { color: THREE.Color; energy: number; pulse: number };
+type Live = Omit<Profile, "color"> & { color: THREE.Color; energy: number; pulse: number; lock: number };
 
 // Materials whose look depends on the live profile register a formula here and
 // are updated once per frame instead of being re-created on every state change.
@@ -162,7 +166,7 @@ function Instrument({ state, pulseKey, live }: { state: CompassState; pulseKey: 
     for (const k of ["activity", "brightness", "core", "outer", "middle", "inner", "vertical", "tension"] as const) {
       L[k] = THREE.MathUtils.damp(L[k], T[k], 2.2, dt);
     }
-    targetColor.set(T.color);
+    targetColor.set(T.color).lerp(LOCK_COLOR, L.lock * 0.55);
     L.color.lerp(targetColor, 1 - Math.exp(-2.2 * dt));
     L.pulse = Math.max(0, L.pulse - dt * 0.9);
 
@@ -170,10 +174,13 @@ function Instrument({ state, pulseKey, live }: { state: CompassState; pulseKey: 
     const rect = gl.domElement.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
     const cy = rect.top + rect.height / 2;
-    // A mouse wins; on a phone, tilting it moves a virtual cursor instead.
-    const aim = cursor.seen
-      ? { x: cursor.x, y: cursor.y, on: true }
-      : { x: cx + tilt.x * innerWidth * 0.45, y: cy + tilt.y * innerHeight * 0.35, on: tilt.has };
+    // A card being looked at wins; then the mouse; on a phone without a card
+    // in focus, tilting it moves a virtual cursor instead.
+    const aim = focus.active
+      ? { x: focus.x, y: focus.y, on: true }
+      : cursor.seen
+        ? { x: cursor.x, y: cursor.y, on: true }
+        : { x: cx + tilt.x * innerWidth * 0.45, y: cy + tilt.y * innerHeight * 0.35, on: tilt.has };
     let dx = 0;
     let dy = 0;
     if (aim.on) {
@@ -183,7 +190,9 @@ function Instrument({ state, pulseKey, live }: { state: CompassState; pulseKey: 
     const dist = Math.hypot(dx, dy);
     const energy = cursor.seen ? THREE.MathUtils.clamp(1 - dist / 0.9, 0, 1) : 0.15;
     L.energy = THREE.MathUtils.damp(L.energy, energy, 3, dt);
-    const boost = L.energy * 0.35 + L.pulse * 0.6;
+    // Locked onto a card: the core flares and the light runs cool.
+    L.lock = THREE.MathUtils.damp(L.lock, focus.active ? 1 : 0, 6, dt);
+    const boost = L.energy * 0.35 + L.lock * 0.55 + L.pulse * 0.6;
 
     // Face the cursor: a smooth, critically damped turn and a slight lean.
     st.ry = THREE.MathUtils.damp(st.ry, THREE.MathUtils.clamp(dx, -1.2, 1.2) * 0.62, 3.2, dt);
@@ -346,7 +355,7 @@ class Fallback extends Component<{ children: ReactNode }, { error: boolean }> {
 }
 
 export default function Compass({ state, paused, pulseKey }: { state: CompassState; paused: boolean; pulseKey: number }) {
-  const live = useRef<Live>({ ...PROFILES.sleep, color: new THREE.Color(PROFILES.sleep.color), energy: 0, pulse: 0 });
+  const live = useRef<Live>({ ...PROFILES.sleep, color: new THREE.Color(PROFILES.sleep.color), energy: 0, pulse: 0, lock: 0 });
   return (
     <Fallback>
       <Canvas

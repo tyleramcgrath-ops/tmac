@@ -196,3 +196,12 @@ export function awaken() {
 export function buzz(ms = 8) {
   if (enabled && typeof navigator !== "undefined" && "vibrate" in navigator) navigator.vibrate?.(ms);
 }
+
+/** The Compass locks onto a card: two quick rising pings and a breath of air. */
+export function lock() {
+  if (!ctx) return;
+  const t = now();
+  tone(1320, t, 0.035, 0.08);
+  tone(1980, t + 0.06, 0.03, 0.12);
+  hiss(t, 0.18, 0.025, "bandpass", 3200, 5200, 2);
+}
