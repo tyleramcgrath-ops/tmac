@@ -264,11 +264,18 @@ export default function Studio() {
     },
     content: (
       <>
-        <span className="tile-emblem"><span>{s.symbol}</span></span>
-        <span className="tile-text">
-          <span className="tile-label"><b className="live-dot" /> {s.label}</span>
-          <strong>{s.title}</strong>
-          <small>{s.copy}</small>
+        <span className="hud-row">
+          <b className="live-dot" />
+          <span>SYS·{String(SERVICES.indexOf(s) + 1).padStart(2, "0")}</span>
+          <i />
+          <span>{s.label}</span>
+        </span>
+        <span className="tile-main">
+          <span className="tile-emblem"><span>{s.symbol}</span></span>
+          <span className="tile-text">
+            <strong>{s.title}</strong>
+            <small>{s.copy}</small>
+          </span>
         </span>
         <span className="deck-arrow">↗</span>
       </>
@@ -283,8 +290,9 @@ export default function Studio() {
     content: (
       <>
         <span className="shot">
-          {p.image ? <img src={p.image} alt={`${p.name} homepage`} draggable={false} loading="lazy" /> : <span className="type-cover">{p.name}</span>}
-          <span className="shot-badge">№ {p.id}</span>
+          {p.image ? <img src={p.image} alt={`${p.name} homepage`} draggable={false} /> : <span className="type-cover">{p.name}</span>}
+          <span className="shot-badge">SIG·{p.id}</span>
+          <span className="shot-reticle" aria-hidden="true" />
         </span>
         <span className="shot-caption">
           <span>
@@ -305,16 +313,42 @@ export default function Studio() {
     onClick: () => open(`tool:${t.key}`),
     content: (
       <>
-        <span className="tile-emblem"><span>{t.symbol}</span></span>
-        <span className="tile-text">
-          <span className="tile-label"><b className={`live-dot ${t.status === "live" ? "" : "is-offline"}`} /> {t.label}</span>
-          <strong>{t.name}</strong>
-          <small>{t.tagline}</small>
+        <span className="hud-row">
+          <b className={`live-dot ${t.status === "live" ? "" : "is-offline"}`} />
+          <span>{t.status === "live" ? "ONLINE" : "OFFLINE"}</span>
+          <i />
+          <span>{t.label}</span>
+        </span>
+        <span className="tile-main">
+          <span className="tile-emblem"><span>{t.symbol}</span></span>
+          <span className="tile-text">
+            <strong>{t.name}</strong>
+            <small>{t.tagline}</small>
+          </span>
         </span>
         <span className="deck-arrow">↗</span>
       </>
     ),
   }));
+
+  // Labels for the side arrows: the range of sites each one leads to.
+  const range = (pg: number) => {
+    const p = ((pg % pages) + pages) % pages;
+    const pad = (n: number) => String(n).padStart(2, "0");
+    return `${pad(p * perPage + 1)}–${pad(Math.min((p + 1) * perPage, shown.length))}`;
+  };
+  const workPager = {
+    onPrev: () => {
+      sfx.tick(0);
+      setPage((p) => (p + pages - 1) % pages);
+    },
+    onNext: () => {
+      sfx.tick(3);
+      setPage((p) => (p + 1) % pages);
+    },
+    prevLabel: range(page - 1),
+    nextLabel: range(page + 1),
+  };
 
   function openTools() {
     sfx.chime();
@@ -459,6 +493,7 @@ export default function Studio() {
               key={`${mode}-${filter}-${page}-${perPage}`}
               items={mode === "studio" ? serviceItems : mode === "tools" ? toolItems : workItems}
               layout={mode === "work" ? "showcase" : "tiles"}
+              pager={mode === "work" && pages > 1 ? workPager : undefined}
               reduced={reduced}
               onHover={setHovering}
             />
@@ -554,8 +589,12 @@ export default function Studio() {
         {panel !== null && (
           <div className="studio-backdrop" onClick={(e) => e.target === e.currentTarget && close()}>
             <div className="studio-dialog" role="dialog" aria-modal="true" aria-labelledby="studio-dialog-title" ref={dialog}>
+              <span className="dialog-scan" aria-hidden="true" />
               <div className="studio-dialog-top">
-                <span>THE STUDIO / PORTFOLIO</span>
+                <span className="hud-crumb">
+                  <b className="live-dot" /> TYLER McGRATH //{" "}
+                  {tool ? "NORTH STAR HQ" : project ? `SIGNAL ${project.id}` : panel === "about" ? "DOSSIER" : panel === "contact" ? "OPEN CHANNEL" : panel === "index" ? "INDEX" : "EXPERTISE"}
+                </span>
                 <button ref={closeBtn} aria-label="Close portfolio panel" onClick={close}>
                   ×
                 </button>
@@ -612,16 +651,27 @@ export default function Studio() {
                     SIGNAL {project.id} / {project.category}
                   </span>
                   <h2 id="studio-dialog-title">{project.name}</h2>
-                  <p className="dialog-domain">{project.domain}</p>
+                  <div className="hud-meta">
+                    <div><span>CATEGORY</span><b>{project.category}</b></div>
+                    <div><span>DOMAIN</span><b>{project.domain}</b></div>
+                    <div><span>SIGNAL</span><b>{project.id} / {projects.length}</b></div>
+                  </div>
                   <div className="studio-project-image">
                     {project.image ? <img src={project.image} alt={`${project.name} website preview`} /> : <span>{project.name}</span>}
+                    <i className="hud-corners" aria-hidden="true" />
                   </div>
                   <a className="studio-visit" href={project.url} target="_blank" rel="noopener noreferrer">
                     Visit the website <span>↗</span>
                   </a>
                   <div className="project-switch">
-                    <button onClick={() => setPanel((Number(panel) + projects.length - 1) % projects.length)}>← Previous site</button>
-                    <button onClick={() => setPanel((Number(panel) + 1) % projects.length)}>Next site →</button>
+                    <button onClick={() => setPanel((Number(panel) + projects.length - 1) % projects.length)}>
+                      <small>← PREVIOUS SIGNAL</small>
+                      <b>{projects[(Number(panel) + projects.length - 1) % projects.length].name}</b>
+                    </button>
+                    <button onClick={() => setPanel((Number(panel) + 1) % projects.length)}>
+                      <small>NEXT SIGNAL →</small>
+                      <b>{projects[(Number(panel) + 1) % projects.length].name}</b>
+                    </button>
                   </div>
                 </>
               ) : (
@@ -714,8 +764,17 @@ function Expertise({ panel, setPanel, exploreWork }: { panel: string; setPanel: 
         </div>
       ) : panel === "about" ? (
         <div className="about-editorial">
-          <img className="tyler-portrait" src="/art/tyler-portrait.png" alt="Tyler McGrath" />
+          <span className="portrait-frame">
+            <img className="tyler-portrait" src="/art/tyler-portrait.png" alt="Tyler McGrath" />
+            <i className="hud-corners" aria-hidden="true" />
+            <span className="portrait-tag">ID · TYLER McGRATH</span>
+          </span>
           <p className="bio-lead">SEO &amp; Digital Growth Leader</p>
+          <div className="hud-stats">
+            <div><b>14+</b><span>YEARS IN SEARCH</span></div>
+            <div><b>{projects.length}</b><span>SITES IN THE COLLECTION</span></div>
+            <div><b>{tools.length}</b><span>SEO TOOLS BUILT</span></div>
+          </div>
           <p>I’m Tyler McGrath. I bring 14+ years of experience transforming digital presence into scalable revenue channels.</p>
           <p>
             My expertise spans SEO, Generative Engine Optimization (GEO), and Answer Engine Optimization (AEO)—positioning brands across traditional search and AI-driven platforms, including ChatGPT and
