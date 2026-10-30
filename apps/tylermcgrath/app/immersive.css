@@ -1,4 +1,4 @@
-/* The entrance, sensor lighting, room depth and the orbiting glass cards.
+/* The entrance, sensor lighting, room depth and the card deck.
    Loaded after globals.css. Lighting runs once, from the moment you click
    "Enter the studio" (the .entered class), and settles into the lit room. */
 
@@ -232,322 +232,6 @@
   filter: drop-shadow(0 26px 40px #000a) drop-shadow(0 0 34px #d49b3b55);
 }
 
-/* ---------- Orbiting glass cards ---------- */
-.orbit-field {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-.orbit-filaments {
-  position: absolute;
-  inset: 0;
-  z-index: 12;
-  width: 100%;
-  height: 100%;
-  fill: none;
-  stroke-width: 1;
-  stroke-dasharray: 2 7;
-  pointer-events: none;
-  animation: filament-run 14s linear infinite;
-  filter: drop-shadow(0 0 3px #ffd98a88);
-}
-@keyframes filament-run {
-  to { stroke-dashoffset: -180; }
-}
-
-.orbit-card {
-  --depth: 1;
-  --mx: 30%;
-  --my: 0%;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 25;
-  width: clamp(200px, 15.5vw, 252px);
-  padding: 0;
-  text-align: left;
-  color: #f4ecd8;
-  pointer-events: auto;
-  border-radius: 18px;
-  overflow: hidden;
-  isolation: isolate;
-  background:
-    linear-gradient(152deg, #ffffff26, #ffffff08 34%, #0000 60%, #ffe8c014),
-    linear-gradient(#0a121acc, #070d13b3);
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  backdrop-filter: blur(18px) saturate(160%);
-  border: 1px solid #fff1d64a;
-  box-shadow:
-    inset 0 1px 0 #ffffff59,
-    inset 0 -1px 0 #0000003d,
-    inset 0 0 28px #ffffff0d,
-    0 34px 70px -24px #000c,
-    0 0 46px #ffd68c1c;
-  will-change: transform, opacity;
-  transition: border-color 0.4s, box-shadow 0.4s, background 0.4s;
-}
-/* Cards on the far side of the orbit sit in shadow */
-.orbit-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: none;
-  background: #02060a;
-  opacity: calc((1 - var(--depth)) * 0.5);
-}
-/* Glass edge: bright top rim, fading down the sides */
-.orbit-card::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  border-radius: inherit;
-  pointer-events: none;
-  padding: 1px;
-  background: linear-gradient(170deg, #fff8e8cc, #fff2d522 30%, #0000 60%, #bff4ee55);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-}
-.orbit-card-film {
-  position: absolute;
-  inset: -20%;
-  z-index: 0;
-  pointer-events: none;
-  background: conic-gradient(from var(--sheen, 0deg) at 35% 25%, #ffb47800, #ffc78c26, #8ce6ff1f, #c8a0ff19, #ffb47800);
-  mix-blend-mode: screen;
-  opacity: 0.6;
-}
-.orbit-card-light {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  pointer-events: none;
-  background: radial-gradient(circle at var(--mx) var(--my), #ffffff40, #ffffff10 26%, #0000 50%);
-  mix-blend-mode: screen;
-  opacity: 0.5;
-  transition: opacity 0.4s;
-}
-.card-top,
-.card-emblem,
-.card-screen,
-.card-caption {
-  position: relative;
-  z-index: 1;
-}
-.orbit-card:hover,
-.orbit-card:focus-visible {
-  border-color: #ffeec2a8;
-  background:
-    linear-gradient(152deg, #ffffff33, #ffffff0c 34%, #0000 60%, #ffe8c01c),
-    linear-gradient(#0c1620d9, #08101ac2);
-  box-shadow:
-    inset 0 1px 0 #ffffff80,
-    inset 0 -1px 0 #0000003d,
-    inset 0 0 30px #ffffff14,
-    0 40px 80px -24px #000d,
-    0 0 60px #ffd68c40;
-}
-.orbit-card:hover .orbit-card-light,
-.orbit-card:focus-visible .orbit-card-light {
-  opacity: 1;
-}
-.orbit-card:focus-visible {
-  outline: 2px solid #f5d68b;
-  outline-offset: 4px;
-}
-
-.card-top {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 34px;
-  padding: 0 14px;
-  font-size: 7.5px;
-  letter-spacing: 0.22em;
-  color: #fff0d2b8;
-  border-bottom: 1px solid #fff0d21f;
-  white-space: nowrap;
-}
-.card-top > i {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, #fff0d244, #0000);
-}
-.live-dot {
-  width: 6px;
-  height: 6px;
-  flex: none;
-  border-radius: 50%;
-  background: #8fffe0;
-  box-shadow: 0 0 8px #8fffe0;
-  animation: live 2.4s ease-in-out infinite;
-}
-@keyframes live {
-  50% { opacity: 0.35; box-shadow: 0 0 2px #8fffe0; }
-}
-
-.card-emblem {
-  position: relative;
-  display: grid;
-  place-items: center;
-  height: 92px;
-  margin: 6px 10px 0;
-}
-.card-emblem::before,
-.card-emblem::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-.card-emblem::before {
-  width: 64px;
-  height: 64px;
-  background: radial-gradient(circle at 35% 30%, #ffffff3a, #ffffff08 55%, #0000 70%);
-  border: 1px solid #fff2d555;
-  box-shadow: inset 0 0 18px #ffe0a022, 0 0 24px #ffd68c22;
-}
-.card-emblem::after {
-  width: 82px;
-  height: 82px;
-  border: 1px dashed #fff2d52e;
-  animation: emblem-turn 28s linear infinite;
-}
-@keyframes emblem-turn {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-.card-emblem > span {
-  position: relative;
-  font: 34px "Cormorant Garamond", Georgia, serif;
-  color: #fff6e0;
-  text-shadow: 0 0 18px #ffd68c99;
-}
-
-.card-caption {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 12px 14px 16px;
-}
-.card-caption strong {
-  display: block;
-  font: 400 25px/1.02 "Cormorant Garamond", Georgia, serif;
-  color: #fff8e9;
-  text-shadow: 0 1px 10px #0008;
-}
-.card-caption small {
-  display: block;
-  margin-top: 6px;
-  font-size: 10.5px;
-  line-height: 1.4;
-  color: #f4ead2b0;
-}
-.work-card .card-caption small {
-  margin: 0 0 5px;
-  font-size: 8px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-.card-arrow {
-  display: grid;
-  place-items: center;
-  flex: none;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  border: 1px solid #fff0d24d;
-  font-size: 13px;
-  color: #ffe9b8;
-  transition: background 0.3s, transform 0.3s;
-}
-.orbit-card:hover .card-arrow {
-  background: #ffe9b826;
-  transform: translate(2px, -2px);
-}
-
-.work-card {
-  width: clamp(212px, 17vw, 284px);
-}
-.card-screen {
-  position: relative;
-  display: block;
-  aspect-ratio: 1.6;
-  margin: 8px 8px 0;
-  border-radius: 11px;
-  overflow: hidden;
-  background: #081a23;
-  box-shadow: 0 0 0 1px #fff0d226, 0 10px 24px -10px #000c;
-}
-.card-screen img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top;
-  filter: saturate(0.85) brightness(0.92);
-  transition: filter 0.4s, transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
-}
-.card-screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(125deg, #ffffff2e, #ffffff00 38%), linear-gradient(#0000 60%, #0006);
-  pointer-events: none;
-}
-.orbit-card:hover .card-screen img {
-  filter: none;
-  transform: scale(1.04);
-}
-
-@media (max-width: 760px) {
-  .orbit-card,
-  .work-card {
-    width: min(56vw, 250px);
-    border-radius: 14px;
-  }
-  .card-screen {
-    margin: 6px 6px 0;
-    border-radius: 8px;
-  }
-  .card-emblem {
-    height: 70px;
-  }
-  .card-emblem::before {
-    width: 50px;
-    height: 50px;
-  }
-  .card-emblem::after {
-    width: 64px;
-    height: 64px;
-  }
-  .card-emblem > span {
-    font-size: 27px;
-  }
-  .card-caption strong {
-    font-size: 19px;
-  }
-  .card-caption small {
-    font-size: 9px;
-  }
-  .card-top {
-    font-size: 6px;
-    height: 28px;
-    padding: 0 10px;
-  }
-  .card-arrow {
-    width: 24px;
-    height: 24px;
-  }
-  .room-torch {
-    display: none;
-  }
-}
-
 /* The interface surfaces once there's light to see it by. Backwards fill only,
    so later transitions (like the intro hiding on awaken) still run. */
 .entered .studio-header,
@@ -558,66 +242,392 @@
   animation: fade-up 1.4s 2.7s backwards;
 }
 
-/* ---------- Card details ---------- */
-/* A point of light that runs around the card's edge */
-@property --run {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-.orbit-card-edge {
+/* ---------- The card deck ---------- */
+/* Cards hold still in front of the Compass so they can be read: a row of
+   glass tiles for the Studio and Tools, large website cards for Selected
+   Work. On phones the row becomes a swipe rail that snaps card by card. */
+.deck {
   position: absolute;
   inset: 0;
-  z-index: 5;
-  border-radius: inherit;
-  padding: 1.5px;
+  z-index: 22;
   pointer-events: none;
-  background: conic-gradient(from var(--run), #0000 0 62%, #ffe2a066 72%, #fff6dd 78%, #a8fff2aa 82%, #0000 90%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  opacity: calc(0.25 + var(--depth) * 0.75);
-  filter: drop-shadow(0 0 4px #ffd98a);
-  animation: edge-run 5.5s linear infinite;
 }
-.orbit-card:nth-child(odd) .orbit-card-edge {
-  animation-duration: 7s;
-  animation-direction: reverse;
-}
-@keyframes edge-run {
-  to { --run: 360deg; }
-}
-.card-index {
+.deck-links {
   position: absolute;
-  z-index: 2;
-  top: 12px;
-  right: 14px;
-  font-size: 7.5px;
-  letter-spacing: 0.2em;
-  color: #fff0d28c;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: #ffd98a;
+  stroke-opacity: 0.24;
+  stroke-width: 1;
+  stroke-dasharray: 1 5;
+  pointer-events: none;
+  animation: fade-up 1.4s 0.4s backwards;
 }
-.service-card .card-index {
-  top: 44px;
+.deck-track {
+  position: absolute;
+  left: 50%;
+  bottom: calc(9% + 74px);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 16px;
+  width: min(1250px, 94vw);
+  transform: translateX(-50%);
+  perspective: 1200px;
 }
-.work-card .card-top > span:last-child {
+.deck--showcase .deck-track {
+  gap: 20px;
+  width: min(1320px, 94vw);
+}
+.deck-dots {
   display: none;
 }
-.work-card .card-top {
-  padding-right: 64px;
+
+.deck-card {
+  --rx: 0deg;
+  --ry: 0deg;
+  --mx: 50%;
+  --my: 0%;
+  --lift: 0px;
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 246px;
+  padding: 0;
+  overflow: hidden;
+  isolation: isolate;
+  text-align: left;
+  color: #f4ecd8;
+  pointer-events: auto;
+  border-radius: 18px;
+  border: 1px solid #f6e3b42e;
+  background: linear-gradient(160deg, #1c252ddc, #0c1218e8 55%, #0a0f14f0);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  box-shadow:
+    inset 0 1px 0 #ffffff26,
+    0 0 0 1px #0007,
+    0 26px 50px -22px #000e;
+  transform: translateY(var(--lift)) rotateX(var(--rx)) rotateY(var(--ry));
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), border-color 0.35s, box-shadow 0.35s;
+  animation: deck-in 0.8s calc(0.15s + var(--i) * 0.07s) cubic-bezier(0.2, 0.7, 0.2, 1) backwards;
 }
-/* Depth: the emblem or screenshot floats above the glass as the card turns */
-.card-emblem,
-.card-screen {
-  transform: translate3d(calc(var(--ty, 0) * 0.45px), calc(var(--tx, 0) * -0.45px), 0);
+.deck-card:hover,
+.deck-card:focus-visible {
+  --lift: -8px;
+  border-color: #f4d58f99;
+  box-shadow:
+    inset 0 1px 0 #ffffff38,
+    0 0 0 1px #0007,
+    0 34px 60px -22px #000,
+    0 0 40px #ffcf7a2b;
 }
-.card-caption {
-  transform: translate3d(calc(var(--ty, 0) * -0.15px), calc(var(--tx, 0) * 0.15px), 0);
+.deck-card:focus-visible {
+  outline: 2px solid #f5d68b;
+  outline-offset: 4px;
+}
+@keyframes deck-in {
+  from {
+    opacity: 0;
+    transform: translateY(28px) scale(0.97);
+  }
+}
+/* Light that follows the cursor across the glass */
+.deck-sheen {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--mx) var(--my), #ffffff1f, #0000 46%);
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.deck-card:hover .deck-sheen {
+  opacity: 1;
+}
+.deck-arrow {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid #f6e3b44d;
+  font-size: 13px;
+  color: #ffe9b8;
+  transition: background 0.3s, transform 0.3s, border-color 0.3s;
+}
+.deck-card:hover .deck-arrow {
+  background: #ffe9b826;
+  border-color: #f4d58f;
+  transform: translate(2px, -2px);
+}
+.live-dot {
+  width: 6px;
+  height: 6px;
+  flex: none;
+  border-radius: 50%;
+  background: #8fffe0;
+  box-shadow: 0 0 8px #8fffe0;
+  animation: live 2.4s ease-in-out infinite;
+}
+.live-dot.is-offline {
+  background: #d9a441;
+  box-shadow: 0 0 10px rgba(217, 164, 65, 0.55);
+  animation: none;
+}
+@keyframes live {
+  50% {
+    opacity: 0.35;
+    box-shadow: 0 0 2px #8fffe0;
+  }
+}
+
+/* Studio and Tools: glass tiles */
+.deck--tiles .deck-track {
+  align-items: stretch;
+  gap: 14px;
+  width: min(1350px, 96vw);
+}
+.deck--tiles .deck-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 264px;
+  min-height: 108px;
+  padding: 16px 40px 16px 14px;
+}
+.tile-emblem {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid #f6e3b450;
+  background: radial-gradient(circle at 35% 30%, #ffffff33, #ffffff0d 55%, #0000 72%);
+  box-shadow: inset 0 0 14px #ffd68c22, 0 0 18px #ffd68c1a;
+  font: 20px "Cormorant Garamond", Georgia, serif;
+  color: #fff4da;
+  text-shadow: 0 0 14px #ffd68c88;
+}
+.tile-text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+.tile-label {
+  display: block;
+  font-size: 7px;
+  line-height: 1.6;
+  letter-spacing: 0.16em;
+  color: #f6e3b4a8;
+}
+.tile-label .live-dot {
+  display: inline-block;
+  margin-right: 5px;
+  vertical-align: 1px;
+}
+.tile-text strong {
+  margin-top: 5px;
+  white-space: nowrap;
+  font: 400 21px/1.05 "Cormorant Garamond", Georgia, serif;
+  color: #fff8e9;
+}
+.tile-text small {
+  display: -webkit-box;
+  margin-top: 5px;
+  overflow: hidden;
+  font-size: 10.5px;
+  line-height: 1.4;
+  color: #efe5cfad;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.deck--tiles .deck-arrow {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 26px;
+  height: 26px;
+  font-size: 12px;
+}
+
+/* Selected Work: website cards with the site's own hero */
+.deck--showcase .deck-card {
+  max-width: 312px;
+}
+.shot {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #081a23;
+}
+.shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  filter: saturate(0.94);
+  transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s;
+}
+.shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(130deg, #ffffff1c, #0000 34%), linear-gradient(#0000 62%, #0b1117d9);
+}
+.deck-card:hover .shot img {
+  transform: scale(1.05);
+  filter: none;
+}
+.shot .type-cover {
+  display: grid;
+  place-items: center;
+  height: 100%;
+  padding: 0 18px;
+  text-align: center;
+  font: 26px/1.1 "Cormorant Garamond", Georgia, serif;
+  color: #fff4da;
+  background: radial-gradient(circle at 50% 40%, #2a3a44, #0b1117 70%);
+}
+.shot-badge {
+  position: absolute;
+  z-index: 1;
+  top: 10px;
+  left: 10px;
+  padding: 4px 9px;
+  border-radius: 99px;
+  border: 1px solid #f6e3b433;
+  background: #0b1117b8;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: #fff3d6;
+}
+.shot-caption {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 14px 14px;
+}
+.shot-caption > span:first-child {
+  min-width: 0;
+}
+.shot-caption small {
+  display: block;
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #e9c98a;
+}
+.shot-caption strong {
+  display: block;
+  margin-top: 5px;
+  font: 400 23px/1.05 "Cormorant Garamond", Georgia, serif;
+  color: #fff8e9;
+}
+.shot-caption em {
+  display: block;
+  margin-top: 5px;
+  overflow: hidden;
+  font-size: 10.5px;
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #efe5cf8c;
+}
+
+/* Selected Work: the Compass lifts and shrinks to make room for the cards */
+.studio.mode-work .compass-mount {
+  top: 31%;
+  transform: translate(-50%, -50%) scale(0.58);
+}
+
+@media (max-width: 760px) {
+  .deck-links {
+    display: none;
+  }
+  .deck-track {
+    left: 0;
+    right: 0;
+    bottom: calc(14% + 86px);
+    justify-content: flex-start;
+    align-items: stretch;
+    gap: 12px;
+    width: auto;
+    padding: 8px 15vw 12px;
+    overflow-x: auto;
+    transform: none;
+    perspective: none;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .deck-track::-webkit-scrollbar {
+    display: none;
+  }
+  .deck-card,
+  .deck--showcase .deck-card {
+    flex: 0 0 70vw;
+    max-width: none;
+    opacity: 0.5;
+    transform: scale(0.93);
+    scroll-snap-align: center;
+    transition: opacity 0.35s, transform 0.35s, border-color 0.35s;
+  }
+  .deck-card.is-current {
+    opacity: 1;
+    transform: none;
+    border-color: #f4d58f80;
+  }
+  .deck-dots {
+    position: absolute;
+    left: 50%;
+    bottom: calc(14% + 70px);
+    display: flex;
+    gap: 6px;
+    transform: translateX(-50%);
+  }
+  .deck-dots i {
+    width: 5px;
+    height: 5px;
+    border-radius: 3px;
+    background: #f6e3b440;
+    transition: width 0.3s, background 0.3s;
+  }
+  .deck-dots i.on {
+    width: 16px;
+    background: #f4d58f;
+  }
+  .studio.mode-work .compass-mount {
+    top: 25%;
+    transform: translate(-50%, -50%) scale(0.72);
+  }
+  .studio.mode-studio .compass-mount,
+  .studio.mode-tools .compass-mount {
+    top: 30%;
+    transform: translate(-50%, -50%) scale(0.86);
+  }
+  .deck-card,
+  .deck--showcase .deck-card,
+  .deck--tiles .deck-card {
+    flex-basis: 74vw;
+    max-width: none;
+  }
+  .deck-track {
+    padding-inline: 13vw;
+  }
 }
 
 /* ---------- Phones ---------- */
-.orbit-swipe {
-  display: none;
-}
 .touch-lights {
   position: absolute;
   inset: 0;
@@ -657,59 +667,12 @@
     font-size: 18px;
     letter-spacing: 0.1em;
   }
-  .awakened .compass-mount {
-    top: 34%;
-    width: 64%;
-    height: 30%;
-  }
-  .collection-heading {
-    top: 12.5%;
-  }
-  .orbit-swipe {
-    display: block;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 44%;
-    bottom: 15%;
-    z-index: 19;
-    touch-action: none;
-    pointer-events: auto;
-  }
-  .orbit-card {
-    touch-action: none;
-    -webkit-user-select: none;
-    user-select: none;
-  }
-  .orbit-filaments {
-    stroke-width: 0.8;
-  }
-  .card-index {
-    top: 9px;
-    right: 10px;
-    font-size: 6px;
-  }
-  .work-card .card-top {
-    padding-right: 48px;
-  }
-  .service-card .card-index {
-    top: 37px;
+  .room-torch {
+    display: none;
   }
 }
 
-/* The Lab: SEO tools orbiting the Compass. Same glass as the service cards;
-   an offline tool's dot goes amber and stops pulsing. */
-.live-dot.is-offline {
-  background: #d9a441;
-  box-shadow: 0 0 10px rgba(217, 164, 65, 0.55);
-  animation: none;
-}
-.tool-card .card-caption small {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
+/* Tools: an offline tool's panel note. */
 .tool-offline {
   display: flex;
   align-items: center;

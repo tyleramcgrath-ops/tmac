@@ -6,8 +6,8 @@ SiteGround from `public_html`. There's no Node runtime in production.
 - `components/Studio.tsx`: the page (doors, room, panels, narration)
 - `components/Compass.tsx`: the 3D Compass (three.js via react-three-fiber).
   It eases between states, faces the cursor and points its needle at it.
-- `components/OrbitField.tsx`: the glass cards orbiting the Compass (a swipe
-  carousel on phones)
+- `components/CardDeck.tsx`: the cards in front of the Compass (a row of
+  tiles, a website showcase, a swipe rail on phones)
 - `app/globals.css`: the original stylesheet; `app/immersive.css` adds the
   sensor-light entrance, room depth and the glass cards
 - `lib/sound.ts`: all sound, synthesised with Web Audio (room tone, doors,

@@ -51,7 +51,7 @@ async function check(browser, url, tag) {
   await page.waitForTimeout(1500);
   if ((await spoken()).length === before) failures.push('Compass click did nothing');
 
-  // The card may be on the far side of its orbit, behind the Compass.
+  // On a phone the card may not be the one in the middle of the rail.
   await page.locator('button', { hasText: 'Selected Work' }).first().dispatchEvent('click');
   await page.waitForTimeout(3000);
   const shots = await page.locator('img[src*="/projects/"]').evaluateAll((els) => els.filter((e) => e.complete && e.naturalWidth > 0).length);
