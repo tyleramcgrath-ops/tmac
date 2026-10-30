@@ -4,10 +4,12 @@ import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { enableTilt, tilt } from "@/lib/motion";
 import * as sfx from "@/lib/sound";
+import EXPERTISE from "@/lib/expertise";
 import projects, { type Project } from "@/lib/projects";
 import tools, { hub } from "@/lib/tools";
 import type { CompassState } from "./Compass";
 import CardDeck, { type DeckItem } from "./CardDeck";
+import MobileShell from "./MobileShell";
 
 const Compass = dynamic(() => import("./Compass"), { ssr: false });
 
@@ -66,6 +68,8 @@ export default function Studio() {
   const [hovering, setHovering] = useState(false);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
+  // Phones get their own app once the doors open (components/MobileShell.tsx).
+  const [phone, setPhone] = useState(false);
   const [panel, setPanel] = useState<Panel | null>(null);
   const [roomLoaded, setRoomLoaded] = useState(false);
   const [mode, setMode] = useState<"studio" | "work" | "tools">("studio");
@@ -153,6 +157,7 @@ export default function Studio() {
     const sm = matchMedia("(max-width: 760px)");
     const sync = () => {
       setReduced(rm.matches);
+      setPhone(sm.matches);
       setPage(0);
     };
     sync();
@@ -263,6 +268,7 @@ export default function Studio() {
   }, [aim, voice]);
 
   const compassState: CompassState = awake ? (waking ? "wake" : hovering ? "hover" : cycle) : "sleep";
+  const shell = phone && arrived;
 
   const serviceItems: DeckItem[] = SERVICES.map((s) => ({
     key: s.key,
@@ -383,7 +389,7 @@ export default function Studio() {
         r.addEventListener("animationend", () => r.remove());
         ripples.current.append(r);
       }}
-      className={`studio ${entered ? "entered" : ""} ${arrived ? "arrived" : ""} ${opening ? "door-opening" : ""} ${awake ? "awakened" : "resting"} ${waking ? "waking" : ""} ${roomLoaded ? "room-loaded" : ""} ${reduced ? "reduced" : ""} mode-${mode} compass-${compassState}`}
+      className={`studio ${entered ? "entered" : ""} ${arrived ? "arrived" : ""} ${opening ? "door-opening" : ""} ${awake ? "awakened" : "resting"} ${waking ? "waking" : ""} ${roomLoaded ? "room-loaded" : ""} ${reduced ? "reduced" : ""} ${shell ? "has-shell" : ""} mode-${mode} compass-${compassState}`}
     >
       <div className="studio-content" inert={!arrived}>
         <div className="office-environment" ref={room}>
@@ -480,7 +486,7 @@ export default function Studio() {
           tabIndex={awake ? 0 : -1}
           aria-label="Direct the Compass. Click to change its state."
         >
-          <Compass state={compassState} paused={paused || reduced || !arrived} pulseKey={pulse} />
+          {!shell && <Compass state={compassState} paused={paused || reduced || !arrived} pulseKey={pulse} />}
           <div className={`compass-say ${aim ? "on" : ""}`} aria-hidden="true">
             <span className="compass-say-tag">
               <b className="live-dot" /> LOCKED
@@ -489,7 +495,7 @@ export default function Studio() {
           </div>
         </div>
 
-        {!awake && (
+        {!awake && !shell && (
           <button className="activate-compass" onClick={awaken}>
             <span className="activation-symbol">✧</span>
             <span>
@@ -503,7 +509,7 @@ export default function Studio() {
           TYLER McGRATH <span>✧</span> CREATIVE DIRECTION
         </div>
 
-        {awake && (
+        {awake && !shell && (
           <>
             <div className="collection-heading">
               <span className="studio-eyebrow">{waking ? "COMPASS AWAKENING" : mode === "studio" ? "WELCOME TO MY STUDIO" : mode === "tools" ? "NORTH STAR HQ" : "THE PORTFOLIO IS OPEN"}</span>
@@ -723,6 +729,29 @@ export default function Studio() {
         )}
       </div>
 
+      {shell && (
+        <MobileShell
+          ordered={ordered}
+          compassState={waking ? "wake" : cycle}
+          pulse={pulse}
+          paused={paused || reduced}
+          reduced={reduced}
+          voice={voice}
+          sound={sound}
+          onCompass={directCompass}
+          onVoice={() => {
+            if (voice) window.speechSynthesis.cancel();
+            setVoice(!voice);
+          }}
+          onSound={() => {
+            sfx.unlock();
+            sfx.setSound(!sound);
+            setSound(!sound);
+          }}
+          say={say}
+        />
+      )}
+
       {!arrived && (
         <div className={`studio-entrance ${opening ? "opening" : ""}`} role="dialog" aria-modal="true" aria-labelledby="entrance-title">
           <div className="entrance-architecture" />
@@ -753,27 +782,6 @@ export default function Studio() {
     </main>
   );
 }
-
-const EXPERTISE: Record<string, { title: string; lead: string; body: string; list: string[] }> = {
-  seo: {
-    title: "SEO · GEO · AEO",
-    lead: "Be discovered wherever people search.",
-    body: "I connect traditional SEO with GEO and AEO to position brands across search engines and AI-driven discovery.",
-    list: ["Technical SEO and site structure", "Content strategy and search intent", "Generative Engine Optimization (GEO)", "Answer Engine Optimization (AEO)"],
-  },
-  marketing: {
-    title: "Marketing & SEO",
-    lead: "Turn attention into opportunity.",
-    body: "Clear messaging, useful content, and data-driven execution help turn digital visibility into high-quality leads and opportunities to grow.",
-    list: ["SEO, GEO and AEO strategy", "Content planning and execution", "Lead generation journeys", "Data-driven improvement"],
-  },
-  design: {
-    title: "Web Design",
-    lead: "A stronger digital foundation.",
-    body: "I bring web design, content, and search strategy together to create a clear presence online and guide visitors toward the next step.",
-    list: ["Brand-led website design", "Clear navigation and user journeys", "Content and search foundations"],
-  },
-};
 
 function Expertise({ panel, setPanel, exploreWork }: { panel: string; setPanel: (p: Panel) => void; exploreWork: () => void }) {
   const e = EXPERTISE[panel];

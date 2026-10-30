@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import "./immersive.css";
+import "./mobile.css";
 import projects from "@/lib/projects";
 
 const SITE = "https://tylermcgrath.com";
@@ -46,7 +47,7 @@ const STRUCTURED_DATA = {
   ],
 };
 
-export const viewport: Viewport = { width: "device-width", initialScale: 1 };
+export const viewport: Viewport = { width: "device-width", initialScale: 1, viewportFit: "cover" };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
