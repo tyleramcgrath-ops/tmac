@@ -7,7 +7,7 @@ import * as sfx from "@/lib/sound";
 import projects, { type Project } from "@/lib/projects";
 import tools, { hub } from "@/lib/tools";
 import type { CompassState } from "./Compass";
-import OrbitField, { type OrbitItem } from "./OrbitField";
+import CardDeck, { type DeckItem } from "./CardDeck";
 
 const Compass = dynamic(() => import("./Compass"), { ssr: false });
 
@@ -252,7 +252,7 @@ export default function Studio() {
 
   const compassState: CompassState = awake ? (waking ? "wake" : hovering ? "hover" : cycle) : "sleep";
 
-  const serviceItems: OrbitItem[] = SERVICES.map((s) => ({
+  const serviceItems: DeckItem[] = SERVICES.map((s) => ({
     key: s.key,
     className: "service-card",
     onClick: () => {
@@ -264,65 +264,54 @@ export default function Studio() {
     },
     content: (
       <>
-        <span className="card-top">
-          <b className="live-dot" /> {s.label}
+        <span className="tile-emblem"><span>{s.symbol}</span></span>
+        <span className="tile-text">
+          <span className="tile-label"><b className="live-dot" /> {s.label}</span>
+          <strong>{s.title}</strong>
+          <small>{s.copy}</small>
         </span>
-        <span className="card-emblem"><span>{s.symbol}</span></span>
-        <span className="card-caption">
-          <span>
-            <strong>{s.title}</strong>
-            <small>{s.copy}</small>
-          </span>
-          <span className="card-arrow">↗</span>
-        </span>
+        <span className="deck-arrow">↗</span>
       </>
     ),
   }));
 
-  const workItems: OrbitItem[] = slice.map((p) => ({
+  const workItems: DeckItem[] = slice.map((p) => ({
     key: p.domain,
     className: "work-card",
     ariaLabel: `Explore ${p.name}`,
     onClick: () => open(projects.indexOf(p)),
     content: (
       <>
-        <span className="card-top">
-          <span>SIGNAL {p.id}</span>
-          <i />
-          <span>↗</span>
+        <span className="shot">
+          {p.image ? <img src={p.image} alt={`${p.name} homepage`} draggable={false} loading="lazy" /> : <span className="type-cover">{p.name}</span>}
+          <span className="shot-badge">№ {p.id}</span>
         </span>
-        <span className="card-screen">
-          {p.image ? <img src={p.image} alt={`${p.name} homepage`} draggable={false} /> : <span className="type-cover">{p.name}</span>}
-        </span>
-        <span className="card-caption">
+        <span className="shot-caption">
           <span>
             <small>{p.category}</small>
             <strong>{p.name}</strong>
+            <em>{p.domain}</em>
           </span>
-          <span className="card-arrow">↗</span>
+          <span className="deck-arrow">↗</span>
         </span>
       </>
     ),
   }));
 
-  const toolItems: OrbitItem[] = tools.map((t) => ({
+  const toolItems: DeckItem[] = tools.map((t) => ({
     key: t.key,
     className: "service-card tool-card",
     ariaLabel: `${t.name}: ${t.tagline}`,
     onClick: () => open(`tool:${t.key}`),
     content: (
       <>
-        <span className="card-top">
-          <b className={`live-dot ${t.status === "live" ? "" : "is-offline"}`} /> {t.label}
+        <span className="tile-emblem"><span>{t.symbol}</span></span>
+        <span className="tile-text">
+          <span className="tile-label"><b className={`live-dot ${t.status === "live" ? "" : "is-offline"}`} /> {t.label}</span>
+          <strong>{t.name}</strong>
+          <small>{t.tagline}</small>
         </span>
-        <span className="card-emblem"><span>{t.symbol}</span></span>
-        <span className="card-caption">
-          <span>
-            <strong>{t.name}</strong>
-            <small>{t.tagline}</small>
-          </span>
-          <span className="card-arrow">↗</span>
-        </span>
+        <span className="deck-arrow">↗</span>
       </>
     ),
   }));
@@ -345,7 +334,7 @@ export default function Studio() {
         r.addEventListener("animationend", () => r.remove());
         ripples.current.append(r);
       }}
-      className={`studio ${entered ? "entered" : ""} ${arrived ? "arrived" : ""} ${opening ? "door-opening" : ""} ${awake ? "awakened" : "resting"} ${waking ? "waking" : ""} ${roomLoaded ? "room-loaded" : ""} ${reduced ? "reduced" : ""} compass-${compassState}`}
+      className={`studio ${entered ? "entered" : ""} ${arrived ? "arrived" : ""} ${opening ? "door-opening" : ""} ${awake ? "awakened" : "resting"} ${waking ? "waking" : ""} ${roomLoaded ? "room-loaded" : ""} ${reduced ? "reduced" : ""} mode-${mode} compass-${compassState}`}
     >
       <div className="studio-content" inert={!arrived}>
         <div className="office-environment" ref={room}>
@@ -466,9 +455,10 @@ export default function Studio() {
               <p>{mode === "studio" ? "Meet Tyler. Find your next direction." : mode === "tools" ? "The tools around the Compass. Click the Compass for HQ." : "Select a signal. Explore the work."}</p>
             </div>
 
-            <OrbitField
+            <CardDeck
               key={`${mode}-${filter}-${page}-${perPage}`}
               items={mode === "studio" ? serviceItems : mode === "tools" ? toolItems : workItems}
+              layout={mode === "work" ? "showcase" : "tiles"}
               reduced={reduced}
               onHover={setHovering}
             />
