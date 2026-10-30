@@ -71,6 +71,8 @@ export default function Studio() {
   const [mode, setMode] = useState<"studio" | "work" | "tools">("studio");
   const [cycle, setCycle] = useState<CompassState>("idle");
   const [voice, setVoice] = useState(true);
+  // The name of the card the Compass is locked onto, said aloud after a beat.
+  const [aim, setAim] = useState<string | null>(null);
   const [sound, setSound] = useState(true);
   const [pulse, setPulse] = useState(0);
   const room = useRef<HTMLDivElement>(null);
@@ -250,10 +252,21 @@ export default function Studio() {
     return () => window.removeEventListener("keydown", key);
   }, [awake, panel, pages]);
 
+  // The Compass says the name of a card it has locked onto. It waits a beat so
+  // sweeping across the row doesn't chatter.
+  useEffect(() => {
+    if (!aim || !voice) return;
+    const t = setTimeout(() => say(aim), 380);
+    return () => clearTimeout(t);
+    // say() only reads voice, which is in the deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [aim, voice]);
+
   const compassState: CompassState = awake ? (waking ? "wake" : hovering ? "hover" : cycle) : "sleep";
 
   const serviceItems: DeckItem[] = SERVICES.map((s) => ({
     key: s.key,
+    spoken: s.title,
     className: "service-card",
     onClick: () => {
       if (s.key === "work" || s.key === "tools") {
@@ -284,6 +297,7 @@ export default function Studio() {
 
   const workItems: DeckItem[] = slice.map((p) => ({
     key: p.domain,
+    spoken: p.name,
     className: "work-card",
     ariaLabel: `Explore ${p.name}`,
     onClick: () => open(projects.indexOf(p)),
@@ -308,6 +322,7 @@ export default function Studio() {
 
   const toolItems: DeckItem[] = tools.map((t) => ({
     key: t.key,
+    spoken: t.name,
     className: "service-card tool-card",
     ariaLabel: `${t.name}: ${t.tagline}`,
     onClick: () => open(`tool:${t.key}`),
@@ -466,6 +481,12 @@ export default function Studio() {
           aria-label="Direct the Compass. Click to change its state."
         >
           <Compass state={compassState} paused={paused || reduced || !arrived} pulseKey={pulse} />
+          <div className={`compass-say ${aim ? "on" : ""}`} aria-hidden="true">
+            <span className="compass-say-tag">
+              <b className="live-dot" /> LOCKED
+            </span>
+            <span className="compass-say-text">{aim ?? ""}</span>
+          </div>
         </div>
 
         {!awake && (
@@ -496,6 +517,7 @@ export default function Studio() {
               pager={mode === "work" && pages > 1 ? workPager : undefined}
               reduced={reduced}
               onHover={setHovering}
+              onAim={setAim}
             />
 
             <div className="portfolio-console">
@@ -707,6 +729,11 @@ export default function Studio() {
           <div className="door-leaf door-left" />
           <div className="door-leaf door-right" />
           <div className="door-seam" />
+          <div className="door-monogram" aria-hidden="true">
+            <span className="door-monogram-name">McGRATH</span>
+            <span className="door-monogram-line" />
+            <small>PRIVATE STUDIO</small>
+          </div>
           <div className="entrance-nameplate">
             <h2 id="entrance-title" className="entrance-accessible-name">
               McGrath Private Studio

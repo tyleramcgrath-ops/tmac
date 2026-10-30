@@ -14,6 +14,8 @@ export type DeckItem = {
   key: string;
   className?: string;
   ariaLabel?: string;
+  /** What the Compass says when it locks onto this card. */
+  spoken: string;
   onClick: () => void;
   content: ReactNode;
 };
@@ -35,12 +37,14 @@ export default function CardDeck({
   layout,
   reduced,
   onHover,
+  onAim,
   pager,
 }: {
   items: DeckItem[];
   layout: "tiles" | "showcase";
   reduced: boolean;
   onHover?: (on: boolean) => void;
+  onAim?: (spoken: string | null) => void;
   pager?: Pager;
 }) {
   const track = useRef<HTMLDivElement>(null);
@@ -113,6 +117,7 @@ export default function CardDeck({
         }
       });
       aimAt(cards.current[best]);
+      onAim?.(items[best]?.spoken ?? null);
       if (best !== currentRef.current) {
         currentRef.current = best;
         setCurrent(best);
@@ -126,7 +131,9 @@ export default function CardDeck({
       el.removeEventListener("scroll", settle);
       focus.active = false;
     };
-  }, []);
+    // items/onAim are read at scroll time; the rail is rebuilt when they change.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items.length]);
 
   const lean = (el: HTMLElement, x: number, y: number) => {
     el.style.setProperty("--ry", `${x * 4}deg`);
@@ -158,6 +165,7 @@ export default function CardDeck({
         aimAt(e.currentTarget);
         setHot(i);
         lock();
+        onAim?.(it.spoken);
         onHover?.(true);
       }}
       onPointerLeave={(e) => {
@@ -165,15 +173,18 @@ export default function CardDeck({
         lean(e.currentTarget, 0, 0);
         focus.active = false;
         setHot(null);
+        onAim?.(null);
         onHover?.(false);
       }}
       onFocus={(e) => {
         aimAt(e.currentTarget);
         setHot(i);
+        onAim?.(it.spoken);
       }}
       onBlur={() => {
         if (!phone()) focus.active = false;
         setHot(null);
+        onAim?.(null);
       }}
       onPointerMove={(e) => {
         if (e.pointerType === "touch" || reduced) return;
