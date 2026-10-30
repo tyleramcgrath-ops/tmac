@@ -303,6 +303,318 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'minneapolis-law-firm-website-design',
+    title: 'Minneapolis Law Firm Websites: Minnesota Ad Rules',
+    description: 'Plan a Minneapolis law firm website under Minnesota Rules 7.1 to 7.3: the specialist disclosure, contact details, results, intake and Hennepin County courts.',
+    kind: 'guide',
+    summary: [
+      'Minnesota has no filing or pre-approval for lawyer websites, but Rules 7.1 to 7.3 of the Minnesota Rules of Professional Conduct govern every page and ad.',
+      'Minnesota’s specialist rule is stricter than most: calling a lawyer a "specialist" requires naming the certifying organization, or saying in the same paragraph that the lawyer is not certified by an organization accredited by the Minnesota Board of Legal Certification.',
+      'Every communication about your services must name at least one responsible lawyer or firm with contact information (Rule 7.2(d)).',
+      'Minnesota’s solicitation rule targets live person-to-person contact. A website, a reply to an inquiry and an automated response to a search are not solicitation under the comments to Rule 7.3.',
+      'Hennepin County is its own judicial district with six court buildings, and Minnesota’s courts list Spanish, Somali, Karen and Hmong among their most requested interpreter languages.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1693883110201-fa6f43f6a682?auto=format&fit=crop&w=1600&q=75', alt: 'The Pillsbury’s Best Flour sign above the Mississippi riverfront in Minneapolis at sunset, seen from the Stone Arch Bridge' },
+    body: `A Minneapolis law firm website must follow the Minnesota Rules of Professional Conduct, Rules 7.1 to 7.3, and one of them works differently from the rules in most other states. Under Minnesota Rule 7.2(c), a lawyer who says or implies they are a "specialist" must either name the organization that certified them or state, in the same paragraph, that they are not certified by an organization accredited by the Minnesota Board of Legal Certification. That catches ordinary marketing phrases like "we specialize in workers' compensation." Add the rule that every communication names a responsible lawyer or firm with contact details, keep results honest, and build pages that explain Hennepin County's courts, and you have a site that is both compliant and worth reading.
+
+What follows is a working guide for firm owners and the people who build their sites, with links to each rule. It is not an ethics opinion. The Minnesota [Lawyers Professional Responsibility Board](https://lprb.mncourts.gov/) publishes articles on advertising questions, and close calls belong with your own ethics counsel.
+
+## Which Minnesota rules cover a law firm website?
+
+The Minnesota Supreme Court rewrote its advertising rules effective September 1, 2022. Rules 7.4 and 7.5, on fields of practice and firm names, were repealed that day, as the Revisor's pages for [Rule 7.4](https://www.revisor.mn.gov/court_rules/rule/prcond-7.4/pdf) and [Rule 7.5](https://www.revisor.mn.gov/court_rules/rule/prcond-7.5/pdf) now show. What they covered moved into the remaining rules and their comments. If a vendor's compliance checklist still cites Rule 7.4, it predates the change.
+
+Three rules remain:
+
+- **[Rule 7.1](https://www.revisor.mn.gov/court_rules/rule/prcond-7.1/pdf)** bars false or misleading communications. Its first comment says it "governs all communications about a lawyer's services, including advertising."
+- **[Rule 7.2](https://www.revisor.mn.gov/court_rules/rule/prcond-7.2/)** covers paying for recommendations, specialist claims and the contact information every communication must carry.
+- **[Rule 7.3](https://www.revisor.mn.gov/court_rules/rule/prcond-7.3/pdf)** covers solicitation, which matters most for intake calls and follow-up.
+
+Minnesota has no filing requirement and no bar review before a site goes live. That puts the whole job on the firm, and it means the site should be checked again whenever someone adds a results page, a fee banner or a new attorney bio.
+
+## Can a Minneapolis lawyer use the word "specialist"?
+
+Yes, but in Minnesota the word comes with a disclosure. Rule 7.2(c) says a lawyer shall not state or imply that a lawyer is a specialist or certified as a specialist except as follows:
+
+1. the communication clearly identifies the name of the certifying organization, if any; and
+2. if the lawyer is not certified, or the certifier is not accredited by the Minnesota Board of Legal Certification, the communication clearly says the lawyer is not certified by any organization accredited by the Board, **in the same paragraph** as the claim.
+
+Comment [9] confirms that a lawyer may say they concentrate in, specialize in or practice a specialty in a field, based on experience or training. Comment [11] then explains why Minnesota asks for the extra sentence: so a prospective client can find out what standards the certifier applies. Read together, they mean the word "specialize" is allowed but never stands alone.
+
+Here is how that plays out on real pages:
+
+- **A certified lawyer.** "Jordan Ruiz is certified as a Criminal Law Specialist by the Minnesota State Bar Association." That names an accredited certifier, so no further statement is needed.
+- **An experienced lawyer without certification.** "Our practice focuses on employment law" avoids the word entirely. If you want "we specialize in employment law," the same paragraph needs a sentence such as "Our attorneys are not certified as specialists by an organization accredited by the Minnesota Board of Legal Certification."
+- **A lawyer certified by an unaccredited group.** Name the group and add that it is not accredited by the Board.
+
+The Board publishes its list of [accredited certifying agencies](https://blc.mn.gov/accredited-agencies/). At the time of writing it includes the Minnesota State Bar Association (civil trial, criminal, real property, and labor and employment law), the National Board of Trial Advocacy, the American Board of Certification, the National Elder Law Foundation and the International Association of Privacy Professionals. Check the list before you publish a claim, because accreditation can lapse: the Board notes that one organization did not seek reaccreditation in 2024.
+
+> **Tip:** Page titles and meta descriptions are communications too. "Minneapolis DWI Specialist | Firm Name" puts the claim in a search result with no room for the disclosure. "Minneapolis DWI Defense Lawyer" says the same thing safely.
+
+## What contact details does every page need?
+
+Rule 7.2(d) requires any communication made under the rule to include the name and contact information of at least one lawyer or law firm responsible for its content. Comment [12] says contact information includes a website address, telephone number, email address or physical office location.
+
+On a website the reliable way to meet this is the footer: firm name, a phone number and an office address on every page. People rarely enter a law firm site through the home page. They land on a blog post about expungement or a page about a car crash on I-94, and that page has to stand on its own.
+
+The comments to Rule 7.1 also cover names. A firm may use a trade name, a distinctive web address or a social media handle if it is not misleading, but comment [5] says a name is misleading if it implies a connection with a government agency, a public or charitable legal services organization, or a lawyer who is not part of the firm. A name like "Hennepin Legal Help" invites exactly that confusion, so test any trade name against that comment before you buy the domain.
+
+![Two people walking along a riverside path near the Stone Arch Bridge in Minneapolis on a clear day](https://images.unsplash.com/photo-1787355784333-6c031c991196?auto=format&fit=crop&w=1200&q=75)
+
+## How should you present results, reviews and fees?
+
+Comment [3] to Rule 7.1 is the standard to write against. A truthful report of results can still mislead if it leads a reasonable person to expect the same outcome without regard to the facts and law of their own case, and unsubstantiated comparisons with other lawyers can mislead too. The same comment says an appropriate disclaimer or qualifying language may prevent that.
+
+A results page that follows the comment:
+
+- describes each matter in a sentence or two, so readers see the facts behind the figure;
+- puts a short caution next to the results, such as "Results depend on the facts of each case. A past result does not guarantee a similar outcome";
+- leaves out "the best," "the top" and "the most aggressive," which are comparisons no one can prove.
+
+For reviews, Rule 7.2(b) says a lawyer may not give anything of value for recommending the lawyer's services, apart from listed exceptions such as paying for advertising, paying the usual charges of a qualified referral service, and nominal gifts that were never promised in return for referrals. Show reviews clients actually wrote, with their permission, and never reward one.
+
+If you buy online leads, read comment [5] to Rule 7.2 before signing anything. A lawyer may pay a lead generator only if it does not recommend the lawyer, does not suggest the referral comes without payment, and has not analyzed the person's legal problem to choose the lawyer. Ask to see the pages your leads come from.
+
+Fees are allowed and useful. Comment [1] to Rule 7.2 says you may publish the basis on which fees are set, including prices for specific services and payment arrangements. A flat-fee price for a simple will, an uncontested divorce or a misdemeanor expungement petition gives a reader something concrete, as long as the page says plainly what is and is not included.
+
+## What counts as solicitation under Minnesota Rule 7.3?
+
+Minnesota's solicitation rule is aimed at one thing: live person-to-person contact for profit. Rule 7.3(b) bars soliciting professional employment that way unless the person is a lawyer, has a family, close personal or prior professional relationship with you, or routinely uses the kind of legal services you offer for business. Rule 7.3(c) adds that you may never solicit someone who has said they don't want to be contacted, or use coercion, duress or harassment.
+
+The comments draw useful lines for a website:
+
+- Comment [1] says a communication is not solicitation if it is directed to the general public, such as a website or an internet banner ad, or if it responds to a request for information or is automatically generated in response to electronic searches.
+- Comment [2] defines live person-to-person contact as in-person, face-to-face, live telephone and other real-time conversations, and says it does not include chat rooms, text messages or other written communications the recipient can easily ignore.
+
+So a contact form, an automatic confirmation email and a call back to someone who asked for one are not solicitation. A cold phone call to someone you read about in a crash report would be. Build your intake so the record shows who reached out first.
+
+If you want a second opinion on your current site, you can [request a free redesign](/redesign) and see it rebuilt with your own words and details before you decide whether to change anything.
+
+## Which courts should a Minneapolis firm explain?
+
+Minneapolis is in Hennepin County, and Hennepin County is a judicial district of its own. The Minnesota Judicial Branch's page for the [Fourth Judicial District](https://mncourts.gov/find-courts/fourth-judicial-district) says it serves 45 cities and about 1.2 million residents, uses six buildings, four downtown and two in the suburbs, and is organized into civil, criminal, family, juvenile, probate and mental health, and treatment court divisions. It also says everyone entering a courtroom goes through weapons screening, which is the kind of detail a nervous first-time client wants to know.
+
+| Court | Covers | Note for your site |
+| --- | --- | --- |
+| Hennepin County District Court (Fourth District) | Minneapolis and the rest of Hennepin County | Say which divisions you appear in and which building your clients usually go to |
+| Ramsey County District Court ([Second District](https://mncourts.gov/find-courts/second-judicial-district)) | St. Paul and Ramsey County | Worth a section if you regularly cross the river |
+| U.S. District Court, District of Minnesota | Federal cases | Minneapolis courthouse at 300 South Fourth Street ([court locations](https://www.mnd.uscourts.gov/contact-information)) |
+
+The federal court also sits in St. Paul, Duluth and Fergus Falls. For a firm with a statewide federal practice, a short note on where hearings happen saves clients a wasted drive.
+
+A courts page does not need to be long. Say which kinds of cases you handle in each court, what a first hearing usually involves, and one practical point people ask about, like security or where to park downtown. That first-hand detail is what Google describes in its guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content), and it is hard to fake.
+
+## Should your site be in Spanish, Somali or Hmong?
+
+If your clients speak those languages, very likely yes. The Minnesota Judicial Branch's [court interpreter recruitment brochure](https://www.mncourts.gov/mncourtsgov/media/scao_library/Court%20Interpreter/2023-MN-CIP-Recruitment-Brochure.pdf) lists the most requested languages in its district courts as Spanish, Somali, Karen S'gaw, Hmong, American Sign Language, Arabic, Vietnamese, Oromo, Russian, Amharic, Mandarin and Swahili.
+
+Only add a language you can serve. A Somali page is a promise that someone at the firm, or a qualified interpreter you work with, can carry on the conversation after the first click. When you do translate:
+
+1. **Translate the whole page**, including the responsible lawyer and contact details and any specialist disclosure. A disclosure that exists only in English does not do its job on a Spanish page.
+2. **Use real translators** who know legal terms, and have a fluent lawyer or staff member review the result.
+3. **Connect the versions** so Google shows each reader the right one. Google explains how in its guide to [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions).
+4. **Say which languages your staff speak** on each attorney profile. Comment [1] to Rule 7.2 expressly allows a lawyer's foreign language ability to be published.
+
+## Legal paraprofessionals in Minnesota
+
+Minnesota has tested a different model too. The Minnesota Supreme Court's [Legal Paraprofessional Pilot Project](https://mncourts.gov/about-the-courts/newsandannouncements/minnesota-supreme-court-committee-issues-final-report-on-the-legal-paraprofessional-pilot-project) lets approved, attorney-supervised paraprofessionals give legal advice and appear in court in a limited set of housing and family matters. The committee's final report recommended making the program permanent. If your firm supervises a paraprofessional, give them an accurate title and a clear description of what they can help with, and never list them among the attorneys, because Rule 7.1 applies to how you present every member of the team.
+
+![A woman in a suit meets a client across a table in a bright office](https://images.unsplash.com/photo-1758518730162-09a142505bfd?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Minneapolis law firm website
+
+1. **A home page** that says which cases you take, for whom and where, with the phone number and a short form near the top.
+2. **One page per practice area**, built around the questions clients ask. Our guide on [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) walks through it.
+3. **Attorney profiles** with real photos, admissions, languages spoken and any certification with its certifier named.
+4. **An office page** with the address, skyway and parking directions for downtown offices, and transit notes.
+5. **A courts page** that explains Hennepin County and the other courts you appear in.
+6. **A fees page** with honest wording about what a flat fee covers.
+7. **Language pages** where your intake shows the need.
+8. **A contact form** that asks for the other party's name for a conflict check and asks people not to send confidential details yet.
+
+Resist the urge to build near-identical pages for Bloomington, Edina, Plymouth, Maple Grove and every other suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created for similar searches that lead to essentially the same content as doorway abuse. A separate page makes sense for a real office or a real difference, such as how cases move in Ramsey County compared with Hennepin.
+
+## Google Business Profile for Minneapolis firms
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real business name without added keywords, an accurate address where clients can visit, and they include separate guidance for individual practitioners such as lawyers. If your firm shares a downtown suite or uses a virtual office, read the guidelines closely before creating a profile for it.
+
+Google says local results are based mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Clear practice pages help relevance, and real reviews build prominence over time. No one can promise a spot in the map results. If you want your pages to be easy for AI answers to quote accurately, our checklist on [writing pages AI answers can quote](/blog/write-pages-ai-answers-can-quote) covers the structure.
+
+## A Minnesota pre-launch checklist
+
+- [ ] Firm name and contact details on every page, including landing pages (Rule 7.2(d)).
+- [ ] Every "specialist" or "specialize" either names an accredited certifier or carries the Board disclosure in the same paragraph (Rule 7.2(c)).
+- [ ] Page titles and meta descriptions avoid "specialist" claims that cannot carry the disclosure.
+- [ ] Results have context and a caution next to them; no unprovable comparisons (Rule 7.1, comment [3]).
+- [ ] Reviews are real, unpaid and used with permission (Rule 7.2(b)).
+- [ ] Any trade name passes comment [5] to Rule 7.1.
+- [ ] Translated pages repeat every disclosure in that language.
+- [ ] Paraprofessionals are titled accurately and kept off the attorneys page.
+- [ ] Intake records show who contacted whom first (Rule 7.3).
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For everything else a firm site needs, use our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## How SaySites builds a Minneapolis law firm website
+
+A SaySites law firm site starts from the page plan above: practice area pages, attorney profiles, office pages and a consultation form whose questions include the other party's name for a conflict check. The firm is described to search engines as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it can go live.
+
+You make changes by saying what you want in plain words, for example "add 'Certified as a Real Property Law Specialist by the Minnesota State Bar Association' under Priya's name" or "change 'we specialize in' to 'our practice focuses on' on the employment page," and each change waits as a draft until you approve it. Certifications, results and reviews come only from you. SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Minnesota site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt first. For another Midwest example, compare our [Detroit law firm website guide](/blog/detroit-law-firm-website-design).`,
+    faq: [
+      { q: 'Can a Minnesota lawyer say they specialize in a practice area?', a: 'Yes, with a disclosure. Minnesota Rule 7.2(c) requires any statement that a lawyer is a specialist to name the certifying organization. If the lawyer is not certified, or the certifier is not accredited by the Minnesota Board of Legal Certification, the same paragraph must say the lawyer is not certified by an organization the Board accredits. "Our practice focuses on" avoids the issue.' },
+      { q: 'Which organizations can certify Minnesota lawyers as specialists?', a: 'The Minnesota Board of Legal Certification publishes its list of accredited agencies. It includes the Minnesota State Bar Association for civil trial, criminal, real property, and labor and employment law, plus the National Board of Trial Advocacy, the American Board of Certification, the National Elder Law Foundation and the International Association of Privacy Professionals. Check the list before publishing, because accreditation can lapse.' },
+      { q: 'Do Minnesota law firm websites have to be filed with the bar?', a: 'No. Minnesota has no filing or pre-approval process for lawyer websites or advertising. The site must still follow Rules 7.1 to 7.3 of the Minnesota Rules of Professional Conduct, so the firm is responsible for checking specialist claims, results, contact details and anything else on the site before launch and after every significant change.' },
+      { q: 'Is a follow-up text from a Minnesota law firm considered solicitation?', a: 'Not as live contact. Comment [2] to Minnesota Rule 7.3 says live person-to-person contact means in-person, live telephone and other real-time conversations, and does not include text messages or other written messages the recipient can ignore. Comment [1] adds that responding to a request for information is not solicitation. You still may not contact someone who asked not to be contacted.' },
+      { q: 'What must a Minneapolis law firm website show on every page?', a: 'Minnesota Rule 7.2(d) requires every communication about your services to include the name and contact information of at least one responsible lawyer or law firm. Comment [12] says contact information can be a website, phone number, email address or office location. A footer with the firm name, phone and office address covers this on every page.' },
+      { q: 'Should a Minneapolis law firm website be translated into Somali or Hmong?', a: 'If you can serve clients in those languages. The Minnesota Judicial Branch lists Spanish, Somali, Karen, Hmong, Arabic, Vietnamese and Oromo among the most requested interpreter languages in its district courts. Translate whole pages, including disclosures and contact details, and only offer a language when someone at the firm or a qualified interpreter can continue the conversation.' },
+      { q: 'How much does a SaySites website for a Minneapolis law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign and see your current site rebuilt with your own details before you decide.' },
+    ],
+    about: ['Minnesota Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Minneapolis, Minnesota'],
+    published: '2026-10-30',
+    status: 'published',
+  },
+  {
+    slug: 'portland-plumber-website-design',
+    title: 'Portland Plumber Websites: Oregon CCB and License Rules',
+    description: 'Build a Portland plumbing website that follows Oregon rules: the CCB number on every page, the BCD plumbing license, city permits and emergency calls.',
+    kind: 'guide',
+    summary: [
+      'Oregon requires your CCB license number on internet advertising, and OAR 812-003-0120 names websites specifically. Show it as "CCB #" plus the number on every page.',
+      'Plumbing businesses need two credentials: a CCB license and a plumbing contractor license from the Oregon Building Codes Division. Say both on the site.',
+      'Portland requires a plumbing permit for jobs most customers think of as small, such as replacing a water heater. A site that explains this earns trust.',
+      'Clackamas County doubles permit fees when work starts before the permit and gives five days to file for proven emergency work, which shapes how you describe emergency service.',
+      'One service area page with real local detail beats a stack of near-identical town pages, which Google treats as doorway abuse.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1782318691186-1d909c479de4?auto=format&fit=crop&w=1600&q=75', alt: 'The Portland, Oregon neon sign glowing against the evening sky at dusk' },
+    body: `A Portland plumber's website has to do two jobs at once: convince a stressed homeowner to call you right now, and follow Oregon's contractor advertising rules while it does. The rule that matters most is short. Oregon Administrative Rule 812-003-0120 says internet advertising, including websites, must visually display your Construction Contractors Board license number. Put "CCB #" and your number in the footer of every page, show your Oregon plumbing contractor license next to it, and then spend the rest of the site answering the questions Portland customers actually have: Do I need a permit for this? Are you licensed? Can you come today? Do you work in my part of town?
+
+This guide covers the Oregon rules with links to the sources, then the Portland details that make a plumbing site useful: city permits, the Clackamas and Washington County side of the metro, what to say about emergency work, and how to set up your Google Business Profile. It is practical advice for owners and office managers, not legal advice. For a question about your own license, the CCB and the Building Codes Division answer the phone.
+
+## Does a Portland plumber have to show a CCB number on the website?
+
+Yes. [OAR 812-003-0120](https://www.law.cornell.edu/regulations/oregon/Or-Admin-Code-SS-812-003-0120) starts by saying no one may advertise or hold out their services as a contractor without a current, valid license. It then lists, medium by medium, where the license number must appear. Newspaper ads, bids, contracts and phone directories each have their own line. Radio needs an audible statement of the number and television needs it on screen. Subsection (2)(f) covers the internet: web advertising, including but not limited to website ads, must visually display the number. Business cards, letterhead, job site signs and "all other written or visual advertising" are covered too. Only promotional gifts such as pens, cups and clothing are exempt.
+
+The CCB's own contractor newsletter puts it in plain terms: "All contractors must include their CCB license number on advertisements," it lists websites among them, and it gives the format as "CCB #123456" ([CCB Contractor Toolbox, spring 2025](https://www.oregon.gov/ccb/Documents/HR%20policies%20and%20onboarding%20documents%20for%20Workday/Education%20News%20and%20Newsletters/Contractor%20Toolbox/Spring%20newsletter%202025.pdf)). The same newsletter says leaving the number off an advertisement is a violation and mentions a fine of up to $400.
+
+### Where to put it
+
+- **The footer of every page.** A visitor who lands on your water heater page from a search result never sees your home page, so the number has to travel with each page.
+- **Next to the call button on mobile**, if there is room. "Licensed in Oregon, CCB #123456" beside "Call now" answers the first question before the customer asks it.
+- **Every landing page and ad.** Pages you build for paid search or a seasonal promotion are web advertising too.
+- **Your Google Business Profile description and social profiles**, where they allow it. The rule covers advertising in general, not just your own site.
+
+Use the number as it appears on your license, and link it to the [CCB license search](https://search.ccb.state.or.us/search/) so a customer can check it in one tap. That link does more for trust than any badge.
+
+## Which licenses does a plumbing business in Oregon need?
+
+Two, and the site should show both. The Oregon Building Codes Division's page on [licensed work](https://www.oregon.gov/bcd/lbdd/Pages/licensed-work.aspx) explains that a plumbing contractor needs a CCB license from the Construction Contractors Board and the appropriate plumbing contractor license from the Building Codes Division. The CCB's [license overview](https://www.oregon.gov/ccb/pages/ccb%20license.aspx) lists plumbing among the trades that need a CCB license, and explains that residential and commercial work carry separate endorsements with their own bond and insurance requirements.
+
+That matters in Portland because the city checks. Portland Permitting & Development's page on [contractor license requirements](https://www.portland.gov/ppd/development-permit-processes/contractor-license-requirements) says contractors buying plumbing trade permits online need a CCB license and a BCD plumbing license, and that the BCD license must include the letters "PB" to buy the full range of plumbing fixture permits. Portland's [plumbing code chapter](https://www.portland.gov/code/25/05) also says permit applications must list a contractor holding a State of Oregon plumbing contractor registration and a City business license number.
+
+You do not need to explain all of that to customers. You do need to make it easy for them to see that you are properly licensed. A short "Licenses" line on your About page might read: "CCB #123456 (residential and commercial). Oregon plumbing contractor license. City of Portland business license." Include only what is current and true for your business.
+
+![A plumber in work gloves fitting a new drain pipe inside a sink cabinet](https://images.unsplash.com/photo-1676210133055-eab6ef033ce3?auto=format&fit=crop&w=1200&q=75)
+
+## Which Portland plumbing jobs need a permit?
+
+More than most homeowners think, and that is a gift for your website. Portland's page on [residential plumbing permits](https://www.portland.gov/ppd/residential-permitting/residential-plumbing-permits) says a permit is needed for one- and two-family homes, townhouses and ADUs when you:
+
+- repair, replace or move pipes, add piping or cap pipes;
+- install or replace fixtures such as toilets, sinks, showers, tubs and dishwashers;
+- replace a water heater;
+- work on rain drains, drywells, water service lines or backflow devices for lawn sprinklers;
+- install or cap a sewer line.
+
+The same page says no permit is needed to fix or maintain existing fixtures and parts. It also explains the inspections: a rough-in inspection before any piping is covered, and a final inspection to close the permit, with permits expiring if more than 180 days pass between inspections.
+
+Homeowners who search "do I need a permit to replace a water heater in Portland" are a few steps from hiring someone. A page that answers the question honestly, links to the city's page, and explains that you pull the permit and schedule the inspections as part of the job is useful to them and shows you know the local process. Keep it current: if the city changes its rules or fees, update the page and say when.
+
+### What homeowners can do themselves
+
+The city page also says homeowners may do their own plumbing if they are the recorded owner of the property with the county, and that a property owned by an LLC does not qualify. Landlords who own rentals through an LLC often do not know this. A short section for property managers and landlords that explains why their jobs need a licensed contractor is the kind of first-hand, specific content Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks for.
+
+## How should you describe emergency plumbing?
+
+Carefully and concretely. "24/7 emergency service" is only worth saying if someone actually answers at 2 a.m. If you do take night calls, say how: who answers, what areas you cover after hours, and whether there is an after-hours charge. If you don't, say when you open and give a clear path to book the first slot of the morning.
+
+Permits come into it too. Clackamas County's [plumbing permit page](https://clackamas.us/building/plumbing.html) says fees double if work starts before the permit is issued, and that proven emergency work requires a permit within five days of starting. The same page notes that contractors installing sanitary building sewers need an Oregon plumbing business license in addition to their CCB license. Portland's code says temporary emergency permits are issued only to licensed plumbers. Explaining on your emergency page that you fix the problem first and handle the permit paperwork afterward, within the county's rules, reassures a homeowner who is worried about doing things in the wrong order.
+
+Things worth putting on an emergency plumbing page:
+
+1. **What counts as an emergency** for you: a burst pipe, no water, a sewer backup, a leaking water heater.
+2. **What the customer should do while waiting**, such as how to find the main water shutoff and when to turn off the water heater.
+3. **How fast you usually respond**, in honest terms, by area. "Usually the same day in inner Southeast" is better than a promise you can't keep.
+4. **Your CCB number and phone number**, large, near the top.
+5. **A short form** for people who would rather text than call, with a question about whether water is actively leaking.
+
+![A plumber in red gloves working on the base of a toilet in a white-tiled bathroom](https://images.unsplash.com/photo-1676210134050-6f12c6898395?auto=format&fit=crop&w=1200&q=75)
+
+## How to cover the whole Portland metro without doorway pages
+
+The Portland area spans several counties and two states, and customers search by where they live: "plumber Beaverton," "plumber Milwaukie," "plumber Gresham," "plumber Vancouver WA." It is tempting to make one page per town with the name swapped. Don't. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages that lead to essentially the same content for similar searches as doorway abuse, and those pages rarely help the customer either.
+
+A better plan:
+
+- **One strong service area page** that names the neighborhoods, cities and counties you really serve, with honest notes on response times and anything that differs by place. Different permit offices are a real difference: the City of Portland, Clackamas County and other cities each run their own building departments, so say that you pull permits wherever the job is.
+- **A separate page only when you have something true and different to say**, such as a second shop in Hillsboro, or a page on Clackamas County sewer connections if you do that work often.
+- **Washington is a different license.** Working across the river in Vancouver means Washington's licensing rules, not Oregon's. If you hold a Washington plumbing contractor registration, say so on its own page. Our [Seattle plumber website guide](/blog/seattle-plumber-website-design) covers what Washington requires.
+
+Our article on [showing Google where you work without a storefront](/blog/service-area-business-google) explains how service areas work on your Google Business Profile, which is the next piece.
+
+## Google Business Profile for Portland plumbers
+
+Most plumbers work at the customer's address, so Google treats you as a service-area business. Google's help page on [service areas](https://support.google.com/business/answer/9157481) explains how to set one and hide your address if customers don't come to you. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) say the business name must be your real name, without extra words like "Best Emergency Plumber Portland OR."
+
+Google explains that local results are based mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). You can't change distance. You can make relevance clear, with categories, services and a website that explains what you do and where, and you can build prominence honestly over time by asking every happy customer for a review. Nobody can promise you a position in the map results.
+
+## A page plan for a Portland plumbing website
+
+1. **Home page** with what you do, where you work, your phone number, your CCB number and a request form, all visible on a phone without scrolling far.
+2. **One page per main service**: drain cleaning, water heaters, repiping, sewer lines, fixture installs, leak repair. Each one explains what is involved, whether a permit is needed in Portland and what affects the price.
+3. **An emergency page** written as above.
+4. **A service area page** with real detail, not a list of fifty town names.
+5. **A licenses and insurance page** with your CCB number linked to the state search, your BCD plumbing license and your insurance carrier, if you choose to name it.
+6. **A permits page** that explains the rough-in and final inspections in plain words and links to the city.
+7. **Real photos** of your vans, your crew and your work. Stock photos of strangers make a plumbing site feel interchangeable.
+8. **Reviews** from real customers, shown only with their permission.
+
+For the full list of what a trade site needs, see our [home service website checklist](/blog/home-service-website-checklist).
+
+## An Oregon plumbing pre-launch checklist
+
+- [ ] "CCB #" and your number appear on every page, including landing pages (OAR 812-003-0120(2)(f)).
+- [ ] The CCB number links to the state license search.
+- [ ] Your BCD plumbing contractor license is stated on the About or licenses page.
+- [ ] Permit information matches the City of Portland's current page and links to it.
+- [ ] Emergency claims match what you actually offer at night and on weekends.
+- [ ] One service area page; no near-identical town pages.
+- [ ] Any Washington work is described with your Washington credentials, not your Oregon ones.
+- [ ] Google Business Profile uses your real name and a service area.
+- [ ] Pages load fast on a phone ([Core Web Vitals](https://web.dev/articles/vitals)).
+- [ ] Structured data describes only what is on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites helps Portland plumbers
+
+SaySites gives a plumbing company this structure without a long build. A new site comes with a page for each service, a service area page, a tap-to-call button and a job request form whose questions ask how soon the customer needs you, the ZIP code of the job and whether they own or rent. The business is described to search engines as a Plumber, and every page has to pass a 95+ speed check before it goes live. Requests land in a leads pipeline where you call, email, add notes and follow each one through to a won job.
+
+You edit by saying what you want in plain words, for example "add CCB #123456 to the footer and link it to the state search" or "write a page on Portland water heater permits," and each change appears as a draft for you to approve. Your license numbers, photos and reviews come from you. SaySites never invents them.
+
+The Site plan is $15 a month with hosting included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your site ready before the winter rains, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own details before you decide anything.`,
+    faq: [
+      { q: 'Does an Oregon plumber have to put the CCB number on a website?', a: 'Yes. OAR 812-003-0120(2)(f) says internet advertising, including websites, must visually display the contractor’s CCB license number. The CCB says to write it as "CCB #" followed by the number and treats leaving it off an advertisement as a violation. Put it in the footer of every page, on landing pages and in ads that point to your site.' },
+      { q: 'What licenses does a plumbing company need in Oregon?', a: 'The Oregon Building Codes Division says a plumbing contractor needs a CCB license from the Construction Contractors Board and a plumbing contractor license from BCD. Portland Permitting & Development adds that the BCD license must include the letters PB to buy the full range of plumbing fixture permits online. Show both credentials on your site so customers can check them.' },
+      { q: 'Do I need a permit to replace a water heater in Portland?', a: 'Yes. The City of Portland’s residential plumbing permit page lists replacing a water heater among the jobs that need a plumbing permit, along with replacing fixtures and repairing or moving pipes. Fixing or maintaining existing fixtures does not. A licensed contractor or the recorded homeowner can get the permit, and the work needs a final inspection to close.' },
+      { q: 'Can a landlord do their own plumbing in a Portland rental?', a: 'Only in limited cases. The City of Portland says homeowners may do their own plumbing if they are the recorded owner of the property with the county, and that a property owned by an LLC does not qualify. Landlords who hold rentals through an LLC generally need a licensed plumbing contractor, which is worth explaining on a page for property managers.' },
+      { q: 'What happens if emergency plumbing starts before the permit?', a: 'It depends on where the job is. Clackamas County says fees double if work starts before the permit is issued, but proven emergency work needs a permit within five days of starting. Portland’s code says temporary emergency permits are issued only to licensed plumbers. Explain on your emergency page that you fix the problem first and file the permit within the local rules.' },
+      { q: 'Should a Portland plumber make a page for every suburb?', a: 'No. Near-identical pages with only the town name changed are what Google’s spam policies call doorway abuse. Build one service area page that names the places you really serve with honest response times, and add a separate page only for a real difference, such as a second shop or Washington work under your Washington license.' },
+      { q: 'How much does a SaySites plumbing website cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting included. It comes with a page for each service, a service area page, tap-to-call, a job request form, Plumber structured data and a leads pipeline. You can also ask for a free redesign and see your current site rebuilt with your own details before deciding.' },
+    ],
+    about: ['Oregon Construction Contractors Board', 'Contractor advertising', 'Plumbing websites', 'Portland, Oregon'],
+    published: '2026-10-30',
+    status: 'published',
+  },
+  {
     slug: 'detroit-law-firm-website-design',
     title: 'Detroit Law Firm Websites: Michigan Ad Rules',
     description: 'Plan a Detroit law firm website under Michigan Rules 7.1 to 7.5: results and client reviews, the responsible-lawyer rule, two-year records and keyword ads.',
