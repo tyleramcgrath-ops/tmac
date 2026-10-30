@@ -5,6 +5,7 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { enableTilt, tilt } from "@/lib/motion";
 import * as sfx from "@/lib/sound";
 import projects, { type Project } from "@/lib/projects";
+import tools, { hub } from "@/lib/tools";
 import type { CompassState } from "./Compass";
 import OrbitField, { type OrbitItem } from "./OrbitField";
 
@@ -21,6 +22,7 @@ const SERVICES = [
   { key: "about", title: "About Tyler", label: "THE PERSON BEHIND THE WORK", symbol: "TM", copy: "14+ years in search and digital growth." },
   { key: "marketing", title: "Marketing & SEO", label: "STRATEGY · SEARCH · AI", symbol: "◎", copy: "SEO, GEO, AEO and digital growth." },
   { key: "work", title: "Selected Work", label: `${projects.length} DIGITAL DESTINATIONS`, symbol: "◈", copy: "Explore websites across industries." },
+  { key: "tools", title: "Tools", label: `${tools.length} SEO TOOLS`, symbol: "✧", copy: "The SEO tools I build, around the Compass." },
   { key: "contact", title: "Let’s Connect", label: "YOUR NEXT DIRECTION", symbol: "↗", copy: "Start a conversation about your business." },
 ];
 
@@ -49,7 +51,7 @@ const GLINTS = Array.from({ length: 16 }, (_, i) => ({
   delay: ((i * 0.37) % 1.6).toFixed(2),
 }));
 
-type Panel = "about" | "seo" | "marketing" | "design" | "contact" | "index" | number;
+type Panel = "about" | "seo" | "marketing" | "design" | "contact" | "index" | number | `tool:${string}`;
 
 const MMG = "https://mcgrathmarketinggroup.com";
 
@@ -66,7 +68,7 @@ export default function Studio() {
   const [reduced, setReduced] = useState(false);
   const [panel, setPanel] = useState<Panel | null>(null);
   const [roomLoaded, setRoomLoaded] = useState(false);
-  const [mode, setMode] = useState<"studio" | "work">("studio");
+  const [mode, setMode] = useState<"studio" | "work" | "tools">("studio");
   const [cycle, setCycle] = useState<CompassState>("idle");
   const [voice, setVoice] = useState(true);
   const [sound, setSound] = useState(true);
@@ -83,6 +85,7 @@ export default function Studio() {
   const pages = Math.ceil(shown.length / perPage);
   const slice = shown.slice((page % pages) * perPage, (page % pages) * perPage + perPage);
   const project = typeof panel === "number" ? projects[panel] : null;
+  const tool = typeof panel === "string" && panel.startsWith("tool:") ? [...tools, hub].find((t) => `tool:${t.key}` === panel) ?? null : null;
 
   function open(p: Panel) {
     returnFocus.current = document.activeElement;
@@ -103,6 +106,11 @@ export default function Studio() {
     window.speechSynthesis.speak(u);
   }
   function directCompass() {
+    // On the Tools ring the Compass is North Star HQ itself, the building you walk into.
+    if (mode === "tools" && awake) {
+      open(`tool:${hub.key}`);
+      return;
+    }
     setPulse((p) => p + 1);
     sfx.buzz(14);
     setCycle((c) => {
@@ -248,9 +256,9 @@ export default function Studio() {
     key: s.key,
     className: "service-card",
     onClick: () => {
-      if (s.key === "work") {
+      if (s.key === "work" || s.key === "tools") {
         sfx.chime();
-        setMode("work");
+        setMode(s.key);
         setPage(0);
       } else open(s.key as Panel);
     },
@@ -296,6 +304,35 @@ export default function Studio() {
       </>
     ),
   }));
+
+  const toolItems: OrbitItem[] = tools.map((t) => ({
+    key: t.key,
+    className: "service-card tool-card",
+    ariaLabel: `${t.name}: ${t.tagline}`,
+    onClick: () => open(`tool:${t.key}`),
+    content: (
+      <>
+        <span className="card-top">
+          <b className={`live-dot ${t.status === "live" ? "" : "is-offline"}`} /> {t.label}
+        </span>
+        <span className="card-emblem"><span>{t.symbol}</span></span>
+        <span className="card-caption">
+          <span>
+            <strong>{t.name}</strong>
+            <small>{t.tagline}</small>
+          </span>
+          <span className="card-arrow">↗</span>
+        </span>
+      </>
+    ),
+  }));
+
+  function openTools() {
+    sfx.chime();
+    setAwake(true);
+    setMode("tools");
+    setPage(0);
+  }
 
   return (
     <main
@@ -425,13 +462,13 @@ export default function Studio() {
         {awake && (
           <>
             <div className="collection-heading">
-              <span className="studio-eyebrow">{waking ? "COMPASS AWAKENING" : mode === "studio" ? "WELCOME TO MY STUDIO" : "THE PORTFOLIO IS OPEN"}</span>
-              <p>{mode === "studio" ? "Meet Tyler. Find your next direction." : "Select a signal. Explore the work."}</p>
+              <span className="studio-eyebrow">{waking ? "COMPASS AWAKENING" : mode === "studio" ? "WELCOME TO MY STUDIO" : mode === "tools" ? "NORTH STAR HQ" : "THE PORTFOLIO IS OPEN"}</span>
+              <p>{mode === "studio" ? "Meet Tyler. Find your next direction." : mode === "tools" ? "The tools around the Compass. Click the Compass for HQ." : "Select a signal. Explore the work."}</p>
             </div>
 
             <OrbitField
               key={`${mode}-${filter}-${page}-${perPage}`}
-              items={mode === "studio" ? serviceItems : workItems}
+              items={mode === "studio" ? serviceItems : mode === "tools" ? toolItems : workItems}
               reduced={reduced}
               onHover={setHovering}
             />
@@ -460,10 +497,16 @@ export default function Studio() {
                       {f}
                     </button>
                   ))
+                ) : mode === "tools" ? (
+                  <>
+                    <button onClick={() => open(`tool:${hub.key}`)}>About HQ</button>
+                    <button onClick={() => { sfx.chime(); setMode("work"); setPage(0); }}>Selected Work</button>
+                  </>
                 ) : (
                   <>
                     <button onClick={() => open("seo")}>SEO / GEO / AEO</button>
                     <button onClick={() => open("design")}>Web Design</button>
+                    <button onClick={openTools}>Tools</button>
                   </>
                 )}
               </div>
@@ -527,7 +570,46 @@ export default function Studio() {
                   ×
                 </button>
               </div>
-              {typeof panel === "string" && panel !== "index" ? (
+              {tool ? (
+                <>
+                  <span className="studio-eyebrow">NORTH STAR HQ / {tool.label}</span>
+                  <h2 id="studio-dialog-title">{tool.name}</h2>
+                  <p className="dialog-domain">{tool.home}</p>
+                  <div className="expertise-detail">
+                    <p className="bio-lead">{tool.lead}</p>
+                    <p>{tool.body}</p>
+                    <div className="expertise-list">
+                      {tool.list.map((item, i) => (
+                        <div key={item}>
+                          <span>0{i + 1}</span>
+                          <h3>{item}</h3>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                  {tool.status === "live" ? (
+                    <a className="studio-visit" href={tool.url} target="_blank" rel="noopener noreferrer">
+                      Open {tool.name} <span>↗</span>
+                    </a>
+                  ) : (
+                    <p className="tool-offline">
+                      <b className="live-dot is-offline" /> {tool.name} is offline for maintenance and back soon.
+                    </p>
+                  )}
+                  <div className="project-switch">
+                    {tool === hub ? (
+                      tools.map((t) => (
+                        <button key={t.key} onClick={() => setPanel(`tool:${t.key}`)}>{t.name} →</button>
+                      ))
+                    ) : (
+                      <>
+                        <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + tools.length - 1) % tools.length].key}`)}>← Previous tool</button>
+                        <button onClick={() => setPanel(`tool:${tools[(tools.indexOf(tool) + 1) % tools.length].key}`)}>Next tool →</button>
+                      </>
+                    )}
+                  </div>
+                </>
+              ) : typeof panel === "string" && panel !== "index" ? (
                 <Expertise panel={panel} setPanel={setPanel} exploreWork={() => {
                   setMode("work");
                   setPage(0);

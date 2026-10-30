@@ -1,0 +1,15 @@
+{
+  "name": "serp-quake-site",
+  "private": true,
+  "description": "SERP Quake product site: marketing pages, magic-link accounts, the paid seismograph dashboard.",
+  "engines": {
+    "node": "22.x"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo-data": "node ../bin/quake.js simulate --days 42.5 --data ../demo-data && node ../bin/quake.js export --data ../demo-data --out demo-data.json"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

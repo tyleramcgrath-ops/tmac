@@ -8,7 +8,7 @@ import { redirect } from 'next/navigation'
 import { after } from 'next/server'
 import { keepClassicAssets } from '@/lib/classic-assets'
 import { hostOf, withFreeMonth } from '@/lib/prospects'
-import { claimFromPreview, offersCopy } from '@/lib/redesign'
+import { claimFromPreview, offersCopy, offersFresh, type PreviewVersion } from '@/lib/redesign'
 import { currentUser } from '@/lib/session'
 import { subdomainFor } from '@/lib/starter'
 import { getStore } from '@/lib/store'
@@ -17,21 +17,22 @@ export const dynamic = 'force-dynamic'
 
 export default async function ClaimPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ v?: string }> }) {
   const { id } = await params
-  const fresh = (await searchParams).v === 'fresh'
+  const v = (await searchParams).v
   const store = getStore()
   const p = await store.preview(id)
   if (!p) redirect('/redesign')
   const user = await currentUser()
-  if (!user) redirect(`/signup?claim=${encodeURIComponent(id)}${fresh ? 'f' : ''}`)
+  if (!user) redirect(`/signup?claim=${encodeURIComponent(id)}${v === 'fresh' ? 'f' : v === 'rebuilt' ? 'r' : ''}`)
   if (p.claimed) redirect(p.claimed.by === user.id ? `/dashboard/sites/${p.claimed.siteId}` : '/dashboard')
   const base = subdomainFor(p.detected.name)
   let subdomain = base
   for (let n = 2; await store.subdomainTaken(subdomain); n++) subdomain = `${base}-${n}`
   // Only a version the preview offers can be claimed (lib/redesign).
   const copy = offersCopy(p)
-  const freshOk = p.asIs !== undefined && !!p.fresh && p.freshReady !== false
+  const freshOk = offersFresh(p)
   if (!copy && !freshOk) redirect(`/redesign/${id}`)
-  const claimed = claimFromPreview(p, user.id, subdomain, (fresh && freshOk) || !copy ? 'fresh' : 'as-is')
+  const version: PreviewVersion = freshOk && (v === 'fresh' || v === 'rebuilt') ? v : copy ? 'as-is' : 'fresh'
+  const claimed = claimFromPreview(p, user.id, subdomain, version)
   const { pages, redirects } = claimed
   const domain = hostOf(p.url)
   const site = { ...claimed.site, ownership: { verified: false, ...(/^(?:[a-z0-9-]+\.)+[a-z]{2,}$/.test(domain) ? { domain } : {}) } }

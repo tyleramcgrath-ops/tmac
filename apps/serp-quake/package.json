@@ -1,0 +1,18 @@
+{
+  "name": "serp-quake",
+  "private": true,
+  "description": "A seismograph for Google's algorithm: continuous SERP volatility monitoring on a logarithmic, earthquake-style magnitude scale.",
+  "engines": {
+    "node": ">=20"
+  },
+  "bin": {
+    "quake": "bin/quake.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "build": "node --test test/*.test.js",
+    "scan": "node bin/quake.js scan",
+    "watch": "node bin/quake.js watch",
+    "demo": "node bin/quake.js simulate --data demo-data && node bin/quake.js serve --data demo-data"
+  }
+}

@@ -2,7 +2,7 @@
 //   node scripts/verify-tylermcgrath.cjs <expected build ID> [screenshot dir]
 // Fails unless both the bare domain and www serve the expected build, the
 // doors open into the studio, narration starts, the Voice control shows, the
-// four main cards are there, the Compass responds and Selected Work loads.
+// five main cards are there, the Compass responds and Selected Work loads.
 const { chromium } = require('playwright');
 const fs = require('fs');
 const path = require('path');
@@ -11,7 +11,7 @@ const expected = process.argv[2];
 const dir = process.argv[3] || 'shots';
 // VERIFY_URLS (comma-separated) checks another copy, e.g. a local build.
 const urls = (process.env.VERIFY_URLS || 'https://tylermcgrath.com/,https://www.tylermcgrath.com/').split(',');
-const cards = ['About Tyler', 'Marketing & SEO', 'Selected Work', 'Let’s Connect'];
+const cards = ['About Tyler', 'Marketing & SEO', 'Selected Work', 'Tools', 'Let’s Connect'];
 
 async function check(browser, url, tag) {
   const failures = [];

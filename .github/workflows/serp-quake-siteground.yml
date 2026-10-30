@@ -1,0 +1,125 @@
+# Deploys the SERP Quake product site to tylermcgrath.com/serp-quake on
+# SiteGround over SSH — same keys and host as tylermcgrath-deploy.yml. The site
+# is static pages plus a PHP API (apps/serp-quake/site/php → serp-quake/api/)
+# that runs sign-in, free trials, Stripe and the gated dashboard on MySQL.
+#
+# Reuses the tylermcgrath.com SSH secrets: SG_SSH_HOST, SG_SSH_PORT, SG_SSH_USER,
+# SG_SSH_KEY, SG_SSH_PASSPHRASE, SG_DOC_ROOT (optional).
+#
+# Accounts work with no extra setup: sign-ins are stored in a SQLite file beside
+# public_html and sign-in links go out through SiteGround's own PHP mail. Optional
+# upgrades, as repo secrets:
+#   SQ_DB_NAME, SQ_DB_USER, SQ_DB_PASS   use a MySQL database instead (Site Tools → Site → MySQL)
+#   SQ_RESEND_API_KEY, SQ_MAIL_FROM      send sign-in links through Resend (more reliable inboxing)
+#   SQ_STRIPE_SECRET_KEY, SQ_STRIPE_PRICE_PRO, SQ_STRIPE_WEBHOOK_SECRET   billing (webhook URL:
+#                                        https://tylermcgrath.com/serp-quake/api/stripe-webhook.php)
+# They're written to serp-quake-config.php NEXT TO public_html, never inside it.
+name: SERP Quake site deploy (SiteGround)
+
+on:
+  push:
+    branches: [main]
+    paths: ['apps/serp-quake/site/**', '.github/workflows/serp-quake-siteground.yml']
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+concurrency:
+  group: serp-quake-siteground
+  cancel-in-progress: false
+
+env:
+  DOC_ROOT: ${{ secrets.SG_DOC_ROOT || 'www/tylermcgrath.com/public_html' }}
+  SSH_PORT: ${{ secrets.SG_SSH_PORT || '18765' }}
+  SITE_URL: https://tylermcgrath.com/serp-quake
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Test
+        working-directory: apps/serp-quake/site
+        run: npm ci && npm test
+
+      - name: Build
+        run: node apps/serp-quake/site/build-pages.js --siteground dist/serp-quake
+
+      - name: Write the server config
+        env:
+          SQ_DB_NAME: ${{ secrets.SQ_DB_NAME }}
+          SQ_DB_USER: ${{ secrets.SQ_DB_USER }}
+          SQ_DB_PASS: ${{ secrets.SQ_DB_PASS }}
+          SQ_RESEND_API_KEY: ${{ secrets.SQ_RESEND_API_KEY }}
+          SQ_MAIL_FROM: ${{ secrets.SQ_MAIL_FROM }}
+          SQ_STRIPE_SECRET_KEY: ${{ secrets.SQ_STRIPE_SECRET_KEY }}
+          SQ_STRIPE_PRICE_PRO: ${{ secrets.SQ_STRIPE_PRICE_PRO }}
+          SQ_STRIPE_WEBHOOK_SECRET: ${{ secrets.SQ_STRIPE_WEBHOOK_SECRET }}
+        run: |
+          node -e '
+            const e = process.env;
+            const cfg = {
+              db_dsn: e.SQ_DB_NAME ? `mysql:host=localhost;dbname=${e.SQ_DB_NAME};charset=utf8mb4` : "sqlite:auto",
+              db_user: e.SQ_DB_USER || "", db_pass: e.SQ_DB_PASS || "",
+              resend_api_key: e.SQ_RESEND_API_KEY || "",
+              mail_from: e.SQ_MAIL_FROM || "SERP Quake <noreply@tylermcgrath.com>",
+              app_origin: e.SITE_URL, cookie_path: new URL(e.SITE_URL).pathname,
+              stripe_secret_key: e.SQ_STRIPE_SECRET_KEY || "", stripe_price_pro: e.SQ_STRIPE_PRICE_PRO || "",
+              stripe_webhook_secret: e.SQ_STRIPE_WEBHOOK_SECRET || "",
+            };
+            const b64 = Buffer.from(JSON.stringify(cfg)).toString("base64");
+            require("fs").writeFileSync("serp-quake-config.php", "<?php return json_decode(base64_decode(\x27" + b64 + "\x27), true);\n");
+            console.log("accounts:", e.SQ_DB_NAME ? "MySQL" : "SQLite", "· email:", cfg.resend_api_key ? "Resend" : "SiteGround PHP mail", "· billing:", cfg.stripe_secret_key ? "on" : "off (no SQ_STRIPE_SECRET_KEY)");
+          '
+
+      - name: Set up SSH
+        env:
+          SG_SSH_KEY: ${{ secrets.SG_SSH_KEY }}
+          SG_SSH_HOST: ${{ secrets.SG_SSH_HOST }}
+          SG_SSH_USER: ${{ secrets.SG_SSH_USER }}
+          SG_SSH_PASSPHRASE: ${{ secrets.SG_SSH_PASSPHRASE }}
+        run: |
+          test -n "$SG_SSH_KEY" && test -n "$SG_SSH_HOST" && test -n "$SG_SSH_USER" || { echo "SG_SSH_KEY / SG_SSH_HOST / SG_SSH_USER secrets are not set"; exit 1; }
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SG_SSH_KEY" | tr -d '\r' > ~/.ssh/sg && chmod 600 ~/.ssh/sg
+          if ! ssh-keygen -y -P "" -f ~/.ssh/sg > /dev/null 2>&1; then
+            test -n "$SG_SSH_PASSPHRASE" || { echo "SG_SSH_KEY is password-protected; set SG_SSH_PASSPHRASE"; exit 1; }
+            ssh-keygen -p -P "$SG_SSH_PASSPHRASE" -N "" -f ~/.ssh/sg > /dev/null || { echo "SG_SSH_PASSPHRASE doesn't unlock SG_SSH_KEY"; exit 1; }
+          fi
+          ssh-keyscan -p "$SSH_PORT" "$SG_SSH_HOST" >> ~/.ssh/known_hosts
+          printf 'Host sg\n  HostName %s\n  Port %s\n  User %s\n  IdentityFile ~/.ssh/sg\n  IdentitiesOnly yes\n  BatchMode yes\n' \
+            "$SG_SSH_HOST" "$SSH_PORT" "$SG_SSH_USER" > ~/.ssh/config
+          ssh sg true
+
+      # Only public_html/serp-quake/ is replaced. tylermcgrath-deploy.yml skips
+      # that folder in its own --delete, so the two deploys never clobber each other.
+      - name: Upload
+        run: |
+          ssh sg "mkdir -p $DOC_ROOT/serp-quake"
+          rsync -az --delete --exclude '.well-known/' dist/serp-quake/ "sg:$DOC_ROOT/serp-quake/"
+          ssh sg "umask 077 && cat > \"\$(dirname $DOC_ROOT)/serp-quake-config.php\"" < serp-quake-config.php
+          rm serp-quake-config.php
+
+      - name: Create or update the database tables
+        run: ssh sg "php $DOC_ROOT/serp-quake/api/migrate.php"
+
+      - name: Flush SiteGround cache
+        run: ssh sg "site-tools-client domain-all update id=1 flush_cache=1" || echo "cache flush failed (non-fatal)"
+
+      - name: Verify the live site
+        run: |
+          set -e
+          curl -fsS "$SITE_URL/" | grep -q 'SERP Quake' || { echo "homepage missing"; exit 1; }
+          curl -fsS "$SITE_URL/app.html" | grep -q 'SQ_API' || { echo "dashboard not the SiteGround build"; exit 1; }
+          curl -fsS "$SITE_URL/api/pulse.php" | tee /dev/stderr | grep -q '"mood"' || { echo "pulse API not answering"; exit 1; }
+          curl -fsS "$SITE_URL/api/auth/session.php" | tee /dev/stderr | grep -q '"accounts":true' || { echo "accounts are not switched on"; exit 1; }
+          code=$(curl -s -o /dev/null -w '%{http_code}' "$SITE_URL/api/_lib/bootstrap.php"); echo "_lib → $code"
+          # _lib only defines functions (requesting it prints nothing), but it should still be refused.
+          test "$code" = 403 || echo "::warning::api/_lib answered $code instead of 403; check that .htaccess is honoured"
+          echo "Live at $SITE_URL/"

@@ -53,3 +53,11 @@ apps/north-star-hq/package-lock.json
 apps/citation-gap/node_modules
 apps/citation-gap/public
 apps/citation-gap/test/*.png
+
+# serp-quake local data (live data lives on the serp-quake-data branch)
+apps/serp-quake/data
+apps/serp-quake/demo-data
+
+apps/serp-quake/site/node_modules
+apps/serp-quake/pages-dist
+apps/serp-quake/siteground-dist
