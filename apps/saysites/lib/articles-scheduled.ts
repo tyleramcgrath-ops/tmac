@@ -303,6 +303,343 @@ const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia
 
 export const SCHEDULED_ARTICLES: Article[] = [
   {
+    slug: 'kansas-city-law-firm-website-design',
+    title: 'Kansas City Law Firm Websites: Missouri and Kansas Rules',
+    description: 'Plan a Kansas City law firm website under both states’ rules: Missouri’s required disclaimer, Kansas specialist limits and courts on each side of State Line.',
+    kind: 'guide',
+    summary: [
+      'Kansas City firms usually answer to two rulebooks: Missouri Supreme Court Rules 4-7.1 to 4-7.4 and the Kansas Rules of Professional Conduct, Rules 7.1 to 7.4. Build the site to pass both.',
+      'Missouri Rule 4-7.2(f) requires the statement "The choice of a lawyer is an important decision and should not be based solely upon advertisements." A full firm website goes beyond the short listings exempted by 4-7.2(g).',
+      'Missouri requires specific wording next to results ("past results afford no guarantee of future results") and next to contingency fee offers (the client may be responsible for costs or expenses).',
+      'Both states require you to keep a copy of each advertisement for two years with a record of when and where it ran, so archive every version of the site.',
+      'The metro spans Jackson County (16th Circuit, Missouri), Wyandotte and Johnson counties in Kansas, and two federal districts. Say plainly which side of State Line you practice on.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1531621403038-64ce9162b7fa?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Kansas City high-rises against a pink early summer sunset sky' },
+    body: `A Kansas City law firm website has to satisfy two state supreme courts, and the stricter of the two sets the floor. If any lawyer at your firm practices in Missouri, the site should carry Missouri's required statement, "The choice of a lawyer is an important decision and should not be based solely upon advertisements" (Missouri Rule 4-7.2(f)), add Missouri's specific cautions next to any results or contingency fee offer, and keep dated copies of the site for two years. If you also practice in Kansas, the Kansas rules add a responsible-lawyer name on every communication, an "Advertising Material" label on targeted electronic messages, and a narrow rule on the word "certified." The rest of this guide shows how to build one site that meets both, then covers the local details that help a reader in Overland Park, Independence or Kansas City, Kansas decide to call you.
+
+This is a planning guide for firm owners and whoever builds their site, with a link to each rule. It is not an ethics opinion. Missouri lawyers can ask the Missouri Bar's Office of Legal Ethics Counsel for an informal opinion, and close calls on either side belong with your own ethics counsel.
+
+## Which advertising rules apply to a Kansas City law firm?
+
+It depends on where your lawyers are licensed and whom the site is aimed at. Most firms in the metro have lawyers admitted on both sides, so assume both sets of rules apply until you have a reason to think otherwise.
+
+**Missouri** keeps its advertising rules in Rule 4 of the Supreme Court Rules:
+
+- [Rule 4-7.1](https://www2.courts.mo.gov/page.jsp?id=198956) bars false or misleading communications and lists specific situations that count as misleading unless the ad says something more.
+- [Rule 4-7.2](https://www.courts.mo.gov/page.jsp?id=198957) covers advertising: records, paying for referrals, branch offices and the required disclosure.
+- [Rule 4-7.3](https://www.courts.mo.gov/page.jsp?id=198958) covers direct contact with prospective clients.
+- [Rule 4-7.4](https://www.courts.mo.gov/page.jsp?id=198959) covers fields of practice and the word "specialist."
+
+The court's pages show these rules were last amended effective July 1, 2010 (4-7.1 to 4-7.3) and July 1, 2007 (4-7.4). Many states rewrote their advertising rules after the ABA's 2018 changes; Missouri has kept its older, more detailed model, which is why it asks for more on the page than Kansas does.
+
+**Kansas** follows the ABA structure more closely: [Rule 7.2](https://kscourts.gov/Rules-Orders/Rules/Rule-240-7-2-Advertising) on advertising, [Rule 7.3](https://11jd.kscourts.gov/Rules-Orders/Rules/Rule-240-7-3-Solicitation-of-Clients-en) on solicitation and [Rule 7.4](https://kscourts.gov/Rules-Orders/Rules/7-4-Information-about-Legal-Services-Communica-1) on fields of practice, alongside Rule 7.1's general ban on misleading statements.
+
+Neither state requires you to file your website or get it approved before launch. Comment [5] to Kansas Rule 7.2 says outright that advertising need not be reviewed before it goes out. That leaves the checking to you.
+
+## What does Missouri's required disclaimer mean for a website?
+
+Missouri Rule 4-7.2(f) requires the statement quoted at the top of this guide, and the rule defines "conspicuous" by size, color, contrast, location and similar factors, so an ordinary reader can notice it. Rule 4-7.2(g) exempts communications limited to basic facts: the names of the firm and its lawyers, fields of practice, dates and places of bar admission, and contact details, including email and web address, phone number and office hours.
+
+A real firm website goes far past that list. It describes cases, explains fees and publishes attorney biographies. The exemption does not fit, so plan on the statement. A continuing-education [presentation on Missouri advertising rules](https://lakc.wildapricot.org/resources/Pictures/Rittman%20presentation%204.17.pdf) hosted by a Kansas City legal association summarizes Missouri Informal Advisory Opinion 2006-0005 the same way: the disclosure applies to websites, and only a site limited to the 4-7.2(g) information can skip it.
+
+Where to put it:
+
+- **In the footer of every page**, in readable type and a color that contrasts with the background. People reach a law firm site through a blog post or a practice page far more often than through the home page.
+- **Near the top of pages built for paid ads**, where the page itself is the advertisement.
+- **In each language the page uses.** Rule 4-7.2(h) says required statements must appear in the same language as the advertisement, so a Spanish page needs the disclosure in Spanish.
+
+The Supplemental Missouri Comment adds that the disclosure is only required for advertisements in Missouri. A Kansas-only firm with no Missouri lawyers and no Missouri audience may not need it, but for a metro site aimed at both sides of the line, including it costs one sentence.
+
+> **Tip:** The comment also says the disclosure may add "This disclosure is required by rule of the Supreme Court of Missouri." That line tells readers why the sentence is there, which keeps it from reading like a hedge.
+
+## How should a Kansas City site show results, fees and reviews?
+
+Missouri turns general honesty into specific sentences. Under Rule 4-7.1, a communication is misleading if it:
+
+1. **claims results** "without stating that past results afford no guarantee of future results" (4-7.1(c));
+2. **advertises contingency fees** "without stating conspicuously that the client may be responsible for costs or expenses" where that is true (4-7.1(k));
+3. **uses a paid testimonial or endorsement** without conspicuously saying payment was made (4-7.1(h));
+4. **uses a simulated portrayal** of a lawyer, client, victim, scene or event without saying it is a simulation (4-7.1(i));
+5. **mentions an office staffed only part-time or by appointment** without saying so (4-7.1(j));
+6. **comes from a lawyer who routinely refers matters to other lawyers** without saying that conspicuously (4-7.1(g)).
+
+On a website this becomes a short list of page-level rules. Every results page or results block carries the exact caution from item 1 next to the figures. A "No fee unless we win" banner on a personal injury page needs the costs statement beside it, not three screens down. Stock photos of a "client" or a staged crash scene need a "simulation" label, or better, should be replaced with real photos of your office and people. If a personal injury practice refers most of its trial work to another firm, the site has to say so.
+
+Kansas is shorter on wording but the same in spirit: Rule 7.1 bars misleading communications, and Kansas Rule 7.2(c) bars giving anything of value for a recommendation, apart from listed exceptions such as paying for advertising and the usual charges of a not-for-profit lawyer referral service. Comment [6] allows paying lead generators only if they do not recommend the lawyer or analyze the person's legal problem to choose the lawyer. Missouri's Rule 4-7.2(c) also bars paying for recommendations, apart from reasonable advertising costs and the usual charges of a registered referral service.
+
+For reviews, show only what clients wrote, with their permission, and never reward a review. Fees, on the other hand, are worth publishing: Comment [2] to Kansas Rule 7.2 lists the basis on which fees are set and payment arrangements among the information a lawyer may share.
+
+If you would like to see how your current site handles all of this before you change anything, [ask for a free redesign](/redesign). You get your own site rebuilt with your real details to compare.
+
+![Kansas City's Union Station seen in the distance beyond a modern building and a reflecting pool](https://images.unsplash.com/photo-1664733865764-768873659f2c?auto=format&fit=crop&w=1200&q=75)
+
+## Can Kansas City lawyers call themselves specialists?
+
+Both states allow you to say what you practice, and both restrict the word "specialist."
+
+- **Missouri Rule 4-7.4** lets a lawyer say they do or do not practice in particular fields. A lawyer may not state or imply they are a specialist unless the communication contains a disclaimer that says, among other things, that "neither the Supreme Court of Missouri nor The Missouri Bar reviews or approves certifying organizations." Patent attorneys admitted before the U.S. Patent and Trademark Office and admiralty lawyers are excused.
+- **Kansas Rule 7.4(d)** says a lawyer may not state or imply being certified as a specialist unless the certifying organization has been approved by an appropriate state authority or accredited by the American Bar Association, and the communication clearly names the certifying organization.
+
+The safest wording on a two-state site avoids the problem: "Our practice is limited to workers' compensation" or "We focus on estate planning and probate." If a lawyer holds an ABA-accredited certification, put it on that lawyer's profile with the certifier's full name and the Missouri disclaimer in the same place. Check page titles and meta descriptions too. "KC Divorce Specialist" in a search result has no room for a disclaimer, while "Kansas City Divorce Lawyer" says the same thing safely.
+
+## What counts as solicitation in Missouri and Kansas?
+
+The two states agree on the core: no live, in-person, live phone or real-time electronic solicitation for profit, apart from narrow exceptions for lawyers, family, close friends and current or former clients ([Missouri 4-7.3(a)](https://www.courts.mo.gov/page.jsp?id=198958); Kansas 7.3(b)). Comment [1] to Kansas Rule 7.3 says communications directed to the general public, such as a website or a banner ad, and replies to requests for information are not solicitations.
+
+They differ on written messages to someone you know needs help with a specific matter:
+
+| Point | Missouri | Kansas |
+| --- | --- | --- |
+| Label | "ADVERTISEMENT" at the top of the first page, in type at least as large as the largest text, and on the envelope | "Advertising Material" on the envelope and at the beginning and end of recorded or electronic messages |
+| Waiting period | No written solicitation about personal injury or wrongful death within 30 days of the incident | No fixed waiting period in the rule |
+| Delivery | Regular U.S. mail for mailed solicitations, not certified or registered | Mail or electronic means allowed (comment [3]) |
+| Records | Copy kept for two years | Copy of each advertisement kept for two years (Rule 7.2(b)) |
+
+What this means for your intake system: the website form, the auto-reply and the call back to someone who asked for one are all fine. A marketing email sequence sent to people whose names came from accident reports is not a website feature at all, and it falls under the table above. If a vendor offers "automated outreach," read Missouri's rule before you switch it on.
+
+## Which courts should a Kansas City firm explain?
+
+The metro has more courthouses than most clients realize, and the right one depends on which side of State Line their case is on. A plain courts page answers a question people search for and shows real local knowledge.
+
+| Court | Where | Worth saying on your site |
+| --- | --- | --- |
+| [16th Judicial Circuit](https://www.16thcircuit.org/about-the-court), Jackson County, Missouri | 415 E. 12th Street downtown; Eastern Jackson County Courthouse at 308 W. Kansas in Independence; Family Justice Center at 625 E. 26th Street | Which building your client's case is likely in. The circuit has 19 circuit judges, 10 associate circuit judges and nine commissioners. |
+| Wyandotte County District Court ([29th Judicial District](https://11jd.kscourts.gov/About-the-Courts/District-Courts/Districts/29th-Judicial-District)) | 710 N. 7th Street, Kansas City, Kansas | That Kansas City, Kansas cases are filed here, not downtown KCMO |
+| Johnson County District Court (10th Judicial District) | Olathe | The [courthouse](https://jocogov.org/courthouse) opened in January 2021 with 28 courtrooms |
+| U.S. District Court, Western District of Missouri | [Charles Evans Whittaker U.S. Courthouse](https://www.mow.uscourts.gov/offices/kansas-city-western-division), 400 E. 9th Street | For federal cases on the Missouri side |
+| U.S. District Court, District of Kansas | Robert J. Dole U.S. Courthouse, 500 State Avenue | The court's [visitor information](https://ksd.uscourts.gov/sites/ksd/files/Visitor-Information2.pdf) says the public may not bring cell phones or other electronic devices inside, and to use the State Avenue entrance |
+
+Details like the phone rule at the Dole courthouse are the kind of first-hand help Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) describes. A client who reads it on your site and leaves the phone in the car remembers who told them. Missouri cases appeal to the Missouri Court of Appeals, Western District, which also sits in Kansas City, according to the 16th Circuit's page.
+
+## Should a Kansas City firm publish Spanish pages?
+
+If your clients need them and someone at the firm can serve them, yes. The U.S. Census Bureau's [QuickFacts for Wyandotte County](https://www.census.gov/quickfacts/wyandottecountykansas) puts the Hispanic or Latino share of the population at 35.5% and reports that 31.8% of residents age 5 and older speak a language other than English at home (2020 to 2024 estimates). Those numbers vary a great deal across the metro, so look at your own intake calls before deciding.
+
+When you translate:
+
+1. **Translate the whole page**, including the responsible lawyer's name, the contact details and every Missouri disclosure. Rule 4-7.2(h) requires required statements in the language of the ad.
+2. **Use a qualified legal translator** and have a fluent lawyer or staff member review the result.
+3. **Link the language versions** so Google can show each reader the right one, following Google's guide to [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions).
+4. **Say which languages each lawyer and staff member speaks.** Comment [2] to Kansas Rule 7.2 lists foreign language ability among the facts a lawyer may publish.
+
+![Two professionals reviewing documents together over coffee at a table](https://images.unsplash.com/photo-1758519288372-045de3f65147?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a two-state firm website
+
+1. **Home page:** what you handle, for whom and on which side of State Line, with the phone number and a short form near the top.
+2. **Practice area pages:** one per real practice, built around the questions clients ask. Our guide to [writing a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) walks through the structure.
+3. **Attorney profiles:** real photos, the states each lawyer is admitted in, languages spoken, and any certification with its certifier named.
+4. **Office pages:** one per real office, with hours. Missouri Rule 4-7.2(e) restricts advertising any office other than the principal one unless it is staffed at least three days a week or the ad states its hours or that meetings are by appointment, so say exactly that on a satellite office page.
+5. **Courts page:** the table above, trimmed to the courts you actually appear in.
+6. **Fees page:** flat fees where you have them, and the costs statement wherever contingency fees appear.
+7. **Results page:** short case descriptions with the Missouri caution beside them.
+8. **Contact page:** a form that asks for the other party's name for a conflict check and asks people not to send confidential details yet.
+
+Resist the urge to build a near-identical page for Overland Park, Lee's Summit, Olathe, Independence, Shawnee and every other suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead to essentially the same content as doorway abuse. One honest service-area section, plus a separate page only where something is genuinely different (a real office, or a court your clients will face there), serves readers better.
+
+## Google Business Profile for Kansas City firms
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real business name without extra keywords and an address where clients can actually visit, and they include rules for individual practitioners such as lawyers. A firm with real offices in both KCMO and Overland Park can have a profile for each office. A virtual office or a mail drop on the Kansas side does not qualify.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Clear practice pages help relevance, real reviews build prominence over time, and distance is up to the searcher. No one can promise a place in the map results. If you want your pages to be easy for AI answers to quote accurately, see our checklist on [writing pages AI answers can quote](/blog/write-pages-ai-answers-can-quote).
+
+## A Kansas City pre-launch checklist
+
+- [ ] The Missouri disclosure (Rule 4-7.2(f)) appears conspicuously in the footer of every page and near the top of ad landing pages.
+- [ ] Every page names at least one responsible lawyer and the firm's contact details (Kansas Rule 7.2(d); Missouri Rule 4-7.2(b)).
+- [ ] Results carry the exact caution "past results afford no guarantee of future results" (Missouri Rule 4-7.1(c)).
+- [ ] Contingency fee offers say the client may be responsible for costs or expenses, right beside the offer (Missouri Rule 4-7.1(k)).
+- [ ] "Specialist" and "certified" appear only with a named, qualifying certifier and the Missouri disclaimer (Missouri 4-7.4; Kansas 7.4(d)).
+- [ ] Satellite offices show their hours or say "by appointment only" (Missouri 4-7.2(e)).
+- [ ] Spanish or other language pages repeat every required statement in that language (Missouri 4-7.2(h)).
+- [ ] No simulated photos without a label; real photos preferred (Missouri 4-7.1(i)).
+- [ ] A dated copy of each version of the site is saved and kept for two years.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For everything else a law firm site needs, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## How SaySites builds a Kansas City law firm website
+
+A SaySites law firm site follows the page plan above: a page for each practice area, a profile for each attorney, office pages and a consultation form that asks for the other party's name so you can check conflicts. Search engines read the firm as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live.
+
+Changes work by asking in plain words. "Put the Missouri disclosure in the footer of every page," "add 'past results afford no guarantee of future results' under the results list" or "add a Spanish version of the workers' compensation page" each becomes a draft you review and approve before anything goes live. Results, reviews and certifications come only from you; SaySites never makes them up.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your two-state site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt first. For a comparison with another state that sets its own wording, read our [Houston law firm website guide](/blog/houston-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a Missouri law firm website need the "choice of a lawyer" disclaimer?', a: 'In most cases, yes. Missouri Rule 4-7.2(f) requires advertisements to state conspicuously that "the choice of a lawyer is an important decision and should not be based solely upon advertisements." Rule 4-7.2(g) exempts only communications limited to names, fields of practice, admissions and contact details. A full firm website goes well beyond that, so put the statement in the footer of every page.' },
+      { q: 'What must a Missouri lawyer say next to case results?', a: 'Missouri Rule 4-7.1(c) treats a communication about results as misleading unless it states that past results afford no guarantee of future results. Put that sentence directly beside any verdicts, settlements or results list on your site, including results mentioned on practice area pages and in attorney biographies, not only on a separate results page.' },
+      { q: 'Can a Kansas lawyer advertise as a certified specialist?', a: 'Only with a qualifying certification. Kansas Rule 7.4(d) allows a lawyer to state or imply certification as a specialist only when the certifier is approved by an appropriate state authority or accredited by the American Bar Association, and the communication clearly names that organization. Saying you practice only in certain fields is allowed without certification.' },
+      { q: 'Do Kansas City law firm websites have to be filed with the bar?', a: 'No. Neither Missouri nor Kansas requires lawyers to file websites or get them approved before publishing. Both states do require you to keep a copy of each advertisement for two years along with a record of when and where it was used, so save a dated copy of the site each time it changes.' },
+      { q: 'Can a Kansas City firm send emails to accident victims?', a: 'Carefully, and not right away in Missouri. Missouri Rule 4-7.3 bars written solicitations about personal injury or wrongful death within 30 days of the incident and requires an "ADVERTISEMENT" label. Kansas Rule 7.3(c) requires "Advertising Material" at the beginning and end of electronic solicitations. A website and replies to inquiries are not solicitation.' },
+      { q: 'Which court handles a case in Kansas City, Kansas?', a: 'State cases from Kansas City, Kansas are filed in the Wyandotte County District Court, part of the 29th Judicial District, at 710 N. 7th Street. Cases on the Missouri side go to the 16th Judicial Circuit in Jackson County. Federal cases go to the Dole courthouse at 500 State Avenue in Kansas or the Whittaker courthouse at 400 E. 9th Street in Missouri.' },
+      { q: 'How much does a SaySites website for a Kansas City law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign and see your current site rebuilt with your own details first.' },
+    ],
+    about: ['Missouri Rules of Professional Conduct', 'Kansas Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Kansas City'],
+    published: '2026-10-31',
+    status: 'published',
+  },
+  {
+    slug: 'dallas-plumber-website-design',
+    title: 'Dallas Plumber Websites: Texas TSBPE License Rules',
+    description: 'Build a Dallas plumbing website that follows Texas rules: the RMP license number in every ad, invoice notices, city permits, backflow tests and DallasNow.',
+    kind: 'guide',
+    summary: [
+      'Texas plumbing board rule 367.10 requires every advertisement that solicits business to state the license number of the company’s Responsible Master Plumber (RMP). Treat your website as an ad and show it on every page.',
+      'The same rule requires the RMP’s name and number, "regulated by the Texas State Board of Plumbing Examiners" and the board’s contact details on the first page of proposals and invoices, including electronic ones sent from your site.',
+      'Dallas requires a permit to replace a water heater, and permits, plan review and inspections now run through the city’s DallasNow portal.',
+      'Dallas Water Utilities requires annual tests of high-hazard backflow assemblies by testers registered with the city, filed through SwiftComply. Explain it if you offer testing.',
+      'About half of Dallas County homes are rented, so pages for landlords and property managers, and Spanish pages where your crew can serve them, are worth building.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1775717677666-cb0e14a904fe?auto=format&fit=crop&w=1600&q=75', alt: 'The Dallas skyline at sunset with its modern downtown skyscrapers' },
+    body: `A Dallas plumbing website has one legal must-have that many sites miss: the license number of your Responsible Master Plumber. Texas State Board of Plumbing Examiners rule 367.10 says all advertisements designed to solicit business must state the RMP of record's license number, in any media. Put "RMP License M-" and the number in the footer of every page, link it to the state's license search, and add the board's required notice to every estimate and invoice your site sends. Then spend the rest of the site on what Dallas customers ask before they call: Are you licensed? Do I need a permit for a new water heater? Can you test my backflow device? Do you come out to my part of town?
+
+This guide covers the Texas rules with links to the sources, then the Dallas details that make a plumbing site useful: city permits through DallasNow, the backflow testing program, suburbs that run their own permit offices, rental properties and Spanish-speaking customers. It is practical advice for owners and office managers, not legal advice. For a question about your own license, call the board.
+
+## Does a Dallas plumber have to show a license number on the website?
+
+Yes, if the site is there to win work, and every plumbing company's site is. Section (c) of [22 Texas Administrative Code §367.10](https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-367-10) says all advertisements designed to solicit business must state the license number of the RMP of record, in any media, and names business cards, flyers, referral coupons and handouts as examples. The rule does not single out websites, and it does not need to. A page that describes your services and asks people to call is an advertisement in plain terms.
+
+The board's own [consumer information page](https://tsbpe.texas.gov/consumer-information/) tells homeowners the same thing from the other side: the RMP's license number should appear in all advertisements, and Master Plumber license numbers begin with the letter "M." Customers who read that page will look for the number on yours.
+
+The rule lists a few exemptions, and they show where the line sits:
+
+- national or interstate TV ads, and internet ads a franchisor places for its franchisees, if they say local license numbers are available on request;
+- ads with no visual part, such as radio or phone solicitations, if the caller says the company complies with state licensing and the number is available on request;
+- promotional items of nominal value, like caps, T-shirts and uniforms;
+- signs on or next to your permanent business location;
+- phone book listings and third-party directory information you do not control or promote.
+
+Your own website fits none of those. Neither does a Google Business Profile description you wrote, a social media page you run, or a landing page for a paid ad.
+
+### Where to put it
+
+1. **The footer of every page.** Someone who lands on your slab leak page from a search never sees your home page.
+2. **Next to the call button on phones**, if it fits: "Licensed Texas plumber, RMP M-12345" beside "Call now."
+3. **The About page**, with the RMP's name and a link to the board's public license search (it is linked from the [consumer information page](https://tsbpe.texas.gov/consumer-information/)), where customers can confirm the license and that a certificate of insurance is on file.
+4. **Every ad landing page and seasonal promotion.**
+
+The Cornell copy of the rule may trail the board's own text, so check the current version on the board's [laws and rules page](https://tsbpe.texas.gov/laws-rules/) before you print anything.
+
+## What must your estimates and invoices say?
+
+Section (b) of rule 367.10 covers the first page of every written or electronic proposal, invoice or contract, in at least 12-point type. It must include:
+
+- the RMP of record's first and last name;
+- the RMP's license number;
+- the words "regulated by the Texas State Board of Plumbing Examiners";
+- the board's mailing address, phone number and website.
+
+The rule applies to estimates, service invoices, billing invoices and receipts. That matters for your website because more estimates now leave from a web form, a quoting tool or an email template than from a clipboard. If your site sends an automatic quote or a "here is your estimate" email, the template needs that block on the first page. Build it once, check it against the rule, and every quote carries it.
+
+Section (a) covers trucks: the RMP's license number and the company name on both sides of every service vehicle, with an "M," "MPL" or "RMP" prefix, in a contrasting color, at least two inches tall. Photos of your trucks on the website are good for trust. Make sure the ones you publish show compliant lettering.
+
+## Who can offer plumbing to the public in Texas?
+
+The board's rules (see the [current rules PDF](https://tsbpe.texas.gov/wp-content/uploads/documents/TSBPE_AdministrativeRules_March2026.pdf), March 2026 reference copy) say a Master Plumber serving as a Responsible Master Plumber may advertise or otherwise offer plumbing to the public and must obtain the plumbing permits for the work. Journeyman and Master Plumbers who are not the RMP work under an RMP's contracts, and Tradesman Plumber-Limited licensees work on one- and two-family homes under an RMP's supervision.
+
+For your site, that means three things:
+
+- **Name the RMP.** "Licensed plumbers" is vague. "Our Responsible Master Plumber is Maria Lopez, Texas license M-12345" is specific and checkable.
+- **Describe the crew honestly.** If your technicians are journeymen and tradesmen working under the RMP, say so. Customers do not mind; they mind surprises.
+- **List endorsements only if you hold them.** If you install medical gas or residential fire sprinklers, say which endorsement covers it.
+
+![Exposed plumbing pipes and electrical conduit inside a wall under construction](https://images.unsplash.com/photo-1768321913920-d3ac011e0683?auto=format&fit=crop&w=1200&q=75)
+
+## Which Dallas plumbing jobs need a permit?
+
+More than most homeowners think. A City of Dallas Building Inspection [how-to sheet on plumbing permits](https://dallascityhall.com/departments/sustainabledevelopment/buildinginspection/DCH%20documents/pdf/How-to_plumbing.pdf) says plainly that "a permit is required for water heater replacement," and boiler replacements too. It says repairing or replacing accessible traps and fixture parts in kind, with no change to the rough-in, does not need one. A homeowner with a homestead exemption who lives in the house can pull a permit and do the work personally, following state law and city code.
+
+A short permits page on your site does real work:
+
+- It explains why your water heater price includes a permit, which answers "why is your quote higher than the guy on the marketplace app?"
+- It reassures buyers and sellers, whose inspectors will ask whether the work was permitted.
+- It is the kind of first-hand, specific help Google describes in its guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content).
+
+### DallasNow
+
+Dallas runs permits through [DallasNow](https://dallascityhall.com/departments/sustainabledevelopment/Pages/DallasNow.aspx), a single online system for permitting, plan review and inspections. The city's page says applicants can submit applications, track them, manage inspections and pay fees online at any hour, and that inspections can also be scheduled by phone at 214-670-5313. It also warns about phishing emails asking for license records and says real city email comes from an @dallas.gov address. A one-line note on your permits page ("we pull the permit in DallasNow and schedule the inspection for you") tells customers exactly what they are paying for.
+
+### The suburbs run their own offices
+
+Dallas permits stop at the city limit. Many suburbs run their own process: the City of Denton's [water heater page](https://www.cityofdenton.com/678/Water-Heater), for example, says water heater repair or replacement requires a permit, applied for through its own portal, with a final plumbing inspection. Your service area page can say which cities you pull permits in regularly. That is useful to customers and accurate, and it does not need a separate page per suburb.
+
+If you want to see these pages on your own site before you write anything, [ask for a free redesign](/redesign). We rebuild your current site with your real license, services and service area so you can compare.
+
+## Should your site explain backflow testing?
+
+If you test backflow assemblies, yes, because the city sends customers looking for someone. The [Dallas Water Utilities backflow page](https://dallas.gov/departments/waterutilities/Pages/Backflow-Test-Reports.aspx) says:
+
+- high-hazard backflow prevention assemblies must be tested every year;
+- irrigation devices need a test only when newly installed, repaired or replaced, and annual inspection is not mandatory for them;
+- testers must be registered with the City of Dallas Building Inspection office and enrolled with SwiftComply, the online system where test reports are filed;
+- a device that fails has 30 days to be repaired and retested.
+
+A backflow page that explains this in plain words, says that your testers are registered with the city, and offers to file the report for the customer turns a confusing notice letter into a phone call.
+
+![Close-up of a red valve with a pressure gauge on a water line](https://images.unsplash.com/photo-1761758674188-2b8e4c89c5e2?auto=format&fit=crop&w=1200&q=75)
+
+## Who are Dallas plumbing customers?
+
+The Census Bureau's [QuickFacts for Dallas County](https://www.census.gov/quickfacts/dallascountytexas) helps here. It estimates 2,661,397 residents as of July 1, 2025, puts the owner-occupied housing rate at 50.8% for 2020 to 2024, and reports that 42.9% of residents age 5 and older speak a language other than English at home. The Hispanic or Latino share is 42.3%.
+
+Two practical points follow.
+
+**Renters and the people who manage their homes.** With roughly half of homes rented, many calls come from tenants who cannot authorize work and from landlords and property managers who can. A page for property managers that covers how you handle tenant access, who approves the estimate, how invoices are sent and whether you offer make-ready work speaks to a buyer most plumbing sites ignore. Note that the homeowner permit exception in Dallas is tied to a homestead exemption on a home the owner lives in, so a landlord generally needs a licensed plumber for permitted work on a rental.
+
+**Spanish-speaking customers.** If someone on your team can take the call and run the job in Spanish, a Spanish version of your main service pages is worth having. Translate the whole page, including the RMP license number, and connect the versions as Google explains in its guide to [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions). Do not add a language you cannot answer the phone in.
+
+## A page plan for a Dallas plumbing website
+
+1. **Home page:** phone number and call button at the top, the areas you cover, your main services and the RMP license number.
+2. **One page per main service:** water heaters, slab leaks, drain and sewer, gas lines, repiping and backflow testing each answer different searches.
+3. **Permits page:** what needs a permit in Dallas, how you handle DallasNow, and which nearby cities you pull permits in.
+4. **Backflow page**, if you test.
+5. **Property managers page:** access, approvals, invoicing and turnaround.
+6. **Service area page:** one honest page that names the neighborhoods and cities you really serve and your realistic response times.
+7. **About page:** the RMP's name and license, your crew, insurance and how long you have been working in Dallas.
+8. **Contact page:** a form that asks how urgent the job is, the ZIP code and whether the person owns or rents.
+
+Skip the stack of near-identical pages for Garland, Mesquite, Irving, Richardson and every other suburb with only the city name changed. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead to essentially the same content as doorway abuse. Our guide to [showing Google where a service-area business works](/blog/service-area-business-google) covers the better approach.
+
+## Google Business Profile for Dallas plumbers
+
+Most plumbers do not serve customers at their shop, which makes them service-area businesses in Google's terms. Google's [service area guidance](https://support.google.com/business/answer/9157481) explains how to set the areas you serve and hide an address customers do not visit. The [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real business name with no added keywords, so "Lopez Plumbing" rather than "Lopez Plumbing Dallas Water Heater Repair 24/7."
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Your service pages help relevance, real reviews build prominence over time, and nobody can promise a spot in the map results. Our [home service website checklist](/blog/home-service-website-checklist) covers the rest of the basics.
+
+## A Texas pre-launch checklist for plumbers
+
+- [ ] The RMP license number appears on every page, every landing page and in your Business Profile description (rule 367.10(c)).
+- [ ] The license number links to the board's license search.
+- [ ] Estimate, quote and invoice templates sent from the site carry the RMP's name and number, "regulated by the Texas State Board of Plumbing Examiners" and the board's contact details on the first page, in 12-point type or larger (rule 367.10(b)).
+- [ ] Truck photos show compliant lettering (rule 367.10(a)).
+- [ ] Endorsements are listed only if you hold them.
+- [ ] The permits page matches current City of Dallas rules and names the other cities you work in.
+- [ ] Backflow testers are registered with the city before the page says so.
+- [ ] Spanish pages repeat the license number and are answered by someone who speaks Spanish.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites helps Dallas plumbers
+
+SaySites sets up this structure for you. A new plumbing site comes with a page for each service, a service area page, a big tap-to-call button and a job request form that asks how urgent the job is, the ZIP code and whether the customer owns or rents. Search engines read the business as a Plumber, and no page goes live until it passes a 95+ speed check. Every request lands in a leads pipeline where you can call, email, add notes and track the job through to won.
+
+To change anything, you say it in plain words: "put RMP M-12345 in the footer and link it to the state license search," "add a page on Dallas backflow testing" or "write a page for property managers." Each change shows up as a draft for you to approve first. Your license numbers, photos and reviews always come from you; SaySites never invents them.
+
+The Site plan is $15 a month with hosting included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and get your site in shape before the winter freeze calls start, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own details first. For another Texas license rule worked through on a website, see our [Austin electrician website guide](/blog/austin-electrician-website-design).`,
+    faq: [
+      { q: 'Does a Texas plumber have to put a license number on the website?', a: 'Yes, in practice. Texas plumbing board rule 367.10(c) requires every advertisement designed to solicit business to state the Responsible Master Plumber’s license number, in any media. A company website that asks people to call is advertising, and none of the rule’s exemptions cover it. Put the RMP number in the footer of every page and on ad landing pages.' },
+      { q: 'What has to be on a Texas plumbing invoice or estimate?', a: 'Rule 367.10(b) requires the first page of each written or electronic proposal, invoice or contract to show the RMP’s first and last name, the RMP’s license number, the words "regulated by the Texas State Board of Plumbing Examiners" and the board’s mailing address, phone and website, in at least 12-point type. Estimate templates sent from your website count.' },
+      { q: 'Do I need a permit to replace a water heater in Dallas?', a: 'Yes. A City of Dallas Building Inspection guide states that a permit is required for water heater replacement. Repairing or replacing accessible traps and fixture parts in kind, with no change to the rough-in, does not need one. Permits and inspections run through the city’s DallasNow system, and suburbs such as Denton have their own permit rules.' },
+      { q: 'How often does backflow testing happen in Dallas?', a: 'Dallas Water Utilities requires high-hazard backflow prevention assemblies to be tested every year. Irrigation devices need a test only when newly installed, repaired or replaced. Testers must be registered with the City of Dallas Building Inspection office and enrolled with SwiftComply, where reports are filed, and a failed device has 30 days for repair and retest.' },
+      { q: 'How can a Dallas customer check a plumber’s license?', a: 'The Texas State Board of Plumbing Examiners has a public license search on its website. Its consumer page says to ask for the Responsible Master Plumber’s name, notes that Master Plumber numbers start with the letter M, and suggests confirming a certificate of insurance is on file. Linking your number to that search lets customers check you in one tap.' },
+      { q: 'Should a Dallas plumber build a page for every suburb?', a: 'No. Near-identical pages with only the city name swapped are what Google’s spam policies call doorway abuse. Build one service area page that names the cities and neighborhoods you really serve, with honest response times, and add a separate page only for a real difference, such as a second shop or a city with its own permit process you explain.' },
+      { q: 'How much does a SaySites plumbing website cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting included. It comes with a page for each service, a service area page, tap-to-call, a job request form, Plumber structured data and a leads pipeline. You can also ask for a free redesign and see your current site rebuilt with your own details before you decide.' },
+    ],
+    about: ['Texas State Board of Plumbing Examiners', 'Plumbing contractor advertising', 'Plumber websites', 'Dallas, Texas'],
+    published: '2026-10-31',
+    status: 'published',
+  },
+  {
     slug: 'minneapolis-law-firm-website-design',
     title: 'Minneapolis Law Firm Websites: Minnesota Ad Rules',
     description: 'Plan a Minneapolis law firm website under Minnesota Rules 7.1 to 7.3: the specialist disclosure, contact details, results, intake and Hennepin County courts.',
