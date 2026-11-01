@@ -301,7 +301,355 @@ const MBC_FNP = 'https://www.mbc.ca.gov/Licensing/Fictitious-Name-Permit/'
 const BBC_MEDSPA = 'https://barbercosmo.ca.gov/consumers/medspa_factsheet.pdf'
 const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia'
 
+const DC_71 = 'https://dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/information-about-legal-services/communications-concerning-a-lawyer%E2%80%99s-services'
+const DC_75 = 'https://dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/information-about-legal-services/firm-names-and-letterheads'
+const DC_54 = 'https://www.dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/law-firms-and-associations/professional-independence-of-a-lawyer'
+const DC_OP_302 = 'https://dcbar.org/for-lawyers/legal-ethics/ethics-opinions-210-present/ethics-opinion-302'
+const DC_OP_342 = 'https://dcbar.org/for-lawyers/legal-ethics/ethics-opinions-210-present/ethics-opinion-342'
+const DC_PITFALLS = 'https://dcbar.org/getmedia/fb4198bd-c6f7-4a83-b0e5-06c149bb3e1d/Common-Legal-Website-Pitfalls-and-How-To-Avoid'
+const DC_R49 = 'https://www.dccourts.gov/sites/default/files/2020-11/DCCA%20Rule%2049.pdf'
+const DC_R49_GUIDE = 'https://www.dccourts.gov/sites/default/files/matters-docs/rule49_compliance.pdf'
+const DC_CUPL_2420 = 'https://www.dccourts.gov/sites/default/files/2020-03/CUPL-Opinion-24-20.pdf'
+const DC_SUPERIOR = 'https://dccourts.gov/superior-court/about'
+const DATAUSA_DC = 'https://datausa.io/profile/geo/district-of-columbia'
+const IL_DENT_45 = 'https://ilga.gov/legislation/ilcs/documents/022500250K45.htm'
+const IL_1220_421 = 'https://ilga.gov/commission/jcar/admincode/068/068012200D04210R.html'
+const DATAUSA_CHI = 'https://datausa.io/profile/geo/16000US1714000'
+const IL_PA_104_151 = 'https://ilga.gov/documents/legislation/PublicActs/104/104-0151.htm'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'washington-dc-law-firm-website-design',
+    title: 'Washington, DC Law Firm Websites: D.C. Bar and Rule 49',
+    description: 'Plan a Washington, DC law firm website under D.C. Rules 7.1 and 7.5 and Rule 49: bar status notices, federal practice limits, verdicts and referral fees.',
+    kind: 'guide',
+    summary: [
+      'D.C. regulates lawyer advertising mostly through one rule, Rule 7.1: no false or misleading communication. There is no filing requirement and no mandatory "advertising" label, but verdicts and comparisons must be qualified or provable.',
+      'The rule that catches DC firm websites most often is Rule 49 of the D.C. Court of Appeals. A lawyer who is not a D.C. Bar member must not be presented as available to practice law from a DC office.',
+      'Lawyers relying on the federal practice exception need a prominent notice that their practice is limited to matters before federal courts and agencies. "Not admitted in D.C." alone is not enough.',
+      'Rule 7.5(b) requires a firm with offices in several jurisdictions to show, office by office, where its lawyers are not licensed. In a market where most firms also practice in Maryland and Virginia, that belongs on every attorney profile.',
+      'Write for clients who cross the District line daily, explain which court hears their case, and offer Spanish pages only when someone can answer in Spanish.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1600&q=75', alt: 'Pennsylvania Avenue in Washington, DC with a protected center bike lane leading toward the U.S. Capitol dome on a sunny day' },
+    body: `A Washington, DC law firm website has a lighter advertising rulebook than most states but a stricter test on who may be shown as a DC lawyer. The District's Rules of Professional Conduct handle advertising through Rule 7.1, which bars false or misleading communications, and Rule 7.5 on firm names. There is no pre-approval, no filing and no required "attorney advertising" label. The hard part is Rule 49 of the District of Columbia Court of Appeals, which forbids anyone who is not a member of the D.C. Bar from holding out as authorized to practice law in the District. On a firm site, that means every attorney profile, office page and footer has to make each lawyer's bar status plain, and lawyers who practice only before federal agencies or courts need specific notice language. Get those two things right, qualify any verdicts and comparisons, and most of the risk on a DC firm site is handled.
+
+This guide is for firm owners and the people who build their sites. It links to each rule and opinion so you can read them yourself. It is not legal advice, and close calls belong with ethics counsel or the D.C. Bar's ethics guidance.
+
+## What advertising rules apply to a DC law firm website?
+
+The District's rules on information about legal services are short. The D.C. Bar's chapter lists two rules: [Rule 7.1, Communications Concerning a Lawyer's Services](${DC_71}), and [Rule 7.5, Firm Names and Letterheads](${DC_75}). Where many states split advertising, solicitation, specialization and filing across Rules 7.2 to 7.4, D.C. folds the core of it into one standard.
+
+Rule 7.1(a) says a lawyer shall not make a false or misleading communication about the lawyer or the lawyer's services. A communication is misleading if it contains a material misrepresentation of fact or law, leaves out a fact needed to keep the whole statement from misleading, or makes an assertion about the lawyer that cannot be substantiated. Comment [4] makes the point directly: beyond false and misleading content, the rule does not regulate the content of advertising.
+
+That freedom is real, and it has edges. The comments to Rule 7.1 and the D.C. Bar's ethics opinions show where firms get into trouble:
+
+- **Verdicts and records.** Comment [1] says an ad describing the amount of a damage award, or a lawyer's record of favorable verdicts, can mislead unless it is suitably qualified, because it can suggest the reader will get a similar result.
+- **Comparisons.** The same comment says claims comparing your services with other lawyers' are misleading if they cannot be substantiated. "The most experienced," "top-rated" and "best in DC" are comparisons.
+- **Buried disclosures.** In [Ethics Opinion 302](${DC_OP_302}), the D.C. Bar's Legal Ethics Committee said web disclosures should not be buried several clicks deep, and compared that to fine print in a newspaper ad. A qualifier on a results page does not cure a big number on the home page.
+
+Comment [3] lists what a lawyer can safely publish: names, addresses and phone numbers, the kinds of services offered, the basis on which fees are set, and foreign language ability, among other facts. That is a good outline for a practice page.
+
+**Note:** Many DC firms have lawyers admitted in Maryland, Virginia or elsewhere. Those states' advertising rules can reach a site aimed at their residents, and some are stricter than D.C.'s. Check each jurisdiction where your lawyers practice before you treat D.C.'s rules as the whole story.
+
+![A lawyer in a white blazer and glasses takes notes across a desk from a client in a bright office](https://images.unsplash.com/photo-1758520144437-f068ecaf0d83?auto=format&fit=crop&w=1200&q=75)
+
+## How does Rule 49 affect a law firm website?
+
+Rule 49 is the District's unauthorized practice rule, and it is written broadly. Under [Rule 49](${DC_R49}), a person who is not a D.C. Bar member may not practice law in the District or hold out as authorized or competent to practice law there. Paragraph (b)(4) defines holding out as indicating to others, in any manner, that you are competent, authorized or available to practice law from a DC office or location, and it names the words that usually do it: "esquire," "lawyer," "attorney" and "counsel."
+
+A website is one of the clearest ways to hold someone out. A profile that says "Jane Doe, Esq." next to a K Street address, with no mention that she is admitted only in Virginia, tells a reader she is a DC lawyer. The Court of Appeals' Committee on Unauthorized Practice of Law has said in its [compliance guidance](${DC_R49_GUIDE}) that the required notices apply to communications with the public, including letters, business cards and internet sites, and that it has found violations in each of those. The same guidance tells firms to review the adequacy of the disclosures on their own websites.
+
+Rule 49 has exceptions, and several of them come with notice duties that land on the site:
+
+| Situation | What Rule 49 allows | What the website should say |
+|---|---|---|
+| Practice only before federal agencies, such as immigration, patent or veterans' benefits work | Rule 49(c)(2), where the agency permits it and the work stays before that agency | A prominent notice that the lawyer is not a D.C. Bar member and that practice is limited to matters and proceedings before federal courts and agencies |
+| Practice only in a federal court where the lawyer is admitted | Rule 49(c)(3) | The same kind of notice of bar status and the limit on practice |
+| A lawyer whose first D.C. Bar application is pending | Rule 49(c)(8), for up to 360 days, under direct supervision of an active D.C. Bar member | Notice of the lawyer's bar status and that practice is supervised by a D.C. Bar member |
+| A lawyer working from home in DC whose office is elsewhere | Opinion 24-20, under the incidental and temporary practice exception | No DC address on business documents, which likely includes the website |
+
+The committee's guidance makes one point worth repeating to whoever writes your attorney bios: a bare statement such as "not admitted in D.C." or "admitted only in Maryland" is not enough for lawyers relying on the federal practice exception. The notice has to say what the practice is limited to.
+
+The telework opinion, [Opinion 24-20](${DC_CUPL_2420}), adopted on March 23, 2020, allows a lawyer who is not a D.C. Bar member to work from a DC residence only if, among other conditions, the lawyer keeps an office where they are admitted and avoids using a DC address in business documents. If a lawyer at your Bethesda or Arlington firm lives in the District, keep their home address off the site, their profile and their email signature.
+
+## What should each attorney profile show?
+
+A DC firm site works best when every lawyer's page answers the reader's real question, "Can this person handle my case here?", in the first two lines. A pattern that satisfies the rules and helps the reader:
+
+- **Name and role**, then a line such as "Admitted in the District of Columbia and Maryland" for D.C. Bar members.
+- **For lawyers relying on Rule 49(c)(2) or (c)(3)**, a notice near the name, for example "Admitted in New York only. Not a member of the D.C. Bar. Practice limited to matters and proceedings before federal courts and agencies." Put it on the profile itself, in the firm directory listing and anywhere the lawyer's name appears with a DC address.
+- **For lawyers practicing under supervision while their application is pending**, a notice that they are not yet D.C. Bar members and that their practice is supervised by a named D.C. Bar member.
+- **Practice areas and matters**, written factually. If you list representative results, qualify them where they appear.
+- **Languages spoken**, which Comment [3] specifically allows.
+
+Rule 7.5(b) adds a firm-level duty. A firm with offices in more than one jurisdiction may use the same name in each, but it must identify its lawyers so that the reader can see where any of them is not licensed to practice in that office's jurisdiction. For a firm with offices in the District and Silver Spring, the simplest compliant layout is an office page for each location listing the lawyers who work there, each with their admissions.
+
+A website-compliance presentation hosted by the D.C. Bar lists the same expectations for any legal site: identify the responsible attorney, list the jurisdictions where your attorneys are licensed, and avoid "specialist" claims you cannot back up ([Common legal website pitfalls](${DC_PITFALLS})).
+
+## Can a DC firm use a trade name or a web address as its name?
+
+Yes, within Rule 7.5. Rule 7.5(a) lets a private firm use a trade name if it does not imply a connection with a government agency or a public or charitable legal services organization, and if it is not otherwise misleading under Rule 7.1. Comment [1] says a firm may also be designated by a distinctive website address.
+
+That matters in a city full of federal agencies and legal aid organizations. A domain or brand that reads like an agency program, a court service or a tenant help line can mislead a reader looking for free help. If a reasonable visitor could think you are a public program, choose another name or say plainly, near the top of the page, that you are a private law firm.
+
+Three more parts of Rule 7.5 apply directly to the site:
+
+- **No phantom partners.** Rule 7.5(d) allows lawyers to state or imply that they practice in a partnership only when that is true. Comment [2] says lawyers who share space but are not associated in a firm may not use a name like "Smith and Jones."
+- **Public officials.** Under Rule 7.5(c), a lawyer holding public office may not have their name used in the firm name, or in the firm's communications, during any substantial period when they are not actively and regularly practicing with the firm. Take that partner's photo off the home page while they serve.
+- **Departed and unaffiliated lawyers.** Comment [1] treats using the name of a lawyer not associated with the firm as misleading. Update the site the day someone leaves.
+
+D.C. has long allowed nonlawyer partners in law firms. Under [Rule 5.4(b)](${DC_54}), that works only if the firm's sole purpose is providing legal services, every owner or manager agrees to follow the rules, lawyers take responsibility for them, and the terms are in writing. If your firm has a nonlawyer principal, such as an economist or lobbyist who helps deliver legal services, the leadership page must describe their role accurately and must not call them a lawyer or counsel.
+
+## Can a DC firm pay for leads, directories or referral programs?
+
+Rule 7.1(c) bars giving anything of value to a person or organization to recommend or secure your employment, with exceptions. You may pay for permitted advertising, pay the usual charges of a legal service plan or lawyer referral service, and enter reciprocal referral arrangements that are not exclusive and that clients are told about.
+
+In [Ethics Opinion 342](${DC_OP_342}) (November 2007), the D.C. Bar said lawyers may take part in internet-based referral services, including for-profit ones, if the program complies with Rules 7.1 and 5.4. Flat participation fees, flat per-referral fees and per-client fees not tied to the outcome of the case are acceptable, and fees should fall within the range comparable services charge. What you must avoid is any payment that rises or falls with your legal fee, which turns the arrangement into fee sharing.
+
+For your own website, that means: link to directories you belong to if you like, but do not let a vendor publish anything under your name that you have not reviewed, and do not pay anyone a share of the fees from clients who arrive through your site.
+
+## How should a DC firm site handle contact forms and confidentiality?
+
+Your consultation form is where a visitor becomes a prospective client, and the duties that come with that can attach before you ever call back. A website-compliance presentation hosted by the D.C. Bar points out that when a site invites a visitor to submit case information, that exchange can count as a consultation for conflict purposes, and suggest a clear notice near the form that sending it does not create an attorney-client relationship and that the visitor should not send confidential details yet ([Common legal website pitfalls](${DC_PITFALLS})).
+
+A form that works for DC clients asks for:
+
+- Name, phone and email, and the best time to call.
+- The type of matter, chosen from your practice areas.
+- The names of the other parties, so you can run a conflict check before anyone shares the story.
+- Where the matter is, District, Maryland or Virginia, because that decides which of your lawyers can take it.
+
+Ethics Opinion 302 also notes that the internet does not reduce a lawyer's conflict-of-interest duties, so the form is a starting point for screening, not a substitute for it.
+
+![A tree-lined Capitol Hill street with parked cars on both sides leading to the U.S. Capitol dome in the evening light](https://images.unsplash.com/photo-1687692680866-fbd2aa3953de?auto=format&fit=crop&w=1200&q=75)
+
+## Which court will hear my client's case, and why should the site say so?
+
+Readers searching for a lawyer in the District usually do not know how the local courts are organized, and a short plain-language explanation earns their trust. DC has no counties and no separate city courts. The [Superior Court of the District of Columbia](${DC_SUPERIOR}) handles all local trial matters: civil, criminal, family, probate, tax, landlord and tenant, small claims and traffic cases. Its divisions include the Civil Division, Criminal Division, Family Court, Probate Division, Domestic Violence Division and the Multi-Door Dispute Resolution Division. Appeals go to the D.C. Court of Appeals, the court that also oversees the D.C. Bar and Rule 49.
+
+Federal cases go to the U.S. District Court for the District of Columbia, and a large share of DC legal work happens before federal agencies rather than in any courtroom. Write a short page or section for each place your clients actually end up:
+
+- **A tenant or landlord matter** in the Superior Court's landlord and tenant cases, with what to bring and what happens at the first hearing.
+- **A family case** in Family Court, explaining custody, support and divorce in your own words.
+- **A probate matter**, for families handling an estate in the District.
+- **Agency work**, such as an immigration, security clearance or federal employment matter, naming the agency and the stage you handle.
+
+Rule 7.1(e) also bars soliciting clients in or near the D.C. Courthouse, so any outreach you do around the courts has to stay off that ground. Your website is the right place to meet those clients instead.
+
+## Who searches for a lawyer in DC, and in what language?
+
+The District is a small jurisdiction inside a large metro area. Data USA puts the District's 2024 population at 681,294 ([Data USA, District of Columbia](${DATAUSA_DC})), while many of your clients live or work in Maryland and Virginia and commute in. A good DC site says, on each practice page, which jurisdictions that practice covers, so a reader in Prince George's County or Alexandria knows at once whether you can help.
+
+Language matters too. Data USA reports that 19.1% of District households speak a language other than English at home as their primary shared language, and Spanish is the most common, in 60,423 households, about 9.4% ([Data USA](${DATAUSA_DC})). If someone at your firm can take a call and run a consultation in Spanish, a real Spanish version of the pages those clients need is worth building. Google's guidance on [localized versions](${HREFLANG}) explains how to connect the English and Spanish pages so each reader gets the right one. A Spanish page with an English-only phone line wastes the visitor's time, so only promise what you can deliver. Comment [3] to Rule 7.1 allows you to state foreign language ability; say which lawyers or staff speak which language.
+
+## How do DC law firms show up in Google's local results?
+
+Google's [Business Profile guidelines](${GBP_GUIDELINES}) ask for your real-world business name with no added keywords, an address where you actually meet clients during stated hours, and the right category. They also allow individual practitioners, such as lawyers, a profile of their own when they can be reached at the verified location. A firm with a District office and a Maryland office can have one profile for each real office. A virtual office or a mail drop does not qualify.
+
+Two DC-specific cautions:
+
+- **The address on the profile is a holding-out question too.** A profile showing a DC office for a lawyer who is not a D.C. Bar member raises the same Rule 49 issue as the website.
+- **Federal practice firms often do not need walk-in visits.** If clients never come to your office, read Google's guidance on [service-area businesses](${SERVICE_AREAS}) before listing an address.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](${LOCAL_RANKING})). Clear practice pages build relevance, real reviews build prominence over time, and distance depends on the searcher. No one can promise a place in the map results. For how AI answers choose what to quote, see our guide on [how AI search decides which businesses to mention](/blog/how-ai-search-chooses-who-to-recommend).
+
+## A DC law firm website checklist
+
+- [ ] Every attorney profile states the lawyer's admissions, and lawyers who are not D.C. Bar members are never presented as available to practice law from a DC office.
+- [ ] Lawyers relying on federal practice exceptions carry a prominent notice that practice is limited to matters and proceedings before federal courts and agencies, on the profile, directory and anywhere their name appears with a DC address.
+- [ ] Lawyers practicing under supervision while their application is pending show their bar status and the supervision.
+- [ ] Each office page lists the lawyers who work there and where any of them is not licensed (Rule 7.5(b)).
+- [ ] Verdicts and settlements are qualified where they appear, not several clicks away (Rule 7.1, Comment [1]; Opinion 302).
+- [ ] No unprovable comparisons such as "best" or "top" lawyer.
+- [ ] The firm name or domain does not suggest a government agency or legal aid organization.
+- [ ] Nonlawyer principals are described accurately and never called counsel.
+- [ ] The consultation form asks for other parties' names and carries a clear no-relationship notice.
+- [ ] Practice pages say which jurisdictions and courts they cover.
+- [ ] Spanish pages exist only where someone can answer in Spanish.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For the rest of what any firm site needs, see our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to writing [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+## How SaySites builds a Washington, DC law firm website
+
+A SaySites law firm site starts from the plan above: a page for each practice area, a profile for each attorney, a page for each office and a consultation form whose intake questions include the other party's name for a conflict check. Search engines read the firm as a [LegalService](${SCHEMA_LEGAL}), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish.
+
+You make changes by saying them in plain words, such as "add 'Admitted in Virginia only. Not a member of the D.C. Bar. Practice limited to matters and proceedings before federal courts and agencies.' under Maya's name" or "move the Silver Spring lawyers onto the Maryland office page," and each change waits as a draft until you approve it. Admissions, results and reviews come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your DC site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own details first. To compare a state that adds its own required wording, read our [Kansas City law firm website guide](/blog/kansas-city-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a DC law firm website have to be filed with the D.C. Bar?', a: 'No. The District has no filing or pre-approval requirement for lawyer advertising, and no required "attorney advertising" label. The site must still meet Rule 7.1, which bars false or misleading communications, and Rule 7.5 on firm names. If your lawyers are also admitted in Maryland, Virginia or another state, check whether that state adds requirements for a site aimed at its residents.' },
+      { q: 'Can a lawyer not admitted in DC be listed on a DC office website?', a: 'Yes, if the site does not hold them out as authorized to practice law in the District. Rule 49 of the D.C. Court of Appeals bars that. State each lawyer\'s admissions clearly. Lawyers relying on the federal practice exceptions need a prominent notice that their practice is limited to matters and proceedings before federal courts and agencies.' },
+      { q: 'Is "Not admitted in D.C." enough on an attorney profile?', a: 'Not always. The Committee on Unauthorized Practice of Law has said that bare statements such as "not admitted in D.C." or "admitted only in" another state are not enough for lawyers relying on the federal practice exception. The notice should also say that practice is limited to matters and proceedings before federal courts and agencies.' },
+      { q: 'Can a DC law firm website show verdicts and settlements?', a: 'Yes, if they are accurate and suitably qualified. Comment [1] to D.C. Rule 7.1 says describing damage awards or a record of favorable verdicts can mislead readers into expecting similar results unless it is qualified. Put the qualifier right beside the figures, because Ethics Opinion 302 warns against disclosures buried several clicks deep.' },
+      { q: 'Can a DC law firm pay for leads from a website or directory?', a: 'Often, yes. D.C. Ethics Opinion 342 allows participation in internet-based referral services, including for-profit ones, if the program complies with Rules 7.1 and 5.4. Flat participation fees and flat per-referral or per-client fees are acceptable. A fee tied to the outcome or to your legal fee is not, because it becomes fee sharing.' },
+      { q: 'Should a DC law firm website be in Spanish?', a: 'If your firm can serve Spanish-speaking clients, often yes. Data USA reports that Spanish is the most common non-English language in District homes, spoken as the main shared language in about 9.4% of households in 2024. Build full Spanish pages only when someone at the firm can take the call and run the consultation in Spanish.' },
+      { q: 'How much does a SaySites website for a DC law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles with room for each lawyer\'s admissions, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['District of Columbia Rules of Professional Conduct', 'D.C. Court of Appeals Rule 49', 'Attorney advertising', 'Law firm websites', 'Washington, DC'],
+    published: '2026-11-01',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-dental-practice-website-design',
+    title: 'Chicago Dental Websites: Illinois Advertising Rules',
+    description: 'Plan a Chicago dental practice website under Illinois rules: specialty disclaimers, fee wording, sedation claims, free exams and keeping your web ads 3 years.',
+    kind: 'guide',
+    summary: [
+      'Illinois dental advertising is governed by Section 45 of the Dental Practice Act (225 ILCS 25/45) and the Department\'s rule at 68 Ill. Adm. Code 1220.421. A practice website is advertising under both.',
+      'A general dentist who advertises orthodontics, implants, root canals or other specialty services needs a disclaimer that they are not licensed in that specialty. Words like "Specialist" or "Practice Limited To" count as claiming one.',
+      'Listed fees must be your usual fees and carry a statement that they may be adjusted due to complications or unforeseen circumstances. "Sedation dentistry" needs a current Illinois sedation or anesthesia permit.',
+      'A free exam is allowed, but a new patient cannot be charged for anything done during it. Internet ads must be approved by the dentist and kept for at least three years.',
+      'Practices operating under a trade name must name the designated Illinois dentist, with address and phone, in every ad, so it belongs in the site footer.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1704455306251-b4634215d98f?auto=format&fit=crop&w=1600&q=75', alt: 'A bright dental treatment room with a pale gray patient chair, an overhead light, a wall-mounted monitor and wood-look flooring' },
+    body: `A Chicago dental practice website is advertising under Illinois law, and Illinois writes more specific dental advertising rules than most states. Two sources set them: [Section 45 of the Illinois Dental Practice Act](${IL_DENT_45}) and the Department of Financial and Professional Regulation's rule at [68 Ill. Adm. Code 1220.421](${IL_1220_421}). In practice, five things shape the site: a disclaimer whenever a general dentist advertises specialty services, a set sentence beside any listed fee, no "sedation dentistry" without a sedation permit, no charges during an advertised free exam, and a saved copy of your web advertising for at least three years. If your practice runs under a trade name, the designated dentist's name, address and phone must appear too. Build those into the page plan from the start, and the rest of the work is writing pages that help a nervous patient pick up the phone.
+
+This is a planning guide for practice owners and whoever builds their site, with each rule linked. It is not legal advice; ask your own counsel or the Illinois State Dental Society about close calls.
+
+## Which rules govern a dental website in Illinois?
+
+Section 45 opens by saying its purpose is to let dentists advertise so the public can make informed choices, while protecting the public from false or misleading advertising. The Department's rule goes further. Section 1220.421(a) allows advertising in any medium or other form of public communication, as long as it is truthful and not fraudulent, deceptive, inherently misleading or proven to be misleading in practice, and it says an ad must include the information needed to keep it from misleading.
+
+The Dental Practice Act was due to be repealed on January 1, 2026 under Illinois's sunset law. [Public Act 104-0151](${IL_PA_104_151}) renewed it until January 1, 2031 and amended several sections, so the rules below are current law. When you read the statute on the General Assembly's site, check that you are looking at the version that reflects that Act.
+
+Both sources list what you are expressly allowed to publish. Between them, that includes:
+
+- The services you offer, your name, title, office hours, address and phone.
+- Specialty licenses, board certification and limits on your practice, with the conditions below.
+- Usual and customary fees for routine services, with the required sentence.
+- Schools attended, hospital affiliations and society memberships.
+- Credit arrangements and whether you take Medicare or Medicaid patients.
+- Foreign language ability.
+- What the office is like: accessibility, an on-site lab, parking.
+- Opening, moving, leaving or returning to practice, and dentists joining or leaving.
+- Anything else a reasonable person might regard as relevant to choosing a dentist.
+
+That last item is broad, which is good news for useful content. A page explaining what happens at a first visit, how long a crown takes or which insurance plans you file with is the kind of information the law wants patients to have.
+
+![A Chicago downtown street at dusk lined with lit lamps and stone buildings, ending at a tall tower glowing at the far end](https://images.unsplash.com/photo-1515963665762-77ef90e624fa?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist advertise braces, implants or root canals in Illinois?
+
+Yes, with a disclaimer. Illinois licenses dental specialties, and its rules protect the line between a general dentist who offers a service and a licensed specialist.
+
+Section 45(h) says that when a general dentist, or a specialist not licensed in the specialty concerned, advertises services in endodontics, pediatric dentistry, periodontics, prosthodontics, orthodontics and dentofacial orthopedics, oral and maxillofacial surgery, or oral and maxillofacial radiology, the ad must include a disclaimer that the dentist does not hold a license in that specialty.
+
+Section 1220.421 adds detail that matters for page wording:
+
+- **Specialist titles are for licensees.** Titles such as "Orthodontist" or "Oral and Maxillofacial Surgeon" may be used only by dentists holding that specialty license.
+- **Some phrases count as a specialty claim.** The rule treats words like "Specialist" or "Practice Limited To" as prima facie evidence that a dentist is holding out as a specialist.
+- **The disclaimer has a set meaning.** A general dentist who uses specialist-style language must state prominently that they are licensed only as a general dentist.
+- **Other descriptive terms.** The rule names terms such as family, cosmetic, restorative, preventive, hospital and implant dentistry, and TMJ, in connection with the same disclaimer. Read the rule before you title a page "Cosmetic Dentistry" or "Implant Center" and decide with your counsel where the disclaimer goes.
+
+On a website, "prominent" means on the page that advertises the service, near the service name, not only in a footer. A clean pattern for a general practice:
+
+> **Tip:** On each service page in a specialty area, put one line under the heading, such as "Dr. Rivera is licensed in Illinois as a general dentist." Then explain the treatment, who it suits, how long it takes and what it costs, the way you would in the chair.
+
+If a licensed specialist on your team performs the work, say who. Section 1220.421(e) requires a practice advertising specialty services under an assumed name to name the licensed specialist who performs them.
+
+## How should a Chicago practice show prices on its website?
+
+Price pages answer one of the first questions patients ask, and Illinois allows them with conditions. Section 45(d) lets you advertise your usual and customary fees for routine professional services, but the ad must say that fees may be adjusted due to complications or unforeseen circumstances. Section 1220.421 repeats the requirement and allows one exception: fees that never vary under any circumstances.
+
+So a "New patient exam and cleaning" price, a crown fee or a whitening package needs that sentence beside it. Put it directly under the price list, and repeat it on any landing page that shows a price.
+
+**Free exams and specials.** Section 45 bars offering gifts to induce patients to come in, but it allows free examinations and free services. The catch is concrete: a dentist offering a free examination or service may not charge a new patient for any service provided at that time. If your "free consultation" includes X-rays you bill for, either stop billing for them or stop calling it free. Spell out on the offer page what the free visit includes.
+
+**Referral services.** Section 45 also bars paying a fee to a referral service or other third party that advertises dental referrals unless all of that advertising makes clear the dentist pays a fee for the referral. Check how any directory or lead service you pay describes you.
+
+## Can a dental website say "sedation dentistry" or "painless"?
+
+Only the first, and only with a permit. Section 45 prohibits using "sedation dentistry" or a similar term unless the advertising dentist holds a current permit from the Department for general anesthesia and deep sedation or moderate sedation under Section 8.1 of the Act. If a visiting anesthesiologist provides sedation in your office, describe that arrangement accurately instead of branding the practice as sedation dentistry.
+
+"Painless" is out entirely: Section 45 bars advertising that you practice dentistry without causing pain. Write about comfort in specific, true terms, such as numbing gel before injections, breaks during long appointments or noise-cancelling headphones, if you actually offer them.
+
+The same section prohibits claims of superior quality of care and ads that guarantee success, play on public vanity or fears, or promote unfair competition. Section 1220.421(d) adds a ban on creating unjustified expectations of favorable results and on advertising services the dentist is not licensed to provide. In practice, that rules out:
+
+- "Chicago's best dentist" or "the highest quality care in the Loop."
+- "Perfect teeth guaranteed" or "results that last a lifetime."
+- Copy that shames people about their smile to sell veneers.
+
+Before-and-after photos are not addressed by name in Section 1220.421, but they still fall under the general rules. Use real photos of your own patients, with their written permission, show typical rather than exceptional results, and do not retouch the "after." A caption saying the treatment and roughly how long it took gives the photo context.
+
+![A stainless steel dental mirror resting on a white surface in soft side light](https://images.unsplash.com/photo-1606811856475-5e6fcdc6e509?auto=format&fit=crop&w=1200&q=75)
+
+## What must a practice with a trade name show?
+
+Many Chicago practices operate under a brand rather than a dentist's name: a neighborhood name, a family dental name, or several offices under one banner. Section 1220.421(e) allows an entity to advertise under a fictitious or assumed name only when:
+
+- A licensed Illinois dentist is designated at each practice location and is responsible for the advertising.
+- The designated dentist's name, office address and phone number appear in all advertising.
+- The names of owners who are not designated dentists also appear in all advertising.
+- A list of the dentists employed there is prominently displayed at each location.
+
+For the website, the simplest compliant pattern is a footer on every page with each location, its designated dentist and that office's address and phone, plus a team page for each office listing every dentist who works there.
+
+Multi-location practices in managed care networks have one more duty under Section 45: confirm to each plan whether each dentist is accepting new patients at each listed location, so directories stay accurate. Keep your own site in step, with an "accepting new patients" line on each location page that you update when it changes.
+
+## How long must a dental practice keep copies of its website?
+
+Longer than most practices expect. Section 45 requires dentists to keep a copy of all advertisements for three years, with the accurate date and place of publication. Section 1220.421(c) says advertising on television, radio or the internet must be prerecorded, approved by the dentist and kept, as a recording of the actual transmission, for at least three years, and that a copy must go to the Department within 7 working days of a written request.
+
+A website changes constantly, so build the record into your routine:
+
+1. Save a full, dated copy of each page whenever you change it, as a PDF or web archive file.
+2. Save each paid search, social and email ad with the dates it ran and where.
+3. Keep a short log of who approved each change. The dentist's approval is part of the rule.
+4. Keep everything for at least three years, then review before deleting.
+
+## Who is searching for a dentist in Chicago?
+
+Chicago is a city of neighborhoods, and patients usually search close to home or work: "dentist near me," "emergency dentist Pilsen," "pediatric dentist Lincoln Park." A useful site makes it easy to see which office is closest, which hours suit a commuter, whether there is parking or a train nearby, and which plans you accept.
+
+Language is part of that. Data USA, which draws on Census Bureau surveys, puts Chicago's Hispanic population at 29.7% of residents in 2024, about 805,000 people ([Data USA, Chicago](${DATAUSA_CHI})). Section 1220.421 expressly allows you to advertise foreign language ability. If dentists or front desk staff speak Spanish, Polish or another language, say who and at which office. If someone can book and answer questions in Spanish, full Spanish pages for your main services are worth it; Google's guidance on [localized versions](${HREFLANG}) explains how to link the English and Spanish versions so each reader gets the right one. Any required disclaimer or fee sentence must appear in the Spanish version too, because it is the same advertising.
+
+What not to do: a stack of near-identical "Dentist in Wicker Park," "Dentist in Logan Square," "Dentist in Bucktown" pages with only the neighborhood swapped. Google's [spam policies](${SPAM}) treat pages made mainly to rank for places as doorway pages. Make one strong page for each real office instead, with its own team, hours, directions and photos.
+
+## How do Chicago dental practices show up on Google Maps?
+
+The Google Business Profile does much of the local work. Google's [Business Profile guidelines](${GBP_GUIDELINES}) ask for your real-world name with no added keywords, so "Rivera Family Dental," not "Rivera Family Dental Best Implants Chicago." Each real office with staffed hours can have its own profile, and dentists who see patients at a verified location can have individual practitioner profiles under Google's rules.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](${LOCAL_RANKING})). Clear service pages help relevance; steady, genuine reviews build prominence. Google allows you to ask every patient for a review but not to offer anything in exchange or to ask only happy patients ([Google's review tips](${REVIEW_TIPS})). Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers the wording. No one can promise a place in the map results.
+
+Tell search engines what the practice is with [Dentist](${SCHEMA_DENTIST}) structured data that matches what the page shows ([Google's local business structured data](${LOCAL_SD})). And make the site usable for every patient: the Justice Department's [guidance on web accessibility](${ADA_WEB}) explains how the ADA applies to businesses open to the public.
+
+## A Chicago dental website checklist
+
+- [ ] Every specialty-service page by a general dentist carries a prominent disclaimer near the service name.
+- [ ] "Specialist," "Practice Limited To" and specialist titles appear only for dentists holding that Illinois specialty license.
+- [ ] Every listed fee is a usual fee and carries the sentence that fees may be adjusted due to complications or unforeseen circumstances.
+- [ ] Free exam offers say what is included, and nothing done during them is billed to new patients.
+- [ ] "Sedation dentistry" appears only with a current Illinois sedation or anesthesia permit.
+- [ ] No "painless," "best," "highest quality" or promises of success.
+- [ ] Trade-name practices show the designated dentist's name, address and phone, and any non-dentist owners, on every page.
+- [ ] Each office page shows whether it is accepting new patients.
+- [ ] A dated copy of each version of the site and each web ad is kept for at least three years, with the dentist's approval.
+- [ ] Spanish pages repeat every disclaimer and fee sentence.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For the rest of what a practice site needs, see our [medical practice website checklist](/blog/medical-practice-website-checklist). To compare another state's dental rules, read our [Nashville dental website guide](/blog/nashville-dental-practice-website-design).
+
+## How SaySites builds a Chicago dental practice website
+
+A SaySites site for a dental practice starts with the pages above: a page for each service, a team page, an office page for each location and a new patient appointment form that asks only for the basics, such as new or returning patient, insurance provider and the best time to call, without asking for clinical details. The practice is described to search engines as a [Dentist](${SCHEMA_DENTIST}), a Book online button can link to the scheduler you already use, sites can be written in English or Spanish, and no page goes live until it passes a 95+ speed check.
+
+You change the site by saying what you want in your own words, such as "put 'Dr. Rivera is licensed in Illinois as a general dentist' under the Invisalign heading" or "add the line about fees being adjusted for complications under the price list," and each change waits as a draft until you approve it. That approval step fits the Illinois rule that the dentist approves internet advertising. Fees, credentials, reviews and before-and-after photos come only from you; SaySites never invents them.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first.`,
+    faq: [
+      { q: 'Does an Illinois general dentist need a disclaimer to advertise Invisalign or implants?', a: 'Usually, yes. Section 45(h) of the Dental Practice Act requires a disclaimer when a general dentist advertises services in a licensed specialty such as orthodontics, oral surgery or periodontics. Section 1220.421 says the statement must be prominent and that the dentist is licensed only as a general dentist. Put it on the service page, near the service name.' },
+      { q: 'Can a Chicago dental website list prices?', a: 'Yes. Illinois lets dentists advertise their usual and customary fees for routine services. Each fee listing must state that fees may be adjusted due to complications or unforeseen circumstances, unless the fee never varies under any circumstances. Put that sentence directly under the price list and on any ad landing page that shows a price.' },
+      { q: 'Can an Illinois dentist offer a free exam online?', a: 'Yes, but with a firm condition. Section 45 of the Dental Practice Act allows free examinations and free services, but a dentist who offers one may not charge a new patient for any service provided at that time. If X-rays or a cleaning would be billed, say so plainly or include them in the free visit.' },
+      { q: 'Can a Chicago practice advertise "sedation dentistry"?', a: 'Only if the advertising dentist holds a current permit from the Illinois Department of Financial and Professional Regulation for general anesthesia and deep sedation or moderate sedation under Section 8.1 of the Act. Without a permit, describe the comfort options you really offer instead, such as numbing gel, breaks or headphones, and never call treatment painless.' },
+      { q: 'How long does an Illinois dentist have to keep website ads?', a: 'At least three years. Section 45 requires copies of all advertisements for three years with their dates and places of publication, and Section 1220.421 requires internet advertising to be approved by the dentist and kept for at least three years. Save a dated copy of each page version and each online ad, and record who approved it.' },
+      { q: 'Should a Chicago dental website have Spanish pages?', a: 'If someone at your practice can book and answer questions in Spanish, usually yes. Data USA puts Chicago\'s Hispanic population at about 29.7% of residents in 2024. Illinois rules allow you to advertise foreign language ability, and every disclaimer and fee sentence must appear in the Spanish pages as well.' },
+      { q: 'How much does a SaySites website for a Chicago dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment form, Dentist structured data, a booking button that links to your existing scheduler and hosting. You can also ask for a free redesign to see your current site rebuilt with your own content first.' },
+    ],
+    about: ['Illinois Dental Practice Act', 'Dental advertising', 'Dental practice websites', 'Chicago, Illinois'],
+    published: '2026-11-01',
+    status: 'published',
+  },
   {
     slug: 'kansas-city-law-firm-website-design',
     title: 'Kansas City Law Firm Websites: Missouri and Kansas Rules',
