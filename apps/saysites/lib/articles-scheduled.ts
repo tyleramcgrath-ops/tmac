@@ -7705,6 +7705,383 @@ SaySites puts your business name, phone number and area into your site’s detai
     published: '2026-10-15',
     status: 'published',
   },
+  {
+    slug: 'salt-lake-city-law-firm-website-design',
+    title: 'Salt Lake City Law Firm Websites: Utah Rule 7.1 Guide',
+    description: 'Plan a Salt Lake City law firm website under Utah Rule 7.1: results, specialist wording, firm names, the 30-day rule and the November 2026 fee changes.',
+    kind: 'guide',
+    summary: [
+      'Utah regulates lawyer marketing with one main rule. Rules 7.2 through 7.5 are reserved, and Rule 7.1 (current version effective May 1, 2024) bars false or misleading communications, coercive contact, and some direct contact within 30 days of an injury or disaster.',
+      'Past results and comparisons are allowed if they are not misleading. The rule\'s comments say a disclaimer or qualifying language can help, and that "certified specialist" needs an objective certifying body named in the same communication.',
+      'From November 1, 2026, amended Utah Rules 1.0, 5.4 and 5.8 prohibit referral fees and set new fee-sharing conditions. A new comment says lead generation, pay-per-click and similar advertising fees are not referral fees.',
+      'A Utah Bar ethics opinion treats advertising in Utah by a firm with no Utah-licensed lawyers as misleading without a disclaimer, so licensing belongs on every attorney profile.',
+      'Plan one strong page per practice area and per real office, not a page for every suburb of the Wasatch Front.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1681391835354-63aeb171ff41?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Salt Lake City office towers in front of snow-covered Wasatch mountains under a clear blue sky' },
+    body: `A Salt Lake City law firm website is governed by a short rule with long reach. Utah folded almost all of its lawyer advertising rules into one, [Rule 7.1 of the Utah Rules of Professional Conduct](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-7.1), and left Rules 7.2 through 7.5 reserved. The result is fewer checklists than in most states and more judgment calls: no filing requirement, no mandated "advertising material" label, but a firm test that every page must pass. On top of that, amended rules on referral fees and fee sharing took effect on November 1, 2026, which changes how firms should think about paid marketing.
+
+This guide walks through what Utah's rules mean for each part of a firm site, how people in Salt Lake City look for a lawyer, and a checklist to work through before launch. It is a planning guide with each rule linked, not legal advice. For close calls, ask the Utah State Bar's ethics hotline or your own counsel.
+
+## What rule governs law firm websites in Utah?
+
+Rule 7.1 does the work. In its current form, effective May 1, 2024, it has three parts:
+
+- **(a) No false or misleading communications.** A communication is false or misleading if it contains a material misrepresentation, omits a fact needed to keep it from misleading, is likely to create an unjustified or unreasonable expectation about results, or contains a testimonial or endorsement that violates the rule.
+- **(b) No coercion, duress or harassment** in any interaction with a prospective client.
+- **(c) A 30-day limit on some direct contact.** A lawyer may not directly contact a prospective client to get hired about a disaster, personal injury or wrongful death unless 30 days have passed, the person has a family, close personal or prior professional relationship with the lawyer or firm, or the person (or a family member or close friend) started the contact.
+
+The comments carry much of the practical guidance. Comment [1] says the rule covers every way a lawyer's services are made known, so a website, a Google Business Profile, a video and a paid search ad all count. Comment [3] lists examples of what is allowed so long as it is not misleading: your name and firm name, address, email, website and phone, the kinds of services you take on, how fees are set, including prices for specific services and payment arrangements, actors and dramatizations, and the courts where you are permitted to practice.
+
+The Utah State Bar explained the shift in [Ethics Opinion 22-02](https://www.utahbar.org/wp-content/uploads/2022/12/2022-02-Rules-Changes-and-Prior-Opinions.pdf). It notes that Rules 7.2 to 7.5 were deleted and Rule 7.1 rewritten, and that "false or misleading" remains the guiding standard. The opinion also lists which older advertising opinions still apply, which is worth reading before you write copy about rankings, awards or "& Associates."
+
+## Can a Utah law firm website show case results and reviews?
+
+Yes, with care. Utah does not ban results or testimonials. It bans the misleading version of them.
+
+Comment [4] to Rule 7.1 says a truthful report of what a lawyer achieved for clients can still mislead if it leads a reasonable person to expect the same result without regard to the facts and law of their own case. It adds that an appropriate disclaimer or qualifying language may prevent that. Ethics Opinion 22-02 confirms that Opinion 09-01 remains in force: testimonials, dramatizations and fictionalized portrayals may be used as long as the advertising is not false or misleading.
+
+What that means on the page:
+
+1. **Give each result its context.** Say what kind of case it was, what the issue was and what made it unusual. A list of dollar figures with no facts invites exactly the expectation the rule warns about.
+2. **Put the qualifier next to the claim.** A line such as "Every case is different. Past results do not guarantee a similar outcome in your matter" belongs beside the results, not only in the footer.
+3. **Use real reviews, accurately.** Quote clients with permission and do not trim a review so that it says something the client did not mean. Rule 7.1(a)(3) treats a testimonial that breaks the rule as itself misleading.
+4. **Label dramatizations.** Comment [3] allows actors and dramatizations. If a video uses them, a short on-screen note keeps a viewer from mistaking it for a real client.
+
+**Comparisons and "best" claims.** Comment [4] also says an unsubstantiated comparison with other lawyers' services or fees may mislead. Opinion 22-02 keeps part of Opinion 14-04 in place: a "best" or "super" designation is acceptable only if the organization behind it made an appropriate inquiry, and paying to be called the best is still false and misleading. If you show an award, name who gave it and the year, and link to how it was chosen.
+
+![Downtown Salt Lake City's towers seen across green treetops, with the long ridge of the Wasatch Range behind under a hazy sky](https://images.unsplash.com/photo-1621603933126-6c216db10045?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Utah lawyer say "specialist" on a website?
+
+Utah is more relaxed than many states here, with one firm line. Comment [5] to Rule 7.1 says a lawyer can describe practice areas and can state that they "specialize" in a field based on experience, training and education, subject to the false-or-misleading standard. What a lawyer cannot do is state or imply certification as a specialist unless an objective entity has certified them and the communication clearly names that entity.
+
+So, on an attorney profile:
+
+- "Ms. Larsen focuses her practice on water rights and has handled them for fifteen years" is a description of experience. Make sure it is true and current.
+- "Board certified in civil trial law" needs the certifying organization named right there, not on a separate credentials page.
+- A badge image from a certifying body should have the organization's name in visible text nearby, since a reader may not recognize a logo.
+
+Write the profile around what clients need to know: what the lawyer handles, where they are admitted, which courts they appear in, how they work with clients and what a first meeting looks like.
+
+## What do firm names, trade names and web addresses need to show?
+
+Comment [7] treats firm names, letterhead and professional designations as communications about a lawyer's services, which brings them under Rule 7.1. It allows a firm to use the names of current members, of retired or deceased members where the firm has succeeded them, or a trade name that is not false or misleading. It also expressly allows a distinctive website address, social media username or similar designation that is not misleading.
+
+The same comment lists names that mislead: ones that imply a connection with a government agency, with a lawyer who is not part of the firm, with a nonlawyer, or with a public or charitable legal services organization. It gives the example of a trade name built on a place, such as a "legal clinic" named after a city, which may need a statement that the firm is not a public legal aid organization. A Salt Lake City firm thinking about a name like "Wasatch Legal Center" or "Salt Lake Injury Help" should read that comment first, and consider a short line in the footer saying the firm is a private law practice.
+
+Two more comments matter for multi-office firms:
+
+- Comment [8] allows a firm with offices in more than one jurisdiction to use the same name in each.
+- Comment [9] says lawyers may not imply they practice together as a firm when they do not. A shared website for an office-sharing arrangement should make the separate practices clear.
+
+Ethics Opinion 22-02 also keeps Opinions 138 and 04-03 in force, which address "& Associates" when there are no associates. If you are a solo practitioner, use a name that reflects that.
+
+## What does Utah's 30-day rule mean for a personal injury firm's website?
+
+Rule 7.1(c) limits direct communication about a disaster, personal injury or wrongful death in the first 30 days, unless an exception applies. A website on its own is not direct communication: a person who finds your page and fills in the contact form has started the contact, which falls within the exception in 7.1(c)(3).
+
+Where firms can trip is in follow-up systems built around the website:
+
+- **Automated outreach.** Text or email sequences triggered by a list you bought, rather than by the person contacting you, are direct communication you started.
+- **Retargeting that names the event.** An ad following someone around the web is advertising, but a message addressed to a named person about their crash is closer to direct contact. Keep paid ads general.
+- **Call-backs.** If someone asked you to call, you are answering their request. Make that clear in your intake notes.
+
+Comment [6] also asks for caution with live contact of any kind, in person, by phone or by real-time video, because the person has no time to reflect. On the website, that means no pressure tactics in chat tools and no countdown timers on "free case reviews."
+
+![A Salt Lake City light rail train stopped beside a tree-lined downtown street, with office buildings rising behind it](https://images.unsplash.com/photo-1462900157664-3ecc405a9341?auto=format&fit=crop&w=1200&q=75)
+
+## What changed on November 1, 2026 for referral fees and marketing?
+
+This is the newest piece of Utah's rules, and it is easy to misread. The Utah Supreme Court amended three rules effective November 1, 2026:
+
+- **Rule 1.0** now defines a "referral fee" as compensation paid only for referring a legal matter to anyone outside the firm ([Rule 1.0](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-1.0)).
+- **Rule 5.4(c)** now says plainly that referral fees are prohibited, while 5.4(b) still allows a person to recommend, retain or pay a lawyer to serve someone else ([Rule 5.4](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-5.4)).
+- **Rule 5.8** sets the conditions for sharing fees between lawyers: no one is paid before the fee is payable, the total fee does not go up, the client agrees in writing to the split including each lawyer's share, and each share is reasonable ([Rule 5.8](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-5.8)).
+
+For marketing, the key sentence is comment [9] to Rule 1.0. It says fees paid for generating consumer interest in legal services, with the aim of turning that interest into clients, are not referral fees under the rules. It names lead generation service providers, online banner advertising and pay-per-click marketing, along with similar marketing and advertising fees. Small gifts of marginal value are not treated as compensation.
+
+So paying for ads, a website or a lead generation service is not a referral fee under the new definition. What the rule targets is paying someone simply for sending you a matter. Comment [5] to Rule 5.4 also tells lawyers to know Utah law on kickbacks before entering any fee-sharing arrangement. Two practical steps for the website:
+
+1. **Describe co-counsel honestly.** If your site says you "work with" firms in other states, make sure any fee split follows Rule 5.8 and that the description matches how cases are actually handled.
+2. **Read your marketing contracts.** If a vendor's fee is tied to a specific matter rather than to generating interest, ask your counsel which side of the new line it falls on.
+
+Rule 5.4(e) and (f) still allow fee sharing with nonlawyers and nonlawyer ownership only where authorized under Utah Supreme Court Standing Order No. 15, the order behind Utah's legal regulatory sandbox. The [Utah Office of Legal Services Innovation](https://utahinnovationoffice.org/) says the sandbox is closed to new applications and set to end on August 14, 2027, and that the court closed its alternative-business-structure-only portion at the end of 2024. Most firms building a site today should plan on the ordinary rules.
+
+## Do out-of-state firms need to say where their lawyers are licensed?
+
+Yes, if they advertise in Utah. In [Ethics Opinion 22-04](https://www.utahbar.org/ethics-opinions/22-04), the Utah Bar considered an out-of-state personal injury firm with no Utah-licensed lawyers that advertised on Utah billboards and by mail. It concluded that the advertising was materially misleading under Rule 7.1, because people would reasonably assume the firm could practice in Utah, unless it carried an appropriate disclaimer or qualifying language. The opinion notes it does not necessarily apply to firms practicing only federal law.
+
+A website is easy to get right here:
+
+- Put each lawyer's admissions on their profile, by state.
+- If a lawyer practices only in federal court or only in another state's courts, say so near their name.
+- If the firm has Utah and Idaho or Nevada offices, list which lawyers work from which office.
+
+The same principle helps firms based in Salt Lake City whose lawyers are not all admitted in Utah. Comment [3] lists "the courts or jurisdictions where the lawyer is permitted to practice" as information a firm may publish. Publishing it also answers a question many visitors have before they call.
+
+## How do people in Salt Lake City search for a lawyer?
+
+People search by problem and by place: "divorce lawyer Sandy," "DUI attorney Salt Lake," "estate planning West Jordan." Salt Lake City itself is not large, about 208,000 residents according to [Data USA](https://datausa.io/profile/geo/salt-lake-city-ut), and much of the demand comes from the surrounding valley and the wider Wasatch Front. A useful site makes clear which counties and courts you handle and where clients meet you.
+
+A few local realities to reflect on the site:
+
+- **Service area.** If you take matters in Salt Lake County and in neighboring counties such as Davis or Utah County, say so plainly on the relevant practice pages rather than creating a page for every city.
+- **Remote meetings.** Many clients prefer a video consultation. If you offer one, say so on each practice page and in the booking form.
+- **Language.** Data USA reports that 14.9% of Salt Lake City residents in 2024 were born outside the country. Comment [3] lets you publish information that invites the attention of people seeking legal help, so if lawyers or staff speak Spanish or another language, say which, and add real translated pages that repeat every disclaimer and admission statement.
+- **Plain explanations of process.** Pages that explain what happens at a first hearing in a family case, or how long a probate usually takes in Utah, help readers more than a list of practice areas.
+
+What to avoid: a stack of near-identical pages such as "Personal Injury Lawyer Murray," "Personal Injury Lawyer Midvale" and "Personal Injury Lawyer Draper" with only the city swapped. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages made mainly to rank for places as doorway pages, and calls out scaled content abuse. Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether a page would satisfy someone who arrived from search. One deep page per practice area, written by someone who handles those cases, does that better than twenty thin ones.
+
+For a broader look at structuring those pages, see [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** If you are weighing a website change, try the free option first. SaySites will [rebuild your current site as a free redesign preview](/redesign) using your own content, so you can see what a cleaner Utah-ready layout looks like before deciding anything.
+
+## How should a Salt Lake City firm set up Google Business Profile?
+
+Your Google Business Profile often appears before your website does. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real-world business name, without added keywords or locations. "Larsen & Cho" is right; "Larsen & Cho Best Salt Lake Injury Lawyers" is not, and it would raise the same Rule 7.1 questions as a misleading firm name.
+
+Other points that matter for law firms:
+
+- **One profile per real office.** A satellite office counts only if it is staffed during its hours. A virtual office or mail drop does not.
+- **Individual lawyers.** Google's guidelines allow some practitioners to have their own profiles. Decide as a firm how you handle this, since separate profiles can split reviews.
+- **Reviews.** Google lets you ask clients for reviews but not offer anything in exchange ([Google's review guidance](https://support.google.com/business/answer/3474122)). Never write or edit them, and respond without revealing anything about the client's matter.
+- **Ranking factors.** Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Accurate categories and practice descriptions help relevance; steady, genuine reviews help prominence.
+
+On the website, mark up the firm with [LegalService](https://schema.org/LegalService) or [Attorney](https://schema.org/Attorney) structured data that matches what visitors see, following [Google's local business structured data guidance](https://developers.google.com/search/docs/appearance/structured-data/local-business). Google's [structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) require markup to describe content that is visible on the page, so do not mark up reviews, awards or hours that the page does not show.
+
+![A wide view across the Salt Lake Valley to the downtown Salt Lake City skyline, with mountains rising behind it under a pale sky](https://images.unsplash.com/photo-1761582253950-1b970a4579d5?auto=format&fit=crop&w=1200&q=75)
+
+## What pages does a Utah law firm website need?
+
+Start from what a person with a legal problem needs to decide whether to call:
+
+- **A home page** that says, in the first screen, what the firm handles, where, and how to get in touch.
+- **A page for each practice area**, explaining who it is for, what the process looks like in Utah, what affects cost and what to bring to a first meeting.
+- **A profile for each lawyer** with admissions by state, the courts they appear in, real experience and any certification with the certifier named.
+- **A page for each real office**, with address, hours, parking or transit and a map.
+- **A fees page** that explains how you charge. Comment [3] expressly permits stating the basis of fees and prices for specific services, so a flat fee for a simple will or an uncontested divorce can be shown, along with what it does and does not include.
+- **A contact or consultation form** that asks only what you need to check conflicts and call back, with a note that sending the form does not create an attorney-client relationship and that visitors should not send confidential details yet.
+- **A privacy page** that explains what you do with form submissions and analytics.
+
+Make every page usable for everyone. The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) explains why sites should work with screen readers and keyboards, and the same habits, such as clear headings, descriptive links and readable contrast, make pages easier for every visitor. For the full list, our [law firm website checklist](/blog/law-firm-website-checklist) goes page by page.
+
+## A Salt Lake City law firm website checklist
+
+- [ ] Every page passes Rule 7.1's test: true, with no omission that would leave a reasonable reader with the wrong idea.
+- [ ] Case results describe the type of case and its facts, and carry a qualifier next to them.
+- [ ] Testimonials are real, used with permission and not edited to change their meaning; dramatizations are labeled.
+- [ ] "Specialize" appears only where experience supports it, and any certification names the certifying body in the same place.
+- [ ] Awards and rankings name the source and year, and none were paid for.
+- [ ] The firm name and any trade name imply no link to a government agency, legal aid group or lawyer outside the firm.
+- [ ] Each lawyer's admissions are listed by state, and any limits on practice are stated near the name.
+- [ ] No automated outreach about an injury, death or disaster to people who did not contact you first within 30 days.
+- [ ] Co-counsel and fee-sharing descriptions match Rule 5.8, and marketing contracts have been checked against the November 2026 referral fee rules.
+- [ ] Fee information says what is and is not included.
+- [ ] One page per real practice area and office; no city-swap pages.
+- [ ] Translated pages repeat every disclaimer and admission statement.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Salt Lake City law firm website
+
+SaySites builds the plan above into a working site: practice area pages, a profile for each attorney with room for admissions by state, office pages and a consultation form whose intake includes the opposing party's name so you can check conflicts before you call back. The firm is described to search engines as a LegalService, each lawyer as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live. Sites can be built in English and Spanish.
+
+You edit by describing the change in plain words, for example "under Ms. Larsen's name, add that she is admitted in Utah and Idaho" or "put the line about past results not guaranteeing future outcomes right under the verdicts list." Each change waits as a draft until you approve it. Results, reviews and credentials come only from you, and SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also serves Nevada, compare the rules in our [Las Vegas law firm website guide](/blog/las-vegas-law-firm-website-design).`,
+    faq: [
+      { q: 'Does Utah require law firms to file website ads with the bar?', a: 'No filing requirement appears in Utah\'s rules. Utah reserved Rules 7.2 through 7.5 and governs lawyer advertising mainly through Rule 7.1, which bars false or misleading communications. That puts the responsibility on the firm to review its own pages. Many firms keep dated copies of each version of the site so they can show what it said if a question comes up later.' },
+      { q: 'Can a Salt Lake City law firm post case results on its website?', a: 'Yes, if they are not misleading. Comment [4] to Utah Rule 7.1 warns that truthful results can mislead when they suggest a reader will get the same outcome regardless of their own facts. Describe each case type and its circumstances, and place a qualifier such as "past results do not guarantee a similar outcome" next to the results, not only in the footer.' },
+      { q: 'Can a Utah lawyer call themselves a specialist?', a: 'A Utah lawyer may say they specialize in a field based on experience, training and education, as long as the statement is not misleading, according to comment [5] to Rule 7.1. Claiming or implying certification as a specialist is different: it is allowed only if an objective entity certified the lawyer and the communication clearly names that entity.' },
+      { q: 'Are lead generation and pay-per-click fees referral fees under Utah\'s November 2026 rules?', a: 'No. Amended Rule 1.0, effective November 1, 2026, defines a referral fee as compensation paid only for referring a legal matter, and Rule 5.4(c) prohibits referral fees. Comment [9] to Rule 1.0 says fees paid to generate consumer interest, including lead generation providers, banner ads and pay-per-click marketing, are not referral fees. Check any matter-specific payment with counsel.' },
+      { q: 'Can a personal injury firm contact accident victims through its website?', a: 'A website visitor who fills in your contact form has started the conversation, which Rule 7.1(c) treats as an exception. What the rule limits is the firm directly contacting someone about a disaster, personal injury or wrongful death within 30 days, unless an exception applies. Be careful with automated texts or emails sent to people who never contacted you.' },
+      { q: 'Does an out-of-state firm advertising in Utah need a disclaimer?', a: 'Utah Ethics Opinion 22-04 concluded that a firm with no Utah-licensed lawyers that advertises in Utah is materially misleading under Rule 7.1 unless it includes appropriate disclaimer or qualifying language, though it may not apply to purely federal practices. On a website, the simplest fix is listing each lawyer\'s admissions by state on their profile.' },
+      { q: 'How much does a SaySites website for a Salt Lake City law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before you sign up.' },
+    ],
+    about: ['Utah Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Salt Lake City, Utah'],
+    published: '2026-11-02',
+    status: 'published',
+  },
+  {
+    slug: 'orlando-dental-practice-website-design',
+    title: 'Orlando Dental Websites: Florida Advertising Rules',
+    description: 'Build an Orlando dental practice website that meets Florida rules: minimum fee disclaimers, ADA codes, free exam wording, specialty claims and telehealth notes.',
+    kind: 'guide',
+    summary: [
+      'Florida\'s dental advertising law, section 466.019 of the Florida Statutes, names websites and social media as advertisements. The Board of Dentistry\'s rules 64B5-4.002 and 64B5-4.003 add the detail.',
+      'Every dental ad must identify the responsible Florida-licensed dentist, by license number or by the name, address and phone on file with the Department of Health.',
+      'An advertised fee needs a "minimum fee only" disclaimer, a period it is good for (or at least 90 days after the last ad), and the exact ADA procedure name or code.',
+      'Free or discounted exams need the capital-letter statement in section 456.062 plus the dates the offer runs. "Sleep dentistry" requires a general anesthesia permit.',
+      'Laudatory statements, quality comparisons and fear-based appeals are banned, so write service pages that explain rather than boast.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1609184889233-eff6dd93def4?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Orlando high-rises reflected in the still water of a city lake under a clear blue sky' },
+    body: `An Orlando dental practice website is an advertisement under Florida law, and the law says so in as many words. The current version of [section 466.019 of the Florida Statutes](https://www.flsenate.gov/Laws/Statutes/2026/466.019) defines an advertisement as any representation used to solicit patients, "including, but not limited to," business cards, newspapers, websites and social media. The Board of Dentistry fills in the details in [rule 64B5-4.002](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64B5-4-002) on advertising and solicitation and [rule 64B5-4.003](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64B5-4-003) on fees.
+
+Florida's rules are unusually specific about price pages, free offers and specialty wording, which are exactly the pages a practice most wants to publish. This guide takes each rule in turn and shows what it means for the site, then covers how Orlando patients search and a checklist to run before launch. It is a planning guide, not legal advice; for close calls, ask your counsel or the [Florida Board of Dentistry](https://floridasdentistry.gov/).
+
+## Which Florida rules apply to a dental practice website?
+
+Three sources do most of the work:
+
+- **Section 466.019, Florida Statutes**, the advertising section of the Dental Practice Act. It bans false, fraudulent, misleading or deceptive statements and lists specific kinds of claims that are not allowed.
+- **Rule 64B5-4.002**, which defines advertising broadly, requires every ad to identify the responsible dentist and adds rules on solicitation, names, referral services and "sleep dentistry."
+- **Rule 64B5-4.003**, which sets the requirements for any ad that mentions a fee.
+
+Two more statutes come into play for particular pages: [section 456.062](https://www.flsenate.gov/Laws/Statutes/2026/456.062) for free or discounted offers, and [section 466.0282](https://www.flsenate.gov/Laws/Statutes/2026/466.0282) for specialty claims.
+
+The Board's definition of advertising is broad on purpose. Rule 64B5-4.002(1) covers any statement made to the public to sell or offer professional services, "regardless of whether it is in the form of paid advertising." Your home page, your blog, a promotional video on your site and the description on your Google Business Profile all fall inside it.
+
+## Who must a Florida dental website identify?
+
+Every advertisement in any medium must identify the Florida-licensed dentist who takes total responsibility for it. Rule 64B5-4.002(2) gives two ways to do that:
+
+1. The dentist's license number, as it appears on the license and renewal certificate, or
+2. The dentist's commonly used name together with the current address and phone number the dentist has on file with the Department of Health.
+
+On a website, the cleanest approach is a line in the site footer, so it appears on every page: "Dr. Ana Reyes, DMD, Florida license DN 00000, responsible for this website," with the real license number. A group practice should name the dentist who has agreed to take that responsibility, and update the line when that changes. Patients can confirm a license through the Department of Health's [license verification search](https://mqa-internet.doh.state.fl.us/MQASearchServices/Home), so make sure the name and address match.
+
+Two related rules affect the team and history pages:
+
+- **Only people who practice there or own the practice.** Rule 64B5-4.002(5) bars naming a person who is neither practicing at the advertised location nor an owner. When a dentist leaves, take them off the site.
+- **Previous owners, for a while.** After a sale, the new owner may name the previous owner for a reasonable period of up to two years, and only with that dentist's written permission. A "formerly the practice of Dr. Lopez" line should come down by then.
+
+Section 466.019(5) also says D.D.S. and D.M.D. are interchangeable for dentists who graduated from an accredited American dental school, so either is fine on a profile.
+
+![Two swans on a lake framed by mossy cypress trunks, with downtown Orlando towers on the far shore](https://images.unsplash.com/photo-1758464642801-14bd789db153?auto=format&fit=crop&w=1200&q=75)
+
+## What claims can't an Orlando dental website make?
+
+Section 466.019(3) and rule 64B5-4.002(3) list the same core prohibitions. An advertisement may not:
+
+- Contain misrepresentations of fact.
+- Mislead through only partial disclosure of relevant facts.
+- Contain **laudatory statements** about the dentist or group of dentists.
+- Be intended or likely to create **false, unjustified expectations of favorable results**.
+- Relate to the **quality** of dental services compared to other available dental services.
+- Be intended or likely to **appeal primarily to a layperson's fears**.
+- Contain other representations likely to make an ordinary, prudent person misunderstand or be deceived.
+
+The laudatory-statement and quality-comparison bans rule out much of the copy that fills dental websites elsewhere: "Orlando's best dentist," "the highest quality care in Central Florida," "the gentlest hygienists you'll ever meet." Think carefully, too, about headlines built around patient fear, such as warnings about what will happen if someone waits.
+
+The Board's rule gives one concrete example: a dentist who uses a laser may advertise that they treat patients with a laser in certain cases, but may not advertise that laser treatment is painless, heals faster or provides better results than other procedures. Apply the same logic to any technology page. Describe what the equipment is and when you use it, and leave out comparisons and outcomes.
+
+**What works instead.** Facts patients can use are allowed and helpful: which services you offer, hours, location, parking, insurance plans you file with, languages spoken, what a first visit involves and how long a treatment usually takes. Praise from patients is a judgment call under the laudatory-statement ban; ask your counsel before you put reviews on the site, and do not choose or edit them in a way that turns them into claims you could not make yourself.
+
+## How should an Orlando dental practice list fees online?
+
+Price pages are allowed, but rule 64B5-4.003 sets four requirements, and section 466.019(3)(g) repeats the first:
+
+1. **A minimum-fee disclaimer.** Any ad with fee information must say the fee is a minimum fee only.
+2. **A time period.** Each advertised fee must either state the period it is in effect, or the service must stay available at or below that fee for at least 90 days after the last ad for it.
+3. **Exact procedure names or codes.** Each service with a fee must be described with the exact wording from the American Dental Association's *Code on Dental Procedures and Nomenclature*, or by the specific ADA code number. A category such as "root canal therapy" or "orthodontics" is not enough when a price is attached.
+4. **Free and discounted services** must follow section 456.062 and state the dates the offer is available (covered in the next section).
+
+On a website, that turns into a fee table with three columns: the ADA code, the procedure name as the code set words it, and the fee, followed by a line such as "Fees shown are minimum fees only. Prices on this page are effective through March 31, 2027." If you want plain-English descriptions for patients, add them in a fourth column or below the table without replacing the official wording. A web page can sit unchanged for months, so the effective date or the 90-day rule matters: when you change a price, keep the old price available for the required period or state the dates in advance.
+
+If a page describes a procedure without a price, the rule allows a general description by category, so a "Root canal treatment" page that explains the process needs none of this unless it shows a fee.
+
+> **Tip:** Want to see a compliant fee page and footer on your own practice's site before committing to anything? [Ask SaySites for a free redesign preview](/redesign) and we'll rebuild your current site with your own content.
+
+## What must a free exam or new patient special say in Florida?
+
+Free and discounted offers are where Florida's wording is most exact. Section 456.062 requires every ad for a free, discounted fee or reduced fee service, examination or treatment by a dentist to carry this statement in capital letters, clearly distinguishable from the rest of the text:
+
+"THE PATIENT AND ANY OTHER PERSON RESPONSIBLE FOR PAYMENT HAS A RIGHT TO REFUSE TO PAY, CANCEL PAYMENT, OR BE REIMBURSED FOR PAYMENT FOR ANY OTHER SERVICE, EXAMINATION, OR TREATMENT THAT IS PERFORMED AS A RESULT OF AND WITHIN 72 HOURS OF RESPONDING TO THE ADVERTISEMENT FOR THE FREE, DISCOUNTED FEE, OR REDUCED FEE SERVICE, EXAMINATION, OR TREATMENT."
+
+Rule 64B5-4.003(5) adds that the ad must clearly identify the dates the free or discounted service will be available.
+
+Practical points for the website:
+
+- Put the statement directly under the offer, on every page and banner where the offer appears, including a pop-up or a landing page for a paid ad.
+- Use real capital letters in the page text rather than styling lowercase text to look capitalized, so the statement reads correctly when copied, translated or read by a screen reader.
+- Give the dates in the offer itself: "New patient exam and X-rays, $59, for appointments booked November 3 to December 31, 2026."
+- Take expired offers down. An old special still live on a forgotten page is still an ad.
+
+Your front desk should know what the 72-hour statement means, because patients may ask.
+
+![Two dental professionals in face shields, masks and white gowns treating a patient reclined in a dental chair](https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist in Florida advertise orthodontics or implants?
+
+A general dentist can offer and describe these services, but Florida limits how specialty is claimed. Section 466.0282(1) says a dentist may not hold themselves out as a specialist, or advertise specialty recognition by an accrediting organization, unless they completed an ADA- and CODA-approved specialty education program and are eligible for or have achieved diplomate status with an ADA-recognized national specialty board (with a narrow exception for dentists who have claimed a specialty continuously since 1964).
+
+For areas of practice that are not ADA-recognized specialties, section 466.0282(3) allows a dentist to announce a practice emphasis, but only with a statement, in capital letters or otherwise clearly set apart, in this form: "(NAME OF AREA) IS NOT RECOGNIZED AS A SPECIALTY AREA BY THE AMERICAN DENTAL ASSOCIATION OR THE FLORIDA BOARD OF DENTISTRY." If the page names an organization that recognizes that area, it must also state that the organization is not recognized as a bona fide specialty accrediting organization by the ADA or the Board.
+
+What that means on the site:
+
+- A general dentist's "Clear aligners" page should describe the treatment and who provides it, without "orthodontist," "specialist" or "practice limited to" language.
+- If an associate is a qualified orthodontist or oral surgeon under section 466.0282(1), say so on their profile and on the pages for the work they do.
+- A "Cosmetic Dentistry" or "Implant Dentistry" heading that announces an emphasis needs the not-recognized statement set apart on that page. Have counsel check the wording before launch.
+
+## What about sedation, telehealth aligners and referral services?
+
+**Sedation.** Rule 64B5-4.002(7) bars the term "sleep dentistry" in any ad unless the dentist holds a valid general anesthesia permit from the Board. If your practice offers lighter sedation under a different permit, describe it accurately and check your wording against the permit you actually hold.
+
+**Telehealth.** Section 466.019(4), part of the statute as amended in 2024, requires a specific disclaimer, in a clearly legible font and size, on ads for dental services provided by telehealth that involve impressions or digital scans, dentures and other appliances, placing or adjusting an appliance, or correcting malformations of teeth or jaws. The required wording is: "An in-person examination with a dentist licensed under chapter 466, Florida Statutes, is recommended before beginning telehealth treatment in order to prevent injury or harm." If your practice offers remote aligner check-ins or any of these services by telehealth, the line belongs on that service page.
+
+**Referral services.** If you advertise through a dental referral service, rule 64B5-4.002(6) makes you responsible for its ads and requires four statements: that the ad is for a referral service on behalf of member dentists, that it refers only to dentists who paid or were otherwise selected, that membership is limited by the agency, and that member dentists charge no more than their usual fees. Check any directory listing you pay for.
+
+**Phone and in-person solicitation.** Rule 64B5-4.002(4) prohibits in-person and telephone solicitation by a dentist or their agent, but expressly excludes calls with patients or former patients to schedule appointments or offer follow-up care. A website form that asks the practice to call back is the patient asking; cold-calling a purchased list is not.
+
+![A dental model of upper and lower teeth fitted with metal braces, sitting on a pale blue desk beside a desk calendar](https://images.unsplash.com/photo-1777446899714-c26de766dffd?auto=format&fit=crop&w=1200&q=75)
+
+## How do patients in Orlando look for a dentist?
+
+Orlando patients search the way most people do, by need and by place: "emergency dentist near me," "pediatric dentist Lake Nona," "dentist that takes my insurance in Winter Park." The city has about 320,000 residents and 25.2% of them were born outside the U.S., according to [Data USA's 2024 figures for Orlando](https://datausa.io/profile/geo/orlando-fl). Orlando also draws many visitors, and some of them will need a dentist quickly in a city they do not know.
+
+Reflect that on the site:
+
+- **Emergency and same-day care.** If you keep same-day slots, say how to get one and what counts as an emergency, without fear-based language.
+- **Languages.** If dentists or staff speak Spanish, Portuguese or another language, say which and when, and add real translated pages. Every required statement, from the minimum-fee line to the 456.062 notice, must appear on the translated pages too.
+- **Insurance and payment.** List the plans you file with and how payment works for patients without insurance.
+- **Getting there.** Parking, nearby roads and accessibility details help both locals and visitors.
+
+What not to do: build a page for each neighborhood and suburb with the same text and a different place name. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created mainly to rank for particular places as doorway pages, and warn against mass-produced, low-value content. Google's guide to [creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether the content shows first-hand expertise and fully answers the question. One page per real office, and one useful page per service, is the honest route.
+
+## How should an Orlando practice set up Google Business Profile and markup?
+
+Under rule 64B5-4.002(1), your Google Business Profile description and posts are advertising too, so the same rules apply there: no "best dentist in Orlando," and a free-exam post needs the 456.062 statement and dates.
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for the real-world practice name with no added keywords or locations, and one profile per staffed location. Google says local ranking depends mainly on relevance, distance and prominence ([Google's local ranking explanation](https://support.google.com/business/answer/7091)). Accurate categories and services build relevance. For reviews, Google lets you ask patients but not reward them for reviewing ([Google's review guidance](https://support.google.com/business/answer/3474122)); when you reply, never confirm that the reviewer is a patient or mention their treatment.
+
+On the website, describe each office with [Dentist](https://schema.org/Dentist) structured data that matches what the page shows, following [Google's local business structured data guide](https://developers.google.com/search/docs/appearance/structured-data/local-business) and its [general structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies). The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) is a good reference for making the booking form and fee table usable with a keyboard and screen reader.
+
+For the wider set of pages a practice site needs, see our [medical practice website checklist](/blog/medical-practice-website-checklist), and for asking patients for reviews within Google's rules, read [how to ask for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way).
+
+## An Orlando dental website checklist
+
+- [ ] The footer names the responsible Florida dentist with license number, or name plus the address and phone on file.
+- [ ] Only dentists who practice at the location or own the practice are named; any previous owner appears with written permission and for no more than two years.
+- [ ] No laudatory statements, quality comparisons, fear-based appeals or promises of results anywhere, including technology pages.
+- [ ] Every fee has the minimum-fee disclaimer, an effective period (or stays available 90 days after the last ad) and the exact ADA name or code.
+- [ ] Every free or discounted offer carries the section 456.062 statement in capital letters and the dates it runs.
+- [ ] Specialty language appears only for dentists who meet section 466.0282(1); practice-emphasis pages carry the not-recognized statement.
+- [ ] "Sleep dentistry" appears only with a general anesthesia permit.
+- [ ] Telehealth service pages carry the section 466.019(4) in-person examination disclaimer.
+- [ ] Referral-service listings carry the four required statements.
+- [ ] Translated pages repeat every required statement.
+- [ ] Google Business Profile posts follow the same rules as the site.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds an Orlando dental practice website
+
+SaySites builds a dental site around the pages above: a page for each service, a team page, a page for each office and a new patient appointment request form that asks only for the basics, such as whether the patient is new or returning, their insurance carrier and the best time to call. Each office is described with Dentist structured data, and a booking button can link to the scheduler you already use. Every page has to pass a 95+ speed check before it goes live, and the site can be built in English and Spanish.
+
+To edit, you say what you want, for example "add 'Fees shown are minimum fees only' under the fee table" or "put the 72-hour statement in capitals under the new patient special and end the offer on December 31." Each change waits as a draft until you approve it. Credentials, fees and reviews come only from you; SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. To see how another state handles dental fee wording, compare our [Atlanta dental website guide](/blog/atlanta-dental-practice-website-design).`,
+    faq: [
+      { q: 'Does a Florida dental website have to show the dentist\'s license number?', a: 'It has to identify the Florida-licensed dentist who takes responsibility for it. Board rule 64B5-4.002(2) allows either the license number as it appears on the license, or the dentist\'s commonly used name with the current address and phone number on file with the Department of Health. A footer line on every page is the simplest way to meet it.' },
+      { q: 'Can an Orlando dentist list prices on the practice website?', a: 'Yes. Under rule 64B5-4.003, each advertised fee needs a disclaimer that it is a minimum fee only, a stated period the fee is in effect (or availability at that fee for 90 days after the last ad), and the exact ADA procedure name or code. A broad category such as "orthodontics" is not enough when a price is shown.' },
+      { q: 'What does a free new patient exam ad need to say in Florida?', a: 'Section 456.062 of the Florida Statutes requires a statement in capital letters, clearly set apart, that the patient may refuse to pay, cancel payment or be reimbursed for other services performed within 72 hours of responding to the free or discounted offer. Board rule 64B5-4.003 also requires the ad to give the dates the offer is available.' },
+      { q: 'Can a Florida dental website say "best dentist in Orlando"?', a: 'No. Section 466.019 of the Florida Statutes bars advertising that contains laudatory statements about the dentist or compares the quality of their services with other available dental services. Describe services, hours, insurance, languages and what a visit involves instead. The same rule applies to Google Business Profile descriptions and posts, which are advertising too.' },
+      { q: 'Can a general dentist in Florida advertise implants or aligners?', a: 'A general dentist can offer and describe these treatments, but may not claim to be a specialist unless they meet section 466.0282(1), which requires ADA-approved specialty training and board eligibility or diplomate status. Announcing an emphasis in an area that is not an ADA-recognized specialty requires a set-apart statement that it is not recognized as a specialty.' },
+      { q: 'Do Florida dental ads for remote aligner care need a disclaimer?', a: 'Yes, if the services are provided through telehealth and include scans or impressions, appliances, adjustments or correcting malformations of the teeth or jaws. Section 466.019(4) requires a legible statement that an in-person examination with a Florida-licensed dentist is recommended before beginning telehealth treatment, to prevent injury or harm.' },
+      { q: 'How much does a SaySites website for an Orlando dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment request form, Dentist structured data, a booking button that links to your current scheduler and English or Spanish pages. You can ask for a free redesign preview of your current site first.' },
+    ],
+    about: ['Florida Dental Practice Act', 'Dental advertising', 'Dental practice websites', 'Orlando, Florida'],
+    published: '2026-11-02',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
