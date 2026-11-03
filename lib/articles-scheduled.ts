@@ -8082,6 +8082,355 @@ The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [
     published: '2026-11-02',
     status: 'published',
   },
+  {
+    slug: 'nashville-law-firm-website-design',
+    title: 'Nashville Law Firm Websites Under Tennessee RPC 7.1',
+    description: 'Plan a Nashville law firm website under Tennessee RPC 7.1 and 7.3: the responsible lawyer line, results, specialist claims, trade names and lead sources.',
+    kind: 'guide',
+    summary: [
+      'Since the Tennessee Supreme Court’s September 2021 order, one rule, RPC 7.1, covers lawyer advertising. RPCs 7.2, 7.4 and 7.5 are now deleted and reserved.',
+      'Every communication must name at least one lawyer or firm responsible for it, with contact information, and each advertisement must be kept for two years after it last ran.',
+      'Past results are allowed if they do not create unjustified expectations; the rule’s comments say a disclaimer can help. “Specialist” needs an ABA-accredited certification registered with the Tennessee CLE Commission first.',
+      'A website is not a solicitation, but a follow-up email to someone known to need help on a particular matter must say “Advertising Material” at the start and end, and some topics carry a 30-day wait.',
+      'Build one strong page per practice area and per real office. Davidson County is the core market, and about one in five residents speaks a language other than English at home.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1698323338671-991aaa1cea60?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Nashville from across the Cumberland River, with riverfront park lawns, low brick blocks and the AT&T Building towering behind' },
+    body: `A Nashville law firm website is an advertisement under Tennessee Supreme Court Rule 8, and since 2021 the whole subject lives mainly in one rule: [RPC 7.1](https://www.tncourts.gov/rules/supreme-court/8). It bans false or misleading communications, requires every communication to name a responsible lawyer or firm with contact information, and requires a two-year record of each advertisement. Solicitation, the 30-day rule and paying for leads sit in RPC 7.3, and referral platforms in RPC 7.6.
+
+That makes Tennessee simpler than many states on paper. There is no filing office for websites and no list of required phrases for every page. It also means more rides on judgment: whether a verdicts page misleads, whether a firm name implies something untrue, whether a lead vendor is really "recommending" you. This guide works through those questions for a firm practicing in Nashville, then covers how people here search for a lawyer, a page plan and a checklist. It is a planning guide with each rule linked, not legal advice; for a close call, ask the Board of Professional Responsibility's ethics counsel or your own lawyer.
+
+## Which Tennessee rule governs a law firm website?
+
+RPC 7.1, as rewritten by the [Tennessee Supreme Court's order of September 1, 2021](https://docs.tbpr.org/order-grants-tba-petition-to-amend-s-ct-rule-8-rpcs%207.1%207.2%207.3%207.4%207.5-denies-amendment%20to-s-ct-rule%208-rpc-7.6.pdf), which granted a Tennessee Bar Association petition. The order folded the old advertising, specialization and firm-name rules into RPC 7.1 and its comments, and left RPCs 7.2, 7.4 and 7.5 "deleted and reserved." If your website copy was written against the older numbered rules, some of the language your designer was told to include may no longer be required, and some of the advice now sits in comments rather than rule text.
+
+The current rule has three parts:
+
+1. **(a) Nothing false or misleading.** A communication is false or misleading if it contains a material misrepresentation of fact or law, or omits a fact needed to keep the whole statement from misleading.
+2. **(b) Advertising is allowed in any medium,** written, recorded or electronic, subject to (a), RPC 7.3 and RPC 7.6. Every communication must include the name and contact information of at least one lawyer or law firm responsible for its content.
+3. **(c) Keep a record.** A copy or recording of each advertisement must be kept for two years after it was last disseminated, along with when and where it appeared.
+
+Comment 6 lists what a lawyer may publish, and it reads like a website outline: the lawyer's or firm's name, address, email, website and phone number; the kinds of services offered; how fees are set, including prices for specific services and payment arrangements; foreign language ability; references; and, with their consent, names of clients regularly represented.
+
+## What has to appear on every page?
+
+The responsible-lawyer line in RPC 7.1(b) is the one requirement every page shares. The simplest way to meet it is a site-wide footer: the firm name, the name of at least one Tennessee lawyer responsible for the site, the office address and a phone number or email. Do the same on landing pages built for ads and on any page a vendor hosts for you, since the rule covers "any communication made under this Rule," not just the home page.
+
+The two-year record in RPC 7.1(c) is easy to forget with a website, because a website changes quietly. Comment 14 says a lawyer may comply by following guidelines the Board of Professional Responsibility may adopt for websites, email and other electronic communications, and that materially similar advertisements can be covered by one copy. Until you have confirmed what the Board currently expects, a practical habit is to save a dated copy of each page whenever its content changes in a meaningful way (new results, new attorney, new fee information) and keep a short log of what changed. A site builder that keeps drafts and a change history makes this far easier than a site edited directly in production.
+
+> **Tip:** Treat your Google Business Profile posts, ad landing pages and intake emails as part of the same record. They are communications about your services too.
+
+## Can a Nashville firm post verdicts, settlements and reviews?
+
+Yes, with care. Comment 3 to RPC 7.1 explains that truthfully reporting results "may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters." The same comment says an unsubstantiated comparison with other lawyers' services or fees can mislead if it is specific enough to suggest it could be proven. It then adds the useful part: "The inclusion of an appropriate disclaimer or qualifying language may preclude a finding that a statement is likely to create unjustified expectations or otherwise mislead the public."
+
+On a results page, that suggests:
+
+- **Context for each result.** Case type, court or forum, year and what the amount represented. A gross settlement shown without saying so, or a verdict later reduced, is the kind of omission paragraph (a) is aimed at.
+- **A qualifying sentence near the results,** not buried in the footer. Something like "Every case is different. Past results do not guarantee a similar outcome in your matter."
+- **No "best" or "top" claims you cannot back up.** "Nashville's most aggressive DUI defense" is a comparison nobody can substantiate.
+
+Comment 8 covers the badges many firms display. A lawyer may advertise a subjective characterization conferred by an organization only if the organization "has made inquiry into the lawyer's fitness and does not issue or confer such designations indiscriminately or for a price." Before a ratings badge goes on the site, find out how the organization chooses lawyers and whether placement is bought.
+
+Client reviews are not addressed by a separate Tennessee rule, so they fall under RPC 7.1(a): a review that is fake, selectively edited or implies a certain outcome is a problem. Only publish reviews from real clients, unedited, and with their permission when you copy them onto your own site. Google's [review guidance for businesses](https://support.google.com/business/answer/3474122) applies to the reviews on your profile.
+
+![Downtown Nashville at dusk, with lit office towers, the Bridgestone Arena roof and city streets glowing under an orange and blue sky](https://images.unsplash.com/photo-1545419913-775e3e82c7db?auto=format&fit=crop&w=1200&q=75)
+
+## When can a Tennessee lawyer say "specialist"?
+
+Only in narrow cases. Comment 9 to RPC 7.1 lets any lawyer list practice areas, and lets a lawyer say they practice only in certain fields. It does not let a lawyer say they are a "specialist," practice a "specialty," "specialize in" a field or are certified as a specialist, unless:
+
+- the claim concerns **patent matters or admiralty law**, both long-standing exceptions; or
+- under comment 10, the lawyer is certified by an organization **accredited by the American Bar Association's House of Delegates**, and has first **registered the certification with the Tennessee Commission on Continuing Legal Education** under Supreme Court Rule 21.
+
+Comment 10 also says a lawyer "shall not state or imply that the lawyer has received any certification of specialty from the Tennessee Commission on Continuing Legal Education." The Commission keeps a [public list of registered specialists](https://cle.tncourts.gov/about-us-main/specialists/), which is a good place to confirm a listing before the word goes on a bio.
+
+What this means for page copy:
+
+- "Our practice is limited to family law" is fine if true.
+- "Family law specialists" is not, unless each lawyer it describes meets comment 10.
+- "Certified as a specialist in civil trial law by [the certifying organization]" works for a lawyer who holds and has registered that certification. Name the certifying body so readers do not assume the state granted it.
+- Watch page titles and image alt text too. "Nashville Workers' Comp Specialist" in a title tag is still a communication about your services.
+
+## What can a firm name, trade name or domain say?
+
+Comment 11 allows a firm to use the names of some or all members, of deceased or retired members where there has been a continuing succession, or a trade name such as "ABC Legal Clinic." It specifically allows a lawyer or firm to be designated by "a distinctive website address or comparable professional designation." Three limits follow from the same comments:
+
+1. **Geographic trade names may need a disclaimer.** Comment 11 says a private firm using a trade name with a geographical name may need an express disclaimer that it is not a public legal aid agency. A name built around "Nashville," "Davidson County" or "Middle Tennessee" plus "Legal Clinic" or "Legal Services" is where that risk sits.
+2. **No names of lawyers outside the firm, and no nonlawyers.** Using the name of a lawyer not associated with the firm or a predecessor is misleading under comment 11.
+3. **Office sharing is not a firm.** Comment 13 says lawyers who share space but do not practice together may not call themselves "Smith and Jones."
+
+Your Google Business Profile name should match the name you actually practice under. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask for the real-world name used consistently on signage, letterhead and branding, without added keywords or locations. A profile named "Smith Law | Nashville Car Accident Lawyer" breaks Google's rules even if the website itself is fine.
+
+## Where does solicitation start for a website?
+
+RPC 7.3 defines a solicitation as a targeted communication directed to a specific person that offers services for a particular matter. Comment 1 says a lawyer's communication typically is not a solicitation if it is directed to the general public, "such as through a billboard, an Internet banner advertisement, a website, or a television commercial," or if it responds to a request for information or is automatically generated in response to internet searches.
+
+So the website itself is general advertising. The edges are in what happens next:
+
+- **Written follow-up to someone known to need help.** Under RPC 7.3(c), a written, recorded or electronic solicitation to anyone known to need legal services in a particular matter must include "Advertising Material" at the beginning and end of the communication, unless an exception applies. Comment 8 says the label is not needed for communications sent in response to a request from the potential client, which covers the normal reply to a contact form.
+- **The 30-day rule.** RPC 7.3(d)(3) bars soliciting for pecuniary gain about personal injury, wrongful death, workers' compensation, divorce or legal separation, or an accident or disaster involving the person or family, unless the event or filing was more than 30 days before, or there is a family, close personal or prior professional relationship. A drip email sequence aimed at people pulled from crash reports or divorce filings is where firms get into trouble.
+- **Chat and texting.** Comment 2 says "live person-to-person contact" means in-person, live phone and other real-time contact without time for reflection, and does not include chat rooms, text messages, email or other written messages that can easily be disregarded. A chat widget answering someone who came to your site is a response to their request, but keep its scripts within RPC 7.1, and never let it promise outcomes.
+- **Records.** RPC 7.3(e) requires keeping each solicitation sent to a specific recipient for two years, with when and to whom it was sent.
+
+## Can you pay for leads, directories or referral platforms?
+
+RPC 7.3(f) bars giving anything of value to someone outside the firm for recommending or securing your services, with listed exceptions. The first is paying "the reasonable cost of advertisements and other communications permitted by RPC 7.1, including online group advertising." Comment 10 names directory listings, internet ads and domain registrations, and says a lawyer may pay "website designers" and other marketing vendors as long as they do not direct the lawyer's professional judgment.
+
+Lead generation is allowed under comment 10 if the lead generator does not recommend the lawyer, the payment fits RPC 1.5(e) and RPC 5.4, and the generator's communications comply with RPC 7.1. A comparison site that tells visitors "we matched you with the best lawyer for your case" is recommending; one that shows a list of firms who paid to appear is advertising.
+
+Referral services, matching services and online marketing platforms are "intermediary organizations" under RPC 7.6. Before and while participating, a lawyer must make reasonable efforts to ensure the platform does not direct the lawyer's judgment, does not solicit improperly, discloses its inclusion criteria and any payments to prospective clients at the start, and is not owned by the lawyer or the firm. If it does not comply and will not fix it, the lawyer must withdraw.
+
+![Brick storefronts and street banners along a tree-lined block of downtown Nashville, with people walking past planters and office towers rising behind](https://images.unsplash.com/photo-1776176130100-d8a17b7bdd70?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in Nashville look for a lawyer?
+
+They search by problem first and place second: "custody lawyer Nashville," "DUI attorney Davidson County," "Brentwood estate planning lawyer." The pages that answer those searches well tend to be specific about the local process, which is where a Nashville firm has real material to work with.
+
+**Name the courts.** Davidson County's [trial courts](https://trialcourts.nashville.gov/) include eight divisions of Circuit Court and four parts of Chancery Court at the Metro Courthouse on Public Square, and the Criminal Court divisions in the Justice A.A. Birch Building on 2nd Avenue North. The [Circuit Court Clerk's office](https://circuitclerk.nashville.gov/) handles records for the Circuit, Probate, General Sessions civil and traffic courts. Federal cases go to the [U.S. District Court for the Middle District of Tennessee](https://www.tnmd.uscourts.gov/), whose main courthouse is on Church Street, with divisions in Columbia and Cookeville. A criminal defense page that explains what happens at a first General Sessions appearance, or a divorce page that explains the difference between filing in Circuit and Chancery, answers questions people actually have.
+
+**Plan for more than one language.** The Census Bureau's [QuickFacts for Davidson County](https://www.census.gov/quickfacts/davidsoncountytennessee) shows a 2025 population estimate of 745,904, with 15.5 percent of residents Hispanic or Latino, 15.0 percent born outside the United States and 19.2 percent of people age five and up speaking a language other than English at home. The trial courts let parties request a foreign language or sign language interpreter. If anyone at your firm speaks Spanish, or another language common among your clients, comment 6 to RPC 7.1 allows you to say so, and a translated page set, linked with Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions), serves those clients far better than a translate button. A translated page is still advertising, so every disclaimer goes with it.
+
+**Be honest about your service area.** Many Nashville clients live or work in the surrounding counties, such as Williamson, Rutherford, Sumner and Wilson. A firm that genuinely handles matters there can say so on its practice pages and explain which courts it appears in. What does not work is a page for every town with the city name swapped. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call those doorway pages, and they read as thin to anyone who lands on one.
+
+**Make the first contact easy on a phone.** Many people searching for a lawyer are stressed and on a phone. A visible phone number, a short form and a plain statement of what happens next ("we call back within one business day") do more than another paragraph of credentials.
+
+For more on writing those pages, read [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** Want to see this before you commit? SaySites will [rebuild your current site as a free redesign preview](/redesign), using your own content, so you can judge a cleaner layout with real Nashville pages first.
+
+## How should the Google Business Profile be set up?
+
+One profile for each real, staffed office. Google says local results are based mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), so a complete, accurate profile matters as much as the website. Set the primary category to the area you most want to be found for, add secondary categories that are true, use the same name, address and phone number as your site, and link the profile to the office page rather than the home page when you have more than one office.
+
+Profiles for individual lawyers are allowed in some situations under Google's guidelines, but a virtual office or a mail drop in a county where nobody works is not. Posts and Q and A answers on the profile are communications about your services, so the same RPC 7.1 rules about results and comparisons apply there.
+
+![Two red brick commercial buildings with tall arched windows on a street in downtown Nashville, under a clear sky](https://images.unsplash.com/photo-1768141113540-53a89a536e11?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Nashville law firm
+
+| Page | What it should cover | Tennessee point to watch |
+|---|---|---|
+| Home | Who you help, practice areas, phone, next step | Responsible lawyer and contact in footer (RPC 7.1(b)) |
+| Practice area pages | One per area, with the local process and courts | No "specialist" unless comment 10 is met |
+| Attorney profiles | Admissions, education, languages, real certifications | Name the certifying body; no implied state certification |
+| Results | Each result with context | Qualifying language near the results (comment 3) |
+| Reviews | Real client words, unedited | Nothing implying a certain outcome |
+| Office pages | Address, hours, parking, courts nearby | Match the Google Business Profile exactly |
+| Fees | How fees work, flat fees where you offer them | Prices allowed (comment 6); say what is included |
+| Contact | Short form, phone, what happens next | Replies to requests need no "Advertising Material" label |
+| Spanish pages | The pages above, translated | Every disclaimer translated too |
+
+Structured data helps search engines read the same facts. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains how to mark up an office, and schema.org's [LegalService](https://schema.org/LegalService) type fits a firm. Mark up only what the page shows. For the full list of pages, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## A Tennessee pre-launch checklist
+
+- [ ] Every page names at least one responsible lawyer or the firm, with contact information.
+- [ ] You have a dated copy of the site at launch and a way to keep copies when content changes, for two years.
+- [ ] Results carry context and a qualifying statement next to them.
+- [ ] No comparisons with other lawyers you cannot back up.
+- [ ] "Specialist" appears only for patent, admiralty or a registered ABA-accredited certification, with the certifying body named.
+- [ ] Ratings badges come from organizations that review fitness and do not sell the designation.
+- [ ] The firm name and any trade name are accurate, and a geographic trade name has a disclaimer if it could suggest legal aid.
+- [ ] Follow-up emails to people known to need help on a matter are labeled "Advertising Material" at the start and end, and respect the 30-day rule.
+- [ ] Lead vendors and platforms do not "recommend" you, and RPC 7.6 conditions are met.
+- [ ] Google Business Profile names, addresses and categories match the site.
+- [ ] Spanish or other translated pages repeat every disclaimer.
+- [ ] Structured data matches the visible page.
+- [ ] Pages work with a keyboard and screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a good final test: would a person facing this legal problem in Nashville leave your page knowing more, and knowing what to do next?
+
+## How SaySites builds a Nashville law firm website
+
+SaySites turns the plan above into a working site: a page for each practice area, a profile for each attorney, a page for each office and a consultation form whose questions fit the practice area, including the name of the other party so you can check conflicts before calling back. The firm is marked up as a LegalService, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+You make changes by describing them, for example "add 'Every case is different; past results do not guarantee a similar outcome' under the results list" or "put Ms. Carter's registered certification and the name of the certifying organization on her profile." Each change waits as a draft until you approve it, which also gives you a record of what the site said and when. Results, reviews and credentials come only from you. SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also serves clients in Georgia, compare the rules in our [Atlanta law firm website guide](/blog/atlanta-law-firm-website-design), and for profile setup, read our [Google Business Profile setup guide](/blog/google-business-profile-setup-guide).`,
+    faq: [
+      { q: "Does a Tennessee law firm website have to say “Advertising Material”?", a: "Not on the website itself. RPC 7.3 comment 1 says a website directed to the general public typically is not a solicitation. The “Advertising Material” label applies under RPC 7.3(c) to written, recorded or electronic solicitations sent to someone known to need legal help in a particular matter, at the start and end of the message, unless an exception applies." },
+      { q: "What contact information must a Tennessee lawyer ad include?", a: "RPC 7.1(b) requires every communication about a lawyer’s services to include the name and contact information of at least one lawyer or law firm responsible for its content. On a website, a footer on every page with the firm name, a responsible Tennessee lawyer, the office address and a phone number or email is the simplest way to meet it." },
+      { q: "Can a Nashville lawyer call themselves a specialist online?", a: "Only for patent or admiralty matters, or when certified by an organization accredited by the American Bar Association and the certification is first registered with the Tennessee Commission on Continuing Legal Education under Supreme Court Rule 21. Comment 10 to RPC 7.1 also bars stating or implying that the Commission itself granted the certification." },
+      { q: "Can a Tennessee firm show past verdicts and settlements?", a: "Yes, if they are presented without creating an unjustified expectation that other clients will get the same result. Comment 3 to RPC 7.1 says an appropriate disclaimer or qualifying language may prevent that. Give context for each result, such as case type and year, and place the qualifying sentence next to the results rather than only in the footer." },
+      { q: "How long must a Tennessee lawyer keep copies of website content?", a: "RPC 7.1(c) requires keeping a copy of each advertisement for two years after it was last disseminated, with a record of when and where it appeared. Comment 14 allows compliance through any Board of Professional Responsibility guidelines for websites. Saving a dated copy whenever page content meaningfully changes, with a short change log, is a practical approach." },
+      { q: "Can a Tennessee lawyer pay for online leads?", a: "Yes, within limits. Comment 10 to RPC 7.3 allows paying a lead generator if it does not recommend the lawyer, the payment fits RPCs 1.5(e) and 5.4, and its communications comply with RPC 7.1. Referral services and online marketing platforms that match clients with lawyers are intermediary organizations, which must meet the conditions in RPC 7.6." },
+      { q: "How much does a SaySites website for a Nashville law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before deciding." },
+    ],
+    about: ['Tennessee Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Nashville, Tennessee'],
+    published: '2026-11-03',
+    status: 'published',
+  },
+  {
+    slug: 'cleveland-dental-practice-website-design',
+    title: 'Cleveland Dental Websites: Ohio Name and Specialty Rules',
+    description: 'Plan a Cleveland dental practice website under Ohio Dental Board rules 4715-13: owner names, trade names, the General Dentist label, specialists and reviews.',
+    kind: 'guide',
+    summary: [
+      'Ohio Administrative Code chapter 4715-13 covers dental advertising, and rule 4715-13-01 names the internet explicitly. Each different advertisement must be kept for two years at the dental facility.',
+      'Every ad, including a website, must give the first and last name of the practice owner or owners, and any trade name has to include the owner dentist’s name.',
+      'A general dentist who lists services such as implants or braces must show “General Dentist” directly after or below their name, at least as prominently as the list.',
+      'Only dentists who meet rule 4715-5-04 may use “specialist,” “orthodontist” and similar terms, and testimonials may come only from patients of record.',
+      'Cleveland has about 364,000 residents, and roughly one in seven speaks a language other than English at home. Build a light, phone-first site with one page per real office.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1782008140333-2ce01a8cab27?auto=format&fit=crop&w=1600&q=75', alt: 'Cleveland lakefront on a clear day, with the Rock and Roll Hall of Fame in front of Key Tower and the downtown skyline under a deep blue sky' },
+    body: `A Cleveland dental practice website is advertising under the Ohio State Dental Board's rules in [Ohio Administrative Code chapter 4715-13](https://codes.ohio.gov/ohio-administrative-code/chapter-4715-13), and those rules are more specific about names than most states'. Every ad has to carry the owner dentist's first and last name, trade names must include it, a general dentist listing specialty-type services has to say "General Dentist" right by their name, and testimonials can only come from patients of record. Get those four right and most of the rest is ordinary good practice.
+
+This guide goes through each rule with its text linked, then turns to what Cleveland patients need from a dental site: a page plan, local search setup and a checklist to work through before launch. It is a planning guide, not legal advice. The [Ohio State Dental Board](https://dental.ohio.gov/) is the authority on how its rules apply to your practice.
+
+## Which Ohio rules apply to a dental website?
+
+Five rules do most of the work:
+
+| Rule | What it covers |
+|---|---|
+| [4715-13-01](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-01) | When and how licensees may advertise, solicitation limits, testimonials, owner names, record keeping |
+| [4715-13-02](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-02) | Names a practice may operate under, signage, the dentist in charge, specialty listing after a name |
+| [4715-13-03](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-03) | Specific prohibited statements, including the General Dentist requirement |
+| [4715-13-04](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-04) | Statements that tend to deceive or mislead |
+| [4715-13-05](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-05) | Advertising specialty services, including the diplomate disclaimer |
+
+Rule 4715-13-01(A) allows licensees and "dental organizations" (a term the rule defines to include dental groups, corporations, partnerships and management companies) to advertise in print, on FCC-approved radio and television, "or via the internet." It also sets two practical requirements that apply to a website:
+
+- **Keep each different advertisement for two years.** The rule says it must be kept in the dental facility and made available within 24 hours when an authorized agent of the board asks. For a website, that means a dated copy of each version of your pages, saved whenever the content changes in a meaningful way, plus your ad landing pages and email campaigns.
+- **Present it in a dignified, professional manner.** Rule 4715-13-01(B) applies this standard to internet notices along with cards, signs and letterheads.
+
+## Whose name has to be on an Ohio dental website?
+
+This is where Ohio differs most from neighboring states, and where many practice websites fall short.
+
+**The owner's full name on every ad.** Rule 4715-13-01(D) says all advertising statements in print, broadcast "and/or internet form" must include the first and last name of the owner or owners of the practice, and that the owner dentist is responsible for all of the practice's advertising. On a website, put the owner dentist's full name and degree in the site footer so it appears on every page, and on every ad landing page and email.
+
+**Trade names must include the owner dentist's name.** Under rule 4715-13-02(A), a dentist may practice under their own name or through a corporation, professional association, partnership or LLC, "provided the name of the entity includes the name of the dentist currently practicing." The rule then says "all trade names, fictitious names and the like" must include the owner dentist's name. A practice branded only as a neighborhood name plus "Dental" does not meet that wording; the owner's name needs to be part of the name as used.
+
+**No former dentists in the name.** Rule 4715-13-02(C) allows only licensed dentists currently practicing at the entity in its name, sign or identification, and says deceased or retired dentists' names may not be used. Rule 4715-13-04(A)(7) separately bars ads suggesting that a retired, deceased or departed dentist is still practicing with the practice, and 4715-13-04(A)(6) gives an owner 90 days to change signs after a change in who practices there. Update the website on the same timetable: the doctors page, the footer, the practice name, every bio, and the Google Business Profile.
+
+**Who works there.** Rule 4715-13-02(B) requires the first and last name and degree (for example D.D.S. or D.M.D.) of every dentist practicing at the office to be prominently displayed at its front entrance. A doctors page that lists the same people the same way keeps the sign, the site and the profile consistent. Rule 4715-13-02(D) also requires a licensed dentist in charge at each location, so a page for each office can name that dentist.
+
+> **Note:** Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask that a profile name match the name used on signage and stationery, without added keywords or locations. In Ohio, that real-world name includes the dentist's name, so "Dr. Jane Novak Family Dentistry" on the sign should not become "Cleveland Family Dentist | Implants" on the profile.
+
+![A dentist in a white uniform chatting with a smiling patient seated in a dental chair in a bright, modern treatment room](https://images.unsplash.com/photo-1777331903190-341a3dd0441b?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist list implants, braces or root canals?
+
+Yes, with the right label. Rule 4715-13-05(E) says a general dentist is not prohibited from announcing that they provide specific types of services, "including, but not limited to, specialty services," as long as the wording avoids terms the rules prohibit. Rule 4715-5-04(A) adds that a general dentist "is permitted to render specialty services in Ohio."
+
+The catch is rule 4715-13-03(E). A general dentist who lists or announces specific types of services must include the phrase "General Dentist" at least as prominently as the list, directly after or below their name. The rule's own example is "John Doe, D.D.S., general dentist." On a website that list appears in many places, so check each one:
+
+- the home page services section;
+- every service page, such as "Dental implants" or "Clear aligners";
+- the doctors page and each bio;
+- page titles and headings that pair a name with a service;
+- Google Business Profile services and posts.
+
+A simple pattern is to set the dentist's name, degree and "General Dentist" as one line in the header or the opening of each service page, in the same size type as the service names.
+
+## What words are reserved for specialists in Ohio?
+
+Rule 4715-5-04 recognizes a dentist as a specialist only if the specialty has a certifying board recognized by the American Dental Association and the dentist completed an accredited post-doctoral program in it (with a narrow exception for specialists who announced before August 1, 1974). Rules 4715-5-04(C) and 4715-13-05(C) then reserve these words for those dentists: "specialist," "specializes," "orthodontist," "oral and maxillofacial surgeon," "oral and maxillofacial radiologist," "periodontist," "pediatric dentist," "prosthodontist," "endodontist," "oral pathologist" and "public health dentist," plus "other similar terms which imply that the dentist is a specialist." Rule 4715-13-03(C) adds "limits his practice to" a branch of dentistry and "diplomate" to the statements that require compliance.
+
+For a website, that means:
+
+- **Specialists list their specialty after their name.** Rule 4715-13-02(E) requires specialists to list their ADA-recognized specialty directly after or below their name, for example "Jane Novak, D.D.S., M.S., Orthodontist."
+- **No invented specialties.** Rule 4715-13-05(F) prohibits terms suggesting a specialty where no ADA-recognized specialty exists, while still allowing terms that describe areas of practice. "Cosmetic dentistry" as a service is an area of practice; "cosmetic dentistry specialist" implies a specialty that the [National Commission on Recognition of Dental Specialties and Certifying Boards](https://ncrdscb.ada.org/) does not recognize.
+- **Mixed practices show who does what.** Rule 4715-13-05(A) says a specialist must avoid implying that associated general dentists are specialists, and 4715-13-05(B) requires advertising for a multidisciplinary practice to indicate the services each practitioner provides. A team page that puts each dentist's services under their own name handles both.
+- **Diplomate status needs a disclaimer** unless it comes from an ADA-recognized specialty certifying board. Rule 4715-13-05(D) allows diplomate status from a bona fide national organization that grants it based on postgraduate education, training, experience and a psychometrically based oral and written exam, but only with this disclaimer shown reasonably clearly next to it: "the (name of organization) is not recognized as a specialty board by the Ohio state dental board or the American dental association."
+
+## What else can't an Ohio dental website say?
+
+Rules 4715-13-03 and 4715-13-04 list statements the board considers misleading. The ones most likely to appear on a modern site:
+
+1. **Patient counts that are not true.** False statements that a number of patients have received services from a licensee are prohibited (4715-13-03(A)). If you say "over 5,000 smiles," you need records to support it.
+2. **Superior outcome claims that are not true.** False statements about superior outcomes are prohibited (4715-13-03(B)). Describe what a treatment involves instead of promising how it will turn out.
+3. **Years in practice.** False claims about years in practice, or years at one location, are prohibited (4715-13-04(A)(1)). After an acquisition, be careful with "serving Cleveland since" lines.
+4. **Materials, drugs and methods by the wrong name.** Misnaming or misrepresenting an anesthetic, drug, material, method or system is prohibited (4715-13-04(A)(2) to (5)). Name the actual brand or generic material you use, and do not describe a technique you do not perform.
+5. **"Nurse" when the person is not one.** The term may be used only for a graduate licensed and registered nurse (4715-13-03(D)). Use "dental assistant" or "hygienist" as appropriate.
+6. **Directory headings for specialties you do not hold.** Rule 4715-13-04(A)(8) and (9) bar listings under a specialty heading in a telephone book "or similar publication" when the dentist is not a specialist in it, or under a heading for a service that is not an ADA specialty. Online directories that sort by specialty are worth checking against this.
+
+## Can a Cleveland practice post reviews and testimonials?
+
+Yes, from real patients only. Rule 4715-13-01(C) says testimonials or endorsements "may be made only by patients of record." That rules out actor testimonials, stock photos presented as patients and quotes from people who never received care. Before you put a patient's words or photo on the site, get their written permission, and do not add any detail about their treatment they have not agreed to share.
+
+For reviews on your Google Business Profile, follow Google's [tips for getting reviews](https://support.google.com/business/answer/3474122): ask every patient, never offer anything in return and never filter who gets asked. A link in the post-visit text or email works well, and a short reply to each review, without confirming that the reviewer is a patient or discussing their care, keeps the profile active.
+
+![Downtown Cleveland's skyline in the distance beyond a wide stretch of green treetops and neighborhood rooftops under a pale blue sky](https://images.unsplash.com/photo-1763431595079-2a572e54c826?auto=format&fit=crop&w=1200&q=75)
+
+## What do Cleveland patients need from a dental website?
+
+The Census Bureau's [QuickFacts for Cleveland](https://www.census.gov/quickfacts/clevelandcityohio) gives a useful starting point. The city's 2025 population estimate is 363,608. Of people age five and up, 14.6 percent speak a language other than English at home, and 13.2 percent of residents are Hispanic or Latino. About 15 percent are 65 or older. And 84.7 percent of households have a broadband internet subscription, which means many of the rest are browsing on a phone's data plan.
+
+What that suggests for a practice site:
+
+- **Phone first, and light.** Big tap targets, a visible phone number, a short appointment request form and pages that load quickly on a weak connection. Google's [helpful content guidance](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether a page leaves visitors satisfied; a page that never finishes loading cannot.
+- **Spanish where you can serve it.** If someone at your practice speaks Spanish, say so and offer translated pages for new patients, services, insurance and directions. Link them using Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions). The owner name and General Dentist label must appear on the Spanish pages too, because they are advertising as well.
+- **Clear answers for older patients.** Readable type, high contrast and plain explanations of dentures, implants, crowns and what a first visit involves. The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) explains what makes a site usable with screen readers and keyboards.
+- **Insurance and payment, stated plainly.** List the plans you are in network with, including any Ohio Medicaid managed care plans you accept, and keep the list current. An outdated insurance page costs more calls than it saves.
+
+**Service area.** Cleveland practices draw patients from inner-ring suburbs and across Cuyahoga County, and the city's east and west sides can feel like different markets. One well-built page per real office, with directions, parking or transit notes and the dentist in charge, will do more than a page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical location pages as doorway pages.
+
+> **Tip:** Not sure how much of your current site needs to change? SaySites will [rebuild it as a free redesign preview](/redesign) with your own content, so you can see the Ohio name lines and General Dentist labels in place before deciding anything.
+
+## How should a Cleveland practice set up local search?
+
+Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091). For a dental practice that comes down to a few steps:
+
+1. Create one Business Profile per office, with the real name (including the dentist's name, as above), address, phone and hours.
+2. Choose the primary category that matches what you are: a general practice should not pick a specialist category under Ohio's rules.
+3. Link each profile to that office's page on your site.
+4. Add services, insurance information and real photos of your office and team.
+5. Mark up each office page with [Dentist structured data](https://schema.org/Dentist), following Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business), and include only facts that appear on the page.
+
+![A bright dental treatment room with a patient chair, overhead light, monitor and white cabinets along a window with blinds](https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Cleveland dental website
+
+| Page | What it should cover | Ohio point to watch |
+|---|---|---|
+| Home | Who you treat, services, insurance, phone, request form | Owner's full name in the footer (4715-13-01(D)) |
+| Service pages | One per service, what to expect, recovery, cost factors | "General Dentist" by the name if the dentist is not a specialist (4715-13-03(E)) |
+| Doctors and team | Each dentist with degree, services, languages | Specialty after the name for specialists (4715-13-02(E)); services per practitioner (4715-13-05(B)) |
+| New patients | First visit, forms, insurance, payment | Accurate material and method names (4715-13-04) |
+| Offices | Address, hours, parking, dentist in charge | Match the entrance sign and the Business Profile |
+| Reviews | Patient words with permission | Patients of record only (4715-13-01(C)) |
+| Spanish pages | Key pages translated | All required names and labels repeated |
+
+For the parts every practice site needs regardless of state, see our [medical practice website checklist](/blog/medical-practice-website-checklist).
+
+## An Ohio pre-launch checklist
+
+- [ ] The owner dentist's first and last name appears on every page, ad landing page and marketing email.
+- [ ] The practice name and any trade name include the owner dentist's name.
+- [ ] No retired, deceased or departed dentist appears in the name or as currently practicing.
+- [ ] Every general dentist who lists services has "General Dentist" directly after or below their name, at least as prominent as the list.
+- [ ] "Specialist," "orthodontist" and similar terms appear only for dentists who meet rule 4715-5-04.
+- [ ] Specialists list their ADA-recognized specialty after their name.
+- [ ] Diplomate status from a non-ADA board carries the exact disclaimer from rule 4715-13-05(D).
+- [ ] Patient counts, outcome claims and years in practice are accurate.
+- [ ] Drugs, materials and methods are named correctly.
+- [ ] Testimonials come only from patients of record, with written permission.
+- [ ] Dated copies of each version of the site are kept for two years at the practice.
+- [ ] Business Profile names, categories and offices match the site and the signs.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Cleveland dental website
+
+SaySites builds a dental site around the page plan above: a page for each service, a team page where each dentist's services sit under their own name, a page for each office and a new patient appointment request form that asks only the basics and tells patients not to send medical details through it. Each office is marked up with Dentist structured data, a booking button can link to the scheduler you already use, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+To make a change, you describe it, for example "put 'Dr. Jane Novak, D.D.S., General Dentist' above the services list on every service page" or "remove Dr. Patel from the team page and footer; he retired on the 15th." Each change waits as a draft until you approve it, so you also keep a record of what the site said and when. Credentials, reviews and patient numbers come only from you; SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. To compare how another state handles dental advertising, read our [Chicago dental website guide](/blog/chicago-dental-practice-website-design).`,
+    faq: [
+      { q: "Does an Ohio dental website have to show the owner dentist’s name?", a: "Yes. Ohio Administrative Code rule 4715-13-01(D) says all advertising in print, broadcast or internet form must include the first and last name of the practice owner or owners, and that the owner dentist is responsible for all of the practice’s advertising. Putting the owner’s full name and degree in a site-wide footer covers every page." },
+      { q: "Can an Ohio dental practice use a trade name?", a: "Yes, but under rule 4715-13-02(A) all trade names and fictitious names must include the name of the owner dentist currently practicing there. Names of retired or deceased dentists may not be used. The same name should appear on the office sign, the website and the Google Business Profile so patients and search engines see one consistent practice." },
+      { q: "Can a general dentist in Cleveland advertise implants or braces?", a: "Yes. Ohio rules allow general dentists to announce specific services, including specialty-type services. Rule 4715-13-03(E) requires the phrase “General Dentist” directly after or below the dentist’s name, at least as prominently as the list of services, for example “John Doe, D.D.S., general dentist.” Check every service page, bio and profile listing." },
+      { q: "Who can use the word specialist on an Ohio dental website?", a: "Only dentists who meet rule 4715-5-04: a specialty with an ADA-recognized certifying board and an accredited post-doctoral program in it. Terms such as orthodontist, periodontist, endodontist and pediatric dentist are reserved the same way. Specialists must list their recognized specialty directly after or below their name under rule 4715-13-02(E)." },
+      { q: "Can an Ohio dentist post patient testimonials online?", a: "Yes, but rule 4715-13-01(C) says testimonials or endorsements may be made only by patients of record. That excludes paid actors and quotes from people who never received care. Get each patient’s written permission before using their words or photo, and avoid any treatment details they have not agreed to share publicly." },
+      { q: "How long should an Ohio dental practice keep copies of its website?", a: "Rule 4715-13-01(A) says each different advertisement must be kept for two years at the dental facility and made available within 24 hours when an authorized agent of the board asks. For a website, keep a dated copy of each meaningful version of your pages, along with ad landing pages and marketing emails." },
+      { q: "How much does a SaySites website for a Cleveland dental practice cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment request form, Dentist structured data, a booking button that links to your current scheduler and English or Spanish pages. You can ask for a free redesign preview of your current site first." },
+    ],
+    about: ['Ohio State Dental Board', 'Dental advertising', 'Dental practice websites', 'Cleveland, Ohio'],
+    published: '2026-11-03',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
