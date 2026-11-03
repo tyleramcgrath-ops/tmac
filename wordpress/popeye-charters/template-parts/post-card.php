@@ -11,11 +11,7 @@ $cats = get_the_category();
 ?>
 <article <?php post_class( 'post-card' ); ?>>
 	<a class="post-card__media" href="<?php the_permalink(); ?>" tabindex="-1" aria-hidden="true">
-		<?php if ( has_post_thumbnail() ) : ?>
-			<?php the_post_thumbnail( 'popeye-wide', array( 'loading' => 'lazy' ) ); ?>
-		<?php else : ?>
-			<img src="<?php echo esc_url( popeye_img( 'public_fbab_6229d9679bfe4e8c8741d48790e51b52' ) ); ?>" alt="" loading="lazy">
-		<?php endif; ?>
+		<img src="<?php echo esc_url( popeye_post_image() ); ?>" alt="" loading="lazy">
 		<?php if ( $cats ) : ?>
 			<span class="pill"><?php echo esc_html( $cats[0]->name ); ?></span>
 		<?php endif; ?>

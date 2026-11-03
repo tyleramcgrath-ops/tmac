@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'POPEYE_VERSION', '1.0.0' );
+define( 'POPEYE_VERSION', '1.1.0' );
 define( 'POPEYE_DIR', get_template_directory() );
 
 require POPEYE_DIR . '/inc/helpers.php';

@@ -192,3 +192,19 @@ function popeye_icon( $name ) {
 function popeye_the_icon( $name ) {
 	echo popeye_icon( $name ); // phpcs:ignore WordPress.Security.EscapeOutput -- static markup.
 }
+
+/**
+ * Cover image URL for a blog post: Featured Image, else the bundled photo it was imported with.
+ *
+ * @param int|null $post Post ID.
+ * @param string   $size Image size.
+ * @return string
+ */
+function popeye_post_image( $post = null, $size = 'popeye-wide' ) {
+	$post = $post ? $post : get_the_ID();
+	if ( has_post_thumbnail( $post ) ) {
+		return (string) get_the_post_thumbnail_url( $post, $size );
+	}
+	$stem = get_post_meta( $post, '_popeye_image', true );
+	return popeye_img( $stem ? $stem : 'public_fbab_6229d9679bfe4e8c8741d48790e51b52' );
+}

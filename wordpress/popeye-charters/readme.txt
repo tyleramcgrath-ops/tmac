@@ -12,10 +12,16 @@ with the same design, copy and photos.
 
 1. Zip the `popeye-charters` folder, or upload the folder to wp-content/themes/.
 2. Appearance → Themes → activate "Popeye Charters".
-3. Appearance → Popeye Setup → "Import Popeye Charters content". This creates:
+3. Open wp-admin once as an administrator. The content imports automatically on that
+   first admin page load (it takes a few seconds), and a green notice confirms it. You can
+   also re-run it from Appearance → Popeye Setup. It creates:
    * Pages: Home, Our Story, Elite Cruises, Blog, Gallery, Contact, Book a Charter (each with its page template)
    * The 8 charter Experiences with their durations, highlights, inclusions, galleries and quotes
-   * Primary and footer menus, static front page, posts page, /%postname%/ permalinks
+   * All 45 blog guides with categories, tags, original dates, excerpts and cover photos
+   * Primary and footer menus, static front page, posts page and /blog/%postname%/ permalinks
+     (the original site's URLs) on a fresh site
+   Cover photos are added to the Media Library as Featured Images over the next few admin
+   page loads.
    Running it again skips anything that already exists.
 4. Appearance → Customize → Popeye Charters: check the phone, email, inquiry inbox,
    homepage hero, footer text and Google Analytics ID.
@@ -41,8 +47,6 @@ with the same design, copy and photos.
 
 == Content not migrated by the theme ==
 
-* Blog posts: the original site has about 45 guides. Import them as normal posts. The theme
-  styles the blog index, single posts and the homepage "Captain's Log" section.
 * The original site's AI chat widget and its /admin dashboard were part of the old app's
   backend and are not part of this theme.
 

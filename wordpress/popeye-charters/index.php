@@ -39,6 +39,17 @@ get_template_part(
 
 <section class="section section--parchment">
 	<div class="container">
+		<?php
+		$cats = get_categories( array( 'hide_empty' => true ) );
+		if ( ( is_home() || is_category() ) && count( $cats ) > 1 ) :
+			?>
+			<nav class="filters" aria-label="<?php esc_attr_e( 'Blog categories', 'popeye-charters' ); ?>">
+				<a class="filter<?php echo is_home() ? ' is-active' : ''; ?>" href="<?php echo esc_url( popeye_blog_url() ); ?>"><?php esc_html_e( 'All', 'popeye-charters' ); ?> <span><?php echo (int) wp_count_posts()->publish; ?></span></a>
+				<?php foreach ( $cats as $c ) : ?>
+					<a class="filter<?php echo is_category( $c->term_id ) ? ' is-active' : ''; ?>" href="<?php echo esc_url( get_category_link( $c ) ); ?>"><?php echo esc_html( $c->name ); ?> <span><?php echo (int) $c->count; ?></span></a>
+				<?php endforeach; ?>
+			</nav>
+		<?php endif; ?>
 		<?php if ( have_posts() ) : ?>
 			<div class="grid grid--3">
 				<?php

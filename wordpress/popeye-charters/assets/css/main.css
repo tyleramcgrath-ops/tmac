@@ -605,3 +605,8 @@ body:not(.has-sticky-bar) .to-top { bottom: 1.25rem; }
 /* Solid header while the mobile menu is open; stronger shade behind centered hero text. */
 .nav-open .site-header, body.has-hero-top.nav-open .site-header:not(.is-scrolled) { background: var(--navy-dark); }
 .hero--center .hero__shade { background: radial-gradient(ellipse at center, rgba(15, 30, 48, .55) 0%, rgba(15, 30, 48, .35) 70%), linear-gradient(180deg, rgba(15, 30, 48, .5) 0%, rgba(15, 30, 48, .3) 45%, rgba(15, 30, 48, .85) 100%); }
+a.filter span { opacity: .55; font-size: .75rem; margin-left: .15rem; }
+a.filter:hover { color: var(--navy); }
+a.filter.is-active, a.filter.is-active:hover { color: var(--white); }
+.prose h2 { font-size: clamp(1.6rem, 2.6vw, 2rem); margin-top: 2.5rem; }
+.prose h3 { font-size: 1.35rem; }

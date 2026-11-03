@@ -16,7 +16,7 @@ while ( have_posts() ) :
 		'template-parts/page-hero',
 		null,
 		array(
-			'image'   => has_post_thumbnail() ? get_the_post_thumbnail_url( null, 'full' ) : popeye_img( 'public_4114_7215344bbf124e30a59b01153b1bd2d3' ),
+			'image'   => popeye_post_image( null, 'full' ),
 			'eyebrow' => $cats ? $cats[0]->name : __( "Captain's Log", 'popeye-charters' ),
 			'title'   => get_the_title(),
 			/* translators: 1: date, 2: minutes */

@@ -8,16 +8,41 @@
 
 defined( 'ABSPATH' ) || exit;
 
+/**
+ * Bump when the bundled content changes so existing installs pick up new items
+ * (e.g. blog posts added in 1.1). Existing items are never overwritten.
+ */
+define( 'POPEYE_CONTENT_VERSION', 2 );
+
 add_action( 'after_switch_theme', 'popeye_activation' );
 /**
- * Flush rewrites so /experiences/ works and flag the setup notice.
+ * Flush rewrites so /experiences/ works. The content import itself runs on the next admin load.
  */
 function popeye_activation() {
 	popeye_register_experiences();
 	flush_rewrite_rules();
-	if ( ! get_option( 'popeye_imported' ) ) {
-		update_option( 'popeye_show_setup_notice', 1 );
+}
+
+add_action( 'admin_init', 'popeye_auto_import', 20 );
+/**
+ * Import the site content automatically the first time an administrator loads wp-admin
+ * with this theme active (and again, adding only missing items, when the bundled content
+ * version changes). Afterwards, attach bundled photos to the Media Library a few at a time.
+ */
+function popeye_auto_import() {
+	if ( ! current_user_can( 'manage_options' ) || wp_doing_ajax() || ( defined( 'DOING_CRON' ) && DOING_CRON ) ) {
+		return;
 	}
+	if ( (int) get_option( 'popeye_content_version' ) < POPEYE_CONTENT_VERSION && ! get_transient( 'popeye_import_lock' ) ) {
+		set_transient( 'popeye_import_lock', 1, 5 * MINUTE_IN_SECONDS );
+		$log = popeye_run_import();
+		update_option( 'popeye_content_version', POPEYE_CONTENT_VERSION );
+		delete_transient( 'popeye_import_lock' );
+		set_transient( 'popeye_import_log', $log, 10 * MINUTE_IN_SECONDS );
+		update_option( 'popeye_show_setup_notice', 'done' );
+		return;
+	}
+	popeye_attach_images_batch( 6 );
 }
 
 add_action( 'admin_menu', 'popeye_setup_page' );
@@ -33,14 +58,15 @@ add_action( 'admin_notices', 'popeye_setup_notice' );
  * Nudge to run the importer after activation.
  */
 function popeye_setup_notice() {
-	if ( ! current_user_can( 'manage_options' ) || ! get_option( 'popeye_show_setup_notice' ) ) {
+	if ( ! current_user_can( 'manage_options' ) || 'done' !== get_option( 'popeye_show_setup_notice' ) ) {
 		return;
 	}
 	$screen = get_current_screen();
 	if ( $screen && 'appearance_page_popeye-setup' === $screen->id ) {
 		return;
 	}
-	echo '<div class="notice notice-info"><p><strong>' . esc_html__( 'Popeye Charters theme is active.', 'popeye-charters' ) . '</strong> ' . esc_html__( 'Import the site pages, charter experiences and menus to get started.', 'popeye-charters' ) . ' <a class="button button-primary" href="' . esc_url( admin_url( 'themes.php?page=popeye-setup' ) ) . '">' . esc_html__( 'Run Popeye Setup', 'popeye-charters' ) . '</a></p></div>';
+	delete_option( 'popeye_show_setup_notice' );
+	echo '<div class="notice notice-success is-dismissible"><p><strong>' . esc_html__( 'Popeye Charters content imported.', 'popeye-charters' ) . '</strong> ' . esc_html__( 'Pages, charter experiences, blog posts and menus are in place.', 'popeye-charters' ) . ' <a href="' . esc_url( admin_url( 'themes.php?page=popeye-setup' ) ) . '">' . esc_html__( 'See what was created', 'popeye-charters' ) . '</a> · <a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'View site', 'popeye-charters' ) . '</a></p></div>';
 }
 
 /**
@@ -63,6 +89,7 @@ function popeye_setup_page_html() {
 		<ul style="list-style:disc;padding-left:20px">
 			<li><?php esc_html_e( 'Pages: Home, Our Story, Elite Cruises, Blog, Gallery, Contact, Book (with the matching page templates)', 'popeye-charters' ); ?></li>
 			<li><?php esc_html_e( 'The 8 charter Experiences with durations, highlights, inclusions, galleries and guest quotes', 'popeye-charters' ); ?></li>
+			<li><?php esc_html_e( 'All 45 blog guides with their categories, tags, dates and cover photos', 'popeye-charters' ); ?></li>
 			<li><?php esc_html_e( 'Primary and footer menus, static front page, posts page and pretty permalinks', 'popeye-charters' ); ?></li>
 		</ul>
 		<p><?php esc_html_e( 'Anything that already exists (same slug) is left untouched, so it is safe to run again.', 'popeye-charters' ); ?></p>
@@ -130,9 +157,15 @@ function popeye_ensure_page( $slug, $title, $template, $content, &$log ) {
 function popeye_run_import() {
 	$log = array();
 
-	if ( ! get_option( 'permalink_structure' ) ) {
-		update_option( 'permalink_structure', '/%postname%/' );
-		$log[] = 'Set permalinks to /%postname%/.';
+	// Match the original site's URLs (/blog/post-slug/) on a fresh site. A site that already
+	// has its own posts keeps its permalink settings; old /blog/ links still redirect (see below).
+	$structure = (string) get_option( 'permalink_structure' );
+	$own_posts = get_posts( array( 'post_type' => 'post', 'post_status' => 'any', 'posts_per_page' => 2, 'fields' => 'ids' ) );
+	$own_posts = array_filter( $own_posts, fn( $id ) => 'hello-world' !== get_post_field( 'post_name', $id ) );
+	if ( '/blog/%postname%/' !== $structure && ( ! $structure || ! $own_posts ) ) {
+		global $wp_rewrite;
+		$wp_rewrite->set_permalink_structure( '/blog/%postname%/' );
+		$log[] = 'Set permalinks to /blog/%postname%/ to match the original site.';
 	}
 
 	$home    = popeye_ensure_page( 'home', 'Home', '', '', $log );
@@ -186,6 +219,9 @@ function popeye_run_import() {
 		$log[]     = sprintf( 'Created experience "%s".', $e['title'] );
 	}
 
+	popeye_import_posts( $log );
+	popeye_trash_default_content( $log );
+
 	// Menus.
 	$locations = get_theme_mod( 'nav_menu_locations', array() );
 	if ( empty( $locations['primary'] ) && ! wp_get_nav_menu_object( 'Primary' ) ) {
@@ -227,8 +263,204 @@ function popeye_run_import() {
 
 	popeye_register_experiences();
 	flush_rewrite_rules();
+	popeye_queue_images();
 	update_option( 'popeye_imported', time() );
 	delete_option( 'popeye_show_setup_notice' );
 
 	return $log;
+}
+
+/**
+ * Import the blog guides from inc/data/posts.json. Existing slugs are skipped.
+ *
+ * @param array $log Log (by reference).
+ */
+function popeye_import_posts( &$log ) {
+	$file = POPEYE_DIR . '/inc/data/posts.json';
+	if ( ! file_exists( $file ) ) {
+		return;
+	}
+	$posts = json_decode( (string) file_get_contents( $file ), true ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	if ( ! is_array( $posts ) ) {
+		return;
+	}
+	$created = 0;
+	$skipped = 0;
+	foreach ( $posts as $p ) {
+		if ( get_page_by_path( $p['slug'], OBJECT, 'post' ) ) {
+			++$skipped;
+			continue;
+		}
+		$cat = term_exists( $p['category'], 'category' );
+		if ( ! $cat ) {
+			$cat = wp_insert_term( $p['category'], 'category' );
+		}
+		$cat_id = is_array( $cat ) ? (int) $cat['term_id'] : (int) $cat;
+		$date   = $p['date'] . ' 09:00:00';
+		$id     = wp_insert_post(
+			array(
+				'post_type'     => 'post',
+				'post_status'   => 'publish',
+				'post_title'    => $p['title'],
+				'post_name'     => $p['slug'],
+				'post_content'  => $p['content'],
+				'post_excerpt'  => $p['excerpt'],
+				'post_date'     => $date,
+				'post_date_gmt' => get_gmt_from_date( $date ),
+				'post_category' => $cat_id ? array( $cat_id ) : array(),
+				'tags_input'    => isset( $p['tags'] ) ? $p['tags'] : array(),
+				'comment_status' => 'closed',
+			),
+			true
+		);
+		if ( is_wp_error( $id ) ) {
+			$log[] = sprintf( 'Could not import "%s": %s', $p['title'], $id->get_error_message() );
+			continue;
+		}
+		if ( ! empty( $p['image'] ) ) {
+			update_post_meta( $id, '_popeye_image', $p['image'] );
+		}
+		++$created;
+	}
+	$log[] = sprintf( 'Blog: imported %d posts%s.', $created, $skipped ? sprintf( ' (%d already existed)', $skipped ) : '' );
+
+	// Remove the empty default category if nothing is in it any more.
+	$uncat = get_category_by_slug( 'uncategorized' );
+	if ( $uncat && 0 === (int) $uncat->count && (int) get_option( 'default_category' ) === (int) $uncat->term_id ) {
+		$first = get_term_by( 'name', 'Charter Guide', 'category' );
+		if ( $first ) {
+			update_option( 'default_category', $first->term_id );
+		}
+	}
+}
+
+/**
+ * Move WordPress's untouched sample post and page to the trash (restorable).
+ *
+ * @param array $log Log (by reference).
+ */
+function popeye_trash_default_content( &$log ) {
+	foreach ( array( array( 'hello-world', 'post', 'Hello world!' ), array( 'sample-page', 'page', 'Sample Page' ) ) as $d ) {
+		$p = get_page_by_path( $d[0], OBJECT, $d[1] );
+		if ( $p && $d[2] === $p->post_title && 'publish' === $p->post_status && $p->post_modified_gmt === $p->post_date_gmt ) {
+			wp_trash_post( $p->ID );
+			$log[] = sprintf( 'Moved the default "%s" to the trash.', $d[2] );
+		}
+	}
+}
+
+/**
+ * Queue the bundled photos used as cover images so they can be added to the Media Library
+ * and set as real Featured Images (done a few per admin page load to avoid timeouts).
+ */
+function popeye_queue_images() {
+	$queue = array();
+	foreach ( get_posts( array( 'post_type' => array( 'post', 'experience' ), 'posts_per_page' => -1, 'fields' => 'ids', 'post_status' => 'publish' ) ) as $id ) {
+		if ( has_post_thumbnail( $id ) ) {
+			continue;
+		}
+		$stem = 'experience' === get_post_type( $id ) ? get_post_meta( $id, '_popeye_hero_image', true ) : get_post_meta( $id, '_popeye_image', true );
+		if ( $stem ) {
+			$queue[] = $id;
+		}
+	}
+	update_option( 'popeye_image_queue', $queue, false );
+}
+
+/**
+ * Add a bundled image to the Media Library once and return its attachment ID.
+ *
+ * @param string $stem Image file stem in assets/images.
+ * @return int Attachment ID or 0.
+ */
+function popeye_bundled_attachment( $stem ) {
+	$map = get_option( 'popeye_attachments', array() );
+	if ( ! empty( $map[ $stem ] ) && get_post( $map[ $stem ] ) ) {
+		return (int) $map[ $stem ];
+	}
+	$src = POPEYE_DIR . '/assets/images/' . $stem . '.jpg';
+	if ( ! file_exists( $src ) ) {
+		return 0;
+	}
+	require_once ABSPATH . 'wp-admin/includes/image.php';
+	$upload = wp_upload_bits( 'popeye-' . sanitize_file_name( $stem ) . '.jpg', null, (string) file_get_contents( $src ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions
+	if ( ! empty( $upload['error'] ) ) {
+		return 0;
+	}
+	$caption = '';
+	foreach ( popeye_content( 'gallery' ) as $g ) {
+		if ( $g[0] === $stem ) {
+			$caption = $g[1];
+			break;
+		}
+	}
+	$att = wp_insert_attachment(
+		array(
+			'post_mime_type' => 'image/jpeg',
+			'post_title'     => $caption ? $caption : 'Popeye Charters',
+			'post_status'    => 'inherit',
+		),
+		$upload['file']
+	);
+	if ( ! $att || is_wp_error( $att ) ) {
+		return 0;
+	}
+	wp_update_attachment_metadata( $att, wp_generate_attachment_metadata( $att, $upload['file'] ) );
+	if ( $caption ) {
+		update_post_meta( $att, '_wp_attachment_image_alt', $caption );
+	}
+	$map[ $stem ] = $att;
+	update_option( 'popeye_attachments', $map, false );
+	return (int) $att;
+}
+
+/**
+ * Process a few queued posts: create the attachment (if new) and set it as Featured Image.
+ *
+ * @param int $limit Max new attachments to generate this request.
+ */
+function popeye_attach_images_batch( $limit ) {
+	$queue = get_option( 'popeye_image_queue', array() );
+	if ( ! $queue || get_transient( 'popeye_image_lock' ) ) {
+		return;
+	}
+	set_transient( 'popeye_image_lock', 1, MINUTE_IN_SECONDS );
+	$made  = 0;
+	$start = microtime( true );
+	while ( $queue && $made < $limit && microtime( true ) - $start < 15 ) {
+		$id   = array_shift( $queue );
+		$stem = 'experience' === get_post_type( $id ) ? get_post_meta( $id, '_popeye_hero_image', true ) : get_post_meta( $id, '_popeye_image', true );
+		if ( ! $stem || has_post_thumbnail( $id ) ) {
+			continue;
+		}
+		$map = get_option( 'popeye_attachments', array() );
+		if ( empty( $map[ $stem ] ) ) {
+			++$made;
+		}
+		$att = popeye_bundled_attachment( $stem );
+		if ( $att ) {
+			set_post_thumbnail( $id, $att );
+		}
+	}
+	update_option( 'popeye_image_queue', $queue, false );
+	delete_transient( 'popeye_image_lock' );
+}
+
+add_action( 'template_redirect', 'popeye_legacy_blog_redirect' );
+/**
+ * Send old /blog/{slug} links to the post if the permalink structure differs.
+ */
+function popeye_legacy_blog_redirect() {
+	if ( ! is_404() ) {
+		return;
+	}
+	$path = trim( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '', PHP_URL_PATH ), '/' );
+	if ( preg_match( '#^blog/([a-z0-9-]+)$#', $path, $m ) ) {
+		$post = get_page_by_path( $m[1], OBJECT, 'post' );
+		$target = $post && 'publish' === $post->post_status ? get_permalink( $post ) : '';
+		if ( $target && trim( (string) wp_parse_url( $target, PHP_URL_PATH ), '/' ) !== $path ) {
+			wp_safe_redirect( $target, 301 );
+			exit;
+		}
+	}
 }

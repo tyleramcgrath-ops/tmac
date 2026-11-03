@@ -199,3 +199,15 @@ function popeye_widgets() {
 		)
 	);
 }
+
+add_action( 'pre_get_posts', 'popeye_blog_per_page' );
+/**
+ * Blog listings in rows of three.
+ *
+ * @param WP_Query $q Query.
+ */
+function popeye_blog_per_page( $q ) {
+	if ( ! is_admin() && $q->is_main_query() && ( $q->is_home() || $q->is_category() || $q->is_tag() ) ) {
+		$q->set( 'posts_per_page', 12 );
+	}
+}
