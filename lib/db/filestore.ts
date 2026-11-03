@@ -5,8 +5,20 @@ import type { Store } from './index'
 
 // Zero-dependency local store: one JSON file per report under .data/reports,
 // plus a settings.json. Used when DATABASE_URL is not configured.
+//
+// SiteGround's Node.js hosting runs each deploy from a new release folder
+// (".nodeapp/1790973536-im6ky2/app_source"), so .data inside it would be
+// left behind on every update. There the store lives beside the releases
+// instead, where lib/prune-releases.ts leaves it alone. SEO_INTEL_DATA_DIR
+// overrides both.
+const RELEASE = /^\d{10}-[a-z0-9]{6}$/
+function dataDir(cwd = process.cwd()): string {
+  if (process.env.SEO_INTEL_DATA_DIR) return process.env.SEO_INTEL_DATA_DIR
+  const release = [cwd, path.dirname(cwd)].find((d) => RELEASE.test(path.basename(d)))
+  return release ? path.join(path.dirname(release), 'seo-intel-data') : path.join(cwd, '.data')
+}
 
-const DATA_DIR = path.join(process.cwd(), '.data')
+const DATA_DIR = dataDir()
 const REPORTS_DIR = path.join(DATA_DIR, 'reports')
 const SETTINGS_FILE = path.join(DATA_DIR, 'settings.json')
 
