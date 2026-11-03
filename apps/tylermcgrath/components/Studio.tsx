@@ -24,7 +24,7 @@ const SERVICES = [
   { key: "about", title: "About Tyler", label: "THE PERSON BEHIND THE WORK", symbol: "TM", copy: "14+ years in search and digital growth." },
   { key: "marketing", title: "Marketing & SEO", label: "STRATEGY · SEARCH · AI", symbol: "◎", copy: "SEO, GEO, AEO and digital growth." },
   { key: "work", title: "Selected Work", label: `${projects.length} DIGITAL DESTINATIONS`, symbol: "◈", copy: "Explore websites across industries." },
-  { key: "tools", title: "Tools", label: `${tools.length} SEO TOOLS`, symbol: "✧", copy: "The SEO tools I build, around the Compass." },
+  { key: "tools", title: "Tools", label: `${tools.length} TOOLS`, symbol: "✧", copy: "The SEO and content tools I build, around the Compass." },
   { key: "contact", title: "Let’s Connect", label: "YOUR NEXT DIRECTION", symbol: "↗", copy: "Start a conversation about your business." },
 ];
 
@@ -808,7 +808,7 @@ function Expertise({ panel, setPanel, exploreWork }: { panel: string; setPanel: 
           <div className="hud-stats">
             <div><b>14+</b><span>YEARS IN SEARCH</span></div>
             <div><b>{projects.length}</b><span>SITES IN THE COLLECTION</span></div>
-            <div><b>{tools.length}</b><span>SEO TOOLS BUILT</span></div>
+            <div><b>{tools.length}</b><span>TOOLS BUILT</span></div>
           </div>
           <p>I’m Tyler McGrath. I bring 14+ years of experience transforming digital presence into scalable revenue channels.</p>
           <p>

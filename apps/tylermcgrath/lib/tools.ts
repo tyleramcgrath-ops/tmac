@@ -1,4 +1,4 @@
-// Tools: the Compass is North Star HQ, and these SEO tools orbit it (the
+// Tools: the Compass is North Star HQ, and these tools orbit it (the
 // third ring, next to Studio and Selected Work). `hub` is North Star HQ itself,
 // opened by clicking the Compass while that ring is showing.
 //
@@ -59,6 +59,32 @@ const tools: Tool[] = [
     url: "https://citation-gap.vercel.app/",
     status: "offline",
     home: "citation-gap.vercel.app",
+  },
+  {
+    key: "seo-intel",
+    name: "Competitor Intel",
+    symbol: "⌖",
+    label: "TOP 10 GAP ANALYSIS",
+    tagline: "See exactly what the top 10 has that your page doesn't.",
+    lead: "Your page against the live top 10, side by side.",
+    body: "Enter a page and a keyword. It pulls the live Google top 10, crawls every result and your page, and compares content, headings, schema, links, keyword placement and page speed, then hands back a prioritised action plan.",
+    list: ["Live top 10, featured snippets and People Also Ask", "Content, schema and heading gaps, with ready-to-paste JSON-LD", "Internal and external link comparison", "PageSpeed and Core Web Vitals against competitors"],
+    url: "https://seo-competitor-intelligence.vercel.app/",
+    status: "offline",
+    home: "seo-competitor-intelligence.vercel.app",
+  },
+  {
+    key: "shorts-studio",
+    name: "Viral Shorts Studio",
+    symbol: "▶",
+    label: "AI VIDEO BUILDER",
+    tagline: "A topic in, a finished vertical short out.",
+    lead: "Script, voice, footage and captions, in your browser.",
+    body: "Give it a topic and it writes the script, voices it, finds matching footage, syncs word-by-word captions and exports a vertical video ready for Shorts, Reels or TikTok. It runs entirely in the browser on free services, with your own keys optional.",
+    list: ["AI script and hook writing", "Voiceover with synced captions", "Stock footage matched to every line", "Exports a full-length vertical video"],
+    url: "https://tylermcgrath.com/shorts-studio/",
+    status: "live",
+    home: "tylermcgrath.com/shorts-studio",
   },
 ];
 
