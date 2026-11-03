@@ -1,0 +1,5 @@
+/* Block editor styles — mirrors front-end typography. */
+body { font-family: "Inter", system-ui, sans-serif; color: #6b5a45; font-size: 1.02rem; line-height: 1.65; }
+h1, h2, h3, h4, h5, h6, .editor-post-title__input { font-family: "Cormorant Garamond", "Playfair Display", Georgia, serif; color: #1a2e44; font-weight: 600; }
+a { color: #4a7c72; }
+blockquote { border-left: 3px solid #c4a265; padding-left: 1.5rem; font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 1.3rem; color: #1a2e44; }
