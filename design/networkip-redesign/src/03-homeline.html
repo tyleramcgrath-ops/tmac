@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NetworkIP — Concept C: Home Line</title>
+<link href="fonts-03-homeline.css" rel="stylesheet">
+<style>
+  :root{--cream:#F4EFE6;--cream2:#EAE2D3;--navy:#0E2749;--rust:#B8432F;--gold:#D6A64D;--ink:#1A2233;--muted:#6A6558;--line:#DDD3C1}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--cream);font-family:"Figtree",sans-serif;color:var(--ink);width:1440px;-webkit-font-smoothing:antialiased}
+  .wrap{width:1240px;margin:0 auto}
+  .serif{font-family:"DM Serif Display",serif;font-weight:400}
+  .topbar{background:var(--navy);color:#C7D0DE;font-size:13px;text-align:center;padding:10px}
+  .topbar b{color:var(--gold)}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0}
+  .logo{font-family:"DM Serif Display",serif;font-size:28px;color:var(--navy)}
+  .logo span{color:var(--rust);font-style:italic}
+  .links{display:flex;gap:30px;font-weight:500;font-size:15px}
+  .pill{padding:13px 22px;border-radius:999px;font-weight:600;font-size:15px;display:inline-flex;gap:8px}
+  .pill.dark{background:var(--navy);color:#fff}
+  .pill.rust{background:var(--rust);color:#fff}
+  .pill.out{border:1.5px solid var(--navy);color:var(--navy)}
+
+  .hero{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center;padding:50px 0 90px}
+  h1{font-family:"DM Serif Display",serif;font-weight:400;font-size:92px;line-height:.98;letter-spacing:-.01em;color:var(--navy)}
+  h1 i{color:var(--rust)}
+  .lede{font-size:21px;line-height:1.55;color:var(--muted);margin:28px 0 36px;max-width:540px}
+  .row{display:flex;gap:14px;align-items:center}
+  .trust{margin-top:44px;display:flex;gap:28px;align-items:center;color:var(--muted);font-size:14px}
+  .trust b{font-size:18px;color:var(--navy)}
+
+  /* phone visual */
+  .stage{position:relative;height:620px}
+  .blob{position:absolute;inset:40px 0 0 40px;background:var(--navy);border-radius:48% 52% 42% 58%/55% 45% 55% 45%}
+  .blob:after{content:"";position:absolute;inset:0;border-radius:inherit;background:repeating-radial-gradient(circle at 60% 40%,transparent 0 38px,rgba(214,166,77,.18) 38px 39px)}
+  .phone{position:absolute;left:150px;top:0;width:290px;height:590px;background:#fff;border-radius:44px;border:10px solid #141C2B;box-shadow:0 40px 80px -30px rgba(14,39,73,.6);padding:40px 24px;text-align:center}
+  .phone .ava{width:96px;height:96px;border-radius:50%;margin:40px auto 18px;background:linear-gradient(135deg,var(--gold),var(--rust));display:grid;place-items:center;color:#fff;font-family:"DM Serif Display";font-size:40px}
+  .phone h5{font-size:24px;font-family:"DM Serif Display";font-weight:400;color:var(--navy)}
+  .phone .sub{color:var(--muted);font-size:14px;margin-top:6px}
+  .phone .time{font-size:34px;font-weight:600;color:var(--navy);margin:34px 0 8px;font-variant-numeric:tabular-nums}
+  .badge{display:inline-block;background:#E7F4EC;color:#1E7A4B;font-weight:600;font-size:12px;padding:6px 12px;border-radius:999px}
+  .keys{display:flex;justify-content:center;gap:22px;margin-top:70px}
+  .keys i{width:58px;height:58px;border-radius:50%;background:#EEF1F5;display:block}
+  .keys i.end{background:var(--rust)}
+  .float{position:absolute;background:#fff;border-radius:18px;padding:16px 18px;box-shadow:0 20px 40px -20px rgba(14,39,73,.35);font-size:14px;display:flex;gap:12px;align-items:center}
+  .float .f{font-size:26px}
+  .float b{display:block;color:var(--navy)}
+  .f1{left:0;top:120px}.f2{right:0;top:300px}.f3{left:30px;bottom:40px}
+
+  .band{background:var(--navy);color:#fff;padding:26px 0}
+  .band .wrap{display:flex;justify-content:space-between;align-items:center;font-size:24px;font-weight:600;color:#7F90AA}
+  .band small{font-size:13px;font-weight:500;color:var(--gold);text-transform:uppercase;letter-spacing:.12em}
+
+  section{padding:120px 0}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+  h2{font-family:"DM Serif Display",serif;font-weight:400;font-size:62px;line-height:1.02;color:var(--navy)}
+  h2 i{color:var(--rust)}
+  .copy{font-size:19px;line-height:1.65;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-top:40px;border-top:1px solid var(--line)}
+  .stat{padding:30px 0;border-bottom:1px solid var(--line)}
+  .stat:nth-child(odd){padding-right:30px;border-right:1px solid var(--line)}
+  .stat:nth-child(even){padding-left:30px}
+  .stat b{font-family:"DM Serif Display",serif;font-weight:400;font-size:58px;color:var(--navy);display:block;line-height:1}
+  .stat span{color:var(--muted);font-size:15px;display:block;margin-top:8px;line-height:1.4}
+
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:60px}
+  .step{background:#fff;border-radius:28px;padding:38px;border:1px solid var(--line)}
+  .step .num{width:44px;height:44px;border-radius:50%;background:var(--cream2);display:grid;place-items:center;font-weight:700;color:var(--rust)}
+  .step h3{font-family:"DM Serif Display",serif;font-weight:400;font-size:30px;color:var(--navy);margin:40px 0 12px}
+  .step p{color:var(--muted);line-height:1.6}
+
+  .quote{background:var(--cream2);border-radius:40px;padding:90px;display:grid;grid-template-columns:1.5fr 1fr;gap:60px;align-items:center}
+  .quote blockquote{font-family:"DM Serif Display",serif;font-size:46px;line-height:1.15;color:var(--navy)}
+  .quote blockquote i{color:var(--rust)}
+  .contact{background:#fff;border-radius:24px;padding:34px;display:grid;gap:18px}
+  .contact div{border-bottom:1px solid var(--line);padding-bottom:16px;font-size:15px;color:var(--muted)}
+  .contact div b{display:block;font-size:19px;color:var(--navy);margin-bottom:2px}
+  footer{padding:50px 0;display:flex;justify-content:space-between;color:var(--muted);font-size:14px;border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="topbar">New: <b>Customer Intelligence</b> for MVNOs — see who your subscribers are calling →</div>
+<div class="wrap">
+  <nav>
+    <div class="logo">Network<span>IP</span></div>
+    <div class="links"><span>How it works</span><span>International Calling</span><span>Customer Intelligence</span><span>Technology</span><span>About</span></div>
+    <span class="pill dark">Get in touch</span>
+  </nav>
+
+  <div class="hero">
+    <div>
+      <h1>Help your customers <i>call home.</i></h1>
+      <p class="lede">NetworkIP gives MVNOs and MNOs worldwide calling that's simple to sell and effortless to use — so subscribers stop reaching for apps and start staying with you.</p>
+      <div class="row"><span class="pill rust">Book a strategy call →</span><span class="pill out">▶ 2‑min overview</span></div>
+      <div class="trust"><span><b>25+</b> years in international voice</span><span><b>4</b> major U.S. carrier connections</span></div>
+    </div>
+    <div class="stage">
+      <div class="blob"></div>
+      <div class="phone">
+        <div class="ava">A</div>
+        <h5>Abuela · Guadalajara</h5>
+        <div class="sub">+52 33 •••• ••••</div>
+        <div class="time">12:48</div>
+        <span class="badge">✓ Included in your plan</span>
+        <div class="keys"><i></i><i class="end"></i><i></i></div>
+      </div>
+      <div class="float f1"><span class="f">🇳🇬</span><div><b>Lagos</b>Connected · HD voice</div></div>
+      <div class="float f2"><span class="f">🇮🇳</span><div><b>Pune</b>No app needed</div></div>
+      <div class="float f3"><span class="f">🇵🇭</span><div><b>Manila</b>Same as calling stateside</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="band"><div class="wrap"><small>Direct dialing via</small><span>AT&amp;T</span><span>Verizon</span><span>T‑Mobile</span><span>Boost Mobile</span></div></div>
+
+<section>
+  <div class="wrap split">
+    <div>
+      <h2>A market of millions, <i>hiding in plain sight.</i></h2>
+      <p class="copy" style="margin-top:28px">Roaming matters to fewer than 2% of Americans. International calling matters to one in four. Yet most offers are built for the rare heavy user — and push everyone else to free apps.</p>
+      <p class="copy" style="margin-top:18px">We flip that model with proven, automated fraud &amp; abuse controls, so you can welcome the casual caller.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>51.6M</b><span>Foreign‑born U.S. residents (2024)</span></div>
+      <div class="stat"><b>15.6%</b><span>Of the U.S. population — a record high</span></div>
+      <div class="stat"><b>80M+</b><span>Addressable U.S. consumers</span></div>
+      <div class="stat"><b>&lt;2%</b><span>Need roaming, by comparison</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <h2 style="max-width:760px">Launch worldwide calling in <i>three steps.</i></h2>
+    <div class="steps">
+      <div class="step"><div class="num">1</div><h3>Pick your offer</h3><p>Bundle it into every plan, or sell it as a simple add‑on. We'll help you choose with Customer Intelligence.</p></div>
+      <div class="step"><div class="num">2</div><h3>Integrate once</h3><p>Plug into our platform and carrier connections. We take on routing, regulation and fraud.</p></div>
+      <div class="step"><div class="num">3</div><h3>Win &amp; retain</h3><p>Market a clear promise — call anyone, anywhere — and watch churn drop among international callers.</p></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="quote">
+      <blockquote>Call anyone, anywhere — <i>with no worries.</i></blockquote>
+      <div class="contact">
+        <div><b>512‑423‑0748</b>Talk to our team</div>
+        <div><b>marketing@networkip.net</b>We reply within a business day</div>
+        <div style="border:none;padding:0"><b>Longview, Texas</b>119 W Tyler St, Suite 100</div>
+        <span class="pill rust" style="justify-content:center">Contact us →</span>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="wrap"><footer><span>© 2025 NetworkIP</span><span>About · Management · Integration · Call Quality · Privacy</span></footer></div>
+</body>
+</html>

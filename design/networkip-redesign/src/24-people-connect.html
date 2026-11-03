@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetworkIP — People Connect Possibilities</title>
+<link rel="stylesheet" href="fonts-06-vibrant.css">
+<style>
+:root{
+  --ink:#0b0b0d;--text:#2b2b30;--muted:#5d5f66;--line:#e4e4e7;
+  --red:#a3141f;--red-dark:#86101a;--gold:#d8a040;--gold-deep:#b07d22;--gold-light:#ecc56f;
+  --font:"Plus Jakarta Sans",system-ui,sans-serif;
+}
+*{box-sizing:border-box}html,body{margin:0;overflow-x:hidden}
+body{background:#fff;color:var(--text);font-family:var(--font);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}a{color:inherit;text-decoration:none}
+h1,h2,h3{margin:0;color:var(--ink);font-weight:800;letter-spacing:-.035em;line-height:1}
+p{margin:0}
+.wrap{max-width:1280px;margin:0 auto;padding:0 56px}
+.ic{width:20px;height:20px}
+.btn{display:inline-flex;align-items:center;gap:12px;height:52px;padding:0 30px;border-radius:999px;background:var(--red);color:#fff;font-weight:600;font-size:1rem;box-shadow:0 14px 28px -14px rgba(163,20,31,.85)}
+.btn:hover{background:var(--red-dark)}
+.kicker{font-size:.8rem;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--ink)}
+.kicker::after{content:"";display:block;width:38px;height:3px;background:var(--gold);margin-top:14px}
+.kicker--red::before{content:"";display:block;width:38px;height:3px;background:var(--red);margin-bottom:14px}
+.kicker--red::after{display:none}
+.g{color:var(--gold)}.r{color:var(--red)}
+.side-words{text-align:right;font-size:.82rem;font-weight:600;letter-spacing:.34em;line-height:2;text-transform:uppercase;color:var(--ink)}
+.side-words::after{content:"";display:block;width:44px;height:3px;background:var(--gold);margin:12px 0 0 auto}
+.side-words--red::after{background:var(--red)}
+
+/* Header */
+.hd{position:relative;z-index:5;background:#fff}
+.hd-in{display:flex;align-items:center;height:96px;gap:56px}
+.logo img{height:50px;width:auto}
+.nav{display:flex;gap:34px;font-size:.95rem;font-weight:500;color:var(--ink)}
+.nav a:hover{color:var(--red)}
+.hd .btn{margin-left:auto;height:48px;padding:0 26px;font-size:.95rem}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;background:#fff;min-height:640px}
+.hero-globe{position:absolute;right:-13%;top:-120px;width:84%;max-width:1400px;-webkit-mask-image:linear-gradient(180deg,#000 58%,transparent 88%);mask-image:linear-gradient(180deg,#000 58%,transparent 88%)}
+.hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:160px;background:linear-gradient(180deg,rgba(255,255,255,0),#fff 85%);pointer-events:none}
+.hero-in{position:relative;z-index:1;padding:40px 56px 90px;display:grid;grid-template-columns:1fr 1fr;min-height:640px}
+.hero-copy{padding-top:20px}
+.hero h1{font-size:clamp(3.2rem,2rem + 4.6vw,6rem);margin:34px 0 34px;letter-spacing:-.045em;line-height:.96}
+.hero p{max-width:30em;font-size:1.12rem;color:var(--text)}
+.hero .btn{margin-top:34px}
+.hero .side-words{align-self:end;justify-self:end;padding-bottom:10px}
+
+/* Carrier strip */
+.strip{background:#fff;padding:28px 0 34px;border-bottom:1px solid var(--line)}
+.strip-label{text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.36em;text-transform:uppercase;color:var(--ink);margin-bottom:24px}
+.carriers{display:flex;justify-content:center;align-items:center}
+.carriers span{flex:1;max-width:260px;text-align:center;font-size:1.9rem;font-weight:800;letter-spacing:-.03em;color:var(--ink)}
+.carriers span+span{border-left:1px solid var(--line)}
+.carriers .att{color:#0a0a0a}
+.carriers .boost em{font-style:normal;color:var(--gold-deep)}
+
+/* Gold band */
+.band{position:relative;overflow:hidden;background:
+  radial-gradient(ellipse 60% 90% at 78% 40%,rgba(255,240,200,.85),rgba(255,240,200,0) 70%),
+  linear-gradient(120deg,#e8c578 0%,#d9ab52 45%,#c9963d 100%);
+  padding:74px 0 70px}
+.band-map{position:absolute;right:-4%;top:10px;width:62%;opacity:.95;mix-blend-mode:screen;pointer-events:none}
+.band-in{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:40px}
+.band h2{font-size:clamp(2.3rem,1.5rem + 2.6vw,3.6rem);margin:26px 0 22px;letter-spacing:-.04em;line-height:1.02}
+.band .lead{font-size:1.18rem;color:#1d1a14;max-width:30em}
+.band .side-words{align-self:end;justify-self:end}
+.feats{position:relative;display:grid;grid-template-columns:repeat(3,1fr);margin-top:56px}
+.feat{padding:0 36px 6px 44px;border-left:1px solid rgba(60,40,10,.35)}
+.feat:first-child{border-left:1px solid rgba(60,40,10,.35)}
+.feat svg{width:62px;height:62px;color:var(--red);margin-bottom:14px}
+.feat h3{font-size:1.5rem;letter-spacing:-.03em;margin-bottom:10px}
+.feat p{font-size:1.06rem;color:#2a241a}
+
+/* Bridging section */
+.bridge{position:relative;background:#fff;padding:0}
+.bridge-in{display:grid;grid-template-columns:.85fr 1.15fr;min-height:560px}
+.bridge-copy{padding:70px 56px 70px 56px;align-self:center;max-width:620px;margin-left:auto}
+.bridge h2{font-size:clamp(2.3rem,1.5rem + 2.4vw,3.4rem);margin:26px 0 24px;letter-spacing:-.045em;line-height:1.04}
+.bridge p{color:var(--muted);font-size:1.1rem;max-width:28em}
+.bridge .btn{margin-top:30px}
+.bridge-photo{position:relative;clip-path:polygon(14% 0,100% 0,100% 100%,0 100%);background:#2a1a0c url('img-white/person-phone.jpg') 40% 30%/cover no-repeat;margin-top:18px}
+.bridge-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(216,160,64,.18),rgba(216,160,64,.05) 50%,rgba(26,13,5,.0)),linear-gradient(90deg,rgba(26,13,5,0) 45%,rgba(26,13,5,.6) 100%);mix-blend-mode:normal}
+.bridge-photo .side-words{position:absolute;right:44px;bottom:48px;color:#fff}
+
+/* Impact */
+.impact{padding:44px 0 64px;background:#fff}
+.impact-in{display:grid;grid-template-columns:auto repeat(4,1fr);align-items:start}
+.impact .kicker{padding-right:44px}
+.imp{padding:0 34px;border-left:1px solid var(--line)}
+.imp strong{display:block;font-size:2.6rem;font-weight:800;letter-spacing:-.04em;line-height:1;color:var(--gold-deep)}
+.imp span{display:block;margin-top:10px;font-size:.74rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ink)}
+
+/* Footer */
+.ft{border-top:1px solid var(--line);padding:34px 0;font-size:.9rem;color:var(--muted)}
+.ft-in{display:flex;align-items:center;gap:40px;flex-wrap:wrap}
+.ft img{height:38px;width:auto}
+.ft-in .sp{margin-left:auto}
+
+@media (max-width:1100px){.nav{display:none}.hero-globe{width:95%;right:-30%;opacity:.9}.hero-in{grid-template-columns:1fr}.hero .side-words{display:none}
+ .band-in{grid-template-columns:1fr}.band .side-words{display:none}.band-map{width:100%;opacity:.5}
+ .bridge-in{grid-template-columns:1fr}.bridge-copy{margin:0;max-width:none}.bridge-photo{min-height:360px;clip-path:none;margin:0}
+ .impact-in{grid-template-columns:repeat(2,1fr);gap:28px 0}.impact .kicker{grid-column:1/-1}.imp:nth-child(4){border-left:0;padding-left:0}.imp:nth-child(2){border-left:0;padding-left:0}}
+@media (max-width:700px){.wrap{padding:0 20px}.hero-in{padding:20px 20px 60px}.hd-in{height:76px}.hd .btn{display:none}.logo img{height:42px}
+ .hero-globe{top:-20px;right:-55%;width:150%;opacity:.35}
+ .carriers{flex-wrap:wrap;gap:12px 0}.carriers span{flex:1 1 50%;font-size:1.35rem}.carriers span:nth-child(3){border-left:0}
+ .feats{grid-template-columns:1fr;gap:30px}.feat,.feat:first-child{padding:0 0 0 20px}
+ .bridge-copy{padding:56px 20px}.imp{padding:0 16px}.imp strong{font-size:2.1rem}}
+</style>
+</head>
+<body>
+<header class="hd"><div class="wrap hd-in">
+  <a class="logo" href="#"><img src="img-white/logo-color@2x.png" alt="NetworkIP" width="170" height="50"></a>
+  <nav class="nav"><a href="#">About Us</a><a href="#">Services</a><a href="#">Technology</a><a href="#">International Calling</a><a href="#">Contact Us</a></nav>
+  <a class="btn" href="#">Talk to Our Team <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+</div></header>
+
+<main>
+<section class="hero">
+  <img class="hero-globe" src="img-white/globe-gold.png" alt="">
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="kicker">Global reach. Real opportunity.</p>
+      <h1>People<br>Connect<br><span class="g">Possibilities</span><span class="r">.</span></h1>
+      <p>For more than 25 years, NetworkIP has enabled MNOs and MVNOs to outsource international calling with minimal risk and significant regulatory savings, helping them grow, compete and deliver more value to their customers.</p>
+      <a class="btn" href="#">Talk to Our Team <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <p class="side-words">People<br>Connect<br>Opportunities<br>Grow</p>
+  </div>
+</section>
+
+<section class="strip">
+  <p class="strip-label">Direct connections with the major US mobile operators</p>
+  <div class="wrap carriers"><span class="att">AT&amp;T</span><span>Verizon</span><span>T-Mobile</span><span class="boost">Boost <em>Mobile</em></span></div>
+</section>
+
+<section class="band">
+  <img class="band-map" src="img-white/map-gold-lights.png" alt="">
+  <div class="wrap">
+    <div class="band-in">
+      <div>
+        <p class="kicker kicker--red">Built on experience. Designed for growth.</p>
+        <h2>Global Calling Solutions<br>for <span class="r">Mobile Operators</span><span class="g">.</span></h2>
+        <p class="lead">Bundled and add-on international calling that helps MNOs and MVNOs remove consumer barriers, increase revenue and improve loyalty.</p>
+      </div>
+      <p class="side-words side-words--red">People<br>Ideas<br>Cultures<br>Opportunities</p>
+    </div>
+    <div class="feats">
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.8 3.9 5.8 3.9 9s-1.3 6.2-3.9 9c-2.6-2.8-3.9-5.8-3.9-9S9.4 5.8 12 3z"/></svg>
+        <h3>Grow Revenue</h3>
+        <p>Offering international long distance is an easy way to increase revenue and improve loyalty.</p>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="13" width="4" height="8" rx="1"/><rect x="10" y="8" width="4" height="13" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg>
+        <h3>Move Faster</h3>
+        <p>Turnkey, or integrated with your existing infrastructure. NetworkIP gets you up and running quickly.</p>
+      </div>
+      <div class="feat">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3 20v-1a6 6 0 0 1 12 0v1M14 20v-.5a4.5 4.5 0 0 1 7-3.7"/></svg>
+        <h3>A Partner You Can Trust</h3>
+        <p>25+ years of experience and exclusive direct connections with the major US MNOs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bridge">
+  <div class="bridge-in">
+    <div class="bridge-copy">
+      <p class="kicker kicker--red">A more connected world</p>
+      <h2>Bridging People.<br><span class="g">Strengthening</span><br>Communities<span class="r">.</span></h2>
+      <p>International calling is more than a service. It keeps families and friends together, without the need for calling apps, and helps mobile operators deliver greater value.</p>
+      <a class="btn" href="#">Our Services <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+    <div class="bridge-photo"><p class="side-words">People<br>Ideas<br>Cultures<br>Opportunities</p></div>
+  </div>
+</section>
+
+<section class="impact"><div class="wrap impact-in">
+  <p class="kicker">Our impact</p>
+  <div class="imp"><strong>25+</strong><span>Years of experience</span></div>
+  <div class="imp"><strong>100+</strong><span>International carriers</span></div>
+  <div class="imp"><strong>6M+</strong><span>Calls a day capacity</span></div>
+  <div class="imp"><strong>1B+</strong><span>End-user accounts supported</span></div>
+</div></section>
+</main>
+
+<footer class="ft"><div class="wrap ft-in">
+  <img src="img-white/logo-color@2x.png" alt="NetworkIP" width="130" height="38">
+  <span>119 West Tyler Street, Suite 100, Longview, Texas 75601</span>
+  <span>512-423-0748 · marketing@networkip.net</span>
+  <span class="sp">© 2026 NetworkIP</span>
+</div></footer>
+</body>
+</html>

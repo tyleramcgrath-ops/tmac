@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetworkIP Group</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --navy:#0B1E3A; --navy-2:#13294D; --ink:#0F1B2D; --text:#4B5768; --muted:#7A8496;
+    --line:#E3E1DA; --paper:#FAF9F6; --stone:#F2F0EA; --white:#FFFFFF; --gold:#B8893A; --gold-2:#D9B46A;
+    --max:1200px; color-scheme:light;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Manrope",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--paper);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--max);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+  .serif{font-family:"Newsreader",Georgia,"Times New Roman",serif;font-weight:400}
+  h1,h2,h3{font-family:"Newsreader",Georgia,serif;font-weight:400;letter-spacing:-.015em;line-height:1.1;text-wrap:balance;color:var(--ink)}
+  h1{font-size:clamp(42px,6vw,76px)}
+  h2{font-size:clamp(32px,4vw,48px)}
+  h3{font-size:24px}
+  p{color:var(--text)}
+  .kicker{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
+  .rule{width:48px;height:1px;background:var(--gold);margin:22px 0}
+  .btn{display:inline-flex;align-items:center;gap:10px;height:50px;padding:0 26px;font-weight:600;font-size:14px;letter-spacing:.04em;text-transform:uppercase;transition:background .2s,color .2s}
+  .btn-dark{background:var(--navy);color:#fff}
+  .btn-dark:hover{background:var(--navy-2)}
+  .btn-line{border:1px solid var(--ink);color:var(--ink)}
+  .btn-line:hover{background:var(--ink);color:#fff}
+  .btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  /* Top bar + header */
+  .utility{background:var(--navy);color:#AAB6CB;font-size:12.5px;letter-spacing:.04em}
+  .utility .container{display:flex;justify-content:space-between;height:38px;align-items:center;gap:16px}
+  .utility b{color:#fff;font-weight:600}
+  header.site{background:var(--paper);border-bottom:1px solid var(--line)}
+  .nav{display:flex;align-items:center;justify-content:space-between;height:84px;gap:24px}
+  .brand{display:flex;align-items:center;gap:12px}
+  .brand .name{font-family:"Newsreader",Georgia,serif;font-size:26px;letter-spacing:-.01em}
+  .brand .name b{font-weight:500;color:var(--gold)}
+  .brand small{display:block;font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-top:-2px}
+  .menu{display:flex;gap:36px;font-size:14px;font-weight:600;color:var(--ink)}
+  .menu a{padding-block:6px;border-bottom:1px solid transparent}
+  .menu a:hover{border-color:var(--gold)}
+
+  /* Hero */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:72px;align-items:end;padding-block:96px 88px}
+  .hero h1 em{font-style:italic;color:var(--gold)}
+  .hero .lead{font-size:19px;max-width:34em;margin-top:28px}
+  .hero .actions{display:flex;gap:14px;margin-top:40px;flex-wrap:wrap}
+  .facts{border-top:1px solid var(--ink);display:grid;grid-template-columns:1fr 1fr}
+  .fact{padding:26px 0;border-bottom:1px solid var(--line)}
+  .fact:nth-child(odd){padding-right:24px;border-right:1px solid var(--line)}
+  .fact:nth-child(even){padding-left:24px}
+  .fact b{display:block;font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:48px;line-height:1;color:var(--navy);font-variant-numeric:lining-nums}
+  .fact span{display:block;margin-top:10px;font-size:13.5px;color:var(--muted);line-height:1.45}
+
+  /* Image band (abstract, no photography) */
+  .band{height:340px;position:relative;overflow:hidden;background:var(--navy)}
+  .band canvas{position:absolute;inset:0;width:100%;height:100%}
+  .band .cap{position:absolute;left:0;right:0;bottom:0}
+  .band .cap .container{display:flex;justify-content:space-between;align-items:end;padding-block:28px;color:#C9D2E0;font-size:13px;letter-spacing:.06em;gap:16px;flex-wrap:wrap}
+  .band .cap b{color:#fff;font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:26px;letter-spacing:-.01em;display:block;max-width:20em;line-height:1.25}
+
+  section{padding-block:112px}
+  .head{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:end;margin-bottom:56px}
+  .head p{font-size:17px}
+
+  /* Group structure */
+  .structure{background:var(--white);border:1px solid var(--line);padding:56px 48px 48px}
+  .parent{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .parent .seal{width:76px;height:76px;border-radius:50%;border:1px solid var(--gold);display:grid;place-items:center;background:var(--paper)}
+  .parent h3{margin-top:16px;font-size:28px}
+  .parent p{font-size:14px;color:var(--muted);margin-top:4px}
+  .trunk{width:1px;height:44px;background:var(--gold);margin:22px auto 0}
+  .branches{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding-top:44px}
+  .branches:before{content:"";position:absolute;top:0;left:12.5%;right:12.5%;height:1px;background:var(--gold)}
+  .co{position:relative;border:1px solid var(--line);background:var(--paper);padding:30px 24px 26px;display:flex;flex-direction:column;gap:10px;transition:border-color .2s,transform .2s}
+  .co:before{content:"";position:absolute;top:-45px;left:50%;width:1px;height:44px;background:var(--gold)}
+  .co:hover{border-color:var(--gold);transform:translateY(-3px)}
+  .co .mono{width:44px;height:44px;border:1px solid var(--ink);display:grid;place-items:center;font-family:"Newsreader",Georgia,serif;font-size:20px}
+  .co h4{font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:21px;line-height:1.2;margin-top:8px}
+  .co .sector{font-size:11.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+  .co p{font-size:14px;line-height:1.55}
+  .co .more{margin-top:auto;padding-top:10px;font-size:13px;font-weight:600;color:var(--navy)}
+  .co.flagship{background:var(--navy);border-color:var(--navy)}
+  .co.flagship h4{color:#fff}
+  .co.flagship p{color:#B9C4D6}
+  .co.flagship .mono{border-color:var(--gold-2);color:var(--gold-2)}
+  .co.flagship .more{color:var(--gold-2)}
+  .note{margin-top:22px;font-size:12.5px;color:var(--muted);text-align:center}
+
+  /* Principles */
+  .stone{background:var(--stone);border-block:1px solid var(--line)}
+  .principles{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink)}
+  .principle{padding:34px 32px 8px 0}
+  .principle + .principle{padding-left:32px;border-left:1px solid var(--line)}
+  .principle .n{font-family:"Newsreader",Georgia,serif;font-size:15px;color:var(--gold)}
+  .principle h3{margin:14px 0 12px}
+  .principle p{font-size:15.5px}
+
+  /* Carriers */
+  .carriers{display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;padding-block:44px;border-bottom:1px solid var(--line)}
+  .carriers p{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .carriers ul{list-style:none;display:flex;gap:56px;flex-wrap:wrap}
+  .carriers li{font-family:"Newsreader",Georgia,serif;font-size:26px;color:#8E97A6}
+
+  /* Leadership */
+  .leaders{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+  .leader .portrait{aspect-ratio:4/5;max-width:100%;background:linear-gradient(160deg,#E9E6DE,#D9D4C8);display:grid;place-items:center;position:relative;overflow:hidden}
+  .leader .portrait span{font-family:"Newsreader",Georgia,serif;font-size:64px;color:#9C9483}
+  .leader .portrait:after{content:"Photo";position:absolute;bottom:10px;right:12px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#9C9483}
+  .leader h4{font-family:"Newsreader",Georgia,serif;font-weight:400;font-size:22px;margin-top:18px}
+  .leader p{font-size:13.5px;color:var(--muted);margin-top:2px}
+
+  /* Contact */
+  .contact{background:var(--navy);color:#fff}
+  .contact .container{display:grid;grid-template-columns:1.2fr 1fr;gap:72px;padding-block:96px}
+  .contact h2{color:#fff}
+  .contact h2 em{font-style:italic;color:var(--gold-2)}
+  .contact p{color:#B9C4D6;font-size:17px;margin-top:20px;max-width:30em}
+  .contact .btn-dark{background:var(--gold);color:var(--navy);margin-top:34px}
+  .contact .btn-dark:hover{background:var(--gold-2)}
+  .details{border-top:1px solid rgba(255,255,255,.25)}
+  .details div{display:grid;grid-template-columns:120px 1fr;gap:16px;padding:20px 0;border-bottom:1px solid rgba(255,255,255,.14);font-size:15px}
+  .details small{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:#8F9CB2;padding-top:3px}
+
+  footer{background:#081629;color:#8F9CB2;font-size:13px}
+  footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;padding-block:26px}
+
+  @media (max-width:960px){
+    .menu{display:none}
+    .utility .container span:first-child{display:none}
+    .hero,.head,.contact .container{grid-template-columns:1fr;gap:40px}
+    .hero{padding-block:56px}
+    .branches{grid-template-columns:1fr 1fr;padding-top:24px}
+    .branches:before,.co:before{display:none}
+    .trunk{height:24px}
+    .structure{padding:36px 20px}
+    .principles{grid-template-columns:1fr}
+    .principle,.principle + .principle{padding:28px 0;border-left:none;border-bottom:1px solid var(--line)}
+    .leaders{grid-template-columns:1fr 1fr}
+    section{padding-block:72px}
+    .details div{grid-template-columns:1fr;gap:4px}
+  }
+  @media (max-width:520px){ .branches{grid-template-columns:1fr} .carriers ul{gap:24px} }
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="utility"><div class="container"><span>A privately held Texas technology company · Est. 1998</span><span><b>512‑423‑0748</b> &nbsp;·&nbsp; marketing@networkip.net</span></div></div>
+
+<header class="site">
+  <div class="container nav">
+    <a class="brand" href="#">
+      <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true"><circle cx="17" cy="17" r="15.5" stroke="#0B1E3A"/><ellipse cx="17" cy="17" rx="6.5" ry="15.5" stroke="#0B1E3A"/><path d="M1.5 17h31M4 9h26M4 25h26" stroke="#0B1E3A"/><circle cx="17" cy="17" r="2.6" fill="#B8893A"/></svg>
+      <span><span class="name">Network<b>IP</b></span><small>Group of companies</small></span>
+    </a>
+    <nav class="menu" aria-label="Main"><a href="#">Our Companies</a><a href="#">About</a><a href="#">Leadership</a><a href="#">Partners</a><a href="#">Contact</a></nav>
+    <a class="btn btn-dark" href="#">Contact us</a>
+  </div>
+</header>
+
+<main>
+  <div class="container hero">
+    <div>
+      <span class="kicker">NetworkIP Group</span>
+      <div class="rule"></div>
+      <h1>The parent company behind <em>connected</em> communications.</h1>
+      <p class="lead">For more than 25 years, NetworkIP and its operating companies have built the systems, connections and services that let carriers and their customers reach the world.</p>
+      <div class="actions"><a class="btn btn-dark" href="#">Our companies</a><a class="btn btn-line" href="#">About the group</a></div>
+    </div>
+    <div class="facts" aria-label="Group facts">
+      <div class="fact"><b>1998</b><span>Founded in Texas, privately held</span></div>
+      <div class="fact"><b>25+</b><span>Years in telecommunications</span></div>
+      <div class="fact"><b>$80M</b><span>Invested in research and development</span></div>
+      <div class="fact"><b>4</b><span>Direct connections with major U.S. carriers</span></div>
+    </div>
+  </div>
+
+  <div class="band" aria-hidden="true">
+    <canvas id="net"></canvas>
+    <div class="cap"><div class="container"><b>Systems built on a scalable N+x load-sharing topology across every critical platform.</b><span>Longview, Texas</span></div></div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="head">
+        <div><span class="kicker">Our companies</span><h2 style="margin-top:16px">One group. Specialized operating companies.</h2></div>
+        <p>Each company in the NetworkIP group focuses on a part of the communications market, supported by shared engineering, regulatory expertise and carrier relationships at the parent level.</p>
+      </div>
+      <div class="structure">
+        <div class="parent">
+          <div class="seal"><svg width="38" height="38" viewBox="0 0 34 34" fill="none"><circle cx="17" cy="17" r="15.5" stroke="#0B1E3A"/><ellipse cx="17" cy="17" rx="6.5" ry="15.5" stroke="#0B1E3A"/><path d="M1.5 17h31" stroke="#0B1E3A"/><circle cx="17" cy="17" r="2.6" fill="#B8893A"/></svg></div>
+          <h3>NetworkIP</h3>
+          <p>Parent company · Longview, Texas</p>
+        </div>
+        <div class="trunk"></div>
+        <div class="branches">
+          <a class="co flagship" href="#"><span class="mono">G</span><span class="sector">International voice</span><h4>NetworkIP Global Calling</h4><p>Worldwide calling for MNOs and MVNOs, delivered through direct carrier connections.</p><span class="more">Visit company →</span></a>
+          <a class="co" href="#"><span class="mono">A</span><span class="sector">Sector name</span><h4>Operating Company A</h4><p>One-line description of what this company does and who it serves.</p><span class="more">Visit company →</span></a>
+          <a class="co" href="#"><span class="mono">B</span><span class="sector">Sector name</span><h4>Operating Company B</h4><p>One-line description of what this company does and who it serves.</p><span class="more">Visit company →</span></a>
+          <a class="co" href="#"><span class="mono">C</span><span class="sector">Sector name</span><h4>Operating Company C</h4><p>One-line description of what this company does and who it serves.</p><span class="more">Visit company →</span></a>
+        </div>
+        <p class="note">Company names, sectors and descriptions are placeholders for the group's operating companies.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="stone">
+    <div class="container">
+      <div class="head">
+        <div><span class="kicker">How we operate</span><h2 style="margin-top:16px">Built to last, run for the long term.</h2></div>
+        <p>NetworkIP has been privately held since its founding. That independence lets us invest for decades rather than quarters.</p>
+      </div>
+      <div class="principles">
+        <div class="principle"><span class="n">I.</span><h3>Engineering first</h3><p>$80 million invested in R&amp;D and systems designed for scale, redundancy and carrier-grade quality.</p></div>
+        <div class="principle"><span class="n">II.</span><h3>Trusted connections</h3><p>Exclusive direct connections with AT&amp;T, Verizon, T-Mobile and Boost Mobile, built over two decades.</p></div>
+        <div class="principle"><span class="n">III.</span><h3>Regulatory expertise</h3><p>Deep experience with federal and state requirements, so our companies and clients can grow with confidence.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="carriers">
+      <p>Direct carrier connections</p>
+      <ul><li>AT&amp;T</li><li>Verizon</li><li>T‑Mobile</li><li>Boost Mobile</li></ul>
+    </div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="head">
+        <div><span class="kicker">Leadership</span><h2 style="margin-top:16px">Decades of telecommunications experience.</h2></div>
+        <p>Our leadership team brings more than a century of combined experience across carriers, networks and client services.</p>
+      </div>
+      <div class="leaders">
+        <div class="leader"><div class="portrait"><span>PP</span></div><h4>Peter R. Pattullo</h4><p>Co-founder &amp; Chief Executive Officer</p></div>
+        <div class="leader"><div class="portrait"><span>MT</span></div><h4>Mike Truemner</h4><p>Vice President, Engineering &amp; Operations</p></div>
+        <div class="leader"><div class="portrait"><span>BK</span></div><h4>Brian Kirk</h4><p>Vice President, Business Development</p></div>
+        <div class="leader"><div class="portrait"><span>KJ</span></div><h4>Kristin Jones</h4><p>Director, Client Services</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" style="padding:0">
+    <div class="container">
+      <div>
+        <span class="kicker">Contact</span>
+        <h2 style="margin-top:16px">Partner with the <em>NetworkIP</em> group.</h2>
+        <p>For partnerships, carrier relationships or questions about any of our companies, our team will connect you with the right people.</p>
+        <a class="btn btn-dark" href="#">Get in touch</a>
+      </div>
+      <div class="details">
+        <div><small>Headquarters</small><span>119 West Tyler Street, Suite 100<br>Longview, Texas 75601</span></div>
+        <div><small>Phone</small><span>512‑423‑0748</span></div>
+        <div><small>Email</small><span>marketing@networkip.net</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="container"><span>© 2026 NetworkIP. All rights reserved.</span><span>Our Companies · About · Leadership · Privacy Policy</span></div></footer>
+
+<script>
+// Quiet network constellation for the image band
+(function(){
+  var c=document.getElementById('net'); if(!c) return; var x=c.getContext('2d');
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pts=[],W,H,dpr=Math.min(2,window.devicePixelRatio||1);
+  function size(){W=c.clientWidth;H=c.clientHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    pts=[];var n=Math.round(W/22);var s=7;for(var i=0;i<n;i++){s=(s*9301+49297)%233280;var r1=s/233280;s=(s*9301+49297)%233280;var r2=s/233280;s=(s*9301+49297)%233280;
+      pts.push({x:r1*W,y:r2*H*.82,vx:(s/233280-.5)*.15,vy:(r1-.5)*.1});}}
+  function draw(){x.clearRect(0,0,W,H);
+    var g=x.createLinearGradient(0,0,W,H);g.addColorStop(0,'#0B1E3A');g.addColorStop(1,'#13294D');x.fillStyle=g;x.fillRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){var p=pts[i];if(!reduce){p.x+=p.vx;p.y+=p.vy;if(p.x<0||p.x>W)p.vx*=-1;if(p.y<0||p.y>H*.85)p.vy*=-1;}
+      for(var j=i+1;j<pts.length;j++){var q=pts[j],d=Math.hypot(p.x-q.x,p.y-q.y);if(d<140){x.strokeStyle='rgba(217,180,106,'+(0.22*(1-d/140))+')';x.lineWidth=1;x.beginPath();x.moveTo(p.x,p.y);x.lineTo(q.x,q.y);x.stroke();}}
+      x.fillStyle=i%7===0?'#D9B46A':'rgba(201,210,224,.55)';x.beginPath();x.arc(p.x,p.y,i%7===0?2.4:1.4,0,7);x.fill();}
+    var sh=x.createLinearGradient(0,H*.45,0,H);sh.addColorStop(0,'rgba(11,30,58,0)');sh.addColorStop(1,'rgba(11,30,58,.92)');x.fillStyle=sh;x.fillRect(0,0,W,H);
+    if(!reduce)requestAnimationFrame(draw);}
+  size();draw();addEventListener('resize',function(){size();if(reduce)draw();});
+})();
+</script>
+</body>
+</html>

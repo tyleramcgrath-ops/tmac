@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="80" viewBox="0 0 360 80" role="img" aria-label="NetworkIP typographic wordmark">
+  <rect width="360" height="80" fill="none"/>
+  <text x="0" y="52" font-family="Inter, Arial, Helvetica, sans-serif" font-size="46" font-weight="800" letter-spacing="0" fill="#FFFFFF">Network<tspan fill="#38D8FF">IP</tspan></text>
+  <path d="M286 20h44" stroke="#38D8FF" stroke-width="4" stroke-linecap="round"/>
+  <path d="M286 60h44" stroke="#1277FF" stroke-width="4" stroke-linecap="round"/>
+</svg>

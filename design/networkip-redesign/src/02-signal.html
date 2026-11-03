@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>NetworkIP — Concept B: Signal</title>
+<link href="fonts-02-signal.css" rel="stylesheet">
+<style>
+  html{overflow-x:hidden}
+  :root{--bg:#071427;--bg2:#0B1D38;--panel:#0F2444;--line:rgba(160,190,230,.14);--text:#E8EEF7;--muted:#8DA0BD;--gold:#E2B15B;--teal:#5FD4C4}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font-family:"Bricolage Grotesque",sans-serif;width:1440px;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  .mono{font-family:"IBM Plex Mono",monospace}
+  .wrap{width:1240px;margin:0 auto;position:relative}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;border-bottom:1px solid var(--line)}
+  .logo{font-weight:700;font-size:21px;letter-spacing:.04em;display:flex;align-items:center;gap:10px}
+  .logo i{width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 18px var(--gold)}
+  .logo b{color:var(--gold)}
+  .links{display:flex;gap:34px;font-size:15px;color:var(--muted)}
+  .btn{display:inline-flex;gap:10px;align-items:center;padding:14px 22px;border-radius:10px;font-weight:600;font-size:15px}
+  .btn-gold{background:var(--gold);color:#1A1405}
+  .btn-line{border:1px solid var(--line);color:var(--text)}
+
+  .hero{position:relative;height:760px}
+  .hero svg{position:absolute;right:-100px;top:10px}
+  .hero{overflow:visible}
+  .hero-copy{position:absolute;left:0;top:110px;width:640px}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--teal);letter-spacing:.06em;display:inline-flex;gap:10px;align-items:center;border:1px solid rgba(95,212,196,.3);padding:8px 14px;border-radius:999px;background:rgba(95,212,196,.06)}
+  .tag i{width:7px;height:7px;border-radius:50%;background:var(--teal)}
+  h1{font-size:78px;line-height:.98;letter-spacing:-.035em;font-weight:700;margin:28px 0 28px}
+  h1 span{color:var(--gold)}
+  .lede{font-size:20px;line-height:1.55;color:var(--muted);max-width:540px}
+  .cta{display:flex;gap:14px;margin-top:40px}
+  .ticker{position:absolute;left:0;bottom:60px;display:flex;gap:0;border:1px solid var(--line);border-radius:14px;background:rgba(15,36,68,.6);backdrop-filter:blur(8px)}
+  .ticker div{padding:20px 30px;border-right:1px solid var(--line)}
+  .ticker div:last-child{border:none}
+  .ticker b{display:block;font-size:34px;font-weight:600;letter-spacing:-.02em}
+  .ticker span{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+
+  .carriers{display:flex;align-items:center;gap:60px;padding:34px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .carriers .l{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;width:220px}
+  .carriers .c{font-size:26px;font-weight:600;color:#5E7393}
+
+  section{padding:110px 0}
+  .kicker{font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--gold);letter-spacing:.08em}
+  h2{font-size:56px;letter-spacing:-.03em;line-height:1.02;font-weight:700;margin-top:18px;max-width:760px}
+  .bento{display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:260px 260px;gap:18px;margin-top:56px}
+  .tile{background:linear-gradient(180deg,var(--panel),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:32px;position:relative;overflow:hidden}
+  .tile h3{font-size:26px;font-weight:600;letter-spacing:-.01em}
+  .tile p{color:var(--muted);margin-top:10px;line-height:1.55;font-size:16px}
+  .tile .ix{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--muted);position:absolute;top:28px;right:30px}
+  .t1{grid-row:span 2;display:flex;flex-direction:column;justify-content:flex-end}
+  .t1:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 70% 25%,rgba(226,177,91,.35),transparent 55%)}
+  .t1 .big{font-size:140px;font-weight:700;letter-spacing:-.05em;line-height:.9;color:var(--gold);position:relative}
+  .t1 h3,.t1 p{position:relative}
+  .t4{grid-column:span 2;display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+  .console{font-family:"IBM Plex Mono",monospace;font-size:13px;line-height:1.9;background:#050F1F;border:1px solid var(--line);border-radius:12px;padding:18px 20px;color:#9FB3D1}
+  .console .ok{color:var(--teal)}.console .g{color:var(--gold)}
+
+  .compare{margin-top:56px;border:1px solid var(--line);border-radius:22px;overflow:hidden}
+  .row{display:grid;grid-template-columns:1.4fr 1.1fr 1fr 1fr 1fr;border-bottom:1px solid var(--line)}
+  .row:last-child{border:none}
+  .row>div{padding:20px 26px;font-size:16px}
+  .row.h>div{font-family:"IBM Plex Mono",monospace;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .row>div:nth-child(2){background:rgba(226,177,91,.08);border-left:1px solid rgba(226,177,91,.4);border-right:1px solid rgba(226,177,91,.4)}
+  .row.h>div:nth-child(2){color:var(--gold)}
+  .dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:10px;vertical-align:middle}
+  .on{background:var(--teal);box-shadow:0 0 10px var(--teal)}.half{background:transparent;border:2px solid var(--gold)}.off{background:#2A3C5A}
+
+  .final{text-align:center;padding:140px 0 120px;position:relative}
+  .final:before{content:"";position:absolute;left:50%;top:40px;width:900px;height:500px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(226,177,91,.18),transparent 65%)}
+  .final h2{margin:18px auto 0;font-size:84px;max-width:1000px;position:relative}
+  .final p{color:var(--muted);font-size:20px;margin:26px 0 40px;position:relative}
+  footer{border-top:1px solid var(--line);padding:36px 0;display:flex;justify-content:space-between;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav>
+    <div class="logo"><i></i>NETWORK<b>IP</b></div>
+    <div class="links"><span>Services</span><span>Technology</span><span>Call Quality</span><span>About</span><span>Management</span></div>
+    <span class="btn btn-gold">Contact us →</span>
+  </nav>
+
+  <div class="hero">
+    <svg id="globe" width="900" height="760" viewBox="0 0 900 760"></svg>
+    <div class="hero-copy">
+      <span class="tag"><i></i>LIVE · Direct routes to 200+ destinations</span>
+      <h1>Every country.<br>One <span>connection.</span></h1>
+      <p class="lede">The international voice backbone behind America's mobile operators. Launch worldwide calling as a bundle or add‑on — with 25 years of routing, quality and fraud control built in.</p>
+      <div class="cta"><span class="btn btn-gold">Book a strategy call →</span><span class="btn btn-line">▶ See how it works</span></div>
+    </div>
+    <div class="ticker">
+      <div><b>25+ yrs</b><span>In international voice</span></div>
+      <div><b>80M+</b><span>Addressable U.S. market</span></div>
+      <div><b>25%</b><span>Of mobile subs need it</span></div>
+      <div><b>&lt;2%</b><span>Need roaming, by contrast</span></div>
+    </div>
+  </div>
+
+  <div class="carriers">
+    <span class="l">Exclusive direct connections</span>
+    <span class="c">AT&amp;T</span><span class="c">Verizon</span><span class="c">T‑Mobile</span><span class="c">Boost Mobile</span>
+  </div>
+
+  <section>
+    <span class="kicker">// WHY INTERNATIONAL CALLING</span>
+    <h2>The most under‑served subscriber in America is calling home.</h2>
+    <div class="bento">
+      <div class="tile t1"><span class="ix">01</span><div class="big">51.6M</div><h3>Foreign‑born U.S. residents</h3><p>15.6% of the population — the highest share in U.S. history, surpassing the 1890 record.</p></div>
+      <div class="tile"><span class="ix">02</span><h3>Bundle or add‑on</h3><p>Clear, simple offers built for the casual caller, not just heavy users.</p></div>
+      <div class="tile"><span class="ix">03</span><h3>No apps needed</h3><p>Call any phone worldwide — as easy as calling stateside.</p></div>
+      <div class="tile t4"><div><span class="ix" style="position:static">04</span><h3 style="margin-top:10px">Fraud &amp; abuse, automated</h3><p>Proven controls flip the model — from policing heavy users to welcoming casual ones.</p></div>
+        <div class="console">
+          <div><span class="ok">●</span> route&nbsp;&nbsp;US → NG (Lagos)&nbsp;&nbsp;&nbsp;<span class="g">MOS 4.3</span></div>
+          <div><span class="ok">●</span> route&nbsp;&nbsp;US → MX (CDMX)&nbsp;&nbsp;&nbsp;&nbsp;<span class="g">MOS 4.4</span></div>
+          <div><span class="ok">●</span> route&nbsp;&nbsp;US → IN (Pune)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="g">MOS 4.2</span></div>
+          <div><span class="ok">●</span> fraud&nbsp;&nbsp;pattern blocked&nbsp;&nbsp;&nbsp;<span class="ok">auto</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <span class="kicker">// COMPARISON</span>
+    <h2>Built to beat apps and carrier plans.</h2>
+    <div class="compare">
+      <div class="row h"><div>Value to consumer</div><div>NetworkIP Global Calling</div><div>Calling apps</div><div>AT&amp;T · T‑Mobile · Verizon</div><div>Other providers</div></div>
+      <div class="row"><div>Included at no additional cost</div><div><i class="dot on"></i>Yes</div><div><i class="dot on"></i>Yes</div><div><i class="dot half"></i>Limited</div><div><i class="dot off"></i>No</div></div>
+      <div class="row"><div>Call from / to any phone</div><div><i class="dot on"></i>Yes</div><div><i class="dot off"></i>No</div><div><i class="dot on"></i>Yes</div><div><i class="dot on"></i>Yes</div></div>
+      <div class="row"><div>Global connectivity</div><div><i class="dot on"></i>Yes</div><div><i class="dot half"></i>Limited</div><div><i class="dot half"></i>Limited</div><div><i class="dot off"></i>No</div></div>
+      <div class="row"><div>Easy as calling stateside</div><div><i class="dot on"></i>Yes</div><div><i class="dot off"></i>No</div><div><i class="dot on"></i>Yes</div><div><i class="dot off"></i>No</div></div>
+    </div>
+  </section>
+
+  <div class="final">
+    <span class="kicker">// READY WHEN YOU ARE</span>
+    <h2>Call anyone, anywhere. No worries.</h2>
+    <p>512‑423‑0748 · marketing@networkip.net · Longview, Texas</p>
+    <span class="btn btn-gold" style="position:relative">Start the conversation →</span>
+  </div>
+  <footer><span>© 2025 NetworkIP</span><span class="mono">Services · Technology · About · Privacy</span></footer>
+</div>
+<script>
+// Dotted orthographic globe with gold call arcs
+const svg=document.getElementById('globe'),NS='http://www.w3.org/2000/svg';
+const cx=470,cy=380,R=320,rot=35*Math.PI/180,tilt=22*Math.PI/180;
+function proj(lat,lon){lat*=Math.PI/180;lon=lon*Math.PI/180+rot;
+  let x=Math.cos(lat)*Math.sin(lon),y=Math.sin(lat),z=Math.cos(lat)*Math.cos(lon);
+  const y2=y*Math.cos(tilt)-z*Math.sin(tilt),z2=y*Math.sin(tilt)+z*Math.cos(tilt);
+  return {x:cx+R*x,y:cy-R*y2,z:z2};}
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);svg.appendChild(e);return e}
+const defs=el('defs',{});defs.innerHTML='<radialGradient id="g" cx="40%" cy="35%"><stop offset="0" stop-color="#16325C"/><stop offset="1" stop-color="#071427"/></radialGradient><linearGradient id="arc" x1="0" x2="1"><stop offset="0" stop-color="#E2B15B" stop-opacity=".2"/><stop offset=".5" stop-color="#E2B15B"/><stop offset="1" stop-color="#5FD4C4"/></linearGradient>';
+el('circle',{cx,cy,r:R+60,fill:'none',stroke:'rgba(160,190,230,.07)'});
+el('circle',{cx,cy,r:R+120,fill:'none',stroke:'rgba(160,190,230,.05)'});
+el('circle',{cx,cy,r:R,fill:'url(#g)',stroke:'rgba(160,190,230,.18)'});
+// crude continent mask (lat/lon boxes) for density
+const land=[[15,70,-165,-55],[-55,12,-82,-35],[35,70,-10,40],[-35,35,-17,50],[5,75,40,145],[-40,-10,112,154],[60,82,-60,-20]];
+const isLand=(la,lo)=>land.some(b=>la>b[0]&&la<b[1]&&lo>b[2]&&lo<b[3]);
+for(let la=-80;la<=80;la+=4)for(let lo=-180;lo<180;lo+=4/Math.max(.3,Math.cos(la*Math.PI/180))){
+  const p=proj(la,lo);if(p.z<0)continue;const L=isLand(la,lo);
+  el('circle',{cx:p.x.toFixed(1),cy:p.y.toFixed(1),r:L?1.8:0.9,fill:L?`rgba(170,195,235,${.25+.55*p.z})`:`rgba(120,150,200,${.12*p.z})`});}
+const hub=[32.5,-94.7];// Longview TX
+const dests=[[6.5,3.4],[19.4,-99.1],[18.5,73.8],[14.6,121],[51.5,-0.1],[-23.5,-46.6],[9,38.7],[18.5,-69.9],[33.7,73]];
+function arc(a,b){const pts=[];for(let t=0;t<=1.0001;t+=.02){const la=a[0]+(b[0]-a[0])*t,lo=a[1]+(b[1]-a[1])*t;const p=proj(la,lo);const h=1+.18*Math.sin(Math.PI*t);pts.push([cx+(p.x-cx)*h,cy+(p.y-cy)*h,p.z]);}
+  return pts}
+dests.forEach((d,i)=>{const pts=arc(hub,d);if(pts[pts.length-1][2]<-.1)return;
+  el('path',{d:'M'+pts.map(p=>p[0].toFixed(1)+' '+p[1].toFixed(1)).join(' L'),fill:'none',stroke:'url(#arc)','stroke-width':1.8,opacity:.9});
+  const e=pts[pts.length-1];el('circle',{cx:e[0],cy:e[1],r:9,fill:'rgba(95,212,196,.15)'});el('circle',{cx:e[0],cy:e[1],r:3.5,fill:'#5FD4C4'});});
+const h=proj(...hub);el('circle',{cx:h.x,cy:h.y,r:22,fill:'rgba(226,177,91,.15)'});el('circle',{cx:h.x,cy:h.y,r:6,fill:'#E2B15B'});
+</script>
+</body>
+</html>

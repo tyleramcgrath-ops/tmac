@@ -1,0 +1,432 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NetworkIP Vibrant</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+  :root{
+    --night:#06122A; --navy:#0A1F44; --navy-2:#11295A;
+    --blue:#2F6BFF; --sky:#4FC3FF; --teal:#14C8B0; --gold:#F5B942; --coral:#FF6B5A;
+    --ink:#0A1A3A; --text:#4A5872; --muted:#6D7A92; --line:#E4E9F2; --surface:#F4F7FC; --white:#fff;
+    --grad:linear-gradient(120deg,var(--blue),var(--sky) 55%,var(--teal));
+    --max:1200px; color-scheme:light;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Plus Jakarta Sans",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);background:var(--white);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  a{color:inherit;text-decoration:none}
+  .container{max-width:var(--max);margin:0 auto;padding-inline:clamp(16px,4vw,40px)}
+  h1,h2,h3{font-weight:800;letter-spacing:-.03em;line-height:1.08;text-wrap:balance}
+  h1{font-size:clamp(38px,5vw,58px)}
+  h2{font-size:clamp(30px,4vw,46px)}
+  h3{font-size:20px;font-weight:700;letter-spacing:-.015em}
+  p{color:var(--text)}
+  .grad-text{background:linear-gradient(100deg,var(--gold),#FFD98A 40%,var(--sky) 75%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--blue)}
+  .eyebrow:before{content:"";width:18px;height:3px;border-radius:3px;background:var(--grad)}
+  .btn{display:inline-flex;align-items:center;gap:10px;height:52px;padding:0 24px;border-radius:12px;font-weight:700;font-size:15px;white-space:nowrap;transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px)}
+  .btn:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+  .btn-gold{background:var(--gold);color:var(--night);box-shadow:0 10px 30px -10px rgba(245,185,66,.7)}
+  .btn-glass{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);color:#fff;backdrop-filter:blur(6px)}
+  .btn-blue{background:var(--blue);color:#fff;box-shadow:0 10px 30px -10px rgba(47,107,255,.7)}
+
+  /* ===== HERO ===== */
+  .hero-wrap{position:relative;background:var(--night);color:#fff;overflow:hidden;isolation:isolate}
+  .hero-wrap:before{content:"";position:absolute;inset:0;z-index:-2;
+    background:
+      radial-gradient(600px 420px at 12% 10%,rgba(47,107,255,.55),transparent 70%),
+      radial-gradient(520px 420px at 88% 20%,rgba(20,200,176,.35),transparent 70%),
+      radial-gradient(700px 500px at 70% 110%,rgba(245,185,66,.28),transparent 70%),
+      linear-gradient(180deg,#081634,#06122A);
+    animation:drift 16s ease-in-out infinite alternate}
+  .hero-wrap:after{content:"";position:absolute;inset:0;z-index:-1;opacity:.35;
+    background-image:linear-gradient(rgba(255,255,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.06) 1px,transparent 1px);
+    background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 40%,#000 30%,transparent 75%)}
+  @keyframes drift{to{transform:scale(1.08) translate(-2%,2%)}}
+
+  .nav{display:flex;align-items:center;justify-content:space-between;height:80px;gap:24px}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.01em}
+  .brand b{color:var(--gold)}
+  .menu{display:flex;gap:34px;font-size:15px;font-weight:500;color:#C5D1E8}
+  .menu a:hover{color:#fff}
+  .nav-right{display:flex;align-items:center;gap:18px}
+  .nav-right .phone{font-size:15px;font-weight:600;color:#C5D1E8}
+  .nav .btn{height:44px}
+
+  .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;padding-block:72px 96px}
+  .badge{display:inline-flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);font-size:14px;font-weight:600;color:#DDE6F7}
+  .badge span{background:var(--gold);color:var(--night);font-size:12px;font-weight:800;padding:4px 10px;border-radius:999px}
+  .hero h1{margin:26px 0 22px;color:#fff}
+  .hero .lead{font-size:19px;color:#BAC7DE;max-width:33em}
+  .actions{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+  .hero-stats{display:flex;gap:36px;margin-top:48px;flex-wrap:wrap}
+  .hero-stats b{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em;color:#fff;font-variant-numeric:tabular-nums}
+  .hero-stats span{font-size:13.5px;color:#9FB0CE;white-space:nowrap}
+
+  /* hero visual */
+  .visual{position:relative;padding:44px 24px 44px 36px}
+  .console{position:relative;border-radius:24px;background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04));border:1px solid rgba(255,255,255,.18);backdrop-filter:blur(14px);box-shadow:0 40px 80px -30px rgba(0,0,0,.6);padding:26px;display:flex;flex-direction:column;gap:18px}
+  .console-top{display:flex;justify-content:space-between;align-items:center}
+  .console-top b{font-size:16px}
+  .live{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--teal)}
+  .live i{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 0 0 rgba(20,200,176,.7);animation:ping 1.6s infinite}
+  @keyframes ping{70%{box-shadow:0 0 0 10px rgba(20,200,176,0)}100%{box-shadow:0 0 0 0 rgba(20,200,176,0)}}
+  .big-num{font-size:44px;font-weight:800;letter-spacing:-.03em;font-variant-numeric:tabular-nums;line-height:1}
+  .big-num small{display:block;margin-top:8px;font-size:14px;font-weight:600;color:#9FB0CE;letter-spacing:0}
+  .spark{display:block;width:100%;height:70px}
+  .route{display:grid;grid-template-columns:34px 1fr auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(255,255,255,.06)}
+  .cc{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font-size:12px;font-weight:800;color:var(--night)}
+  .route b{font-size:14px;font-weight:700;display:block}
+  .route small{font-size:12px;color:#9FB0CE}
+  .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.1);overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;border-radius:6px;background:var(--grad);animation:grow 1.4s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes grow{from{width:0}}
+  .route em{font-style:normal;font-size:12px;font-weight:700;color:var(--teal);background:rgba(20,200,176,.14);padding:4px 10px;border-radius:999px}
+
+  .float{position:absolute;display:flex;align-items:center;gap:12px;background:#fff;color:var(--ink);border-radius:16px;padding:12px 16px;box-shadow:0 20px 40px -16px rgba(0,0,0,.5);font-size:13px;animation:bob 6s ease-in-out infinite}
+  .float b{display:block;font-size:14px}
+  .float small{color:var(--muted)}
+  .float .ico{width:36px;height:36px;border-radius:10px;display:grid;place-items:center}
+  .f1{top:8px;right:0;animation-delay:-1s}
+  .f2{bottom:8px;left:0;animation-delay:-3s}
+  @keyframes bob{50%{transform:translateY(-10px)}}
+
+  /* marquee */
+  .marquee{border-top:1px solid rgba(255,255,255,.1);padding-block:22px;overflow:hidden;position:relative}
+  .marquee:before,.marquee:after{content:"";position:absolute;top:0;bottom:0;width:120px;z-index:1}
+  .marquee:before{left:0;background:linear-gradient(90deg,var(--night),transparent)}
+  .marquee:after{right:0;background:linear-gradient(-90deg,var(--night),transparent)}
+  .track{display:flex;gap:44px;width:max-content;animation:scroll 40s linear infinite}
+  .track span{font-size:15px;font-weight:600;color:#8FA2C4;white-space:nowrap;display:inline-flex;align-items:center;gap:10px}
+  .track span:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* carriers */
+  .carriers .container{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-block:36px;flex-wrap:wrap}
+  .carriers p{font-size:14px;font-weight:600;color:var(--muted);max-width:17em}
+  .carriers ul{list-style:none;display:flex;gap:56px;flex-wrap:wrap}
+  .carriers li{font-weight:800;font-size:22px;color:#98A5BB;letter-spacing:-.02em;transition:color .2s}
+  .carriers li:hover{color:var(--ink)}
+
+  section{padding-block:104px}
+  .head{max-width:680px;margin-bottom:52px}
+  .head h2{margin-top:14px}
+  .head p{margin-top:16px;font-size:18px}
+
+  /* services */
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .card{position:relative;background:#fff;border:1px solid var(--line);border-radius:22px;padding:34px;display:flex;flex-direction:column;gap:12px;transition:transform .25s,box-shadow .25s,border-color .25s;overflow:hidden}
+  .card:hover{transform:translateY(-6px);box-shadow:0 30px 60px -30px rgba(10,31,68,.35);border-color:transparent}
+  .card:after{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--c);opacity:0;transition:opacity .25s}
+  .card:hover:after{opacity:1}
+  .card .ico{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--c);box-shadow:0 12px 24px -10px var(--cs);margin-bottom:10px}
+  .card p{font-size:15.5px}
+  .card a{margin-top:auto;padding-top:14px;font-weight:700;font-size:15px;color:var(--blue)}
+  .c1{--c:linear-gradient(135deg,#2F6BFF,#4FC3FF);--cs:rgba(47,107,255,.7)}
+  .c2{--c:linear-gradient(135deg,#14C8B0,#4FC3FF);--cs:rgba(20,200,176,.7)}
+  .c3{--c:linear-gradient(135deg,#F5B942,#FF6B5A);--cs:rgba(245,140,70,.7)}
+
+  /* stats band */
+  .band{background:linear-gradient(115deg,#1D4FE0,#2F6BFF 35%,#1FA5E0 70%,#14C8B0);color:#fff;border-radius:28px;padding:56px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;position:relative;overflow:hidden}
+  .band:before{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.12)}
+  .band:after{content:"";position:absolute;left:30%;bottom:-140px;width:260px;height:260px;border-radius:50%;background:rgba(245,185,66,.25)}
+  .band div{position:relative;z-index:1}
+  .band b{display:block;font-size:clamp(40px,5vw,60px);font-weight:800;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+  .band span{display:block;margin-top:10px;font-size:15px;font-weight:500;color:rgba(255,255,255,.85);max-width:14em}
+
+  /* market */
+  .market{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+  .checks{list-style:none;display:grid;gap:14px;margin-top:28px}
+  .checks li{display:flex;gap:12px;font-size:16px;color:var(--text)}
+  .checks li i{flex:none;width:24px;height:24px;border-radius:8px;background:rgba(20,200,176,.14);display:grid;place-items:center;margin-top:1px}
+  .chart{background:var(--night);color:#fff;border-radius:24px;padding:36px;position:relative;overflow:hidden}
+  .chart:before{content:"";position:absolute;right:-60px;top:-60px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(47,107,255,.5),transparent 70%)}
+  .chart h3{position:relative}
+  .chart .sub{color:#9FB0CE;font-size:14px;margin-top:4px;position:relative}
+  .rows{display:grid;gap:22px;margin-top:30px;position:relative}
+  .row-meta{display:flex;justify-content:space-between;font-size:14px;color:#C5D1E8;margin-bottom:8px}
+  .row-meta b{color:#fff;font-size:16px;font-variant-numeric:tabular-nums}
+  .rail{height:14px;border-radius:8px;background:rgba(255,255,255,.08);overflow:hidden}
+  .rail i{display:block;height:100%;border-radius:8px;animation:grow 1.6s cubic-bezier(.2,.8,.2,1) both}
+  .axis{display:flex;justify-content:space-between;margin-top:12px;font-size:12px;color:#7F90B0;font-variant-numeric:tabular-nums;position:relative}
+  .note{font-size:12px;color:#7F90B0;margin-top:18px;position:relative}
+
+  /* compare */
+  .tbl{overflow-x:auto;border-radius:22px;border:1px solid var(--line);box-shadow:0 30px 60px -40px rgba(10,31,68,.35)}
+  table{width:100%;min-width:780px;border-collapse:collapse;font-size:15px;background:#fff}
+  th,td{padding:20px 24px;text-align:left;border-bottom:1px solid var(--line)}
+  thead th{font-size:13px;font-weight:700;color:var(--muted);background:var(--surface)}
+  thead th.us{background:var(--navy);color:#fff;position:relative}
+  thead th.us span{display:inline-block;margin-left:8px;background:var(--gold);color:var(--night);font-size:11px;padding:3px 8px;border-radius:999px;vertical-align:1px}
+  td.us{background:#F1F5FF}
+  tbody tr:last-child td{border-bottom:none}
+  td:first-child{font-weight:700;color:var(--ink)}
+  td small{display:block;font-weight:500;color:var(--muted);font-size:13px}
+  .y,.l,.n{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:14px}
+  .y{color:#0E9F87}.y:before{content:"✓";display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(20,200,176,.15);font-size:13px}
+  .l{color:#B7791F}.l:before{content:"~";display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:rgba(245,185,66,.18)}
+  .n{color:#A0AABB}.n:before{content:"–";display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#EEF1F6}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;position:relative}
+  .steps:before{content:"";position:absolute;left:28px;right:28px;top:28px;height:3px;border-radius:3px;background:var(--grad);opacity:.35}
+  .step{position:relative}
+  .step .num{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:20px;color:#fff;background:var(--grad);box-shadow:0 0 0 8px #fff,0 14px 30px -10px rgba(47,107,255,.7)}
+  .step h3{margin:24px 0 8px}
+  .step p{font-size:15.5px}
+
+  /* cta */
+  .cta{position:relative;overflow:hidden;background:var(--night);color:#fff;border-radius:32px;padding:72px;display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:center;isolation:isolate}
+  .cta:before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(500px 300px at 0% 0%,rgba(47,107,255,.55),transparent 70%),radial-gradient(500px 340px at 100% 100%,rgba(245,185,66,.35),transparent 70%),radial-gradient(400px 300px at 70% 0%,rgba(20,200,176,.3),transparent 70%)}
+  .cta h2{color:#fff}
+  .cta p{color:#BAC7DE;font-size:18px;margin-top:16px}
+  .cta .actions{margin-top:32px}
+  .contact{display:grid;gap:12px}
+  .contact div{display:flex;gap:16px;align-items:center;padding:18px 20px;border-radius:16px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12)}
+  .contact .ci{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none}
+  .contact small{display:block;font-size:13px;color:#9FB0CE}
+  .contact b{font-size:16px;font-weight:700}
+
+  footer{margin-top:104px;border-top:1px solid var(--line)}
+  .foot{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;padding-block:56px}
+  .foot .brand{color:var(--ink)}
+  .foot h4{font-size:13px;font-weight:800;margin-bottom:14px}
+  .foot ul{list-style:none;display:grid;gap:10px;font-size:14px;color:var(--text)}
+  .foot address{font-style:normal;font-size:14px;color:var(--text);margin-top:14px;line-height:1.7}
+  .legal{border-top:1px solid var(--line);padding-block:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+
+  @media (max-width:960px){
+    .menu,.nav-right .phone{display:none}
+    .hero,.market,.cta{grid-template-columns:1fr}
+    .hero{padding-block:40px 64px}
+    .visual{padding:44px 0}
+    .hero>div{min-width:0}
+    .badge{border-radius:14px;align-items:flex-start;flex-wrap:wrap}
+    .actions .btn{white-space:normal;height:auto;min-height:52px;padding-block:12px}
+    .float{max-width:calc(100% - 8px)}
+    .hero-stats{gap:24px 32px}
+    .cards,.steps{grid-template-columns:1fr}
+    .steps:before{display:none}
+    .band{grid-template-columns:1fr 1fr;padding:36px 28px}
+    .cta{padding:40px 24px}
+    .foot{grid-template-columns:1fr 1fr}
+    section{padding-block:72px}
+    .carriers ul{gap:28px}
+  }
+  @media (prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<div class="hero-wrap">
+  <div class="container nav">
+    <a class="brand" href="#">
+      <svg width="30" height="30" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="12" stroke="#fff" stroke-width="2"/><ellipse cx="14" cy="14" rx="5" ry="12" stroke="#fff" stroke-width="2"/><path d="M2 14h24" stroke="#fff" stroke-width="2"/><circle cx="22.5" cy="6" r="3.2" fill="#F5B942"/></svg>
+      <span>Network<b>IP</b></span>
+    </a>
+    <nav class="menu" aria-label="Main"><a href="#">Services</a><a href="#">Technology</a><a href="#">About</a><a href="#">Management</a><a href="#">Contact</a></nav>
+    <div class="nav-right"><span class="phone">512‑423‑0748</span><a class="btn btn-gold" href="#">Contact sales</a></div>
+  </div>
+
+  <div class="container hero">
+    <div>
+      <span class="badge"><span>25+ years</span>International voice for MNOs &amp; MVNOs</span>
+      <h1>Make international calling your <span class="grad-text">competitive advantage.</span></h1>
+      <p class="lead">Give subscribers worldwide calling as a bundle or add-on, with minimal risk and big regulatory savings. NetworkIP runs the international voice service behind your brand.</p>
+      <div class="actions">
+        <a class="btn btn-gold" href="#">Schedule a consultation →</a>
+        <a class="btn btn-glass" href="#"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 2l9 5-9 5z" fill="currentColor"/></svg>Watch the 2‑minute overview</a>
+      </div>
+      <div class="hero-stats">
+        <div><b data-count="51.6" data-suffix="M">51.6M</b><span>foreign‑born U.S. residents</span></div>
+        <div><b data-count="80" data-suffix="M+">80M+</b><span>addressable consumers</span></div>
+        <div><b data-count="25" data-suffix="%">25%</b><span>of mobile subs need it</span></div>
+      </div>
+    </div>
+
+    <div class="visual" aria-label="Example Global Calling dashboard">
+      <div class="console">
+        <div class="console-top"><b>Global Calling</b><span class="live"><i></i>Live</span></div>
+        <div>
+          <div class="big-num" id="mins">1,284,930<small>minutes connected today</small></div>
+          <svg class="spark" viewBox="0 0 400 70" preserveAspectRatio="none" aria-hidden="true">
+            <defs><linearGradient id="sg" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#4FC3FF" stop-opacity=".45"/><stop offset="1" stop-color="#4FC3FF" stop-opacity="0"/></linearGradient><linearGradient id="sl" x1="0" x2="1"><stop offset="0" stop-color="#2F6BFF"/><stop offset=".6" stop-color="#4FC3FF"/><stop offset="1" stop-color="#14C8B0"/></linearGradient></defs>
+            <path d="M0 58 L40 52 L80 55 L120 42 L160 46 L200 34 L240 38 L280 24 L320 28 L360 14 L400 8 L400 70 L0 70Z" fill="url(#sg)"/>
+            <path d="M0 58 L40 52 L80 55 L120 42 L160 46 L200 34 L240 38 L280 24 L320 28 L360 14 L400 8" fill="none" stroke="url(#sl)" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="400" cy="8" r="5" fill="#14C8B0"/>
+          </svg>
+        </div>
+        <div class="route"><span class="cc" style="background:#F5B942">MX</span><div><b>Mexico</b><div class="bar"><i style="width:92%"></i></div></div><em>HD voice</em></div>
+        <div class="route"><span class="cc" style="background:#4FC3FF">IN</span><div><b>India</b><div class="bar"><i style="width:78%;animation-delay:.15s"></i></div></div><em>HD voice</em></div>
+        <div class="route"><span class="cc" style="background:#14C8B0">PH</span><div><b>Philippines</b><div class="bar"><i style="width:64%;animation-delay:.3s"></i></div></div><em>HD voice</em></div>
+        <div class="route"><span class="cc" style="background:#FF8A7A">NG</span><div><b>Nigeria</b><div class="bar"><i style="width:51%;animation-delay:.45s"></i></div></div><em>HD voice</em></div>
+      </div>
+      <div class="float f1"><span class="ico" style="background:rgba(20,200,176,.15)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0E9F87" stroke-width="2.4"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Included in plan</b><small>No extra charge to subscriber</small></div></div>
+      <div class="float f2"><span class="ico" style="background:rgba(47,107,255,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2F6BFF" stroke-width="2.2"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/></svg></span><div><b>Fraud blocked automatically</b><small>Abuse controls always on</small></div></div>
+    </div>
+  </div>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="track">
+      <span>Mexico</span><span>India</span><span>Philippines</span><span>Nigeria</span><span>Dominican Republic</span><span>Guatemala</span><span>Vietnam</span><span>El Salvador</span><span>China</span><span>Colombia</span><span>Pakistan</span><span>Honduras</span><span>Jamaica</span><span>Brazil</span><span>Ghana</span><span>Haiti</span>
+      <span>Mexico</span><span>India</span><span>Philippines</span><span>Nigeria</span><span>Dominican Republic</span><span>Guatemala</span><span>Vietnam</span><span>El Salvador</span><span>China</span><span>Colombia</span><span>Pakistan</span><span>Honduras</span><span>Jamaica</span><span>Brazil</span><span>Ghana</span><span>Haiti</span>
+    </div>
+  </div>
+</div>
+
+<main>
+  <div class="carriers">
+    <div class="container">
+      <p>Direct dialing through exclusive connections with major U.S. carriers</p>
+      <ul><li>AT&amp;T</li><li>Verizon</li><li>T‑Mobile</li><li>Boost Mobile</li></ul>
+    </div>
+  </div>
+
+  <section style="padding-top:64px">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Services</span>
+        <h2>Everything you need to launch worldwide calling</h2>
+        <p>Outsource the complexity of international voice to a partner with a 25‑year track record.</p>
+      </div>
+      <div class="cards">
+        <div class="card c1">
+          <span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg></span>
+          <h3>International Calling</h3>
+          <p>Bundled or add-on worldwide calling. Subscribers call any phone, anywhere, straight from their dialer.</p>
+          <a href="#">Explore calling →</a>
+        </div>
+        <div class="card c2">
+          <span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M4 20V11M10 20V5M16 20v-6M22 20H2"/></svg></span>
+          <h3>Customer Intelligence</h3>
+          <p>See who your subscribers call and where, then design offers that attract and keep them.</p>
+          <a href="#">Explore insights →</a>
+        </div>
+        <div class="card c3">
+          <span class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8"><path d="M12 3l8 3v6c0 4.5-3.4 8.2-8 9-4.6-.8-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
+          <h3>Integration &amp; Call Quality</h3>
+          <p>Fast integration, carrier-grade quality and proven automated fraud and abuse controls.</p>
+          <a href="#">Explore technology →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="band">
+      <div><b data-count="51.6" data-suffix="M">51.6M</b><span>foreign‑born U.S. residents in 2024</span></div>
+      <div><b data-count="15.6" data-suffix="%">15.6%</b><span>of the U.S. population, a record high</span></div>
+      <div><b data-count="80" data-suffix="M+">80M+</b><span>addressable U.S. consumers</span></div>
+      <div><b>&lt;2%</b><span>need roaming, by comparison</span></div>
+    </div>
+  </div>
+
+  <section>
+    <div class="container market">
+      <div>
+        <span class="eyebrow">The opportunity</span>
+        <h2 style="margin-top:14px">One in four subscribers wants to call abroad</h2>
+        <p style="margin-top:16px;font-size:18px">Most international offers are built for a few heavy users and push everyone else to free apps. NetworkIP's automated fraud controls flip that model, so you can welcome the casual caller.</p>
+        <ul class="checks">
+          <li><i><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0E9F87" stroke-width="2.4"><path d="M3 8.5l3 3 7-7"/></svg></i>Attract and retain subscribers with a simple offer</li>
+          <li><i><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0E9F87" stroke-width="2.4"><path d="M3 8.5l3 3 7-7"/></svg></i>Keep calls on your network instead of in third‑party apps</li>
+          <li><i><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#0E9F87" stroke-width="2.4"><path d="M3 8.5l3 3 7-7"/></svg></i>Ride falling international voice costs</li>
+        </ul>
+      </div>
+      <div class="chart" role="img" aria-label="International calling need 25%, foreign-born share 15.6%, roaming need under 2%">
+        <h3>Who needs what</h3>
+        <p class="sub">Share of U.S. mobile subscribers</p>
+        <div class="rows">
+          <div><div class="row-meta"><span>Need international calling</span><b>25%</b></div><div class="rail"><i style="width:83.3%;background:linear-gradient(90deg,#2F6BFF,#4FC3FF)"></i></div></div>
+          <div><div class="row-meta"><span>Foreign‑born population</span><b>15.6%</b></div><div class="rail"><i style="width:52%;background:linear-gradient(90deg,#F5B942,#FF8A5A);animation-delay:.2s"></i></div></div>
+          <div><div class="row-meta"><span>Need international roaming</span><b>&lt;2%</b></div><div class="rail"><i style="width:6.6%;background:#7F90B0;animation-delay:.4s"></i></div></div>
+        </div>
+        <div class="axis"><span>0%</span><span>10%</span><span>20%</span><span>30%</span></div>
+        <p class="note">Population figures based on 2024 results.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">Comparison</span>
+        <h2>How Global Calling stacks up</h2>
+        <p>International calling options available to U.S. consumers today.</p>
+      </div>
+      <div class="tbl">
+        <table>
+          <thead><tr><th>Value to consumer</th><th class="us">NetworkIP Global Calling<span>Best value</span></th><th>Calling apps</th><th>AT&amp;T, T‑Mobile, Verizon</th><th>Other providers</th></tr></thead>
+          <tbody>
+            <tr><td>Affordability<small>Included at no additional cost</small></td><td class="us"><span class="y">Yes</span></td><td><span class="y">Yes</span></td><td><span class="l">Limited</span></td><td><span class="n">No</span></td></tr>
+            <tr><td>Convenience<small>Call from and to any phone</small></td><td class="us"><span class="y">Yes</span></td><td><span class="n">No</span></td><td><span class="y">Yes</span></td><td><span class="y">Yes</span></td></tr>
+            <tr><td>Global connectivity<small>Connect with people worldwide</small></td><td class="us"><span class="y">Yes</span></td><td><span class="l">Limited</span></td><td><span class="l">Limited</span></td><td><span class="n">No</span></td></tr>
+            <tr><td>As easy as calling stateside</td><td class="us"><span class="y">Yes</span></td><td><span class="n">No</span></td><td><span class="y">Yes</span></td><td><span class="n">No</span></td></tr>
+            <tr><td>Easy-to-understand offer</td><td class="us"><span class="y">Yes</span></td><td><span class="y">Yes</span></td><td><span class="n">No</span></td><td><span class="n">No</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="container">
+      <div class="head">
+        <span class="eyebrow">How it works</span>
+        <h2>Live in three steps</h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>Choose your offer</h3><p>Pick a bundled or add-on offer, guided by data on your subscribers' calling needs.</p></div>
+        <div class="step"><div class="num">2</div><h3>Integrate</h3><p>Connect to NetworkIP's platform. We handle routing, call quality and fraud prevention.</p></div>
+        <div class="step"><div class="num">3</div><h3>Launch and grow</h3><p>Market a clear promise, call anyone anywhere, and keep the customers who call abroad.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="cta">
+      <div>
+        <span class="eyebrow" style="color:var(--gold)">Let's talk</span>
+        <h2 style="margin-top:14px">Call anyone, anywhere, <span class="grad-text">with no worries.</span></h2>
+        <p>See how international calling can grow and retain your subscriber base.</p>
+        <div class="actions"><a class="btn btn-gold" href="#">Schedule a consultation →</a></div>
+      </div>
+      <div class="contact">
+        <div><span class="ci" style="background:var(--gold)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06122A" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg></span><span><small>Phone</small><b>512‑423‑0748</b></span></div>
+        <div><span class="ci" style="background:var(--sky)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06122A" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><span><small>Email</small><b>marketing@networkip.net</b></span></div>
+        <div><span class="ci" style="background:var(--teal)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#06122A" stroke-width="2"><path d="M12 21s-7-6.2-7-12a7 7 0 0114 0c0 5.8-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span><small>Office</small><b>119 W Tyler St, Suite 100, Longview, TX</b></span></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="container foot">
+    <div>
+      <a class="brand" href="#"><svg width="26" height="26" viewBox="0 0 28 28" fill="none" aria-hidden="true"><circle cx="14" cy="14" r="12" stroke="#0A1A3A" stroke-width="2"/><ellipse cx="14" cy="14" rx="5" ry="12" stroke="#0A1A3A" stroke-width="2"/><path d="M2 14h24" stroke="#0A1A3A" stroke-width="2"/><circle cx="22.5" cy="6" r="3.2" fill="#F5B942"/></svg><span>Network<b>IP</b></span></a>
+      <address>119 West Tyler Street, Suite 100<br>Longview, Texas 75601<br>512‑423‑0748 · marketing@networkip.net</address>
+    </div>
+    <div><h4>Company</h4><ul><li>About us</li><li>Management</li><li>Contact us</li></ul></div>
+    <div><h4>Services</h4><ul><li>International Calling</li><li>Customer Intelligence</li></ul></div>
+    <div><h4>Technology</h4><ul><li>Integration</li><li>Call Quality</li></ul></div>
+  </div>
+  <div class="container legal"><span>© 2025 NetworkIP. All rights reserved.</span><span>Privacy Policy</span></div>
+</footer>
+
+<script>
+(function(){
+  var reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // Count-up numbers (final values are already in the markup)
+  if(!reduce){document.querySelectorAll('[data-count]').forEach(function(el){
+    var end=parseFloat(el.dataset.count),suf=el.dataset.suffix||'',dec=(el.dataset.count.split('.')[1]||'').length,t0=null;
+    function step(t){if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400),e=1-Math.pow(1-p,3);el.textContent=(end*e).toFixed(dec)+suf;if(p<1)requestAnimationFrame(step)}
+    requestAnimationFrame(step);});}
+  // Ticking minutes counter
+  var m=document.getElementById('mins'),n=1284930;
+  if(m&&!reduce)setInterval(function(){n+=Math.floor(Math.random()*40)+12;m.firstChild.nodeValue=n.toLocaleString('en-US')},900);
+})();
+</script>
+</body>
+</html>
