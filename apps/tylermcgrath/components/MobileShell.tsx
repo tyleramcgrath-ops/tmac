@@ -342,6 +342,14 @@ function Home({
               <span className="m-arrow">→</span>
             </button>
           ))}
+          <a className="m-skill" href="/blog/">
+            <span className="m-skill-n">0{Object.keys(EXPERTISE).length + 1}</span>
+            <span>
+              <strong>The Journal</strong>
+              <small>In-depth guides to SEO, GEO and AI search</small>
+            </span>
+            <span className="m-arrow">→</span>
+          </a>
         </div>
       </section>
 
@@ -594,6 +602,9 @@ function Connect({ go, count }: { go: (t: Tab) => void; count: number }) {
       <button className="m-btn" onClick={() => go("work")}>
         Explore all {count} websites
       </button>
+      <a className="m-btn" href="/blog/">
+        Read the Journal: SEO &amp; AI search guides
+      </a>
     </section>
   );
 }
