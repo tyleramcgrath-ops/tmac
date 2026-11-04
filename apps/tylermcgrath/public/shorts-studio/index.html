@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Viral Shorts Studio</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --acc:#FF4500;--acc2:#ff6b35;--ind:#6366f1;--pur:#a855f7;--grn:#4ade80;
+  --bg:#07070f;--bg2:#0c0c1a;--bg3:#111120;
+  --glass:rgba(255,255,255,0.035);--border:rgba(255,255,255,0.07);
+  --text:#f0f0fa;--muted:rgba(255,255,255,0.4);--dim:rgba(255,255,255,0.18);
+}
+body{background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;height:100vh;overflow:hidden;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;outline:none;font-family:inherit}
+input,select,textarea{font-family:inherit;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 12px;width:100%;font-size:13px}
+input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(255,69,0,0.5)}
+textarea{resize:vertical;min-height:80px}
+select option{background:var(--bg2)}
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:4px}
+nav{height:46px;background:rgba(7,7,15,0.95);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;gap:16px;flex-shrink:0;backdrop-filter:blur(10px);z-index:100}
+.nav-logo{font-size:15px;font-weight:800;background:linear-gradient(135deg,var(--acc),var(--pur));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-0.3px}
+.nav-badge{font-size:10px;background:var(--acc);color:#fff;padding:2px 7px;border-radius:20px;font-weight:700;-webkit-text-fill-color:#fff}
+.nav-spacer{flex:1}
+.nav-key-wrap{display:flex;align-items:center;gap:8px}
+.nav-key-wrap label{font-size:11px;color:var(--muted);margin:0;white-space:nowrap}
+.nav-key-wrap input{width:200px;padding:5px 10px;font-size:12px}
+#navSaveKey{background:var(--acc);color:#fff;padding:5px 12px;border-radius:5px;font-size:12px;font-weight:600}
+.step-rail{height:40px;background:var(--bg2);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:0 20px}
+.sr-step{display:flex;align-items:center;gap:6px;padding:0 14px}
+.sr-dot{width:22px;height:22px;border-radius:50%;border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--dim);transition:all 0.3s;flex-shrink:0}
+.sr-label{font-size:11px;font-weight:600;color:var(--dim);transition:all 0.3s;white-space:nowrap}
+.sr-line{width:36px;height:2px;background:var(--border);transition:all 0.3s;flex-shrink:0}
+.sr-step.active .sr-dot{border-color:var(--acc);color:var(--acc);box-shadow:0 0 8px rgba(255,69,0,0.4)}
+.sr-step.active .sr-label{color:var(--text)}
+.sr-step.done .sr-dot{background:var(--grn);border-color:var(--grn);color:#000}
+.sr-step.done .sr-label{color:var(--grn)}
+.studio{display:grid;grid-template-columns:260px 1fr 360px;height:calc(100vh - 86px);overflow:hidden}
+.left{background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+.left::-webkit-scrollbar{width:4px}
+.left::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.lsection{padding:14px 16px;border-bottom:1px solid var(--border)}
+.lsection-title{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+.lrow{margin-bottom:10px}
+.lrow:last-child{margin-bottom:0}
+.dur-btns{display:flex;gap:6px}
+.dur-btn{flex:1;padding:6px 4px;border-radius:6px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-size:12px;font-weight:600;transition:all 0.2s}
+.dur-btn.active{background:rgba(255,69,0,0.15);border-color:var(--acc);color:var(--acc)}
+.btn-generate{width:100%;padding:12px;border-radius:8px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--acc),#c73200);color:#fff;transition:all 0.2s;position:relative;overflow:hidden}
+.btn-generate:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 20px rgba(255,69,0,0.35)}
+.btn-generate:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-secondary{width:100%;padding:9px;border-radius:7px;font-size:13px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);transition:all 0.2s}
+.btn-secondary:hover:not(:disabled){background:rgba(255,255,255,0.1)}
+.btn-secondary:disabled{opacity:0.35;cursor:not-allowed}
+.voice-char-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;}
+.voice-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;transition:border-color .15s,background .15s;text-align:left;}
+.voice-card:hover{border-color:var(--acc);}
+.voice-card.active{border-color:var(--acc);background:rgba(255,69,0,0.12);}
+.voice-card-name{font-size:12px;font-weight:700;color:var(--text);}
+.voice-card-desc{font-size:10px;color:var(--muted);margin-top:2px;}
+.cap-style-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
+.cap-style-btn{padding:7px 8px;border-radius:6px;background:var(--glass);border:1px solid var(--border);color:var(--muted);font-size:11px;font-weight:600;transition:all 0.2s;text-align:center}
+.cap-style-btn.active{background:rgba(168,85,247,0.15);border-color:var(--pur);color:var(--pur)}
+.status-chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;padding:3px 9px;border-radius:20px;font-weight:600}
+.status-chip.idle{background:rgba(255,255,255,0.05);color:var(--muted)}
+.status-chip.working{background:rgba(255,165,0,0.15);color:#ffa500}
+.status-chip.done{background:rgba(74,222,128,0.15);color:var(--grn)}
+.status-chip.error{background:rgba(255,69,0,0.15);color:var(--acc)}
+.center{display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden}
+.center-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,69,0,0.04) 0%,transparent 70%);pointer-events:none}
+.c-status{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:40px;text-align:center;width:100%}
+.c-status-icon{font-size:56px;line-height:1}
+.c-status-title{font-size:22px;font-weight:800;color:var(--text)}
+.c-status-sub{font-size:14px;color:var(--muted);max-width:360px;line-height:1.6}
+.c-status-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--acc);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.c-progress{width:280px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
+.c-progress-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--pur));border-radius:2px;transition:width 0.4s ease;width:0%}
+.c-step-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.c-step-item.done{color:var(--grn)}
+.c-step-dot{width:18px;height:18px;border-radius:50%;border:2px solid var(--dim);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;font-weight:700}
+.c-step-item.done .c-step-dot{background:var(--grn);border-color:var(--grn);color:#000}
+.c-preview{display:none;flex-direction:column;align-items:center;gap:12px;padding:16px}
+.phone-frame{width:270px;height:480px;border-radius:28px;background:#000;border:2px solid rgba(255,255,255,0.15);overflow:hidden;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.8)}
+#previewCanvas{width:270px;height:480px;display:block}
+.preview-controls{display:flex;gap:8px;align-items:center}
+.preview-btn{padding:7px 14px;border-radius:6px;font-size:12px;font-weight:600;background:rgba(255,255,255,0.06);border:1px solid var(--border);color:var(--text);transition:all 0.2s}
+.preview-btn:hover{background:rgba(255,255,255,0.12)}
+.preview-btn.primary{background:var(--acc);border-color:var(--acc);color:#fff}
+.right{background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.rtabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto}
+.rtabs::-webkit-scrollbar{height:0}
+.rtab{padding:10px 14px;font-size:12px;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;cursor:pointer}
+.rtab.active{color:var(--text);border-bottom-color:var(--acc)}
+.rtab.locked{opacity:0.35;cursor:not-allowed}
+.rtab:not(.locked):hover{color:var(--text)}
+.rtab .li{font-size:9px;margin-left:3px;opacity:0.6}
+.rpane{flex:1;overflow-y:auto;padding:16px}
+.rpane::-webkit-scrollbar{width:4px}
+.rpane::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.rpane>.tab-content{display:none}
+.rpane>.tab-content.active{display:block}
+.scene-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:12px;margin-bottom:10px}
+.scene-card-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.scene-num{width:22px;height:22px;border-radius:50%;background:rgba(255,69,0,0.15);border:1px solid rgba(255,69,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:var(--acc);flex-shrink:0}
+.scene-time{font-size:11px;color:var(--muted);flex:1}
+.scene-thumb{width:100%;height:80px;border-radius:6px;object-fit:cover;margin-bottom:8px;border:1px solid var(--border)}
+.scene-thumb-ph{width:100%;height:80px;border-radius:6px;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:11px;margin-bottom:8px}
+.scene-field{margin-bottom:6px}
+.scene-field label{margin-bottom:2px}
+.caption-timeline{display:flex;flex-direction:column;gap:6px}
+.cap-phrase{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;display:flex;align-items:center;gap:8px}
+.cap-phrase-text{flex:1;font-size:12px;font-weight:600}
+.cap-phrase-time{font-size:10px;color:var(--muted);white-space:nowrap}
+.cap-phrase .hl{color:var(--acc)}
+.meta-section{margin-bottom:16px}
+.meta-section-title{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px}
+.meta-tag{display:inline-block;background:rgba(99,102,241,0.12);border:1px solid rgba(99,102,241,0.25);color:#a5b4fc;padding:3px 8px;border-radius:4px;font-size:11px;margin:2px}
+.export-card{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px}
+.export-card-title{font-size:13px;font-weight:700;margin-bottom:4px}
+.export-card-sub{font-size:11px;color:var(--muted);line-height:1.5;margin-bottom:10px}
+#renderProgress{display:none;margin-top:8px}
+.render-bar{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.render-fill{height:100%;background:linear-gradient(90deg,var(--acc),var(--pur));border-radius:3px;width:0%;transition:width 0.2s}
+#toasts{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:9999}
+.toast{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:13px;max-width:320px;animation:slideIn 0.3s ease;box-shadow:0 4px 20px rgba(0,0,0,0.5)}
+.toast.success{border-color:rgba(74,222,128,0.3);color:var(--grn)}
+.toast.error{border-color:rgba(255,69,0,0.4);color:#ff8a6a}
+@keyframes slideIn{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+.empty-state{text-align:center;padding:30px 20px;color:var(--muted);font-size:13px;line-height:1.7}
+.empty-state .ei{font-size:32px;margin-bottom:8px;display:block}
+/* Settings modal */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+.modal-overlay.hidden{display:none}
+.modal{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:24px;width:460px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal-title{font-size:16px;font-weight:800;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.modal-close{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;padding:0 4px;line-height:1}
+.modal-close:hover{color:var(--text)}
+.modal-row{margin-bottom:14px}
+.modal-row label{font-size:12px;color:var(--muted);margin-bottom:5px;display:flex;align-items:center;gap:6px}
+.modal-row label a{font-size:11px;color:var(--acc)}
+.modal-row input,.modal-row select{width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 12px;font-size:13px;font-family:inherit}
+.modal-row input:focus,.modal-row select:focus{outline:none;border-color:rgba(255,69,0,0.5)}
+.modal-save{width:100%;padding:11px;border-radius:8px;font-size:14px;font-weight:700;background:linear-gradient(135deg,var(--acc),#c73200);color:#fff;margin-top:6px;cursor:pointer;border:none}
+.modal-save:hover{opacity:0.9}
+.settings-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border);color:var(--text);padding:5px 12px;border-radius:6px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px}
+.settings-btn:hover{background:rgba(255,255,255,0.12)}
+.key-status{font-size:10px;padding:2px 6px;border-radius:10px;font-weight:600}
+.key-status.set{background:rgba(74,222,128,0.15);color:var(--grn)}
+.key-status.missing{background:rgba(255,69,0,0.12);color:#ff8a6a}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">⚡ Viral Shorts Studio</span>
+  <span class="nav-badge">AI</span>
+  <div class="nav-spacer"></div>
+  <span id="keyStatusBadge" style="font-size:11px;color:var(--muted);margin-right:8px"></span>
+  <button class="settings-btn" onclick="openSettings()">⚙ API Keys</button>
+</nav>
+
+<!-- Settings Modal -->
+<div class="modal-overlay hidden" id="settingsModal" onclick="if(event.target===this)closeSettings()">
+  <div class="modal">
+    <div class="modal-title">⚙ API Keys <button class="modal-close" onclick="closeSettings()">✕</button></div>
+    <div class="modal-row">
+      <label>🤖 Gemini Key (primary AI) <a href="https://aistudio.google.com/apikey" target="_blank">Get free key →</a></label>
+      <input type="password" id="geminiKey" placeholder="AIza..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>⚡ Groq Key (fallback AI) <a href="https://console.groq.com" target="_blank">Get free key →</a></label>
+      <input type="password" id="groqKey" placeholder="gsk_..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🎥 Pexels Key (stock video) <a href="https://www.pexels.com/api/" target="_blank">Get free key →</a></label>
+      <input type="password" id="pexelsKey" placeholder="pexels key..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🎞 Pixabay Key (video fallback) <a href="https://pixabay.com/api/docs/" target="_blank">Get free key →</a></label>
+      <input type="password" id="pixabayKey" placeholder="pixabay key..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🤖 OpenAI Key (ChatGPT — alternative AI) <a href="https://platform.openai.com/api-keys" target="_blank">Get key →</a></label>
+      <input type="password" id="openaiKey" placeholder="sk-..." autocomplete="off">
+    </div>
+    <div class="modal-row">
+      <label>🔊 ElevenLabs Key (AI voice) <a href="https://elevenlabs.io" target="_blank">Get free key →</a></label>
+      <input type="password" id="elKey" placeholder="elevenlabs key..." autocomplete="off">
+    </div>
+    <button class="modal-save" onclick="saveKeys()">💾 Save All Keys</button>
+  </div>
+</div>
+
+<div class="step-rail">
+  <div class="sr-step" id="sr0"><div class="sr-dot" id="srd0">1</div><span class="sr-label">Script</span></div>
+  <div class="sr-line" id="srl0"></div>
+  <div class="sr-step" id="sr1"><div class="sr-dot" id="srd1">2</div><span class="sr-label">Footage</span></div>
+  <div class="sr-line" id="srl1"></div>
+  <div class="sr-step" id="sr2"><div class="sr-dot" id="srd2">3</div><span class="sr-label">Captions</span></div>
+  <div class="sr-line" id="srl2"></div>
+  <div class="sr-step" id="sr3"><div class="sr-dot" id="srd3">4</div><span class="sr-label">Preview</span></div>
+  <div class="sr-line" id="srl3"></div>
+  <div class="sr-step" id="sr4"><div class="sr-dot" id="srd4">5</div><span class="sr-label">Export</span></div>
+</div>
+
+<div class="studio">
+  <!-- LEFT -->
+  <div class="left">
+    <div class="lsection">
+      <div class="lsection-title">Topic</div>
+      <div class="lrow">
+        <label>What's your video about?</label>
+        <textarea id="topicInput" placeholder="e.g. 5 habits that changed my life..."></textarea>
+      </div>
+      <div class="lrow">
+        <label>Format</label>
+        <select id="fmtSelect">
+          <option value="top3">Top 3 Secrets</option>
+          <option value="hook_story">Hook + Story + CTA</option>
+          <option value="tutorial">Quick Tutorial</option>
+          <option value="mindblown">Mind-Blowing Fact</option>
+          <option value="listicle">Rapid Listicle</option>
+          <option value="controversy">Hot Take / Controversy</option>
+        </select>
+      </div>
+      <div class="lrow">
+        <label>Tone</label>
+        <select id="toneSelect">
+          <option value="Educational + Surprising">Educational + Surprising</option>
+          <option value="Hype + Motivational">Hype + Motivational</option>
+          <option value="Calm + Authoritative">Calm + Authoritative</option>
+          <option value="Funny + Relatable">Funny + Relatable</option>
+          <option value="Controversial + Bold">Controversial + Bold</option>
+        </select>
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Duration</div>
+      <div class="dur-btns">
+        <button class="dur-btn" data-s="15" onclick="setDur(15)">15s</button>
+        <button class="dur-btn active" data-s="30" onclick="setDur(30)">30s</button>
+        <button class="dur-btn" data-s="45" onclick="setDur(45)">45s</button>
+        <button class="dur-btn" data-s="60" onclick="setDur(60)">60s</button>
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Background</div>
+      <div class="lrow">
+        <label>Source</label>
+        <select id="bgModeSelect">
+          <option value="pexels">Pexels Stock Video</option>
+          <option value="gradient">Animated Gradient</option>
+        </select>
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Voice Character</div>
+      <div class="voice-char-grid" id="voiceCharGrid">
+        <!-- cards generated by JS -->
+      </div>
+    </div>
+    <div class="lsection">
+      <div class="lsection-title">Caption Style</div>
+      <div class="cap-style-grid">
+        <button class="cap-style-btn active" data-style="hormozi" onclick="setCapStyle('hormozi')">Hormozi</button>
+        <button class="cap-style-btn" data-style="clean" onclick="setCapStyle('clean')">Clean</button>
+        <button class="cap-style-btn" data-style="yellow" onclick="setCapStyle('yellow')">Yellow Pop</button>
+        <button class="cap-style-btn" data-style="dark" onclick="setCapStyle('dark')">Dark Pill</button>
+        <button class="cap-style-btn" data-style="tiktok" onclick="setCapStyle('tiktok')">TikTok</button>
+      </div>
+    </div>
+    <div class="lsection" style="flex:1;border-bottom:none">
+      <button class="btn-generate" id="genBtn" onclick="stepGenerate()">⚡ Generate Script</button>
+      <div style="height:8px"></div>
+      <button class="btn-secondary" onclick="resetAll()">↺ Start Over</button>
+      <div style="height:10px"></div>
+      <div id="leftStatus" class="status-chip idle">◉ <span id="leftStatusText">Ready</span></div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div class="center">
+    <div class="center-bg"></div>
+    <div class="c-status" id="cs-idle">
+      <div class="c-status-icon">🎬</div>
+      <div class="c-status-title">Viral Shorts Studio</div>
+      <div class="c-status-sub">Enter your topic, choose settings, and hit Generate Script to start building your viral short.</div>
+    </div>
+    <div class="c-status" id="cs-scripting" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Writing Your Script</div>
+      <div class="c-status-sub" id="cs-scripting-sub">Crafting hook, scenes, and CTA...</div>
+      <div class="c-progress"><div class="c-progress-fill" id="scriptProgress"></div></div>
+    </div>
+    <div class="c-status" id="cs-script-done" style="display:none">
+      <div class="c-status-icon">✅</div>
+      <div class="c-status-title">Script Ready</div>
+      <div class="c-status-sub">Review your script in the Script tab, then click <strong>Approve Script &amp; Find Footage</strong>.</div>
+      <div id="cs-script-stats" style="display:flex;flex-direction:column;gap:8px;width:100%;max-width:300px"></div>
+    </div>
+    <div class="c-status" id="cs-footage" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Finding Footage</div>
+      <div class="c-status-sub" id="cs-footage-sub">Searching Pexels for each scene...</div>
+      <div class="c-progress"><div class="c-progress-fill" id="footageProgress"></div></div>
+    </div>
+    <div class="c-status" id="cs-footage-done" style="display:none">
+      <div class="c-status-icon">🎞️</div>
+      <div class="c-status-title">Footage Ready</div>
+      <div class="c-status-sub">Review thumbnails in the Footage tab, then click <strong>Build Captions &amp; Preview</strong>.</div>
+    </div>
+    <div class="c-status" id="cs-captions" style="display:none">
+      <div class="c-status-spinner"></div>
+      <div class="c-status-title">Building Captions</div>
+      <div class="c-status-sub">Generating phrase-level caption timeline...</div>
+    </div>
+    <div class="c-preview" id="cs-preview">
+      <div class="phone-frame">
+        <canvas id="previewCanvas" width="540" height="960"></canvas>
+      </div>
+      <div class="preview-controls">
+        <button class="preview-btn" id="playPauseBtn" onclick="togglePreviewPlay()">⏸ Pause</button>
+        <button class="preview-btn" onclick="restartPreview()">↺ Restart</button>
+        <button class="preview-btn primary" onclick="switchRightTab('export')">Export →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <div class="rtabs">
+      <div class="rtab active" id="rtab-script" onclick="switchRightTab('script')">Script</div>
+      <div class="rtab locked" id="rtab-footage" onclick="switchRightTab('footage')">Footage<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-captions" onclick="switchRightTab('captions')">Captions<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-metadata" onclick="switchRightTab('metadata')">Metadata<span class="li">🔒</span></div>
+      <div class="rtab locked" id="rtab-export" onclick="switchRightTab('export')">Export<span class="li">🔒</span></div>
+    </div>
+    <div class="rpane">
+      <div class="tab-content active" id="tab-script">
+        <div id="script-empty" class="empty-state"><span class="ei">📝</span>Enter a topic and click<br><strong>Generate Script</strong> to begin.</div>
+        <div id="script-content" style="display:none">
+          <div id="script-meta"></div>
+          <div id="script-hook" style="margin-bottom:8px"></div>
+          <div id="script-scenes-list"></div>
+          <div id="script-cta" style="margin-bottom:12px"></div>
+          <button class="btn-generate" id="approveBtn" onclick="stepFindFootage()" disabled>🔍 Approve Script &amp; Find Footage</button>
+          <div style="height:6px"></div>
+          <button class="btn-secondary" id="regenBtn" onclick="regenScript()" disabled>↺ Regenerate Script</button>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-footage">
+        <div id="footage-empty" class="empty-state"><span class="ei">🎥</span>Complete Script step first,<br>then approve to find footage.</div>
+        <div id="footage-content" style="display:none">
+          <div id="footage-scenes-list"></div>
+          <div style="height:8px"></div>
+          <button class="btn-generate" id="buildCaptionsBtn" onclick="stepBuildCaptions()" disabled>🎬 Build Captions &amp; Preview</button>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-captions">
+        <div id="captions-empty" class="empty-state"><span class="ei">💬</span>Find footage first,<br>then build captions.</div>
+        <div id="captions-content" style="display:none">
+          <div class="caption-timeline" id="caption-timeline-list"></div>
+        </div>
+      </div>
+      <div class="tab-content" id="tab-metadata">
+        <div id="metadata-empty" class="empty-state"><span class="ei">📋</span>Generate a script first<br>to see YouTube metadata.</div>
+        <div id="metadata-content" style="display:none"></div>
+      </div>
+      <div class="tab-content" id="tab-export">
+        <div id="export-empty" class="empty-state"><span class="ei">📤</span>Complete the full workflow<br>to unlock export.</div>
+        <div id="export-content" style="display:none">
+          <div class="export-card">
+            <div class="export-card-title">🎬 Export Video</div>
+            <div class="export-card-sub">Records the preview as a 540×960 .webm at 9Mbps (VP9).</div>
+            <button class="btn-generate" id="exportBtn" onclick="renderVideo()">⬇ Export .webm</button>
+            <div id="renderProgress">
+              <div class="render-bar"><div class="render-fill" id="renderFill"></div></div>
+              <div style="font-size:11px;color:var(--muted);margin-top:4px" id="renderLabel">Rendering...</div>
+            </div>
+          </div>
+          <div class="export-card">
+            <div class="export-card-title">🎵 Voiceover</div>
+            <div class="export-card-sub">Preview TTS voiceover using Web Speech API.</div>
+            <button class="btn-secondary" onclick="playVoiceover()">▶ Play Voiceover</button>
+          </div>
+          <div id="downloadLinks" style="margin-top:8px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toasts"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════════
+// VIRAL SHORTS STUDIO — complete rewrite for reliable audio+caption+export sync
+// ═══════════════════════════════════════════════════════════════════════════════
+const WORD_TARGETS={15:[35,45],30:[75,90],45:[110,135],60:[145,180]};
+const SCENE_TARGETS={15:[3,4],30:[5,6],45:[7,8],60:[9,12]};
+const FPS=30,W=540,H=960;
+const TAB_MIN={script:0,footage:4,captions:6,metadata:2,export:6};
+
+let wfStep=0,D=null,sceneVids=[],sceneThumbUrls=[],captionTimeline=[];
+let captionStyle='hormozi',bgMode='pexels',dur=30,effectiveDur=30;
+let activeTab='script',previewFrame=0,previewPlaying=false,previewRAF=null,lastTS=0;
+
+// ── Audio ─────────────────────────────────────────────────────────────────────
+let audioEl=null,audioBlobUrl=null,audioReady=false;
+let audioCtx=null,audioBuffer=null,audioDest=null,audioCapSrc=null;
+let wordTimestamps=null; // [{text,start,end}] from ElevenLabs alignment — enables perfect sync
+
+function getElKey(){return getKey('elKey');}
+function getVrKey(){return getKey('voicerssKey');}
+
+async function fetchTTSAudio(text){
+  const elKey=getElKey();
+  if(elKey){
+    const voiceId=getElVoiceId();
+    const body=JSON.stringify({text:text.slice(0,2500),model_id:'eleven_turbo_v2_5',voice_settings:{stability:0.45,similarity_boost:0.8,style:0.3,use_speaker_boost:true}});
+    // Try /with-timestamps first — gives exact word timings for perfect caption sync
+    try{
+      const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}/with-timestamps`,{
+        method:'POST',headers:{'xi-api-key':elKey,'Content-Type':'application/json'},body
+      });
+      if(r.ok){
+        const data=await r.json();
+        if(data.audio_base64&&data.alignment){
+          const raw=atob(data.audio_base64);
+          const arr=new Uint8Array(raw.length);
+          for(let i=0;i<raw.length;i++)arr[i]=raw.charCodeAt(i);
+          wordTimestamps=parseWordTimestamps(data.alignment);
+          await loadAudioBlob(new Blob([arr],{type:'audio/mpeg'}));
+          return;
+        }
+      }
+    }catch(e){console.warn('EL timestamps failed, using regular:',e);}
+    // Regular endpoint fallback (no timestamps — captions use proportional timing)
+    wordTimestamps=null;
+    const r=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`,{
+      method:'POST',headers:{'xi-api-key':elKey,'Content-Type':'application/json','Accept':'audio/mpeg'},body
+    });
+    if(!r.ok){const e=await r.text().catch(()=>'');throw new Error('ElevenLabs '+r.status+': '+e.slice(0,100));}
+    const blob=await r.blob();
+    if(blob.size<500)throw new Error('ElevenLabs returned empty audio');
+    await loadAudioBlob(blob);
+    return;
+  }
+  wordTimestamps=null;
+  const vrKey=getVrKey();
+  if(vrKey){
+    const params=new URLSearchParams({key:vrKey,hl:'en-us',src:text.slice(0,3000),c:'MP3',f:'16khz_16bit_stereo',ssml:'false',b64:'false'});
+    const r=await fetch('https://api.voicerss.org/?'+params.toString());
+    if(!r.ok)throw new Error('VoiceRSS '+r.status);
+    const blob=await r.blob();
+    if(blob.size<500)throw new Error('VoiceRSS returned empty — check your key');
+    await loadAudioBlob(blob);
+    return;
+  }
+  throw new Error('No TTS key — add a free ElevenLabs key at elevenlabs.io');
+}
+
+function parseWordTimestamps(alignment){
+  const chars=alignment.characters||[];
+  const starts=alignment.character_start_times_seconds||[];
+  const ends=alignment.character_end_times_seconds||[];
+  const words=[];
+  let wStart=null,wEnd=null,wText='';
+  for(let i=0;i<=chars.length;i++){
+    const c=i<chars.length?chars[i]:' ';
+    if(c===' '||c==='\n'||c==='\t'||i===chars.length){
+      if(wText.trim()){words.push({text:wText.trim(),start:wStart||0,end:wEnd||0});}
+      wText='';wStart=null;wEnd=null;
+    }else{
+      if(wStart===null)wStart=starts[i]||0;
+      wEnd=ends[i]||0;
+      wText+=c;
+    }
+  }
+  return words;
+}
+
+async function loadAudioBlob(blob){
+  if(audioBlobUrl)URL.revokeObjectURL(audioBlobUrl);
+  audioBlobUrl=URL.createObjectURL(blob);
+  if(!audioEl){audioEl=document.createElement('audio');}
+  audioEl.src=audioBlobUrl;
+  audioEl.loop=true; // loop so preview stays in sync across multiple plays
+  audioEl.load();
+  await new Promise(res=>{audioEl.oncanplaythrough=res;audioEl.onerror=res;setTimeout(res,6000);});
+
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')await audioCtx.resume();
+  const arrayBuf=await blob.arrayBuffer();
+  audioBuffer=await audioCtx.decodeAudioData(arrayBuf);
+  audioDest=audioCtx.createMediaStreamDestination();
+
+  effectiveDur=audioBuffer.duration;
+  audioReady=true;
+  rebuildCaptionTimeline();
+}
+
+function rebuildCaptionTimeline(){
+  if(!D)return;
+  const ps=dur<=15?3:4;
+  const timeline=[];
+  const allHL=new Set((D.scenes||[]).flatMap(s=>(s.caption_highlights||[]).map(h=>h.toUpperCase().replace(/[^A-Z0-9]/g,''))));
+
+  if(wordTimestamps&&wordTimestamps.length>0){
+    // Perfect sync path: each phrase timed to actual TTS word timestamps
+    for(let i=0;i<wordTimestamps.length;i+=ps){
+      const pw=wordTimestamps.slice(i,Math.min(i+ps,wordTimestamps.length));
+      const text=pw.map(w=>w.text).join(' ');
+      const startSec=pw[0].start;
+      const endSec=i+ps<wordTimestamps.length?wordTimestamps[i+ps].start:effectiveDur;
+      const highlights=pw.map(w=>w.text.toUpperCase().replace(/[^A-Z0-9]/g,'')).filter(w=>allHL.has(w));
+      timeline.push({text,highlights,startSec,endSec});
+    }
+  }else{
+    // Fallback: word-rate proportional timing — TTS speaks at roughly constant wpm
+    // so dividing by total word count is far more accurate than scene-based timestamps.
+    const allWords=(D.scenes||[]).flatMap(s=>(s.voiceover||'').split(/\s+/).filter(Boolean));
+    const totalWords=allWords.length;
+    if(totalWords>0){
+      for(let i=0;i<totalWords;i+=ps){
+        const chunk=allWords.slice(i,Math.min(i+ps,totalWords));
+        const startSec=(i/totalWords)*effectiveDur;
+        const endSec=(Math.min(i+ps,totalWords)/totalWords)*effectiveDur;
+        const highlights=chunk.map(w=>w.toUpperCase().replace(/[^A-Z0-9]/g,'')).filter(w=>allHL.has(w));
+        timeline.push({text:chunk.join(' '),highlights,startSec,endSec});
+      }
+    }
+  }
+  captionTimeline=timeline;
+}
+
+// Preview: play through <audio> element (simple, reliable)
+function playAudio(offset=0){
+  if(!audioEl||!audioReady)return;
+  audioEl.currentTime=Math.min(offset,audioEl.duration-0.01||0);
+  audioEl.play().catch(e=>console.warn('Audio:',e));
+}
+function stopAudio(){if(audioEl)audioEl.pause();}
+
+// Recording capture — Web Audio API only
+// IMPORTANT: prepareAudioCapture() sets up the graph but does NOT call src.start()
+// The caller must call src.start(0) after rec.start() so audio begins with recording.
+async function prepareAudioCapture(){
+  if(!audioCtx||!audioBuffer)return null;
+  if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}}
+  if(audioCtx.state!=='running')await audioCtx.resume();
+  audioDest=audioCtx.createMediaStreamDestination();
+  audioCapSrc=audioCtx.createBufferSource();
+  audioCapSrc.buffer=audioBuffer;
+  audioCapSrc.loop=false;
+  audioCapSrc.connect(audioDest);
+  audioCapSrc.connect(audioCtx.destination);
+  // Do NOT call .start() here — caller starts it in sync with rec.start()
+  return{src:audioCapSrc,stream:audioDest.stream};
+}
+// Legacy shim used during preview (still starts immediately)
+async function startAudioCapture(){
+  const r=await prepareAudioCapture();
+  if(r)r.src.start(0);
+  return r?r.stream:null;
+}
+function stopAudioCapture(){
+  if(audioCapSrc){try{audioCapSrc.stop();}catch(e){}audioCapSrc=null;}
+}
+
+// Web Speech API — pick best available voice
+function getBestVoice(){
+  const voices=window.speechSynthesis.getVoices();
+  // Priority: Google voices > Microsoft > Apple > anything English
+  const priority=[
+    v=>v.name.includes('Google')&&v.lang.startsWith('en'),
+    v=>v.name.includes('Microsoft')&&v.lang.startsWith('en')&&v.name.includes('Natural'),
+    v=>v.name.includes('Microsoft')&&v.lang.startsWith('en'),
+    v=>v.name.includes('Samantha')||v.name.includes('Alex'),
+    v=>v.lang==='en-US',
+    v=>v.lang.startsWith('en'),
+  ];
+  for(const test of priority){const v=voices.find(test);if(v)return v;}
+  return voices[0]||null;
+}
+
+function speakPreview(text){
+  if(!window.speechSynthesis)return;
+  window.speechSynthesis.cancel();
+  const speak=()=>{
+    const u=new SpeechSynthesisUtterance(text);
+    const voice=getBestVoice();
+    if(voice)u.voice=voice;
+    u.rate=1.05;u.pitch=1.0;u.volume=1.0;
+    window.speechSynthesis.speak(u);
+  };
+  // Voices may not be loaded yet on first call
+  if(window.speechSynthesis.getVoices().length>0)speak();
+  else{window.speechSynthesis.onvoiceschanged=()=>{window.speechSynthesis.onvoiceschanged=null;speak();};}
+}
+function stopSpeech(){window.speechSynthesis?.cancel();}
+
+const VOICES=[
+  {id:'21m00Tcm4TlvDq8ikWAM',name:'Rachel',desc:'Female · Calm'},
+  {id:'TxGEqnHWrfWFTfGW9XjX',name:'Josh',desc:'Male · Deep'},
+  {id:'pNInz6obpgDQGcFmaJgB',name:'Adam',desc:'Male · Narration'},
+  {id:'ErXwobaYiN019PkySvjV',name:'Antoni',desc:'Male · Friendly'},
+  {id:'EXAVITQu4vr4xnSDxMaL',name:'Sarah',desc:'Female · Soft'},
+  {id:'TX3LPaxmHKxFdv7VOQHJ',name:'Liam',desc:'Male · Clear'},
+  {id:'IKne3meq5aSn9XLyUdCD',name:'Charlie',desc:'Australian'},
+  {id:'ThT5KcBeYPX3keUQqHPh',name:'Dorothy',desc:'British'},
+];
+let selectedVoiceId='21m00Tcm4TlvDq8ikWAM';
+
+function renderVoiceGrid(){
+  const grid=document.getElementById('voiceCharGrid');
+  if(!grid)return;
+  grid.innerHTML=VOICES.map(v=>`<div class="voice-card${v.id===selectedVoiceId?' active':''}" onclick="selectVoice('${v.id}')"><div class="voice-card-name">${v.name}</div><div class="voice-card-desc">${v.desc}</div></div>`).join('');
+}
+function selectVoice(id){
+  selectedVoiceId=id;
+  renderVoiceGrid();
+}
+function getElVoiceId(){return selectedVoiceId;}
+
+window.onload=()=>{
+  ['geminiKey','groqKey','openaiKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+    const v=localStorage.getItem(id);if(v&&document.getElementById(id))document.getElementById(id).value=v;
+  });
+  updateKeyBadge();
+  updateStepRail();
+  renderVoiceGrid();
+};
+
+function openSettings(){document.getElementById('settingsModal').classList.remove('hidden');}
+function closeSettings(){document.getElementById('settingsModal').classList.add('hidden');}
+function saveKeys(){
+  ['geminiKey','groqKey','openaiKey','pexelsKey','pixabayKey','elKey'].forEach(id=>{
+    const v=document.getElementById(id)?.value.trim();if(v)localStorage.setItem(id,v);
+  });
+  toast('Keys saved!','success');
+  closeSettings();
+  updateKeyBadge();
+}
+function getKey(id){return document.getElementById(id)?.value.trim()||localStorage.getItem(id)||'';}
+function updateKeyBadge(){
+  const keys=['geminiKey','groqKey','pexelsKey','elKey'];
+  const set=keys.filter(k=>getKey(k)).length;
+  const el=document.getElementById('keyStatusBadge');
+  if(el)el.textContent=set+'/'+keys.length+' keys set';
+}
+function setDur(s){dur=s;effectiveDur=s;document.querySelectorAll('.dur-btn').forEach(b=>b.classList.toggle('active',+b.dataset.s===s));}
+function setCapStyle(s){captionStyle=s;document.querySelectorAll('.cap-style-btn').forEach(b=>b.classList.toggle('active',b.dataset.style===s));}
+
+function updateStepRail(){
+  const done=[wfStep>=2,wfStep>=4,wfStep>=6,wfStep>=6,wfStep>=8];
+  const active=[wfStep===1,wfStep===3,wfStep===5,wfStep>=6&&wfStep<8,wfStep===7];
+  for(let i=0;i<5;i++){
+    const el=document.getElementById('sr'+i),dot=document.getElementById('srd'+i);
+    el.className='sr-step'+(done[i]?' done':active[i]?' active':'');
+    dot.innerHTML=done[i]?'✓':(i+1);
+  }
+  for(let i=0;i<4;i++){
+    const ln=document.getElementById('srl'+i);
+    if(ln)ln.style.background=wfStep>=(i+1)*2?'var(--grn)':'var(--border)';
+  }
+}
+
+function showCenter(id){
+  ['idle','scripting','script-done','footage','footage-done','captions'].forEach(k=>{
+    const el=document.getElementById('cs-'+k);
+    if(el)el.style.display=k===id?'flex':'none';
+  });
+  document.getElementById('cs-preview').style.display=id==='preview'?'flex':'none';
+}
+
+function switchRightTab(name){
+  if(wfStep<TAB_MIN[name]){toast('Complete earlier steps first','error');return;}
+  activeTab=name;
+  document.querySelectorAll('.rtab').forEach(t=>t.classList.toggle('active',t.id==='rtab-'+name));
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.toggle('active',t.id==='tab-'+name));
+}
+function unlockTabs(){
+  ['script','footage','captions','metadata','export'].forEach(name=>{
+    const el=document.getElementById('rtab-'+name);
+    if(!el)return;
+    const locked=wfStep<TAB_MIN[name];
+    el.classList.toggle('locked',locked);
+    const li=el.querySelector('.li');
+    if(li)li.style.display=locked?'':'none';
+  });
+}
+
+function setStatus(type,text){
+  const el=document.getElementById('leftStatus');
+  el.className='status-chip '+type;
+  el.innerHTML=(type==='working'?'◎':type==='done'?'●':type==='error'?'✕':'◉')+' <span>'+text+'</span>';
+}
+
+function toast(msg,type='info'){
+  const c=document.getElementById('toasts'),d=document.createElement('div');
+  d.className='toast '+type;d.textContent=msg;c.appendChild(d);
+  setTimeout(()=>d.remove(),3500);
+}
+
+async function callGemini(msgs){
+  const key=document.getElementById('geminiKey').value.trim()||localStorage.getItem('geminiKey')||'';
+  if(!key)throw new Error('No Gemini key');
+  // OpenAI-compatible endpoint for Gemini
+  const r=await fetch('https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'gemini-2.0-flash',temperature:0.75,max_tokens:3000,messages:msgs,response_format:{type:'json_object'}})
+  });
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('Gemini '+r.status+': '+t.slice(0,150));}
+  const d=await r.json();
+  return JSON.parse(d.choices?.[0]?.message?.content||'{}');
+}
+
+async function callGroq(msgs){
+  const key=document.getElementById('groqKey').value.trim()||localStorage.getItem('groqKey')||'';
+  if(!key)throw new Error('No Groq API key. Enter it at the top.');
+  // Try two models — 8b-instant has higher TPM limits on free tier
+  const models=['llama-3.1-8b-instant','llama-3.3-70b-versatile'];
+  for(let mi=0;mi<models.length;mi++){
+    for(let retry=0;retry<2;retry++){
+      const r=await fetch('https://api.groq.com/openai/v1/chat/completions',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+        body:JSON.stringify({model:models[mi],temperature:0.75,max_tokens:3000,messages:msgs,response_format:{type:'json_object'}})
+      });
+      if(r.ok){const d=await r.json();return JSON.parse(d.choices?.[0]?.message?.content||'{}');}
+      const t=await r.text().catch(()=>'');
+      if(r.status===429){
+        const wait=retry===0?8000:20000;
+        document.getElementById('cs-scripting-sub').textContent=`Rate limit — waiting ${wait/1000}s then retrying...`;
+        await new Promise(res=>setTimeout(res,wait));
+        continue;
+      }
+      throw new Error('Groq '+r.status+': '+t.slice(0,150));
+    }
+  }
+  throw new Error('Groq 429: rate limit on all models — switching to fallback');
+}
+
+async function callOpenAI(msgs){
+  const key=document.getElementById('openaiKey')?.value.trim()||localStorage.getItem('openaiKey')||'';
+  if(!key)throw new Error('No OpenAI key');
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
+    body:JSON.stringify({model:'gpt-4o-mini',temperature:0.75,max_tokens:3000,messages:msgs,response_format:{type:'json_object'}})
+  });
+  if(!r.ok){const t=await r.text().catch(()=>'');throw new Error('OpenAI '+r.status+': '+t.slice(0,150));}
+  const d=await r.json();
+  return JSON.parse(d.choices?.[0]?.message?.content||'{}');
+}
+
+async function callFallback(sys,usr){
+  const models=['openai','mistral','openai-large'];
+  let lastErr='';
+  for(const model of models){
+    try{
+      // Small random delay to avoid instant re-queue
+      await new Promise(r=>setTimeout(r,1200+Math.random()*1500));
+      const r=await fetch('https://text.pollinations.ai/',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({model,jsonMode:true,messages:[{role:'system',content:sys},{role:'user',content:usr}],seed:Math.floor(Math.random()*99999)})
+      });
+      if(!r.ok){
+        const t=await r.text().catch(()=>'');
+        lastErr='Pollinations/'+model+' '+r.status;
+        if(r.status===429){continue;} // try next model
+        throw new Error(lastErr+': '+t.slice(0,100));
+      }
+      const txt=await r.text();
+      const j=txt.indexOf('{'),e=txt.lastIndexOf('}');
+      if(j<0||e<0){lastErr='No JSON from '+model;continue;}
+      return JSON.parse(txt.slice(j,e+1));
+    }catch(e){lastErr=e.message;if(!e.message.includes('429'))throw e;}
+  }
+  throw new Error('All fallback models rate-limited. Wait 30s or get a free Groq key at console.groq.com');
+}
+
+function buildPrompt(topic,attempt){
+  const [wMin,wMax]=WORD_TARGETS[dur]||[75,90];
+  const [sMin,sMax]=SCENE_TARGETS[dur]||[5,6];
+  const fmt=document.getElementById('fmtSelect').value;
+  const tone=document.getElementById('toneSelect').value;
+  // Compact system prompt — fewer tokens = lower rate limit impact
+  const sys=`You are a viral YouTube Shorts writer. Return ONLY valid JSON for a ${dur}s short.
+Rules: ${sMin}-${sMax} scenes, full_voiceover_script must be ${wMin}-${wMax} words, no placeholders.
+FOOTAGE RULES: pexels_search must be 2-4 specific cinematic keywords that visually match what the voiceover is SAYING in that scene. Use concrete nouns and actions — NOT abstract concepts. Good examples: "rolls royce luxury car showroom", "private jet takeoff aerial", "rapper pouring champagne bottle", "stacks of cash money counting", "penthouse apartment skyline view", "lambo sports car street", "diamond jewelry close up", "credit card swipe luxury store". Bad examples: "success", "wealth", "man thinking", "lifestyle". If the topic involves celebrities/money/cars/fashion, use those exact things.
+Schema: {"title":"","hook":"","full_voiceover_script":"","cta":"","accentColor":"#FF4500","gradientColors":["#0a001a","#200040","#0d0028"],"keyWords":["","","","","",""],"scenes":[{"scene_number":1,"start_time":"0:00","end_time":"0:05","voiceover":"","caption":"","caption_highlights":[""],"pexels_search":"rolls royce luxury dealership","visual_direction":"","transition":"cut","pacing":"fast"}],"youtube_metadata":{"title_options":["","",""],"description":"","hashtags":["#shorts"],"seo_keywords":[""]}}`;
+  const usr=`Topic: ${topic}\nTone: ${tone}\nFormat: ${fmt}\nDuration: ${dur}s\nScenes: ${sMin}-${sMax}\nWords: ${wMin}-${wMax}\nIMPORTANT: Every pexels_search must show the EXACT thing being talked about in that scene — specific visual objects, actions, locations. No generic terms.${attempt>1?'\n[RETRY: write ALL scenes fully, no placeholders]':''}`;
+  return {sys,usr};
+}
+
+function validateScript(data){
+  const issues=[];
+  const [sMin]=SCENE_TARGETS[dur]||[5,6];
+  if(!data.scenes?.length){issues.push('No scenes');return issues;}
+  if(data.scenes.length<sMin)issues.push(`Need ${sMin}+ scenes, got ${data.scenes.length}`);
+  const missingVo=data.scenes.filter(s=>!s.voiceover?.trim()).length;
+  if(missingVo>data.scenes.length/2)issues.push(`${missingVo} scenes missing voiceover`);
+  return issues;
+}
+
+async function stepGenerate(){
+  const topic=document.getElementById('topicInput').value.trim();
+  if(!topic){toast('Enter a topic first!','error');return;}
+  bgMode=document.getElementById('bgModeSelect').value;
+  wfStep=1;updateStepRail();showCenter('scripting');setStatus('working','Writing script...');
+  document.getElementById('genBtn').disabled=true;
+  document.getElementById('genBtn').textContent='⏳ Generating...';
+  document.getElementById('scriptProgress').style.width='15%';
+  let scriptData=null,lastErr=null;
+  // Provider order: Gemini → OpenAI → Groq → Pollinations
+  const providers=[
+    {name:'Gemini',fn:(m)=>callGemini(m)},
+    {name:'OpenAI',fn:(m)=>callOpenAI(m)},
+    {name:'Groq',fn:(m)=>callGroq(m)},
+    {name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)},
+  ];
+  outer:for(const prov of providers){
+    for(let attempt=1;attempt<=2;attempt++){
+      try{
+        document.getElementById('cs-scripting-sub').textContent=`${prov.name}: writing script...`;
+        document.getElementById('scriptProgress').style.width='40%';
+        const {sys,usr}=buildPrompt(topic,attempt);
+        const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
+        const data=await prov.fn(msgs,sys,usr);
+        const issues=validateScript(data);
+        if(!issues.length){scriptData=data;break outer;}
+        lastErr=issues.join('; ');
+        // retry same provider with attempt=2 to fix issues
+      }catch(e){
+        lastErr=e.message;
+        if(e.message.includes('No Gemini')||e.message.includes('No Groq'))break; // skip this provider
+        toast(prov.name+' failed — trying next...','info');
+        break; // move to next provider
+      }
+    }
+    if(scriptData)break;
+  }
+  document.getElementById('scriptProgress').style.width='100%';
+  document.getElementById('genBtn').disabled=false;
+  document.getElementById('genBtn').textContent='⚡ Generate Script';
+  if(!scriptData){
+    wfStep=0;updateStepRail();showCenter('idle');setStatus('error','Failed');
+    toast('Error: '+(lastErr||'unknown'),'error');return;
+  }
+  D=scriptData;wfStep=2;updateStepRail();unlockTabs();
+  renderScriptTab();renderMetadataTab();showCenter('script-done');
+  renderScriptStats();setStatus('done','Script ready');
+  switchRightTab('script');
+  document.getElementById('approveBtn').disabled=false;
+  document.getElementById('regenBtn').disabled=false;
+}
+
+async function regenScript(){
+  const topic=document.getElementById('topicInput').value.trim();
+  if(!topic){toast('Enter a topic first!','error');return;}
+  wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];unlockTabs();
+  await stepGenerate();
+}
+
+function renderScriptStats(){
+  if(!D)return;
+  const script=D.full_voiceover_script||D.scenes.map(s=>s.voiceover||'').join(' ');
+  const wc=script.trim().split(/\s+/).filter(Boolean).length;
+  document.getElementById('cs-script-stats').innerHTML=`
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>${D.scenes.length} scenes generated</div>
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>${wc} words in script</div>
+    <div class="c-step-item done"><div class="c-step-dot">✓</div>Hook: "${esc((D.hook||'').slice(0,40))}..."</div>`;
+}
+
+function renderScriptTab(){
+  if(!D)return;
+  document.getElementById('script-empty').style.display='none';
+  document.getElementById('script-content').style.display='block';
+  document.getElementById('script-meta').innerHTML=`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px"><div style="font-size:15px;font-weight:800;margin-bottom:2px">${esc(D.title||'')}</div><div style="font-size:12px;color:var(--muted)">${esc(D.subtitle||'')} · ${D.duration_seconds}s · ${esc(D.tone||'')}</div></div>`;
+  document.getElementById('script-hook').innerHTML=`<div style="background:rgba(255,69,0,0.07);border:1px solid rgba(255,69,0,0.2);border-radius:7px;padding:9px 12px;font-size:13px"><span style="font-size:10px;color:var(--acc);font-weight:700;text-transform:uppercase;letter-spacing:1px">Hook</span><br>${esc(D.hook||'')}</div>`;
+  let html='';
+  (D.scenes||[]).forEach((s,i)=>{
+    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:var(--muted)">${s.pacing||''}</span></div><div class="scene-field"><label>Voiceover</label><div style="font-size:12px;line-height:1.6">${esc(s.voiceover||'')}</div></div><div class="scene-field"><label>Caption</label><div style="font-size:12px;color:var(--acc);font-weight:700">${esc(s.caption||'')}</div></div><div class="scene-field"><label>Pexels Search</label><div style="font-size:11px;color:var(--muted)">${esc(s.pexels_search||'')}</div></div><div class="scene-field"><label>Visual Direction</label><div style="font-size:11px;color:var(--muted)">${esc(s.visual_direction||'')}</div></div></div>`;
+  });
+  document.getElementById('script-scenes-list').innerHTML=html;
+  document.getElementById('script-cta').innerHTML=`<div style="background:rgba(99,102,241,0.07);border:1px solid rgba(99,102,241,0.2);border-radius:7px;padding:9px 12px;font-size:13px"><span style="font-size:10px;color:#a5b4fc;font-weight:700;text-transform:uppercase;letter-spacing:1px">CTA</span><br>${esc(D.cta||'')}</div>`;
+}
+
+function renderMetadataTab(){
+  if(!D||!D.youtube_metadata)return;
+  document.getElementById('metadata-empty').style.display='none';
+  const m=D.youtube_metadata;
+  document.getElementById('metadata-content').innerHTML=`
+    <div class="meta-section"><div class="meta-section-title">Title Options</div>${(m.title_options||[]).map((t,i)=>`<div style="background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:12px;font-weight:600;margin-bottom:5px">${i+1}. ${esc(t)}</div>`).join('')}</div>
+    <div class="meta-section"><div class="meta-section-title">Description</div><textarea readonly style="min-height:80px;font-size:12px;color:var(--muted)">${esc(m.description||'')}</textarea></div>
+    <div class="meta-section"><div class="meta-section-title">Hashtags</div><div>${(m.hashtags||[]).map(h=>`<span class="meta-tag">${esc(h)}</span>`).join('')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">SEO Keywords</div><div>${(m.seo_keywords||[]).map(k=>`<span class="meta-tag" style="background:rgba(255,69,0,0.1);border-color:rgba(255,69,0,0.2);color:#ff8a6a">${esc(k)}</span>`).join('')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">Thumbnail Text</div><div style="font-size:14px;font-weight:800;color:var(--acc)">${esc(m.thumbnail_text||'')}</div></div>
+    <div class="meta-section"><div class="meta-section-title">Pinned Comment</div><div style="font-size:12px;color:var(--muted)">${esc(m.pinned_comment||'')}</div></div>`;
+  document.getElementById('metadata-content').style.display='block';
+}
+
+async function generateFootageQueries(scenes){
+  const lines=scenes.map((s,i)=>`Scene ${i+1}: ${(s.voiceover||'').slice(0,100)} | visual: ${(s.visual_direction||'').slice(0,60)} | script query: ${s.pexels_search||''}`).join('\n');
+  const sys=`You are a stock video search expert. For each scene, write ONE Pexels search query (2-4 words) that finds footage of the SPECIFIC thing being described.
+Rules:
+- Show the exact physical thing the narrator mentions (car, money, person, city, food, etc.)
+- Use concrete nouns + actions or adjectives. Never abstract words like "success", "growth", "wealth", "dream".
+- If narrator says "10 million dollars" → "stacks cash money counting"
+- If narrator says "Rolls Royce" → "rolls royce driving street"
+- If narrator says "working out" → "gym workout barbell lifting"
+- If narrator says "social media" → "phone scrolling instagram feed"
+- If narrator says "mansion" → "luxury mansion pool exterior"
+- Match the scene's energy: fast paced → action shots, calm → slow establishing shots
+Return ONLY JSON: {"q":["query for scene 1","query for scene 2",...]}`;
+  const usr=lines;
+  const msgs=[{role:'system',content:sys},{role:'user',content:usr}];
+  for(const prov of [{name:'Gemini',fn:m=>callGemini(m)},{name:'OpenAI',fn:m=>callOpenAI(m)},{name:'Groq',fn:m=>callGroq(m)},{name:'Pollinations',fn:(_,s,u)=>callFallback(s,u)}]){
+    try{
+      const data=await prov.fn(msgs,sys,usr);
+      if(data.q&&Array.isArray(data.q)&&data.q.length)return data.q;
+    }catch(e){}
+  }
+  return null;
+}
+
+async function stepFindFootage(){
+  if(!D||wfStep<2){toast('Generate script first','error');return;}
+  bgMode=document.getElementById('bgModeSelect').value;
+  wfStep=3;updateStepRail();showCenter('footage');setStatus('working','Finding footage...');
+  document.getElementById('approveBtn').disabled=true;
+  sceneVids=[];sceneThumbUrls=[];
+  const scenes=D.scenes||[];
+  const pxKey=getKey('pexelsKey');
+  const pbKey=getKey('pixabayKey');
+  if(!pxKey&&!pbKey) toast('No Pexels or Pixabay key — using gradient backgrounds. Add a key in the top nav.','error');
+
+  // Ask AI for precise visual search queries — separate task from script writing
+  document.getElementById('cs-footage-sub').textContent='AI generating visual search terms...';
+  const aiQueries=await generateFootageQueries(scenes);
+
+  let shownErr=false;
+  for(let i=0;i<scenes.length;i++){
+    document.getElementById('footageProgress').style.width=Math.round((i/scenes.length)*100)+'%';
+    const aiQuery=(aiQueries&&aiQueries[i])||null;
+    const displayQ=aiQuery||scenes[i].pexels_search||'cinematic';
+    document.getElementById('cs-footage-sub').textContent=`Scene ${i+1}/${scenes.length}: "${displayQ}"...`;
+    let vid=null,thumb=null;
+    try{
+      const r=await fetchBestFootage(scenes[i],aiQuery,pxKey,pbKey);
+      if(r){vid=r.vid;thumb=r.thumb;}
+    }catch(e){if(!shownErr){shownErr=true;toast('Footage: '+e.message,'error');}}
+    sceneVids.push(vid);sceneThumbUrls.push(thumb);
+  }
+  document.getElementById('footageProgress').style.width='100%';
+  wfStep=4;updateStepRail();unlockTabs();renderFootageTab();showCenter('footage-done');
+  setStatus('done','Footage ready');switchRightTab('footage');
+  document.getElementById('buildCaptionsBtn').disabled=false;
+}
+
+function scorePexelsVid(v){
+  // Prefer HD quality and longer duration; orientation no longer filtered
+  const hasHD=v.video_files?.some(f=>f.quality==='hd'||f.quality==='uhd');
+  return (hasHD?10:0)+Math.min((v.duration||0)/10,5);
+}
+
+async function fetchPexelsVideo(query,key){
+  const r=await fetch(`https://api.pexels.com/videos/search?query=${encodeURIComponent(query)}&per_page=15`,{headers:{Authorization:key}});
+  if(!r.ok)throw new Error('Pexels '+r.status+(r.status===403?' (invalid key?)':''));
+  const data=await r.json();
+  const vids=data.videos||[];if(!vids.length)return null;
+  const best=vids.sort((a,b)=>scorePexelsVid(b)-scorePexelsVid(a))[0];
+  const file=best.video_files?.find(f=>f.quality==='hd'||f.quality==='uhd')||best.video_files?.[0];
+  if(!file)return null;
+  const el=document.createElement('video');
+  el.src=file.link;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
+  el.play().catch(()=>{});
+  return{vid:el,thumb:best.image||null};
+}
+
+async function fetchPixabayVideo(query,key){
+  const r=await fetch(`https://pixabay.com/api/videos/?key=${key}&q=${encodeURIComponent(query)}&per_page=15&safesearch=true`);
+  if(!r.ok)throw new Error('Pixabay '+r.status+(r.status===400?' (invalid key?)':''));
+  const data=await r.json();
+  const hits=data.hits||[];if(!hits.length)return null;
+  // Prefer hits with large video file available
+  const best=hits.sort((a,b)=>{
+    const scoreA=(a.videos?.large?5:0)+(a.videos?.medium?2:0);
+    const scoreB=(b.videos?.large?5:0)+(b.videos?.medium?2:0);
+    return scoreB-scoreA;
+  })[0];
+  const file=best.videos?.large||best.videos?.medium||best.videos?.small;
+  if(!file?.url)return null;
+  const el=document.createElement('video');
+  el.src=file.url;el.crossOrigin='anonymous';el.muted=true;el.loop=true;el.preload='auto';
+  el.play().catch(()=>{});
+  return{vid:el,thumb:best.userImageURL||best.previewURL||null};
+}
+
+// Extract 2-4 most meaningful keywords from a scene description
+function extractKeywords(text){
+  const stop=new Set(['a','an','the','and','or','but','in','on','at','to','of','for','with','as','by','this','that','is','are','was','were','be','been','being','have','has','had','do','does','did','will','would','could','should','may','might','their','they','them','we','our','you','your','he','she','it','its','his','her','very','just','also','all','some','one','two','three','four','five','while','when','where','who','what','how','from','into','over','after','before','about','through','these','those','than','then','so','if','not','no','up','out','more','less','most','each','every','between','against','during','without','within','along','around','among']);
+  return text.toLowerCase().replace(/[^a-z0-9\s]/g,'').split(/\s+/)
+    .filter(w=>w.length>3&&!stop.has(w))
+    .slice(0,4).join(' ');
+}
+
+async function fetchBestFootage(scene,aiQuery,pxKey,pbKey){
+  // Build query variants in priority order: AI query → script pexels_search → visual_direction keywords → voiceover keywords
+  const queries=[];
+  if(aiQuery)queries.push(aiQuery);
+  if(scene.pexels_search&&!queries.includes(scene.pexels_search))queries.push(scene.pexels_search);
+  if(scene.visual_direction){
+    const kw=extractKeywords(scene.visual_direction);
+    if(kw&&!queries.includes(kw))queries.push(kw);
+  }
+  if(scene.voiceover){
+    const kw=extractKeywords(scene.voiceover);
+    if(kw&&!queries.includes(kw))queries.push(kw);
+  }
+  if(!queries.length)queries.push('cinematic');
+
+  for(const q of queries){
+    const attempts=[];
+    if(pxKey) attempts.push(fetchPexelsVideo(q,pxKey).catch(()=>null));
+    if(pbKey) attempts.push(fetchPixabayVideo(q,pbKey).catch(()=>null));
+    const results=await Promise.all(attempts);
+    const found=results.find(r=>r!=null);
+    if(found)return found;
+  }
+  return null;
+}
+
+function renderFootageTab(){
+  document.getElementById('footage-empty').style.display='none';
+  document.getElementById('footage-content').style.display='block';
+  let html='';
+  (D.scenes||[]).forEach((s,i)=>{
+    const thumb=sceneThumbUrls[i];
+    html+=`<div class="scene-card"><div class="scene-card-header"><div class="scene-num">${s.scene_number||i+1}</div><span class="scene-time">${s.start_time||''} → ${s.end_time||''}</span><span style="font-size:10px;color:${sceneVids[i]?'var(--grn)':'var(--muted)'}">${sceneVids[i]?'✓ Found':'Gradient'}</span></div>${thumb?`<img class="scene-thumb" crossorigin="anonymous" src="${thumb}" alt="Scene ${i+1}" onerror="this.style.display='none'">`:'<div class="scene-thumb-ph">No Pexels key — using gradient</div>'}<div style="font-size:11px;color:var(--muted)">🔍 ${esc(s.pexels_search||'')}</div></div>`;
+  });
+  document.getElementById('footage-scenes-list').innerHTML=html;
+}
+
+async function stepBuildCaptions(){
+  if(!D||wfStep<4){toast('Find footage first','error');return;}
+  wfStep=5;updateStepRail();showCenter('captions');setStatus('working','Building captions...');
+  document.getElementById('buildCaptionsBtn').disabled=true;
+
+  // Build initial timeline (proportional fallback — will be rebuilt after TTS loads)
+  rebuildCaptionTimeline();
+
+  // Fetch TTS voiceover audio
+  const script=D.full_voiceover_script||(D.scenes||[]).map(s=>s.voiceover||'').join(' ');
+  document.getElementById('cs-captions').querySelector('.c-status-sub').textContent='Fetching voiceover audio...';
+  audioReady=false;
+  const hasKey=getElKey()||getVrKey();
+  if(hasKey){
+    try{
+      await fetchTTSAudio(script);
+      toast('🔊 AI voiceover loaded — audio baked into export!','success');
+    }catch(e){
+      console.warn('TTS failed:',e.message);
+      toast('TTS error: '+e.message,'error');
+    }
+  } else {
+    toast('💡 Add an ElevenLabs key (free at elevenlabs.io) for AI voices. Using browser voice for now.','info');
+  }
+
+  wfStep=6;updateStepRail();unlockTabs();renderCaptionsTab();renderExportTab();
+  setStatus('done','Preview ready');showCenter('preview');
+  switchRightTab('captions');startPreview();
+}
+
+function parseTime(t){
+  if(!t)return 0;
+  const p=String(t).split(':');
+  return p.length===2?parseInt(p[0])*60+parseFloat(p[1]):parseFloat(t)||0;
+}
+
+function renderCaptionsTab(){
+  document.getElementById('captions-empty').style.display='none';
+  document.getElementById('captions-content').style.display='block';
+  let html='';
+  captionTimeline.forEach(c=>{
+    const s=(c.startSec).toFixed(1),e=(c.endSec).toFixed(1);
+    const words=c.text.split(/\s+/);
+    const hiWords=words.map(w=>{
+      const clean=w.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+      return c.highlights.includes(clean)?`<span class="hl">${esc(w)}</span>`:esc(w);
+    }).join(' ');
+    html+=`<div class="cap-phrase"><div class="cap-phrase-text">${hiWords}</div><div class="cap-phrase-time">${s}s–${e}s</div></div>`;
+  });
+  document.getElementById('caption-timeline-list').innerHTML=html||'<div style="color:var(--muted);font-size:12px">No captions</div>';
+}
+function renderExportTab(){
+  document.getElementById('export-empty').style.display='none';
+  document.getElementById('export-content').style.display='block';
+}
+
+// ── Preview ──────────────────────────────────────────────────────────────────
+function startPreview(){
+  previewFrame=0;previewPlaying=true;lastTS=0;
+  if(previewRAF)cancelAnimationFrame(previewRAF);
+  if(audioReady){
+    audioEl.currentTime=0;
+    audioEl.play().catch(e=>console.warn('Audio play:',e));
+  }else{
+    const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');
+    speakPreview(script);
+  }
+  previewRAF=requestAnimationFrame(previewLoop);
+}
+function togglePreviewPlay(){
+  previewPlaying=!previewPlaying;
+  document.getElementById('playPauseBtn').textContent=previewPlaying?'⏸ Pause':'▶ Play';
+  if(previewPlaying){
+    lastTS=0;
+    if(audioReady) audioEl.play().catch(()=>{});
+    else{const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
+    previewRAF=requestAnimationFrame(previewLoop);
+  }else{
+    if(audioReady) audioEl.pause();
+    stopSpeech();
+  }
+}
+function restartPreview(){
+  previewFrame=0;previewPlaying=true;lastTS=0;
+  document.getElementById('playPauseBtn').textContent='⏸ Pause';
+  if(previewRAF)cancelAnimationFrame(previewRAF);
+  if(audioReady){audioEl.currentTime=0;audioEl.play().catch(()=>{});}
+  else{const script=D?.full_voiceover_script||(D?.scenes||[]).map(s=>s.voiceover||'').join(' ');speakPreview(script);}
+  previewRAF=requestAnimationFrame(previewLoop);
+}
+
+function previewLoop(ts){
+  if(!previewPlaying)return;
+  if(!lastTS)lastTS=ts;
+  const elapsed=ts-lastTS;
+  if(elapsed>=1000/FPS){
+    lastTS=ts;
+    // Always use audio clock when available — it's the source of truth.
+    // previewFrame only drives the zoom animation in drawBg, not caption timing.
+    const currentT=(audioReady&&audioEl&&audioEl.duration>0)
+      ?audioEl.currentTime
+      :previewFrame/FPS;
+    drawFrame(previewFrame,currentT);
+    previewFrame++;
+    if(previewFrame>=Math.ceil(effectiveDur*FPS))previewFrame=0;
+  }
+  previewRAF=requestAnimationFrame(previewLoop);
+}
+
+// drawFrame(frameIndex, currentTimeSec)
+// frameIndex  — used only for the Ken Burns zoom animation in drawBg
+// currentTimeSec — authoritative time for caption + scene selection
+function drawFrame(f,t){
+  const canvas=document.getElementById('previewCanvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,W,H);
+  const scenes=D?.scenes||[];
+
+  // Scene index from time, not frame (avoids rAF drift vs audio clock)
+  let si=0;
+  for(let i=0;i<scenes.length;i++){
+    const sceneStartT=(parseTime(scenes[i].start_time)/dur)*effectiveDur;
+    if(t>=sceneStartT)si=i;
+  }
+  drawBg(ctx,f,si);
+
+  const g=ctx.createLinearGradient(0,0,0,H);
+  g.addColorStop(0,'rgba(0,0,0,0.5)');g.addColorStop(0.4,'rgba(0,0,0,0.08)');g.addColorStop(1,'rgba(0,0,0,0.6)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,W,H);
+
+  // Caption lookup — purely time-based, no frame arithmetic
+  const cap=captionTimeline.find(c=>t>=c.startSec&&t<=c.endSec);
+  if(cap)drawCaption(ctx,W,H,cap.text,captionStyle,D?.accentColor||'#FF4500',cap.highlights,cap.startSec,t);
+
+  ctx.save();ctx.globalAlpha=0.3;ctx.fillStyle='#fff';ctx.font='500 11px Inter,sans-serif';ctx.fillText('Viral Shorts Studio',16,H-14);ctx.restore();
+}
+
+function drawBg(ctx,f,si){
+  const vid=sceneVids[si];
+  if(vid&&vid.readyState>=2){
+    const zoom=1+(f%(FPS*5))/(FPS*5)*0.04;
+    const vw=vid.videoWidth||W,vh=vid.videoHeight||H;
+    // Cover-scale: fill canvas regardless of video orientation (landscape or portrait)
+    const scale=Math.max(W/vw,H/vh)*zoom;
+    const sw=vw*scale,sh=vh*scale,sx=(sw-W)/2,sy=(sh-H)/2;
+    try{ctx.drawImage(vid,-sx,-sy,sw,sh);}catch(e){}
+  } else {
+    const cols=D?.gradientColors||['#0a001a','#200040','#0d0028'];
+    const gi=ctx.createLinearGradient(0,0,W,H);
+    gi.addColorStop(0,cols[0]);gi.addColorStop(0.5,cols[1]);gi.addColorStop(1,cols[2]);
+    ctx.fillStyle=gi;ctx.fillRect(0,0,W,H);
+    const t=f/FPS;
+    const orb=ctx.createRadialGradient(W/2+Math.sin(t)*60,H/3+Math.cos(t*0.7)*80,0,W/2,H/3,280);
+    orb.addColorStop(0,'rgba(255,69,0,0.16)');orb.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=orb;ctx.fillRect(0,0,W,H);
+  }
+}
+
+function drawCaption(ctx,W,H,text,style,accent,highlights,startSec,currentSec){
+  if(!text)return;
+  const capY=H*0.72;
+  // pop animation: 0→1 over first 0.15s of the phrase
+  const elapsed=Math.max(0,currentSec-startSec);
+  const ease=t=>t<0.5?2*t*t:-1+(4-2*t)*t;
+  const pop=Math.min(1,elapsed/0.15);
+  const scale=1+(1-ease(pop))*0.13;
+  const defs={
+    hormozi:{fs:54,font:'Impact,Arial Black,sans-serif',color:'#fff',strokeColor:'#000',strokeW:12,hlColor:accent,shadow:true,pill:false},
+    clean:  {fs:42,font:'800 42px Inter,system-ui,sans-serif',color:'#fff',strokeColor:'rgba(0,0,0,0.7)',strokeW:8,hlColor:'#38bdf8',shadow:true,pill:false},
+    yellow: {fs:50,font:'Impact,Arial Black,sans-serif',color:'#FFE000',strokeColor:'#000',strokeW:12,hlColor:'#fff',shadow:false,pill:false},
+    dark:   {fs:40,font:'700 40px Inter,system-ui,sans-serif',color:'#fff',strokeColor:null,strokeW:0,hlColor:accent,shadow:false,pill:true},
+    tiktok: {fs:46,font:'800 46px Inter,system-ui,sans-serif',color:'#fff',strokeColor:'#000',strokeW:8,hlColor:'#FF2D55',shadow:false,pill:false},
+  };
+  const s=defs[style]||defs.hormozi;
+  const maxW=W-104;
+  ctx.save();
+  ctx.translate(W/2,capY);ctx.scale(scale,scale);
+  let fs=s.fs,rows=[];
+  for(let t=0;t<8;t++){
+    const fstr=style==='hormozi'||style==='yellow'?`${fs}px ${s.font}`:s.font.replace(/\d+px/,fs+'px');
+    ctx.font=fstr;rows=wrapText(ctx,text,maxW);
+    if(rows.every(r=>ctx.measureText(r).width<=maxW))break;
+    fs=Math.max(20,fs-4);
+  }
+  const lh=fs*1.28,totalH=rows.length*lh,startY=-totalH/2;
+  const fstr=style==='hormozi'||style==='yellow'?`${fs}px ${s.font}`:s.font.replace(/\d+px/,fs+'px');
+  ctx.font=fstr;
+  if(s.pill){
+    const pad=16;
+    ctx.fillStyle='rgba(0,0,0,0.72)';
+    roundRect(ctx,-maxW/2-pad,startY-pad,maxW+pad*2,totalH+pad*2,12);ctx.fill();
+  }
+  rows.forEach((row,ri)=>{
+    const y=startY+ri*lh+lh*0.8;
+    const words=row.split(' ');let xCur=-ctx.measureText(row).width/2;
+    words.forEach((word,wi)=>{
+      const clean=word.replace(/[^a-zA-Z0-9]/g,'').toUpperCase();
+      const isHl=highlights.includes(clean);
+      const ww=ctx.measureText(word).width,sp=wi<words.length-1?ctx.measureText(' ').width:0;
+      if(s.shadow){ctx.shadowColor='rgba(0,0,0,0.8)';ctx.shadowBlur=6;ctx.shadowOffsetY=2;}
+      if(s.strokeColor){ctx.lineWidth=s.strokeW;ctx.strokeStyle=s.strokeColor;ctx.lineJoin='round';ctx.strokeText(word,xCur,y);}
+      ctx.shadowBlur=0;ctx.fillStyle=isHl?s.hlColor:s.color;ctx.fillText(word,xCur,y);
+      xCur+=ww+sp;
+    });
+  });
+  ctx.restore();
+}
+
+function wrapText(ctx,text,maxW){
+  const words=text.split(' ');const rows=[];let cur='';
+  words.forEach(w=>{const test=cur?cur+' '+w:w;if(ctx.measureText(test).width>maxW&&cur){rows.push(cur);cur=w;}else cur=test;});
+  if(cur)rows.push(cur);return rows;
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.arcTo(x+w,y,x+w,y+r,r);
+  ctx.lineTo(x+w,y+h-r);ctx.arcTo(x+w,y+h,x+w-r,y+h,r);ctx.lineTo(x+r,y+h);
+  ctx.arcTo(x,y+h,x,y+h-r,r);ctx.lineTo(x,y+r);ctx.arcTo(x,y,x+r,y,r);ctx.closePath();
+}
+
+// ── Export ───────────────────────────────────────────────────────────────────
+async function renderVideo(){
+  if(wfStep<6){toast('Complete all steps first','error');return;}
+
+  // Stop live preview
+  if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
+  stopAudio();stopAudioCapture();
+
+  const canvas=document.getElementById('previewCanvas');
+
+  // captureStream(0) = manual mode: we call videoTrack.requestFrame() after each drawFrame()
+  // This guarantees every drawn frame is captured — no browser sampling jitter
+  const videoStream=canvas.captureStream(0);
+  const videoTrack=videoStream.getVideoTracks()[0];
+
+  // Prepare audio graph (connected but NOT started yet — started after rec.start)
+  const audioPrep=await prepareAudioCapture();
+  const audioTracks=audioPrep?audioPrep.stream.getAudioTracks():[];
+  const combinedStream=new MediaStream([...videoStream.getVideoTracks(),...audioTracks]);
+
+  let rec=null;
+  const mimes=['video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'];
+  for(const m of mimes){
+    try{if(MediaRecorder.isTypeSupported(m)){rec=new MediaRecorder(combinedStream,{mimeType:m,videoBitsPerSecond:9_000_000});break;}}catch(e){}
+  }
+  if(!rec)rec=new MediaRecorder(combinedStream);
+
+  const chunks=[];
+  rec.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data);};
+  document.getElementById('exportBtn').disabled=true;
+  document.getElementById('renderProgress').style.display='block';
+  document.getElementById('renderFill').style.width='0%';
+  wfStep=7;updateStepRail();
+
+  // Start recorder first, then audio — both from same moment, frame 0
+  rec.start(100);
+  if(audioPrep) audioPrep.src.start(0);
+
+  const totalF=Math.ceil(effectiveDur*FPS);
+  const msPerFrame=1000/FPS;
+  const renderStart=performance.now();
+
+  await new Promise(resolve=>{
+    let f=0;
+    function fr(){
+      if(f>=totalF){rec.stop();resolve();return;}
+      drawFrame(f,f/FPS); // explicit time = frame/FPS, in sync with audio source
+      videoTrack.requestFrame(); // push exact frame into captureStream(0)
+      f++;
+      const pct=(f/totalF*100).toFixed(0);
+      document.getElementById('renderFill').style.width=pct+'%';
+      document.getElementById('renderLabel').textContent='Rendering... '+pct+'%';
+      // Wall-clock pace: schedule next frame at the real-time offset it should appear
+      const elapsed=performance.now()-renderStart;
+      const nextMs=f*msPerFrame;
+      setTimeout(fr,Math.max(0,nextMs-elapsed));
+    }
+    fr();
+  });
+
+  rec.onstop=()=>{
+    stopAudioCapture();
+    const blob=new Blob(chunks,{type:'video/webm'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');a.href=url;a.download='shorts_'+Date.now()+'.webm';a.click();
+    document.getElementById('exportBtn').disabled=false;
+    document.getElementById('renderLabel').textContent='Export complete! ✓';
+    wfStep=8;updateStepRail();setStatus('done','Exported!');toast('🎉 Video exported!','success');
+    document.getElementById('downloadLinks').innerHTML=`<a href="${url}" download="shorts_${Date.now()}.webm" style="font-size:12px;color:var(--grn)">⬇ Download again</a>`;
+    previewFrame=0;previewPlaying=true;lastTS=0;
+    if(audioReady){audioEl.currentTime=0;audioEl.play().catch(()=>{});}
+    previewRAF=requestAnimationFrame(previewLoop);
+  };
+}
+
+function playVoiceover(){
+  if(audioReady)playAudio(0);
+  else if(D){const s=D.full_voiceover_script||(D.scenes||[]).map(sc=>sc.voiceover||'').join(' ');speakPreview(s);}
+  else toast('Generate a script first','info');
+}
+
+function resetAll(){
+  if(previewRAF){cancelAnimationFrame(previewRAF);previewRAF=null;}
+  stopAudio();stopAudioCapture();stopSpeech();
+  audioReady=false;audioBuffer=null;audioDest=null;effectiveDur=dur;wordTimestamps=null;
+  if(audioBlobUrl){URL.revokeObjectURL(audioBlobUrl);audioBlobUrl=null;}audioEl=null;
+  wfStep=0;D=null;sceneVids=[];sceneThumbUrls=[];captionTimeline=[];previewFrame=0;previewPlaying=false;
+  updateStepRail();unlockTabs();showCenter('idle');setStatus('idle','Ready');
+  document.getElementById('approveBtn').disabled=true;
+  document.getElementById('regenBtn').disabled=true;
+  document.getElementById('buildCaptionsBtn').disabled=true;
+  document.getElementById('script-empty').style.display='';
+  document.getElementById('script-content').style.display='none';
+  document.getElementById('footage-empty').style.display='';
+  document.getElementById('footage-content').style.display='none';
+  document.getElementById('captions-empty').style.display='';
+  document.getElementById('captions-content').style.display='none';
+  document.getElementById('metadata-empty').style.display='';
+  document.getElementById('metadata-content').style.display='none';
+  document.getElementById('export-empty').style.display='';
+  document.getElementById('export-content').style.display='none';
+  document.getElementById('renderProgress').style.display='none';
+  const cv=document.getElementById('previewCanvas');cv.getContext('2d').clearRect(0,0,W,H);
+  switchRightTab('script');
+}
+
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+</script>
+</body>
+</html>

@@ -53,6 +53,7 @@ The only **required** key is `SERP_API_KEY` ([serpapi.com](https://serpapi.com) 
 | `PAGESPEED_API_KEY` | Recommended | Raises PageSpeed Insights rate limits (works without, slowly) |
 | `DATAFORSEO_API_KEY` | Optional | `login:password` — enables backlink/authority comparison |
 | `DATABASE_URL` | Optional | PostgreSQL connection string; omit to use the local `.data/` JSON store |
+| `SEO_INTEL_DATA_DIR` | Optional | Where the JSON store keeps reports (default `.data/`, or beside the release folders on SiteGround) |
 | `APP_SECRET` | Optional | Enables saving keys from the Settings UI (AES-256-GCM encrypted at rest) |
 | `NEXT_PUBLIC_APP_URL` | Optional | Public URL of the app |
 | `PSI_COMPETITOR_LIMIT` | Optional | Competitor pages to run PageSpeed against per report (default 3) |
@@ -82,6 +83,7 @@ pnpm build       # production build
 Any Node 20+ host works. See **[DEPLOY.md](./DEPLOY.md)** for the full Vercel walkthrough.
 
 - **Vercel** (one-click button above): set Root Directory to `seo-intel` and add `SERP_API_KEY` — no database needed. Each analysis runs as a single streaming request (`/api/analyze`, `maxDuration` 300s) that pushes live progress to the browser. Optionally connect Postgres for saved history. Pro runs every time; Hobby works for most runs — see DEPLOY.md's plan note.
+- **SiteGround Node.js hosting** (like SaySites and LawMatchNow): GitHub keeps the `seo-intel-host` branch in step with this folder on `main` (`.github/workflows/seo-intel-host.yml`). In Site Tools → Devs → Node.js, point the app at that branch with Node 22, install `npm install`, build `npm run build`, start `npm start`, and add `SERP_API_KEY` plus any optional variables above. The build uses one CPU and no worker threads; old release folders are pruned a minute after start (`lib/prune-releases.ts`). Saved reports live beside the release folders (`.nodeapp/seo-intel-data`), so they survive each deploy; `SEO_INTEL_DATA_DIR` moves them.
 - **Docker / VM / Railway / Render**: `pnpm build && pnpm start`. The app detects it's not on Vercel and runs the pipeline as a normal background job with the built-in file store (persistent disk) — or set `DATABASE_URL` for Postgres.
 
 ## Architecture

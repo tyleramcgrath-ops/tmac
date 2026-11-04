@@ -45,7 +45,7 @@ jobs:
           fi
 
       - name: Type-check
-        if: matrix.project == 'apps/lawmatchnow'
+        if: matrix.project == 'apps/lawmatchnow' || matrix.project == 'seo-intel'
         run: pnpm type-check
 
       - name: Build

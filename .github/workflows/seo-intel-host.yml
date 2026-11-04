@@ -1,0 +1,30 @@
+# Keeps the seo-intel-host branch in step with seo-intel on main.
+# SiteGround's Node.js hosting builds from the top of a branch and can't be
+# pointed at a subfolder, so seo-intel-host holds just SEO Competitor
+# Intelligence (the same setup as saysites-host).
+name: SEO Competitor Intelligence host branch
+
+on:
+  push:
+    branches: [main]
+    paths: ['seo-intel/**']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: seo-intel-host
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Split seo-intel and push it to seo-intel-host
+        run: |
+          git subtree split --prefix seo-intel -b seo-intel-host-new
+          git push origin seo-intel-host-new:seo-intel-host

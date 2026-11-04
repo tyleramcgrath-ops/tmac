@@ -301,7 +301,692 @@ const MBC_FNP = 'https://www.mbc.ca.gov/Licensing/Fictitious-Name-Permit/'
 const BBC_MEDSPA = 'https://barbercosmo.ca.gov/consumers/medspa_factsheet.pdf'
 const CENSUS_LAC = 'https://www.census.gov/quickfacts/losangelescountycalifornia'
 
+const DC_71 = 'https://dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/information-about-legal-services/communications-concerning-a-lawyer%E2%80%99s-services'
+const DC_75 = 'https://dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/information-about-legal-services/firm-names-and-letterheads'
+const DC_54 = 'https://www.dcbar.org/for-lawyers/legal-ethics/rules-of-professional-conduct/law-firms-and-associations/professional-independence-of-a-lawyer'
+const DC_OP_302 = 'https://dcbar.org/for-lawyers/legal-ethics/ethics-opinions-210-present/ethics-opinion-302'
+const DC_OP_342 = 'https://dcbar.org/for-lawyers/legal-ethics/ethics-opinions-210-present/ethics-opinion-342'
+const DC_PITFALLS = 'https://dcbar.org/getmedia/fb4198bd-c6f7-4a83-b0e5-06c149bb3e1d/Common-Legal-Website-Pitfalls-and-How-To-Avoid'
+const DC_R49 = 'https://www.dccourts.gov/sites/default/files/2020-11/DCCA%20Rule%2049.pdf'
+const DC_R49_GUIDE = 'https://www.dccourts.gov/sites/default/files/matters-docs/rule49_compliance.pdf'
+const DC_CUPL_2420 = 'https://www.dccourts.gov/sites/default/files/2020-03/CUPL-Opinion-24-20.pdf'
+const DC_SUPERIOR = 'https://dccourts.gov/superior-court/about'
+const DATAUSA_DC = 'https://datausa.io/profile/geo/district-of-columbia'
+const IL_DENT_45 = 'https://ilga.gov/legislation/ilcs/documents/022500250K45.htm'
+const IL_1220_421 = 'https://ilga.gov/commission/jcar/admincode/068/068012200D04210R.html'
+const DATAUSA_CHI = 'https://datausa.io/profile/geo/16000US1714000'
+const IL_PA_104_151 = 'https://ilga.gov/documents/legislation/PublicActs/104/104-0151.htm'
+
 export const SCHEDULED_ARTICLES: Article[] = [
+  {
+    slug: 'washington-dc-law-firm-website-design',
+    title: 'Washington, DC Law Firm Websites: D.C. Bar and Rule 49',
+    description: 'Plan a Washington, DC law firm website under D.C. Rules 7.1 and 7.5 and Rule 49: bar status notices, federal practice limits, verdicts and referral fees.',
+    kind: 'guide',
+    summary: [
+      'D.C. regulates lawyer advertising mostly through one rule, Rule 7.1: no false or misleading communication. There is no filing requirement and no mandatory "advertising" label, but verdicts and comparisons must be qualified or provable.',
+      'The rule that catches DC firm websites most often is Rule 49 of the D.C. Court of Appeals. A lawyer who is not a D.C. Bar member must not be presented as available to practice law from a DC office.',
+      'Lawyers relying on the federal practice exception need a prominent notice that their practice is limited to matters before federal courts and agencies. "Not admitted in D.C." alone is not enough.',
+      'Rule 7.5(b) requires a firm with offices in several jurisdictions to show, office by office, where its lawyers are not licensed. In a market where most firms also practice in Maryland and Virginia, that belongs on every attorney profile.',
+      'Write for clients who cross the District line daily, explain which court hears their case, and offer Spanish pages only when someone can answer in Spanish.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1501466044931-62695aada8e9?auto=format&fit=crop&w=1600&q=75', alt: 'Pennsylvania Avenue in Washington, DC with a protected center bike lane leading toward the U.S. Capitol dome on a sunny day' },
+    body: `A Washington, DC law firm website has a lighter advertising rulebook than most states but a stricter test on who may be shown as a DC lawyer. The District's Rules of Professional Conduct handle advertising through Rule 7.1, which bars false or misleading communications, and Rule 7.5 on firm names. There is no pre-approval, no filing and no required "attorney advertising" label. The hard part is Rule 49 of the District of Columbia Court of Appeals, which forbids anyone who is not a member of the D.C. Bar from holding out as authorized to practice law in the District. On a firm site, that means every attorney profile, office page and footer has to make each lawyer's bar status plain, and lawyers who practice only before federal agencies or courts need specific notice language. Get those two things right, qualify any verdicts and comparisons, and most of the risk on a DC firm site is handled.
+
+This guide is for firm owners and the people who build their sites. It links to each rule and opinion so you can read them yourself. It is not legal advice, and close calls belong with ethics counsel or the D.C. Bar's ethics guidance.
+
+## What advertising rules apply to a DC law firm website?
+
+The District's rules on information about legal services are short. The D.C. Bar's chapter lists two rules: [Rule 7.1, Communications Concerning a Lawyer's Services](${DC_71}), and [Rule 7.5, Firm Names and Letterheads](${DC_75}). Where many states split advertising, solicitation, specialization and filing across Rules 7.2 to 7.4, D.C. folds the core of it into one standard.
+
+Rule 7.1(a) says a lawyer shall not make a false or misleading communication about the lawyer or the lawyer's services. A communication is misleading if it contains a material misrepresentation of fact or law, leaves out a fact needed to keep the whole statement from misleading, or makes an assertion about the lawyer that cannot be substantiated. Comment [4] makes the point directly: beyond false and misleading content, the rule does not regulate the content of advertising.
+
+That freedom is real, and it has edges. The comments to Rule 7.1 and the D.C. Bar's ethics opinions show where firms get into trouble:
+
+- **Verdicts and records.** Comment [1] says an ad describing the amount of a damage award, or a lawyer's record of favorable verdicts, can mislead unless it is suitably qualified, because it can suggest the reader will get a similar result.
+- **Comparisons.** The same comment says claims comparing your services with other lawyers' are misleading if they cannot be substantiated. "The most experienced," "top-rated" and "best in DC" are comparisons.
+- **Buried disclosures.** In [Ethics Opinion 302](${DC_OP_302}), the D.C. Bar's Legal Ethics Committee said web disclosures should not be buried several clicks deep, and compared that to fine print in a newspaper ad. A qualifier on a results page does not cure a big number on the home page.
+
+Comment [3] lists what a lawyer can safely publish: names, addresses and phone numbers, the kinds of services offered, the basis on which fees are set, and foreign language ability, among other facts. That is a good outline for a practice page.
+
+**Note:** Many DC firms have lawyers admitted in Maryland, Virginia or elsewhere. Those states' advertising rules can reach a site aimed at their residents, and some are stricter than D.C.'s. Check each jurisdiction where your lawyers practice before you treat D.C.'s rules as the whole story.
+
+![A lawyer in a white blazer and glasses takes notes across a desk from a client in a bright office](https://images.unsplash.com/photo-1758520144437-f068ecaf0d83?auto=format&fit=crop&w=1200&q=75)
+
+## How does Rule 49 affect a law firm website?
+
+Rule 49 is the District's unauthorized practice rule, and it is written broadly. Under [Rule 49](${DC_R49}), a person who is not a D.C. Bar member may not practice law in the District or hold out as authorized or competent to practice law there. Paragraph (b)(4) defines holding out as indicating to others, in any manner, that you are competent, authorized or available to practice law from a DC office or location, and it names the words that usually do it: "esquire," "lawyer," "attorney" and "counsel."
+
+A website is one of the clearest ways to hold someone out. A profile that says "Jane Doe, Esq." next to a K Street address, with no mention that she is admitted only in Virginia, tells a reader she is a DC lawyer. The Court of Appeals' Committee on Unauthorized Practice of Law has said in its [compliance guidance](${DC_R49_GUIDE}) that the required notices apply to communications with the public, including letters, business cards and internet sites, and that it has found violations in each of those. The same guidance tells firms to review the adequacy of the disclosures on their own websites.
+
+Rule 49 has exceptions, and several of them come with notice duties that land on the site:
+
+| Situation | What Rule 49 allows | What the website should say |
+|---|---|---|
+| Practice only before federal agencies, such as immigration, patent or veterans' benefits work | Rule 49(c)(2), where the agency permits it and the work stays before that agency | A prominent notice that the lawyer is not a D.C. Bar member and that practice is limited to matters and proceedings before federal courts and agencies |
+| Practice only in a federal court where the lawyer is admitted | Rule 49(c)(3) | The same kind of notice of bar status and the limit on practice |
+| A lawyer whose first D.C. Bar application is pending | Rule 49(c)(8), for up to 360 days, under direct supervision of an active D.C. Bar member | Notice of the lawyer's bar status and that practice is supervised by a D.C. Bar member |
+| A lawyer working from home in DC whose office is elsewhere | Opinion 24-20, under the incidental and temporary practice exception | No DC address on business documents, which likely includes the website |
+
+The committee's guidance makes one point worth repeating to whoever writes your attorney bios: a bare statement such as "not admitted in D.C." or "admitted only in Maryland" is not enough for lawyers relying on the federal practice exception. The notice has to say what the practice is limited to.
+
+The telework opinion, [Opinion 24-20](${DC_CUPL_2420}), adopted on March 23, 2020, allows a lawyer who is not a D.C. Bar member to work from a DC residence only if, among other conditions, the lawyer keeps an office where they are admitted and avoids using a DC address in business documents. If a lawyer at your Bethesda or Arlington firm lives in the District, keep their home address off the site, their profile and their email signature.
+
+## What should each attorney profile show?
+
+A DC firm site works best when every lawyer's page answers the reader's real question, "Can this person handle my case here?", in the first two lines. A pattern that satisfies the rules and helps the reader:
+
+- **Name and role**, then a line such as "Admitted in the District of Columbia and Maryland" for D.C. Bar members.
+- **For lawyers relying on Rule 49(c)(2) or (c)(3)**, a notice near the name, for example "Admitted in New York only. Not a member of the D.C. Bar. Practice limited to matters and proceedings before federal courts and agencies." Put it on the profile itself, in the firm directory listing and anywhere the lawyer's name appears with a DC address.
+- **For lawyers practicing under supervision while their application is pending**, a notice that they are not yet D.C. Bar members and that their practice is supervised by a named D.C. Bar member.
+- **Practice areas and matters**, written factually. If you list representative results, qualify them where they appear.
+- **Languages spoken**, which Comment [3] specifically allows.
+
+Rule 7.5(b) adds a firm-level duty. A firm with offices in more than one jurisdiction may use the same name in each, but it must identify its lawyers so that the reader can see where any of them is not licensed to practice in that office's jurisdiction. For a firm with offices in the District and Silver Spring, the simplest compliant layout is an office page for each location listing the lawyers who work there, each with their admissions.
+
+A website-compliance presentation hosted by the D.C. Bar lists the same expectations for any legal site: identify the responsible attorney, list the jurisdictions where your attorneys are licensed, and avoid "specialist" claims you cannot back up ([Common legal website pitfalls](${DC_PITFALLS})).
+
+## Can a DC firm use a trade name or a web address as its name?
+
+Yes, within Rule 7.5. Rule 7.5(a) lets a private firm use a trade name if it does not imply a connection with a government agency or a public or charitable legal services organization, and if it is not otherwise misleading under Rule 7.1. Comment [1] says a firm may also be designated by a distinctive website address.
+
+That matters in a city full of federal agencies and legal aid organizations. A domain or brand that reads like an agency program, a court service or a tenant help line can mislead a reader looking for free help. If a reasonable visitor could think you are a public program, choose another name or say plainly, near the top of the page, that you are a private law firm.
+
+Three more parts of Rule 7.5 apply directly to the site:
+
+- **No phantom partners.** Rule 7.5(d) allows lawyers to state or imply that they practice in a partnership only when that is true. Comment [2] says lawyers who share space but are not associated in a firm may not use a name like "Smith and Jones."
+- **Public officials.** Under Rule 7.5(c), a lawyer holding public office may not have their name used in the firm name, or in the firm's communications, during any substantial period when they are not actively and regularly practicing with the firm. Take that partner's photo off the home page while they serve.
+- **Departed and unaffiliated lawyers.** Comment [1] treats using the name of a lawyer not associated with the firm as misleading. Update the site the day someone leaves.
+
+D.C. has long allowed nonlawyer partners in law firms. Under [Rule 5.4(b)](${DC_54}), that works only if the firm's sole purpose is providing legal services, every owner or manager agrees to follow the rules, lawyers take responsibility for them, and the terms are in writing. If your firm has a nonlawyer principal, such as an economist or lobbyist who helps deliver legal services, the leadership page must describe their role accurately and must not call them a lawyer or counsel.
+
+## Can a DC firm pay for leads, directories or referral programs?
+
+Rule 7.1(c) bars giving anything of value to a person or organization to recommend or secure your employment, with exceptions. You may pay for permitted advertising, pay the usual charges of a legal service plan or lawyer referral service, and enter reciprocal referral arrangements that are not exclusive and that clients are told about.
+
+In [Ethics Opinion 342](${DC_OP_342}) (November 2007), the D.C. Bar said lawyers may take part in internet-based referral services, including for-profit ones, if the program complies with Rules 7.1 and 5.4. Flat participation fees, flat per-referral fees and per-client fees not tied to the outcome of the case are acceptable, and fees should fall within the range comparable services charge. What you must avoid is any payment that rises or falls with your legal fee, which turns the arrangement into fee sharing.
+
+For your own website, that means: link to directories you belong to if you like, but do not let a vendor publish anything under your name that you have not reviewed, and do not pay anyone a share of the fees from clients who arrive through your site.
+
+## How should a DC firm site handle contact forms and confidentiality?
+
+Your consultation form is where a visitor becomes a prospective client, and the duties that come with that can attach before you ever call back. A website-compliance presentation hosted by the D.C. Bar points out that when a site invites a visitor to submit case information, that exchange can count as a consultation for conflict purposes, and suggest a clear notice near the form that sending it does not create an attorney-client relationship and that the visitor should not send confidential details yet ([Common legal website pitfalls](${DC_PITFALLS})).
+
+A form that works for DC clients asks for:
+
+- Name, phone and email, and the best time to call.
+- The type of matter, chosen from your practice areas.
+- The names of the other parties, so you can run a conflict check before anyone shares the story.
+- Where the matter is, District, Maryland or Virginia, because that decides which of your lawyers can take it.
+
+Ethics Opinion 302 also notes that the internet does not reduce a lawyer's conflict-of-interest duties, so the form is a starting point for screening, not a substitute for it.
+
+![A tree-lined Capitol Hill street with parked cars on both sides leading to the U.S. Capitol dome in the evening light](https://images.unsplash.com/photo-1687692680866-fbd2aa3953de?auto=format&fit=crop&w=1200&q=75)
+
+## Which court will hear my client's case, and why should the site say so?
+
+Readers searching for a lawyer in the District usually do not know how the local courts are organized, and a short plain-language explanation earns their trust. DC has no counties and no separate city courts. The [Superior Court of the District of Columbia](${DC_SUPERIOR}) handles all local trial matters: civil, criminal, family, probate, tax, landlord and tenant, small claims and traffic cases. Its divisions include the Civil Division, Criminal Division, Family Court, Probate Division, Domestic Violence Division and the Multi-Door Dispute Resolution Division. Appeals go to the D.C. Court of Appeals, the court that also oversees the D.C. Bar and Rule 49.
+
+Federal cases go to the U.S. District Court for the District of Columbia, and a large share of DC legal work happens before federal agencies rather than in any courtroom. Write a short page or section for each place your clients actually end up:
+
+- **A tenant or landlord matter** in the Superior Court's landlord and tenant cases, with what to bring and what happens at the first hearing.
+- **A family case** in Family Court, explaining custody, support and divorce in your own words.
+- **A probate matter**, for families handling an estate in the District.
+- **Agency work**, such as an immigration, security clearance or federal employment matter, naming the agency and the stage you handle.
+
+Rule 7.1(e) also bars soliciting clients in or near the D.C. Courthouse, so any outreach you do around the courts has to stay off that ground. Your website is the right place to meet those clients instead.
+
+## Who searches for a lawyer in DC, and in what language?
+
+The District is a small jurisdiction inside a large metro area. Data USA puts the District's 2024 population at 681,294 ([Data USA, District of Columbia](${DATAUSA_DC})), while many of your clients live or work in Maryland and Virginia and commute in. A good DC site says, on each practice page, which jurisdictions that practice covers, so a reader in Prince George's County or Alexandria knows at once whether you can help.
+
+Language matters too. Data USA reports that 19.1% of District households speak a language other than English at home as their primary shared language, and Spanish is the most common, in 60,423 households, about 9.4% ([Data USA](${DATAUSA_DC})). If someone at your firm can take a call and run a consultation in Spanish, a real Spanish version of the pages those clients need is worth building. Google's guidance on [localized versions](${HREFLANG}) explains how to connect the English and Spanish pages so each reader gets the right one. A Spanish page with an English-only phone line wastes the visitor's time, so only promise what you can deliver. Comment [3] to Rule 7.1 allows you to state foreign language ability; say which lawyers or staff speak which language.
+
+## How do DC law firms show up in Google's local results?
+
+Google's [Business Profile guidelines](${GBP_GUIDELINES}) ask for your real-world business name with no added keywords, an address where you actually meet clients during stated hours, and the right category. They also allow individual practitioners, such as lawyers, a profile of their own when they can be reached at the verified location. A firm with a District office and a Maryland office can have one profile for each real office. A virtual office or a mail drop does not qualify.
+
+Two DC-specific cautions:
+
+- **The address on the profile is a holding-out question too.** A profile showing a DC office for a lawyer who is not a D.C. Bar member raises the same Rule 49 issue as the website.
+- **Federal practice firms often do not need walk-in visits.** If clients never come to your office, read Google's guidance on [service-area businesses](${SERVICE_AREAS}) before listing an address.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](${LOCAL_RANKING})). Clear practice pages build relevance, real reviews build prominence over time, and distance depends on the searcher. No one can promise a place in the map results. For how AI answers choose what to quote, see our guide on [how AI search decides which businesses to mention](/blog/how-ai-search-chooses-who-to-recommend).
+
+## A DC law firm website checklist
+
+- [ ] Every attorney profile states the lawyer's admissions, and lawyers who are not D.C. Bar members are never presented as available to practice law from a DC office.
+- [ ] Lawyers relying on federal practice exceptions carry a prominent notice that practice is limited to matters and proceedings before federal courts and agencies, on the profile, directory and anywhere their name appears with a DC address.
+- [ ] Lawyers practicing under supervision while their application is pending show their bar status and the supervision.
+- [ ] Each office page lists the lawyers who work there and where any of them is not licensed (Rule 7.5(b)).
+- [ ] Verdicts and settlements are qualified where they appear, not several clicks away (Rule 7.1, Comment [1]; Opinion 302).
+- [ ] No unprovable comparisons such as "best" or "top" lawyer.
+- [ ] The firm name or domain does not suggest a government agency or legal aid organization.
+- [ ] Nonlawyer principals are described accurately and never called counsel.
+- [ ] The consultation form asks for other parties' names and carries a clear no-relationship notice.
+- [ ] Practice pages say which jurisdictions and courts they cover.
+- [ ] Spanish pages exist only where someone can answer in Spanish.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For the rest of what any firm site needs, see our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to writing [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+## How SaySites builds a Washington, DC law firm website
+
+A SaySites law firm site starts from the plan above: a page for each practice area, a profile for each attorney, a page for each office and a consultation form whose intake questions include the other party's name for a conflict check. Search engines read the firm as a [LegalService](${SCHEMA_LEGAL}), each attorney as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Sites can be written in English or Spanish.
+
+You make changes by saying them in plain words, such as "add 'Admitted in Virginia only. Not a member of the D.C. Bar. Practice limited to matters and proceedings before federal courts and agencies.' under Maya's name" or "move the Silver Spring lawyers onto the Maryland office page," and each change waits as a draft until you approve it. Admissions, results and reviews come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your DC site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own details first. To compare a state that adds its own required wording, read our [Kansas City law firm website guide](/blog/kansas-city-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a DC law firm website have to be filed with the D.C. Bar?', a: 'No. The District has no filing or pre-approval requirement for lawyer advertising, and no required "attorney advertising" label. The site must still meet Rule 7.1, which bars false or misleading communications, and Rule 7.5 on firm names. If your lawyers are also admitted in Maryland, Virginia or another state, check whether that state adds requirements for a site aimed at its residents.' },
+      { q: 'Can a lawyer not admitted in DC be listed on a DC office website?', a: 'Yes, if the site does not hold them out as authorized to practice law in the District. Rule 49 of the D.C. Court of Appeals bars that. State each lawyer\'s admissions clearly. Lawyers relying on the federal practice exceptions need a prominent notice that their practice is limited to matters and proceedings before federal courts and agencies.' },
+      { q: 'Is "Not admitted in D.C." enough on an attorney profile?', a: 'Not always. The Committee on Unauthorized Practice of Law has said that bare statements such as "not admitted in D.C." or "admitted only in" another state are not enough for lawyers relying on the federal practice exception. The notice should also say that practice is limited to matters and proceedings before federal courts and agencies.' },
+      { q: 'Can a DC law firm website show verdicts and settlements?', a: 'Yes, if they are accurate and suitably qualified. Comment [1] to D.C. Rule 7.1 says describing damage awards or a record of favorable verdicts can mislead readers into expecting similar results unless it is qualified. Put the qualifier right beside the figures, because Ethics Opinion 302 warns against disclosures buried several clicks deep.' },
+      { q: 'Can a DC law firm pay for leads from a website or directory?', a: 'Often, yes. D.C. Ethics Opinion 342 allows participation in internet-based referral services, including for-profit ones, if the program complies with Rules 7.1 and 5.4. Flat participation fees and flat per-referral or per-client fees are acceptable. A fee tied to the outcome or to your legal fee is not, because it becomes fee sharing.' },
+      { q: 'Should a DC law firm website be in Spanish?', a: 'If your firm can serve Spanish-speaking clients, often yes. Data USA reports that Spanish is the most common non-English language in District homes, spoken as the main shared language in about 9.4% of households in 2024. Build full Spanish pages only when someone at the firm can take the call and run the consultation in Spanish.' },
+      { q: 'How much does a SaySites website for a DC law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles with room for each lawyer\'s admissions, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['District of Columbia Rules of Professional Conduct', 'D.C. Court of Appeals Rule 49', 'Attorney advertising', 'Law firm websites', 'Washington, DC'],
+    published: '2026-11-01',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-dental-practice-website-design',
+    title: 'Chicago Dental Websites: Illinois Advertising Rules',
+    description: 'Plan a Chicago dental practice website under Illinois rules: specialty disclaimers, fee wording, sedation claims, free exams and keeping your web ads 3 years.',
+    kind: 'guide',
+    summary: [
+      'Illinois dental advertising is governed by Section 45 of the Dental Practice Act (225 ILCS 25/45) and the Department\'s rule at 68 Ill. Adm. Code 1220.421. A practice website is advertising under both.',
+      'A general dentist who advertises orthodontics, implants, root canals or other specialty services needs a disclaimer that they are not licensed in that specialty. Words like "Specialist" or "Practice Limited To" count as claiming one.',
+      'Listed fees must be your usual fees and carry a statement that they may be adjusted due to complications or unforeseen circumstances. "Sedation dentistry" needs a current Illinois sedation or anesthesia permit.',
+      'A free exam is allowed, but a new patient cannot be charged for anything done during it. Internet ads must be approved by the dentist and kept for at least three years.',
+      'Practices operating under a trade name must name the designated Illinois dentist, with address and phone, in every ad, so it belongs in the site footer.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1704455306251-b4634215d98f?auto=format&fit=crop&w=1600&q=75', alt: 'A bright dental treatment room with a pale gray patient chair, an overhead light, a wall-mounted monitor and wood-look flooring' },
+    body: `A Chicago dental practice website is advertising under Illinois law, and Illinois writes more specific dental advertising rules than most states. Two sources set them: [Section 45 of the Illinois Dental Practice Act](${IL_DENT_45}) and the Department of Financial and Professional Regulation's rule at [68 Ill. Adm. Code 1220.421](${IL_1220_421}). In practice, five things shape the site: a disclaimer whenever a general dentist advertises specialty services, a set sentence beside any listed fee, no "sedation dentistry" without a sedation permit, no charges during an advertised free exam, and a saved copy of your web advertising for at least three years. If your practice runs under a trade name, the designated dentist's name, address and phone must appear too. Build those into the page plan from the start, and the rest of the work is writing pages that help a nervous patient pick up the phone.
+
+This is a planning guide for practice owners and whoever builds their site, with each rule linked. It is not legal advice; ask your own counsel or the Illinois State Dental Society about close calls.
+
+## Which rules govern a dental website in Illinois?
+
+Section 45 opens by saying its purpose is to let dentists advertise so the public can make informed choices, while protecting the public from false or misleading advertising. The Department's rule goes further. Section 1220.421(a) allows advertising in any medium or other form of public communication, as long as it is truthful and not fraudulent, deceptive, inherently misleading or proven to be misleading in practice, and it says an ad must include the information needed to keep it from misleading.
+
+The Dental Practice Act was due to be repealed on January 1, 2026 under Illinois's sunset law. [Public Act 104-0151](${IL_PA_104_151}) renewed it until January 1, 2031 and amended several sections, so the rules below are current law. When you read the statute on the General Assembly's site, check that you are looking at the version that reflects that Act.
+
+Both sources list what you are expressly allowed to publish. Between them, that includes:
+
+- The services you offer, your name, title, office hours, address and phone.
+- Specialty licenses, board certification and limits on your practice, with the conditions below.
+- Usual and customary fees for routine services, with the required sentence.
+- Schools attended, hospital affiliations and society memberships.
+- Credit arrangements and whether you take Medicare or Medicaid patients.
+- Foreign language ability.
+- What the office is like: accessibility, an on-site lab, parking.
+- Opening, moving, leaving or returning to practice, and dentists joining or leaving.
+- Anything else a reasonable person might regard as relevant to choosing a dentist.
+
+That last item is broad, which is good news for useful content. A page explaining what happens at a first visit, how long a crown takes or which insurance plans you file with is the kind of information the law wants patients to have.
+
+![A Chicago downtown street at dusk lined with lit lamps and stone buildings, ending at a tall tower glowing at the far end](https://images.unsplash.com/photo-1515963665762-77ef90e624fa?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist advertise braces, implants or root canals in Illinois?
+
+Yes, with a disclaimer. Illinois licenses dental specialties, and its rules protect the line between a general dentist who offers a service and a licensed specialist.
+
+Section 45(h) says that when a general dentist, or a specialist not licensed in the specialty concerned, advertises services in endodontics, pediatric dentistry, periodontics, prosthodontics, orthodontics and dentofacial orthopedics, oral and maxillofacial surgery, or oral and maxillofacial radiology, the ad must include a disclaimer that the dentist does not hold a license in that specialty.
+
+Section 1220.421 adds detail that matters for page wording:
+
+- **Specialist titles are for licensees.** Titles such as "Orthodontist" or "Oral and Maxillofacial Surgeon" may be used only by dentists holding that specialty license.
+- **Some phrases count as a specialty claim.** The rule treats words like "Specialist" or "Practice Limited To" as prima facie evidence that a dentist is holding out as a specialist.
+- **The disclaimer has a set meaning.** A general dentist who uses specialist-style language must state prominently that they are licensed only as a general dentist.
+- **Other descriptive terms.** The rule names terms such as family, cosmetic, restorative, preventive, hospital and implant dentistry, and TMJ, in connection with the same disclaimer. Read the rule before you title a page "Cosmetic Dentistry" or "Implant Center" and decide with your counsel where the disclaimer goes.
+
+On a website, "prominent" means on the page that advertises the service, near the service name, not only in a footer. A clean pattern for a general practice:
+
+> **Tip:** On each service page in a specialty area, put one line under the heading, such as "Dr. Rivera is licensed in Illinois as a general dentist." Then explain the treatment, who it suits, how long it takes and what it costs, the way you would in the chair.
+
+If a licensed specialist on your team performs the work, say who. Section 1220.421(e) requires a practice advertising specialty services under an assumed name to name the licensed specialist who performs them.
+
+## How should a Chicago practice show prices on its website?
+
+Price pages answer one of the first questions patients ask, and Illinois allows them with conditions. Section 45(d) lets you advertise your usual and customary fees for routine professional services, but the ad must say that fees may be adjusted due to complications or unforeseen circumstances. Section 1220.421 repeats the requirement and allows one exception: fees that never vary under any circumstances.
+
+So a "New patient exam and cleaning" price, a crown fee or a whitening package needs that sentence beside it. Put it directly under the price list, and repeat it on any landing page that shows a price.
+
+**Free exams and specials.** Section 45 bars offering gifts to induce patients to come in, but it allows free examinations and free services. The catch is concrete: a dentist offering a free examination or service may not charge a new patient for any service provided at that time. If your "free consultation" includes X-rays you bill for, either stop billing for them or stop calling it free. Spell out on the offer page what the free visit includes.
+
+**Referral services.** Section 45 also bars paying a fee to a referral service or other third party that advertises dental referrals unless all of that advertising makes clear the dentist pays a fee for the referral. Check how any directory or lead service you pay describes you.
+
+## Can a dental website say "sedation dentistry" or "painless"?
+
+Only the first, and only with a permit. Section 45 prohibits using "sedation dentistry" or a similar term unless the advertising dentist holds a current permit from the Department for general anesthesia and deep sedation or moderate sedation under Section 8.1 of the Act. If a visiting anesthesiologist provides sedation in your office, describe that arrangement accurately instead of branding the practice as sedation dentistry.
+
+"Painless" is out entirely: Section 45 bars advertising that you practice dentistry without causing pain. Write about comfort in specific, true terms, such as numbing gel before injections, breaks during long appointments or noise-cancelling headphones, if you actually offer them.
+
+The same section prohibits claims of superior quality of care and ads that guarantee success, play on public vanity or fears, or promote unfair competition. Section 1220.421(d) adds a ban on creating unjustified expectations of favorable results and on advertising services the dentist is not licensed to provide. In practice, that rules out:
+
+- "Chicago's best dentist" or "the highest quality care in the Loop."
+- "Perfect teeth guaranteed" or "results that last a lifetime."
+- Copy that shames people about their smile to sell veneers.
+
+Before-and-after photos are not addressed by name in Section 1220.421, but they still fall under the general rules. Use real photos of your own patients, with their written permission, show typical rather than exceptional results, and do not retouch the "after." A caption saying the treatment and roughly how long it took gives the photo context.
+
+![A stainless steel dental mirror resting on a white surface in soft side light](https://images.unsplash.com/photo-1606811856475-5e6fcdc6e509?auto=format&fit=crop&w=1200&q=75)
+
+## What must a practice with a trade name show?
+
+Many Chicago practices operate under a brand rather than a dentist's name: a neighborhood name, a family dental name, or several offices under one banner. Section 1220.421(e) allows an entity to advertise under a fictitious or assumed name only when:
+
+- A licensed Illinois dentist is designated at each practice location and is responsible for the advertising.
+- The designated dentist's name, office address and phone number appear in all advertising.
+- The names of owners who are not designated dentists also appear in all advertising.
+- A list of the dentists employed there is prominently displayed at each location.
+
+For the website, the simplest compliant pattern is a footer on every page with each location, its designated dentist and that office's address and phone, plus a team page for each office listing every dentist who works there.
+
+Multi-location practices in managed care networks have one more duty under Section 45: confirm to each plan whether each dentist is accepting new patients at each listed location, so directories stay accurate. Keep your own site in step, with an "accepting new patients" line on each location page that you update when it changes.
+
+## How long must a dental practice keep copies of its website?
+
+Longer than most practices expect. Section 45 requires dentists to keep a copy of all advertisements for three years, with the accurate date and place of publication. Section 1220.421(c) says advertising on television, radio or the internet must be prerecorded, approved by the dentist and kept, as a recording of the actual transmission, for at least three years, and that a copy must go to the Department within 7 working days of a written request.
+
+A website changes constantly, so build the record into your routine:
+
+1. Save a full, dated copy of each page whenever you change it, as a PDF or web archive file.
+2. Save each paid search, social and email ad with the dates it ran and where.
+3. Keep a short log of who approved each change. The dentist's approval is part of the rule.
+4. Keep everything for at least three years, then review before deleting.
+
+## Who is searching for a dentist in Chicago?
+
+Chicago is a city of neighborhoods, and patients usually search close to home or work: "dentist near me," "emergency dentist Pilsen," "pediatric dentist Lincoln Park." A useful site makes it easy to see which office is closest, which hours suit a commuter, whether there is parking or a train nearby, and which plans you accept.
+
+Language is part of that. Data USA, which draws on Census Bureau surveys, puts Chicago's Hispanic population at 29.7% of residents in 2024, about 805,000 people ([Data USA, Chicago](${DATAUSA_CHI})). Section 1220.421 expressly allows you to advertise foreign language ability. If dentists or front desk staff speak Spanish, Polish or another language, say who and at which office. If someone can book and answer questions in Spanish, full Spanish pages for your main services are worth it; Google's guidance on [localized versions](${HREFLANG}) explains how to link the English and Spanish versions so each reader gets the right one. Any required disclaimer or fee sentence must appear in the Spanish version too, because it is the same advertising.
+
+What not to do: a stack of near-identical "Dentist in Wicker Park," "Dentist in Logan Square," "Dentist in Bucktown" pages with only the neighborhood swapped. Google's [spam policies](${SPAM}) treat pages made mainly to rank for places as doorway pages. Make one strong page for each real office instead, with its own team, hours, directions and photos.
+
+## How do Chicago dental practices show up on Google Maps?
+
+The Google Business Profile does much of the local work. Google's [Business Profile guidelines](${GBP_GUIDELINES}) ask for your real-world name with no added keywords, so "Rivera Family Dental," not "Rivera Family Dental Best Implants Chicago." Each real office with staffed hours can have its own profile, and dentists who see patients at a verified location can have individual practitioner profiles under Google's rules.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](${LOCAL_RANKING})). Clear service pages help relevance; steady, genuine reviews build prominence. Google allows you to ask every patient for a review but not to offer anything in exchange or to ask only happy patients ([Google's review tips](${REVIEW_TIPS})). Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers the wording. No one can promise a place in the map results.
+
+Tell search engines what the practice is with [Dentist](${SCHEMA_DENTIST}) structured data that matches what the page shows ([Google's local business structured data](${LOCAL_SD})). And make the site usable for every patient: the Justice Department's [guidance on web accessibility](${ADA_WEB}) explains how the ADA applies to businesses open to the public.
+
+## A Chicago dental website checklist
+
+- [ ] Every specialty-service page by a general dentist carries a prominent disclaimer near the service name.
+- [ ] "Specialist," "Practice Limited To" and specialist titles appear only for dentists holding that Illinois specialty license.
+- [ ] Every listed fee is a usual fee and carries the sentence that fees may be adjusted due to complications or unforeseen circumstances.
+- [ ] Free exam offers say what is included, and nothing done during them is billed to new patients.
+- [ ] "Sedation dentistry" appears only with a current Illinois sedation or anesthesia permit.
+- [ ] No "painless," "best," "highest quality" or promises of success.
+- [ ] Trade-name practices show the designated dentist's name, address and phone, and any non-dentist owners, on every page.
+- [ ] Each office page shows whether it is accepting new patients.
+- [ ] A dated copy of each version of the site and each web ad is kept for at least three years, with the dentist's approval.
+- [ ] Spanish pages repeat every disclaimer and fee sentence.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For the rest of what a practice site needs, see our [medical practice website checklist](/blog/medical-practice-website-checklist). To compare another state's dental rules, read our [Nashville dental website guide](/blog/nashville-dental-practice-website-design).
+
+## How SaySites builds a Chicago dental practice website
+
+A SaySites site for a dental practice starts with the pages above: a page for each service, a team page, an office page for each location and a new patient appointment form that asks only for the basics, such as new or returning patient, insurance provider and the best time to call, without asking for clinical details. The practice is described to search engines as a [Dentist](${SCHEMA_DENTIST}), a Book online button can link to the scheduler you already use, sites can be written in English or Spanish, and no page goes live until it passes a 95+ speed check.
+
+You change the site by saying what you want in your own words, such as "put 'Dr. Rivera is licensed in Illinois as a general dentist' under the Invisalign heading" or "add the line about fees being adjusted for complications under the price list," and each change waits as a draft until you approve it. That approval step fits the Illinois rule that the dentist approves internet advertising. Fees, credentials, reviews and before-and-after photos come only from you; SaySites never invents them.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first.`,
+    faq: [
+      { q: 'Does an Illinois general dentist need a disclaimer to advertise Invisalign or implants?', a: 'Usually, yes. Section 45(h) of the Dental Practice Act requires a disclaimer when a general dentist advertises services in a licensed specialty such as orthodontics, oral surgery or periodontics. Section 1220.421 says the statement must be prominent and that the dentist is licensed only as a general dentist. Put it on the service page, near the service name.' },
+      { q: 'Can a Chicago dental website list prices?', a: 'Yes. Illinois lets dentists advertise their usual and customary fees for routine services. Each fee listing must state that fees may be adjusted due to complications or unforeseen circumstances, unless the fee never varies under any circumstances. Put that sentence directly under the price list and on any ad landing page that shows a price.' },
+      { q: 'Can an Illinois dentist offer a free exam online?', a: 'Yes, but with a firm condition. Section 45 of the Dental Practice Act allows free examinations and free services, but a dentist who offers one may not charge a new patient for any service provided at that time. If X-rays or a cleaning would be billed, say so plainly or include them in the free visit.' },
+      { q: 'Can a Chicago practice advertise "sedation dentistry"?', a: 'Only if the advertising dentist holds a current permit from the Illinois Department of Financial and Professional Regulation for general anesthesia and deep sedation or moderate sedation under Section 8.1 of the Act. Without a permit, describe the comfort options you really offer instead, such as numbing gel, breaks or headphones, and never call treatment painless.' },
+      { q: 'How long does an Illinois dentist have to keep website ads?', a: 'At least three years. Section 45 requires copies of all advertisements for three years with their dates and places of publication, and Section 1220.421 requires internet advertising to be approved by the dentist and kept for at least three years. Save a dated copy of each page version and each online ad, and record who approved it.' },
+      { q: 'Should a Chicago dental website have Spanish pages?', a: 'If someone at your practice can book and answer questions in Spanish, usually yes. Data USA puts Chicago\'s Hispanic population at about 29.7% of residents in 2024. Illinois rules allow you to advertise foreign language ability, and every disclaimer and fee sentence must appear in the Spanish pages as well.' },
+      { q: 'How much does a SaySites website for a Chicago dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment form, Dentist structured data, a booking button that links to your existing scheduler and hosting. You can also ask for a free redesign to see your current site rebuilt with your own content first.' },
+    ],
+    about: ['Illinois Dental Practice Act', 'Dental advertising', 'Dental practice websites', 'Chicago, Illinois'],
+    published: '2026-11-01',
+    status: 'published',
+  },
+  {
+    slug: 'kansas-city-law-firm-website-design',
+    title: 'Kansas City Law Firm Websites: Missouri and Kansas Rules',
+    description: 'Plan a Kansas City law firm website under both states’ rules: Missouri’s required disclaimer, Kansas specialist limits and courts on each side of State Line.',
+    kind: 'guide',
+    summary: [
+      'Kansas City firms usually answer to two rulebooks: Missouri Supreme Court Rules 4-7.1 to 4-7.4 and the Kansas Rules of Professional Conduct, Rules 7.1 to 7.4. Build the site to pass both.',
+      'Missouri Rule 4-7.2(f) requires the statement "The choice of a lawyer is an important decision and should not be based solely upon advertisements." A full firm website goes beyond the short listings exempted by 4-7.2(g).',
+      'Missouri requires specific wording next to results ("past results afford no guarantee of future results") and next to contingency fee offers (the client may be responsible for costs or expenses).',
+      'Both states require you to keep a copy of each advertisement for two years with a record of when and where it ran, so archive every version of the site.',
+      'The metro spans Jackson County (16th Circuit, Missouri), Wyandotte and Johnson counties in Kansas, and two federal districts. Say plainly which side of State Line you practice on.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1531621403038-64ce9162b7fa?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Kansas City high-rises against a pink early summer sunset sky' },
+    body: `A Kansas City law firm website has to satisfy two state supreme courts, and the stricter of the two sets the floor. If any lawyer at your firm practices in Missouri, the site should carry Missouri's required statement, "The choice of a lawyer is an important decision and should not be based solely upon advertisements" (Missouri Rule 4-7.2(f)), add Missouri's specific cautions next to any results or contingency fee offer, and keep dated copies of the site for two years. If you also practice in Kansas, the Kansas rules add a responsible-lawyer name on every communication, an "Advertising Material" label on targeted electronic messages, and a narrow rule on the word "certified." The rest of this guide shows how to build one site that meets both, then covers the local details that help a reader in Overland Park, Independence or Kansas City, Kansas decide to call you.
+
+This is a planning guide for firm owners and whoever builds their site, with a link to each rule. It is not an ethics opinion. Missouri lawyers can ask the Missouri Bar's Office of Legal Ethics Counsel for an informal opinion, and close calls on either side belong with your own ethics counsel.
+
+## Which advertising rules apply to a Kansas City law firm?
+
+It depends on where your lawyers are licensed and whom the site is aimed at. Most firms in the metro have lawyers admitted on both sides, so assume both sets of rules apply until you have a reason to think otherwise.
+
+**Missouri** keeps its advertising rules in Rule 4 of the Supreme Court Rules:
+
+- [Rule 4-7.1](https://www2.courts.mo.gov/page.jsp?id=198956) bars false or misleading communications and lists specific situations that count as misleading unless the ad says something more.
+- [Rule 4-7.2](https://www.courts.mo.gov/page.jsp?id=198957) covers advertising: records, paying for referrals, branch offices and the required disclosure.
+- [Rule 4-7.3](https://www.courts.mo.gov/page.jsp?id=198958) covers direct contact with prospective clients.
+- [Rule 4-7.4](https://www.courts.mo.gov/page.jsp?id=198959) covers fields of practice and the word "specialist."
+
+The court's pages show these rules were last amended effective July 1, 2010 (4-7.1 to 4-7.3) and July 1, 2007 (4-7.4). Many states rewrote their advertising rules after the ABA's 2018 changes; Missouri has kept its older, more detailed model, which is why it asks for more on the page than Kansas does.
+
+**Kansas** follows the ABA structure more closely: [Rule 7.2](https://kscourts.gov/Rules-Orders/Rules/Rule-240-7-2-Advertising) on advertising, [Rule 7.3](https://11jd.kscourts.gov/Rules-Orders/Rules/Rule-240-7-3-Solicitation-of-Clients-en) on solicitation and [Rule 7.4](https://kscourts.gov/Rules-Orders/Rules/7-4-Information-about-Legal-Services-Communica-1) on fields of practice, alongside Rule 7.1's general ban on misleading statements.
+
+Neither state requires you to file your website or get it approved before launch. Comment [5] to Kansas Rule 7.2 says outright that advertising need not be reviewed before it goes out. That leaves the checking to you.
+
+## What does Missouri's required disclaimer mean for a website?
+
+Missouri Rule 4-7.2(f) requires the statement quoted at the top of this guide, and the rule defines "conspicuous" by size, color, contrast, location and similar factors, so an ordinary reader can notice it. Rule 4-7.2(g) exempts communications limited to basic facts: the names of the firm and its lawyers, fields of practice, dates and places of bar admission, and contact details, including email and web address, phone number and office hours.
+
+A real firm website goes far past that list. It describes cases, explains fees and publishes attorney biographies. The exemption does not fit, so plan on the statement. A continuing-education [presentation on Missouri advertising rules](https://lakc.wildapricot.org/resources/Pictures/Rittman%20presentation%204.17.pdf) hosted by a Kansas City legal association summarizes Missouri Informal Advisory Opinion 2006-0005 the same way: the disclosure applies to websites, and only a site limited to the 4-7.2(g) information can skip it.
+
+Where to put it:
+
+- **In the footer of every page**, in readable type and a color that contrasts with the background. People reach a law firm site through a blog post or a practice page far more often than through the home page.
+- **Near the top of pages built for paid ads**, where the page itself is the advertisement.
+- **In each language the page uses.** Rule 4-7.2(h) says required statements must appear in the same language as the advertisement, so a Spanish page needs the disclosure in Spanish.
+
+The Supplemental Missouri Comment adds that the disclosure is only required for advertisements in Missouri. A Kansas-only firm with no Missouri lawyers and no Missouri audience may not need it, but for a metro site aimed at both sides of the line, including it costs one sentence.
+
+> **Tip:** The comment also says the disclosure may add "This disclosure is required by rule of the Supreme Court of Missouri." That line tells readers why the sentence is there, which keeps it from reading like a hedge.
+
+## How should a Kansas City site show results, fees and reviews?
+
+Missouri turns general honesty into specific sentences. Under Rule 4-7.1, a communication is misleading if it:
+
+1. **claims results** "without stating that past results afford no guarantee of future results" (4-7.1(c));
+2. **advertises contingency fees** "without stating conspicuously that the client may be responsible for costs or expenses" where that is true (4-7.1(k));
+3. **uses a paid testimonial or endorsement** without conspicuously saying payment was made (4-7.1(h));
+4. **uses a simulated portrayal** of a lawyer, client, victim, scene or event without saying it is a simulation (4-7.1(i));
+5. **mentions an office staffed only part-time or by appointment** without saying so (4-7.1(j));
+6. **comes from a lawyer who routinely refers matters to other lawyers** without saying that conspicuously (4-7.1(g)).
+
+On a website this becomes a short list of page-level rules. Every results page or results block carries the exact caution from item 1 next to the figures. A "No fee unless we win" banner on a personal injury page needs the costs statement beside it, not three screens down. Stock photos of a "client" or a staged crash scene need a "simulation" label, or better, should be replaced with real photos of your office and people. If a personal injury practice refers most of its trial work to another firm, the site has to say so.
+
+Kansas is shorter on wording but the same in spirit: Rule 7.1 bars misleading communications, and Kansas Rule 7.2(c) bars giving anything of value for a recommendation, apart from listed exceptions such as paying for advertising and the usual charges of a not-for-profit lawyer referral service. Comment [6] allows paying lead generators only if they do not recommend the lawyer or analyze the person's legal problem to choose the lawyer. Missouri's Rule 4-7.2(c) also bars paying for recommendations, apart from reasonable advertising costs and the usual charges of a registered referral service.
+
+For reviews, show only what clients wrote, with their permission, and never reward a review. Fees, on the other hand, are worth publishing: Comment [2] to Kansas Rule 7.2 lists the basis on which fees are set and payment arrangements among the information a lawyer may share.
+
+If you would like to see how your current site handles all of this before you change anything, [ask for a free redesign](/redesign). You get your own site rebuilt with your real details to compare.
+
+![Kansas City's Union Station seen in the distance beyond a modern building and a reflecting pool](https://images.unsplash.com/photo-1664733865764-768873659f2c?auto=format&fit=crop&w=1200&q=75)
+
+## Can Kansas City lawyers call themselves specialists?
+
+Both states allow you to say what you practice, and both restrict the word "specialist."
+
+- **Missouri Rule 4-7.4** lets a lawyer say they do or do not practice in particular fields. A lawyer may not state or imply they are a specialist unless the communication contains a disclaimer that says, among other things, that "neither the Supreme Court of Missouri nor The Missouri Bar reviews or approves certifying organizations." Patent attorneys admitted before the U.S. Patent and Trademark Office and admiralty lawyers are excused.
+- **Kansas Rule 7.4(d)** says a lawyer may not state or imply being certified as a specialist unless the certifying organization has been approved by an appropriate state authority or accredited by the American Bar Association, and the communication clearly names the certifying organization.
+
+The safest wording on a two-state site avoids the problem: "Our practice is limited to workers' compensation" or "We focus on estate planning and probate." If a lawyer holds an ABA-accredited certification, put it on that lawyer's profile with the certifier's full name and the Missouri disclaimer in the same place. Check page titles and meta descriptions too. "KC Divorce Specialist" in a search result has no room for a disclaimer, while "Kansas City Divorce Lawyer" says the same thing safely.
+
+## What counts as solicitation in Missouri and Kansas?
+
+The two states agree on the core: no live, in-person, live phone or real-time electronic solicitation for profit, apart from narrow exceptions for lawyers, family, close friends and current or former clients ([Missouri 4-7.3(a)](https://www.courts.mo.gov/page.jsp?id=198958); Kansas 7.3(b)). Comment [1] to Kansas Rule 7.3 says communications directed to the general public, such as a website or a banner ad, and replies to requests for information are not solicitations.
+
+They differ on written messages to someone you know needs help with a specific matter:
+
+| Point | Missouri | Kansas |
+| --- | --- | --- |
+| Label | "ADVERTISEMENT" at the top of the first page, in type at least as large as the largest text, and on the envelope | "Advertising Material" on the envelope and at the beginning and end of recorded or electronic messages |
+| Waiting period | No written solicitation about personal injury or wrongful death within 30 days of the incident | No fixed waiting period in the rule |
+| Delivery | Regular U.S. mail for mailed solicitations, not certified or registered | Mail or electronic means allowed (comment [3]) |
+| Records | Copy kept for two years | Copy of each advertisement kept for two years (Rule 7.2(b)) |
+
+What this means for your intake system: the website form, the auto-reply and the call back to someone who asked for one are all fine. A marketing email sequence sent to people whose names came from accident reports is not a website feature at all, and it falls under the table above. If a vendor offers "automated outreach," read Missouri's rule before you switch it on.
+
+## Which courts should a Kansas City firm explain?
+
+The metro has more courthouses than most clients realize, and the right one depends on which side of State Line their case is on. A plain courts page answers a question people search for and shows real local knowledge.
+
+| Court | Where | Worth saying on your site |
+| --- | --- | --- |
+| [16th Judicial Circuit](https://www.16thcircuit.org/about-the-court), Jackson County, Missouri | 415 E. 12th Street downtown; Eastern Jackson County Courthouse at 308 W. Kansas in Independence; Family Justice Center at 625 E. 26th Street | Which building your client's case is likely in. The circuit has 19 circuit judges, 10 associate circuit judges and nine commissioners. |
+| Wyandotte County District Court ([29th Judicial District](https://11jd.kscourts.gov/About-the-Courts/District-Courts/Districts/29th-Judicial-District)) | 710 N. 7th Street, Kansas City, Kansas | That Kansas City, Kansas cases are filed here, not downtown KCMO |
+| Johnson County District Court (10th Judicial District) | Olathe | The [courthouse](https://jocogov.org/courthouse) opened in January 2021 with 28 courtrooms |
+| U.S. District Court, Western District of Missouri | [Charles Evans Whittaker U.S. Courthouse](https://www.mow.uscourts.gov/offices/kansas-city-western-division), 400 E. 9th Street | For federal cases on the Missouri side |
+| U.S. District Court, District of Kansas | Robert J. Dole U.S. Courthouse, 500 State Avenue | The court's [visitor information](https://ksd.uscourts.gov/sites/ksd/files/Visitor-Information2.pdf) says the public may not bring cell phones or other electronic devices inside, and to use the State Avenue entrance |
+
+Details like the phone rule at the Dole courthouse are the kind of first-hand help Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) describes. A client who reads it on your site and leaves the phone in the car remembers who told them. Missouri cases appeal to the Missouri Court of Appeals, Western District, which also sits in Kansas City, according to the 16th Circuit's page.
+
+## Should a Kansas City firm publish Spanish pages?
+
+If your clients need them and someone at the firm can serve them, yes. The U.S. Census Bureau's [QuickFacts for Wyandotte County](https://www.census.gov/quickfacts/wyandottecountykansas) puts the Hispanic or Latino share of the population at 35.5% and reports that 31.8% of residents age 5 and older speak a language other than English at home (2020 to 2024 estimates). Those numbers vary a great deal across the metro, so look at your own intake calls before deciding.
+
+When you translate:
+
+1. **Translate the whole page**, including the responsible lawyer's name, the contact details and every Missouri disclosure. Rule 4-7.2(h) requires required statements in the language of the ad.
+2. **Use a qualified legal translator** and have a fluent lawyer or staff member review the result.
+3. **Link the language versions** so Google can show each reader the right one, following Google's guide to [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions).
+4. **Say which languages each lawyer and staff member speaks.** Comment [2] to Kansas Rule 7.2 lists foreign language ability among the facts a lawyer may publish.
+
+![Two professionals reviewing documents together over coffee at a table](https://images.unsplash.com/photo-1758519288372-045de3f65147?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a two-state firm website
+
+1. **Home page:** what you handle, for whom and on which side of State Line, with the phone number and a short form near the top.
+2. **Practice area pages:** one per real practice, built around the questions clients ask. Our guide to [writing a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) walks through the structure.
+3. **Attorney profiles:** real photos, the states each lawyer is admitted in, languages spoken, and any certification with its certifier named.
+4. **Office pages:** one per real office, with hours. Missouri Rule 4-7.2(e) restricts advertising any office other than the principal one unless it is staffed at least three days a week or the ad states its hours or that meetings are by appointment, so say exactly that on a satellite office page.
+5. **Courts page:** the table above, trimmed to the courts you actually appear in.
+6. **Fees page:** flat fees where you have them, and the costs statement wherever contingency fees appear.
+7. **Results page:** short case descriptions with the Missouri caution beside them.
+8. **Contact page:** a form that asks for the other party's name for a conflict check and asks people not to send confidential details yet.
+
+Resist the urge to build a near-identical page for Overland Park, Lee's Summit, Olathe, Independence, Shawnee and every other suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead to essentially the same content as doorway abuse. One honest service-area section, plus a separate page only where something is genuinely different (a real office, or a court your clients will face there), serves readers better.
+
+## Google Business Profile for Kansas City firms
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real business name without extra keywords and an address where clients can actually visit, and they include rules for individual practitioners such as lawyers. A firm with real offices in both KCMO and Overland Park can have a profile for each office. A virtual office or a mail drop on the Kansas side does not qualify.
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Clear practice pages help relevance, real reviews build prominence over time, and distance is up to the searcher. No one can promise a place in the map results. If you want your pages to be easy for AI answers to quote accurately, see our checklist on [writing pages AI answers can quote](/blog/write-pages-ai-answers-can-quote).
+
+## A Kansas City pre-launch checklist
+
+- [ ] The Missouri disclosure (Rule 4-7.2(f)) appears conspicuously in the footer of every page and near the top of ad landing pages.
+- [ ] Every page names at least one responsible lawyer and the firm's contact details (Kansas Rule 7.2(d); Missouri Rule 4-7.2(b)).
+- [ ] Results carry the exact caution "past results afford no guarantee of future results" (Missouri Rule 4-7.1(c)).
+- [ ] Contingency fee offers say the client may be responsible for costs or expenses, right beside the offer (Missouri Rule 4-7.1(k)).
+- [ ] "Specialist" and "certified" appear only with a named, qualifying certifier and the Missouri disclaimer (Missouri 4-7.4; Kansas 7.4(d)).
+- [ ] Satellite offices show their hours or say "by appointment only" (Missouri 4-7.2(e)).
+- [ ] Spanish or other language pages repeat every required statement in that language (Missouri 4-7.2(h)).
+- [ ] No simulated photos without a label; real photos preferred (Missouri 4-7.1(i)).
+- [ ] A dated copy of each version of the site is saved and kept for two years.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+For everything else a law firm site needs, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## How SaySites builds a Kansas City law firm website
+
+A SaySites law firm site follows the page plan above: a page for each practice area, a profile for each attorney, office pages and a consultation form that asks for the other party's name so you can check conflicts. Search engines read the firm as a [LegalService](https://schema.org/LegalService), each attorney as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live.
+
+Changes work by asking in plain words. "Put the Missouri disclosure in the footer of every page," "add 'past results afford no guarantee of future results' under the results list" or "add a Spanish version of the workers' compensation page" each becomes a draft you review and approve before anything goes live. Results, reviews and certifications come only from you; SaySites never makes them up.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your two-state site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt first. For a comparison with another state that sets its own wording, read our [Houston law firm website guide](/blog/houston-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a Missouri law firm website need the "choice of a lawyer" disclaimer?', a: 'In most cases, yes. Missouri Rule 4-7.2(f) requires advertisements to state conspicuously that "the choice of a lawyer is an important decision and should not be based solely upon advertisements." Rule 4-7.2(g) exempts only communications limited to names, fields of practice, admissions and contact details. A full firm website goes well beyond that, so put the statement in the footer of every page.' },
+      { q: 'What must a Missouri lawyer say next to case results?', a: 'Missouri Rule 4-7.1(c) treats a communication about results as misleading unless it states that past results afford no guarantee of future results. Put that sentence directly beside any verdicts, settlements or results list on your site, including results mentioned on practice area pages and in attorney biographies, not only on a separate results page.' },
+      { q: 'Can a Kansas lawyer advertise as a certified specialist?', a: 'Only with a qualifying certification. Kansas Rule 7.4(d) allows a lawyer to state or imply certification as a specialist only when the certifier is approved by an appropriate state authority or accredited by the American Bar Association, and the communication clearly names that organization. Saying you practice only in certain fields is allowed without certification.' },
+      { q: 'Do Kansas City law firm websites have to be filed with the bar?', a: 'No. Neither Missouri nor Kansas requires lawyers to file websites or get them approved before publishing. Both states do require you to keep a copy of each advertisement for two years along with a record of when and where it was used, so save a dated copy of the site each time it changes.' },
+      { q: 'Can a Kansas City firm send emails to accident victims?', a: 'Carefully, and not right away in Missouri. Missouri Rule 4-7.3 bars written solicitations about personal injury or wrongful death within 30 days of the incident and requires an "ADVERTISEMENT" label. Kansas Rule 7.3(c) requires "Advertising Material" at the beginning and end of electronic solicitations. A website and replies to inquiries are not solicitation.' },
+      { q: 'Which court handles a case in Kansas City, Kansas?', a: 'State cases from Kansas City, Kansas are filed in the Wyandotte County District Court, part of the 29th Judicial District, at 710 N. 7th Street. Cases on the Missouri side go to the 16th Judicial Circuit in Jackson County. Federal cases go to the Dole courthouse at 500 State Avenue in Kansas or the Whittaker courthouse at 400 E. 9th Street in Missouri.' },
+      { q: 'How much does a SaySites website for a Kansas City law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can also ask for a free redesign and see your current site rebuilt with your own details first.' },
+    ],
+    about: ['Missouri Rules of Professional Conduct', 'Kansas Rules of Professional Conduct', 'Attorney advertising', 'Law firm websites', 'Kansas City'],
+    published: '2026-10-31',
+    status: 'published',
+  },
+  {
+    slug: 'dallas-plumber-website-design',
+    title: 'Dallas Plumber Websites: Texas TSBPE License Rules',
+    description: 'Build a Dallas plumbing website that follows Texas rules: the RMP license number in every ad, invoice notices, city permits, backflow tests and DallasNow.',
+    kind: 'guide',
+    summary: [
+      'Texas plumbing board rule 367.10 requires every advertisement that solicits business to state the license number of the company’s Responsible Master Plumber (RMP). Treat your website as an ad and show it on every page.',
+      'The same rule requires the RMP’s name and number, "regulated by the Texas State Board of Plumbing Examiners" and the board’s contact details on the first page of proposals and invoices, including electronic ones sent from your site.',
+      'Dallas requires a permit to replace a water heater, and permits, plan review and inspections now run through the city’s DallasNow portal.',
+      'Dallas Water Utilities requires annual tests of high-hazard backflow assemblies by testers registered with the city, filed through SwiftComply. Explain it if you offer testing.',
+      'About half of Dallas County homes are rented, so pages for landlords and property managers, and Spanish pages where your crew can serve them, are worth building.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1775717677666-cb0e14a904fe?auto=format&fit=crop&w=1600&q=75', alt: 'The Dallas skyline at sunset with its modern downtown skyscrapers' },
+    body: `A Dallas plumbing website has one legal must-have that many sites miss: the license number of your Responsible Master Plumber. Texas State Board of Plumbing Examiners rule 367.10 says all advertisements designed to solicit business must state the RMP of record's license number, in any media. Put "RMP License M-" and the number in the footer of every page, link it to the state's license search, and add the board's required notice to every estimate and invoice your site sends. Then spend the rest of the site on what Dallas customers ask before they call: Are you licensed? Do I need a permit for a new water heater? Can you test my backflow device? Do you come out to my part of town?
+
+This guide covers the Texas rules with links to the sources, then the Dallas details that make a plumbing site useful: city permits through DallasNow, the backflow testing program, suburbs that run their own permit offices, rental properties and Spanish-speaking customers. It is practical advice for owners and office managers, not legal advice. For a question about your own license, call the board.
+
+## Does a Dallas plumber have to show a license number on the website?
+
+Yes, if the site is there to win work, and every plumbing company's site is. Section (c) of [22 Texas Administrative Code §367.10](https://www.law.cornell.edu/regulations/texas/22-Tex-Admin-Code-SS-367-10) says all advertisements designed to solicit business must state the license number of the RMP of record, in any media, and names business cards, flyers, referral coupons and handouts as examples. The rule does not single out websites, and it does not need to. A page that describes your services and asks people to call is an advertisement in plain terms.
+
+The board's own [consumer information page](https://tsbpe.texas.gov/consumer-information/) tells homeowners the same thing from the other side: the RMP's license number should appear in all advertisements, and Master Plumber license numbers begin with the letter "M." Customers who read that page will look for the number on yours.
+
+The rule lists a few exemptions, and they show where the line sits:
+
+- national or interstate TV ads, and internet ads a franchisor places for its franchisees, if they say local license numbers are available on request;
+- ads with no visual part, such as radio or phone solicitations, if the caller says the company complies with state licensing and the number is available on request;
+- promotional items of nominal value, like caps, T-shirts and uniforms;
+- signs on or next to your permanent business location;
+- phone book listings and third-party directory information you do not control or promote.
+
+Your own website fits none of those. Neither does a Google Business Profile description you wrote, a social media page you run, or a landing page for a paid ad.
+
+### Where to put it
+
+1. **The footer of every page.** Someone who lands on your slab leak page from a search never sees your home page.
+2. **Next to the call button on phones**, if it fits: "Licensed Texas plumber, RMP M-12345" beside "Call now."
+3. **The About page**, with the RMP's name and a link to the board's public license search (it is linked from the [consumer information page](https://tsbpe.texas.gov/consumer-information/)), where customers can confirm the license and that a certificate of insurance is on file.
+4. **Every ad landing page and seasonal promotion.**
+
+The Cornell copy of the rule may trail the board's own text, so check the current version on the board's [laws and rules page](https://tsbpe.texas.gov/laws-rules/) before you print anything.
+
+## What must your estimates and invoices say?
+
+Section (b) of rule 367.10 covers the first page of every written or electronic proposal, invoice or contract, in at least 12-point type. It must include:
+
+- the RMP of record's first and last name;
+- the RMP's license number;
+- the words "regulated by the Texas State Board of Plumbing Examiners";
+- the board's mailing address, phone number and website.
+
+The rule applies to estimates, service invoices, billing invoices and receipts. That matters for your website because more estimates now leave from a web form, a quoting tool or an email template than from a clipboard. If your site sends an automatic quote or a "here is your estimate" email, the template needs that block on the first page. Build it once, check it against the rule, and every quote carries it.
+
+Section (a) covers trucks: the RMP's license number and the company name on both sides of every service vehicle, with an "M," "MPL" or "RMP" prefix, in a contrasting color, at least two inches tall. Photos of your trucks on the website are good for trust. Make sure the ones you publish show compliant lettering.
+
+## Who can offer plumbing to the public in Texas?
+
+The board's rules (see the [current rules PDF](https://tsbpe.texas.gov/wp-content/uploads/documents/TSBPE_AdministrativeRules_March2026.pdf), March 2026 reference copy) say a Master Plumber serving as a Responsible Master Plumber may advertise or otherwise offer plumbing to the public and must obtain the plumbing permits for the work. Journeyman and Master Plumbers who are not the RMP work under an RMP's contracts, and Tradesman Plumber-Limited licensees work on one- and two-family homes under an RMP's supervision.
+
+For your site, that means three things:
+
+- **Name the RMP.** "Licensed plumbers" is vague. "Our Responsible Master Plumber is Maria Lopez, Texas license M-12345" is specific and checkable.
+- **Describe the crew honestly.** If your technicians are journeymen and tradesmen working under the RMP, say so. Customers do not mind; they mind surprises.
+- **List endorsements only if you hold them.** If you install medical gas or residential fire sprinklers, say which endorsement covers it.
+
+![Exposed plumbing pipes and electrical conduit inside a wall under construction](https://images.unsplash.com/photo-1768321913920-d3ac011e0683?auto=format&fit=crop&w=1200&q=75)
+
+## Which Dallas plumbing jobs need a permit?
+
+More than most homeowners think. A City of Dallas Building Inspection [how-to sheet on plumbing permits](https://dallascityhall.com/departments/sustainabledevelopment/buildinginspection/DCH%20documents/pdf/How-to_plumbing.pdf) says plainly that "a permit is required for water heater replacement," and boiler replacements too. It says repairing or replacing accessible traps and fixture parts in kind, with no change to the rough-in, does not need one. A homeowner with a homestead exemption who lives in the house can pull a permit and do the work personally, following state law and city code.
+
+A short permits page on your site does real work:
+
+- It explains why your water heater price includes a permit, which answers "why is your quote higher than the guy on the marketplace app?"
+- It reassures buyers and sellers, whose inspectors will ask whether the work was permitted.
+- It is the kind of first-hand, specific help Google describes in its guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content).
+
+### DallasNow
+
+Dallas runs permits through [DallasNow](https://dallascityhall.com/departments/sustainabledevelopment/Pages/DallasNow.aspx), a single online system for permitting, plan review and inspections. The city's page says applicants can submit applications, track them, manage inspections and pay fees online at any hour, and that inspections can also be scheduled by phone at 214-670-5313. It also warns about phishing emails asking for license records and says real city email comes from an @dallas.gov address. A one-line note on your permits page ("we pull the permit in DallasNow and schedule the inspection for you") tells customers exactly what they are paying for.
+
+### The suburbs run their own offices
+
+Dallas permits stop at the city limit. Many suburbs run their own process: the City of Denton's [water heater page](https://www.cityofdenton.com/678/Water-Heater), for example, says water heater repair or replacement requires a permit, applied for through its own portal, with a final plumbing inspection. Your service area page can say which cities you pull permits in regularly. That is useful to customers and accurate, and it does not need a separate page per suburb.
+
+If you want to see these pages on your own site before you write anything, [ask for a free redesign](/redesign). We rebuild your current site with your real license, services and service area so you can compare.
+
+## Should your site explain backflow testing?
+
+If you test backflow assemblies, yes, because the city sends customers looking for someone. The [Dallas Water Utilities backflow page](https://dallas.gov/departments/waterutilities/Pages/Backflow-Test-Reports.aspx) says:
+
+- high-hazard backflow prevention assemblies must be tested every year;
+- irrigation devices need a test only when newly installed, repaired or replaced, and annual inspection is not mandatory for them;
+- testers must be registered with the City of Dallas Building Inspection office and enrolled with SwiftComply, the online system where test reports are filed;
+- a device that fails has 30 days to be repaired and retested.
+
+A backflow page that explains this in plain words, says that your testers are registered with the city, and offers to file the report for the customer turns a confusing notice letter into a phone call.
+
+![Close-up of a red valve with a pressure gauge on a water line](https://images.unsplash.com/photo-1761758674188-2b8e4c89c5e2?auto=format&fit=crop&w=1200&q=75)
+
+## Who are Dallas plumbing customers?
+
+The Census Bureau's [QuickFacts for Dallas County](https://www.census.gov/quickfacts/dallascountytexas) helps here. It estimates 2,661,397 residents as of July 1, 2025, puts the owner-occupied housing rate at 50.8% for 2020 to 2024, and reports that 42.9% of residents age 5 and older speak a language other than English at home. The Hispanic or Latino share is 42.3%.
+
+Two practical points follow.
+
+**Renters and the people who manage their homes.** With roughly half of homes rented, many calls come from tenants who cannot authorize work and from landlords and property managers who can. A page for property managers that covers how you handle tenant access, who approves the estimate, how invoices are sent and whether you offer make-ready work speaks to a buyer most plumbing sites ignore. Note that the homeowner permit exception in Dallas is tied to a homestead exemption on a home the owner lives in, so a landlord generally needs a licensed plumber for permitted work on a rental.
+
+**Spanish-speaking customers.** If someone on your team can take the call and run the job in Spanish, a Spanish version of your main service pages is worth having. Translate the whole page, including the RMP license number, and connect the versions as Google explains in its guide to [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions). Do not add a language you cannot answer the phone in.
+
+## A page plan for a Dallas plumbing website
+
+1. **Home page:** phone number and call button at the top, the areas you cover, your main services and the RMP license number.
+2. **One page per main service:** water heaters, slab leaks, drain and sewer, gas lines, repiping and backflow testing each answer different searches.
+3. **Permits page:** what needs a permit in Dallas, how you handle DallasNow, and which nearby cities you pull permits in.
+4. **Backflow page**, if you test.
+5. **Property managers page:** access, approvals, invoicing and turnaround.
+6. **Service area page:** one honest page that names the neighborhoods and cities you really serve and your realistic response times.
+7. **About page:** the RMP's name and license, your crew, insurance and how long you have been working in Dallas.
+8. **Contact page:** a form that asks how urgent the job is, the ZIP code and whether the person owns or rents.
+
+Skip the stack of near-identical pages for Garland, Mesquite, Irving, Richardson and every other suburb with only the city name changed. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created to rank for similar searches that lead to essentially the same content as doorway abuse. Our guide to [showing Google where a service-area business works](/blog/service-area-business-google) covers the better approach.
+
+## Google Business Profile for Dallas plumbers
+
+Most plumbers do not serve customers at their shop, which makes them service-area businesses in Google's terms. Google's [service area guidance](https://support.google.com/business/answer/9157481) explains how to set the areas you serve and hide an address customers do not visit. The [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real business name with no added keywords, so "Lopez Plumbing" rather than "Lopez Plumbing Dallas Water Heater Repair 24/7."
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google determines local ranking](https://support.google.com/business/answer/7091)). Your service pages help relevance, real reviews build prominence over time, and nobody can promise a spot in the map results. Our [home service website checklist](/blog/home-service-website-checklist) covers the rest of the basics.
+
+## A Texas pre-launch checklist for plumbers
+
+- [ ] The RMP license number appears on every page, every landing page and in your Business Profile description (rule 367.10(c)).
+- [ ] The license number links to the board's license search.
+- [ ] Estimate, quote and invoice templates sent from the site carry the RMP's name and number, "regulated by the Texas State Board of Plumbing Examiners" and the board's contact details on the first page, in 12-point type or larger (rule 367.10(b)).
+- [ ] Truck photos show compliant lettering (rule 367.10(a)).
+- [ ] Endorsements are listed only if you hold them.
+- [ ] The permits page matches current City of Dallas rules and names the other cities you work in.
+- [ ] Backflow testers are registered with the city before the page says so.
+- [ ] Spanish pages repeat the license number and are answered by someone who speaks Spanish.
+- [ ] Structured data describes only what is visible on the page ([Google's structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies)).
+
+## How SaySites helps Dallas plumbers
+
+SaySites sets up this structure for you. A new plumbing site comes with a page for each service, a service area page, a big tap-to-call button and a job request form that asks how urgent the job is, the ZIP code and whether the customer owns or rents. Search engines read the business as a Plumber, and no page goes live until it passes a 95+ speed check. Every request lands in a leads pipeline where you can call, email, add notes and track the job through to won.
+
+To change anything, you say it in plain words: "put RMP M-12345 in the footer and link it to the state license search," "add a page on Dallas backflow testing" or "write a page for property managers." Each change shows up as a draft for you to approve first. Your license numbers, photos and reviews always come from you; SaySites never invents them.
+
+The Site plan is $15 a month with hosting included ([websites for plumbers](/websites-for/plumbers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and get your site in shape before the winter freeze calls start, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own details first. For another Texas license rule worked through on a website, see our [Austin electrician website guide](/blog/austin-electrician-website-design).`,
+    faq: [
+      { q: 'Does a Texas plumber have to put a license number on the website?', a: 'Yes, in practice. Texas plumbing board rule 367.10(c) requires every advertisement designed to solicit business to state the Responsible Master Plumber’s license number, in any media. A company website that asks people to call is advertising, and none of the rule’s exemptions cover it. Put the RMP number in the footer of every page and on ad landing pages.' },
+      { q: 'What has to be on a Texas plumbing invoice or estimate?', a: 'Rule 367.10(b) requires the first page of each written or electronic proposal, invoice or contract to show the RMP’s first and last name, the RMP’s license number, the words "regulated by the Texas State Board of Plumbing Examiners" and the board’s mailing address, phone and website, in at least 12-point type. Estimate templates sent from your website count.' },
+      { q: 'Do I need a permit to replace a water heater in Dallas?', a: 'Yes. A City of Dallas Building Inspection guide states that a permit is required for water heater replacement. Repairing or replacing accessible traps and fixture parts in kind, with no change to the rough-in, does not need one. Permits and inspections run through the city’s DallasNow system, and suburbs such as Denton have their own permit rules.' },
+      { q: 'How often does backflow testing happen in Dallas?', a: 'Dallas Water Utilities requires high-hazard backflow prevention assemblies to be tested every year. Irrigation devices need a test only when newly installed, repaired or replaced. Testers must be registered with the City of Dallas Building Inspection office and enrolled with SwiftComply, where reports are filed, and a failed device has 30 days for repair and retest.' },
+      { q: 'How can a Dallas customer check a plumber’s license?', a: 'The Texas State Board of Plumbing Examiners has a public license search on its website. Its consumer page says to ask for the Responsible Master Plumber’s name, notes that Master Plumber numbers start with the letter M, and suggests confirming a certificate of insurance is on file. Linking your number to that search lets customers check you in one tap.' },
+      { q: 'Should a Dallas plumber build a page for every suburb?', a: 'No. Near-identical pages with only the city name swapped are what Google’s spam policies call doorway abuse. Build one service area page that names the cities and neighborhoods you really serve, with honest response times, and add a separate page only for a real difference, such as a second shop or a city with its own permit process you explain.' },
+      { q: 'How much does a SaySites plumbing website cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting included. It comes with a page for each service, a service area page, tap-to-call, a job request form, Plumber structured data and a leads pipeline. You can also ask for a free redesign and see your current site rebuilt with your own details before you decide.' },
+    ],
+    about: ['Texas State Board of Plumbing Examiners', 'Plumbing contractor advertising', 'Plumber websites', 'Dallas, Texas'],
+    published: '2026-10-31',
+    status: 'published',
+  },
   {
     slug: 'minneapolis-law-firm-website-design',
     title: 'Minneapolis Law Firm Websites: Minnesota Ad Rules',
@@ -7018,6 +7703,732 @@ Set up your Business Profile today; it’s free and it’s how you show up on th
 
 SaySites puts your business name, phone number and area into your site’s details for Google, so your website and your profile tell the same story.`,
     published: '2026-10-15',
+    status: 'published',
+  },
+  {
+    slug: 'salt-lake-city-law-firm-website-design',
+    title: 'Salt Lake City Law Firm Websites: Utah Rule 7.1 Guide',
+    description: 'Plan a Salt Lake City law firm website under Utah Rule 7.1: results, specialist wording, firm names, the 30-day rule and the November 2026 fee changes.',
+    kind: 'guide',
+    summary: [
+      'Utah regulates lawyer marketing with one main rule. Rules 7.2 through 7.5 are reserved, and Rule 7.1 (current version effective May 1, 2024) bars false or misleading communications, coercive contact, and some direct contact within 30 days of an injury or disaster.',
+      'Past results and comparisons are allowed if they are not misleading. The rule\'s comments say a disclaimer or qualifying language can help, and that "certified specialist" needs an objective certifying body named in the same communication.',
+      'From November 1, 2026, amended Utah Rules 1.0, 5.4 and 5.8 prohibit referral fees and set new fee-sharing conditions. A new comment says lead generation, pay-per-click and similar advertising fees are not referral fees.',
+      'A Utah Bar ethics opinion treats advertising in Utah by a firm with no Utah-licensed lawyers as misleading without a disclaimer, so licensing belongs on every attorney profile.',
+      'Plan one strong page per practice area and per real office, not a page for every suburb of the Wasatch Front.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1681391835354-63aeb171ff41?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Salt Lake City office towers in front of snow-covered Wasatch mountains under a clear blue sky' },
+    body: `A Salt Lake City law firm website is governed by a short rule with long reach. Utah folded almost all of its lawyer advertising rules into one, [Rule 7.1 of the Utah Rules of Professional Conduct](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-7.1), and left Rules 7.2 through 7.5 reserved. The result is fewer checklists than in most states and more judgment calls: no filing requirement, no mandated "advertising material" label, but a firm test that every page must pass. On top of that, amended rules on referral fees and fee sharing took effect on November 1, 2026, which changes how firms should think about paid marketing.
+
+This guide walks through what Utah's rules mean for each part of a firm site, how people in Salt Lake City look for a lawyer, and a checklist to work through before launch. It is a planning guide with each rule linked, not legal advice. For close calls, ask the Utah State Bar's ethics hotline or your own counsel.
+
+## What rule governs law firm websites in Utah?
+
+Rule 7.1 does the work. In its current form, effective May 1, 2024, it has three parts:
+
+- **(a) No false or misleading communications.** A communication is false or misleading if it contains a material misrepresentation, omits a fact needed to keep it from misleading, is likely to create an unjustified or unreasonable expectation about results, or contains a testimonial or endorsement that violates the rule.
+- **(b) No coercion, duress or harassment** in any interaction with a prospective client.
+- **(c) A 30-day limit on some direct contact.** A lawyer may not directly contact a prospective client to get hired about a disaster, personal injury or wrongful death unless 30 days have passed, the person has a family, close personal or prior professional relationship with the lawyer or firm, or the person (or a family member or close friend) started the contact.
+
+The comments carry much of the practical guidance. Comment [1] says the rule covers every way a lawyer's services are made known, so a website, a Google Business Profile, a video and a paid search ad all count. Comment [3] lists examples of what is allowed so long as it is not misleading: your name and firm name, address, email, website and phone, the kinds of services you take on, how fees are set, including prices for specific services and payment arrangements, actors and dramatizations, and the courts where you are permitted to practice.
+
+The Utah State Bar explained the shift in [Ethics Opinion 22-02](https://www.utahbar.org/wp-content/uploads/2022/12/2022-02-Rules-Changes-and-Prior-Opinions.pdf). It notes that Rules 7.2 to 7.5 were deleted and Rule 7.1 rewritten, and that "false or misleading" remains the guiding standard. The opinion also lists which older advertising opinions still apply, which is worth reading before you write copy about rankings, awards or "& Associates."
+
+## Can a Utah law firm website show case results and reviews?
+
+Yes, with care. Utah does not ban results or testimonials. It bans the misleading version of them.
+
+Comment [4] to Rule 7.1 says a truthful report of what a lawyer achieved for clients can still mislead if it leads a reasonable person to expect the same result without regard to the facts and law of their own case. It adds that an appropriate disclaimer or qualifying language may prevent that. Ethics Opinion 22-02 confirms that Opinion 09-01 remains in force: testimonials, dramatizations and fictionalized portrayals may be used as long as the advertising is not false or misleading.
+
+What that means on the page:
+
+1. **Give each result its context.** Say what kind of case it was, what the issue was and what made it unusual. A list of dollar figures with no facts invites exactly the expectation the rule warns about.
+2. **Put the qualifier next to the claim.** A line such as "Every case is different. Past results do not guarantee a similar outcome in your matter" belongs beside the results, not only in the footer.
+3. **Use real reviews, accurately.** Quote clients with permission and do not trim a review so that it says something the client did not mean. Rule 7.1(a)(3) treats a testimonial that breaks the rule as itself misleading.
+4. **Label dramatizations.** Comment [3] allows actors and dramatizations. If a video uses them, a short on-screen note keeps a viewer from mistaking it for a real client.
+
+**Comparisons and "best" claims.** Comment [4] also says an unsubstantiated comparison with other lawyers' services or fees may mislead. Opinion 22-02 keeps part of Opinion 14-04 in place: a "best" or "super" designation is acceptable only if the organization behind it made an appropriate inquiry, and paying to be called the best is still false and misleading. If you show an award, name who gave it and the year, and link to how it was chosen.
+
+![Downtown Salt Lake City's towers seen across green treetops, with the long ridge of the Wasatch Range behind under a hazy sky](https://images.unsplash.com/photo-1621603933126-6c216db10045?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Utah lawyer say "specialist" on a website?
+
+Utah is more relaxed than many states here, with one firm line. Comment [5] to Rule 7.1 says a lawyer can describe practice areas and can state that they "specialize" in a field based on experience, training and education, subject to the false-or-misleading standard. What a lawyer cannot do is state or imply certification as a specialist unless an objective entity has certified them and the communication clearly names that entity.
+
+So, on an attorney profile:
+
+- "Ms. Larsen focuses her practice on water rights and has handled them for fifteen years" is a description of experience. Make sure it is true and current.
+- "Board certified in civil trial law" needs the certifying organization named right there, not on a separate credentials page.
+- A badge image from a certifying body should have the organization's name in visible text nearby, since a reader may not recognize a logo.
+
+Write the profile around what clients need to know: what the lawyer handles, where they are admitted, which courts they appear in, how they work with clients and what a first meeting looks like.
+
+## What do firm names, trade names and web addresses need to show?
+
+Comment [7] treats firm names, letterhead and professional designations as communications about a lawyer's services, which brings them under Rule 7.1. It allows a firm to use the names of current members, of retired or deceased members where the firm has succeeded them, or a trade name that is not false or misleading. It also expressly allows a distinctive website address, social media username or similar designation that is not misleading.
+
+The same comment lists names that mislead: ones that imply a connection with a government agency, with a lawyer who is not part of the firm, with a nonlawyer, or with a public or charitable legal services organization. It gives the example of a trade name built on a place, such as a "legal clinic" named after a city, which may need a statement that the firm is not a public legal aid organization. A Salt Lake City firm thinking about a name like "Wasatch Legal Center" or "Salt Lake Injury Help" should read that comment first, and consider a short line in the footer saying the firm is a private law practice.
+
+Two more comments matter for multi-office firms:
+
+- Comment [8] allows a firm with offices in more than one jurisdiction to use the same name in each.
+- Comment [9] says lawyers may not imply they practice together as a firm when they do not. A shared website for an office-sharing arrangement should make the separate practices clear.
+
+Ethics Opinion 22-02 also keeps Opinions 138 and 04-03 in force, which address "& Associates" when there are no associates. If you are a solo practitioner, use a name that reflects that.
+
+## What does Utah's 30-day rule mean for a personal injury firm's website?
+
+Rule 7.1(c) limits direct communication about a disaster, personal injury or wrongful death in the first 30 days, unless an exception applies. A website on its own is not direct communication: a person who finds your page and fills in the contact form has started the contact, which falls within the exception in 7.1(c)(3).
+
+Where firms can trip is in follow-up systems built around the website:
+
+- **Automated outreach.** Text or email sequences triggered by a list you bought, rather than by the person contacting you, are direct communication you started.
+- **Retargeting that names the event.** An ad following someone around the web is advertising, but a message addressed to a named person about their crash is closer to direct contact. Keep paid ads general.
+- **Call-backs.** If someone asked you to call, you are answering their request. Make that clear in your intake notes.
+
+Comment [6] also asks for caution with live contact of any kind, in person, by phone or by real-time video, because the person has no time to reflect. On the website, that means no pressure tactics in chat tools and no countdown timers on "free case reviews."
+
+![A Salt Lake City light rail train stopped beside a tree-lined downtown street, with office buildings rising behind it](https://images.unsplash.com/photo-1462900157664-3ecc405a9341?auto=format&fit=crop&w=1200&q=75)
+
+## What changed on November 1, 2026 for referral fees and marketing?
+
+This is the newest piece of Utah's rules, and it is easy to misread. The Utah Supreme Court amended three rules effective November 1, 2026:
+
+- **Rule 1.0** now defines a "referral fee" as compensation paid only for referring a legal matter to anyone outside the firm ([Rule 1.0](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-1.0)).
+- **Rule 5.4(c)** now says plainly that referral fees are prohibited, while 5.4(b) still allows a person to recommend, retain or pay a lawyer to serve someone else ([Rule 5.4](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-5.4)).
+- **Rule 5.8** sets the conditions for sharing fees between lawyers: no one is paid before the fee is payable, the total fee does not go up, the client agrees in writing to the split including each lawyer's share, and each share is reasonable ([Rule 5.8](https://legacy.utcourts.gov/rules/view.php?type=scrp&rule=3-5.8)).
+
+For marketing, the key sentence is comment [9] to Rule 1.0. It says fees paid for generating consumer interest in legal services, with the aim of turning that interest into clients, are not referral fees under the rules. It names lead generation service providers, online banner advertising and pay-per-click marketing, along with similar marketing and advertising fees. Small gifts of marginal value are not treated as compensation.
+
+So paying for ads, a website or a lead generation service is not a referral fee under the new definition. What the rule targets is paying someone simply for sending you a matter. Comment [5] to Rule 5.4 also tells lawyers to know Utah law on kickbacks before entering any fee-sharing arrangement. Two practical steps for the website:
+
+1. **Describe co-counsel honestly.** If your site says you "work with" firms in other states, make sure any fee split follows Rule 5.8 and that the description matches how cases are actually handled.
+2. **Read your marketing contracts.** If a vendor's fee is tied to a specific matter rather than to generating interest, ask your counsel which side of the new line it falls on.
+
+Rule 5.4(e) and (f) still allow fee sharing with nonlawyers and nonlawyer ownership only where authorized under Utah Supreme Court Standing Order No. 15, the order behind Utah's legal regulatory sandbox. The [Utah Office of Legal Services Innovation](https://utahinnovationoffice.org/) says the sandbox is closed to new applications and set to end on August 14, 2027, and that the court closed its alternative-business-structure-only portion at the end of 2024. Most firms building a site today should plan on the ordinary rules.
+
+## Do out-of-state firms need to say where their lawyers are licensed?
+
+Yes, if they advertise in Utah. In [Ethics Opinion 22-04](https://www.utahbar.org/ethics-opinions/22-04), the Utah Bar considered an out-of-state personal injury firm with no Utah-licensed lawyers that advertised on Utah billboards and by mail. It concluded that the advertising was materially misleading under Rule 7.1, because people would reasonably assume the firm could practice in Utah, unless it carried an appropriate disclaimer or qualifying language. The opinion notes it does not necessarily apply to firms practicing only federal law.
+
+A website is easy to get right here:
+
+- Put each lawyer's admissions on their profile, by state.
+- If a lawyer practices only in federal court or only in another state's courts, say so near their name.
+- If the firm has Utah and Idaho or Nevada offices, list which lawyers work from which office.
+
+The same principle helps firms based in Salt Lake City whose lawyers are not all admitted in Utah. Comment [3] lists "the courts or jurisdictions where the lawyer is permitted to practice" as information a firm may publish. Publishing it also answers a question many visitors have before they call.
+
+## How do people in Salt Lake City search for a lawyer?
+
+People search by problem and by place: "divorce lawyer Sandy," "DUI attorney Salt Lake," "estate planning West Jordan." Salt Lake City itself is not large, about 208,000 residents according to [Data USA](https://datausa.io/profile/geo/salt-lake-city-ut), and much of the demand comes from the surrounding valley and the wider Wasatch Front. A useful site makes clear which counties and courts you handle and where clients meet you.
+
+A few local realities to reflect on the site:
+
+- **Service area.** If you take matters in Salt Lake County and in neighboring counties such as Davis or Utah County, say so plainly on the relevant practice pages rather than creating a page for every city.
+- **Remote meetings.** Many clients prefer a video consultation. If you offer one, say so on each practice page and in the booking form.
+- **Language.** Data USA reports that 14.9% of Salt Lake City residents in 2024 were born outside the country. Comment [3] lets you publish information that invites the attention of people seeking legal help, so if lawyers or staff speak Spanish or another language, say which, and add real translated pages that repeat every disclaimer and admission statement.
+- **Plain explanations of process.** Pages that explain what happens at a first hearing in a family case, or how long a probate usually takes in Utah, help readers more than a list of practice areas.
+
+What to avoid: a stack of near-identical pages such as "Personal Injury Lawyer Murray," "Personal Injury Lawyer Midvale" and "Personal Injury Lawyer Draper" with only the city swapped. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages made mainly to rank for places as doorway pages, and calls out scaled content abuse. Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether a page would satisfy someone who arrived from search. One deep page per practice area, written by someone who handles those cases, does that better than twenty thin ones.
+
+For a broader look at structuring those pages, see [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** If you are weighing a website change, try the free option first. SaySites will [rebuild your current site as a free redesign preview](/redesign) using your own content, so you can see what a cleaner Utah-ready layout looks like before deciding anything.
+
+## How should a Salt Lake City firm set up Google Business Profile?
+
+Your Google Business Profile often appears before your website does. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real-world business name, without added keywords or locations. "Larsen & Cho" is right; "Larsen & Cho Best Salt Lake Injury Lawyers" is not, and it would raise the same Rule 7.1 questions as a misleading firm name.
+
+Other points that matter for law firms:
+
+- **One profile per real office.** A satellite office counts only if it is staffed during its hours. A virtual office or mail drop does not.
+- **Individual lawyers.** Google's guidelines allow some practitioners to have their own profiles. Decide as a firm how you handle this, since separate profiles can split reviews.
+- **Reviews.** Google lets you ask clients for reviews but not offer anything in exchange ([Google's review guidance](https://support.google.com/business/answer/3474122)). Never write or edit them, and respond without revealing anything about the client's matter.
+- **Ranking factors.** Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Accurate categories and practice descriptions help relevance; steady, genuine reviews help prominence.
+
+On the website, mark up the firm with [LegalService](https://schema.org/LegalService) or [Attorney](https://schema.org/Attorney) structured data that matches what visitors see, following [Google's local business structured data guidance](https://developers.google.com/search/docs/appearance/structured-data/local-business). Google's [structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) require markup to describe content that is visible on the page, so do not mark up reviews, awards or hours that the page does not show.
+
+![A wide view across the Salt Lake Valley to the downtown Salt Lake City skyline, with mountains rising behind it under a pale sky](https://images.unsplash.com/photo-1761582253950-1b970a4579d5?auto=format&fit=crop&w=1200&q=75)
+
+## What pages does a Utah law firm website need?
+
+Start from what a person with a legal problem needs to decide whether to call:
+
+- **A home page** that says, in the first screen, what the firm handles, where, and how to get in touch.
+- **A page for each practice area**, explaining who it is for, what the process looks like in Utah, what affects cost and what to bring to a first meeting.
+- **A profile for each lawyer** with admissions by state, the courts they appear in, real experience and any certification with the certifier named.
+- **A page for each real office**, with address, hours, parking or transit and a map.
+- **A fees page** that explains how you charge. Comment [3] expressly permits stating the basis of fees and prices for specific services, so a flat fee for a simple will or an uncontested divorce can be shown, along with what it does and does not include.
+- **A contact or consultation form** that asks only what you need to check conflicts and call back, with a note that sending the form does not create an attorney-client relationship and that visitors should not send confidential details yet.
+- **A privacy page** that explains what you do with form submissions and analytics.
+
+Make every page usable for everyone. The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) explains why sites should work with screen readers and keyboards, and the same habits, such as clear headings, descriptive links and readable contrast, make pages easier for every visitor. For the full list, our [law firm website checklist](/blog/law-firm-website-checklist) goes page by page.
+
+## A Salt Lake City law firm website checklist
+
+- [ ] Every page passes Rule 7.1's test: true, with no omission that would leave a reasonable reader with the wrong idea.
+- [ ] Case results describe the type of case and its facts, and carry a qualifier next to them.
+- [ ] Testimonials are real, used with permission and not edited to change their meaning; dramatizations are labeled.
+- [ ] "Specialize" appears only where experience supports it, and any certification names the certifying body in the same place.
+- [ ] Awards and rankings name the source and year, and none were paid for.
+- [ ] The firm name and any trade name imply no link to a government agency, legal aid group or lawyer outside the firm.
+- [ ] Each lawyer's admissions are listed by state, and any limits on practice are stated near the name.
+- [ ] No automated outreach about an injury, death or disaster to people who did not contact you first within 30 days.
+- [ ] Co-counsel and fee-sharing descriptions match Rule 5.8, and marketing contracts have been checked against the November 2026 referral fee rules.
+- [ ] Fee information says what is and is not included.
+- [ ] One page per real practice area and office; no city-swap pages.
+- [ ] Translated pages repeat every disclaimer and admission statement.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Salt Lake City law firm website
+
+SaySites builds the plan above into a working site: practice area pages, a profile for each attorney with room for admissions by state, office pages and a consultation form whose intake includes the opposing party's name so you can check conflicts before you call back. The firm is described to search engines as a LegalService, each lawyer as a Person and each practice area as a Service, and every page has to pass a 95+ speed check before it goes live. Sites can be built in English and Spanish.
+
+You edit by describing the change in plain words, for example "under Ms. Larsen's name, add that she is admitted in Utah and Idaho" or "put the line about past results not guaranteeing future outcomes right under the verdicts list." Each change waits as a draft until you approve it. Results, reviews and credentials come only from you, and SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also serves Nevada, compare the rules in our [Las Vegas law firm website guide](/blog/las-vegas-law-firm-website-design).`,
+    faq: [
+      { q: 'Does Utah require law firms to file website ads with the bar?', a: 'No filing requirement appears in Utah\'s rules. Utah reserved Rules 7.2 through 7.5 and governs lawyer advertising mainly through Rule 7.1, which bars false or misleading communications. That puts the responsibility on the firm to review its own pages. Many firms keep dated copies of each version of the site so they can show what it said if a question comes up later.' },
+      { q: 'Can a Salt Lake City law firm post case results on its website?', a: 'Yes, if they are not misleading. Comment [4] to Utah Rule 7.1 warns that truthful results can mislead when they suggest a reader will get the same outcome regardless of their own facts. Describe each case type and its circumstances, and place a qualifier such as "past results do not guarantee a similar outcome" next to the results, not only in the footer.' },
+      { q: 'Can a Utah lawyer call themselves a specialist?', a: 'A Utah lawyer may say they specialize in a field based on experience, training and education, as long as the statement is not misleading, according to comment [5] to Rule 7.1. Claiming or implying certification as a specialist is different: it is allowed only if an objective entity certified the lawyer and the communication clearly names that entity.' },
+      { q: 'Are lead generation and pay-per-click fees referral fees under Utah\'s November 2026 rules?', a: 'No. Amended Rule 1.0, effective November 1, 2026, defines a referral fee as compensation paid only for referring a legal matter, and Rule 5.4(c) prohibits referral fees. Comment [9] to Rule 1.0 says fees paid to generate consumer interest, including lead generation providers, banner ads and pay-per-click marketing, are not referral fees. Check any matter-specific payment with counsel.' },
+      { q: 'Can a personal injury firm contact accident victims through its website?', a: 'A website visitor who fills in your contact form has started the conversation, which Rule 7.1(c) treats as an exception. What the rule limits is the firm directly contacting someone about a disaster, personal injury or wrongful death within 30 days, unless an exception applies. Be careful with automated texts or emails sent to people who never contacted you.' },
+      { q: 'Does an out-of-state firm advertising in Utah need a disclaimer?', a: 'Utah Ethics Opinion 22-04 concluded that a firm with no Utah-licensed lawyers that advertises in Utah is materially misleading under Rule 7.1 unless it includes appropriate disclaimer or qualifying language, though it may not apply to purely federal practices. On a website, the simplest fix is listing each lawyer\'s admissions by state on their profile.' },
+      { q: 'How much does a SaySites website for a Salt Lake City law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before you sign up.' },
+    ],
+    about: ['Utah Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Salt Lake City, Utah'],
+    published: '2026-11-02',
+    status: 'published',
+  },
+  {
+    slug: 'orlando-dental-practice-website-design',
+    title: 'Orlando Dental Websites: Florida Advertising Rules',
+    description: 'Build an Orlando dental practice website that meets Florida rules: minimum fee disclaimers, ADA codes, free exam wording, specialty claims and telehealth notes.',
+    kind: 'guide',
+    summary: [
+      'Florida\'s dental advertising law, section 466.019 of the Florida Statutes, names websites and social media as advertisements. The Board of Dentistry\'s rules 64B5-4.002 and 64B5-4.003 add the detail.',
+      'Every dental ad must identify the responsible Florida-licensed dentist, by license number or by the name, address and phone on file with the Department of Health.',
+      'An advertised fee needs a "minimum fee only" disclaimer, a period it is good for (or at least 90 days after the last ad), and the exact ADA procedure name or code.',
+      'Free or discounted exams need the capital-letter statement in section 456.062 plus the dates the offer runs. "Sleep dentistry" requires a general anesthesia permit.',
+      'Laudatory statements, quality comparisons and fear-based appeals are banned, so write service pages that explain rather than boast.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1609184889233-eff6dd93def4?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Orlando high-rises reflected in the still water of a city lake under a clear blue sky' },
+    body: `An Orlando dental practice website is an advertisement under Florida law, and the law says so in as many words. The current version of [section 466.019 of the Florida Statutes](https://www.flsenate.gov/Laws/Statutes/2026/466.019) defines an advertisement as any representation used to solicit patients, "including, but not limited to," business cards, newspapers, websites and social media. The Board of Dentistry fills in the details in [rule 64B5-4.002](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64B5-4-002) on advertising and solicitation and [rule 64B5-4.003](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-64B5-4-003) on fees.
+
+Florida's rules are unusually specific about price pages, free offers and specialty wording, which are exactly the pages a practice most wants to publish. This guide takes each rule in turn and shows what it means for the site, then covers how Orlando patients search and a checklist to run before launch. It is a planning guide, not legal advice; for close calls, ask your counsel or the [Florida Board of Dentistry](https://floridasdentistry.gov/).
+
+## Which Florida rules apply to a dental practice website?
+
+Three sources do most of the work:
+
+- **Section 466.019, Florida Statutes**, the advertising section of the Dental Practice Act. It bans false, fraudulent, misleading or deceptive statements and lists specific kinds of claims that are not allowed.
+- **Rule 64B5-4.002**, which defines advertising broadly, requires every ad to identify the responsible dentist and adds rules on solicitation, names, referral services and "sleep dentistry."
+- **Rule 64B5-4.003**, which sets the requirements for any ad that mentions a fee.
+
+Two more statutes come into play for particular pages: [section 456.062](https://www.flsenate.gov/Laws/Statutes/2026/456.062) for free or discounted offers, and [section 466.0282](https://www.flsenate.gov/Laws/Statutes/2026/466.0282) for specialty claims.
+
+The Board's definition of advertising is broad on purpose. Rule 64B5-4.002(1) covers any statement made to the public to sell or offer professional services, "regardless of whether it is in the form of paid advertising." Your home page, your blog, a promotional video on your site and the description on your Google Business Profile all fall inside it.
+
+## Who must a Florida dental website identify?
+
+Every advertisement in any medium must identify the Florida-licensed dentist who takes total responsibility for it. Rule 64B5-4.002(2) gives two ways to do that:
+
+1. The dentist's license number, as it appears on the license and renewal certificate, or
+2. The dentist's commonly used name together with the current address and phone number the dentist has on file with the Department of Health.
+
+On a website, the cleanest approach is a line in the site footer, so it appears on every page: "Dr. Ana Reyes, DMD, Florida license DN 00000, responsible for this website," with the real license number. A group practice should name the dentist who has agreed to take that responsibility, and update the line when that changes. Patients can confirm a license through the Department of Health's [license verification search](https://mqa-internet.doh.state.fl.us/MQASearchServices/Home), so make sure the name and address match.
+
+Two related rules affect the team and history pages:
+
+- **Only people who practice there or own the practice.** Rule 64B5-4.002(5) bars naming a person who is neither practicing at the advertised location nor an owner. When a dentist leaves, take them off the site.
+- **Previous owners, for a while.** After a sale, the new owner may name the previous owner for a reasonable period of up to two years, and only with that dentist's written permission. A "formerly the practice of Dr. Lopez" line should come down by then.
+
+Section 466.019(5) also says D.D.S. and D.M.D. are interchangeable for dentists who graduated from an accredited American dental school, so either is fine on a profile.
+
+![Two swans on a lake framed by mossy cypress trunks, with downtown Orlando towers on the far shore](https://images.unsplash.com/photo-1758464642801-14bd789db153?auto=format&fit=crop&w=1200&q=75)
+
+## What claims can't an Orlando dental website make?
+
+Section 466.019(3) and rule 64B5-4.002(3) list the same core prohibitions. An advertisement may not:
+
+- Contain misrepresentations of fact.
+- Mislead through only partial disclosure of relevant facts.
+- Contain **laudatory statements** about the dentist or group of dentists.
+- Be intended or likely to create **false, unjustified expectations of favorable results**.
+- Relate to the **quality** of dental services compared to other available dental services.
+- Be intended or likely to **appeal primarily to a layperson's fears**.
+- Contain other representations likely to make an ordinary, prudent person misunderstand or be deceived.
+
+The laudatory-statement and quality-comparison bans rule out much of the copy that fills dental websites elsewhere: "Orlando's best dentist," "the highest quality care in Central Florida," "the gentlest hygienists you'll ever meet." Think carefully, too, about headlines built around patient fear, such as warnings about what will happen if someone waits.
+
+The Board's rule gives one concrete example: a dentist who uses a laser may advertise that they treat patients with a laser in certain cases, but may not advertise that laser treatment is painless, heals faster or provides better results than other procedures. Apply the same logic to any technology page. Describe what the equipment is and when you use it, and leave out comparisons and outcomes.
+
+**What works instead.** Facts patients can use are allowed and helpful: which services you offer, hours, location, parking, insurance plans you file with, languages spoken, what a first visit involves and how long a treatment usually takes. Praise from patients is a judgment call under the laudatory-statement ban; ask your counsel before you put reviews on the site, and do not choose or edit them in a way that turns them into claims you could not make yourself.
+
+## How should an Orlando dental practice list fees online?
+
+Price pages are allowed, but rule 64B5-4.003 sets four requirements, and section 466.019(3)(g) repeats the first:
+
+1. **A minimum-fee disclaimer.** Any ad with fee information must say the fee is a minimum fee only.
+2. **A time period.** Each advertised fee must either state the period it is in effect, or the service must stay available at or below that fee for at least 90 days after the last ad for it.
+3. **Exact procedure names or codes.** Each service with a fee must be described with the exact wording from the American Dental Association's *Code on Dental Procedures and Nomenclature*, or by the specific ADA code number. A category such as "root canal therapy" or "orthodontics" is not enough when a price is attached.
+4. **Free and discounted services** must follow section 456.062 and state the dates the offer is available (covered in the next section).
+
+On a website, that turns into a fee table with three columns: the ADA code, the procedure name as the code set words it, and the fee, followed by a line such as "Fees shown are minimum fees only. Prices on this page are effective through March 31, 2027." If you want plain-English descriptions for patients, add them in a fourth column or below the table without replacing the official wording. A web page can sit unchanged for months, so the effective date or the 90-day rule matters: when you change a price, keep the old price available for the required period or state the dates in advance.
+
+If a page describes a procedure without a price, the rule allows a general description by category, so a "Root canal treatment" page that explains the process needs none of this unless it shows a fee.
+
+> **Tip:** Want to see a compliant fee page and footer on your own practice's site before committing to anything? [Ask SaySites for a free redesign preview](/redesign) and we'll rebuild your current site with your own content.
+
+## What must a free exam or new patient special say in Florida?
+
+Free and discounted offers are where Florida's wording is most exact. Section 456.062 requires every ad for a free, discounted fee or reduced fee service, examination or treatment by a dentist to carry this statement in capital letters, clearly distinguishable from the rest of the text:
+
+"THE PATIENT AND ANY OTHER PERSON RESPONSIBLE FOR PAYMENT HAS A RIGHT TO REFUSE TO PAY, CANCEL PAYMENT, OR BE REIMBURSED FOR PAYMENT FOR ANY OTHER SERVICE, EXAMINATION, OR TREATMENT THAT IS PERFORMED AS A RESULT OF AND WITHIN 72 HOURS OF RESPONDING TO THE ADVERTISEMENT FOR THE FREE, DISCOUNTED FEE, OR REDUCED FEE SERVICE, EXAMINATION, OR TREATMENT."
+
+Rule 64B5-4.003(5) adds that the ad must clearly identify the dates the free or discounted service will be available.
+
+Practical points for the website:
+
+- Put the statement directly under the offer, on every page and banner where the offer appears, including a pop-up or a landing page for a paid ad.
+- Use real capital letters in the page text rather than styling lowercase text to look capitalized, so the statement reads correctly when copied, translated or read by a screen reader.
+- Give the dates in the offer itself: "New patient exam and X-rays, $59, for appointments booked November 3 to December 31, 2026."
+- Take expired offers down. An old special still live on a forgotten page is still an ad.
+
+Your front desk should know what the 72-hour statement means, because patients may ask.
+
+![Two dental professionals in face shields, masks and white gowns treating a patient reclined in a dental chair](https://images.unsplash.com/photo-1588776814546-daab30f310ce?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist in Florida advertise orthodontics or implants?
+
+A general dentist can offer and describe these services, but Florida limits how specialty is claimed. Section 466.0282(1) says a dentist may not hold themselves out as a specialist, or advertise specialty recognition by an accrediting organization, unless they completed an ADA- and CODA-approved specialty education program and are eligible for or have achieved diplomate status with an ADA-recognized national specialty board (with a narrow exception for dentists who have claimed a specialty continuously since 1964).
+
+For areas of practice that are not ADA-recognized specialties, section 466.0282(3) allows a dentist to announce a practice emphasis, but only with a statement, in capital letters or otherwise clearly set apart, in this form: "(NAME OF AREA) IS NOT RECOGNIZED AS A SPECIALTY AREA BY THE AMERICAN DENTAL ASSOCIATION OR THE FLORIDA BOARD OF DENTISTRY." If the page names an organization that recognizes that area, it must also state that the organization is not recognized as a bona fide specialty accrediting organization by the ADA or the Board.
+
+What that means on the site:
+
+- A general dentist's "Clear aligners" page should describe the treatment and who provides it, without "orthodontist," "specialist" or "practice limited to" language.
+- If an associate is a qualified orthodontist or oral surgeon under section 466.0282(1), say so on their profile and on the pages for the work they do.
+- A "Cosmetic Dentistry" or "Implant Dentistry" heading that announces an emphasis needs the not-recognized statement set apart on that page. Have counsel check the wording before launch.
+
+## What about sedation, telehealth aligners and referral services?
+
+**Sedation.** Rule 64B5-4.002(7) bars the term "sleep dentistry" in any ad unless the dentist holds a valid general anesthesia permit from the Board. If your practice offers lighter sedation under a different permit, describe it accurately and check your wording against the permit you actually hold.
+
+**Telehealth.** Section 466.019(4), part of the statute as amended in 2024, requires a specific disclaimer, in a clearly legible font and size, on ads for dental services provided by telehealth that involve impressions or digital scans, dentures and other appliances, placing or adjusting an appliance, or correcting malformations of teeth or jaws. The required wording is: "An in-person examination with a dentist licensed under chapter 466, Florida Statutes, is recommended before beginning telehealth treatment in order to prevent injury or harm." If your practice offers remote aligner check-ins or any of these services by telehealth, the line belongs on that service page.
+
+**Referral services.** If you advertise through a dental referral service, rule 64B5-4.002(6) makes you responsible for its ads and requires four statements: that the ad is for a referral service on behalf of member dentists, that it refers only to dentists who paid or were otherwise selected, that membership is limited by the agency, and that member dentists charge no more than their usual fees. Check any directory listing you pay for.
+
+**Phone and in-person solicitation.** Rule 64B5-4.002(4) prohibits in-person and telephone solicitation by a dentist or their agent, but expressly excludes calls with patients or former patients to schedule appointments or offer follow-up care. A website form that asks the practice to call back is the patient asking; cold-calling a purchased list is not.
+
+![A dental model of upper and lower teeth fitted with metal braces, sitting on a pale blue desk beside a desk calendar](https://images.unsplash.com/photo-1777446899714-c26de766dffd?auto=format&fit=crop&w=1200&q=75)
+
+## How do patients in Orlando look for a dentist?
+
+Orlando patients search the way most people do, by need and by place: "emergency dentist near me," "pediatric dentist Lake Nona," "dentist that takes my insurance in Winter Park." The city has about 320,000 residents and 25.2% of them were born outside the U.S., according to [Data USA's 2024 figures for Orlando](https://datausa.io/profile/geo/orlando-fl). Orlando also draws many visitors, and some of them will need a dentist quickly in a city they do not know.
+
+Reflect that on the site:
+
+- **Emergency and same-day care.** If you keep same-day slots, say how to get one and what counts as an emergency, without fear-based language.
+- **Languages.** If dentists or staff speak Spanish, Portuguese or another language, say which and when, and add real translated pages. Every required statement, from the minimum-fee line to the 456.062 notice, must appear on the translated pages too.
+- **Insurance and payment.** List the plans you file with and how payment works for patients without insurance.
+- **Getting there.** Parking, nearby roads and accessibility details help both locals and visitors.
+
+What not to do: build a page for each neighborhood and suburb with the same text and a different place name. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages created mainly to rank for particular places as doorway pages, and warn against mass-produced, low-value content. Google's guide to [creating helpful content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether the content shows first-hand expertise and fully answers the question. One page per real office, and one useful page per service, is the honest route.
+
+## How should an Orlando practice set up Google Business Profile and markup?
+
+Under rule 64B5-4.002(1), your Google Business Profile description and posts are advertising too, so the same rules apply there: no "best dentist in Orlando," and a free-exam post needs the 456.062 statement and dates.
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for the real-world practice name with no added keywords or locations, and one profile per staffed location. Google says local ranking depends mainly on relevance, distance and prominence ([Google's local ranking explanation](https://support.google.com/business/answer/7091)). Accurate categories and services build relevance. For reviews, Google lets you ask patients but not reward them for reviewing ([Google's review guidance](https://support.google.com/business/answer/3474122)); when you reply, never confirm that the reviewer is a patient or mention their treatment.
+
+On the website, describe each office with [Dentist](https://schema.org/Dentist) structured data that matches what the page shows, following [Google's local business structured data guide](https://developers.google.com/search/docs/appearance/structured-data/local-business) and its [general structured data policies](https://developers.google.com/search/docs/appearance/structured-data/sd-policies). The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) is a good reference for making the booking form and fee table usable with a keyboard and screen reader.
+
+For the wider set of pages a practice site needs, see our [medical practice website checklist](/blog/medical-practice-website-checklist), and for asking patients for reviews within Google's rules, read [how to ask for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way).
+
+## An Orlando dental website checklist
+
+- [ ] The footer names the responsible Florida dentist with license number, or name plus the address and phone on file.
+- [ ] Only dentists who practice at the location or own the practice are named; any previous owner appears with written permission and for no more than two years.
+- [ ] No laudatory statements, quality comparisons, fear-based appeals or promises of results anywhere, including technology pages.
+- [ ] Every fee has the minimum-fee disclaimer, an effective period (or stays available 90 days after the last ad) and the exact ADA name or code.
+- [ ] Every free or discounted offer carries the section 456.062 statement in capital letters and the dates it runs.
+- [ ] Specialty language appears only for dentists who meet section 466.0282(1); practice-emphasis pages carry the not-recognized statement.
+- [ ] "Sleep dentistry" appears only with a general anesthesia permit.
+- [ ] Telehealth service pages carry the section 466.019(4) in-person examination disclaimer.
+- [ ] Referral-service listings carry the four required statements.
+- [ ] Translated pages repeat every required statement.
+- [ ] Google Business Profile posts follow the same rules as the site.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds an Orlando dental practice website
+
+SaySites builds a dental site around the pages above: a page for each service, a team page, a page for each office and a new patient appointment request form that asks only for the basics, such as whether the patient is new or returning, their insurance carrier and the best time to call. Each office is described with Dentist structured data, and a booking button can link to the scheduler you already use. Every page has to pass a 95+ speed check before it goes live, and the site can be built in English and Spanish.
+
+To edit, you say what you want, for example "add 'Fees shown are minimum fees only' under the fee table" or "put the 72-hour statement in capitals under the new patient special and end the offer on December 31." Each change waits as a draft until you approve it. Credentials, fees and reviews come only from you; SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. To see how another state handles dental fee wording, compare our [Atlanta dental website guide](/blog/atlanta-dental-practice-website-design).`,
+    faq: [
+      { q: 'Does a Florida dental website have to show the dentist\'s license number?', a: 'It has to identify the Florida-licensed dentist who takes responsibility for it. Board rule 64B5-4.002(2) allows either the license number as it appears on the license, or the dentist\'s commonly used name with the current address and phone number on file with the Department of Health. A footer line on every page is the simplest way to meet it.' },
+      { q: 'Can an Orlando dentist list prices on the practice website?', a: 'Yes. Under rule 64B5-4.003, each advertised fee needs a disclaimer that it is a minimum fee only, a stated period the fee is in effect (or availability at that fee for 90 days after the last ad), and the exact ADA procedure name or code. A broad category such as "orthodontics" is not enough when a price is shown.' },
+      { q: 'What does a free new patient exam ad need to say in Florida?', a: 'Section 456.062 of the Florida Statutes requires a statement in capital letters, clearly set apart, that the patient may refuse to pay, cancel payment or be reimbursed for other services performed within 72 hours of responding to the free or discounted offer. Board rule 64B5-4.003 also requires the ad to give the dates the offer is available.' },
+      { q: 'Can a Florida dental website say "best dentist in Orlando"?', a: 'No. Section 466.019 of the Florida Statutes bars advertising that contains laudatory statements about the dentist or compares the quality of their services with other available dental services. Describe services, hours, insurance, languages and what a visit involves instead. The same rule applies to Google Business Profile descriptions and posts, which are advertising too.' },
+      { q: 'Can a general dentist in Florida advertise implants or aligners?', a: 'A general dentist can offer and describe these treatments, but may not claim to be a specialist unless they meet section 466.0282(1), which requires ADA-approved specialty training and board eligibility or diplomate status. Announcing an emphasis in an area that is not an ADA-recognized specialty requires a set-apart statement that it is not recognized as a specialty.' },
+      { q: 'Do Florida dental ads for remote aligner care need a disclaimer?', a: 'Yes, if the services are provided through telehealth and include scans or impressions, appliances, adjustments or correcting malformations of the teeth or jaws. Section 466.019(4) requires a legible statement that an in-person examination with a Florida-licensed dentist is recommended before beginning telehealth treatment, to prevent injury or harm.' },
+      { q: 'How much does a SaySites website for an Orlando dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment request form, Dentist structured data, a booking button that links to your current scheduler and English or Spanish pages. You can ask for a free redesign preview of your current site first.' },
+    ],
+    about: ['Florida Dental Practice Act', 'Dental advertising', 'Dental practice websites', 'Orlando, Florida'],
+    published: '2026-11-02',
+    status: 'published',
+  },
+  {
+    slug: 'nashville-law-firm-website-design',
+    title: 'Nashville Law Firm Websites Under Tennessee RPC 7.1',
+    description: 'Plan a Nashville law firm website under Tennessee RPC 7.1 and 7.3: the responsible lawyer line, results, specialist claims, trade names and lead sources.',
+    kind: 'guide',
+    summary: [
+      'Since the Tennessee Supreme Court’s September 2021 order, one rule, RPC 7.1, covers lawyer advertising. RPCs 7.2, 7.4 and 7.5 are now deleted and reserved.',
+      'Every communication must name at least one lawyer or firm responsible for it, with contact information, and each advertisement must be kept for two years after it last ran.',
+      'Past results are allowed if they do not create unjustified expectations; the rule’s comments say a disclaimer can help. “Specialist” needs an ABA-accredited certification registered with the Tennessee CLE Commission first.',
+      'A website is not a solicitation, but a follow-up email to someone known to need help on a particular matter must say “Advertising Material” at the start and end, and some topics carry a 30-day wait.',
+      'Build one strong page per practice area and per real office. Davidson County is the core market, and about one in five residents speaks a language other than English at home.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1698323338671-991aaa1cea60?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Nashville from across the Cumberland River, with riverfront park lawns, low brick blocks and the AT&T Building towering behind' },
+    body: `A Nashville law firm website is an advertisement under Tennessee Supreme Court Rule 8, and since 2021 the whole subject lives mainly in one rule: [RPC 7.1](https://www.tncourts.gov/rules/supreme-court/8). It bans false or misleading communications, requires every communication to name a responsible lawyer or firm with contact information, and requires a two-year record of each advertisement. Solicitation, the 30-day rule and paying for leads sit in RPC 7.3, and referral platforms in RPC 7.6.
+
+That makes Tennessee simpler than many states on paper. There is no filing office for websites and no list of required phrases for every page. It also means more rides on judgment: whether a verdicts page misleads, whether a firm name implies something untrue, whether a lead vendor is really "recommending" you. This guide works through those questions for a firm practicing in Nashville, then covers how people here search for a lawyer, a page plan and a checklist. It is a planning guide with each rule linked, not legal advice; for a close call, ask the Board of Professional Responsibility's ethics counsel or your own lawyer.
+
+## Which Tennessee rule governs a law firm website?
+
+RPC 7.1, as rewritten by the [Tennessee Supreme Court's order of September 1, 2021](https://docs.tbpr.org/order-grants-tba-petition-to-amend-s-ct-rule-8-rpcs%207.1%207.2%207.3%207.4%207.5-denies-amendment%20to-s-ct-rule%208-rpc-7.6.pdf), which granted a Tennessee Bar Association petition. The order folded the old advertising, specialization and firm-name rules into RPC 7.1 and its comments, and left RPCs 7.2, 7.4 and 7.5 "deleted and reserved." If your website copy was written against the older numbered rules, some of the language your designer was told to include may no longer be required, and some of the advice now sits in comments rather than rule text.
+
+The current rule has three parts:
+
+1. **(a) Nothing false or misleading.** A communication is false or misleading if it contains a material misrepresentation of fact or law, or omits a fact needed to keep the whole statement from misleading.
+2. **(b) Advertising is allowed in any medium,** written, recorded or electronic, subject to (a), RPC 7.3 and RPC 7.6. Every communication must include the name and contact information of at least one lawyer or law firm responsible for its content.
+3. **(c) Keep a record.** A copy or recording of each advertisement must be kept for two years after it was last disseminated, along with when and where it appeared.
+
+Comment 6 lists what a lawyer may publish, and it reads like a website outline: the lawyer's or firm's name, address, email, website and phone number; the kinds of services offered; how fees are set, including prices for specific services and payment arrangements; foreign language ability; references; and, with their consent, names of clients regularly represented.
+
+## What has to appear on every page?
+
+The responsible-lawyer line in RPC 7.1(b) is the one requirement every page shares. The simplest way to meet it is a site-wide footer: the firm name, the name of at least one Tennessee lawyer responsible for the site, the office address and a phone number or email. Do the same on landing pages built for ads and on any page a vendor hosts for you, since the rule covers "any communication made under this Rule," not just the home page.
+
+The two-year record in RPC 7.1(c) is easy to forget with a website, because a website changes quietly. Comment 14 says a lawyer may comply by following guidelines the Board of Professional Responsibility may adopt for websites, email and other electronic communications, and that materially similar advertisements can be covered by one copy. Until you have confirmed what the Board currently expects, a practical habit is to save a dated copy of each page whenever its content changes in a meaningful way (new results, new attorney, new fee information) and keep a short log of what changed. A site builder that keeps drafts and a change history makes this far easier than a site edited directly in production.
+
+> **Tip:** Treat your Google Business Profile posts, ad landing pages and intake emails as part of the same record. They are communications about your services too.
+
+## Can a Nashville firm post verdicts, settlements and reviews?
+
+Yes, with care. Comment 3 to RPC 7.1 explains that truthfully reporting results "may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters." The same comment says an unsubstantiated comparison with other lawyers' services or fees can mislead if it is specific enough to suggest it could be proven. It then adds the useful part: "The inclusion of an appropriate disclaimer or qualifying language may preclude a finding that a statement is likely to create unjustified expectations or otherwise mislead the public."
+
+On a results page, that suggests:
+
+- **Context for each result.** Case type, court or forum, year and what the amount represented. A gross settlement shown without saying so, or a verdict later reduced, is the kind of omission paragraph (a) is aimed at.
+- **A qualifying sentence near the results,** not buried in the footer. Something like "Every case is different. Past results do not guarantee a similar outcome in your matter."
+- **No "best" or "top" claims you cannot back up.** "Nashville's most aggressive DUI defense" is a comparison nobody can substantiate.
+
+Comment 8 covers the badges many firms display. A lawyer may advertise a subjective characterization conferred by an organization only if the organization "has made inquiry into the lawyer's fitness and does not issue or confer such designations indiscriminately or for a price." Before a ratings badge goes on the site, find out how the organization chooses lawyers and whether placement is bought.
+
+Client reviews are not addressed by a separate Tennessee rule, so they fall under RPC 7.1(a): a review that is fake, selectively edited or implies a certain outcome is a problem. Only publish reviews from real clients, unedited, and with their permission when you copy them onto your own site. Google's [review guidance for businesses](https://support.google.com/business/answer/3474122) applies to the reviews on your profile.
+
+![Downtown Nashville at dusk, with lit office towers, the Bridgestone Arena roof and city streets glowing under an orange and blue sky](https://images.unsplash.com/photo-1545419913-775e3e82c7db?auto=format&fit=crop&w=1200&q=75)
+
+## When can a Tennessee lawyer say "specialist"?
+
+Only in narrow cases. Comment 9 to RPC 7.1 lets any lawyer list practice areas, and lets a lawyer say they practice only in certain fields. It does not let a lawyer say they are a "specialist," practice a "specialty," "specialize in" a field or are certified as a specialist, unless:
+
+- the claim concerns **patent matters or admiralty law**, both long-standing exceptions; or
+- under comment 10, the lawyer is certified by an organization **accredited by the American Bar Association's House of Delegates**, and has first **registered the certification with the Tennessee Commission on Continuing Legal Education** under Supreme Court Rule 21.
+
+Comment 10 also says a lawyer "shall not state or imply that the lawyer has received any certification of specialty from the Tennessee Commission on Continuing Legal Education." The Commission keeps a [public list of registered specialists](https://cle.tncourts.gov/about-us-main/specialists/), which is a good place to confirm a listing before the word goes on a bio.
+
+What this means for page copy:
+
+- "Our practice is limited to family law" is fine if true.
+- "Family law specialists" is not, unless each lawyer it describes meets comment 10.
+- "Certified as a specialist in civil trial law by [the certifying organization]" works for a lawyer who holds and has registered that certification. Name the certifying body so readers do not assume the state granted it.
+- Watch page titles and image alt text too. "Nashville Workers' Comp Specialist" in a title tag is still a communication about your services.
+
+## What can a firm name, trade name or domain say?
+
+Comment 11 allows a firm to use the names of some or all members, of deceased or retired members where there has been a continuing succession, or a trade name such as "ABC Legal Clinic." It specifically allows a lawyer or firm to be designated by "a distinctive website address or comparable professional designation." Three limits follow from the same comments:
+
+1. **Geographic trade names may need a disclaimer.** Comment 11 says a private firm using a trade name with a geographical name may need an express disclaimer that it is not a public legal aid agency. A name built around "Nashville," "Davidson County" or "Middle Tennessee" plus "Legal Clinic" or "Legal Services" is where that risk sits.
+2. **No names of lawyers outside the firm, and no nonlawyers.** Using the name of a lawyer not associated with the firm or a predecessor is misleading under comment 11.
+3. **Office sharing is not a firm.** Comment 13 says lawyers who share space but do not practice together may not call themselves "Smith and Jones."
+
+Your Google Business Profile name should match the name you actually practice under. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask for the real-world name used consistently on signage, letterhead and branding, without added keywords or locations. A profile named "Smith Law | Nashville Car Accident Lawyer" breaks Google's rules even if the website itself is fine.
+
+## Where does solicitation start for a website?
+
+RPC 7.3 defines a solicitation as a targeted communication directed to a specific person that offers services for a particular matter. Comment 1 says a lawyer's communication typically is not a solicitation if it is directed to the general public, "such as through a billboard, an Internet banner advertisement, a website, or a television commercial," or if it responds to a request for information or is automatically generated in response to internet searches.
+
+So the website itself is general advertising. The edges are in what happens next:
+
+- **Written follow-up to someone known to need help.** Under RPC 7.3(c), a written, recorded or electronic solicitation to anyone known to need legal services in a particular matter must include "Advertising Material" at the beginning and end of the communication, unless an exception applies. Comment 8 says the label is not needed for communications sent in response to a request from the potential client, which covers the normal reply to a contact form.
+- **The 30-day rule.** RPC 7.3(d)(3) bars soliciting for pecuniary gain about personal injury, wrongful death, workers' compensation, divorce or legal separation, or an accident or disaster involving the person or family, unless the event or filing was more than 30 days before, or there is a family, close personal or prior professional relationship. A drip email sequence aimed at people pulled from crash reports or divorce filings is where firms get into trouble.
+- **Chat and texting.** Comment 2 says "live person-to-person contact" means in-person, live phone and other real-time contact without time for reflection, and does not include chat rooms, text messages, email or other written messages that can easily be disregarded. A chat widget answering someone who came to your site is a response to their request, but keep its scripts within RPC 7.1, and never let it promise outcomes.
+- **Records.** RPC 7.3(e) requires keeping each solicitation sent to a specific recipient for two years, with when and to whom it was sent.
+
+## Can you pay for leads, directories or referral platforms?
+
+RPC 7.3(f) bars giving anything of value to someone outside the firm for recommending or securing your services, with listed exceptions. The first is paying "the reasonable cost of advertisements and other communications permitted by RPC 7.1, including online group advertising." Comment 10 names directory listings, internet ads and domain registrations, and says a lawyer may pay "website designers" and other marketing vendors as long as they do not direct the lawyer's professional judgment.
+
+Lead generation is allowed under comment 10 if the lead generator does not recommend the lawyer, the payment fits RPC 1.5(e) and RPC 5.4, and the generator's communications comply with RPC 7.1. A comparison site that tells visitors "we matched you with the best lawyer for your case" is recommending; one that shows a list of firms who paid to appear is advertising.
+
+Referral services, matching services and online marketing platforms are "intermediary organizations" under RPC 7.6. Before and while participating, a lawyer must make reasonable efforts to ensure the platform does not direct the lawyer's judgment, does not solicit improperly, discloses its inclusion criteria and any payments to prospective clients at the start, and is not owned by the lawyer or the firm. If it does not comply and will not fix it, the lawyer must withdraw.
+
+![Brick storefronts and street banners along a tree-lined block of downtown Nashville, with people walking past planters and office towers rising behind](https://images.unsplash.com/photo-1776176130100-d8a17b7bdd70?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in Nashville look for a lawyer?
+
+They search by problem first and place second: "custody lawyer Nashville," "DUI attorney Davidson County," "Brentwood estate planning lawyer." The pages that answer those searches well tend to be specific about the local process, which is where a Nashville firm has real material to work with.
+
+**Name the courts.** Davidson County's [trial courts](https://trialcourts.nashville.gov/) include eight divisions of Circuit Court and four parts of Chancery Court at the Metro Courthouse on Public Square, and the Criminal Court divisions in the Justice A.A. Birch Building on 2nd Avenue North. The [Circuit Court Clerk's office](https://circuitclerk.nashville.gov/) handles records for the Circuit, Probate, General Sessions civil and traffic courts. Federal cases go to the [U.S. District Court for the Middle District of Tennessee](https://www.tnmd.uscourts.gov/), whose main courthouse is on Church Street, with divisions in Columbia and Cookeville. A criminal defense page that explains what happens at a first General Sessions appearance, or a divorce page that explains the difference between filing in Circuit and Chancery, answers questions people actually have.
+
+**Plan for more than one language.** The Census Bureau's [QuickFacts for Davidson County](https://www.census.gov/quickfacts/davidsoncountytennessee) shows a 2025 population estimate of 745,904, with 15.5 percent of residents Hispanic or Latino, 15.0 percent born outside the United States and 19.2 percent of people age five and up speaking a language other than English at home. The trial courts let parties request a foreign language or sign language interpreter. If anyone at your firm speaks Spanish, or another language common among your clients, comment 6 to RPC 7.1 allows you to say so, and a translated page set, linked with Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions), serves those clients far better than a translate button. A translated page is still advertising, so every disclaimer goes with it.
+
+**Be honest about your service area.** Many Nashville clients live or work in the surrounding counties, such as Williamson, Rutherford, Sumner and Wilson. A firm that genuinely handles matters there can say so on its practice pages and explain which courts it appears in. What does not work is a page for every town with the city name swapped. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call those doorway pages, and they read as thin to anyone who lands on one.
+
+**Make the first contact easy on a phone.** Many people searching for a lawyer are stressed and on a phone. A visible phone number, a short form and a plain statement of what happens next ("we call back within one business day") do more than another paragraph of credentials.
+
+For more on writing those pages, read [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** Want to see this before you commit? SaySites will [rebuild your current site as a free redesign preview](/redesign), using your own content, so you can judge a cleaner layout with real Nashville pages first.
+
+## How should the Google Business Profile be set up?
+
+One profile for each real, staffed office. Google says local results are based mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), so a complete, accurate profile matters as much as the website. Set the primary category to the area you most want to be found for, add secondary categories that are true, use the same name, address and phone number as your site, and link the profile to the office page rather than the home page when you have more than one office.
+
+Profiles for individual lawyers are allowed in some situations under Google's guidelines, but a virtual office or a mail drop in a county where nobody works is not. Posts and Q and A answers on the profile are communications about your services, so the same RPC 7.1 rules about results and comparisons apply there.
+
+![Two red brick commercial buildings with tall arched windows on a street in downtown Nashville, under a clear sky](https://images.unsplash.com/photo-1768141113540-53a89a536e11?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Nashville law firm
+
+| Page | What it should cover | Tennessee point to watch |
+|---|---|---|
+| Home | Who you help, practice areas, phone, next step | Responsible lawyer and contact in footer (RPC 7.1(b)) |
+| Practice area pages | One per area, with the local process and courts | No "specialist" unless comment 10 is met |
+| Attorney profiles | Admissions, education, languages, real certifications | Name the certifying body; no implied state certification |
+| Results | Each result with context | Qualifying language near the results (comment 3) |
+| Reviews | Real client words, unedited | Nothing implying a certain outcome |
+| Office pages | Address, hours, parking, courts nearby | Match the Google Business Profile exactly |
+| Fees | How fees work, flat fees where you offer them | Prices allowed (comment 6); say what is included |
+| Contact | Short form, phone, what happens next | Replies to requests need no "Advertising Material" label |
+| Spanish pages | The pages above, translated | Every disclaimer translated too |
+
+Structured data helps search engines read the same facts. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains how to mark up an office, and schema.org's [LegalService](https://schema.org/LegalService) type fits a firm. Mark up only what the page shows. For the full list of pages, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## A Tennessee pre-launch checklist
+
+- [ ] Every page names at least one responsible lawyer or the firm, with contact information.
+- [ ] You have a dated copy of the site at launch and a way to keep copies when content changes, for two years.
+- [ ] Results carry context and a qualifying statement next to them.
+- [ ] No comparisons with other lawyers you cannot back up.
+- [ ] "Specialist" appears only for patent, admiralty or a registered ABA-accredited certification, with the certifying body named.
+- [ ] Ratings badges come from organizations that review fitness and do not sell the designation.
+- [ ] The firm name and any trade name are accurate, and a geographic trade name has a disclaimer if it could suggest legal aid.
+- [ ] Follow-up emails to people known to need help on a matter are labeled "Advertising Material" at the start and end, and respect the 30-day rule.
+- [ ] Lead vendors and platforms do not "recommend" you, and RPC 7.6 conditions are met.
+- [ ] Google Business Profile names, addresses and categories match the site.
+- [ ] Spanish or other translated pages repeat every disclaimer.
+- [ ] Structured data matches the visible page.
+- [ ] Pages work with a keyboard and screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) is a good final test: would a person facing this legal problem in Nashville leave your page knowing more, and knowing what to do next?
+
+## How SaySites builds a Nashville law firm website
+
+SaySites turns the plan above into a working site: a page for each practice area, a profile for each attorney, a page for each office and a consultation form whose questions fit the practice area, including the name of the other party so you can check conflicts before calling back. The firm is marked up as a LegalService, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+You make changes by describing them, for example "add 'Every case is different; past results do not guarantee a similar outcome' under the results list" or "put Ms. Carter's registered certification and the name of the certifying organization on her profile." Each change waits as a draft until you approve it, which also gives you a record of what the site said and when. Results, reviews and credentials come only from you. SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also serves clients in Georgia, compare the rules in our [Atlanta law firm website guide](/blog/atlanta-law-firm-website-design), and for profile setup, read our [Google Business Profile setup guide](/blog/google-business-profile-setup-guide).`,
+    faq: [
+      { q: "Does a Tennessee law firm website have to say “Advertising Material”?", a: "Not on the website itself. RPC 7.3 comment 1 says a website directed to the general public typically is not a solicitation. The “Advertising Material” label applies under RPC 7.3(c) to written, recorded or electronic solicitations sent to someone known to need legal help in a particular matter, at the start and end of the message, unless an exception applies." },
+      { q: "What contact information must a Tennessee lawyer ad include?", a: "RPC 7.1(b) requires every communication about a lawyer’s services to include the name and contact information of at least one lawyer or law firm responsible for its content. On a website, a footer on every page with the firm name, a responsible Tennessee lawyer, the office address and a phone number or email is the simplest way to meet it." },
+      { q: "Can a Nashville lawyer call themselves a specialist online?", a: "Only for patent or admiralty matters, or when certified by an organization accredited by the American Bar Association and the certification is first registered with the Tennessee Commission on Continuing Legal Education under Supreme Court Rule 21. Comment 10 to RPC 7.1 also bars stating or implying that the Commission itself granted the certification." },
+      { q: "Can a Tennessee firm show past verdicts and settlements?", a: "Yes, if they are presented without creating an unjustified expectation that other clients will get the same result. Comment 3 to RPC 7.1 says an appropriate disclaimer or qualifying language may prevent that. Give context for each result, such as case type and year, and place the qualifying sentence next to the results rather than only in the footer." },
+      { q: "How long must a Tennessee lawyer keep copies of website content?", a: "RPC 7.1(c) requires keeping a copy of each advertisement for two years after it was last disseminated, with a record of when and where it appeared. Comment 14 allows compliance through any Board of Professional Responsibility guidelines for websites. Saving a dated copy whenever page content meaningfully changes, with a short change log, is a practical approach." },
+      { q: "Can a Tennessee lawyer pay for online leads?", a: "Yes, within limits. Comment 10 to RPC 7.3 allows paying a lead generator if it does not recommend the lawyer, the payment fits RPCs 1.5(e) and 5.4, and its communications comply with RPC 7.1. Referral services and online marketing platforms that match clients with lawyers are intermediary organizations, which must meet the conditions in RPC 7.6." },
+      { q: "How much does a SaySites website for a Nashville law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before deciding." },
+    ],
+    about: ['Tennessee Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Nashville, Tennessee'],
+    published: '2026-11-03',
+    status: 'published',
+  },
+  {
+    slug: 'cleveland-dental-practice-website-design',
+    title: 'Cleveland Dental Websites: Ohio Name and Specialty Rules',
+    description: 'Plan a Cleveland dental practice website under Ohio Dental Board rules 4715-13: owner names, trade names, the General Dentist label, specialists and reviews.',
+    kind: 'guide',
+    summary: [
+      'Ohio Administrative Code chapter 4715-13 covers dental advertising, and rule 4715-13-01 names the internet explicitly. Each different advertisement must be kept for two years at the dental facility.',
+      'Every ad, including a website, must give the first and last name of the practice owner or owners, and any trade name has to include the owner dentist’s name.',
+      'A general dentist who lists services such as implants or braces must show “General Dentist” directly after or below their name, at least as prominently as the list.',
+      'Only dentists who meet rule 4715-5-04 may use “specialist,” “orthodontist” and similar terms, and testimonials may come only from patients of record.',
+      'Cleveland has about 364,000 residents, and roughly one in seven speaks a language other than English at home. Build a light, phone-first site with one page per real office.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1782008140333-2ce01a8cab27?auto=format&fit=crop&w=1600&q=75', alt: 'Cleveland lakefront on a clear day, with the Rock and Roll Hall of Fame in front of Key Tower and the downtown skyline under a deep blue sky' },
+    body: `A Cleveland dental practice website is advertising under the Ohio State Dental Board's rules in [Ohio Administrative Code chapter 4715-13](https://codes.ohio.gov/ohio-administrative-code/chapter-4715-13), and those rules are more specific about names than most states'. Every ad has to carry the owner dentist's first and last name, trade names must include it, a general dentist listing specialty-type services has to say "General Dentist" right by their name, and testimonials can only come from patients of record. Get those four right and most of the rest is ordinary good practice.
+
+This guide goes through each rule with its text linked, then turns to what Cleveland patients need from a dental site: a page plan, local search setup and a checklist to work through before launch. It is a planning guide, not legal advice. The [Ohio State Dental Board](https://dental.ohio.gov/) is the authority on how its rules apply to your practice.
+
+## Which Ohio rules apply to a dental website?
+
+Five rules do most of the work:
+
+| Rule | What it covers |
+|---|---|
+| [4715-13-01](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-01) | When and how licensees may advertise, solicitation limits, testimonials, owner names, record keeping |
+| [4715-13-02](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-02) | Names a practice may operate under, signage, the dentist in charge, specialty listing after a name |
+| [4715-13-03](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-03) | Specific prohibited statements, including the General Dentist requirement |
+| [4715-13-04](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-04) | Statements that tend to deceive or mislead |
+| [4715-13-05](https://codes.ohio.gov/ohio-administrative-code/rule-4715-13-05) | Advertising specialty services, including the diplomate disclaimer |
+
+Rule 4715-13-01(A) allows licensees and "dental organizations" (a term the rule defines to include dental groups, corporations, partnerships and management companies) to advertise in print, on FCC-approved radio and television, "or via the internet." It also sets two practical requirements that apply to a website:
+
+- **Keep each different advertisement for two years.** The rule says it must be kept in the dental facility and made available within 24 hours when an authorized agent of the board asks. For a website, that means a dated copy of each version of your pages, saved whenever the content changes in a meaningful way, plus your ad landing pages and email campaigns.
+- **Present it in a dignified, professional manner.** Rule 4715-13-01(B) applies this standard to internet notices along with cards, signs and letterheads.
+
+## Whose name has to be on an Ohio dental website?
+
+This is where Ohio differs most from neighboring states, and where many practice websites fall short.
+
+**The owner's full name on every ad.** Rule 4715-13-01(D) says all advertising statements in print, broadcast "and/or internet form" must include the first and last name of the owner or owners of the practice, and that the owner dentist is responsible for all of the practice's advertising. On a website, put the owner dentist's full name and degree in the site footer so it appears on every page, and on every ad landing page and email.
+
+**Trade names must include the owner dentist's name.** Under rule 4715-13-02(A), a dentist may practice under their own name or through a corporation, professional association, partnership or LLC, "provided the name of the entity includes the name of the dentist currently practicing." The rule then says "all trade names, fictitious names and the like" must include the owner dentist's name. A practice branded only as a neighborhood name plus "Dental" does not meet that wording; the owner's name needs to be part of the name as used.
+
+**No former dentists in the name.** Rule 4715-13-02(C) allows only licensed dentists currently practicing at the entity in its name, sign or identification, and says deceased or retired dentists' names may not be used. Rule 4715-13-04(A)(7) separately bars ads suggesting that a retired, deceased or departed dentist is still practicing with the practice, and 4715-13-04(A)(6) gives an owner 90 days to change signs after a change in who practices there. Update the website on the same timetable: the doctors page, the footer, the practice name, every bio, and the Google Business Profile.
+
+**Who works there.** Rule 4715-13-02(B) requires the first and last name and degree (for example D.D.S. or D.M.D.) of every dentist practicing at the office to be prominently displayed at its front entrance. A doctors page that lists the same people the same way keeps the sign, the site and the profile consistent. Rule 4715-13-02(D) also requires a licensed dentist in charge at each location, so a page for each office can name that dentist.
+
+> **Note:** Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask that a profile name match the name used on signage and stationery, without added keywords or locations. In Ohio, that real-world name includes the dentist's name, so "Dr. Jane Novak Family Dentistry" on the sign should not become "Cleveland Family Dentist | Implants" on the profile.
+
+![A dentist in a white uniform chatting with a smiling patient seated in a dental chair in a bright, modern treatment room](https://images.unsplash.com/photo-1777331903190-341a3dd0441b?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist list implants, braces or root canals?
+
+Yes, with the right label. Rule 4715-13-05(E) says a general dentist is not prohibited from announcing that they provide specific types of services, "including, but not limited to, specialty services," as long as the wording avoids terms the rules prohibit. Rule 4715-5-04(A) adds that a general dentist "is permitted to render specialty services in Ohio."
+
+The catch is rule 4715-13-03(E). A general dentist who lists or announces specific types of services must include the phrase "General Dentist" at least as prominently as the list, directly after or below their name. The rule's own example is "John Doe, D.D.S., general dentist." On a website that list appears in many places, so check each one:
+
+- the home page services section;
+- every service page, such as "Dental implants" or "Clear aligners";
+- the doctors page and each bio;
+- page titles and headings that pair a name with a service;
+- Google Business Profile services and posts.
+
+A simple pattern is to set the dentist's name, degree and "General Dentist" as one line in the header or the opening of each service page, in the same size type as the service names.
+
+## What words are reserved for specialists in Ohio?
+
+Rule 4715-5-04 recognizes a dentist as a specialist only if the specialty has a certifying board recognized by the American Dental Association and the dentist completed an accredited post-doctoral program in it (with a narrow exception for specialists who announced before August 1, 1974). Rules 4715-5-04(C) and 4715-13-05(C) then reserve these words for those dentists: "specialist," "specializes," "orthodontist," "oral and maxillofacial surgeon," "oral and maxillofacial radiologist," "periodontist," "pediatric dentist," "prosthodontist," "endodontist," "oral pathologist" and "public health dentist," plus "other similar terms which imply that the dentist is a specialist." Rule 4715-13-03(C) adds "limits his practice to" a branch of dentistry and "diplomate" to the statements that require compliance.
+
+For a website, that means:
+
+- **Specialists list their specialty after their name.** Rule 4715-13-02(E) requires specialists to list their ADA-recognized specialty directly after or below their name, for example "Jane Novak, D.D.S., M.S., Orthodontist."
+- **No invented specialties.** Rule 4715-13-05(F) prohibits terms suggesting a specialty where no ADA-recognized specialty exists, while still allowing terms that describe areas of practice. "Cosmetic dentistry" as a service is an area of practice; "cosmetic dentistry specialist" implies a specialty that the [National Commission on Recognition of Dental Specialties and Certifying Boards](https://ncrdscb.ada.org/) does not recognize.
+- **Mixed practices show who does what.** Rule 4715-13-05(A) says a specialist must avoid implying that associated general dentists are specialists, and 4715-13-05(B) requires advertising for a multidisciplinary practice to indicate the services each practitioner provides. A team page that puts each dentist's services under their own name handles both.
+- **Diplomate status needs a disclaimer** unless it comes from an ADA-recognized specialty certifying board. Rule 4715-13-05(D) allows diplomate status from a bona fide national organization that grants it based on postgraduate education, training, experience and a psychometrically based oral and written exam, but only with this disclaimer shown reasonably clearly next to it: "the (name of organization) is not recognized as a specialty board by the Ohio state dental board or the American dental association."
+
+## What else can't an Ohio dental website say?
+
+Rules 4715-13-03 and 4715-13-04 list statements the board considers misleading. The ones most likely to appear on a modern site:
+
+1. **Patient counts that are not true.** False statements that a number of patients have received services from a licensee are prohibited (4715-13-03(A)). If you say "over 5,000 smiles," you need records to support it.
+2. **Superior outcome claims that are not true.** False statements about superior outcomes are prohibited (4715-13-03(B)). Describe what a treatment involves instead of promising how it will turn out.
+3. **Years in practice.** False claims about years in practice, or years at one location, are prohibited (4715-13-04(A)(1)). After an acquisition, be careful with "serving Cleveland since" lines.
+4. **Materials, drugs and methods by the wrong name.** Misnaming or misrepresenting an anesthetic, drug, material, method or system is prohibited (4715-13-04(A)(2) to (5)). Name the actual brand or generic material you use, and do not describe a technique you do not perform.
+5. **"Nurse" when the person is not one.** The term may be used only for a graduate licensed and registered nurse (4715-13-03(D)). Use "dental assistant" or "hygienist" as appropriate.
+6. **Directory headings for specialties you do not hold.** Rule 4715-13-04(A)(8) and (9) bar listings under a specialty heading in a telephone book "or similar publication" when the dentist is not a specialist in it, or under a heading for a service that is not an ADA specialty. Online directories that sort by specialty are worth checking against this.
+
+## Can a Cleveland practice post reviews and testimonials?
+
+Yes, from real patients only. Rule 4715-13-01(C) says testimonials or endorsements "may be made only by patients of record." That rules out actor testimonials, stock photos presented as patients and quotes from people who never received care. Before you put a patient's words or photo on the site, get their written permission, and do not add any detail about their treatment they have not agreed to share.
+
+For reviews on your Google Business Profile, follow Google's [tips for getting reviews](https://support.google.com/business/answer/3474122): ask every patient, never offer anything in return and never filter who gets asked. A link in the post-visit text or email works well, and a short reply to each review, without confirming that the reviewer is a patient or discussing their care, keeps the profile active.
+
+![Downtown Cleveland's skyline in the distance beyond a wide stretch of green treetops and neighborhood rooftops under a pale blue sky](https://images.unsplash.com/photo-1763431595079-2a572e54c826?auto=format&fit=crop&w=1200&q=75)
+
+## What do Cleveland patients need from a dental website?
+
+The Census Bureau's [QuickFacts for Cleveland](https://www.census.gov/quickfacts/clevelandcityohio) gives a useful starting point. The city's 2025 population estimate is 363,608. Of people age five and up, 14.6 percent speak a language other than English at home, and 13.2 percent of residents are Hispanic or Latino. About 15 percent are 65 or older. And 84.7 percent of households have a broadband internet subscription, which means many of the rest are browsing on a phone's data plan.
+
+What that suggests for a practice site:
+
+- **Phone first, and light.** Big tap targets, a visible phone number, a short appointment request form and pages that load quickly on a weak connection. Google's [helpful content guidance](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether a page leaves visitors satisfied; a page that never finishes loading cannot.
+- **Spanish where you can serve it.** If someone at your practice speaks Spanish, say so and offer translated pages for new patients, services, insurance and directions. Link them using Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions). The owner name and General Dentist label must appear on the Spanish pages too, because they are advertising as well.
+- **Clear answers for older patients.** Readable type, high contrast and plain explanations of dentures, implants, crowns and what a first visit involves. The Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) explains what makes a site usable with screen readers and keyboards.
+- **Insurance and payment, stated plainly.** List the plans you are in network with, including any Ohio Medicaid managed care plans you accept, and keep the list current. An outdated insurance page costs more calls than it saves.
+
+**Service area.** Cleveland practices draw patients from inner-ring suburbs and across Cuyahoga County, and the city's east and west sides can feel like different markets. One well-built page per real office, with directions, parking or transit notes and the dentist in charge, will do more than a page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical location pages as doorway pages.
+
+> **Tip:** Not sure how much of your current site needs to change? SaySites will [rebuild it as a free redesign preview](/redesign) with your own content, so you can see the Ohio name lines and General Dentist labels in place before deciding anything.
+
+## How should a Cleveland practice set up local search?
+
+Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091). For a dental practice that comes down to a few steps:
+
+1. Create one Business Profile per office, with the real name (including the dentist's name, as above), address, phone and hours.
+2. Choose the primary category that matches what you are: a general practice should not pick a specialist category under Ohio's rules.
+3. Link each profile to that office's page on your site.
+4. Add services, insurance information and real photos of your office and team.
+5. Mark up each office page with [Dentist structured data](https://schema.org/Dentist), following Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business), and include only facts that appear on the page.
+
+![A bright dental treatment room with a patient chair, overhead light, monitor and white cabinets along a window with blinds](https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Cleveland dental website
+
+| Page | What it should cover | Ohio point to watch |
+|---|---|---|
+| Home | Who you treat, services, insurance, phone, request form | Owner's full name in the footer (4715-13-01(D)) |
+| Service pages | One per service, what to expect, recovery, cost factors | "General Dentist" by the name if the dentist is not a specialist (4715-13-03(E)) |
+| Doctors and team | Each dentist with degree, services, languages | Specialty after the name for specialists (4715-13-02(E)); services per practitioner (4715-13-05(B)) |
+| New patients | First visit, forms, insurance, payment | Accurate material and method names (4715-13-04) |
+| Offices | Address, hours, parking, dentist in charge | Match the entrance sign and the Business Profile |
+| Reviews | Patient words with permission | Patients of record only (4715-13-01(C)) |
+| Spanish pages | Key pages translated | All required names and labels repeated |
+
+For the parts every practice site needs regardless of state, see our [medical practice website checklist](/blog/medical-practice-website-checklist).
+
+## An Ohio pre-launch checklist
+
+- [ ] The owner dentist's first and last name appears on every page, ad landing page and marketing email.
+- [ ] The practice name and any trade name include the owner dentist's name.
+- [ ] No retired, deceased or departed dentist appears in the name or as currently practicing.
+- [ ] Every general dentist who lists services has "General Dentist" directly after or below their name, at least as prominent as the list.
+- [ ] "Specialist," "orthodontist" and similar terms appear only for dentists who meet rule 4715-5-04.
+- [ ] Specialists list their ADA-recognized specialty after their name.
+- [ ] Diplomate status from a non-ADA board carries the exact disclaimer from rule 4715-13-05(D).
+- [ ] Patient counts, outcome claims and years in practice are accurate.
+- [ ] Drugs, materials and methods are named correctly.
+- [ ] Testimonials come only from patients of record, with written permission.
+- [ ] Dated copies of each version of the site are kept for two years at the practice.
+- [ ] Business Profile names, categories and offices match the site and the signs.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Cleveland dental website
+
+SaySites builds a dental site around the page plan above: a page for each service, a team page where each dentist's services sit under their own name, a page for each office and a new patient appointment request form that asks only the basics and tells patients not to send medical details through it. Each office is marked up with Dentist structured data, a booking button can link to the scheduler you already use, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+To make a change, you describe it, for example "put 'Dr. Jane Novak, D.D.S., General Dentist' above the services list on every service page" or "remove Dr. Patel from the team page and footer; he retired on the 15th." Each change waits as a draft until you approve it, so you also keep a record of what the site said and when. Credentials, reviews and patient numbers come only from you; SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. To compare how another state handles dental advertising, read our [Chicago dental website guide](/blog/chicago-dental-practice-website-design).`,
+    faq: [
+      { q: "Does an Ohio dental website have to show the owner dentist’s name?", a: "Yes. Ohio Administrative Code rule 4715-13-01(D) says all advertising in print, broadcast or internet form must include the first and last name of the practice owner or owners, and that the owner dentist is responsible for all of the practice’s advertising. Putting the owner’s full name and degree in a site-wide footer covers every page." },
+      { q: "Can an Ohio dental practice use a trade name?", a: "Yes, but under rule 4715-13-02(A) all trade names and fictitious names must include the name of the owner dentist currently practicing there. Names of retired or deceased dentists may not be used. The same name should appear on the office sign, the website and the Google Business Profile so patients and search engines see one consistent practice." },
+      { q: "Can a general dentist in Cleveland advertise implants or braces?", a: "Yes. Ohio rules allow general dentists to announce specific services, including specialty-type services. Rule 4715-13-03(E) requires the phrase “General Dentist” directly after or below the dentist’s name, at least as prominently as the list of services, for example “John Doe, D.D.S., general dentist.” Check every service page, bio and profile listing." },
+      { q: "Who can use the word specialist on an Ohio dental website?", a: "Only dentists who meet rule 4715-5-04: a specialty with an ADA-recognized certifying board and an accredited post-doctoral program in it. Terms such as orthodontist, periodontist, endodontist and pediatric dentist are reserved the same way. Specialists must list their recognized specialty directly after or below their name under rule 4715-13-02(E)." },
+      { q: "Can an Ohio dentist post patient testimonials online?", a: "Yes, but rule 4715-13-01(C) says testimonials or endorsements may be made only by patients of record. That excludes paid actors and quotes from people who never received care. Get each patient’s written permission before using their words or photo, and avoid any treatment details they have not agreed to share publicly." },
+      { q: "How long should an Ohio dental practice keep copies of its website?", a: "Rule 4715-13-01(A) says each different advertisement must be kept for two years at the dental facility and made available within 24 hours when an authorized agent of the board asks. For a website, keep a dated copy of each meaningful version of your pages, along with ad landing pages and marketing emails." },
+      { q: "How much does a SaySites website for a Cleveland dental practice cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment request form, Dentist structured data, a booking button that links to your current scheduler and English or Spanish pages. You can ask for a free redesign preview of your current site first." },
+    ],
+    about: ['Ohio State Dental Board', 'Dental advertising', 'Dental practice websites', 'Cleveland, Ohio'],
+    published: '2026-11-03',
     status: 'published',
   },
   // The pillar guides, one a day after these (lib/articles-pillars).
