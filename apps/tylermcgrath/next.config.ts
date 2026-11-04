@@ -5,6 +5,8 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
+  // /blog/<slug>/index.html, so Apache serves clean URLs with no rewrites.
+  trailingSlash: true,
   // Build on its own, not as part of the monorepo root.
   turbopack: { root: path.resolve(__dirname) },
 };

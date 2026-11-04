@@ -449,6 +449,7 @@ export default function Studio() {
             <button onClick={() => open("index")}>
               The portfolio <sup>{projects.length}</sup>
             </button>
+            <a href="/blog/">Journal</a>
             <a href={MMG} target="_blank" rel="noopener noreferrer">
               Connect ↗
             </a>
