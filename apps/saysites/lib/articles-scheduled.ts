@@ -8431,6 +8431,363 @@ The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [
     published: '2026-11-03',
     status: 'published',
   },
+  {
+    slug: 'baltimore-law-firm-website-design',
+    title: 'Baltimore Law Firm Websites Under Maryland Rule 19-307',
+    description: 'Plan a Baltimore law firm website under Maryland Rules 19-307.1 to 19-307.5: results disclaimers, three-year records, trade names and solicitation limits.',
+    kind: 'guide',
+    summary: [
+      'Maryland’s lawyer advertising rules are Rules 19-307.1 to 19-307.5. A website is advertising, and every communication must name at least one attorney responsible for its content.',
+      'Past results need an express, conspicuous statement that each case is different and past results do not guarantee future success. Endorsements must come from real former clients.',
+      'Keep a copy of each version of the site for at least three years after it stops running, with a record of when and where it appeared.',
+      'A trade name built on “Baltimore,” “Baltimore County” or “Maryland” ordinarily breaks Rule 19-307.5, because it suggests a government office. Words like “community” and “neighborhood” carry the same risk.',
+      'Baltimore City and Baltimore County are separate jurisdictions with separate courts. Pages that say which courthouse a case goes to answer what clients actually ask.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1712244743231-980c9edd0c75?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of Baltimore’s Inner Harbor on a clear day, with rows of boats in the marina, the waterfront promenade and downtown office towers behind' },
+    body: `A Baltimore law firm website is attorney advertising under the Maryland Attorneys' Rules of Professional Conduct, and five rules set the limits: [Rules 19-307.1 through 19-307.5](https://www.mdcourts.gov/attygrievance/rules), Maryland's versions of ABA Model Rules 7.1 to 7.5. In practice that means four things for the site itself: name at least one responsible attorney, put a conspicuous disclaimer next to any past results, keep copies of the site for three years, and choose a firm name that does not sound like a government office. Two Maryland statutes add rules for direct mail and email after accidents and arrests.
+
+Maryland kept much of its older rule language when other states rewrote theirs, so advice written for another state, or for the current ABA Model Rules, can be wrong here in both directions. This guide walks through each rule as it applies to a firm practicing in Baltimore City or Baltimore County, then covers the courts, how local clients search, a page plan and a checklist. It is a planning guide with each source linked, not legal advice. For a close question, ask Bar Counsel, the Maryland State Bar Association's ethics service or your own lawyer.
+
+## Which Maryland rules govern a law firm website?
+
+The Attorney Grievance Commission publishes links to the full rules on its [rules page](https://www.mdcourts.gov/attygrievance/rules). The ones that matter for a website are:
+
+1. **Rule 19-307.1, communications about an attorney's services.** No false or misleading statements. A communication misleads if it misstates fact or law or leaves out a fact needed to make it accurate, if it is likely to create unjustified expectations about results, or if it compares the attorney's services with others' without factual support.
+2. **Rule 19-307.2, advertising.** Allows advertising in public media and through communications that do not involve in-person contact, sets the record-keeping duty, limits paying anyone for a recommendation and requires the name of a responsible attorney.
+3. **Rule 19-307.3, direct contact with prospective clients.** Bars live solicitation for financial gain and sets the "Advertising Material" label for written solicitations.
+4. **Rule 19-307.4, fields of practice.** You may say what you do and do not practice. Lawyers admitted before the Patent and Trademark Office may use "Patent Attorney."
+5. **Rule 19-307.5, firm names and letterheads.** Trade names, multi-state firms, public officials and implied partnerships.
+
+There is no Maryland filing requirement for a firm's own website, and no state agency approves advertising in advance. The duties are in the content and in the records you keep.
+
+## What does Rule 19-307.2 require on every page?
+
+Two things, and both are easy to build in once.
+
+**A responsible attorney's name.** Rule 19-307.2(d) says any communication under the rule must include the name of at least one attorney responsible for its content. A site-wide footer line does it: the firm name, "Attorney responsible for this website: Jane Doe," the office address and a phone number. Put the same line on paid-search landing pages, intake pages a vendor hosts for you and any microsite for a single practice area.
+
+**Records for three years.** Rule 19-307.2(b) requires keeping a copy or recording of each advertisement or communication for at least three years after its last dissemination, along with a record of when and where it was used. Comment 6 explains this supports enforcement and does not mean anyone reviews your ads first. A website is easy to change and easy to forget, so the practical habit is a dated snapshot whenever the content changes in a way that matters: a new result, a new attorney, a new fee statement, a new practice area. Keep the snapshots and a one-line change log in the same folder as your other marketing files. Three years is longer than many states ask for, so a routine copied from a firm elsewhere may not be enough.
+
+> **Tip:** Contingency fee language needs one more line. Under Rule 19-307.2(e), an ad that says no fee will be charged unless there is a recovery must also say whether the client will be liable for expenses. Put that sentence directly under "No fee unless we win," not on a separate fees page.
+
+## How must a Baltimore firm present verdicts, settlements and testimonials?
+
+Carefully, and Maryland is specific about it. The comments to [Rule 19-307.1](https://www.mdcourts.gov/attygrievance/rules) say that a claimed record of favorable outcomes must be accompanied by an express, conspicuous statement that each case is different and past results do not guarantee future success. They also say endorsements must come from a genuine, pre-existing client who actually benefited from the attorney's services.
+
+On a website that translates into a few design decisions:
+
+- **The disclaimer sits with the results.** Place a sentence such as "Every case is different. Past results do not guarantee a similar outcome in your case." directly above or below the results list, in body-size type. A footnote in grey eight-point text at the bottom of the page is hard to call conspicuous.
+- **Results that appear elsewhere carry it too.** If the home page shows a "Recent results" strip, or a practice page lists a settlement, the statement goes there as well. The same applies to a results line inside a hero banner.
+- **Each result gets context.** Case type, year, court or forum, and whether the figure was a verdict, a settlement, gross or net. Leaving out that a verdict was reduced on appeal is the kind of omission Rule 19-307.1(a) covers.
+- **Testimonials only from real clients.** No actors, no composites, no reviews written by staff. Use the client's own words, with their written permission when you copy them onto your site.
+- **No comparisons you cannot prove.** "Baltimore's top-rated injury firm" compares you with other lawyers. Unless the statement has factual support you could show, Rule 19-307.1(c) says it misleads.
+
+Badges and awards follow the same standard. Before a ratings logo goes in the footer, find out how the organization picks lawyers and whether placement is paid; a badge that implies an independent judgment that never happened is a misleading communication.
+
+![Black iron cannon on a stone base at the top of Federal Hill Park, looking out over the Inner Harbor marina and the downtown Baltimore skyline](https://images.unsplash.com/photo-1759187425757-8633001db4f9?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Maryland lawyer say "specialist" or "expert"?
+
+Rule 19-307.4 is short. It lets you communicate that you do or do not practice in particular fields, and lets lawyers admitted to practice before the U.S. Patent and Trademark Office use "Patent Attorney." Unlike the current ABA Model Rule and some other states, Maryland's version has no paragraph describing when a lawyer may claim certification as a specialist. That does not make the word free to use. Any title still has to pass Rule 19-307.1: it cannot mislead and cannot create unjustified expectations.
+
+A sensible approach for page copy:
+
+- "Our practice is limited to workers' compensation" or "We handle only criminal defense" is the clearest kind of statement the rule allows, if it is true.
+- A board certification from a real certifying organization can go on a bio with the organization named, so a reader does not assume the State of Maryland granted it.
+- "Expert," "specialist" and "the best" without that kind of support are where questions start. If you cannot explain what stands behind the word, leave it out.
+- Remember page titles, headings and image descriptions. "Baltimore DUI Expert" in a title tag is still a communication about your services.
+
+## What can a Baltimore firm call itself online?
+
+This is where Baltimore firms most often get caught, because the obvious marketing name is the one Maryland warns against. Rule 19-307.5 lets a lawyer in private practice use a trade name if it does not imply a connection with a government agency or with a public or charitable legal services organization. Comment 2 then lists names that ordinarily violate the rule, and the examples are local: proper names of government units, including "Baltimore," "Baltimore County," "Annapolis" and "Maryland." It also flags words associated with public or charitable services, such as "public," "legal aid," "community" and "neighborhood," and names of universities without a real affiliation.
+
+Comment 3 says geographic names that are not also government units ordinarily do not violate the rule, and that any doubt about a name's misleading connotations "may be resolved against use of the name."
+
+What that means in practice:
+
+1. **Firm names built on "Baltimore" or "Maryland" need a hard look.** A name that pairs "Baltimore" with a practice area and "Law Center" reads like the kind of name comment 2 describes. A name based on the lawyers' own names avoids the question entirely.
+2. **Domain names deserve the same care.** The rule text does not mention website addresses, but if a domain becomes the name the firm is known by, in ads or on a Google profile, the same concern applies. Keep a keyword-heavy domain as a redirect rather than as your public name, or ask for an ethics opinion first.
+3. **Multi-jurisdiction firms must show limits.** Under Rule 19-307.5(b), a firm with offices in more than one jurisdiction may use the same name in each, but must indicate the jurisdictional limits of lawyers listed at an office who are not licensed where that office is. Many Baltimore firms have lawyers admitted in the District of Columbia, Pennsylvania or Virginia, so put each lawyer's admissions on their profile and next to their name on office pages.
+4. **No implied partnership.** Lawyers who share office space but do not practice together cannot use a name like "Smith and Jones."
+5. **Public officials.** A lawyer holding public office cannot stay in the firm name during any substantial period when they are not actively and regularly practicing with the firm.
+
+Your Google Business Profile has its own rule that points the same way. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask for your real-world name as used on signage and stationery, with no added keywords or locations. A profile named "Doe Law | Baltimore Car Accident Lawyer" breaks Google's rules, and the "Baltimore" in it would also be the word Maryland's comments warn about.
+
+## Where does solicitation start for a website?
+
+The website is general advertising. Solicitation rules begin when the firm reaches out to a particular person.
+
+**Live contact.** Rule 19-307.3(a) bars soliciting by in-person, live telephone or real-time electronic contact when a significant motive is the lawyer's financial gain, unless the person is a lawyer or has a family, close personal or prior professional relationship with the lawyer. Treat a chat window that opens a conversation on its own the way you would treat a live call: let it answer questions people ask, never push for a signed agreement and never promise outcomes.
+
+**Written solicitations.** Under Rule 19-307.3(c), a written, recorded or electronic solicitation to someone known to need legal services in a particular matter must say "Advertising Material" on the outside of any envelope and at the beginning and end of a recorded or electronic message. Comment 7 says the label does not apply to replies to a prospective client's own request, which covers the normal answer to a contact form.
+
+**Two statutes add more.** Maryland's Business Occupations and Professions Article goes further for certain matters:
+
+- [Section 10-605.1](https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gbo&section=10-605.1&enactments=false) bars a lawyer from sending a communication to seek employment about a personal injury or wrongful death action, or an accident or disaster involving the recipient or a relative, unless the accident or disaster happened more than 30 days before the communication is sent. Communications sent at the prospective client's request are excluded.
+- [Section 10-605.2](https://mgaleg.maryland.gov/mgawebsite/Laws/StatuteText?article=gbo&section=10-605.2&enactments=false) covers solicitations about those matters and about criminal prosecutions, or traffic prosecutions that can lead to incarceration, involving the recipient or a relative. Each one must say "this is an advertisement" prominently at the beginning and end, the envelope cannot reveal the nature of the legal matter, and a copy, with the recipient's name and contact details, must be filed with Bar Counsel within three days after it is sent. It may not state or imply approval by Bar Counsel or the State.
+
+So a Baltimore criminal defense or traffic practice that emails or mails people after an arrest has labeling and filing duties, and an injury practice has a 30-day wait. Neither touches the website itself, but they matter for the email sequences and landing pages many marketing vendors bundle with a site.
+
+> **Note:** The label words differ. The rule says "Advertising Material"; the statute says "this is an advertisement." A covered mailing should satisfy both. If you are unsure which applies, ask before the campaign runs, not after.
+
+## Can you pay for leads, ads and referral services?
+
+Yes, within Rule 19-307.2(c). You may pay the reasonable cost of permitted advertising and written communications, the usual charges of a legal service plan or a not-for-profit lawyer referral service, and the price of a purchased practice. A non-exclusive reciprocal referral arrangement with another professional is allowed if the client is told about it. What you may not do is give anything of value to a person for recommending you.
+
+Rule 19-307.2(f) adds that a lawyer in an advertising group, referral service or similar program stays personally responsible for compliance and must be able to substantiate it. So the claims a lead vendor makes about you, on its pages and in its ads, are your claims. Before signing, read what the vendor says to the public: "We matched you with the best lawyer for your case" is a recommendation, and nobody can substantiate "best."
+
+![Baltimore's Inner Harbor shown from day into night in one wide view, with lit office towers and traffic trails on the left and a gold sunset over the water on the right](https://images.unsplash.com/photo-1542031630-99647f0f3e54?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in Baltimore look for a lawyer?
+
+By problem, then by place, and the place matters more here than in most metro areas, because Baltimore City and Baltimore County are separate jurisdictions with separate courts. Someone arrested in Fells Point and someone arrested in Towson are going to different buildings, and a page that says so answers the first question they have.
+
+**Name the right courthouse.** The [Circuit Court for Baltimore City](https://www.mdcourts.gov/courtsdirectory/baltimorecity) sits in the Clarence M. Mitchell, Jr. Courthouse at 100 N. Calvert Street, with the Clerk's Office in the Elijah Cummings Building. The Orphans' Court, where estates are handled, is in Suite 311 of the Cummings Building at 111 N. Calvert Street, which is a useful detail for a probate or estate planning page. The District Court has four Baltimore City locations: Wabash Avenue, Hargrove on Patapsco Avenue, Eastside on North Avenue and East Fayette Street. In the county, the [Circuit Court for Baltimore County](https://www.mdcourts.gov/courtsdirectory/baltimore) is at 401 Bosley Avenue in Towson, and the District Court sits in Catonsville, Towson and Essex. Federal cases go to the [U.S. District Court for the District of Maryland](https://www.mdd.uscourts.gov/), whose Northern Division courthouse is at 101 West Lombard Street, with the Southern Division in Greenbelt.
+
+**Plan for phones and for more than one language.** The Census Bureau's [QuickFacts for Baltimore City](https://www.census.gov/quickfacts/baltimorecitymaryland) shows a 2025 population estimate of 569,997. For 2020 to 2024 it reports that 12.0 percent of residents age five and up speak a language other than English at home, 9.3 percent were born outside the United States and 85.4 percent of households have a broadband internet subscription. That last figure means a real share of households are going online by phone or not at home at all, so the phone number, the hours and a short form have to work on a small screen first. Maryland courts provide spoken-language interpreters at no cost to parties, witnesses and victims, requested on Form CC-DC-041, ideally 30 days before the court date, according to the Judiciary's [interpreter tip sheet](https://www.mdcourts.gov/sites/default/files/import/video/docs/tipsheetrequestinterpreter.pdf). If anyone at your firm speaks Spanish or another language your clients use, say so, and consider translated pages linked the way Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions) describes. A translated page is still advertising, so the responsible attorney line and every results disclaimer go with it.
+
+**Be honest about where you practice.** A firm that genuinely appears in Towson, Annapolis or Ellicott City can say so on each practice page and explain the local process. A separate thin page for every town in the region, each with the place name swapped, is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages, and readers notice too.
+
+For help writing the pages themselves, read [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** Want to see this on your own site first? SaySites will [rebuild your current site as a free redesign preview](/redesign) with your real content, so you can judge the layout with your Baltimore pages, your attorneys and your results in place.
+
+## How should the Google Business Profile be set up?
+
+One profile per real office where clients are served. Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), so the profile matters as much as the site. Use the firm's real name, the primary category that matches the work you most want, true secondary categories, and the same address and phone number the website shows. A firm with offices downtown and in Towson should link each profile to its own office page, not to the home page.
+
+Profile posts and answers to questions are communications about your services too. The results disclaimer applies to a post that mentions a settlement, and the three-year record duty applies to posts as much as to pages. Save a copy when you publish one.
+
+## A page plan for a Baltimore law firm
+
+| Page | What it should cover | Maryland point to watch |
+|---|---|---|
+| Home | Who you help, practice areas, phone, next step | Responsible attorney named in the footer (19-307.2(d)) |
+| Practice area pages | One per area, with the City or County process | Contingency wording also states expense liability (19-307.2(e)) |
+| Attorney profiles | Admissions in every jurisdiction, education, languages | Show limits for lawyers not licensed in Maryland (19-307.5(b)) |
+| Results | Each result with type, year and court | Conspicuous "each case is different" statement beside them |
+| Testimonials | Real clients' own words, with permission | Bona fide former clients only |
+| Office pages | Address, hours, parking, nearest courthouse | Name matches the Google profile, no "Baltimore" trade name |
+| Fees | How fees work and what is included | Nothing that creates unjustified expectations |
+| Contact | Short form, phone, what happens next | Replies to requests need no "Advertising Material" label |
+| Spanish pages | Key pages fully translated | Disclaimers translated too |
+
+Structured data helps search engines read the same facts you show. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the markup, and schema.org's [LegalService](https://schema.org/LegalService) type fits a firm. Mark up only what the visible page says. For the full list of pages, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## A Maryland pre-launch checklist
+
+- [ ] At least one responsible attorney is named on every page and landing page.
+- [ ] A dated copy of the site is saved at launch, with a plan to save one whenever content changes, kept for three years.
+- [ ] Every results list carries an express, conspicuous statement that each case differs and past results do not guarantee future success.
+- [ ] Testimonials come only from real former clients, unedited, with permission.
+- [ ] "No fee unless we win" is followed by a plain statement about expenses.
+- [ ] No comparisons with other lawyers that you cannot back up.
+- [ ] The firm name, trade name and Google profile name avoid "Baltimore," "Baltimore County," "Maryland," "community," "legal aid" and similar words that suggest a public office.
+- [ ] Each attorney profile lists admissions and any jurisdictional limits.
+- [ ] Mailings and emails after accidents or arrests follow Sections 10-605.1 and 10-605.2, including the 30-day wait and the Bar Counsel filing.
+- [ ] Lead vendors and referral services make no claims you could not substantiate.
+- [ ] Translated pages repeat every required line.
+- [ ] Structured data matches the visible page.
+- [ ] Pages work with a keyboard and a screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+A last test worth running on every page comes from Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): would someone facing this problem in Baltimore leave the page knowing more, and knowing what to do next?
+
+## How SaySites builds a Baltimore law firm website
+
+SaySites builds the plan above into a working site: a page for each practice area, a profile for each attorney with their admissions, a page for each office and a consultation form with questions that fit the practice area, including the other party's name so you can run a conflict check before you call back. The firm is marked up as a LegalService, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+You change the site by saying what you want, for example "put 'Every case is different. Past results do not guarantee future success.' directly above the results list on every page that shows one" or "add 'Admitted in Maryland and the District of Columbia' under Mr. Okafor's name." Each change waits as a draft until you approve it, which also helps you keep the dated record Rule 19-307.2(b) asks for. Results, testimonials and credentials come only from you. SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your lawyers also practice in the District, compare the rules in our [Washington, DC law firm website guide](/blog/washington-dc-law-firm-website-design).`,
+    faq: [
+      { q: 'Does a Maryland law firm website need an attorney advertising label?', a: 'Not on the website itself. Rule 19-307.3(c) requires the words “Advertising Material” on written, recorded or electronic solicitations sent to someone known to need legal help in a particular matter, and replies to a prospective client’s own request are exempt. Every communication does need the name of at least one responsible attorney under Rule 19-307.2(d).' },
+      { q: 'How long must a Maryland lawyer keep copies of website content?', a: 'Rule 19-307.2(b) requires keeping a copy or recording of each advertisement or communication for at least three years after it was last disseminated, along with a record of when and where it was used. For a website, saving a dated copy whenever the content meaningfully changes, with a short note of what changed, is a practical way to meet it.' },
+      { q: 'What disclaimer does Maryland require for case results?', a: 'The comments to Rule 19-307.1 say a claimed record of favorable outcomes must come with an express, conspicuous statement that each case is different and past results do not guarantee future success. On a website, place that sentence directly beside each results list or results banner, in readable type, rather than only in the footer.' },
+      { q: 'Can a Baltimore law firm use “Baltimore” in its name?', a: 'Usually not as a trade name. Comment 2 to Rule 19-307.5 lists proper names of government units, including “Baltimore,” “Baltimore County” and “Maryland,” as names that ordinarily imply a government connection and violate the rule. Names based on the lawyers’ own names avoid the issue, and comment 3 says doubts should be resolved against using a name.' },
+      { q: 'Can a Maryland lawyer email someone after a car accident?', a: 'Not for 30 days. Section 10-605.1 of the Business Occupations and Professions Article bars sending a communication seeking employment about a personal injury, wrongful death, accident or disaster within 30 days of it, unless the person asked. After that, Section 10-605.2 requires “this is an advertisement” at the start and end and a filing with Bar Counsel within three days.' },
+      { q: 'Can a Maryland firm pay a lead generation company?', a: 'You may pay the reasonable cost of permitted advertising and the usual charges of a legal service plan or not-for-profit referral service, but not give anything of value for a recommendation. Rule 19-307.2(f) keeps you personally responsible for the program’s compliance, so check that the vendor makes no claims about you that you could not substantiate.' },
+      { q: 'How much does a SaySites website for a Baltimore law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before deciding.' },
+    ],
+    about: ['Maryland Attorneys’ Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Baltimore, Maryland'],
+    published: '2026-11-04',
+    status: 'published',
+  },
+  {
+    slug: 'phoenix-dental-practice-website-design',
+    title: 'Phoenix Dental Practice Websites: Arizona Ad Rules',
+    description: 'Plan a Phoenix dental practice website under Arizona Board rules: the general dentist phrase, the nine specialties, AHCCCS pages and patient privacy.',
+    kind: 'guide',
+    summary: [
+      'Arizona dental advertising rules live in A.A.C. R4-11-1101 and R4-11-1102 and in the unprofessional conduct list in A.R.S. 32-1201.01. Your website counts as advertising.',
+      'A dentist advertising specific services, or a certification outside a recognized specialty, must include the phrase “Services provided by an Arizona licensed general dentist.”',
+      'Only dentists who limit their practice to one of the nine specialties in R4-11-1102 may say “specialist.” Arizona’s list is shorter than the twelve specialties recognized nationally.',
+      'If you take AHCCCS plans, say which ones and explain the basics. AHCCCS covers emergency dental care for members 21 and older up to $1,000 per contract year.',
+      'Keep tracking scripts off appointment and patient forms, and never answer a review with details about the patient. A federal settlement with a dental practice shows why.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1650917415432-0828fd525b92?auto=format&fit=crop&w=1600&q=75', alt: 'Palm-lined street in central Phoenix under a clear teal sky, with green glass and brick-red office towers on both sides and traffic lights over the road' },
+    body: `A Phoenix dental practice website is advertising under Arizona law, and the Arizona State Board of Dental Examiners has two short rules for it: [R4-11-1101](https://www.law.cornell.edu/regulations/arizona/Ariz-Admin-Code-SS-R4-11-1101), which requires a set phrase when you advertise specific services, and R4-11-1102, which decides who may use the word "specialist." Behind both sits the statute's list of unprofessional conduct, [A.R.S. 32-1201.01](https://www.azleg.gov/ars/32/01201-01.htm), which bars false, fraudulent or misleading statements and advertising that tends to deceive the public. Get those three right, add the privacy habits every practice needs, and the site is on solid ground.
+
+Arizona's approach is narrower than some states. There is no filing office for ads and no long list of required disclaimers. But the general dentist phrase catches many practices by surprise, because it is required on exactly the pages dentists most want to promote: implants, aligners, sedation, cosmetic work. This guide covers the rules page by page, then AHCCCS, patient privacy, how Phoenix patients search, a page plan and a checklist. It is a planning guide with sources linked, not legal advice. For your own situation, ask the Board or your attorney.
+
+## Which Arizona rules apply to a dental website?
+
+Three sources, all short enough to read in one sitting:
+
+1. **A.A.C. R4-11-1101, advertising.** A dentist who advertises specific dental services, or a certification in a non-specialty area, must include the phrase "Services provided by an Arizona licensed general dentist." Dental hygienists advertising specific hygiene services use "Services provided by an Arizona licensed dental hygienist," and denturists use "Services provided by an Arizona certified denturist."
+2. **A.A.C. R4-11-1102, advertising as a recognized specialist.** Who may use "specialist" or "specialty," the list of specialties Arizona recognizes and the qualifications that count.
+3. **A.R.S. 32-1201.01, unprofessional conduct.** Paragraph 20 covers advertising: no false, fraudulent or misleading statements about your skill, methods or practices, or anyone else's, and no advertising that tends to deceive or defraud. Paragraph 8 bars saying a condition can be permanently corrected, or corrected within a stated time, when that is not true. Paragraph 18 bars practicing under a false or assumed name except as [A.R.S. 32-1262](https://www.azleg.gov/ars/32/01262.htm) allows.
+
+The rules were last substantively amended in 2005, according to the historical notes, so most of what follows has been stable for years. It is still worth checking the Board's current rules before launch, because a rule change would not announce itself on your website.
+
+## Where does the general dentist phrase have to appear?
+
+Wherever the site advertises a specific service. For a general practice, that is most of the site: the home page if it lists services, every service page and any landing page built for an ad. The rule does not say where on the page, so the safest reading is somewhere a patient will see it while reading about the service, not only in a footer.
+
+A clean way to handle it:
+
+- **Put it near the service name.** Under the heading "Dental Implants in Phoenix," a line such as "Services provided by an Arizona licensed general dentist" reads naturally and leaves no doubt.
+- **Repeat it on each service page.** A visitor who lands on the aligner page from a search never sees the home page.
+- **Include ads and profiles.** Paid search landing pages, social posts that promote a service and your Google Business Profile's services list are also advertising specific services.
+- **Name the dentist too.** The phrase says a general dentist provides the service. Naming that dentist on the page ("Dr. Maria Lopez, DDS, general dentist") makes it concrete and helps patients choose.
+
+The phrase also covers certifications "in a non-specialty area." If a general dentist holds a fellowship or a training certificate in implants, sleep apnea appliances or sedation and mentions it, the general dentist phrase goes with it, so no reader mistakes the certificate for a specialty.
+
+> **Tip:** A practice with both general dentists and specialists should label each service by who provides it. "Root canal therapy, provided by our general dentists" and "Complex endodontic cases, treated by Dr. Chen, endodontist" says exactly what the rule is trying to make clear.
+
+![White dental chair with its arm-mounted light and instrument tray in a bright, minimal treatment room, with daylight coming through a tall window](https://images.unsplash.com/photo-1728342057953-94bfad8f0e7e?auto=format&fit=crop&w=1200&q=75)
+
+## Who may say "specialist" in Arizona?
+
+Under [R4-11-1102](https://www.law.cornell.edu/regulations/arizona/Ariz-Admin-Code-SS-R4-11-1102), only a dentist who limits their practice exclusively to one or more recognized specialty areas may use "specialist" or "specialty" in advertising. Arizona's rule lists nine areas:
+
+1. Endodontics
+2. Oral and maxillofacial surgery
+3. Orthodontics and dentofacial orthopedics
+4. Pediatric dentistry
+5. Periodontics
+6. Prosthodontics
+7. Dental public health
+8. Oral and maxillofacial pathology
+9. Oral and maxillofacial radiology
+
+The dentist must also qualify in at least one way the rule describes: having announced the specialty before the end of 1964 under the old approach, completing an accredited specialty program of at least two years, being board eligible, or being board certified by a qualifying specialty board.
+
+Two practical consequences for a website:
+
+- **A general practice cannot call itself a specialty practice.** A practice name with "specialists" in it, or "implant specialist" on a general dentist's bio, is the kind of claim the rule exists to stop. Cosmetic dentistry and implant dentistry are not on the list at all.
+- **The national list is longer than Arizona's.** The [National Commission on Recognition of Dental Specialties and Certifying Boards](https://ncrdscb.ada.org/recognized-dental-specialties) now lists twelve specialties, adding dental anesthesiology, oral medicine and orofacial pain. Arizona's rule, as published, still lists nine. A dentist trained in one of those three should check with the Board before using "specialist" on a Phoenix site, and can always describe their training plainly in the meantime.
+
+## What claims cause trouble on a dental website?
+
+Most problems come from three habits common in dental marketing.
+
+**Timelines and guarantees.** Paragraph 8 of A.R.S. 32-1201.01 makes it unprofessional conduct to represent that a correctable condition can be corrected within a stated time when that is not true, or that a condition that cannot be corrected can be. "Straight teeth in six months," "teeth in a day" and "permanent results" are statements about outcomes. If you use them, they must be true for the patients the page is aimed at, and the page should say what affects the result. Usually it is better to describe the process and the typical range, then say the dentist will give a personal estimate at the exam.
+
+**Before and after photos.** They are statements about your skill and methods under paragraph 20. Use only your own patients' photos, with written authorization, with no retouching of the result, and with a short note on what treatment was done. A stock smile presented as a patient result is misleading.
+
+**Comparisons and superlatives.** "Best dentist in Phoenix" or "the most advanced office in the Valley" are claims about other dentists that you cannot prove. Describe what you have instead: the equipment, the hours, the languages spoken, the insurance you take.
+
+**Practice names.** A.R.S. 32-1262 lets dentists practice under a name other than their own if it is not deceptive or misleading, and requires a professional corporation or PLLC to post the dentist owners' names and record address at the entrance of each location. Your website should match that openness: name the owner dentists on the about page and on each location page, so a patient who chose you by the practice name knows who will treat them.
+
+## Should the site explain AHCCCS and insurance?
+
+Yes, if you accept AHCCCS health plans, because it is one of the most common questions Phoenix patients have and the answer changes by age. The Census Bureau's [QuickFacts for Phoenix](https://www.census.gov/quickfacts/phoenixcityarizona) reports that 16.1 percent of residents under 65 have no health insurance and 23.6 percent of residents are under 18, so a practice that sees children and families gets these questions every day.
+
+AHCCCS policy [310-D1](https://azahcccs.gov/shared/Downloads/MedicalPolicyManual/300/310-D1.pdf) says members 21 and older are covered for emergency dental services up to $1,000 per member per contract year, which runs October 1 to September 30, with unused amounts not carrying over. Dental services for members under 21 are covered under a separate policy. Long-term care members have their own adult dental limit under policy [310-D2](https://azahcccs.gov/shared/Downloads/MedicalPolicyManual/300/310D2.pdf).
+
+On your site, that suggests:
+
+- An insurance page that lists the AHCCCS health plans and commercial plans you actually accept, kept current. Remove a plan the day you leave its network.
+- A plain summary of what adult AHCCCS dental coverage is and is not, linked to the policy, with the suggestion to confirm benefits with their plan.
+- A clear note for parents about children's coverage, and a statement of the ages you see.
+- Prices or payment options for patients without coverage, if you offer them. Any fee you list has to be accurate and say what it includes, since a misleading price is a misleading statement under paragraph 20.
+
+![Gloved hands holding a dental mirror and a scaler during a close-up dental exam of a relaxed patient's front teeth](https://images.unsplash.com/photo-1606811971618-4486d14f3f99?auto=format&fit=crop&w=1200&q=75)
+
+## How do you keep patient information safe on the website?
+
+A dental website collects health information the moment a patient types a reason for their visit, so privacy belongs in the design.
+
+**Appointment forms.** Ask only what you need to schedule: name, phone, email, new or returning, preferred times, insurance carrier. Tell patients not to describe symptoms or send records through the form, and offer a phone number for anything urgent.
+
+**Tracking scripts.** The Department of Health and Human Services' [guidance on online tracking technologies](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html) says tracking on patient portals and on pages that collect appointment or registration details can involve protected health information. A June 2024 federal court order vacated one part of that guidance, about tracking on public pages that do not collect such details, and HHS says it is evaluating next steps. The cautious course is to keep advertising pixels and session recorders off appointment, registration and portal pages entirely, and to talk to your HIPAA adviser before adding any third-party script.
+
+**Reviews.** Answer reviews politely, never with details about the patient's visit, not even to correct the record. HHS announced in December 2022 that a California dental practice [paid $23,000 and agreed to a corrective action plan](https://www.hhs.gov/hipaa/for-professionals/compliance-enforcement/agreements/new-vision/index.html) after its responses to online reviews disclosed patients' protected health information. A good reply thanks the person, says you take feedback seriously and invites them to call the office.
+
+> **Note:** Never offer discounts, gifts or entries in a drawing in exchange for reviews. Google's [policy on fake engagement](https://support.google.com/contributionpolicy/answer/7400114) prohibits incentivized reviews, and a pattern of them can cost you reviews you earned honestly.
+
+## How do patients in Phoenix look for a dentist?
+
+They search for a problem or a service near where they live or work: "emergency dentist Phoenix," "kids dentist Arcadia," "dentist open Saturday near me," "dentista en Phoenix que acepta AHCCCS." Distance matters in a metro area this spread out, so the pages that do well are specific about the office's location and what it offers.
+
+**One page per real office.** Each location page gets the full address, a map, parking notes, hours, the dentists who work there, the plans accepted at that location and the languages spoken. That same information goes into the office's Google Business Profile. Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), and its [business representation guidelines](https://support.google.com/business/answer/3038177) ask for your real business name, without added keywords like "Best Phoenix Dentist," plus an address where patients are actually seen. Individual dentists can have their own profiles under those guidelines in some circumstances; read them before creating one.
+
+**Spanish pages, done properly.** QuickFacts also counts 19.0 percent of Phoenix residents as born outside the United States, and Spanish is widely spoken across the city. If someone in the office speaks Spanish, say so on every page, and consider full Spanish versions of the home page, the main service pages, the insurance page and the appointment form, linked as Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions) describes. Keep the general dentist phrase on the Spanish pages as well. The rule quotes the phrase in English, so the careful approach is the English wording as written with a Spanish translation beside it.
+
+**Honest service areas.** A practice near the Biltmore can say it sees patients from nearby neighborhoods. A page for every suburb in the Valley, each identical except for the name, is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages. Write location pages only for offices that exist.
+
+**Hours and emergencies.** If you see same-day emergencies, say how: call by a certain time, what counts as an emergency, what to do after hours. That answer is often what decides who gets the call.
+
+For a full list of pages, see our [medical practice website checklist](/blog/medical-practice-website-checklist), and for profile setup, our [Google Business Profile setup guide](/blog/google-business-profile-setup-guide).
+
+> **Tip:** Curious how your current site would look rebuilt? SaySites will [make a free redesign preview](/redesign) from your own pages, so you can see service pages with the general dentist line and your AHCCCS details in place before you decide anything.
+
+![Mid-rise apartment buildings, tree-lined streets and parking lots in central Phoenix seen from above, with a tall office tower in the distance under a blue sky](https://images.unsplash.com/photo-1648160670241-1d6f5e713996?auto=format&fit=crop&w=1200&q=75)
+
+## A page plan for a Phoenix dental practice
+
+| Page | What it should cover | Arizona point to watch |
+|---|---|---|
+| Home | Who you see, main services, phone, booking | General dentist phrase if services are listed |
+| Service pages | One per service: what it is, steps, recovery, cost range | Phrase on each page; no timelines that are not true |
+| Specialist pages | Each specialist's area and training | "Specialist" only under R4-11-1102 |
+| Team | Each dentist's degree, role and languages | Owner dentists named, matching the practice name |
+| Insurance | AHCCCS plans and other plans accepted, payment options | Kept current; no implied coverage you do not offer |
+| Locations | Address, hours, parking, map, dentists there | Matches the Google profile exactly |
+| Before and after | Your own patients, with authorization | No retouched results, treatment described |
+| Appointment form | Basics only, with a privacy note | No tracking scripts on the form |
+| Spanish pages | Key pages and the form, fully translated | Required phrase kept in English with a translation |
+
+Structured data helps search engines read the facts you show. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the markup, and schema.org's [Dentist](https://schema.org/Dentist) type fits each office. Mark up only what the visible page says.
+
+## An Arizona pre-launch checklist
+
+- [ ] Every page that advertises a specific service includes "Services provided by an Arizona licensed general dentist," or the matching hygienist or denturist phrase.
+- [ ] Non-specialty certifications appear with the general dentist phrase.
+- [ ] "Specialist" and "specialty" appear only for dentists who limit their practice to an area listed in R4-11-1102 and meet its qualifications.
+- [ ] No statement promises a result, a permanent fix or a timeline that is not true for the patients the page addresses.
+- [ ] Before and after photos are your own patients', authorized and unretouched.
+- [ ] No "best" or comparative claims you cannot support.
+- [ ] Owner dentists are named, and the practice name is not misleading.
+- [ ] The insurance page lists only plans you currently accept, and the AHCCCS summary links to the policy.
+- [ ] Appointment forms ask for the minimum and carry no advertising or session-recording scripts.
+- [ ] Review replies never mention a patient's care.
+- [ ] Each office has one accurate Google Business Profile with the real practice name.
+- [ ] Spanish pages repeat every required line.
+- [ ] Pages work with a keyboard and a screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+The last check is the one Google itself suggests in its guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): would a Phoenix patient with a toothache, or a parent looking for a first dentist, leave the page knowing what to do next?
+
+## How SaySites builds a Phoenix dental website
+
+SaySites builds the page plan above as your practice's site: a page for each service, a team page with each dentist's role, a page for each office, and a new patient appointment request form that asks only for the basics and tells patients not to send medical details through it. Each office is marked up with Dentist structured data, a booking button can point to the scheduler you already use, and every page has to pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+You make changes by describing them, such as "add 'Services provided by an Arizona licensed general dentist' under the heading on every service page" or "take the plan we left on the 1st off the insurance page and the Spanish insurance page." Each change waits as a draft until you approve it. Credentials, reviews, photos and results come only from you, and SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your practice's site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. To see how another state handles dental advertising, read our [Houston dental website guide](/blog/houston-dental-practice-website-texas-rules).`,
+    faq: [
+      { q: 'What phrase must an Arizona dentist include in advertising?', a: 'Under A.A.C. R4-11-1101, a dentist who advertises specific dental services, or a certification in a non-specialty area, must include “Services provided by an Arizona licensed general dentist.” Hygienists and denturists have their own versions of the phrase. On a website, place it near each advertised service, including service pages, ad landing pages and service lists on the home page.' },
+      { q: 'Can a general dentist in Phoenix advertise as an implant or cosmetic specialist?', a: 'No. R4-11-1102 allows “specialist” or “specialty” only for dentists who limit their practice exclusively to a recognized specialty and meet its qualifications. Arizona’s list has nine areas, and neither implant nor cosmetic dentistry is among them. A general dentist can describe implant or cosmetic services, with the general dentist phrase beside them.' },
+      { q: 'Which dental specialties does Arizona recognize?', a: 'R4-11-1102 lists endodontics, oral and maxillofacial surgery, orthodontics and dentofacial orthopedics, pediatric dentistry, periodontics, prosthodontics, dental public health, oral and maxillofacial pathology, and oral and maxillofacial radiology. The national commission now recognizes twelve, including dental anesthesiology, oral medicine and orofacial pain, so dentists in those fields should check with the Board first.' },
+      { q: 'Does AHCCCS cover dental care for adults?', a: 'AHCCCS policy 310-D1 covers emergency dental services for members 21 and older up to $1,000 per member per contract year, which runs October 1 to September 30. Unused amounts do not carry over. Children’s dental care is covered under a separate policy. Patients should confirm their benefits with their own AHCCCS health plan before treatment.' },
+      { q: 'Can a dental website use tracking pixels on the appointment form?', a: 'It is safest not to. HHS guidance says tracking on pages that collect appointment or registration details can involve protected health information. A 2024 court order vacated only the part about public pages that collect no such details. Keep advertising pixels and session recorders off forms and portal pages, and ask your HIPAA adviser before adding scripts.' },
+      { q: 'How should a Phoenix dentist reply to a negative review?', a: 'Briefly and without any detail about the patient or their treatment, even to correct the record. HHS announced in 2022 that a dental practice paid $23,000 after review responses disclosed patient information. Thank the reviewer, say you take feedback seriously and invite them to call the office so the conversation continues privately.' },
+      { q: 'How much does a SaySites website for a Phoenix dental practice cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes service pages, a team page, office pages, a new patient appointment request form, Dentist structured data, a booking button that links to your current scheduler and English or Spanish pages. You can ask for a free redesign preview of your current site first.' },
+    ],
+    about: ['Arizona State Board of Dental Examiners rules', 'Dental advertising', 'Dental practice websites', 'Phoenix, Arizona'],
+    published: '2026-11-04',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
