@@ -2,7 +2,7 @@
 {
   "title": "Entity SEO and the Knowledge Graph: How to Make Google and AI Know Who You Are",
   "metaTitle": "Entity SEO: How to Get Into Google's Knowledge Graph",
-  "description": "Entity SEO helps Google's Knowledge Graph and AI assistants recognize your brand as a distinct, trusted thing. Learn the signals, the process and the pitfalls.",
+  "description": "Entity SEO helps Google's Knowledge Graph and AI assistants recognize your brand as a distinct, trusted thing. Learn the signals, the process and pitfalls.",
   "category": "Local & Brand",
   "keywords": ["entity SEO", "knowledge graph SEO", "Google Knowledge Graph", "knowledge panel", "brand entity", "entity optimization"],
   "excerpt": "Search engines and AI models think in things, not strings. Entity SEO is how you make your brand a clearly defined thing they can recognize, describe correctly and recommend.",

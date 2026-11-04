@@ -127,6 +127,12 @@ All endpoints use JSON over HTTPS and require an API key sent in the Authorizati
 
 Many documentation platforms now generate llms.txt automatically, and some also generate **llms-full.txt**, a convention that concatenates the full text of the documentation into one file. llms-full.txt is not part of the core proposal, and for a marketing site it is usually unnecessary. For a large API reference, it can save a developer real time.
 
+### Markdown versions of pages
+
+The second half of the llms.txt proposal, clean Markdown copies of pages, is often more useful than the index file itself. The convention is to serve the Markdown at the same path with `.md` appended, so `https://docs.example.com/quickstart` would have a text twin at `https://docs.example.com/quickstart.md`. For URLs that end in a slash, the proposal suggests `index.html.md`.
+
+Markdown copies strip out navigation, cookie banners, scripts and layout, leaving only headings, paragraphs, lists, tables and code. That makes them far cheaper for a model to read and far less likely to be misparsed. If your CMS or documentation platform can generate them automatically from the same source as the HTML pages, the maintenance cost is close to zero. If they have to be maintained by hand, they will drift out of date, and a stale Markdown copy is worse than none, so only commit to them when generation is automated.
+
 ## Who actually reads llms.txt in 2026
 
 The honest answer is that llms.txt is read mainly by tools and people who choose to load it, not by the major AI answer engines as a documented part of how they rank or cite sources. Here is what is publicly known.
