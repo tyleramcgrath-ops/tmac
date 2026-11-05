@@ -8788,6 +8788,327 @@ The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [
     published: '2026-11-04',
     status: 'published',
   },
+  {
+    slug: 'louisville-law-firm-website-design',
+    title: 'Louisville Law Firm Websites: Kentucky Ad Rules Guide',
+    description: 'Plan a Louisville law firm website under Kentucky SCR 3.130 Part 7: office address, lawyer disclosures, two-year records and optional AAC review.',
+    kind: 'guide',
+    summary: [
+      'In Kentucky a website is an advertisement: SCR 3.130(7.01) covers any information that carries a lawyer’s name, with only three narrow exceptions.',
+      'Every page needs the name and office address of at least one lawyer or the firm, and a lawyer who appears in an ad must be the one doing the work unless the ad says otherwise.',
+      'Keep a copy of every version for two years after it stops running. A PDF copy is accepted.',
+      'Review by the Attorneys’ Advertising Commission is voluntary. It costs $75, and a favorable opinion protects you from discipline over that ad.',
+      'Louisville clients go to the Judicial Center or the Hall of Justice on West Jefferson Street. Pages that name the right building answer their first question.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1747975801330-83ddb8b1a3d7?auto=format&fit=crop&w=1600&q=75', alt: 'Curving pedestrian ramp through Louisville’s Waterfront Park on a summer day, with green lawns, a steel truss bridge over the Ohio River and the downtown skyline under scattered clouds' },
+    body: `A Louisville law firm website is an advertisement under Kentucky's Supreme Court Rules, so it has to follow the advertising rules in [SCR 3.130(7.01) through (7.50)](https://kybar.org/For-Members/Office-of-Bar-Counsel/Attorney-Advertising/Advertising-Rules), the solicitation rule in SCR 3.130(4.5) and the Attorneys' Advertising Commission's regulations. For the site itself, five duties matter most: show the name and office address of a responsible lawyer or the firm, make sure the lawyers you feature are the ones who do the work (or say they are not), give results their context, keep copies for two years, and claim certification only from an approved certifying body. Kentucky also offers something most states do not: an optional review of your ads, for a $75 fee, that protects you from discipline once the Commission finds an ad compliant.
+
+This guide takes each rule as it applies to a firm practicing in Louisville and Jefferson County, then covers the courts, how local clients search, a page plan and a pre-launch checklist. Every rule is linked to its source. It is a planning guide, not legal advice. For a close call, use the Kentucky Bar Association's ethics hotline or ask your own counsel.
+
+## Does Kentucky treat a law firm website as advertising?
+
+Yes, and the definition is broad. SCR 3.130(7.01) defines an advertisement as any information containing a lawyer's name or other identifying information. Only three things fall outside it: a lawyer's professional card, a public service announcement that identifies the sponsoring lawyer or firm by name, address and phone number with nothing else, and a sign on or near the office or in the building directory. A website, a Google Business Profile, a social media page and a paid search ad all carry the firm's name and none of them is on that list.
+
+The Kentucky Bar Association's [attorney advertising page](https://kybar.org/For-Members/Office-of-Bar-Counsel/Attorney-Advertising) names the internet among the media the rules cover, alongside television, radio, newspapers, billboards and correspondence. So the useful question is not whether the rules apply to your site but which parts of the site each rule touches.
+
+## Which Kentucky rules shape the pages?
+
+The KBA lists the current advertising rules on its [advertising rules page](https://kybar.org/For-Members/Office-of-Bar-Counsel/Attorney-Advertising/Advertising-Rules). For a website, these do the work:
+
+1. **SCR 3.130(7.10), communications about a lawyer's services.** The general ban on false or misleading statements.
+2. **SCR 3.130(7.15), advertising of fees.** If you advertise a fee for a routine service and take the case, you are held to that fee.
+3. **SCR 3.130(7.20), advertising.** What every ad must contain, who may appear in it, what you may pay for, and the two-year record duty.
+4. **SCR 3.130(7.40), fields of practice.** What you may say about the work you do, and when you may claim to be a certified specialist.
+5. **SCR 3.130(7.50), firm names and letterheads.** Names that mislead, firms with offices in more than one state, and lawyers who hold public office.
+6. **SCR 3.130(4.5), solicitation.** Formerly Rule 7.09. It governs reaching out to a particular person, including by email and chat.
+
+The Commission's [Regulation No. 1](https://kybar.org/Portals/0/OBC/AACRules/AACReg1.pdf) then gives examples of what it treats as false, deceptive or misleading. It is short, specific and worth reading before you write a single page, because it is where Kentucky differs most from a generic set of website rules.
+
+## What must appear on every page of a Kentucky law firm site?
+
+**A name and an office address.** SCR 3.130(7.20)(3) requires every communication under the rules to include the name and office address of at least one lawyer or law firm, and makes the Kentucky lawyers named responsible for the content. On a website, a footer that runs on every page handles it: the firm's name, a responsible lawyer, the street address of the office and the phone number. Repeat it on landing pages built for ads, on any microsite for a single practice area, and on intake pages a vendor hosts for you.
+
+**An honest office location.** Regulation No. 1 explains that a bona fide office is a physical place where the lawyer reasonably expects to provide substantial, regular and ongoing legal services. An ad must not misrepresent where the office is. A phone number with an area code for a region where you have no office needs a disclosure, and a toll-free number needs a statement of where the substantial legal services are performed. The Commission's own [FAQ](https://kybar.org/Portals/0/OBC/AACFAQsFINALApprovedat062119.pdf) lists firm location among the three oversights it sees most often.
+
+That matters in a metro area that crosses a state line. If the firm takes cases from Southern Indiana but has no office there, a page about Clark County or Floyd County clients can describe the work honestly; it cannot suggest a Jeffersonville or New Albany office that does not exist, and a local Indiana phone number forwarding to Louisville needs the disclosure.
+
+> **Tip:** Put the responsible lawyer and office address in one shared footer component rather than typing them into each page. When a lawyer leaves or the office moves, one change fixes every page.
+
+## Who can appear on the site, and what must you disclose?
+
+SCR 3.130(7.20)(5) is the second item on the Commission's list of common oversights, and it affects photos, videos and attorney pages directly. If an ad uses a lawyer's name or image:
+
+- **That lawyer does the work,** unless the ad prominently discloses that other lawyers may perform the services. A home page built around a founding partner's photo, for a firm where associates handle most intake and cases, needs that statement near the photo, not in a footer.
+- **A lawyer not licensed in Kentucky is identified as such.** If a featured lawyer is admitted only in Indiana or Ohio, say so next to their name.
+- **Referral is disclosed.** If the firm advertises for cases it intends to refer to another lawyer or firm, the ad has to say so prominently.
+
+Regulation No. 1 adds three examples that matter for photography. Showing a non-lawyer in a way that implies they are a lawyer, showing an actor in a way that implies they are a real client, or using a prop in a way that implies it came from a real legal matter can each be treated as misleading where the impression is material. Stock photos of people in suits on an attorney page, or a staged "client" in a video, are the common versions. If you use them, label them; better still, use real photos of your real team.
+
+![Sunset over the Ohio River in Louisville, with a cable-stayed bridge silhouetted against the sun and the downtown skyline reflected in calm water](https://images.unsplash.com/photo-1615825742158-5aac7849e4a4?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Louisville firm present results and testimonials?
+
+With context, which is how Kentucky frames it. Section D of [Regulation No. 1](https://kybar.org/Portals/0/OBC/AACRules/AACReg1.pdf) says ads can mislead when they create unjustified expectations or make comparisons that cannot be backed up, and then gets specific:
+
+- **General testimonials** about a client's satisfaction or the quality of the service are ordinarily not a problem on their own.
+- **Specific results,** such as a damage award, a verdict or a win record, need the context that keeps them from misleading: the facts of the matter, the law that applied, whether the case was appealed and whether it settled after the verdict.
+- **Claims of more success than other lawyers** need objective, statistically meaningful data in an identifiable practice area. Describing your experience in a field is different from claiming better results, and the regulation treats it differently.
+- **Implying a good outcome regardless of the merits,** or that the other side will be more cooperative because you are involved, is a problem unless you can substantiate it.
+
+On a results page, that means each entry carries a short paragraph rather than a dollar figure alone: the type of case, what happened, the year, the court and whether the figure was a verdict or a settlement, gross or net. A "Results" strip on the home page that shows only large numbers is the version most likely to draw questions. Section C of the regulation adds that an ad about recovering money, or defending against a claim for money, should explain the applicable legal requirements clearly and prominently, so an injury page that leads with recoveries should also explain, in plain words, what a claim involves.
+
+Fees have their own rule. Under SCR 3.130(7.15), a lawyer who advertises a fee for routine services and accepts the work must do it for that fee, and must give a detailed account of what the routine services include to the Commission and to any prospective client who asks. If your site lists a flat fee for an uncontested divorce or a simple will, write the description of what is included before you publish the price, and put it on the same page.
+
+## Can a Kentucky lawyer say "specialist" or "board certified"?
+
+Only within SCR 3.130(7.40). You may say which fields you do or do not practice in. A lawyer admitted before the U.S. Patent and Trademark Office may use "Patent Lawyer," and a lawyer in admiralty practice may use "Admiralty" or "Proctor in Admiralty." Beyond that, you may not state or imply that you are certified as a specialist unless three conditions are all met:
+
+1. The certifying organization is approved by an appropriate state authority or accredited by the American Bar Association.
+2. The organization's name is clearly identified in the same communication.
+3. The certification is current and you are in good standing.
+
+Check page titles, headings, image descriptions and meta descriptions too. "Louisville DUI Specialist" in a title tag implies certification just as clearly as a sentence on the page, and search results show the title to people who never open the page. "Our practice is limited to criminal defense" says something useful without that risk.
+
+## Is AAC review required, and is it worth it?
+
+Filing is voluntary in Kentucky. According to the Commission's [FAQ](https://kybar.org/Portals/0/OBC/AACFAQsFINALApprovedat062119.pdf), you submit an ad only when you want an advisory opinion, but every ad must comply either way. The reason to file is protection: the KBA's [advertising page](https://kybar.org/For-Members/Office-of-Bar-Counsel/Attorney-Advertising) says an advisory opinion finding an ad compliant protects the lawyer from discipline over it, unless a violation of SCR 3.130(7.10) was intentional or the ad or the information submitted later becomes false or misleading.
+
+How it works for a website, from those two pages:
+
+- **The fee is $75,** by check to the Kentucky Bar Association, with a $100 supplement for an ad over 100 pages or an audio or video file over 10 minutes.
+- **Send three copies** with a signed cover letter that cites SCR 3.130(7.03) or asks for an advisory opinion. Websites go on paper or on a flash drive as one continuous PDF with consecutively numbered pages, so the Commission can cite problems by page.
+- **You may send the whole site or only new and revised pages.** A full resubmission gets a full review; changed pages get reviewed on their own.
+- **The Commission aims to answer within 30 days.** If it finds a problem, you can correct the ad and resubmit one copy, citing the advertisement ID, with no new fee.
+
+A practical pattern for a new Louisville site: submit the core pages at launch, then submit only changed pages when you add a practice area, a results page or a new fee statement. Keep each opinion with your dated copies.
+
+## What records must a Louisville firm keep?
+
+SCR 3.130(7.20)(6) requires a copy or recording of every advertisement, and a record of when and where it was used, for two years after its last dissemination. Electronic copies in PDF are accepted. If a disciplinary matter is pending, keep the copy until it ends.
+
+A website changes quietly, so build the habit into the way you edit. Save a dated PDF of each page whenever its content changes in a way that matters, keep a one-line note of what changed and why, and store the AAC opinion next to the version it covers. Do the same for Google Business Profile posts and paid search landing pages, which are advertisements under the same definition.
+
+## Where does solicitation start for a website?
+
+The site itself is advertising. SCR 3.130(4.5) applies when the firm reaches out to a particular person, and the Commission's FAQ lists missing "Advertising Material" labels as its most common oversight.
+
+- **Live contact.** You may not solicit employment in person, by live telephone or by real-time electronic means when a significant motive is the lawyer's pecuniary gain, unless the person is a lawyer or has an immediate family or prior attorney-client relationship with you. A chat widget that opens a conversation on its own and asks a visitor to sign up is the website version of that call. Let chat answer questions people ask; leave the sales pitch out.
+- **Responses are different.** Responding to a prospective client's inquiry is not prohibited, and SCR 3.130(7.20)(4) exempts responses to someone seeking information from the advertising rules other than SCR 3.130(7.10). The normal reply to a contact form needs no label.
+- **Written and electronic solicitations.** A message to someone known to need help in a particular matter must say "Advertising Material" on the envelope or in the email subject line, and at the beginning and end of a recorded or electronic message.
+- **Disasters.** No solicitation may go to people involved in a disaster, as defined in SCR 3.130(7.60), until 30 days after it happened.
+
+Follow-up email sequences, text campaigns and retargeting tools that marketing vendors bundle with websites are where these rules usually bite, so read what will be sent before it is switched on.
+
+![Bound volumes of law books stacked on a desk in a quiet office, spines facing the camera](https://images.unsplash.com/photo-1752697589029-0fd0ce96a395?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in Louisville look for a lawyer?
+
+By problem first and place second, and in Louisville the place is easy to make useful because most state cases land in two buildings on West Jefferson Street. The Court of Justice's [Jefferson County page](https://kycourts.gov/Courts/County-Information/Pages/Jefferson.aspx) lists Circuit Court and Family Court in the Jefferson County Judicial Center at 700 W. Jefferson St., and District Court in the Louis D. Brandeis Hall of Justice at 600 W. Jefferson St., where the Circuit Court Clerk's office is in Suite 2008. The Domestic Violence Intake Center is in the Hall of Justice and is open 24 hours a day, which is a detail a family law or protective order page should state plainly. Federal cases go to the [Western District of Kentucky](https://www.justice.gov/usao-wdky/about/court-house-locations), whose Louisville courthouse is the Gene Snyder Courthouse at 601 W. Broadway, with other courthouses in Bowling Green, Owensboro and Paducah.
+
+**Name the building, the process and the next step.** A criminal defense page that explains what happens at the Hall of Justice after an arrest, or a divorce page that explains what to expect at the Judicial Center, answers the question a worried person is actually asking at 11 p.m. on a phone.
+
+**Plan for phones and for languages.** The Census Bureau's [QuickFacts for Jefferson County](https://www.census.gov/quickfacts/jeffersoncountykentucky) shows a population estimate of 793,881 for July 1, 2024, with 12.0 percent of residents age five and up speaking a language other than English at home and 9.5 percent born outside the United States (2019 to 2023). The Court of Justice's [Office of Language Access](https://www.kycourts.gov/Court-Programs/Language-Access/Pages/default.aspx) provides court interpreters at no cost and says it works in more than 100 languages a year; its language pages include Spanish, Arabic, Nepali, Somali, Swahili and Kinyarwanda. If someone at your firm can run a consultation in one of those languages, say which person and which language, and consider translated pages connected the way Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions) describes. Translated pages are advertisements too, so the office address and every disclosure go with them.
+
+**One honest page per real office.** A firm with a downtown office and a second office in the East End can give each its own page. A separate thin page for every neighborhood and every Southern Indiana town, each with the place name swapped, is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages, and under Regulation No. 1 it can also misstate where you practice.
+
+For help writing the practice pages themselves, see [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+> **Tip:** Want to see your firm's pages in a cleaner layout before changing anything? SaySites will [rebuild your current site as a free redesign preview](/redesign) with your real content, so you can judge it with your own attorneys, offices and practice areas in place.
+
+## How should the Google Business Profile match the site?
+
+Exactly. Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), so the profile carries as much weight as the website. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask for your real-world name with no added keywords or locations, so "Doe Law | Louisville Injury Lawyer" breaks Google's rules. Use the same address and phone number the site shows, link each office's profile to that office's page, and remember that profile posts are advertisements under SCR 3.130(7.01): the same disclosure, results and record rules apply.
+
+## A page plan for a Louisville law firm
+
+| Page | What it should cover | Kentucky point to watch |
+|---|---|---|
+| Home | Who you help, practice areas, phone, next step | Lawyer or firm name and office address (7.20(3)) |
+| Practice area pages | One per area, with the local court process | Money-recovery pages explain the legal requirements (Reg. 1, C) |
+| Attorney profiles | Admissions, education, languages, real photos | Non-Kentucky admission disclosed; certification named (7.20(5), 7.40) |
+| Results | Each result with facts, law, court, appeal and settlement status | Context for every figure (Reg. 1, D) |
+| Testimonials | Real clients' own words, with permission | No actors implying they are clients (Reg. 1, B) |
+| Fees | What is included in any advertised fee | Advertised routine fees are binding (7.15) |
+| Office pages | Address, hours, parking, nearest courthouse | Only bona fide offices; phone disclosures (Reg. 1, C) |
+| Contact | Short form, phone, what happens next | Replies to inquiries need no label (4.5, 7.20(4)) |
+
+Structured data helps search engines read the same facts the page shows. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the markup, and schema.org's [LegalService](https://schema.org/LegalService) type fits a firm. Mark up only what is visible on the page. For the full list of pages any firm needs, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## A Kentucky pre-launch checklist
+
+- [ ] Every page shows the name and office address of a responsible lawyer or the firm.
+- [ ] Featured lawyers do the work, or a prominent statement says other lawyers may.
+- [ ] Lawyers not licensed in Kentucky are identified next to their names.
+- [ ] Office pages list only bona fide offices, and out-of-area or toll-free numbers carry the required disclosure.
+- [ ] Every result has its facts, law, court, appeal and settlement context.
+- [ ] No actors, models or props imply real clients, real lawyers or real cases.
+- [ ] Any advertised flat fee has a written description of what it includes.
+- [ ] "Specialist" and "certified" appear only with a named, approved certifying body.
+- [ ] A dated PDF of the site is saved at launch, with a plan to save changed pages for two years.
+- [ ] Emails and texts to people known to need help are labeled "Advertising Material," and nothing goes out within 30 days of a disaster.
+- [ ] You have decided whether to request an AAC advisory opinion for the launch pages.
+- [ ] Structured data matches the visible page, and pages work with a keyboard and a screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+The last check comes from Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): would someone in Louisville facing this problem leave the page knowing more, and knowing what to do next?
+
+## How SaySites builds a Louisville law firm website
+
+SaySites builds this plan into a working site: a page for each practice area, a profile for each attorney with their admissions, a page for each office and a consultation form with questions that fit the practice area, including the other party's name so you can run a conflict check before you call back. The firm is described to search engines as a LegalService, every page has to pass a 95+ speed check before it goes live, and pages can be built in English and Spanish.
+
+You change the site by saying what you want, for example "add 'Other attorneys in the firm may handle your case' under Ms. Reyes's photo on the home page" or "put our Louisville office address in the footer of every page." Each change waits as a draft until you approve it, which makes it easy to save the dated copy SCR 3.130(7.20)(6) asks for, or to send changed pages to the Commission. Results, testimonials and credentials come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build the site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also takes cases in a neighboring state, compare the rules in our [Nashville law firm website guide](/blog/nashville-law-firm-website-design) and our [Columbus law firm website guide](/blog/columbus-law-firm-website-design).`,
+    faq: [
+      { q: "Does a Kentucky law firm website have to be filed with the Attorneys’ Advertising Commission?", a: "No. Filing is voluntary. You submit an ad only to request an advisory opinion, but the site must comply with the rules either way. A favorable opinion protects you from discipline over that ad unless a violation was intentional or the ad later becomes misleading. The fee is $75, and you may submit only new or revised pages." },
+      { q: "What must appear on every page of a Kentucky lawyer’s website?", a: "SCR 3.130(7.20)(3) requires the name and office address of at least one lawyer or law firm, and the Kentucky lawyers named are responsible for the content. A shared footer with the firm name, a responsible lawyer, the street address and phone number covers it on every page, including ad landing pages and vendor-hosted intake pages." },
+      { q: "How long must a Kentucky lawyer keep copies of website content?", a: "Two years after the content was last used, under SCR 3.130(7.20)(6), with a record of when and where it appeared. A PDF copy is accepted. If a disciplinary matter is pending, keep it until the matter ends. Saving a dated PDF of each page whenever its content meaningfully changes is a simple way to comply." },
+      { q: "Can a Louisville lawyer call themselves a specialist?", a: "Only if they are certified by an organization approved by an appropriate state authority or accredited by the American Bar Association, the organization is named in the same communication and the certification is current, under SCR 3.130(7.40). Patent and admiralty lawyers have their own permitted titles. Saying you practice only in one field is always allowed if true." },
+      { q: "Can a Kentucky firm post verdicts and settlements online?", a: "Yes, with context. The Commission’s Regulation No. 1 says specific results such as awards, verdicts or win records need the surrounding facts, the law that applied, appeal status and any settlement after the verdict. General testimonials about satisfaction are ordinarily fine, but claims of more success than other lawyers need objective, statistically meaningful data." },
+      { q: "Does a reply to a website contact form need an “Advertising Material” label?", a: "No. Responding to a prospective client’s inquiry is not prohibited solicitation, and SCR 3.130(7.20)(4) exempts responses to people seeking information from most advertising rules. The label applies to written or electronic solicitations you start with someone known to need help in a particular matter, on the envelope or email subject line." },
+      { q: "How much does a SaySites website for a Louisville law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and English or Spanish pages. You can also ask for a free redesign preview of your current site before deciding." },
+    ],
+    about: ['Kentucky Supreme Court Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Louisville, Kentucky'],
+    published: '2026-11-05',
+    status: 'published',
+  },
+  {
+    slug: 'houston-hvac-website-design',
+    title: 'Houston HVAC Website Design: TDLR Rules and Permits',
+    description: 'What a Houston HVAC company website must show under TDLR rules, how city permits work, and how to build pages for no-cool calls, renters and Spanish speakers.',
+    kind: 'guide',
+    summary: [
+      'Texas rule 16 TAC 75.71(h) requires the affiliated licensee’s TDLR license number on advertising that solicits air conditioning work. Put it on every page of the website.',
+      'Proposals, invoices and contracts need the company name, address, phone, license number and the “Regulated by The Texas Department of Licensing and Regulation” notice.',
+      'A Class B license is limited to 25 tons of cooling and 1.5 million BTU per hour of heating. Do not advertise jobs your license does not cover.',
+      'Houston mechanical permits go to licensed contractors who have registered their license with the city. Explaining the permit and inspection builds trust.',
+      'In Houston, 47.1 percent of residents speak a language other than English at home and most housing is rented, so Spanish pages and a renter path both earn their place.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1666610278692-51058ed05e9a?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Houston skyline at night, lit towers glowing in orange and blue above a freeway streaked with car light trails' },
+    body: `A Houston HVAC company website is advertising under Texas law, so it has to show the TDLR license number of the contractor the company works under. Rule [16 TAC § 75.71](https://www.law.cornell.edu/regulations/texas/16-Tex-Admin-Code-SS-75-71), the Texas Department of Licensing and Regulation's rule on contracting company responsibilities, requires that number on advertising that solicits air conditioning and refrigeration work, on both sides of every work vehicle, and on every proposal and invoice, along with a consumer notice that the company is regulated by TDLR. The website is the easiest of those to get right, and it is also the one a homeowner checks before calling.
+
+The rest of this guide covers what the rule asks for, what your license class lets you advertise, how City of Houston permits fit into the pages, how Houston customers actually search when the house is hot, and a page plan and checklist you can use before launch. Each rule and figure links to its source, checked in November 2026. It is a planning guide, not legal advice; TDLR answers licensing questions directly.
+
+## What does TDLR require an HVAC website to show?
+
+The license number. Section 75.71(h) says advertising meant to solicit air conditioning and refrigeration work must include the license number of the licensee affiliated with the company. The exemptions are narrow and none of them describes a website: nationally placed TV ads that say license numbers are available on request, phone book listings with only a name, address and number, manufacturer or distributor trade listings, telephone solicitations where the caller says the company follows state licensing rules, promotional items of nominal value such as hats and T-shirts, letterhead and office forms, and signs at the company's permanent place of business.
+
+Because the rule speaks of all advertising that solicits work and does not carve out the internet, the safe reading is that each page asking for a call or a booking needs the number. The practical answer is a site-wide header or footer line with "TDLR license" and the number next to the phone number, using the exact number TDLR shows for your affiliated licensee in its [license search](https://www.tdlr.texas.gov/LicenseSearch/). Do the same on Google Business Profile posts, paid search landing pages, social media pages and email offers, which are all advertising that solicits work.
+
+TDLR's [penalties and sanctions schedule](https://www.tdlr.texas.gov/enforcement/acrsanctions.htm) lists a missing license number in an ad as a Class A violation, with a penalty range of $500 to $1,000. It is a small fine compared with the cost of a customer who decides your company looks unlicensed and calls the next result instead.
+
+## What goes on proposals, invoices and the online estimate?
+
+Section 75.71(i) sets the paperwork rules, and many companies now send proposals and invoices from software linked to the website, so they belong in the website plan:
+
+1. **An invoice for all work.** TDLR treats failing to give the customer an invoice as a Class B violation.
+2. **Identity on every proposal and invoice.** The company name, address and phone number, and the affiliated licensee's number.
+3. **The TDLR notice.** Proposals, invoices and written contracts must carry the notice that begins "Regulated by The Texas Department of Licensing and Regulation," followed by TDLR's mailing address, toll-free and local phone numbers and website. If customers come to your place of business, the notice goes on a prominent sign there too.
+
+If your website offers an online estimate or a "get a quote" tool that produces a proposal, check that the generated document carries all of this. A clean PDF from a booking app that leaves out the TDLR notice is still your proposal.
+
+**Vehicles appear on the website too.** Section 75.71(g) requires the license number and company name on both sides of every vehicle used for this work, in letters at least two inches tall. Trucks show up in the team photos, the hero image and the Google profile, so make sure the ones in your photos are lettered correctly. A photo of an unmarked van says something you did not mean to say.
+
+![Weathered outdoor unit of a split air conditioner mounted on a stained white brick wall, its fan grille and refrigerant lines in the sun](https://images.unsplash.com/photo-1550998251-1e18917c975c?auto=format&fit=crop&w=1200&q=75)
+
+## Which jobs can you advertise with a Class A or Class B license?
+
+Only the ones your license covers. Under [Occupations Code section 1302.253](https://statutes.capitol.texas.gov/Docs/OC/htm/OC.1302.htm), a Class A license covers the endorsed types of work on systems of any size or capacity. A Class B license covers the same endorsed types only up to 25 tons of cooling capacity or 1.5 million BTU per hour of heating output. The statute's definitions describe three kinds of work: environmental air conditioning, commercial refrigeration and process cooling or heating.
+
+For the website, that turns into a few rules of thumb:
+
+- A residential company with a Class B license can say "homes and light commercial," but should not run a "Commercial Rooftop Systems of Any Size" page.
+- A walk-in cooler or ice machine page needs a license endorsed for commercial refrigeration.
+- If you subcontract some work, section 75.71(c) says your own employees, supervised by the assigned licensee, must do real hands-on work; the licensee stays fully responsible to the customer. Your service pages should describe work your company actually performs.
+
+Section 75.71(b) also bars misstating which services are needed, will be provided or were provided. "Free system check" offers that exist to sell replacements are where this goes wrong online. Describe what the visit includes and what it does not.
+
+## Where do offices and service areas fit?
+
+Section 75.71(e) requires a full-time licensee at each permanent office, who directly supervises the licensed work from that office. Section 75.71(f) limits other locations to giving workers schedules and instructions, storing parts and supplies, and parking vehicles; they cannot be used to sell or perform air conditioning services.
+
+So a website should list as offices only the places that are offices. A yard in Pasadena where trucks park overnight is not a second office, and building a location page around it misstates what it is. The honest structure for most Houston companies is one office page and one service area page that names the parts of the metro you really cover: the neighborhoods inside the Loop, the suburbs you drive to every week, and the places you do not go.
+
+Google points the same way. A company that visits customers and does not serve them at its address should set up its Google Business Profile as a [service-area business](https://support.google.com/business/answer/9157481), hide the street address, and list the areas it serves. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) ask for your real name with no added keywords, so "Smith Air | Houston AC Repair 24/7" breaks the rules. Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), and none of those improves with a stuffed name.
+
+A page for every suburb with the name swapped and nothing else changed is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages. A suburb deserves its own page when you have something real to say about it: the city's permit office, a housing type you see there often, how far out you schedule. Our guide to [showing Google where you work without a storefront](/blog/service-area-business-google) walks through the setup.
+
+## How do Houston permits change what you should publish?
+
+Permits are a trust signal, and most customers do not know how they work. The City of Houston's permitting center lists mechanical permits for HVAC work and says licensed contractors must [register their license with the City of Houston](https://www.houstonpermittingcenter.org/hpwcode1019) before they can pull them. On the city's page for altering an existing HVAC system, the permit fee when we checked was 2 percent of the total job cost plus $47, with a $33.56 administrative fee, the permit was valid for 180 days and an inspection was required. The page for [replacing a heater only](https://www.houstonpermittingcenter.org/node/1711/printable/print) lists the same fee structure.
+
+That gives a replacement page a section most competitors skip: "Do I need a permit?" Explain that your company pulls the permit under its registered license where the city requires one, that the fee is part of the job, and that a city inspector checks the work. Do not quote the city's fee as a fixed number for every job, and do not promise a permit is never needed; tell customers who live in a separate city inside the metro, like Bellaire or Pasadena, that their own city handles permits.
+
+**Code changes are worth a short note too.** TDLR's commission [adopted rule changes](https://www.tdlr.texas.gov/news/rulemaking/2026/08/31/commission-adopts-rules-11/) effective September 1, 2026, updating the codes it adopts from the 2021 to the 2024 editions of the International Residential Code, International Mechanical Code, International Fuel Gas Code and Uniform Mechanical Code. A line on your installation page saying your crews work to the current adopted codes is true, specific and easy to keep up to date.
+
+![Round smart thermostat on a white textured wall, its blue display showing 63 degrees](https://images.unsplash.com/photo-1545259742-b4fd8fea67e4?auto=format&fit=crop&w=1200&q=75)
+
+## How do Houston customers search for AC help?
+
+Fast, on a phone, and often in Spanish. The Census Bureau's [QuickFacts for Houston](https://www.census.gov/quickfacts/houstoncitytexas) gives a population estimate of 2,397,315 for July 1, 2025. For 2020 to 2024 it reports that 47.1 percent of residents age five and up speak a language other than English at home, 29.3 percent were born outside the United States, and the owner-occupied housing rate is 42.1 percent. It also reports that 44.2 percent of residents are Hispanic or Latino.
+
+Each of those numbers points to something on the site:
+
+- **Spanish pages.** If someone at your company can answer the phone and run a service call in Spanish, give Spanish speakers real pages, not a translation widget: the no-cool page, the repair page, the contact page and the financing page first. Connect them the way Google's [localized versions guidance](https://developers.google.com/search/docs/specialty/international/localized-versions) describes, and put the TDLR license number on them too. If nobody can answer in Spanish, say so honestly rather than publishing pages the phone line cannot support.
+- **A renter path.** In a city where most homes are not owner-occupied, many people calling about a broken AC do not decide who fixes it. A short section for renters ("Tell your landlord or property manager to call us, or have them approve the visit") and a job form that asks whether the person owns or rents saves wasted trips.
+- **The no-cool page first.** The most valuable page on a Houston HVAC site is the one for "AC not cooling" and "AC stopped working." Put the phone number at the top, explain what to check before calling (thermostat setting, breaker, filter), say honestly how fast you usually schedule, and list what the visit costs if you publish a diagnostic fee.
+
+**After storms, be the company that says check first.** TDLR's [hurricane recovery page](https://www.tdlr.texas.gov/hurricane-recovery.htm) warns that water and wind can damage air conditioning and electrical systems in ways you cannot see, and says those systems should be evaluated by a licensed air conditioning contractor and a licensed electrician before they go back into service. A short storm page that says exactly that, with the license number and how to book an inspection, is helpful advice that also brings in the right calls. Point people to TDLR's license search so they can check any contractor who knocks on the door.
+
+> **Tip:** Curious how your current site would look with this structure? SaySites will [rebuild it as a free redesign preview](/redesign) using your real services, service areas and license number, so you can compare before deciding anything.
+
+## A page plan for a Houston HVAC company
+
+| Page | What it should cover | Texas point to watch |
+|---|---|---|
+| Home | Services, area, phone, license number, next step | License number on every page (75.71(h)) |
+| AC repair / no cool | What to check, how fast you come, what the visit costs | No misstated needs or offers (75.71(b)) |
+| Replacement and installation | Process, permit, inspection, financing | Only work your license class covers (1302.253) |
+| Heating | Furnace and heat pump repair and replacement | Same license number and permit notes |
+| Maintenance plans | What each visit includes | Done by licensed or registered people (75.71(k)) |
+| Commercial | Only if your license and endorsements cover it | Class B tonnage and BTU limits |
+| Service area | Real neighborhoods and suburbs you cover | Office pages only for real offices (75.71(e), (f)) |
+| Storm help | Inspect before restart, how to check a license | Link to TDLR license search |
+| Spanish pages | Key pages fully translated | License number on translated pages |
+| Contact | Short form, phone, own or rent, ZIP code | Proposals and invoices carry the TDLR notice (75.71(i)) |
+
+Mark the company up as an [HVACBusiness](https://schema.org/HVACBusiness) following Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business), and mark up only what visitors can see. For the general structure every trade site needs, see our [home service website checklist](/blog/home-service-website-checklist), and for collecting reviews within Google's rules, [how to ask for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way).
+
+## A Texas pre-launch checklist
+
+- [ ] The affiliated licensee's TDLR license number appears on every page, matching the license search exactly.
+- [ ] Profile posts, ad landing pages, social pages and emails that solicit work show it too.
+- [ ] Proposals, invoices and contracts from any online tool carry the company name, address, phone, license number and TDLR notice.
+- [ ] Trucks in photos are lettered on both sides with the company name and license number.
+- [ ] Service pages describe only work your license class and endorsements cover.
+- [ ] Office pages exist only for permanent offices with a full-time licensee.
+- [ ] The Google Business Profile uses your real name, with service areas set and no keywords added.
+- [ ] Replacement pages explain Houston permits and inspections without quoting the city fee as a fixed price.
+- [ ] Spanish pages exist only where your phone line can answer in Spanish.
+- [ ] The job form asks for the ZIP code and whether the customer owns or rents.
+- [ ] Pages pass a speed check on a phone and work with a keyboard and screen reader, following the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/).
+
+The final test is from Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): would a Houston homeowner with a warm house leave your page knowing what to do next?
+
+## How SaySites builds a Houston HVAC website
+
+SaySites builds HVAC sites with this structure from the start: a page for each service, a service area page, a tap-to-call number and a job request form on every page. The form can ask how soon the customer needs you, the ZIP code of the job and whether they own or rent, and each request lands in a leads pipeline where you can call, add notes, follow up and track it to a booked job. The company is described to search engines as an HVACBusiness, every page has to pass a 95+ speed check before it goes live, and pages can be built in English and Spanish.
+
+You change the site by saying what you want, for example "put our TDLR license number next to the phone number in the header" or "add a storm page that tells people to have the system checked before turning it back on." Each change waits as a draft until you approve it. Reviews, license numbers and service claims come only from you; SaySites never invents them.
+
+The Site plan is $15 a month, with hosting, your domain and the leads pipeline included ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). [Start a 7-day free trial](/signup), or [ask for a free redesign](/redesign) and see your current site rebuilt with your own content first. If you also work in Arizona, compare the rules in our [Phoenix HVAC website guide](/blog/phoenix-hvac-website-design).`,
+    faq: [
+      { q: "Does a Texas HVAC company have to put its license number on its website?", a: "Rule 16 TAC 75.71(h) requires the affiliated licensee’s license number on advertising that solicits air conditioning and refrigeration work. Its exemptions cover things like letterhead, small promotional items and signs at your business, not websites. The safe approach is the number on every page, usually beside the phone number in the header or footer." },
+      { q: "What must a Texas HVAC proposal or invoice include?", a: "Under 16 TAC 75.71(i), proposals and invoices need the company name, address and phone number and the affiliated licensee’s number. Proposals, invoices and written contracts also need the notice that begins “Regulated by The Texas Department of Licensing and Regulation,” with TDLR’s address, phone numbers and website. Customers must get an invoice for all work." },
+      { q: "What is the difference between a Class A and Class B ACR license in Texas?", a: "Occupations Code section 1302.253 lets a Class A license cover endorsed work on systems of any size. A Class B license covers the same endorsed work only up to 25 tons of cooling capacity or 1.5 million BTU per hour of heating output. Advertise only the jobs your license class and endorsements cover." },
+      { q: "Who pulls the permit for an AC replacement in Houston?", a: "The licensed contractor. The City of Houston says licensed contractors must register their license with the city before getting mechanical permits, and its HVAC alteration permit requires an inspection. When we checked, the fee was 2 percent of the job cost plus $47 and an admin fee. Separate cities in the metro, such as Bellaire, issue their own permits." },
+      { q: "Should a Houston HVAC website have Spanish pages?", a: "If your team can answer in Spanish, yes. Census QuickFacts reports that 47.1 percent of Houston residents age five and up speak a language other than English at home. Translate the pages people need most, such as AC repair and contact, keep the license number on them, and only promise Spanish service your phone line can deliver." },
+      { q: "Can an HVAC company list a storage yard as a location?", a: "Not as an office. Rule 16 TAC 75.71(f) limits locations other than a permanent office to giving workers schedules, storing parts and parking vehicles; they cannot be used to sell or perform air conditioning services. Each permanent office needs a full-time licensee. List only real offices, and describe the rest of the metro on a service area page." },
+      { q: "How much does a SaySites website for a Houston HVAC company cost?", a: "The Site plan is $15 a month after a 7-day free trial, with hosting, your domain, a leads pipeline and HVACBusiness structured data included. It covers service pages, a service area page, tap-to-call and a job form with urgency, ZIP code and own-or-rent questions. You can ask for a free redesign preview of your current site first." },
+    ],
+    about: ['Texas Department of Licensing and Regulation', 'Air conditioning contractor advertising', 'HVAC company websites', 'Houston, Texas'],
+    published: '2026-11-05',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
