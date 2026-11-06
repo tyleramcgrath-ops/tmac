@@ -9109,6 +9109,373 @@ The Site plan is $15 a month, with hosting, your domain and the leads pipeline i
     published: '2026-11-05',
     status: 'published',
   },
+  {
+    slug: 'indianapolis-law-firm-website-design',
+    title: 'Indianapolis Law Firm Websites: Indiana Rule 7 Guide',
+    description: 'Plan an Indianapolis law firm website under Indiana Rules 7.1 to 7.4: six-year ad records, results and testimonials, specialist claims and local courts.',
+    kind: 'guide',
+    summary: [
+      "Indiana's Rule 7.2(c) requires the name and office address of at least one responsible lawyer or firm on every advertisement, and a law firm website is one.",
+      "Keep a copy of every version of the site for six years after it runs. That is longer than many states ask, so plan for it on launch day.",
+      "Indiana still lists, in the comment to Rule 7.1, ten kinds of statements that are presumed misleading, including past-performance statistics and results that create expectations.",
+      "Only call a lawyer a specialist if an organization accredited by the Indiana Commission for Continuing Legal Education certified them, and name that organization.",
+      "Marion County's trial courts moved to the Community Justice Campus on the southeast side in 2022, so office and directions pages should say where clients actually go.",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1745097752885-217f4c9f0cf4?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Indianapolis skyline at dusk under a cloudy sky, with office towers rising behind low brick buildings and neighborhoods in the foreground' },
+    body: `An Indianapolis law firm website has to follow Indiana's Rules of Professional Conduct 7.1 through 7.4, which the Indiana Supreme Court publishes on its [court rules site](https://rules.incourts.gov/Content/prof-conduct/default.htm). For the website itself, four duties matter most: show the name and office address of a lawyer or firm responsible for the content, keep a copy of the site for six years, avoid the ten kinds of statements Indiana presumes misleading (past-performance statistics and results that set expectations among them), and claim specialization only through a certifying organization accredited in Indiana. If the firm also sends targeted letters or emails, Rule 7.3 adds an "Advertising Material" label, a filing with the Disciplinary Commission and a $50 fee.
+
+This guide walks through each rule as it applies to a firm practicing in Indianapolis and Marion County, then covers where local clients go to court, how they search, which pages to build and a checklist to run before launch. Every rule is linked to the court's own text. It is a planning guide for a website, not legal advice; for a close question, talk to ethics counsel.
+
+## Is a law firm website lawyer advertising in Indiana?
+
+Yes. Indiana's [Rule 7.2](https://rules.incourts.gov/Content/prof-conduct/rule7-2/current.htm) allows lawyers to advertise and treats a public communication made at least partly to promote a lawyer's services as advertising. A firm website exists to promote the firm's services, so the rule reaches every page that does: the home page, practice area pages, attorney profiles, results pages, blog posts with a call to action and the landing pages behind paid ads. Your Google Business Profile, social profiles and directory listings carry the same message to the same people and deserve the same care.
+
+[Rule 7.1](https://rules.incourts.gov/Content/prof-conduct/rule7-1/current.htm) sits above all of it. It bans false or misleading communications about a lawyer or the lawyer's services, and it counts a truthful statement as misleading if it leaves out a fact needed to keep the whole statement from misleading. That second half is the one websites trip over: a true verdict amount with no context, a true award with no explanation of who gave it, a true "decades of experience" that adds up several lawyers' careers without saying so.
+
+## What must every page of an Indiana law firm website show?
+
+**The name and office address of someone responsible.** Rule 7.2(c) says any communication under the rule must include the name and office address of at least one lawyer or law firm responsible for its content. On a website the simplest way to comply on every page is a shared footer: the firm name, the responsible lawyer, the street address of the office and the main phone number. Check that it also appears on pages that do not use your main template, such as a landing page built for a pay-per-click campaign, a practice area microsite or an intake form hosted by a vendor.
+
+**A street address that is a real office.** The address in that footer should be a place where the firm actually practices. If you list more than one office, each one should be a real location with lawyers available there, not a mail drop added to look local in another county.
+
+**Nothing paid for that should not be.** Rule 7.2(b) says a lawyer may not give anything of value to a person for recommending or advertising the lawyer's services. The exceptions cover the reasonable cost of advertising, the usual charges of a legal service plan or qualified lawyer referral service, buying a practice under Rule 1.17, and a reciprocal referral agreement with another lawyer or professional that is not exclusive and that the client is told about. Comment [4] explains that paying for listings, ads and sponsorships is fine, and so is paying the staff and vendors who do your marketing, but paying someone to channel cases to you is not. Read that against any lead generation service that charges per signed case, and make sure your marketing vendors work under your supervision, as the comment's reference to Rule 5.3 requires.
+
+## How long must an Indianapolis firm keep copies of its website?
+
+Six years. Rule 7.2(c) requires the responsible lawyer or firm to keep a copy or recording of each communication for six years after its dissemination. Many states that still have a retention rule set a shorter period, so do not assume a template from a vendor in another state gets this right.
+
+For a website, "each communication" is easiest to satisfy with a dated archive:
+
+1. **Save the whole site at launch.** A PDF of every page, named with the date, is enough. Store it somewhere the firm controls, not only in the vendor's system.
+2. **Save a page again every time its content meaningfully changes.** A new result, a new attorney, a fee change, a new practice area or a new claim all count. A typo fix probably does not, but saving costs nothing.
+3. **Save ads and their landing pages together.** If a search ad sends people to a special page, keep the ad text with the page it pointed to.
+4. **Keep the archive for six years after the version stopped running,** not six years after it went up.
+
+A site that keeps every change as a draft you approve makes this easier, because each approval is a natural moment to save the new version.
+
+## What does Indiana treat as misleading on a law firm website?
+
+This is where Indiana differs most from the generic advice you will find online. The comment to Rule 7.1 still lists ten kinds of communication that, absent special circumstances that protect the people likely to see it, violate the rule. Several of them bear directly on what firms like to put on a website:
+
+| Indiana Rule 7.1, comment [2] | What it means on a website |
+| --- | --- |
+| Statistical data or other information based on past performance, or a prediction of future success | Win rates, "millions recovered" totals and "we win" language are presumed misleading |
+| A claim by a third party that the lawyer could not personally make | A review or award that says something you could not say yourself is still your problem |
+| Appeals primarily to fear, greed or a desire for revenge | Headlines built on fear of insurers or punishing the other side |
+| Comparisons with other lawyers that cannot be factually substantiated | "Best," "top" and "most experienced" without proof |
+| References to results that may reasonably create an expectation of similar results | Verdict and settlement lists without context |
+| A dramatization or re-creation not clearly and conspicuously disclosed | Videos with actors or staged scenes |
+| Testimonials or endorsements likely to create an unjustified expectation | Client quotes about outcomes rather than service |
+| An implied certified or recognized specialty not permitted by Rule 7.4 | "Specialist" or "expert" in the wrong places |
+
+Two items in that list do the most damage to typical law firm sites. The first is past-performance data. Many firms lead with a dollar total of recoveries or a percentage of cases won. In Indiana that kind of figure falls squarely inside the comment's first concern, so it needs either the special circumstances the comment mentions or a different approach. The second is results that create expectations. A results page can still exist, but it should describe the matter, the facts that drove the outcome and the fact that every case is different, close to each result rather than in a footnote, and it should never suggest that a new client can expect the same.
+
+> **Tip:** Write results as short case stories: what the client faced, what the firm did and what happened. Readers learn far more from the work than from a number, and the story format keeps the result tied to its facts.
+
+## How should Indianapolis firms handle reviews and testimonials?
+
+The comment to Rule 7.1 treats a testimonial or endorsement as a problem when, in light of all the circumstances, it is likely to create an unjustified expectation about the lawyer or about a person's legal rights. A client who says the firm returned calls the same day, explained every step and treated them with respect is describing service. A client who says the firm "got me ten times what the insurer offered" is describing a result, and it invites the expectation the rule worries about.
+
+Practical rules for an Indiana site:
+
+- **Use real clients' own words, with written permission,** and keep the permission with your six-year archive.
+- **Prefer reviews about service over reviews about outcomes.** If you show an outcome review, give it the same context you would give a result.
+- **Never edit a review to make it stronger,** and never write one for a client.
+- **Remember that a third party's claim counts as yours.** If a review calls a lawyer "the best injury lawyer in Indy," you have published a comparison you could not make yourself.
+- **Leave review stars out of your own structured data.** Google treats reviews that a business publishes about itself as self-serving, and its [review snippet documentation](https://developers.google.com/search/docs/appearance/structured-data/review-snippet) explains when review markup is eligible.
+
+## When can an Indiana lawyer be called a specialist?
+
+[Rule 7.4](https://rules.incourts.gov/Content/prof-conduct/rule7-4/current.htm) lets a lawyer say that they do or do not practice in particular fields of law. It does not let a lawyer state or imply that they are a specialist unless two conditions are met: the lawyer is certified by an Independent Certifying Organization accredited by the Indiana Commission for Continuing Legal Education, and the certifying organization is identified in the communication.
+
+The Indiana Office of Admissions and Continuing Education lists the accredited organizations on its [attorney specialization page](https://www.in.gov/courts/ace/lawyer-education/specialization), under Admission and Discipline Rule 30. As listed today they include the National Board of Trial Advocacy (accredited in Indiana for civil trial, civil practice, criminal trial and truck accident law), the American Board of Certification, the National Elder Law Foundation, the National Association of Counsel for Children, and two sections of the Indiana State Bar Association: Family Law, and Probate, Trust and Real Property. Certification there means an exam, practice requirements and peer support, which is why the rule protects the word.
+
+On a website, that means:
+
+- "Our firm practices personal injury law" is fine.
+- "Jane Doe is certified as a civil trial specialist by the National Board of Trial Advocacy" is fine if it is current and true.
+- "Indianapolis injury specialists" in a page title is not, unless every lawyer it describes is certified and the certifier is named on the page.
+- "Expert" and "expertise" deserve the same caution, because they can imply a recognized specialty.
+
+Check page titles, meta descriptions and image alt text as well as visible copy. Search results show your title and description to people who never open the page, so a specialist claim there is still a communication about your services.
+
+## What if the website collects leads by email, text or chat?
+
+Most of what a website does is answer people who came looking, and replying to someone who contacted you is not solicitation. [Rule 7.3](https://rules.incourts.gov/Content/prof-conduct/rule7-3/current.htm) matters when the firm starts the contact.
+
+**Live chat that starts the conversation.** Rule 7.3(a) bars soliciting professional employment through in-person, live telephone or real-time electronic contact when significant motive is the lawyer's pecuniary gain, unless the person is a lawyer or has a family, close personal or prior professional relationship with the lawyer. A chat widget that answers a visitor's question is a response. A chat window that pops up and pitches a case to someone who has not asked for anything is closer to the line. Configure chat so the visitor starts the conversation, and train whoever staffs it, inside or outside the firm, to answer and schedule rather than sell.
+
+**Targeted letters and emails.** Rule 7.3(c) requires the words "Advertising Material" on written, recorded and electronic solicitations the rule covers: conspicuously on the face of any outside envelope and at the beginning of a written communication, and at both the beginning and the end of a recorded or electronic one. A copy must be filed with the Indiana Supreme Court Disciplinary Commission at or before the time it goes out, with a $50 filing fee. A changed version must be filed again, the recipient list must be kept for at least a year after the last mailing, and filed communications are open to public inspection.
+
+**The 30-day wait.** For personal injury, wrongful death and other accident or disaster matters, Rule 7.3 bars this kind of solicitation unless the incident happened more than 30 days earlier. If your site captures email addresses for a newsletter, keep that list separate from anything that could become a targeted solicitation after a crash or a disaster.
+
+## Where do Indianapolis clients actually go to court?
+
+Directions pages are one of the most useful things a local firm can publish, because they answer the question a nervous client asks right after "can you help me?": where do I have to be, and when?
+
+**Marion County's trial courts.** In 2022 the Marion Superior Court and Marion Circuit Court moved to the [Community Justice Campus](https://weeklyview.net/2022/05/19/community-justice-campus-fully-opens-may-16/) at 675 Justice Way in the Twin-Aire neighborhood on the southeast side, built on the site of the former Citizens Gas coke works. The campus also holds the Sheriff's Office, the Adult Detention Center and the Assessment and Intervention Center. A criminal defense, family or civil practice whose pages still send people to a downtown courthouse is giving clients old directions. Write a page about the campus: how to get there, what to bring, where to meet your lawyer and what happens at a first hearing in your practice area.
+
+**Federal court.** The U.S. District Court for the Southern District of Indiana sits at the [Birch Bayh Federal Building and U.S. Courthouse](https://www.insd.uscourts.gov/content/indianapolis), 46 East Ohio Street. The district also has courthouses in Terre Haute, Evansville and New Albany, which matters if your employment, civil rights or criminal practice reaches beyond Indianapolis.
+
+![The Soldiers' and Sailors' Monument on Monument Circle in downtown Indianapolis, seen from street level with office towers and older stone buildings around it](https://images.unsplash.com/photo-1661286167375-07429c624e2d?auto=format&fit=crop&w=1200&q=75)
+
+**Surrounding counties.** Firms in Indianapolis often take cases in Hamilton, Hendricks, Johnson, Boone and Hancock counties. If you do, a short page per courthouse you regularly appear in is far more useful than a list of suburb names. Only build the pages you can fill with real information about that court and your work there; a page that just swaps the county name is the kind of doorway page Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) warn against.
+
+## How do people in Indianapolis search for a lawyer?
+
+People search the way they talk about their problem, then narrow by place. "Lawyer for OWI Indianapolis," "child custody attorney Marion County," "truck accident lawyer near me," "how long do I have to file an injury claim in Indiana." A few patterns are worth building around:
+
+**Indiana's own words.** Indiana calls drunk driving OWI, not DUI, and a client who has lived here a while will search for it that way. Use the terms Indiana courts and statutes use on the page, and the words clients use in the headings and questions.
+
+**Courthouse and neighborhood names.** People search for "Community Justice Campus" and the names of the places they live. A directions page and an office page that use those names in plain sentences match those searches without stuffing.
+
+**Questions before hiring.** Many searches are questions. A practice area page that answers the five questions you hear on every consultation call, in short paragraphs, is useful to the reader and easy for search engines and AI answers to quote. Our guide to [writing pages AI answers can quote](/blog/write-pages-ai-answers-can-quote) shows the pattern.
+
+**Spanish-speaking callers.** If your intake team takes calls in Spanish, give those visitors real Spanish pages written or reviewed by someone fluent, with the same disclaimers and the same responsible-lawyer footer as the English pages. Do not run a translation widget over English pages and call it done, and do not advertise Spanish service you cannot actually provide.
+
+**The map results.** For "near me" searches, Google shows a map and a short list of firms before any website. Google's [guidelines for business profiles](https://support.google.com/business/answer/3038177) say a profile should represent the business as it is known in the real world, with an address where it actually serves customers in person, and they have specific rules for individual practitioners such as lawyers within a firm. Make sure your profile's name, address, phone and hours match the site's footer exactly.
+
+## Which pages should an Indianapolis law firm website have?
+
+A firm's site does three jobs: answer the question that brought the visitor, show who will do the work, and make it easy to get in touch. These pages carry most of that load:
+
+| Page | What it should hold | Indiana rule to check |
+| --- | --- | --- |
+| Home | What you do, for whom, where; one clear way to call or book | Footer with responsible lawyer and office address (7.2(c)) |
+| Practice areas | One page per area: the problem, the process, the questions clients ask | Field statements only, no specialist claims without 7.4 |
+| Attorney profiles | Admissions, education, experience, languages, photo | Certifications only from accredited organizations, named |
+| Results or case stories | The facts, the work, the outcome, the context | Past-performance data and expectations (7.1 comment [2]) |
+| Reviews | Real clients' words about service, with permission | Third-party claims and unjustified expectations |
+| Office and courts | Address, parking, the courts you appear in, directions | Real offices only |
+| Fees | How fees work, what a consultation costs, contingency basics | Accuracy and anything that could mislead |
+| Contact | Short form, phone, what happens after they reach out | Replies are not solicitation; chat starts with the visitor |
+
+Structured data helps search engines read the facts the page already shows. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the markup, and schema.org's [LegalService](https://schema.org/LegalService) type fits a law firm. Mark up only what visitors can see. For the full list of pages any firm needs, see our [law firm website checklist](/blog/law-firm-website-checklist), and for writing the practice area pages themselves, our guide to a [practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+
+![Wooden judge's gavel resting beside an open book with its pages fanning upward on a blue background](https://images.unsplash.com/photo-1618771623063-6c3faa854a61?auto=format&fit=crop&w=1200&q=75)
+
+## What does a strong Indianapolis practice area page look like?
+
+Take a criminal defense firm's OWI page as an example of how the rules and good writing point the same way.
+
+1. **Open with the answer.** "If you were arrested for OWI in Marion County, your first court date will be at the Community Justice Campus. Here is what happens next and how we can help." Two sentences, local, specific.
+2. **Explain the process in steps.** Arrest, initial hearing, license consequences, pretrial, possible outcomes. Short paragraphs, plain words, and a note that every case is different.
+3. **Answer the questions callers ask.** Will I lose my license? Do I need a lawyer for a first offense? What should I bring to the first meeting? Each answered in a few sentences.
+4. **Show who does the work.** The lawyers who handle these cases, with links to their profiles.
+5. **Use case stories, not statistics.** If you show past outcomes, show them as matters with facts and context, never as a percentage of wins.
+6. **Make contact easy.** A phone number that is tappable on a phone, a short form, and a sentence on what happens after someone reaches out.
+7. **Close with the footer.** Responsible lawyer, office address, phone.
+
+That page helps a frightened person at 11 p.m., it follows Rule 7.1 because it promises nothing, and it is exactly the kind of page Google describes in its guidance on [helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): made for the reader, showing real expertise, leaving them knowing what to do next.
+
+If you want to see your own site rebuilt along these lines before deciding anything, SaySites offers a [free redesign preview](/redesign) built from your current pages and words.
+
+## How fast and accessible does the site need to be?
+
+People looking for a lawyer often search on a phone, under stress, sometimes from a hospital or a courthouse hallway. A slow page or a form that does not work with a screen reader loses them. Google's [Core Web Vitals documentation](https://developers.google.com/search/docs/appearance/core-web-vitals) explains how page experience is measured, and the Justice Department's [web accessibility guidance](https://www.ada.gov/resources/web-guidance/) explains why businesses open to the public should make their sites usable for people with disabilities. In practice: real text instead of text baked into images, alt text on every meaningful photo, forms with labels, enough color contrast, and a site that works with a keyboard alone.
+
+## An Indiana pre-launch checklist
+
+- [ ] Every page, including ad landing pages and vendor-hosted forms, shows the name and office address of a responsible lawyer or the firm (Rule 7.2(c)).
+- [ ] A dated copy of every page is saved at launch, and a plan exists to save changed pages and keep them six years after they stop running.
+- [ ] No win rates, recovery totals or predictions of success appear anywhere, including titles, descriptions and image text.
+- [ ] Every result or case story carries its facts and context close to it.
+- [ ] Reviews are real, used with permission, unedited, and focused on service rather than outcomes.
+- [ ] No "best," "top" or comparison claims that cannot be factually substantiated.
+- [ ] "Specialist," "certified" and "expert" appear only with certification from an accredited organization, named on the page.
+- [ ] Videos with actors or re-creations say so clearly and conspicuously.
+- [ ] Chat waits for the visitor to start the conversation.
+- [ ] Targeted letters and emails carry "Advertising Material," are filed with the Disciplinary Commission with the $50 fee, and respect the 30-day wait after accidents.
+- [ ] Marketing vendors are paid for services, not per case referred, and work under a lawyer's supervision.
+- [ ] Court and directions pages point to the Community Justice Campus and the federal courthouse correctly.
+- [ ] Google Business Profile details match the site exactly.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds an Indianapolis law firm website
+
+SaySites gives a firm the pieces this guide describes: a page for each practice area, a profile for each attorney with admissions and certifications you supply, office and courthouse pages, and a consultation form with intake questions that fit the practice area, including the other party's name so you can run a conflict check before you call back. The firm is described to search engines as a LegalService, pages can be built in English and Spanish, and every page has to pass a 95+ speed check before it can go live.
+
+You change the site by saying what you want, in plain words: "put our responsible attorney and Meridian Street address in the footer of every page" or "replace the recoveries total on the home page with three case stories." Each change waits as a draft until you approve it, which gives you a natural moment to save the dated copy Rule 7.2(c) asks you to keep for six years. Results, reviews and certifications come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Indiana site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. Practicing across a state line too? Compare Indiana's rules with our [Louisville law firm website guide](/blog/louisville-law-firm-website-design) for Kentucky and our [Chicago law firm website guide](/blog/chicago-law-firm-website-design) for Illinois.`,
+    faq: [
+      { q: "What must appear on every page of an Indiana law firm website?", a: "Rule 7.2(c) of the Indiana Rules of Professional Conduct requires the name and office address of at least one lawyer or law firm responsible for the content. A footer that runs on every page, with the firm name, the responsible lawyer, the street address and the phone number, covers it, including landing pages for ads and forms a vendor hosts for you." },
+      { q: "How long do Indiana lawyers have to keep copies of their website?", a: "Six years after each version is disseminated, under Rule 7.2(c), which requires the responsible lawyer or firm to keep a copy or recording of each communication. For a website, save a dated PDF of every page at launch and again whenever a page's content meaningfully changes, and store the archive somewhere the firm controls." },
+      { q: "Can an Indianapolis law firm list its verdicts and settlements online?", a: "It can, with care. The comment to Indiana Rule 7.1 treats past-performance statistics, and results that may reasonably create an expectation of similar results, as misleading absent special circumstances. Case stories that explain the facts, the work and the outcome, with a clear note that every matter is different, are safer and more useful than totals or win rates." },
+      { q: "Who can certify an Indiana lawyer as a specialist?", a: "Only an Independent Certifying Organization accredited by the Indiana Commission for Continuing Legal Education, and Rule 7.4 requires the communication to name it. The accredited list includes the National Board of Trial Advocacy, the National Elder Law Foundation and two Indiana State Bar Association sections. Saying you practice in a field is always allowed when true." },
+      { q: "Do Indiana lawyers have to file their website with the Disciplinary Commission?", a: "No. Rule 7.3 filing applies to written, recorded and electronic solicitations the rule covers, such as targeted letters or emails, which must be labeled Advertising Material and filed at or before sending with a $50 fee. A website visitors find on their own is not filed, though it must still meet Rules 7.1 and 7.2." },
+      { q: "Where are the Marion County courts now?", a: "The Marion Superior Court and Marion Circuit Court moved in 2022 to the Community Justice Campus at 675 Justice Way, on the southeast side of Indianapolis. Federal cases in the Indianapolis division go to the Birch Bayh Federal Building and U.S. Courthouse at 46 East Ohio Street. Directions pages should send clients to the right building." },
+      { q: "How much does a SaySites website for an Indianapolis law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, LegalService structured data and pages in English or Spanish. You can also ask for a free redesign preview of your current site before you decide." },
+    ],
+    about: ['Indiana Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Indianapolis, Indiana'],
+    published: '2026-11-06',
+    status: 'published',
+  },
+  {
+    slug: 'boston-roofing-website-design',
+    title: 'Boston Roofing Websites: HIC Numbers and Roof CSL Rules',
+    description: 'What a Boston roofing website must show under Massachusetts law: your HIC number in every ad, the CSL for roof work, contract basics and short-form permits.',
+    kind: 'guide',
+    summary: [
+      "Massachusetts General Laws chapter 142A, section 17 makes it a violation to publish an ad for home improvement work without your HIC registration number, and a website is an ad.",
+      "Replacing a roof in Massachusetts calls for both an HIC registration and at least a Specialty Roof Covering construction supervisor license, plus a building permit.",
+      "Contracts of $1,000 or more must be in writing, deposits are capped at one-third (or the cost of special-order materials), and homeowners who hire unregistered contractors lose the Guaranty Fund.",
+      "In Boston, roof repairs use the city's Short-Form Permit, and a three-family home, including one floor of a triple-decker, needs a contractor.",
+      "Pages that explain these rules plainly, by neighborhood and by roof type, answer the questions Boston homeowners ask before they call.",
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1647973210256-a851e271f905?auto=format&fit=crop&w=1600&q=75', alt: 'Row of red brick Beacon Hill townhouses in Boston with dark mansard roofs and dormer windows lit by late afternoon sun' },
+    body: `A Boston roofing company's website has to carry its Massachusetts Home Improvement Contractor (HIC) registration number, because [chapter 142A, section 17](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter142A/Section17) of the General Laws makes it a violation to publish any advertisement for home improvement work that leaves the number out. Beyond that one line of text, the site does its best work when it explains what Massachusetts requires of a roofing job: an HIC registration for work on owner-occupied homes of one to four units, at least a Specialty Roof Covering construction supervisor license (CSL) for roof replacement, a building permit, and a written contract with set terms for any job of $1,000 or more. Homeowners who understand those rules trust the roofer who explained them.
+
+This guide covers what the law requires on the site itself, what the contract and permit rules mean for the pages you write, how Boston homeowners search, which pages to build and a checklist before launch. Every rule links to the state or city page it comes from. It is a planning guide, not legal advice; the Office of Consumer Affairs and Business Regulation and your own counsel are the place for a close call.
+
+## Does a Massachusetts roofer have to show a registration number on the website?
+
+Yes, if you do home improvement work that needs an HIC registration. Section 17 of chapter 142A lists the acts that are prohibited for registered contractors and subcontractors. Item (8) is publishing, directly or indirectly, any advertisement relating to home construction or home improvements that does not contain the contractor's or subcontractor's certificate of registration number, or that contains a false, deceptive or misleading statement. Item (9) adds that you may only advertise that you are registered if the ad accurately references the certificate.
+
+The state's [HIC contractor resources page](https://mass.gov/info-details/hic-contractor-resources) puts it plainly: advertising for residential contracting must contain the contractor's active registration number. A website advertises your work on every page, so the safe pattern is the same one you use on your trucks and yard signs:
+
+- **Put "MA HIC #" and your number in the site footer,** so it appears on every page without anyone remembering to add it.
+- **Repeat it near the phone number at the top of key pages,** such as roof replacement and storm repair, where people decide whether to call.
+- **Check the pages outside your main template:** landing pages for search ads, a page a lead vendor hosts, your online booking page and any coupon page.
+- **Keep it current.** The page says "active" registration. If the number changes or lapses, the website is one of the first places a homeowner or inspector will look.
+
+Your Google Business Profile, social profiles and paid ads are advertising too. Put the number where each platform allows, and make sure the business name and phone match the website exactly.
+
+## Which Massachusetts license does a roofer need for a Boston job?
+
+Two different credentials, and the state is clear that they are separate and "not interchangeable."
+
+**HIC registration.** According to the state's [HIC page](https://mass.gov/info-details/hic-contractor-resources), residential contractors, subcontractors, partnerships and corporations working on owner-occupied, non-commercial property with one to four units must register as Home Improvement Contractors. The contractor who signs the contract with the homeowner must hold the HIC registration. A subcontractor who holds a CSL may perform the licensed part of the work.
+
+**Construction supervisor license.** The same page's chart lists new or replacement roofing as needing a CSL, an HIC registration and a building permit, with a note that a roofing CSL is the minimum. Minor roof repairs also call for a CSL and HIC, with a permit only if the building official decides it is not an ordinary repair.
+
+The state describes the [Specialty CSL for Roof Covering](https://www.mass.gov/info-details/learn-about-different-construction-supervisor-licenses): it covers construction, reconstruction, alteration, repair and removal of roof coverings, including replacing up to 25 percent of the sheathing and sistering up to 25 percent of the roof rafters. It applies to buildings of any use containing less than 35,000 cubic feet, to one- and two-family dwellings with their accessory structures, and to agricultural buildings. If a job goes beyond that, such as structural framing or a larger building, it needs a broader license.
+
+That gives you a simple, honest message for the website: say which licenses you hold, who in the company holds the CSL, and what work it covers. If you also do siding, windows or masonry, the state has separate specialty licenses for those, so list them only if someone in the company holds them.
+
+![Roofer in a bright safety shirt and fall-protection harness kneeling on a dark asphalt shingle roof, sealing a seam with a caulk gun under a clear sky](https://images.unsplash.com/photo-1635424824800-692767998d07?auto=format&fit=crop&w=1200&q=75)
+
+## What do Massachusetts contract rules mean for a roofing website?
+
+Your contract is not your website, but homeowners read both, and the site is where they first learn how you work. The state's guidance on [home improvement contract terms](https://www.mass.gov/info-details/required-contract-terms-in-a-home-improvement-contract) sets out what a home improvement contract must contain. The parts worth explaining on a roofing site are:
+
+1. **A written contract for jobs of $1,000 or more.** Almost every roof replacement qualifies.
+2. **Your registration number on the first page,** along with both parties' names and street addresses.
+3. **Start and completion dates,** a detailed description of the work and materials, the total price and a payment schedule.
+4. **A deposit cap.** A deposit paid before work starts cannot exceed one-third of the total price, or the cost of special-order materials if that is greater, according to the HIC page. Final payment is not due until the work is complete to the satisfaction of the parties.
+5. **A three-day cancellation notice** when the contract is signed somewhere other than the contractor's place of business, which is how most roofing contracts are signed: at the kitchen table.
+6. **A clear notice about permits.** The contractor must obtain the required permits. A homeowner who pulls their own permit or hires an unregistered contractor is not eligible for the Guaranty Fund.
+7. **"DO NOT SIGN THIS CONTRACT IF THERE ARE ANY BLANK SPACES"** in bold directly above the signature line, and no work before the contract is signed and the homeowner has a copy.
+
+A short page called "How our contracts and payments work" turns those rules into a reason to call you. It tells the homeowner what to expect (a written estimate, a contract with dates, a deposit of no more than a third), answers the question they are nervous about asking, and quietly shows that you know the law. Stick to describing what the law requires and what you actually do; do not paraphrase the law into promises your contract does not make.
+
+> **Tip:** Link the state's own pages from your contract page. A homeowner who can check the rule for themselves on mass.gov trusts the roofer who pointed them there.
+
+## Does a Boston roof job need a permit, and who can pull it?
+
+Yes for replacement, and often for repairs. The City of Boston's [roof repair page](https://www.boston.gov/boston-permitting/repair/repair-roof) says that repairing an existing roof, where no other structural changes are needed, uses the city's Short-Form Permit. Homeowners and contractors can both apply, and homeowners can do the work themselves on a one- or two-unit owner-occupied home. For a three-family or larger building, such as an apartment building, a multi-unit condo or one floor of a triple-decker, the city says you must hire a contractor.
+
+That last point is a real Boston detail worth a paragraph on your site. Triple-deckers are a common sight in Dorchester, South Boston, East Boston and other neighborhoods, and the owner of one floor often does not realize the roof is a shared, three-unit question. A page that explains who decides on a roof for a condominium triple-decker, why the job needs a contractor, and how you coordinate with the other owners answers something your competitors' pages probably do not.
+
+On the website, say who pulls the permit (you do, as the state's contract rules expect), roughly how the permit step fits into your schedule, and that homeowners can check a permit's status on the city's Permit Finder, which the roof page links. Avoid promising permit timelines you do not control.
+
+## How do Boston homeowners search for a roofer?
+
+They search by problem, then by place, and they compare before they call.
+
+**By problem and roof type.** "Roof leak repair Boston," "slate roof repair Beacon Hill," "flat roof replacement Dorchester," "ice dam roof leak," "who fixes mansard roofs." Boston's housing mixes asphalt shingle roofs on single-family homes, low-slope roofs on the tops of many multi-family buildings, and slate and copper on older brick rowhouses. Each one is a separate page if you do that work, because the questions, materials and prices differ.
+
+**By neighborhood.** People write "roofer in Roslindale" or "roof repair West Roxbury," and Boston's neighborhoods have their own building stock. A neighborhood page is worth writing only if you have real work there to show: projects, the kinds of roofs you see, permit or access issues on narrow streets. If all you would change is the name, skip it. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call pages made to rank for similar searches that funnel to the same place doorway pages, and they do not help.
+
+**Neighboring cities are separate cities.** Cambridge, Somerville, Brookline, Quincy and Newton each run their own permitting. If you work there, say so on your service area page, but do not imply that Boston's permit process applies.
+
+**By trust signals.** Before calling, homeowners look for a registration number, a real address, photos of real jobs, reviews with names, and a clear explanation of how the job works. Every one of those is something you can put on the site today.
+
+**On the map.** For "roofer near me," Google shows a map and a short list before any website. Google's [business profile guidelines](https://support.google.com/business/answer/3038177) explain how a service-area business that visits customers should set its service area and hide its address if customers do not come to it. A roofing company with an office customers never visit usually falls in that group. Our guide to [showing Google where you work without a storefront](/blog/service-area-business-google) walks through it.
+
+## Which pages should a Boston roofing website have?
+
+A roofing site has one job: help a worried homeowner decide you are the right person to call, and make calling easy. These pages do most of that work:
+
+| Page | What it should hold | Massachusetts or Boston detail |
+| --- | --- | --- |
+| Home | What you do, where, how to reach you; tap-to-call number | HIC number in the header or footer on every page |
+| Roof replacement | Process, materials, timeline, what affects price | CSL and HIC both required; permit required |
+| Roof repair and leaks | Common causes, what you check, when repair beats replacement | Short-Form Permit for repairs without structural changes |
+| Roof types | Shingle, low-slope, slate, copper: only the ones you do | Specialty Roof Covering limits for bigger structural work |
+| Multi-family and triple-deckers | Shared roofs, condo owners, scheduling | City requires a contractor for three-family and larger |
+| Contracts and payments | What the contract includes, deposit, cancellation | $1,000 written contract, one-third deposit cap, three-day notice |
+| About and licenses | Who you are, who holds the CSL, insurance | Active HIC registration, accurately described |
+| Service area | Boston neighborhoods and nearby cities you really serve | Each city runs its own permits |
+| Contact | Short form, phone, what happens next | Same name, address and phone as your Google profile |
+
+Structured data helps search engines read the facts already on the page. Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the markup, and schema.org has a [RoofingContractor](https://schema.org/RoofingContractor) type that fits. Mark up only what visitors can see on the page, and leave review stars out of your own markup: Google's [review snippet documentation](https://developers.google.com/search/docs/appearance/structured-data/review-snippet) treats reviews a business publishes about itself as self-serving.
+
+If you would rather see your current site rebuilt this way before deciding anything, SaySites will make a [free redesign preview](/redesign) from your own pages and photos.
+
+## What should a Boston roof replacement page say?
+
+Here is a structure that follows the rules and answers what homeowners ask, in the order they ask it.
+
+1. **Lead with the answer.** "We replace asphalt shingle and low-slope roofs on homes across Boston. Every job has a written contract, a city permit and a supervisor licensed for roof work on site. MA HIC #000000." Two sentences and your number.
+2. **Explain the steps.** Inspection, written estimate, contract, permit, tear-off and decking check, installation, cleanup, final inspection. One short paragraph each.
+3. **Say what changes the price.** Size, pitch, number of layers to remove, rotted sheathing, access on a tight street, chimneys and skylights, material choice. You do not need to publish prices to be helpful; telling people what drives the estimate is useful on its own.
+4. **Answer the questions callers ask.** How long will it take? Do I need to be home? What happens if it rains mid-job? What happens if you find rotted boards? Will you pull the permit?
+5. **Show real work.** Your own photos of real Boston jobs, with the neighborhood and roof type in the caption. Never stock photos presented as your work.
+6. **Show who does the work.** The person who holds the CSL, the crew lead, how long you have been doing this.
+7. **Make contact easy.** Tap-to-call, a short form, and a sentence on how fast you usually respond, only if you really do.
+
+![Two roofers on scaffolding laying new roofing over a steep pitched roof under construction, with a crane line and bare tree branches in the foreground](https://images.unsplash.com/photo-1763665814485-a0a1b6f51ed7?auto=format&fit=crop&w=1200&q=75)
+
+That page is what Google means by [helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): written for the person with the problem, showing first-hand experience, and leaving them knowing what to do next. It is also the page that turns a search into a call.
+
+## What should a roofing website never say in Massachusetts?
+
+Section 17 bans false, deceptive or misleading statements in home improvement advertising. Keep these off your site:
+
+- **License claims you cannot back up.** "Fully licensed" means nothing if the CSL holder left last year. Say exactly which registration and license you hold.
+- **"Insured" without insurance.** If you say it, be ready to show the certificate.
+- **Fake urgency.** "Only two slots left this week" when it is not true.
+- **Made-up reviews or borrowed photos.** A review you wrote yourself or a stranger's job photo passed off as yours is a false statement in an ad, which is exactly what section 17 bans.
+- **Warranty promises your contract does not contain.** The state's contract guidance lists warranties among the things a contract must address; the website should describe the same warranty, in the same words, or link to it.
+
+## How fast does a roofing website need to be?
+
+Many roofing calls start with a leak and a phone in one hand. A slow page loses that caller. Google's [Core Web Vitals documentation](https://developers.google.com/search/docs/appearance/core-web-vitals) explains how loading speed, responsiveness and layout stability are measured. Large, unresized job photos are the usual culprit on contractor sites, followed by heavy chat and tracking scripts. Keep the phone number as real, tappable text at the top of every page, not a picture of a number.
+
+## A Boston roofing website checklist
+
+- [ ] "MA HIC #" and the active registration number appear on every page, including ad landing pages and vendor-hosted pages.
+- [ ] The site says accurately which HIC registration and which CSL the company holds, and what work they cover.
+- [ ] Roof replacement pages mention the building permit and that you pull it.
+- [ ] A contracts and payments page explains the written contract, the one-third deposit cap and the three-day cancellation notice, linking the state's pages.
+- [ ] A multi-family or triple-decker page explains why three-family homes need a contractor, if you do that work.
+- [ ] Service pages exist only for roof types and places you really work, each with real photos and details.
+- [ ] Reviews are real, unedited and used with permission; no review stars in your own structured data.
+- [ ] The business name, address and phone match your Google Business Profile exactly.
+- [ ] Structured data uses RoofingContractor and describes only what is on the page.
+- [ ] Every photo is resized, every meaningful photo has alt text, and the phone number is tappable text.
+
+## How SaySites builds a Boston roofing website
+
+SaySites builds roofing sites with the contractor layout from the start: a bright photo hero with a request bar, numbered service cards, a "need help?" block and a call band, with separate pages for each service you offer. The request form can ask the homeowner what they need, the job's ZIP code and how soon they need you, and your company is described to search engines as a RoofingContractor. Your photos are resized automatically, and every page has to pass a 95+ speed check before it can go live.
+
+You change the site by saying what you want: "add MA HIC # and our number to the footer of every page," "make a page about triple-decker roofs in Dorchester with these six photos," or "add a section to the contract page about the one-third deposit cap." Every change waits as a draft until you approve it. Licenses, warranties, reviews and project photos come only from you; SaySites never invents them. New requests land in a simple pipeline where you can call, text or email each homeowner, with an instant reply if you turn it on.
+
+The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and have your registration number, contract page and roof pages up this week, or [get a free redesign](/redesign) of your current site to see the difference first. Working in other East Coast markets? See how another state's contractor rules shape a roofing site in our [Philadelphia roofing website guide](/blog/philadelphia-roofing-website-design) and our [Baltimore roofing website guide](/blog/baltimore-roofing-website-design).`,
+    faq: [
+      { q: "Does a Massachusetts roofer have to put a registration number on the website?", a: "Yes, if the work needs an HIC registration. Chapter 142A, section 17 prohibits publishing any advertisement for home improvement work that does not contain the contractor's certificate of registration number, and the state says advertising must show the active number. Putting MA HIC and the number in the footer of every page covers the whole site." },
+      { q: "What license does a roofer need to replace a roof in Boston?", a: "The state's chart lists new or replacement roofing as needing both an HIC registration and a construction supervisor license, with the Specialty Roof Covering CSL as the minimum, plus a building permit. The HIC and CSL are separate credentials. The contractor who signs with the homeowner must hold the HIC registration; a CSL-holding subcontractor may do the licensed work." },
+      { q: "How much deposit can a Massachusetts roofer ask for?", a: "A deposit paid before work starts cannot exceed one-third of the total contract price, or the cost of special-order materials if that is greater, under the state's home improvement contract rules. Final payment is not due until the work is complete to the satisfaction of the parties. Explaining this on your website helps homeowners trust your estimate." },
+      { q: "Can a homeowner cancel a roofing contract in Massachusetts?", a: "Yes, in many cases. The required contract notices include a three-day cancellation right when the contract is signed somewhere other than the contractor's place of business, which covers most contracts signed at a customer's home. The state's sample notice gives the homeowner three business days from the date of the contract to cancel." },
+      { q: "Does a Boston triple-decker roof need a contractor?", a: "Yes. The City of Boston says homeowners may repair the roof of a one- or two-unit owner-occupied home themselves under the Short-Form Permit, but a three-family or larger building, including one floor of a triple-decker, needs a hired contractor. A roofing site that explains shared roofs and condo coordination answers a real Boston question." },
+      { q: "What is the Massachusetts Specialty Roof Covering license?", a: "It is a construction supervisor license limited to roof coverings: building, altering, repairing and removing them, including replacing up to 25 percent of the sheathing and sistering up to 25 percent of the rafters. It applies to buildings under 35,000 cubic feet, one- and two-family dwellings with accessory structures, and agricultural buildings." },
+      { q: "How much does a SaySites website for a Boston roofer cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes the contractor layout, a page for each service, a job request form, RoofingContractor structured data, automatic photo resizing and a lead pipeline with an optional instant reply. You can also ask for a free redesign preview of your current site before deciding." },
+    ],
+    about: ['Massachusetts home improvement contractor law', 'Construction supervisor license', 'Roofing contractor websites', 'Boston, Massachusetts'],
+    published: '2026-11-06',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
