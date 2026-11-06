@@ -22,7 +22,9 @@ not a rating from any review platform.
 
 ## Before it goes live
 - The form has no backend yet; it opens an email to brad@. Wire it to a real form handler.
-- No photos: the site's own photos are 275x76 thumbnails. Add real crew/job photos
-  (before/after work) when the owner supplies them.
+- Photos are free-license Unsplash stock (hero living room, tile bathroom, sofa,
+  gloved spray bottle, carpet being vacuumed, closing band). The current site has
+  no usable photos of its own work (275x76 thumbnails and 2016 banners with text
+  baked in). Swap in real crew and before/after photos when the owner sends them.
 - Logo: their own mark from the WordPress media library (logo.png, logo-mark.png),
   white background removed. Palette keeps the brand's indigo and sun yellow, calmed down.
