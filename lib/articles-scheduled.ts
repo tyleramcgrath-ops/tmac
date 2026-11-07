@@ -9476,6 +9476,330 @@ The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [pr
     published: '2026-11-06',
     status: 'published',
   },
+  {
+    slug: 'richmond-law-firm-website-design',
+    title: 'Richmond Law Firm Websites: Virginia Rule 7.1 Guide',
+    description: 'Plan a Richmond law firm website under Virginia Rule 7.1: case results, specialty claims, trade names, lead generators and the courts clients use.',
+    kind: 'guide',
+    summary: [
+      'Virginia folds almost all lawyer advertising into one rule, Rule 7.1, which bars false or misleading communications. There is no separate advertising rule and no filing requirement for a website.',
+      'Case results and fee comparisons are allowed, but the comments warn they can mislead without context; a qualifying note can prevent a finding that a result creates unjustified expectations.',
+      'Unlike many states, Virginia lets a lawyer describe a specialty earned through experience, training or education, or a certification by a named body, as long as the statement is not misleading.',
+      'A trade name that pairs a place with "clinic", such as a Richmond legal clinic, may need a disclaimer that the firm is not a public legal aid agency.',
+      'Richmond is the seat of the Supreme Court of Virginia, the Court of Appeals and the Fourth Circuit, but most clients start in the city, Henrico or Chesterfield courts, so say which ones you appear in.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1575474007145-7bc306677fa4?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Richmond, Virginia seen across the James River, with office towers behind a long railroad trestle and trees in autumn color' },
+    body: `A Richmond law firm website is governed mainly by one rule: Virginia Rule of Professional Conduct 7.1, which says a lawyer may not make a false or misleading communication about the lawyer or the lawyer's services. Virginia deleted its separate advertising rule (Rule 7.2) in 2013 and folded the old specialty and firm name rules into the comments to Rule 7.1 in 2017, according to the notes in the Virginia State Bar's [complete Rules of Professional Conduct](https://vsb.org/common/Uploaded%20files/docs/rules-rpc-complete.pdf). So there is no filing with the bar, no required "advertising" label on the site and no list of mandatory disclaimers. What you do have is a short rule with four comments that decide how to write results, specialty claims, comparisons and your firm name, plus Rule 7.3, which limits targeted solicitations and paid referrals.
+
+That makes Virginia easier to start in and easier to get wrong. With no checklist to tick, every claim on the site has to stand on its own. This guide takes each part of the rule in turn, then covers the courts Richmond clients use, how they search, the pages a firm here needs and a checklist for launch. Rule quotations come from the bar's own PDF of the rules. It is a planning guide for a website, not legal advice.
+
+## Is a law firm website lawyer advertising under Virginia's rules?
+
+Yes, in the sense that matters. Rule 7.1 covers any communication about a lawyer or the lawyer's services, and a firm website is nothing but that: who the lawyers are, what they handle, what happened in past matters and how to get in touch. It does not matter that Virginia no longer has a rule titled "Advertising". The standard is the same for the home page, a practice area page, an attorney biography, a blog post with a call to action, a Google Business Profile, a directory listing and the landing page behind a paid search ad.
+
+The rule has two halves. A communication is false or misleading if it contains a material misrepresentation of fact or law, or if it omits a fact needed to make the statement, considered as a whole, not materially misleading. Comment [1] adds a third way to fail: a truthful statement is misleading if there is a substantial likelihood it will lead a reasonable person to a specific conclusion about the lawyer for which there is no reasonable factual foundation.
+
+That third test is the one marketing copy tends to miss. "Richmond's trusted injury team" is true in the sense that some clients trust you, but a reader may conclude something specific (that you are the city's leading injury firm) that you cannot back up. Write claims that a reader could check: the courts you appear in, the years each lawyer has practiced, the kinds of matters you take and the kinds you refer out.
+
+## Can a Virginia law firm website show case results?
+
+It can. Comment [2] to Rule 7.1 says a communication that truthfully reports a lawyer's achievements for clients may be misleading if it leads a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters, without reference to the specific facts and law of each case. The same comment adds that an appropriate disclaimer or qualifying language may prevent a finding that a statement creates unjustified expectations or otherwise misleads.
+
+Read together, that gives you a practical way to write a results page:
+
+1. **Describe each result as a story, not a number.** Give the type of case, the court or forum, what was in dispute, what the firm did and how it ended. A figure can appear, but inside its facts.
+2. **Say what the number is.** A gross verdict, a settlement before fees and costs, a reduced charge, a dismissed count: name it. A "recovered for clients" total that adds unlike results together leaves out the facts a reader would need.
+3. **Put a plain qualifier next to the results, not in the footer.** Something like "Every case turns on its own facts and law. These results do not predict the outcome of yours." The comment says this kind of language may prevent a finding that results mislead. It does not cure a statement that is false.
+4. **Keep the file.** For each result you publish, keep the order, the settlement statement or the docket entry, so you can show the claim was accurate on the day it ran.
+5. **Ask before you name a client.** Rule 1.6 on confidentiality still applies to marketing, so get written consent before a client's name or recognizable facts appear online.
+
+Testimonials and reviews follow the same logic. A client's words about their own experience are a communication about your services once you publish them, so a review that says "they'll win your case too" carries the same expectation problem as a verdict with no context. Choose reviews that describe how the firm treated the person, keep them exactly as written, and do not offer anything in exchange for them.
+
+![Two women in a consultation at a wooden table in an office with exposed brick walls, one taking notes beside an open laptop](https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Virginia lawyer call themselves a specialist online?
+
+Virginia is more permissive here than most states. Comment [4] to Rule 7.1 says a lawyer may say that they do or do not practice in particular fields, and that a lawyer who is a specialist in a field "by experience, specialized training, or education, or is certified by a named professional entity" may communicate that specialty or certification as long as the statement is not false or misleading.
+
+Many states allow the word "specialist" only for lawyers certified by an approved body. Virginia does not impose that gate, but the "not misleading" test still applies, and it is strict in practice:
+
+- If you say a lawyer is certified, name the certifying organization and keep the certificate current. An expired certification described in the present tense is false.
+- If you call a lawyer a specialist without a certification, the page should make clear what the claim rests on: the share of their practice in that field, the years they have done it, the training they completed.
+- Do not stretch one lawyer's credential to the whole firm. "Our certified trial lawyers" with one certified lawyer is a misleading statement about the others.
+- If your firm crosses into neighboring jurisdictions, remember that their rules may be stricter. Our [Washington, DC law firm website guide](/blog/washington-dc-law-firm-website-design) covers the District's rules for the many firms that practice on both sides of the line.
+
+A comparison is the related trap. Comment [2] warns that an unsubstantiated comparison of your services or fees with other lawyers' may mislead if it is specific enough that a reader would conclude it can be proven. "Lower fees than other Richmond firms" or "the fastest settlements in Central Virginia" invite exactly that conclusion. State your own fee terms instead.
+
+## What does Virginia say about law firm names and website addresses?
+
+Comment [5] to Rule 7.1 covers firm names, and it explicitly mentions websites. A firm may use the names of all or some of its members, names of deceased members where there has been a continuing succession, or a trade name. It may also be designated "by a distinctive website address or comparable professional designation", so a domain that works as a brand is fine as long as it is not misleading.
+
+Two lines in that comment matter for Richmond firms in particular:
+
+- **Place names plus "clinic".** If a private firm uses a trade name such as "clinic" with a geographical name, the comment gives "Springfield Legal Clinic" as its example, an express disclaimer that the firm is not a public legal aid agency may be required. A name like "Richmond Legal Clinic" or "RVA Law Clinic" should carry that disclaimer near the name on the home page, in the footer and on the contact page.
+- **Names that imply a partnership.** Comment [6] says lawyers may state or imply that they practice in a partnership or other organization only when that is the fact. Two lawyers sharing a suite on East Main Street are not "Smith and Jones" unless they are actually a firm. If you share space, give each practice its own site, or at least its own clearly separate pages.
+
+Domain names deserve the same scrutiny. A domain such as "bestrichmondlawyer.com" makes a comparison the firm would need to back up, and it appears in every link, email address and business card.
+
+## What are the rules on solicitation, paid ads and lead generators?
+
+Your website is not a solicitation. Comment [1] to Rule 7.3 says a communication directed to the general public, such as a billboard, an internet banner ad or a website, typically is not one, and neither is a response to a request for information or something automatically generated in response to internet searches.
+
+Rule 7.3 starts to matter when the firm reaches out to a specific person known to need legal help in a particular matter. Every written, recorded or electronic solicitation then has to include the words "ADVERTISING MATERIAL" on the outside envelope, if any, and at the beginning and end of a recorded or electronic message, unless the recipient is a lawyer, has a family, personal or prior professional relationship with you, had prior contact with you, or is being contacted under a court order. A follow-up email to someone who downloaded a guide from your site, for example, is a response to their request; an email you send to a person named in yesterday's accident report is a solicitation.
+
+Rule 7.3(d) bars giving anything of value to someone outside the firm for recommending you, with exceptions that cover most online marketing. You may pay the reasonable cost of advertising, including online group advertising, and comment [4] lists directory listings, domain registrations, banner ads and the fees of website designers and other marketing vendors, as long as they do not control your professional judgment.
+
+Comment [4] also speaks directly to lead generators. You may pay for internet-based client leads as long as the lead generator does not recommend you, the payment is consistent with Rule 5.4 and its communications satisfy Rule 7.1. You must not pay a lead generator that states, implies or creates a reasonable impression that it is recommending you, that it is making the referral without payment from you, or that it has analyzed the person's legal problem to decide which lawyer should get the referral. Before you sign up for a "matching" service, read its pages the way a consumer would. If they say "we find the right attorney for you", the impression is that it analyzed the problem and chose you.
+
+## Do I need to get my website approved by the Virginia State Bar?
+
+No. Nothing in Virginia's rules requires you to file a website or obtain approval before it goes live. The Virginia State Bar does offer a voluntary option: its [prescreening of lawyer advertising](https://vsb.org/Site/lawyers/presreening-ads.aspx) page explains that any Virginia lawyer can ask the bar's ethics staff for an informal opinion on advertising material, and it publishes a checklist. The bar notes that following the checklist is not a guarantee of compliance, because it cannot cover every possible misleading statement.
+
+If you are unsure about a results page, a specialty claim or a trade name, sending that page for an informal opinion before launch is a reasonable step. For anything that turns on facts specific to your firm, talk to ethics counsel.
+
+## Which courts should a Richmond law firm website mention?
+
+Richmond is unusual because so many appellate and federal courts sit within a few blocks of each other downtown. A courts page that names the right building, with the address, gives a nervous client a concrete next step and gives search engines and AI answers clear facts about where you practice.
+
+| Court | Where | What a client might be there for |
+| --- | --- | --- |
+| Richmond Circuit Court | John Marshall Courts Building, 400 North Ninth Street ([court page](https://courts.state.va.us/courts/circuit/richmond/home)) | Felony cases, larger civil suits, divorces and appeals from district court |
+| Richmond General District Court | City of Richmond ([court page](https://courts.state.va.us/courts/gd/richmond_city/home)) | Traffic tickets, DUI first appearances, landlord and tenant cases |
+| Supreme Court of Virginia | 100 North Ninth Street ([court page](https://www.vacourts.gov/courts/scv/home)) | Appeals and attorney discipline matters |
+| Court of Appeals of Virginia | 109 North Eighth Street ([court page](https://www.vacourts.gov/courts/cav/home)) | Appeals from circuit courts |
+| U.S. District Court, Eastern District of Virginia, Richmond Division | Spottswood W. Robinson III and Robert R. Merhige, Jr. Federal Courthouse, 701 East Broad Street ([court site](https://www.vaed.uscourts.gov/)) | Federal criminal and civil cases |
+| U.S. Court of Appeals for the Fourth Circuit | Lewis F. Powell Jr. Courthouse, 1100 East Main Street ([court site](https://www.ca4.uscourts.gov/)) | Federal appeals |
+
+Many clients will not end up in a city courthouse at all. Henrico County and Chesterfield County have their own circuit courts ([Henrico](https://courts.state.va.us/courts/circuit/henrico/home), [Chesterfield](https://courts.state.va.us/courts/circuit/chesterfield/home)) and district courts, and a client from Short Pump or Midlothian will usually be in those. If your practice is mostly county work, say so on the practice pages: "We handle traffic and DUI cases in Henrico and Chesterfield General District Courts" is more useful to that reader than a list of every court in the region.
+
+![The James River flowing over rocks in front of downtown Richmond's office towers, with a highway bridge crossing the river on a sunny day](https://images.unsplash.com/photo-1648571990036-782b88dd6a1a?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in the Richmond area search for a lawyer?
+
+They search the way they talk about where they live. People say the Fan, Church Hill, Scott's Addition, Manchester, the West End, Short Pump, Mechanicsville and Midlothian. Court papers say "City of Richmond", "County of Henrico" and "County of Chesterfield". A good practice page uses the official name where it matters (which court will hear the case) and the everyday names where the reader would use them (where you meet clients, which parts of the area you cover).
+
+A few patterns are worth building around:
+
+- **Questions, not keywords.** People type or speak a full question: "do I need a lawyer for a reckless driving ticket in Henrico", "how long does an uncontested divorce take in Virginia". A page that answers the question in its first paragraph, then explains the process and the costs, is what Google's [helpful content guidance](${HELPFUL}) describes and what AI answers can quote.
+- **Virginia terms.** Readers searching Virginia law use Virginia vocabulary, such as "reckless driving", "no-fault divorce after separation" or "show cause". Use the terms your clients will hear in court and explain them in plain words.
+- **One page per question that deserves one.** A single "Criminal Defense" page cannot answer DUI, reckless driving, drug possession and expungement well. Give each its own page when you take enough of those cases to say something specific.
+- **Language.** If a lawyer or intake staff member can run a consultation in Spanish or another language, say who, and consider full pages in that language for your main practice areas, linked with Google's guidance on [localized versions](${HREFLANG}). Do not promise a language your phone line cannot answer.
+
+## What should be on your Google Business Profile in Richmond?
+
+Your Google Business Profile often appears before your website, so it counts as much as any page. Google says local results are based mainly on relevance, distance and prominence ([how Google ranks local results](${LOCAL_RANKING})). For a Richmond firm that means:
+
+- **The real office address.** Google's [business profile guidelines](${GBP_GUIDELINES}) require a real location you staff during stated hours. A virtual office in a downtown tower you never visit does not qualify and can get the profile suspended.
+- **One profile per office, and practitioner profiles only where they fit.** Google's guidelines explain when an individual lawyer can have their own profile alongside the firm's. Keep names consistent with the website and the bar's records.
+- **A primary category that matches your main work**, such as personal injury attorney or criminal justice attorney, and the same phone number that appears on the site.
+- **Reviews you earned honestly.** Google's [review guidance](${REVIEW_TIPS}) lets you ask clients for reviews; it does not let you pay for them or filter who you ask. Under Virginia's rules, reviews you repost on your site become your communication, so they also need to meet Rule 7.1.
+
+On the website itself, describe the firm to search engines as a [LegalService](${SCHEMA_LEGAL}) with the same name, address, phone and hours as the profile, using Google's [local business structured data](${LOCAL_SD}) guidance. Mark up only what is visible on the page.
+
+## Which pages does a Richmond law firm website need?
+
+Build around what clients ask and what Rule 7.1 lets you prove.
+
+- **Home page.** What you do, for whom and where, in the first two sentences, with a phone number and a consultation form above the fold. No superlatives you could not substantiate.
+- **A page for each practice area you actually handle.** Each one answers the main question, explains the Virginia process, names the courts and says what a first consultation covers and costs.
+- **Attorney profiles.** Bar admissions with years, courts admitted to, certifications with the certifying body named, languages and the matters each lawyer handles.
+- **Results or case stories.** Written as described above, with the qualifier next to them.
+- **Office and courts pages.** Parking and entrance details for your office, and the courts you appear in with addresses.
+- **Fees.** How you charge for each kind of matter. Comment [2] warns about fee comparisons, not about stating your own fees clearly.
+- **Contact and intake.** A short form, a phone number that is answered, and a note that sending the form does not create an attorney-client relationship.
+
+For a fuller list, our [law firm website checklist](/blog/law-firm-website-checklist) covers what every firm site needs, and [how to write a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) goes deeper on the page that does most of the work.
+
+## Richmond law firm website checklist
+
+Run this before launch and again whenever pages change:
+
+- [ ] Every claim of fact on the site is accurate and something you could show evidence for.
+- [ ] No statement is likely to lead a reader to a specific conclusion about the firm that has no factual basis.
+- [ ] Each case result has its facts, says what the number represents and has a qualifier next to it.
+- [ ] Client names or identifying facts appear only with written consent.
+- [ ] Specialty claims say what they rest on; certifications name the certifying organization and are current.
+- [ ] No comparisons with other lawyers' services or fees that you cannot substantiate.
+- [ ] A trade name with a place name and "clinic" carries a not-legal-aid disclaimer.
+- [ ] Lawyers who share space are not presented as a firm.
+- [ ] Any lead generator you pay does not appear to recommend you or analyze the client's problem.
+- [ ] Targeted letters and emails carry "ADVERTISING MATERIAL" where Rule 7.3(c) requires it.
+- [ ] Courts pages name the right building for city, Henrico, Chesterfield and federal cases.
+- [ ] Google Business Profile details match the site exactly.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Richmond law firm website
+
+A SaySites law firm site starts with the parts this guide recommends: a page per practice area, a profile per attorney with room for admissions and certifications you provide, office and courts pages, and a consultation form. The form can ask questions that fit the practice area, including the name of the other person or company involved so you can check for a conflict before you call back. Search engines read the firm as a LegalService, each lawyer as a Person and each practice area as a Service, and every page must pass a 95+ speed check before it goes live. Pages can be built in English and Spanish.
+
+You make changes by saying them, for example "add 'Every case is different, and past results do not predict yours' under each case story" or "rename the Henrico page to Henrico and Chesterfield traffic court." Each change waits as a draft until you approve it, which is a good moment to check it against Rule 7.1. Results, reviews and certifications come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Virginia site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If you also practice to the south, our [Charlotte law firm website guide](/blog/charlotte-law-firm-website-design) covers North Carolina's rules, and our [Baltimore law firm website guide](/blog/baltimore-law-firm-website-design) covers Maryland's.`,
+    faq: [
+      { q: 'Do Virginia lawyers have to file their website with the state bar?', a: 'No. Virginia has no filing or pre-approval requirement for lawyer websites, and its separate advertising rule was deleted in 2013. The site must still meet Rule 7.1, which bars false or misleading communications. The Virginia State Bar offers voluntary prescreening, where ethics staff give an informal opinion on advertising material you send them.' },
+      { q: 'Can a Richmond law firm post verdicts and settlements online?', a: 'Yes, if they are accurate and presented with context. Comment [2] to Virginia Rule 7.1 warns that truthful results can mislead when they suggest other clients will get the same outcome, and says qualifying language may prevent that. Describe each case, say what the figure represents, and put a plain note beside the results that every matter is different.' },
+      { q: 'Can a Virginia lawyer say they specialize in a practice area?', a: 'Yes, more freely than in many states. Comment [4] to Rule 7.1 allows a lawyer who is a specialist through experience, training or education, or certified by a named organization, to say so if the statement is not misleading. Name any certifying body, keep certifications current, and be ready to show what a specialty claim rests on.' },
+      { q: 'Do I need an "attorney advertising" label on a Virginia law firm website?', a: 'No. Virginia does not require a label on a website. Rule 7.3(c) requires the words "ADVERTISING MATERIAL" on written, recorded or electronic solicitations sent to specific people known to need help in a particular matter, with exceptions for lawyers, people you already know and people who contacted you first. A website reaching the general public is not a solicitation.' },
+      { q: 'Can a Richmond law firm pay for leads from an online service?', a: 'Yes, within limits. Comment [4] to Virginia Rule 7.3 allows paying for internet leads if the lead generator does not recommend you and its communications are not misleading. You must not pay a service that implies it is recommending you, that it refers clients without payment, or that it analyzed the person\'s legal problem to choose a lawyer.' },
+      { q: 'Which courts should a Richmond law firm list on its website?', a: 'List the ones you actually appear in. City cases go to the John Marshall Courts Building at 400 North Ninth Street and the Richmond General District Court, while Henrico and Chesterfield have their own courts. Federal cases go to 701 East Broad Street. The Supreme Court of Virginia, the Court of Appeals and the Fourth Circuit also sit downtown.' },
+      { q: 'How much does a SaySites website for a Richmond law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office and courts pages, a consultation form with a conflict-check question, LegalService structured data and hosting. You can ask for a free redesign first to see your current site rebuilt with your own content.' },
+    ],
+    about: ['Virginia Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Richmond, Virginia'],
+    published: '2026-11-07',
+    status: 'published',
+  },
+  {
+    slug: 'atlanta-hvac-website-design',
+    title: 'Atlanta HVAC Websites: Georgia SB 553 Ad Rules',
+    description: 'Build an Atlanta HVAC website under Georgia SB 553: who may advertise, where the license number goes, Class I vs Class II and metro permit rules.',
+    kind: 'guide',
+    summary: [
+      'Georgia rewrote its contractor licensing law in 2026 with SB 553. Only a licensed conditioned air contractor may advertise as one, and the law counts websites, social media and apps as advertising.',
+      'Your Secretary of State registration or certificate number, or a web address where it can be found, has to be prominently displayed on advertising for work you offer to perform.',
+      'Say which license class you hold: Class I covers residential and light commercial systems up to set size limits, Class II has no size limit apart from boilers.',
+      'Permits differ across the metro. The City of Atlanta exempts some condenser and furnace work on one- and two-family homes; Sandy Springs requires a mechanical permit for HVAC projects.',
+      'A refrigerant rule finalized by EPA in May 2026 changed what can be installed, so service pages that explain equipment choices should be checked against it.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1753744402410-44319f72f8c5?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Atlanta on a sunny day, with the SkyView Ferris wheel and the green lawns of Centennial Olympic Park in front of the office towers' },
+    body: `An Atlanta HVAC company's website now has to follow Georgia's rewritten contractor licensing law, Senate Bill 553 of 2026, which repealed and replaced Chapter 14 of Title 43 of the Georgia Code ([bill page](https://www.legis.ga.gov/legislation/73522), [text as passed](https://www.legis.ga.gov/api/legislation/document/20252026/248131)). Three parts of it shape the site directly. Only a person licensed as a conditioned air contractor may advertise that they are in that business (unless the work is performed by a licensed conditioned air contractor). Advertising expressly includes the internet, social media and digital applications. And the company's registration or certificate number from the Secretary of State, or a web address where that number can be found, must be prominently displayed on advertising for work the licensee says it can perform.
+
+Trade press reported that Governor Kemp signed the bill on May 11, 2026, with an effective date of July 1 ([Contractor](https://www.contractormag.com/codes/news/55392562/new-georgia-law-targets-unlicensed-plumbing-and-hvac-advertising)). This guide explains what the law asks of a website, how the license classes affect what you can promise, how permits differ around the metro, what Atlanta homeowners search for and what pages to build. Quotations of the law come from the text as passed. It is a planning guide, not legal advice; for a specific question, ask the Division of Conditioned Air Contractors or a lawyer.
+
+## What does Georgia's SB 553 change for HVAC advertising?
+
+Before 2026, Georgia already licensed conditioned air contractors through the [Division of Conditioned Air Contractors](https://sos.ga.gov/page/about-board-conditioned-air-contractors) of the State Construction Industry Licensing Board. SB 553 rewrote the whole chapter and put the advertising rules in plain terms.
+
+New Code Section 43-14-14(d) says a person that is not licensed as a conditioned air contractor "shall be prohibited from advertising in any manner" that the person is in that business, "unless the work is performed by a licensed conditioned air contractor." Section 43-14-17(b) then makes it prima facie evidence of a violation when an unlicensed person advertises in the business, or advertises "in a manner such that the general public would believe" they are a licensed conditioned air contractor. It lists what counts as advertising: newspaper, internet, social media and digital applications, television, radio, telephone directory listings, mailings, business cards, and signage at a place of business or on a vehicle.
+
+For a website, that means three things:
+
+1. **The site is advertising.** Every page that offers heating or cooling work is covered: the home page, service pages, a Google Business Profile, a social profile, an ad landing page.
+2. **Licensing has to be real before the site says "HVAC".** A handyman, a general contractor or a new company waiting on its license should not have pages that read as a heating and air business. The exception in 43-14-14(d) covers a business whose work is actually performed by a licensed conditioned air contractor; if that is your arrangement, the site should say who holds the license.
+3. **Lead sites and directories count.** A page you pay for on a lead site, or a profile on an app, is advertising by the same definition. Check that it shows the same license details as your own site.
+
+Section 43-14-17 also sets out enforcement. After notice and a hearing, the board may order someone to stop. Violating that order can bring a fine of up to $1,500 per violation, with each day counted separately, and a violation of the chapter is a misdemeanor punishable by a fine of up to $1,000, up to six months in jail, or both.
+
+## Where does the license number have to appear on a Georgia HVAC website?
+
+Section 43-14-18(b) asks for the company or business registration or certificate number issued by the Secretary of State's office on commercial vehicles used in the business, and says "such registration number or certificate number, or website address where such number can be found, shall also be prominently displayed on any advertising" for work the licensee or certificate holder purports to be able to perform. The same number must be printed on all invoices and proposal forms.
+
+On your own website, the simplest reading is also the most useful one for customers: put the number itself where people look for trust signals.
+
+- **In the header or footer of every page**, next to the phone number: "Georgia conditioned air license" followed by your number, exactly as the state issued it.
+- **On the About page**, with the name of the licensed individual, the class of license and a link to the Secretary of State's license lookup so a homeowner can check it.
+- **On every service page and ad landing page**, because some visitors will never see the home page.
+- **On the request form confirmation and on quotes**, since proposals must carry the number anyway.
+
+The "website address where such number can be found" option exists mainly for ads with no room, such as a vehicle wrap or a short social post. If you use it, point to a page on your site that shows the number at the top, not to a home page where a visitor has to hunt for it.
+
+> **Tip:** If your company has more than one location, Section 43-14-14(f) requires at least one licensed person stationed full time in each branch office supervising the work done from it. A location page for your Marietta or Lawrenceville office should name who that is.
+
+## Class I or Class II: what can your website promise?
+
+SB 553 keeps two conditioned air license classes and defines them in Section 43-14-2:
+
+| License | Scope in the law | What it means for your pages |
+| --- | --- | --- |
+| Conditioned Air Contractor Class I | Residential and light commercial: air conditioning and heat pump systems of 60,000 BTUs of cooling or less, and gas heating systems of 175,000 BTUs or less | Residential and small commercial service pages; no promises of large commercial installations |
+| Conditioned Air Contractor Class II | Residential and commercial, without limits on project size or equipment type, except boilers, which are licensed separately | Commercial pages for rooftop units, chillers, variable refrigerant flow systems and ventilation |
+
+The class matters because a page can make a promise the license does not cover. A Class I company with a page titled "Commercial HVAC Installation, Any Size" is advertising work outside its scope, which is the kind of statement 43-14-17(b) treats as evidence against an unlicensed advertiser. Name the class on the About page, and describe commercial work in terms that match it: "light commercial service for offices and restaurants" for Class I, and the full list only if you hold Class II.
+
+Boilers are a separate case. The law excludes boiler installation from Class II because it is licensed under the Office of the Commissioner of Insurance and Safety Fire. If you install boilers, say what license covers that work.
+
+![A technician in a black T-shirt with a tool pouch full of screwdrivers and pliers on his belt, carrying a yellow ladder past a parked vehicle](https://images.unsplash.com/photo-1625148230889-8195e85aae6b?auto=format&fit=crop&w=1200&q=75)
+
+## Do Atlanta HVAC jobs need a permit?
+
+It depends on which city the house is in, and a good website says so instead of making one blanket claim. Metro Atlanta is dozens of cities and several counties, each with its own building department.
+
+- **City of Atlanta.** The Office of Buildings publishes a list of [work exempt from permit](https://atlantaga.gov/home/showpublisheddocument/54714/637834584756400000). For existing single-family, two-family and duplex homes it includes repair or replacement of existing air conditioner condensers, repair of existing furnaces and equipment, and replacement of grilles and diffusers on existing ductwork. Work that is not on that list, such as a new system or new ductwork, should be treated as needing a permit.
+- **Sandy Springs.** The city says a mechanical permit is [required for all projects involving heating, ventilation and air conditioning](https://up.sandyspringsga.gov/node/1110), unless it is issued as part of a larger building permit.
+- **Everywhere else.** Marietta, Decatur, Alpharetta and the unincorporated parts of Fulton, DeKalb, Cobb and Gwinnett counties each set their own rules. Check each one you serve before you write about it.
+
+This is useful content, not filler. Homeowners comparing quotes want to know whether a permit is included, who pulls it and whether an inspection will follow. A page that says "In Sandy Springs we pull the mechanical permit for every system replacement and schedule the inspection; inside Atlanta city limits a condenser swap on a house is usually exempt, and we will tell you if your job is not" answers that, and it shows you know the area.
+
+## What should an Atlanta HVAC site say about refrigerants?
+
+Equipment choices are one of the questions homeowners ask most, and the rules shifted in 2026. On May 26, 2026, EPA published a final rule reconsidering parts of its hydrofluorocarbon phasedown program ([Federal Register](https://www.federalregister.gov/documents/2026/05/26/2026-10387/phasedown-of-hydrofluorocarbons-reconsideration-of-certain-regulatory-requirements-promulgated-under)). According to the National Association of Home Builders' summary, it allows residential systems using R-410A that were made or imported before January 1, 2025 to keep being installed until existing supplies are used up, where before the change installing those split systems after January 1, 2026 was barred ([NAHB](https://www.nahb.org/blog/2026/05/epa-hvac-refrigerants-r-410a-final-rule)). The same summary notes that R-410A production continues to step down.
+
+If your site has a page about replacing a system, check it against the rule rather than repeating last year's sales talk. Explain in plain words which refrigerant the systems you install use, what that means for future repairs and refills, and why you recommend one option over another for that customer. Avoid scare lines like "R-410A is banned" that the rule no longer supports.
+
+## How do Atlanta homeowners search for heating and air?
+
+Most HVAC searches are urgent and local. A homeowner with a dead system in August, or a furnace that will not light on the first cold night, searches from a phone and calls the first company that looks trustworthy and close. Your site has to work for that person in seconds:
+
+- **Tap-to-call at the top of every page**, and a short request form for people who cannot talk.
+- **The words people use.** Many homeowners say "heating and air" or "heat and air" rather than "HVAC". Use their words in headings and page titles, alongside the trade term.
+- **Real service areas.** Name the parts of the metro you actually serve, such as Buckhead, Midtown, East Atlanta, Decatur, Sandy Springs or Smyrna, and how quickly you can usually get there. Do not create a near-identical page for every suburb with the town name swapped; Google's [spam policies](${SPAM}) treat pages like that as doorway pages. A service area page that explains travel times, permit differences and the work you do most in each area is a different thing.
+- **Answers before the call.** Pages that answer "how much does it cost to replace an AC unit", "do you charge a trip fee" and "how long does a furnace install take" with real ranges from your own pricing build trust and match how people ask search engines and AI assistants.
+
+If someone at the company can take calls and run estimates in Spanish, say so and consider Spanish pages for the main services, linked using Google's guidance on [localized versions](${HREFLANG}). Only promise a language your phones can answer.
+
+![A hand pressing a modern black digital thermostat on a white wall, next to a second small display showing the room temperature](https://images.unsplash.com/photo-1770625467384-304e461ef1be?auto=format&fit=crop&w=1200&q=75)
+
+## How should an Atlanta HVAC company set up its Google Business Profile?
+
+Most HVAC companies go to the customer, so they are service-area businesses in Google's terms. Google's guidance on [service areas](${SERVICE_AREAS}) says to hide your address if you do not serve customers there and to list the areas you serve. Its [business profile guidelines](${GBP_GUIDELINES}) require a real business name, without added keywords or city names, and a real location.
+
+Local results are based mainly on relevance, distance and prominence ([how Google ranks local results](${LOCAL_RANKING})). Practically:
+
+- **Name.** Use your real business name, the one on your license registration and invoices.
+- **Category.** Pick the primary category that matches most of your work, and add secondary categories only for work you actually do.
+- **Hours.** If you advertise emergency service, the hours on the profile and the site should match what your phones really do at 2 a.m.
+- **Reviews.** Google's [review guidance](${REVIEW_TIPS}) lets you ask every customer for a review. It does not let you pay for reviews or ask only happy customers.
+- **License.** Put your Georgia license number in the profile's description too. SB 553 counts internet advertising, and the profile is often the first ad a homeowner sees.
+
+On the website, describe the business to search engines as an [HVACBusiness](${SCHEMA_HVAC}) with the same name, phone, hours and service area as the profile, following Google's [local business structured data](${LOCAL_SD}) guidance. Mark up only what is visible on the page.
+
+## Which pages should an Atlanta HVAC website have?
+
+Build the site around what homeowners need to decide, and around what the law asks you to show:
+
+- **Home page.** What you do, where, and your phone number in the first screen, with your license number in the header or footer.
+- **A page for each main service**: AC repair, AC replacement, furnace repair, heat pump installation, duct cleaning or sealing, maintenance plans, commercial service if your license covers it.
+- **About.** The licensed individual, license class and number, years in business, and a link to the state license lookup.
+- **Service area.** One honest page with the areas you serve and how permits work in each, rather than a stack of thin town pages.
+- **Pricing and financing.** Trip fees, diagnostic fees, maintenance plan prices and any financing terms you actually offer.
+- **Reviews.** Real reviews, quoted exactly, with the reviewer's first name or initials.
+- **Request service.** A short form and a phone number on every page.
+
+Our [home service website checklist](/blog/home-service-website-checklist) covers the rest of what a trade site needs.
+
+## Atlanta HVAC website checklist
+
+- [ ] The company holds a Georgia conditioned air license before any page offers HVAC work.
+- [ ] The license or registration number is prominently displayed on every page, the Google Business Profile and every ad landing page.
+- [ ] The About page names the licensed individual, the license class and how to verify it.
+- [ ] Commercial pages match the license class (Class I limits, or Class II).
+- [ ] Each branch office page names the licensed person stationed there.
+- [ ] Permit statements are correct for each city or county you name.
+- [ ] Refrigerant and equipment pages match the current EPA rule.
+- [ ] Quotes and invoices carry the license number.
+- [ ] Lead sites, directories and social profiles show the same name, phone and license details.
+- [ ] No near-identical city pages with only the town name changed.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds an Atlanta HVAC website
+
+SaySites gives a heating and air company the pages this guide describes from day one: a page per service, a service area page, a tap-to-call button and a request form on every page. You can switch on questions for that form, such as how soon the customer needs you, the ZIP code of the job and whether they own or rent, and every request goes into a leads pipeline where you call, add notes, set a follow-up and mark it booked. Search engines read the company as an HVACBusiness, no page goes live until it passes a 95+ speed check, and pages can be built in English and Spanish.
+
+To change the site, you say what you want: "put our conditioned air license number beside the phone number on every page" or "add a line to the Sandy Springs section saying we pull the mechanical permit on every replacement." Each change waits as a draft until you approve it. License numbers, reviews and prices come only from you; SaySites never invents them.
+
+The Site plan is $15 a month, with hosting, your own domain and the leads pipeline ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). [Start a 7-day free trial](/signup), or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. Working in Florida too? Compare Georgia's rules with our [Tampa HVAC website guide](/blog/tampa-hvac-website-design), or see how Texas handles license numbers in our [Houston HVAC website guide](/blog/houston-hvac-website-design).`,
+    faq: [
+      { q: 'Does an Atlanta HVAC company have to show its license number on its website?', a: 'Georgia Code Section 43-14-18(b), as rewritten by SB 553 in 2026, says the registration or certificate number issued by the Secretary of State, or a web address where it can be found, must be prominently displayed on advertising for work you offer. The law counts the internet and social media as advertising, so show the number on every page.' },
+      { q: 'Can an unlicensed company advertise heating and air services in Georgia?', a: 'No. Under Section 43-14-14(d), a person not licensed as a conditioned air contractor may not advertise in any manner that they are in that business, unless the work is performed by a licensed conditioned air contractor. Advertising that makes the public believe someone is licensed counts as evidence of a violation, and penalties include fines and a possible misdemeanor charge.' },
+      { q: 'What is the difference between a Class I and a Class II conditioned air license?', a: 'Class I covers residential and light commercial work: air conditioning and heat pump systems of 60,000 BTUs of cooling or less, and gas heating systems of 175,000 BTUs or less. Class II covers residential and commercial work with no size or equipment limits, except boilers, which are licensed separately. Your website should only offer work your class covers.' },
+      { q: 'Do I need a permit to replace an AC condenser in Atlanta?', a: 'Inside the City of Atlanta, the Office of Buildings lists repair or replacement of an existing air conditioner condenser on a one- or two-family home as work exempt from permit. Other jurisdictions differ: Sandy Springs requires a mechanical permit for HVAC projects. Check the city or county where each job is, and say so on your site.' },
+      { q: 'Can HVAC companies in Georgia still install R-410A systems?', a: 'EPA published a final rule on May 26, 2026 that, according to the National Association of Home Builders, allows residential R-410A systems made or imported before January 1, 2025 to be installed until existing supplies run out. Production of R-410A keeps stepping down, so explain to customers what that means for future service.' },
+      { q: 'Should an Atlanta HVAC company make a page for every suburb?', a: 'Not near-copies with only the town name changed. Google\'s spam policies treat those as doorway pages. One useful service area page, or a few pages that each say something real about an area, such as travel times and how permits work there, serves customers better and stays within Google\'s guidelines.' },
+      { q: 'How much does a SaySites website for an Atlanta HVAC company cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting, your own domain, service and service area pages, a request form on every page and a leads pipeline. You can also ask for a free redesign to see your current website rebuilt with your own content before you decide.' },
+    ],
+    about: ['Georgia SB 553', 'HVAC contractor licensing', 'HVAC websites', 'Atlanta, Georgia'],
+    published: '2026-11-07',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
