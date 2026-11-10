@@ -265,3 +265,10 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - New page at **/gofocusplus-demo-geotab/**. It matches /gofocusplus-demo50/ but tags its leads
   `source=gofocusplus-demo-geotab`, so these sign-ups stay separate on /get-in-touch/. All four GO Focus Plus
   offer pages are built from one template, so any change to the offer shows up on all of them.
+
+## v6.23 — Baltimore copy of the GO Focus Plus page
+- New page at **/gofocusplus-demo50/baltimore/**. It matches /gofocusplus-demo50/ but tags its leads
+  `source=gofocusplus-demo50/baltimore`, so these sign-ups stay separate on /get-in-touch/.
+- No WP page is needed: the theme serves the nested URL directly. If you do create one, make it a child
+  page of GO Focus Plus Demo 50 with the slug `baltimore`, and the theme template still takes over.
+- /gofocusplus-demo50-baltimore/ and mixed-case links 301 to /gofocusplus-demo50/baltimore/.

@@ -26,7 +26,7 @@ add_action( 'wp_enqueue_scripts', function () {
         true
     );
     // The demo-offer flyer page uses the flyer's condensed display face.
-    if ( function_exists( 'envue_current_slug' ) && in_array( envue_current_slug(), [ 'gofocusplus-demo50', 'gofocusplus-email50', 'gofocusplus-ads50', 'gofocusplus-demo-geotab' ], true ) ) {
+    if ( function_exists( 'envue_current_slug' ) && in_array( envue_current_slug(), [ 'gofocusplus-demo50', 'gofocusplus-email50', 'gofocusplus-ads50', 'gofocusplus-demo-geotab', 'gofocusplus-demo50/baltimore' ], true ) ) {
         wp_enqueue_style( 'envue-font-display', 'https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap', [], null );
     }
 } );
@@ -136,6 +136,8 @@ function envue_template_map() {
         'gofocusplus-email50'     => 'page-gofocusplus-email50.php',
         'gofocusplus-ads50'       => 'page-gofocusplus-ads50.php',
         'gofocusplus-demo-geotab' => 'page-gofocusplus-demo-geotab.php',
+        // Nested route: served at /gofocusplus-demo50/baltimore/ (see envue_current_slug()).
+        'gofocusplus-demo50/baltimore' => 'page-gofocusplus-demo50-baltimore.php',
         'elevate-dinner2026'      => 'page-elevate-dinner2026.php',
         'drivewyze'               => 'page-drivewyze.php',
         'route4me'                => 'page-route4me.php',
@@ -232,7 +234,9 @@ function envue_request_path() {
 add_filter( 'pre_handle_404', function ( $preempt, $wp_query ) {
     if ( $preempt || is_admin() || ! empty( $wp_query->posts ) ) return $preempt;
     $slug = envue_request_path();
-    if ( ! $slug || strpos( $slug, '/' ) !== false ) return $preempt;
+    if ( ! $slug ) return $preempt;
+    // Nested paths are only served when the template map lists the full path.
+    if ( strpos( $slug, '/' ) !== false && ! isset( envue_template_map()[ strtolower( $slug ) ] ) ) return $preempt;
     // Mixed-case links (/Gofocusplus-email50/) 301 to the lowercase route.
     $lower = strtolower( $slug );
     if ( $lower !== $slug && envue_template_for_slug( $lower ) ) {
@@ -270,6 +274,9 @@ function envue_canonical_slug_for( $tpl, $slug ) {
     }
     foreach ( array_unique( $cands ) as $c ) {
         if ( $c === $slug ) continue;
+        // A nested mapped route (e.g. gofocusplus-demo50/baltimore) is the canonical
+        // URL for its template even without a WP page behind it.
+        if ( strpos( $c, '/' ) !== false ) return $c;
         $page = get_page_by_path( $c );
         if ( $page && 'publish' === $page->post_status ) return $c;
     }
@@ -298,7 +305,15 @@ add_action( 'template_redirect', function () {
 function envue_current_slug() {
     if ( ! empty( $GLOBALS['envue_virtual_slug'] ) ) return $GLOBALS['envue_virtual_slug'];
     if ( is_front_page() ) return '';
-    if ( is_page() ) return get_post_field( 'post_name', get_queried_object_id() );
+    if ( is_page() ) {
+        $id = get_queried_object_id();
+        // A child page whose full path is mapped (gofocusplus-demo50/baltimore) uses that path.
+        if ( wp_get_post_parent_id( $id ) ) {
+            $uri = get_page_uri( $id );
+            if ( isset( envue_template_map()[ $uri ] ) ) return $uri;
+        }
+        return get_post_field( 'post_name', $id );
+    }
     if ( is_home() && get_option( 'page_for_posts' ) ) return get_post_field( 'post_name', (int) get_option( 'page_for_posts' ) );
     return '';
 }
@@ -721,6 +736,7 @@ function envue_seo_meta() {
         'gofocusplus-email50'       => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-ads50'         => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'gofocusplus-demo-geotab'   => [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
+        'gofocusplus-demo50/baltimore'=> [ 'Geotab GO Focus Plus Demo: Get a $50 Amazon Gift Card | EnVue', 'Schedule and complete a qualifying Geotab GO Focus Plus camera demo with EnVue Telematics and get a $50 Amazon gift card. AI video safety and real-time driver coaching.' ],
         'elevate-dinner2026'        => [ 'Elevate Dinner 2026 | EnVue Telematics', 'Register for the EnVue Telematics Elevate Dinner 2026.' ],
         'powered-by-geotab'         => [ 'Powered by Geotab: #1 Fleet Telematics Platform | EnVue Telematics', "EnVue is a Geotab Elite Specialized Partner. Deploy the world's most powerful open fleet platform with expert implementation, training, and 24/7 support." ],
     ];
