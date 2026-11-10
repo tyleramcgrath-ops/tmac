@@ -33,6 +33,48 @@ for (const page of pages) {
   if ((html.match(/<h1[\s>]/g) || []).length !== 1) note(page, 'not exactly one h1');
 }
 
+// 1b. Head tags and schema on every page.
+for (const page of pages) {
+  const html = readFileSync(join(dir, page), 'utf8');
+  const desc = (html.match(/<meta name="description" content="([^"]*)"/) || [])[1];
+  if (!desc) note(page, 'no meta description');
+  else if (desc.length < 50 || desc.length > 165) note(page, `description length ${desc.length}`);
+  if (!/<link rel="canonical" href="https:\/\/suncoastclean\.com\//.test(html)) note(page, 'no canonical');
+  if (!/<meta property="og:title"/.test(html)) note(page, 'no og:title');
+  if (!/<meta name="robots"/.test(html)) note(page, 'no robots meta');
+  if ((html.match(/<title>/g) || []).length !== 1) note(page, 'title count');
+  for (const m of html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)) {
+    try { JSON.parse(m[1]); } catch (e) { note(page, 'invalid JSON-LD'); }
+  }
+  if (!/<nav class="crumbs"/.test(html) && page !== 'index.html') note(page, 'no breadcrumbs');
+}
+
+// 1c. Every address the live site has (its sitemap) and every old .aspx link lands on a file.
+const slugFile = s => (s === '' ? 'index.html' : s === 'news' ? 'news.html' : s + '.html');
+const liveUrls = readFileSync(join(dirname(new URL(import.meta.url).pathname), 'content', 'live-urls.txt'), 'utf8').split('\n').filter(Boolean);
+let mapped = 0;
+for (const u of liveUrls) {
+  const slug = u.replace('https://suncoastclean.com/', '').replace(/\/$/, '');
+  if (!existsSync(join(dir, slugFile(slug)))) note('live-url', `${u} has no page`); else mapped++;
+}
+for (const f of ['404.html', 'sitemap.xml', 'robots.txt', '_redirects', 'vercel.json', '.htaccess']) {
+  if (!existsSync(join(dir, f))) note('hosting', `missing ${f}`);
+}
+const sitemap = readFileSync(join(dir, 'sitemap.xml'), 'utf8');
+let smCount = 0;
+for (const m of sitemap.matchAll(/<loc>https:\/\/suncoastclean\.com\/([^<]*)<\/loc>/g)) {
+  smCount++;
+  const slug = m[1].replace(/\/$/, '');
+  if (!existsSync(join(dir, slugFile(slug)))) note('sitemap', `${m[1]} has no page`);
+}
+for (const line of readFileSync(join(dir, '_redirects'), 'utf8').split('\n')) {
+  const m = line.match(/^(\S+)\s+(\S+)\s+(\d+)/);
+  if (!m || m[2].includes(':') || m[1].startsWith('/*')) continue;
+  const target = m[2].split('#')[0].replace(/^\//, '').replace(/\/$/, '');
+  if (!existsSync(join(dir, slugFile(target)))) note('redirects', `${m[1]} -> ${m[2]} has no page`);
+}
+console.log(`${mapped}/${liveUrls.length} live addresses map to a page; ${smCount} sitemap entries checked`);
+
 // 2. Browser.
 const browser = await chromium.launch();
 const results = { pages: 0, loads: 0 };

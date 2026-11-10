@@ -48,6 +48,41 @@ one theme, with each page's own words kept exactly as they are on the live site.
   the page keeps the address, as on the live site, and the post is at
   `<slug>-post.html`.
 
+## SEO
+
+The live site runs no SEO plugin output at all: none of its 363 pages has a meta
+description, robots tag or schema, only the theme's "Page – Suncoast Cleaning and
+Restoration" title. Every page here now has:
+
+- a title under 60 characters where the page's name allows, a hand-written meta
+  description for the 33 main pages and a sentence-cut one for each post, all
+  50–160 characters;
+- a canonical URL in the live site's `/slug/` form, robots, Open Graph and
+  Twitter tags, and article dates on posts;
+- JSON-LD: LocalBusiness on every page, WebSite and an ItemList of services on the
+  home page, BreadcrumbList everywhere, Service on service and location pages,
+  Article on posts, HowTo (steps parsed from the page) on the 29 stain guides,
+  AboutPage, ContactPage and CollectionPage where they apply;
+- visible breadcrumbs, and supporting sections built only from the site itself:
+  "Where we offer …" (links to the 11 town pages) and "News about …" on service
+  pages, "Cleaning services in …" and "News from …" on town pages, "Related
+  reading" and the services an article mentions on posts, and a "Sun Coast at a
+  glance" fact block (each fact from the About or home page).
+
+`seo-meta.csv` lists the URL, title, description and robots value for all 365
+addresses, ready to paste into All in One SEO if the site stays on WordPress.
+
+## No 404s
+
+`content/live-urls.txt` is the live site's sitemap (363 addresses). The test
+confirms every one of them maps to a built page. For hosting, `site/` carries
+`.htaccess` (Apache / SiteGround), `_redirects` (Netlify, Cloudflare Pages) and
+`vercel.json`, which serve `/slug/` from `slug.html`, 301 every old `.aspx`
+address and the WordPress category, author and feed addresses, and send anything
+else to `404.html` (a themed page with the services and a contact card). The
+two posts shadowed by a page carry `noindex` and are left out of `sitemap.xml`;
+`robots.txt` points at the sitemap.
+
 ## Facts used
 
 Everything on the pages comes from the live site: (561) 747-8787 (call or text),

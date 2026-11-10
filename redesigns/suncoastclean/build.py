@@ -31,6 +31,84 @@ BRAND = 'Suncoast Cleaning and Restoration'   # the title tag on the live site
 FACEBOOK = 'https://www.facebook.com/suncoastcleaningandrestoration/'
 TWITTER = 'https://twitter.com/SunCoastClean'
 VIDEO_ID = 'yWZ7fcNIKxA'
+SITE_URL = 'https://suncoastclean.com'      # canonical addresses keep the live site's /slug/ form
+OG_IMAGE = '/img/1600210492486-724fe5c67fb0.jpg'
+
+# Facts about the business, each taken from a page on the live site.
+FACTS = [
+    ('Established in 1988', 'about-suncoast-carpet-cleaning'),
+    ('Owner Bradley Broderick, 30 years of cleaning and restoration experience', 'about-suncoast-carpet-cleaning'),
+    ('Nationally certified by the IICRC; an IICRC certified firm since 1998', 'home'),
+    ('Better Business Bureau member since 1993', 'home'),
+    ('Licensed, bonded and insured (license #1988-09231)', 'about-suncoast-carpet-cleaning'),
+    ('Master Technicians on every truck with at least 12 years of experience with Sun Coast', 'about-suncoast-carpet-cleaning'),
+    ('Authorized 3M Scotchgard provider', 'about-suncoast-carpet-cleaning'),
+    ('Based in Jupiter, FL 33478; serving southeastern Florida from Port St. Lucie to Boca Raton', 'locations'),
+]
+
+# Words that tie a news post to a service or a town (matched against post titles).
+SERVICE_WORDS = {
+    'carpet-cleaning': ['carpet'], 'green-carpet-cleaning': ['green', 'eco', 'natural', 'non-toxic'],
+    'tile-and-grout-cleaning': ['tile', 'grout'], 'natural-stone-restoration-and-polishing': ['stone', 'marble', 'hardwood'],
+    'shower-stall-cleaning': ['shower'], 'furniture-cleaning-that-gets-out-stains': ['upholstery', 'furniture', 'couch', 'sofa'],
+    'leather-cleaning-and-conditioning': ['leather'], 'area-rug-cleaning': ['rug'],
+    'drapery-and-curtain-cleaning': ['drap', 'curtain'], 'water-damage-cleaning': ['water damage', 'flood', 'water restoration'],
+    'hurricane-clean-up': ['hurricane', 'flood', 'water damage'], 'air-duct-cleaning': ['duct', 'allerg'],
+    'commercial-cleaning-for-southern-florida-businesses': ['commercial'],
+    'full-home-cleaning': ['home cleaning', 'spring cleaning', 'holiday', 'guests'], 'move-in-cleaning': ['move in', 'move-in'],
+}
+TOWN_OF = {'jupiter-carpet-cleaning': 'Jupiter', 'palm-beach': 'Palm Beach Gardens', 'port-st-lucie': 'Port St. Lucie',
+           'stuart': 'Stuart', 'indiantown': 'Indiantown', 'lake-worth': 'Lake Worth', 'boca-raton': 'Boca Raton',
+           'boynton-beach': 'Boynton Beach', 'wellington': 'Wellington', 'west-palm-beach': 'West Palm Beach',
+           'royal-palm-beach': 'Royal Palm Beach'}
+
+# Search snippets for the main pages, written from each page's own content.
+DESCRIPTIONS = {
+    'home': 'Carpet, upholstery, tile and grout, area rug and water damage cleaning in Jupiter and the Palm Beaches since 1988. '
+            'Free estimates: (561) 747-8787.',
+    'about-suncoast-carpet-cleaning': 'Sun Coast Cleaning and Restoration: established 1988, owner Bradley Broderick, IICRC certified, '
+            'licensed, bonded and insured, Master Technicians on every truck.',
+    'best-cleaning-services-in-florida': 'Carpet, tile and grout, area rug, drapery, furniture, leather, shower, air duct, water damage '
+            'and commercial cleaning from Sun Coast in Jupiter and the Palm Beaches.',
+    'locations': 'Sun Coast comes to you across southeastern Florida: Jupiter, Palm Beach Gardens, West Palm Beach, Wellington, '
+            'Boca Raton, Stuart, Port St. Lucie and 40 more towns.',
+    'contact-us': 'Contact Sun Coast Cleaning and Restoration in Jupiter, FL 33478. Call or text (561) 747-8787 for a free estimate, '
+            'leave a testimonial, or ask about open jobs.',
+    'get-that-stain-out': 'Sun Coast\'s step-by-step guides to removing 29 common carpet stains, from blood and coffee to '
+            'pet stains, ink, wax and gum. If it won\'t lift, call (561) 747-8787.',
+    'news': 'Cleaning tips and news from Sun Coast in Jupiter: carpet, tile, upholstery, drapery, leather and water damage advice '
+            'for Palm Beach and Martin County homes.',
+    'privacy': 'How Sun Coast Cleaning and Restoration collects, uses and protects personal information on suncoastclean.com.',
+    'carpet-cleaning': 'Carpet cleaning in Jupiter from Sun Coast: certified technicians, truck-mounted deep steam and dry cleaning '
+            'that keeps your carpet looking new and your warranty intact.',
+    'green-carpet-cleaning': 'Green carpet cleaning in Jupiter and the Palm Beaches: eco-friendly, all natural, biodegradable and '
+            'allergy free alternatives from Sun Coast.',
+    'tile-and-grout-cleaning': 'Tile and grout cleaning in Jupiter and the Palm Beaches from Sun Coast: dirty grout lines and dull tile '
+            'restored by certified technicians.',
+    'natural-stone-restoration-and-polishing': 'Natural stone restoration and polishing in Jupiter and the Palm Beaches: marble, travertine '
+            'and other stone floors cleaned and restored by Sun Coast.',
+    'shower-stall-cleaning': 'Shower stall cleaning in Jupiter from Sun Coast Cleaning and Restoration: tile, grout, glass and fixtures '
+            'cleaned professionally.',
+    'furniture-cleaning-that-gets-out-stains': 'Furniture and upholstery cleaning in Jupiter and the Palm Beaches that gets out stains, '
+            'from sofas and sleepers to dining chairs. Sun Coast, since 1988.',
+    'leather-cleaning-and-conditioning': 'Leather cleaning and conditioning in Jupiter and West Palm Beach from Sun Coast: sofas, chairs '
+            'and more cleaned, conditioned and protected.',
+    'area-rug-cleaning': 'Fine area rug cleaning in Jupiter and the Palm Beaches: Oriental and specialty rugs cleaned by IICRC Master '
+            'Rug Cleaners at Sun Coast Cleaning and Restoration.',
+    'drapery-and-curtain-cleaning': 'Drapery and curtain cleaning in Jupiter and Palm Beach from Sun Coast, often without taking them down.',
+    'water-damage-cleaning': 'Water damage restoration in Jupiter and the Palm Beaches: extraction, drying and disinfecting by Sun Coast\'s '
+            'certified water removal technicians.',
+    'hurricane-clean-up': 'Hurricane clean up in Jupiter and the Palm Beaches, 24 hours a day, 7 days a week: water extraction, debris '
+            'removal, disinfecting and drying by Sun Coast\'s own technicians.',
+    'air-duct-cleaning': 'Air duct cleaning and sanitizing in Jupiter from Sun Coast Cleaning and Restoration, for cleaner air and fewer '
+            'allergens at home.',
+    'commercial-cleaning-for-southern-florida-businesses': 'Commercial cleaning for southern Florida businesses: carpet, tile, upholstery '
+            'and water damage work for offices and shops from Sun Coast in Jupiter.',
+    'full-home-cleaning': 'Full home cleaning in Jupiter: air ducts, carpet, tile and grout and furniture cleaned in one visit by Sun Coast '
+            'Cleaning and Restoration.',
+    'move-in-cleaning': 'Move in cleaning in Jupiter and Palm Beach from Sun Coast: carpet, tile, upholstery and ducts cleaned before you '
+            'unpack.',
+}
 
 # The live site's main menu, in its order.
 NAV_SERVICES = [
@@ -301,9 +379,148 @@ def clean(content, slug):
     return out
 
 
-# --------------------------------------------------------------------------- shell
+# --------------------------------------------------------------------------- seo
 def esc(s):
     return html.escape(s, quote=True)
+
+
+def canonical_path(slug, post=None):
+    if slug == 'home':
+        return '/'
+    if post is not None:
+        return '/' + post['slug'] + '/'
+    return '/' + slug + '/'
+
+
+def seo_title(item, kind):
+    title = title_of(item)
+    if kind == 'home':
+        return 'Carpet Cleaning Jupiter & Palm Beach | Sun Coast Cleaning'
+    if kind == 'stain':
+        return f'How to Remove {title} Stains | Sun Coast Cleaning'
+    if kind == 'post':
+        return f'{title} | Sun Coast News' if len(title) <= 48 else title
+    long = f'{title} | Sun Coast Cleaning and Restoration'
+    return long if len(long) <= 60 else f'{title} | Sun Coast'
+
+
+def sentence_cut(text, n=155):
+    text = re.sub(r'\s+', ' ', text).strip()
+    if len(text) <= n:
+        return text
+    cut = text[:n]
+    m = re.search(r'^(.*[.!?])\s', cut)
+    if m and len(m.group(1)) > 70:
+        return m.group(1)
+    return cut.rsplit(' ', 1)[0].rstrip(' ,.;:') + '…'
+
+
+def meta_description(item, kind):
+    return sentence_cut(_description(item, kind), 158)
+
+
+def _description(item, kind):
+    slug = item['slug']
+    if slug in DESCRIPTIONS:
+        return DESCRIPTIONS[slug]
+    if kind == 'location':
+        town = TOWN_OF[slug]
+        return (f'{town} carpet cleaning by Sun Coast, since 1988: carpet, tile and grout, upholstery, area rugs and water damage '
+                f'restoration in {town}, FL. Free estimates: (561) 747-8787.')
+    if kind == 'stain':
+        steps = howto_steps(item)
+        first = '; '.join(steps[:2]).lower() if steps else ''
+        return sentence_cut(f'Sun Coast\'s steps to remove {title_of(item).lower()} stains from carpet: {first}. '
+                            f'Test an inconspicuous area first. Still stained? Call (561) 747-8787 in Jupiter.')
+    text = BeautifulSoup(item['content'], 'html.parser').get_text(' ').replace('\xa0', ' ')
+    return sentence_cut(text) or f'{title_of(item)} from Sun Coast Cleaning and Restoration in Jupiter, Florida.'
+
+
+def howto_steps(page):
+    text = BeautifulSoup(page['content'], 'html.parser').get_text('\n')
+    steps = [re.sub(r'^\d+\.\)\s*', '', ln).strip() for ln in text.split('\n') if re.match(r'^\d+\.\)', ln.strip())]
+    return [s for s in steps if s]
+
+
+def breadcrumbs(items):
+    """items: [(label, href or None)]; the last is the current page."""
+    parts = []
+    for i, (label, href) in enumerate(items):
+        if href and i < len(items) - 1:
+            parts.append(f'<li><a href="{href}">{esc(label)}</a></li>')
+        else:
+            parts.append(f'<li aria-current="page">{esc(label)}</li>')
+    return '<nav class="crumbs" aria-label="Breadcrumb"><ol>' + ''.join(parts) + '</ol></nav>'
+
+
+def breadcrumb_ld(items):
+    els = []
+    for i, (label, path) in enumerate(items, 1):
+        el = {'@type': 'ListItem', 'position': i, 'name': label}
+        if path:
+            el['item'] = SITE_URL + path
+        els.append(el)
+    return {'@context': 'https://schema.org', '@type': 'BreadcrumbList', 'itemListElement': els}
+
+
+BUSINESS_LD = {
+    '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': SITE_URL + '/#business',
+    'name': 'Sun Coast Cleaning and Restoration', 'alternateName': 'Suncoast Cleaning and Restoration',
+    'url': SITE_URL + '/', 'telephone': '+1-561-747-8787', 'email': EMAIL, 'foundingDate': '1988',
+    'image': SITE_URL + '/logo.png', 'logo': SITE_URL + '/logo.png',
+    'address': {'@type': 'PostalAddress', 'addressLocality': 'Jupiter', 'addressRegion': 'FL', 'postalCode': '33478', 'addressCountry': 'US'},
+    'areaServed': ['Jupiter', 'Palm Beach Gardens', 'West Palm Beach', 'Palm Beach', 'Lake Worth', 'Wellington', 'Boynton Beach',
+                   'Delray Beach', 'Boca Raton', 'Stuart', 'Jensen Beach', 'Port St. Lucie', 'Indiantown', 'Royal Palm Beach'],
+    'sameAs': [FACEBOOK, TWITTER],
+}
+
+
+def ld(obj):
+    return '<script type="application/ld+json">' + json.dumps(obj, ensure_ascii=False) + '</script>'
+
+
+def related_posts(words, exclude=None, n=6):
+    words = [w.lower() for w in words]
+    out = []
+    for p in POSTS:
+        if exclude is not None and p['slug'] == exclude:
+            continue
+        t = title_of(p).lower()
+        if any(re.search(r'\b' + re.escape(w), t) for w in words):
+            out.append(p)
+        if len(out) >= n:
+            break
+    return out
+
+
+def related_list(heading, posts, intro=''):
+    if not posts:
+        return ''
+    lis = ''.join(f'<li><a href="{post_url(p)}">{esc(title_of(p))}</a>'
+                  f'<time datetime="{p["date"][:10]}">{fmt_date(p["date"])}</time><p>{esc(excerpt(p, 140))}</p></li>' for p in posts)
+    return f'<section class="related"><h2>{esc(heading)}</h2>{f"<p>{intro}</p>" if intro else ""}<ul class="news-list">{lis}</ul></section>'
+
+
+def glance_block():
+    lis = ''.join(f'<li>{esc(f)}</li>' for f, _ in FACTS)
+    return (f'<section class="glance"><h2>Sun Coast at a glance</h2><ul>{lis}</ul>'
+            f'<p>Call or text <a href="{PHONE_TEL}">{PHONE}</a> for a free estimate, or email <a href="mailto:{EMAIL}">{EMAIL}</a>.</p></section>')
+
+
+def areas_sentence(service_label):
+    links = ', '.join(f'<a href="{url_for(s)}">{TOWN_OF[s]}</a>' for s in LOCATIONS)
+    return (f'<section class="areas"><h2>Where we offer {esc(service_label.lower())}</h2>'
+            f'<p>Sun Coast comes to you in {links}, and the rest of Palm Beach, Martin and St. Lucie counties. '
+            f'<a href="{url_for("locations")}">See every town we serve</a>.</p></section>')
+
+
+def town_services(town):
+    links = ''.join(f'<li><a href="{url_for(s)}">{esc(label)}</a></li>' for s, label in SERVICES)
+    return (f'<section class="areas"><h2>Cleaning services in {esc(town)}</h2>'
+            f'<p>Every Sun Coast service is available in {esc(town)}:</p><ul class="svc-links">{links}</ul></section>')
+
+
+# --------------------------------------------------------------------------- shell
 
 
 def nav_html(current):
@@ -458,13 +675,39 @@ function toggleMenu(b){{var m=document.getElementById('mmenu');var open=m.hidden
 CSS = open(os.path.join(HERE, 'theme.css')).read()
 
 
-def layout(title, description, body, *, current='', artifact=False, skeleton=True, jsonld=''):
-    """The full document around a page's body."""
+def layout(title, description, body, *, current='', artifact=False, skeleton=True, jsonld='', seo=None):
+    """The full document around a page's body. `seo` carries canonical path, og type, dates, robots and schema."""
+    seo = seo or {}
     css = f'<style>\n{CSS}\n</style>' if artifact else '<link rel="stylesheet" href="theme.css">'
+    path = seo.get('path', '/')
+    robots = 'noindex, nofollow' if artifact else seo.get('robots', 'index, follow, max-image-preview:large, max-snippet:-1')
+    og = ''
+    if not artifact:
+        og = f'''<link rel="canonical" href="{SITE_URL}{path}">
+<meta property="og:site_name" content="Sun Coast Cleaning and Restoration">
+<meta property="og:type" content="{seo.get('type', 'website')}">
+<meta property="og:title" content="{esc(seo.get('ogtitle') or title)}">
+<meta property="og:description" content="{esc(description)}">
+<meta property="og:url" content="{SITE_URL}{path}">
+<meta property="og:image" content="{SITE_URL}{OG_IMAGE}">
+<meta property="og:image:width" content="1800">
+<meta property="og:image:height" content="1100">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@SunCoastClean">
+<meta name="twitter:title" content="{esc(seo.get('ogtitle') or title)}">
+<meta name="twitter:description" content="{esc(description)}">
+<meta name="twitter:image" content="{SITE_URL}{OG_IMAGE}">'''
+        if seo.get('published'):
+            og += f'''
+<meta property="article:published_time" content="{seo['published']}">
+<meta property="article:modified_time" content="{seo.get('modified', seo['published'])}">'''
+        jsonld = ''.join(ld(o) for o in seo.get('ld', [])) + jsonld
     head = f'''<title>{esc(title)}</title>
 {'<meta name="claude:viewport-fit-sides" content="cover">' if artifact else ''}
-{'<meta name="robots" content="noindex">' if artifact else ''}
+<meta name="robots" content="{robots}">
 <meta name="description" content="{esc(description)}">
+{og}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -567,9 +810,10 @@ def sidebar_for(slug, section, artifact):
     return '\n'.join(parts)
 
 
-def page_hero(eyebrow_html, title, meta=''):
+def page_hero(eyebrow_html, title, meta='', crumbs=''):
     return f'''<section class="page-hero">
   <div class="wrap">
+    {crumbs}
     <p class="eyebrow">{eyebrow_html}</p>
     <h1>{esc(title)}</h1>
     {f'<p class="meta">{meta}</p>' if meta else ''}
@@ -584,6 +828,9 @@ def render_page(page, artifact):
     label, link = EYEBROWS[section]
     eyebrow = f'<a href="{url_for(link)}">{label}</a>' if link and link != slug else label
     title = title_of(page)
+    kind = {'services': 'service', 'locations': 'location', 'stains': 'stain'}.get(section, 'page')
+    if slug in ('best-cleaning-services-in-florida', 'locations', 'get-that-stain-out'):
+        kind = 'index'
     if slug == 'get-that-stain-out':
         tiles = ''.join(f'<a href="{url_for(s)}">{esc(title_of(PAGE_BY_SLUG[s]))}</a>' for s in STAINS)
         body_html = (f'<p>Pick the stain for Sun Coast\'s own step-by-step instructions. '
@@ -592,19 +839,77 @@ def render_page(page, artifact):
                      f'<div class="tile-grid">{tiles}</div>')
     else:
         body_html = clean(page['content'], slug)
-    desc = excerpt(page, 155) if page['content'].strip() else f'{title} from Sun Coast Cleaning and Restoration in Jupiter, Florida.'
-    if slug in STAINS:
-        desc = f'How to remove {title.lower()} stains, from Sun Coast Cleaning and Restoration. {excerpt(page, 110)}'
-    body = page_hero(eyebrow, title) + f'''
+
+    # Supporting content, all of it from elsewhere on the site.
+    extra = ''
+    if kind == 'service':
+        short = dict(SERVICES)[slug]
+        extra += areas_sentence(short)
+        extra += related_list(f'News about {short.lower()}', related_posts(SERVICE_WORDS[slug]),
+                              'Tips and announcements from Sun Coast on this service.')
+        extra += glance_block()
+    elif kind == 'location':
+        town = TOWN_OF[slug]
+        extra += town_services(town)
+        extra += related_list(f'News from {town}', related_posts([town]))
+        extra += glance_block()
+    elif kind == 'stain':
+        extra += (f'<section class="areas"><h2>When the stain won\'t come out</h2><p>Sun Coast\'s <a href="{url_for("carpet-cleaning")}">carpet cleaning</a>, '
+                  f'<a href="{url_for("furniture-cleaning-that-gets-out-stains")}">furniture cleaning</a> and '
+                  f'<a href="{url_for("area-rug-cleaning")}">area rug cleaning</a> technicians treat set-in stains, pet stains and odors every day '
+                  f'across Jupiter and the Palm Beaches. Call or text <a href="{PHONE_TEL}">{PHONE}</a> for a free estimate.</p></section>')
+        extra += related_list('Stain tips from our news', related_posts(['stain', 'spill', 'ketchup', 'pet stain', 'scotchgard', 'myths']))
+    elif slug in ('about-suncoast-carpet-cleaning', 'contact-us', 'locations', 'best-cleaning-services-in-florida'):
+        extra += glance_block()
+
+    # Breadcrumbs
+    crumbs = [('Home', '/')]
+    if link and link != slug:
+        crumbs.append((label, canonical_path(link)))
+    crumbs.append((title, canonical_path(slug)))
+    crumb_links = [('Home', 'index.html')]
+    if link and link != slug:
+        crumb_links.append((label, url_for(link)))
+    crumb_links.append((title, None))
+
+    desc = meta_description(page, kind)
+    page_types = {'service': 'WebPage', 'location': 'WebPage', 'stain': 'WebPage', 'index': 'CollectionPage', 'page': 'WebPage'}
+    web = {'@context': 'https://schema.org', '@type': page_types[kind], 'name': title, 'description': desc,
+           'url': SITE_URL + canonical_path(slug), 'isPartOf': {'@id': SITE_URL + '/#website'}, 'about': {'@id': SITE_URL + '/#business'}}
+    if slug == 'about-suncoast-carpet-cleaning':
+        web['@type'] = 'AboutPage'
+    if slug == 'contact-us':
+        web['@type'] = 'ContactPage'
+    schemas = [BUSINESS_LD, web, breadcrumb_ld(crumbs)]
+    if kind == 'service':
+        schemas.append({'@context': 'https://schema.org', '@type': 'Service', 'name': title, 'serviceType': dict(SERVICES)[slug],
+                        'description': desc, 'url': SITE_URL + canonical_path(slug),
+                        'provider': {'@id': SITE_URL + '/#business'}, 'areaServed': BUSINESS_LD['areaServed']})
+    if kind == 'location':
+        schemas.append({'@context': 'https://schema.org', '@type': 'Service', 'name': title, 'serviceType': 'Carpet cleaning',
+                        'description': desc, 'url': SITE_URL + canonical_path(slug),
+                        'provider': {'@id': SITE_URL + '/#business'}, 'areaServed': {'@type': 'City', 'name': TOWN_OF[slug]}})
+    if kind == 'stain':
+        steps = howto_steps(page)
+        if len(steps) >= 2:
+            schemas.append({'@context': 'https://schema.org', '@type': 'HowTo', 'name': f'How to remove {title.lower()} stains',
+                            'description': desc, 'url': SITE_URL + canonical_path(slug),
+                            'step': [{'@type': 'HowToStep', 'position': i, 'text': t} for i, t in enumerate(steps, 1)]})
+    seo = {'path': canonical_path(slug), 'ld': schemas, 'ogtitle': title}
+
+    body = page_hero(eyebrow, title, crumbs=breadcrumbs(crumb_links)) + f'''
 <div class="wrap page-grid">
-  <article class="prose">
+  <div>
+    <article class="prose">
 {body_html}
-  </article>
+    </article>
+{extra}
+  </div>
   <aside class="side">
 {sidebar_for(slug, section, artifact)}
   </aside>
 </div>'''
-    return layout(f'{title} | {BRAND}', desc, body, current=slug, artifact=artifact)
+    return layout(seo_title(page, kind), desc, body, current=slug, artifact=artifact, seo=seo)
 
 
 def render_post(post, i, artifact):
@@ -617,17 +922,53 @@ def render_post(post, i, artifact):
     if next_p:
         pager += f'<a class="next" href="{post_url(next_p)}"><small>Newer</small>{esc(title_of(next_p))}</a>'
     pager += '</nav>'
-    body = page_hero('<a href="news.html">News</a>', title, f'<time datetime="{post["date"][:10]}">{fmt_date(post["date"])}</time>') + f'''
+    # Services and towns this post is about, from its title; then more reading on the same subjects.
+    t = (title + ' ' + excerpt(post, 300)).lower()
+    hit = lambda w: re.search(r'\b' + re.escape(w), t)
+    about_services = [(s, l) for s, l in SERVICES if any(hit(w) for w in SERVICE_WORDS[s])]
+    about_towns = [(s, town) for s, town in TOWN_OF.items() if hit(town.lower())]
+    words = [w for s, _ in about_services for w in SERVICE_WORDS[s]] + [town for _, town in about_towns]
+    rel = related_posts(words, exclude=post['slug'], n=4) if words else []
+    if len(rel) < 4:
+        for q in POSTS:
+            if q['slug'] != post['slug'] and q not in rel:
+                rel.append(q)
+            if len(rel) >= 4:
+                break
+    links = ''.join(f'<li><a href="{url_for(s)}">{esc(l)}</a></li>' for s, l in about_services) + \
+            ''.join(f'<li><a href="{url_for(s)}">{esc(town)} carpet cleaning</a></li>' for s, town in about_towns)
+    extra = ''
+    if links:
+        extra += f'<section class="areas"><h2>Sun Coast services in this article</h2><ul class="svc-links">{links}</ul></section>'
+    extra += related_list('Related reading', rel)
+    shadowed = post['slug'] in PAGE_BY_SLUG
+    path = canonical_path(post['slug'], post)
+    desc = meta_description(post, 'post')
+    crumbs = [('Home', '/'), ('News', '/news/'), (title, path)]
+    schemas = [BUSINESS_LD, breadcrumb_ld(crumbs),
+               {'@context': 'https://schema.org', '@type': 'Article', 'headline': title, 'description': desc,
+                'datePublished': post['date'], 'dateModified': post['modified'], 'url': SITE_URL + path,
+                'mainEntityOfPage': SITE_URL + path, 'image': SITE_URL + OG_IMAGE,
+                'author': {'@type': 'Organization', 'name': 'Sun Coast Cleaning and Restoration', '@id': SITE_URL + '/#business'},
+                'publisher': {'@id': SITE_URL + '/#business'}, 'articleSection': 'News'}]
+    seo = {'path': path, 'type': 'article', 'published': post['date'], 'modified': post['modified'], 'ld': schemas, 'ogtitle': title}
+    if shadowed:
+        seo['robots'] = 'noindex, follow'   # a page owns this address on the live site
+    body = page_hero('<a href="news.html">News</a>', title, f'<time datetime="{post["date"][:10]}">{fmt_date(post["date"])}</time>',
+                     crumbs=breadcrumbs([('Home', 'index.html'), ('News', 'news.html'), (title, None)])) + f'''
 <div class="wrap page-grid">
-  <article class="prose">
+  <div>
+    <article class="prose">
 {clean(post['content'], post['slug'])}
+    </article>
+{extra}
 {pager}
-  </article>
+  </div>
   <aside class="side">
 {sidebar_for(post['slug'], 'news', artifact)}
   </aside>
 </div>'''
-    return layout(f'{title} | {BRAND}', excerpt(post, 155), body, current='news', artifact=artifact)
+    return layout(seo_title(post, 'post'), desc, body, current='news', artifact=artifact, seo=seo)
 
 
 def render_news(artifact):
@@ -642,7 +983,12 @@ def render_news(artifact):
                        f'<time datetime="{p["date"][:10]}">{fmt_date(p["date"])}</time><p>{esc(excerpt(p))}</p></li>')
         out.append('</ul>')
     first, last = POSTS[-1]['date'], POSTS[0]['date']
-    body = page_hero('News', 'News', f'{len(POSTS)} articles, {fmt_date(first)} to {fmt_date(last)}') + f'''
+    crumbs = [('Home', '/'), ('News', '/news/')]
+    seo = {'path': '/news/', 'ogtitle': 'News', 'ld': [BUSINESS_LD, breadcrumb_ld(crumbs),
+           {'@context': 'https://schema.org', '@type': 'CollectionPage', 'name': 'News', 'url': SITE_URL + '/news/',
+            'description': DESCRIPTIONS['news'], 'isPartOf': {'@id': SITE_URL + '/#website'}}]}
+    body = page_hero('News', 'News', f'{len(POSTS)} articles, {fmt_date(first)} to {fmt_date(last)}',
+                     crumbs=breadcrumbs([('Home', 'index.html'), ('News', None)])) + f'''
 <div class="wrap page-grid">
   <article>
 {''.join(out)}
@@ -651,8 +997,7 @@ def render_news(artifact):
 {sidebar_for('news', 'news', artifact)}
   </aside>
 </div>'''
-    return layout(f'News | {BRAND}', 'Cleaning tips and news from Sun Coast Cleaning and Restoration in Jupiter, Florida.',
-                  body, current='news', artifact=artifact)
+    return layout('News | Sun Coast Cleaning and Restoration', DESCRIPTIONS['news'], body, current='news', artifact=artifact, seo=seo)
 
 
 # --------------------------------------------------------------------------- home
@@ -693,13 +1038,13 @@ def render_home(artifact):
         (f'<a href="{url_for(TOWN_PAGES[t])}">{t}</a>' if t in TOWN_PAGES else f'<span>{t}</span>') + '</li>'
         for t in HOME_TOWNS)
     svc_link = lambda s, label: f'<li><a href="{url_for(s)}">{label}<svg><use href="#arrow"/></svg></a></li>'
-    jsonld = '''<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"LocalBusiness","name":"Sun Coast Cleaning and Restoration","url":"https://suncoastclean.com/",
-"telephone":"+1-561-747-8787","email":"brad@suncoastclean.com","foundingDate":"1988",
-"address":{"@type":"PostalAddress","addressLocality":"Jupiter","addressRegion":"FL","postalCode":"33478","addressCountry":"US"},
-"areaServed":["Jupiter","Palm Beach Gardens","West Palm Beach","Palm Beach","Lake Worth","Wellington","Boynton Beach","Delray Beach","Boca Raton","Stuart","Jensen Beach","Port St. Lucie","Indiantown"],
-"sameAs":["https://www.facebook.com/suncoastcleaningandrestoration/","https://twitter.com/SunCoastClean"]}
-</script>''' if not artifact else ''
+    seo = {'path': '/', 'ogtitle': 'Sun Coast Cleaning and Restoration, Jupiter FL', 'ld': [
+        BUSINESS_LD,
+        {'@context': 'https://schema.org', '@type': 'WebSite', '@id': SITE_URL + '/#website', 'url': SITE_URL + '/',
+         'name': 'Sun Coast Cleaning and Restoration', 'publisher': {'@id': SITE_URL + '/#business'}},
+        {'@context': 'https://schema.org', '@type': 'ItemList', 'name': 'Services',
+         'itemListElement': [{'@type': 'ListItem', 'position': i, 'name': l, 'url': SITE_URL + canonical_path(s)}
+                             for i, (s, l) in enumerate(SERVICES, 1)]}]}
     body = f'''<section class="hero">
   <img class="hero-bg" src="img/1600210492486-724fe5c67fb0.jpg" alt="A bright, freshly cleaned living room with sofas, an area rug and tall sunny windows" width="1800" height="1100" fetchpriority="high">
   <div class="wrap">
@@ -889,11 +1234,118 @@ def render_home(artifact):
     </div>
   </div>
 </section>'''
-    title = ('Suncoast Homepage Redesign' if artifact else
-             'Carpet, Tile & Upholstery Cleaning in Jupiter & the Palm Beaches | Suncoast Cleaning and Restoration')
-    desc = ('Carpet, upholstery, tile and grout, area rug and water damage cleaning in Jupiter and the Palm Beaches. '
-            'BBB member since 1993, IICRC certified since 1998. Call or text (561) 747-8787 for a free estimate.')
-    return layout(title, desc, body, current='home', artifact=artifact, skeleton=not artifact, jsonld=jsonld)
+    title = 'Suncoast Homepage Redesign' if artifact else seo_title(PAGE_BY_SLUG['home'], 'home')
+    return layout(title, meta_description(PAGE_BY_SLUG['home'], 'home'), body, current='home', artifact=artifact, skeleton=not artifact, seo=seo)
+
+
+# --------------------------------------------------------------------------- hosting files
+def render_404(artifact):
+    tiles = ''.join(f'<a href="{url_for(s)}">{esc(l)}</a>' for s, l in SERVICES)
+    body = page_hero('Page not found', 'We couldn\'t find that page.', crumbs=breadcrumbs([('Home', 'index.html'), ('Page not found', None)])) + f'''
+<div class="wrap page-grid">
+  <div>
+    <article class="prose">
+<p>The address may have changed when the site was rebuilt. Try one of the pages below, <a href="news.html">browse the news</a>,
+or call or text <a href="{PHONE_TEL}">{PHONE}</a> and we\'ll point you the right way.</p>
+<h2>Services</h2>
+<div class="tile-grid">{tiles}</div>
+<h2>Elsewhere on the site</h2>
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="{url_for('about-suncoast-carpet-cleaning')}">About Us</a></li>
+<li><a href="{url_for('locations')}">Locations</a></li>
+<li><a href="{url_for('get-that-stain-out')}">Get That Stain Out!</a></li>
+<li><a href="{url_for('contact-us')}">Contact Us</a></li>
+</ul>
+    </article>
+  </div>
+  <aside class="side">{estimate_form(compact=True, artifact=artifact)}{contact_card()}</aside>
+</div>'''
+    return layout('Page not found | Sun Coast Cleaning and Restoration', 'That page could not be found on suncoastclean.com.',
+                  body, artifact=artifact, seo={'path': '/404.html', 'robots': 'noindex, follow', 'ld': [BUSINESS_LD]})
+
+
+def redirect_rules():
+    """(old path, new canonical path) for every address that is not simply /slug/."""
+    rules = [('/index.html', '/'), ('/home/', '/'), ('/category/news/', '/news/'), ('/author/admin/', '/news/'), ('/feed/', '/news/'),
+             ('/feed', '/news/'), ('/comments/feed/', '/news/')]
+    for old, new in ASPX_MAP.items():
+        target = '/' + new.split('#')[0] + '/' if not new.startswith('mailto') else '/contact-us/'
+        if new == 'home#reviews':
+            target = '/#reviews'
+        rules.append(('/' + old + '.aspx', target))
+    for slug in PAGE_BY_SLUG:
+        if slug != 'home':
+            rules.append((f'/{slug}.aspx', f'/{slug}/'))
+    return rules
+
+
+def hosting_files(out, pages_written):
+    html_files = sorted(f for f in pages_written if f.endswith('.html') and f != '404.html')
+    today = datetime.date.today().isoformat()
+
+    def loc(name):
+        return SITE_URL + ('/' if name == 'index.html' else '/' + name[:-5] + '/')
+    entries = []
+    for name in html_files:
+        slug = name[:-5]
+        if slug.endswith('-post'):
+            continue   # shadowed by a page; noindex
+        item = PAGE_BY_SLUG.get(slug) or POST_BY_SLUG.get(slug)
+        mod = (item['modified'][:10] if item else today)
+        pri = '1.0' if name == 'index.html' else ('0.8' if slug in SERVICE_SLUGS or slug in LOCATIONS or slug in ('news', 'locations', 'best-cleaning-services-in-florida', 'about-suncoast-carpet-cleaning', 'contact-us') else '0.5')
+        entries.append(f'  <url><loc>{loc(name)}</loc><lastmod>{mod}</lastmod><priority>{pri}</priority></url>')
+    open(os.path.join(out, 'sitemap.xml'), 'w').write(
+        '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' + '\n'.join(entries) + '\n</urlset>\n')
+    open(os.path.join(out, 'robots.txt'), 'w').write(f'User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}/sitemap.xml\n')
+
+    rules = redirect_rules()
+    # Netlify / Cloudflare Pages
+    lines = [f'{old}  {new}  301' for old, new in rules]
+    lines += ['/:slug.aspx  /:slug/  301', '/:slug.html  /:slug/  301', '/:slug/  /:slug.html  200', '/*  /404.html  404']
+    open(os.path.join(out, '_redirects'), 'w').write('# Old suncoastclean.com addresses keep working.\n' + '\n'.join(lines) + '\n')
+    # Vercel
+    vercel = {'cleanUrls': True, 'trailingSlash': True,
+              'redirects': [{'source': old.rstrip('/') or '/', 'destination': new, 'permanent': True} for old, new in rules if old not in ('/index.html',)] +
+                           [{'source': '/:slug.aspx', 'destination': '/:slug/', 'permanent': True}]}
+    json.dump(vercel, open(os.path.join(out, 'vercel.json'), 'w'), indent=1)
+    # Apache (SiteGround, cPanel hosts)
+    ht = ['# Old suncoastclean.com addresses keep working.', 'Options -MultiViews', 'RewriteEngine On', 'RewriteBase /', '']
+    for old, new in rules:
+        if old == '/index.html':
+            continue
+        pat = old.lstrip('/').replace('.', r'\.')
+        ht.append(f'RewriteRule ^{pat}$ {new} [R=301,L{",NE" if "#" in new else ""}]')
+    ht += ['RewriteRule ^([a-z0-9-]+)\\.aspx$ /$1/ [R=301,L]',
+           '# /slug.html -> /slug/ (the canonical form), then serve /slug/ from slug.html',
+           'RewriteCond %{THE_REQUEST} \\s/([a-z0-9-]+)\\.html[\\s?]',
+           'RewriteRule ^([a-z0-9-]+)\\.html$ /$1/ [R=301,L]',
+           'RewriteCond %{DOCUMENT_ROOT}/$1.html -f',
+           'RewriteRule ^([a-z0-9-]+)/?$ /$1.html [L]',
+           'ErrorDocument 404 /404.html',
+           '', '<IfModule mod_headers.c>', '  <FilesMatch "\\.(jpg|png|css)$">', '    Header set Cache-Control "public, max-age=31536000"', '  </FilesMatch>', '</IfModule>']
+    open(os.path.join(out, '.htaccess'), 'w').write('\n'.join(ht) + '\n')
+
+
+def seo_csv(path):
+    """Title and description per address, for pasting into All in One SEO if the site stays on WordPress."""
+    import csv
+    with open(path, 'w', newline='') as f:
+        w = csv.writer(f)
+        w.writerow(['URL', 'SEO title', 'Meta description', 'Robots'])
+        w.writerow([SITE_URL + '/', seo_title(PAGE_BY_SLUG['home'], 'home'), DESCRIPTIONS['home'], 'index, follow'])
+        for page in PAGES:
+            if page['slug'] == 'home':
+                continue
+            section = section_of(page['slug'])
+            kind = {'services': 'service', 'locations': 'location', 'stains': 'stain'}.get(section, 'page')
+            if page['slug'] in ('best-cleaning-services-in-florida', 'locations', 'get-that-stain-out'):
+                kind = 'index'
+            w.writerow([SITE_URL + canonical_path(page['slug']), seo_title(page, kind), meta_description(page, kind), 'index, follow'])
+        for post in POSTS:
+            shadow = post['slug'] in PAGE_BY_SLUG
+            w.writerow([SITE_URL + canonical_path(post['slug'], post), seo_title(post, 'post'), meta_description(post, 'post'),
+                        'noindex, follow' if shadow else 'index, follow'])
 
 
 # --------------------------------------------------------------------------- build
@@ -910,6 +1362,7 @@ def build(out, artifact=False):
         written[url_for(page['slug'])] = render_page(page, artifact)
     for i, post in enumerate(POSTS):
         written[post_url(post)] = render_post(post, i, artifact)
+    written['404.html'] = render_404(artifact)
     for name, doc in written.items():
         with open(os.path.join(out, name), 'w') as f:
             f.write(doc)
@@ -917,6 +1370,8 @@ def build(out, artifact=False):
         shutil.copy(os.path.join(HERE, name), out)
     if not artifact:
         shutil.copy(os.path.join(HERE, 'theme.css'), out)
+        hosting_files(out, written)
+        seo_csv(os.path.join(HERE, 'seo-meta.csv'))
     os.makedirs(os.path.join(out, 'img'), exist_ok=True)
     for name in os.listdir(os.path.join(HERE, 'img')):
         shutil.copy(os.path.join(HERE, 'img', name), os.path.join(out, 'img', name))
