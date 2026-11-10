@@ -54,5 +54,12 @@
   "kind": "spam",
   "begin": "2026-09-24T16:15:00+00:00",
   "end": "2026-10-08T08:00:00+00:00"
+ },
+ {
+  "id": "WLxcJyC6jMWMfryxsKMc",
+  "name": "November 2026 core update",
+  "kind": "core",
+  "begin": "2026-11-10T18:06:00+00:00",
+  "end": null
  }
 ]
