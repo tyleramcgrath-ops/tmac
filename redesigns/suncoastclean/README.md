@@ -48,6 +48,16 @@ one theme, with each page's own words kept exactly as they are on the live site.
   the page keeps the address, as on the live site, and the post is at
   `<slug>-post.html`.
 
+## WordPress theme
+
+`wp-theme/suncoast/` is the same design as a WordPress theme, for the site's existing
+WordPress (its pages and posts stay where they are). `python3 wp-theme/build-theme.py`
+writes `style.css` from `theme.css`, copies the images in and produces
+`wp-theme/suncoast.zip`, which installs through Appearance → Themes → Add New → Upload.
+Setup steps and what the theme does are in `wp-theme/suncoast/readme.txt`. The estimate
+form emails the owner through `wp_mail`; the SEO tags, schema and redirects are built in
+and step aside when All in One SEO, Yoast, Rank Math or SEOPress is active.
+
 ## SEO
 
 The live site runs no SEO plugin output at all: none of its 363 pages has a meta
