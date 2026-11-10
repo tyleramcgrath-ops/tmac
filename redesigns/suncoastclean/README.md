@@ -1,30 +1,76 @@
-# Suncoast Cleaning and Restoration: homepage redesign
+# Sun Coast Cleaning and Restoration: full site redesign
 
-A redesign concept for https://suncoastclean.com/ (WordPress, last updated 2020).
-Open `index.html` in a browser; it is one self-contained file (Google Fonts only).
+The whole of https://suncoastclean.com/ (62 pages and 303 news posts) rebuilt in
+one theme, with each page's own words kept exactly as they are on the live site.
 
-## What changed from the current site
-- Clear first screen: what they do, where, and two ways to reach them (call, text),
-  with a free-estimate form beside it. The old page opened on a "fits your budget" banner.
-- Credentials pulled up into a strip: established 1988 (from their logo),
-  BBB member since 1993, IICRC certified since 1998, green cleaning options.
-- 11 services grouped into Floors, Furniture & fabric, Restoration & air,
-  linking to the existing service pages (no URL changes, nothing breaks in search).
-- Real customer letters from the current homepage, lightly trimmed, with one featured.
-- Service-area towns from their own copy; LocalBusiness structured data.
-- Mobile: sticky Call / Free estimate bar; no horizontal scroll at 390px.
+- `site/` is the built website. Open `site/index.html` in a browser, or host the
+  folder as static files. Every page is a flat `<slug>.html` that matches the
+  live site's address (`/carpet-cleaning/` is `carpet-cleaning.html`), so a
+  host with clean URLs keeps the old links working.
+- `build.py` generates `site/` from `content/pages.json` and `content/posts.json`
+  (the live site's content, pulled from its WordPress API on 2026-11-06) and
+  `theme.css`. Run `python3 build.py` after changing any of them.
+- `test.mjs` checks every built page: `node test.mjs site`. It confirms every
+  internal link and image resolves, then loads all 365 pages in Chromium at
+  1280px and 390px and fails on console errors, horizontal scrolling, missing
+  titles, a wrong number of H1s, or an image that doesn't render.
 
-## Facts used (all from the current site)
-(561) 747-8787 (call or text), brad@suncoastclean.com, Jupiter, FL 33478,
-bonded/licensed/insured, BBB since 1993, IICRC since 1998, "Established in 1988" (logo).
-Nothing else is claimed. Star icons are decorative on the owner's own letters,
+## What the theme does with each kind of page
+
+- **Home**: photo hero with the estimate form, credentials strip, the home
+  page's own two sections of copy word for word, services grouped three ways
+  (every service page linked), carpet feature, why Sun Coast, three steps, all
+  ten customer letters in full, the service area, and the call band.
+- **Services, locations, about, contact, privacy**: compact dark header, the
+  page's copy, and a sidebar with the estimate form plus the relevant list
+  (all services, areas we serve, or contact details).
+- **Get That Stain Out!** and its 29 stain pages: the index page is empty on the
+  live site, so it lists the 29 stains; each stain page keeps its steps and
+  shows the full stain list beside it.
+- **News**: one index of all 303 posts grouped by year with dates and excerpts;
+  each post has its date, older/newer links and recent news in the sidebar.
+
+## Content rules followed
+
+- Words are never rewritten. Markup is tidied: Word leftovers removed, tables of
+  links and towns turned into responsive lists, an in-content H1 demoted so each
+  page has exactly one H1 (its title), phone numbers made tappable.
+- Links to old `.aspx` addresses, all of which 404 on the live site, point at
+  the matching new page (`carpet-cleaning-in-florida.aspx` → carpet cleaning,
+  `careers.aspx` → the Now Hiring post, `spring-cleaning.aspx` → the spring
+  cleaning tips post, the testimonials pages → the home page reviews or an
+  email). `AddArticle.aspx` had nothing to point at, so that link became text.
+- 13 images under `/filesimages/` and two on carpetcleangreen.com are already
+  broken on the live site (404), so they are left out rather than shown broken.
+- The YouTube video on the home page and the "Celebrating 25 years" post is a
+  link card to YouTube (an embed can't run in the preview).
+- Two posts share a slug with a page (`carpet-cleaning`, `jupiter-carpet-cleaning`);
+  the page keeps the address, as on the live site, and the post is at
+  `<slug>-post.html`.
+
+## Facts used
+
+Everything on the pages comes from the live site: (561) 747-8787 (call or text),
+1-877-747-8787 on the hurricane page, brad@suncoastclean.com, Jupiter, FL 33478,
+license #1988-09231, BBB since 1993, IICRC since 1998, "Established in 1988" (from
+the logo), bonded/licensed/insured, Facebook and Twitter links from the live
+footer. Star icons on the home page are decorative on the owner's own letters,
 not a rating from any review platform.
 
 ## Before it goes live
-- The form has no backend yet; it opens an email to brad@. Wire it to a real form handler.
+
+- The estimate form has no backend; it opens an email to brad@. Wire it to a
+  real form handler.
 - Photos are free-license Unsplash stock (hero living room, tile bathroom, sofa,
-  gloved spray bottle, carpet being vacuumed, closing band). The current site has
+  gloved spray bottle, carpet being vacuumed, closing band). The live site has
   no usable photos of its own work (275x76 thumbnails and 2016 banners with text
   baked in). Swap in real crew and before/after photos when the owner sends them.
-- Logo: their own mark from the WordPress media library (logo.png, logo-mark.png),
-  white background removed. Palette keeps the brand's indigo and sun yellow, calmed down.
+- Logo: their own mark from the WordPress media library (`logo.png`,
+  `logo-mark.png`), white background removed. Palette keeps the brand's indigo
+  and sun yellow, calmed down.
+
+## Preview build
+
+`python3 build.py --artifact DIR` writes the same site with the CSS inlined, a
+"redesign concept" banner on every page and the form switched off, for sharing
+as a claude.ai artifact.
