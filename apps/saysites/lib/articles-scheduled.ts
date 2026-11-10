@@ -9800,6 +9800,360 @@ The Site plan is $15 a month, with hosting, your own domain and the leads pipeli
     published: '2026-11-07',
     status: 'published',
   },
+  {
+    slug: 'portland-law-firm-website-design',
+    title: 'Portland Law Firm Website Design Under Oregon’s Rules',
+    description: 'Plan a Portland law firm website under Oregon RPC 7.1 to 7.5: firm names, Washington licenses, referral fees, online reviews and the courts clients use.',
+    kind: 'guide',
+    summary: [
+      'Oregon tests every statement on a law firm website against one short sentence in RPC 7.1: no false or misleading communications. Since 2014 the rule no longer lists specific banned types of statements.',
+      'Every advertisement must name at least one lawyer or firm responsible for it, with contact information (RPC 7.2(c)). Oregon dropped its "Advertising Material" label requirement in 2017.',
+      'Many Portland firms also work across the river in Washington. RPC 7.5(b) requires the site to show which lawyers are not licensed where an office is located.',
+      'Answering a bad online review with client details is a real risk in Oregon: the Supreme Court addressed it in In re Conry (2021) and the bar followed with Formal Opinion 2022-201.',
+      'Name the courts you actually use, from Multnomah, Washington and Clackamas county circuit courts to the federal court in Portland and Clark County Superior Court in Vancouver.',
+    ],
+    hero: { src: 'https://images.unsplash.com/flagged/photo-1586023038461-bbbf6610abdd?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Portland, Oregon seen from the Eastbank Esplanade across the Willamette River, with office towers and green trees along the waterfront' },
+    body: `A Portland law firm website has to satisfy one main rule: Oregon Rule of Professional Conduct 7.1, which says a lawyer "shall not make a false or misleading communication about the lawyer or the lawyer's services." Add three practical requirements from the rules around it: every advertisement names a responsible lawyer or firm with contact information (Rule 7.2(c)), you may not pay people to recommend you except in the ways Rule 7.2(b) allows, and your firm name must not imply a government or legal aid connection (Rule 7.5(a)). All of this comes from the Oregon State Bar's own [Oregon Rules of Professional Conduct](https://www.osbar.org/_docs/rulesregs/orpc.pdf), in the edition effective September 3, 2026.
+
+There is no filing step and no pre-approval in those rules. That makes Oregon simple to start in, but it puts the weight on judgment, because a short rule leaves every claim on the page to stand or fall on whether it could mislead. This guide works through the decisions a Portland firm actually faces: what to say about results and specialties, how to handle a firm that also practices in Washington, what to do about lead services and online reviews, which courts to mention, and which pages to build. It is a planning guide for a website, not legal advice, so check anything you are unsure about with the bar's ethics resources.
+
+## What do Oregon's rules require of a law firm website?
+
+Rule 7.1 is one paragraph. A communication is false or misleading if it contains a material misrepresentation of fact or law, or if it omits a fact needed to make the statement, considered as a whole, not materially misleading. The second half matters most on a website, where the temptation is to say something true but incomplete, such as a settlement figure with none of the facts behind it.
+
+Oregon used to be more specific. The bar's notes under the rule explain that on January 1, 2014, the ABA Model Rule language replaced the former Oregon version, and that the new rule "retains the essential prohibition against false or misleading communications, but not the specifically enumerated types of communications deemed misleading." So older advice listing particular forbidden statements may describe the pre-2014 rule. Read the current text, not a summary from a decade ago.
+
+Three more points from the rules shape the site:
+
+- **Name and contact information.** Rule 7.2(c) says any communication made under the advertising rule must include "the name and contact information of at least one lawyer or law firm responsible for its content." A 2017 amendment changed "office address" to "contact information." Put the responsible lawyer or firm and a way to reach them on every page, which a standard footer does.
+- **No advertising label.** The notes under Rule 7.3 record that a 2017 amendment deleted the requirement to place "Advertising Material" on advertising. You do not need a label on the website.
+- **No filing.** Nothing in Rules 7.1 to 7.5 asks you to submit a website to the bar before or after launch.
+
+Treat every place you describe the firm as covered: the home page, practice pages, attorney profiles, blog posts with a call to action, your Google Business Profile, directory listings and paid search landing pages.
+
+## How should you present results, reviews and comparisons in Oregon?
+
+Oregon's published rules come with short notes and a comparison to the old Oregon Code, but no long list of examples about results or testimonials. That leaves the plain test of Rule 7.1, applied with common sense:
+
+1. **Results need context.** A figure alone can suggest that a new client will get something similar. Say what kind of case it was, what the number represents (a verdict, a settlement, a policy limit) and add a plain note that every matter turns on its own facts. That note is the "fact necessary to make the statement considered as a whole not materially misleading."
+2. **Reviews must be real and representative.** Quote only reviews clients actually wrote, never edit them to say more, and do not pick a phrase that implies an outcome the client did not get.
+3. **Comparisons need proof.** "Portland's best injury lawyers" is a claim you cannot support. "We have handled employment cases in Multnomah County since 2009" can be checked, and it tells the reader more.
+4. **Awards need their source.** If you list a rating or award, name who gave it and the year, so a reader can judge it.
+
+Write your case stories so that the person reading them learns something useful: what the dispute was, what the firm did and what the client should expect from the process. That kind of page serves the reader first, which is also what Google asks for in its guidance on [helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content).
+
+## Can an Oregon lawyer call themselves a specialist?
+
+Oregon has no separate rule on specialization. In the current rules, Rule 7.4 is marked "[Reserved]", so a specialty claim is judged only under Rule 7.1. That gives you room, and it also means the claim has to be true in the way a reader would understand it.
+
+"Our practice is limited to family law" or "we handle only workers' compensation claims for injured workers" states a fact about what you do. "Specialist" or "expert" tells a reader there is some formal standard behind it, so use those words only when you can explain what backs them up on the same page: years in the field, a certification and who issued it, or a practice limited to that work. When in doubt, describe the experience and let the reader draw the conclusion.
+
+![Downtown Portland at dusk seen from the west hills, city lights below a band of forest with the snow-capped cone of Mount Hood on the horizon](https://images.unsplash.com/photo-1628783629868-19fb7eb52e2a?auto=format&fit=crop&w=1200&q=75)
+
+## What can a Portland firm call itself online?
+
+Rule 7.5(a) allows trade names in private practice as long as the name "does not imply a connection with a government agency or with a public or charitable legal services organization" and does not otherwise violate Rule 7.1. So "Willamette Injury Law" can work, while a name that sounds like a county service, a court program or a nonprofit legal aid group does not.
+
+Apply the same test to your domain name, your Google Business Profile name and your social handles. A domain such as multnomahcountylegalhelp.com, for example, could read as a public service. Rule 7.5 also says lawyers may state or imply they practice in a partnership or other organization "only when that is a fact" (7.5(d)), so do not present loosely affiliated solo lawyers as one firm. An "Of Counsel" listing is for a lawyer with "a continuing professional relationship" with the firm (7.5(e)).
+
+On Google, the business name should match what you use in the real world. Google's [guidelines for representing your business](https://support.google.com/business/answer/3038177) say not to add keywords or locations to the name, so "Willamette Injury Law" is fine but "Willamette Injury Law | Portland Car Accident Lawyer" is not.
+
+## Do you need to show Washington licenses on a Portland law firm website?
+
+Often, yes. The Portland metro area runs straight across the Columbia River into Vancouver and Clark County, Washington, and plenty of Portland firms have lawyers admitted in both states or an office on each side. Rule 7.5(b) lets a firm use the same name in more than one jurisdiction, but "identification of the lawyers in an office of the firm shall indicate the jurisdictional limitations on those not licensed to practice in the jurisdiction where the office is located."
+
+On a website, that means each attorney profile lists the states where the lawyer is admitted, and the office pages say which lawyers there are licensed in that state. A simple line such as "Admitted in Oregon only" on the profile of a lawyer listed at a Vancouver office does the job. Washington has its own rules for Washington clients and offices: start with the [Washington State Bar Association](https://www.wsba.org/), and see our [Seattle law firm website guide](/blog/seattle-law-firm-website-design) for how they apply to a website.
+
+Write the cross-river pages for real situations, not keywords. A Vancouver resident hurt in a crash on I-5 in Portland, or an Oregon employee who lives in Washington, has a genuine question about which state's law and which court applies. A page that answers that question earns its place. A set of near-identical pages for every suburb on both sides of the river does not, and Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name that pattern as doorway abuse.
+
+## Can you pay for leads or referrals in Oregon?
+
+Rule 7.2(b) says a lawyer "shall not give anything of value to a person for recommending the lawyer's services," with four exceptions: the reasonable cost of permitted advertisements, the usual charges of a legal service plan or a lawyer referral service, buying a practice under Rule 1.17, and, since a 2020 amendment, "nominal gifts as an expression of appreciation that are neither intended nor reasonably expected to be a form of compensation."
+
+For a website, that means:
+
+- Paying for ads, a directory listing or a pay-per-click campaign is paying for advertising, which is allowed.
+- Paying a service a fee per signed client, or a share of the fee, looks like paying for a recommendation. Read the arrangement against Rule 7.2(b) and the bar's [formal ethics opinions](https://www.osbar.org/ethics/toc.html) before you sign up.
+- A thank-you gift to a past client who sent a friend is fine only if it is truly nominal and was not promised in advance.
+
+The Oregon State Bar runs its own [Legal Referral Service](https://www.osbar.org/public/ris/), with an online matching tool that works around the clock. The bar says the first meeting with the referral "costs $50 or less and can last up to 30 minutes", after which the lawyer sets the fees. It also runs a Modest Means Program with reduced rates for some family law, criminal defense, foreclosure and rental housing matters. If you take referrals from either program, say so on your contact page, explain how the first consultation works and keep the price you quote consistent with the program's terms.
+
+Solicitation is a separate question. Rule 7.3 forbids soliciting someone who cannot exercise reasonable judgment, who has said they do not want to be contacted, or through "coercion, duress or harassment." Follow-up emails and texts to someone who filled in your form are fine; keep them respectful and stop when asked.
+
+## How do licensed paralegals change the Portland market?
+
+Oregon created a new kind of legal license in 2023. The bar's [Oregon Licensed Paralegals](https://www.osbar.org/lp) page explains that licensed paralegals may perform "some limited-scope legal tasks previously available only from lawyers" in housing and family law, the two areas it calls the greatest unmet need. The bar's referral service now connects people with "a lawyer or licensed paralegal."
+
+If your firm handles family law or landlord-tenant work, your website now speaks to people who are comparing a lawyer with a licensed paralegal. Be clear about what a lawyer adds in your practice: court appearances, complex property or custody questions, appeals, or whatever is true for you. Do not run down another kind of provider, and do not suggest a licensed paralegal cannot help when the license allows it. If you work alongside licensed paralegals, describe who does what so the client knows who they will meet.
+
+> **Tip:** A short "Which kind of help do I need?" section on a family law page, written plainly and fairly, answers a question Portland clients now ask and keeps them on your site.
+
+## How should an Oregon lawyer respond to online reviews?
+
+Carefully, and without client information. In [Formal Opinion 2022-201](https://www.osbar.org/_docs/ethics/2022-201.pdf), the Oregon State Bar considered a lawyer who wanted to answer a former client's harsh online reviews. The opinion explains that "information relating to the representation of a client" is read broadly and can include even a client's name or information in the public record, and that a lawyer risks violating Rule 1.6 "when summarizing, reframing, or even reposting" embarrassing or detrimental information. Deleting the reply later does not undo the disclosure.
+
+The opinion relies on the Oregon Supreme Court's decision in In re Conry, 368 Or 349 (2021), where the court concluded that the lawyer "revealed information that he did not 'reasonably believe[ ] necessary'" to establish a claim or defense. The opinion also notes that the American Bar Association found that negative online reviews alone are not a "controversy" that opens the self-defense exception.
+
+So a safe reply to a bad review on Google is short and general: you take feedback seriously, you cannot discuss any client matter, and the reviewer is welcome to call the office. For good reviews, the same confidentiality applies: thank people without confirming what you did for them. Our guide on [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers how to request reviews within Google's rules.
+
+## Which courts should a Portland law firm website mention?
+
+Clients search for the court on their paperwork, so name the courts you actually appear in and explain what happens there. The main ones for a Portland practice:
+
+| Court | What it hears | Why it belongs on your site |
+|---|---|---|
+| [Multnomah County Circuit Court](https://www.courts.oregon.gov/courts/multnomah/Pages/default.aspx) | Civil, criminal, family, probate, landlord-tenant, small claims and traffic cases in Portland (4th Judicial District) | Most Portland residents' cases start here |
+| [Washington County Circuit Court](https://www.courts.oregon.gov/courts/washington/Pages/default.aspx) | The same range of state cases for Beaverton, Hillsboro and Tigard | West-side clients often assume Portland means Multnomah |
+| [Clackamas County Circuit Court](https://www.courts.oregon.gov/courts/clackamas/Pages/default.aspx) | State cases for Oregon City, Lake Oswego, Milwaukie and nearby areas | South-side clients and many family law matters |
+| [U.S. District Court for the District of Oregon](https://www.ord.uscourts.gov/) | Federal cases; Portland is one of four divisions with Eugene, Medford and Pendleton | Civil rights, employment, federal criminal and bankruptcy-adjacent work |
+| [Clark County Superior Court](https://www.clark.wa.gov/superior-court) | Washington state cases in Vancouver | Only if a lawyer at the firm is admitted in Washington |
+
+Oregon's state courts take filings electronically through [OJD eFile](https://www.courts.oregon.gov/services/online/Pages/efile.aspx), and the Oregon Judicial Department runs [court language access services](https://www.courts.oregon.gov/programs/interpreters/Pages/default.aspx) for people who need an interpreter. A sentence on your practice pages explaining that the court provides interpreters, and which languages your own staff speak, answers a worry many clients have before they call.
+
+If you serve Spanish-speaking clients, build real Spanish pages for the practice areas and contact page, written or reviewed by a fluent speaker, and only if someone at the firm can take the call in Spanish. Google's guidance on [localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions) explains how to connect the two language versions.
+
+Want to see this structure with your own content? SaySites can [rebuild your current site as a free redesign preview](/redesign), with court and practice pages laid out for Portland, before you decide anything.
+
+![The illuminated Portland Oregon sign with its leaping white stag above Old Town buildings, with forested west hills and houses behind it at dusk](https://images.unsplash.com/photo-1641243745040-5cbf212d28ee?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in the Portland area search for a lawyer?
+
+They search by problem and place, often on a phone, and they compare a few firms before calling. Typical searches name the situation ("eviction notice Oregon", "DUII lawyer Portland", "Oregon custody modification") or the town ("estate planning attorney Beaverton", "Gresham divorce lawyer"). Note that Oregon calls drunk driving DUII, not DUI, and clients who have been charged see that term on their paperwork, so use it.
+
+Google says local results are based mainly on relevance, distance and prominence, in its explanation of [how local ranking works](https://support.google.com/business/answer/7091). You cannot change distance, but you can make relevance obvious: one clear page per practice area, written for an Oregon client, with the courts, the process and the timeline. Prominence grows from real reviews and from being cited by other sites, such as bar sections or community groups you are genuinely part of.
+
+Portland clients also ask AI assistants which lawyer to call. Google's guidance on [AI features and your website](https://developers.google.com/search/docs/appearance/ai-features) says there is nothing special to do beyond normal SEO best practice: make the page crawlable, put the important content in text, and answer questions plainly. A practice page that opens with a direct answer to the question a client is asking is useful to both a reader and an AI summary.
+
+## What should be on your Google Business Profile in Portland?
+
+Your Google Business Profile is often the first thing a client sees. A few Oregon-specific points:
+
+- **Address.** Use an office where you actually work and meet clients. Google's guidelines say a rented mailing address you do not operate from, a virtual office, is not eligible, and an office in a co-working space counts only if it has clear signage, receives customers and is staffed by your people during business hours.
+- **Categories.** Pick the primary category that matches your main practice (for example, "Personal injury attorney" or "Family law attorney") rather than a generic one.
+- **Service area.** If you also meet clients in Vancouver or Beaverton but have no office there, list those under service areas; Google explains how in its guide to [service-area businesses](https://support.google.com/business/answer/9157481).
+- **Description.** State what you do and where, in plain words. It is advertising, so the Rule 7.1 test applies here too.
+- **Replies to reviews.** Follow the confidentiality approach above for every reply.
+
+## Which pages does a Portland law firm website need?
+
+Build for the questions clients bring, not for a page count:
+
+1. **Home page** that says what you handle, where and how to start, with the responsible lawyer and contact information in the footer.
+2. **A page for each practice area**, written for Oregon law and Oregon courts. Our guide on [practice area pages that earn calls](/blog/practice-area-page-that-earns-calls) goes deeper.
+3. **Attorney profiles** with bar admissions in each state, years in practice, and any certification with its issuing body.
+4. **Office pages** for each real office, with directions, parking or transit notes and which lawyers are licensed there.
+5. **Courts page** explaining where cases are heard and what the first hearing looks like.
+6. **Fees and first consultation page** that explains how you charge, and how bar referral program consultations work if you take them.
+7. **Results or case stories** with context and a plain note that outcomes vary.
+8. **Contact page** with a short form, phone, hours and the languages you speak.
+
+Our [law firm website checklist](/blog/law-firm-website-checklist) lists the details every firm site needs beyond these.
+
+## Portland law firm website checklist
+
+- [ ] Every page shows the responsible lawyer or firm and contact information (Rule 7.2(c)).
+- [ ] Each result says what it was and that every matter is different.
+- [ ] No "best", "top" or "specialist" claim without the facts that back it up on the same page.
+- [ ] Firm name, domain and Google name imply no government or legal aid link (Rule 7.5(a)).
+- [ ] Attorney profiles list each state of admission; office pages show who is licensed there (Rule 7.5(b)).
+- [ ] No per-client or fee-share payments to any lead source without checking Rule 7.2(b).
+- [ ] Review replies reveal nothing about any client or matter.
+- [ ] The courts you appear in are named and explained.
+- [ ] Spanish or other language pages exist only where staff can serve in that language.
+- [ ] Each page passes a speed check on a phone.
+- [ ] Structured data describes only what is visible on the page.
+
+## How SaySites builds a Portland law firm website
+
+A SaySites law firm site starts with the pages this guide recommends: a page per practice area, a profile for each attorney with room for the admissions and certifications you provide, office and courts pages, and a consultation form that can ask questions suited to each practice area, including the other party's name so you can run a conflict check before calling back. Search engines read the firm as a LegalService, each lawyer as a Person and each practice area as a Service. Every page has to pass a 95+ speed check before it goes live, and pages can be built in English and Spanish.
+
+You make changes by saying them, such as "add 'Admitted in Oregon and Washington' to Dana's profile" or "add Clark County Superior Court to the courts page." Each change waits as a draft until you approve it, which is the right moment to read it against Rule 7.1. Results, reviews and credentials come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Oregon site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. If you also take cases in Washington, read our [Seattle law firm website guide](/blog/seattle-law-firm-website-design) next, and for another Western market, our [Salt Lake City law firm website guide](/blog/salt-lake-city-law-firm-website-design) covers Utah's rules.`,
+    faq: [
+      { q: 'Does the Oregon State Bar have to approve my law firm website?', a: 'No. Oregon Rules of Professional Conduct 7.1 to 7.5 contain no filing or pre-approval step for websites. The site must still meet Rule 7.1, which bars false or misleading communications, and Rule 7.2(c), which requires the name and contact information of at least one lawyer or firm responsible for the content. The bar publishes formal ethics opinions that help with harder questions.' },
+      { q: 'Do Oregon lawyer websites need an "Advertising Material" label?', a: 'No. Oregon deleted the requirement to put "Advertising Material" on advertising in a 2017 amendment, according to the notes under Rule 7.3 in the bar\'s published rules. What every advertisement still needs is the name and contact information of a responsible lawyer or law firm, which most firms meet with a standard footer on every page.' },
+      { q: 'Can a Portland lawyer list Washington cases on the firm website?', a: 'Yes, if the lawyer who handled them is admitted in Washington and the results are presented with context. Rule 7.5(b) requires a firm with offices in more than one jurisdiction to show the jurisdictional limits of lawyers not licensed where an office is located, so each profile should list every state of admission clearly.' },
+      { q: 'How should an Oregon lawyer reply to a negative Google review?', a: 'Briefly, and without any client information. Oregon State Bar Formal Opinion 2022-201, which draws on In re Conry (2021), warns that even reposting or reframing information about a former client can violate Rule 1.6. A short reply saying you cannot discuss client matters and inviting the person to call the office keeps you on safe ground.' },
+      { q: 'Can I call myself a specialist on an Oregon law firm website?', a: 'Oregon has no separate specialization rule; Rule 7.4 is reserved, so the claim is judged under Rule 7.1 alone. Use the word only if it is true in the way a reader would understand it, and explain what supports it on the same page, such as a practice limited to that area or a certification and the body that issued it.' },
+      { q: 'Can I pay a lead service per signed client in Oregon?', a: 'Be careful. Rule 7.2(b) bars giving anything of value for recommending your services, except reasonable advertising costs, the usual charges of a legal service plan or lawyer referral service, a practice purchase and nominal gifts. A per-client fee or a share of fees can look like paying for a recommendation, so check the arrangement against the rule first.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office and courts pages, a consultation form with conflict-check questions, LegalService structured data and a 95+ speed check on every page. You can also request a free redesign preview of your current site before you decide.' },
+    ],
+    about: ['Oregon Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Portland, Oregon'],
+    published: '2026-11-10',
+    status: 'published',
+  },
+  {
+    slug: 'minneapolis-roofing-website-design',
+    title: 'Minneapolis Roofer Website Design: Minnesota License Rules',
+    description: 'Build a Minneapolis roofing website that meets Minnesota law: license numbers on every ad, storm and insurance claim limits, permits and ice dam pages.',
+    kind: 'guide',
+    summary: [
+      'Minnesota Statutes section 326B.87 requires a licensed roofer\'s license number in any advertising, and the statute names websites and internet ads. The state does not set a size or location, so put it in the footer of every page.',
+      'Section 325E.66 bars residential roofers from advertising or promising to pay an insurance deductible, and from advising on coverage or adjusting a claim without a public adjuster license. Storm pages must be written with that in mind.',
+      'Roofing work on homes needs a state license (roofer, building contractor or remodeler) unless residential receipts stay under $15,000 a year with a Certificate of Exemption.',
+      'Minneapolis requires a permit for all reroofing except repairs smaller than one bundle of shingles; St. Paul\'s reroofing policy has not allowed overlays. Explain the rules for the cities you serve.',
+      'Winter is part of the job here: the code requires an ice barrier at the eaves, and pages about ice dams, ventilation and inspections answer real questions Twin Cities homeowners ask.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1535082049017-5a7b43f3bcef?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Minneapolis at dusk from above the Mississippi River, with the curved Stone Arch Bridge crossing the water below the skyline' },
+    body: `A Minneapolis roofing website has two legal jobs before it has a marketing one. First, it must show your Minnesota license number, because [Minnesota Statutes section 326B.87](https://www.revisor.mn.gov/statutes/2024/cite/326B.87/pdf), subdivision 2, says the license number "must appear in any advertising by that licensee," and lists "flyers, brochures, websites, and Internet ads" among the examples. Second, if you do storm and insurance work, every page about it must respect [section 325E.66](https://www.revisor.mn.gov/statutes/cite/325E.66/pdf), which bars residential roofers from advertising or promising to pay all or part of a homeowner's insurance deductible and from advising on coverage or adjusting a claim without a public adjuster license.
+
+Get those two right and the rest of the site can do what homeowners need: explain the work, show real jobs, answer winter questions and make it easy to ask for an estimate. This guide covers the licensing and advertising rules, what to say (and not say) about hail and insurance, the permit rules in Minneapolis and St. Paul, how Twin Cities homeowners search, and the pages a roofing site here needs. Statute quotations come from the Minnesota Revisor of Statutes; licensing details come from the Minnesota Department of Labor and Industry (DLI). It is a planning guide for a website, not legal advice.
+
+## Who needs a roofing license in Minnesota?
+
+Anyone doing residential roofing for the public, with narrow exceptions. DLI's page on [who needs a roofer license](https://www.dli.mn.gov/business/residential-contractors/who-needs-roofer-license) says "residential contractors who perform roofing work must be licensed" as a residential roofer, a residential building contractor or a residential remodeler. The differences matter for what your website can offer:
+
+- A **residential roofer** license covers roofing. DLI says roofers who also want to install gutters, downspouts, soffit or fascia need a residential building contractor or remodeler license.
+- A **residential remodeler** works only on existing homes.
+- A **residential building contractor** can also do new construction.
+- **Subcontractors** doing roofing do not need a license but must register through the state's Contractor Registration Program.
+- Contractors whose annual residential gross receipts are "less than $15,000 are exempt," but must get a Certificate of Exemption each year.
+
+So if your website lists "roofing, gutters and siding" and you hold only a roofer license, the site is promising work your license does not cover. Match your service pages to your license, or get the license that matches the services.
+
+DLI's [roofer license page](https://dli.mn.gov/business/residential-contractors/roofer-license) also lists what the license requires, and some of it is worth telling homeowners in plain words: the company names a qualifying person who passed the state's prelicensing exam and keeps up continuing education; the company carries liability insurance "with limits of at least $300,000 per occurrence"; and roofers file a $15,000 surety bond. Licensed contractors are also part of the state's Contractor Recovery Fund, which DLI's [residential contractor FAQ](https://www.dli.mn.gov/node/2701) says "reimburses consumers who have suffered a financial loss," up to $550,000 per licensee.
+
+## Where does the license number have to appear on a Minnesota roofing website?
+
+Everywhere you advertise, and a website is advertising. Section 326B.87 has three parts that touch your marketing:
+
+1. **Subdivision 1:** license numbers "must be on all business cards and all contracts to perform work for which a license is required."
+2. **Subdivision 2:** the license number must appear in any advertising, "including but not limited to signs, vehicles, business cards, published display ads," flyers, brochures, websites and internet ads.
+3. **Subdivision 3:** contracts must state that the contractor is licensed and give the license number.
+
+DLI's FAQ adds that "the law does not require a specific size print or location for the license number." That gives you a choice, and the safest one is simple: put "MN License #" followed by your number in the site footer so it appears on every page, repeat it on the contact page and on any landing page you send ads to, and include it in the text of every display ad and social post that promotes your services. Then link it to the state's [license lookup](https://secure.doli.state.mn.us/lookup/licensing.aspx) so a homeowner can check it in one tap. A number people can verify does more for trust than any badge.
+
+> **Note:** Use your exact license number and the business name on the license. If you trade under an assumed name, make sure the name on the website, the license record and your Google Business Profile line up.
+
+## What can a Minnesota roofing website say about hail and insurance claims?
+
+Storm work is a big part of roofing in the Twin Cities, and it is where Minnesota's law is strictest. Section 325E.66, subdivision 1, applies when a residential contractor's work is paid from a property or casualty insurance policy. The contractor may not:
+
+- "advertise or promise to pay, directly or indirectly, all or part of any applicable insurance deductible," or offer compensation in return for letting the contractor inspect the roof, file a claim or refer work;
+- give the homeowner a repair authorization agreement without also giving a good faith estimate of the itemized, detailed cost of the services and materials;
+- "interpret policy provisions or advise an insured regarding coverages or duties under the insured's policy," or adjust a claim for the homeowner, unless the contractor holds a public adjuster license under chapter 72B.
+
+Subdivision 2 lets the homeowner or the insurer sue a contractor who breaks these rules, and subdivision 1(b) says the insurer need not consider the contractor's estimate in that case. Those are real consequences for a sentence on a web page.
+
+Here is how that turns into website copy:
+
+| Avoid writing | Write instead |
+|---|---|
+| "We cover your deductible" or "Free roof with your insurance" | "We give you a written, itemized estimate before any work starts" |
+| "$500 gift card for every free inspection" | "Free inspection, with photos of what we found" |
+| "We'll handle your claim and fight your adjuster" | "We can meet your adjuster on the roof and show the damage we documented" |
+| "Your policy covers this, we'll make sure of it" | "Your insurer decides coverage. Call them with any questions about your policy" |
+
+Meeting the adjuster to point out damage is not the same as negotiating the claim, but keep the line clear on the page. If someone at your company does hold a public adjuster license, say so, and say which person holds it.
+
+![Two roofers in bright yellow shirts and safety harnesses kneeling on a dark shingle roof, one pulling a tape measure, with yellow safety ropes coiled beside them](https://images.unsplash.com/photo-1635424709870-cdc6e64f0e20?auto=format&fit=crop&w=1200&q=75)
+
+## Do Minneapolis and St. Paul require a permit to replace a roof?
+
+Yes, and the two cities do not treat the job the same way, so homeowners on each side of the river get different answers.
+
+The City of Minneapolis [roofing handout for one- and two-family homes](https://www.minneapolismn.gov/media/-www-content-assets/documents/Roofing.pdf) says "a building permit is required for all re-roofing work, except repairs involving less than one bundle of shingles (33 1/3 square feet of roof area)," that a final inspection is required when the work is done, and that repairs to rafters or trusses need an additional permit and a framing inspection. The handout also says the code allows an overlay over one existing layer of roof covering under certain conditions, such as an existing roof that is not water-soaked or badly deteriorated, and never over wood shakes, slate, clay or cement tiles.
+
+St. Paul's [reroofing policy for asphalt or fiberglass shingles](https://www.stpaul.gov/DocumentCenter/Government/Safety%20&%20Inspections/Construction%20Inspections/Building/Re-roof%20Policy%202015_201502051238167277.pdf) starts with "No overlays are allowed," and says soffit and roof vents must be brought up to present code. Both documents were written under earlier editions of the state code, so confirm the current requirements with each city before you quote them, and put the date you checked on your page.
+
+On your website, this becomes a short "Permits and inspections" section on the roof replacement page: you pull the permit, you schedule the inspection, and here is what that means for the homeowner's timeline. If you work in suburbs such as Bloomington, Edina or Maple Grove, say that each city has its own permit office and that you handle it, rather than writing a separate near-identical page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat swarms of pages that differ only by town name as doorway pages.
+
+## What should a Minneapolis roofing site say about ice dams and winter?
+
+Write about what homeowners here actually face. The Minneapolis handout says "Minnesota's climate is considered severe with respect to underlayment requirements," so an ice barrier is required except on detached accessory buildings with no conditioned space. It must run from the eave edge "to a point at least 24 inches inside the exterior wall line," using either two layers of approved felt cemented together or a self-adhering polymer modified bitumen sheet. The handout also notes that attic ventilation "may help to reduce the formation of ice dams," though adding ventilation to an existing home is not required just because you reroof.
+
+That gives you an honest, useful page to write:
+
+- **What an ice dam is** and why it leaks into ceilings and walls.
+- **What the code requires** at the eaves on a new roof, in plain words.
+- **What you check** in an inspection: ventilation, insulation gaps, flashing and the condition of the ice barrier.
+- **What you do in winter**, such as emergency tarping or steaming ice off a roof, if you really offer it, and what waits for spring.
+- **When to call**, with photos from your own jobs that show the problems you describe.
+
+Answer the questions homeowners ask in their own words ("why do I get icicles on one side of the house?", "can a roof be replaced in winter?"). That is the kind of content Google describes in its guidance on [helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content), and it gives AI answers a clear, quotable source.
+
+![The Minneapolis skyline under a clear blue sky, seen above a busy interstate highway lined with autumn trees and city neighborhoods](https://images.unsplash.com/photo-1510607663-c3e0510d8360?auto=format&fit=crop&w=1200&q=75)
+
+## How do Twin Cities homeowners search for a roofer?
+
+They search by problem, by place and by season. After a storm, searches name the damage ("hail damage roof repair Minneapolis", "shingles blown off"). In winter they name the symptom ("ice dam removal", "roof leak ceiling stain"). In spring and summer they plan ("roof replacement cost Minnesota", "metal roof St. Paul"). Many check the license, the reviews and the photos before they call.
+
+Google says local results depend mainly on relevance, distance and prominence ([how local ranking works](https://support.google.com/business/answer/7091)). For a roofer that means:
+
+- **Relevance:** a separate page for each service you really offer, such as shingle replacement, storm damage inspection, flat roofs, gutters (if your license covers them) and ice dam work.
+- **Distance:** an accurate Google Business Profile with the right service area.
+- **Prominence:** real reviews from real customers, and mentions from local groups and suppliers you actually work with.
+
+Not sure your current site does this? SaySites will [rebuild your site as a free redesign preview](/redesign) using your own content, so you can compare before you change anything.
+
+## How should a Minneapolis roofer set up a Google Business Profile?
+
+Most roofers work at customers' homes, so Google treats them as service-area businesses. Google's guide to [service-area businesses](https://support.google.com/business/answer/9157481) explains how to hide your address if customers do not visit you and how to list the cities or ZIP codes you serve. A few more points:
+
+- **Name.** Use your real business name, with no added keywords or cities. Google's [business profile guidelines](https://support.google.com/business/answer/3038177) say including unnecessary information in the name can get the profile suspended.
+- **Category.** "Roofing contractor" as the primary category, with secondary categories only for services you really perform.
+- **License number.** Add it to the profile description and your posts, since those are advertising too.
+- **Photos.** Post your own job photos through the year, including winter work if you do it.
+- **Reviews.** Ask every customer, the same way, after the job. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers what Google allows.
+
+Our guide for businesses with [no storefront](/blog/service-area-business-google) goes further on service areas.
+
+## Which pages should a Minneapolis roofing website have?
+
+1. **Home page** with what you do, where, your license number, a request form and a phone number that works with one tap.
+2. **Roof replacement** with your process, materials, permits and inspection, warranty terms you actually offer and what a homeowner should expect day by day.
+3. **Storm and hail damage** written within section 325E.66: inspections, photo documentation, itemized estimates and what the insurer decides.
+4. **Ice dams and winter roofing** with the code requirements and what you check.
+5. **Repairs** for leaks, flashing and wind damage.
+6. **Gutters, soffit and fascia** only if your license covers them.
+7. **Service area page** listing the cities you serve and how permits work there.
+8. **Gallery** of your own before and after photos.
+9. **About and licensing** with your license number, lookup link, insurance and bond, and the qualifying person.
+10. **Contact and estimate request** with a short form.
+
+Our [home service website checklist](/blog/home-service-website-checklist) covers the rest of what a trade site needs. Roofers in other hail country can compare notes with our [Denver roofing website guide](/blog/denver-roofing-website-design).
+
+![Close-up of dark gray roof tiles laid in neat overlapping rows, showing their shaped edges and fine surface texture](https://images.unsplash.com/photo-1673645652590-9d21295bf4ac?auto=format&fit=crop&w=1200&q=75)
+
+## What structured data should a roofing website use?
+
+Mark up what is on the page, nothing more. Schema.org has a [RoofingContractor](https://schema.org/RoofingContractor) type, a kind of local business. Google's documentation on [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) explains the properties it reads, such as name, address, phone, opening hours and area served, and its [general structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) say markup must describe content visible to users. Do not mark up reviews you wrote yourself or ratings that do not appear on the page.
+
+## Minneapolis roofing website checklist
+
+- [ ] License number in the footer of every page, on the contact page and on every ad landing page (Minn. Stat. 326B.87).
+- [ ] License number linked to the DLI lookup.
+- [ ] Services match the license you hold.
+- [ ] No promise to pay or rebate a deductible, and no gift for an inspection or claim (Minn. Stat. 325E.66).
+- [ ] No advice on insurance coverage and no claim adjusting unless a public adjuster license is held.
+- [ ] Itemized written estimates described on the storm page.
+- [ ] Permit and inspection steps explained for the cities you serve.
+- [ ] Ice dam and winter page written from your own experience.
+- [ ] Your own job photos, not stock photos of other people's roofs, in the gallery.
+- [ ] Google Business Profile name with no keywords, and a service area set.
+- [ ] Each page passes a speed check on a phone.
+
+## How SaySites builds a Minneapolis roofing website
+
+SaySites builds roofing sites with its contractor layout from day one: a bright photo hero with a request bar, numbered service cards, a "need help?" block and a call band, with a separate page for each service you offer. The request form can ask what the homeowner needs, the job's ZIP code and how soon they need you, and the company is described to search engines as a RoofingContractor. Photos from your phone are resized automatically, and every page must pass a 95+ speed check before it can go live.
+
+You change the site by saying what you want, for example "add our MN license number to the footer of every page" or "make a page about ice dams with these five photos from last winter." Every change waits as a draft until you approve it, which is the right time to read it against the rules above. Licenses, warranties, reviews and photos come only from you; SaySites never invents them. New requests land in a simple pipeline where you can call, text or email each homeowner, with an instant reply if you turn it on.
+
+The Site plan is $15 a month, with hosting, your own domain and the leads pipeline ([websites for roofers](/websites-for/roofers), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Minnesota roofing site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. Working in New England too? Compare Minnesota's rules with our [Boston roofing website guide](/blog/boston-roofing-website-design).`,
+    faq: [
+      { q: 'Does a Minnesota roofer have to put the license number on its website?', a: 'Yes. Minnesota Statutes section 326B.87, subdivision 2, says a licensee\'s license number must appear in any advertising and lists websites and internet ads as examples. The Department of Labor and Industry says the law sets no specific size or location, so most roofers put it in the footer of every page and on the contact page.' },
+      { q: 'Can a Minneapolis roofer offer to pay my insurance deductible?', a: 'No. Minnesota Statutes section 325E.66 bars residential roofers from advertising or promising to pay all or part of an insurance deductible when the work is paid by insurance, or offering compensation for an inspection, a claim or a referral. A homeowner or insurer can sue over a violation, and the insurer need not consider that contractor\'s estimate.' },
+      { q: 'Do I need a permit to replace my roof in Minneapolis?', a: 'Yes. The City of Minneapolis says a building permit is required for all reroofing work on one- and two-family homes except repairs using less than one bundle of shingles, about 33 square feet. A final inspection is required when the work is done, and repairs to rafters or trusses need an additional permit and a framing inspection.' },
+      { q: 'Can a roofer help with my insurance claim in Minnesota?', a: 'A roofer can inspect, document damage and give you an itemized estimate. Under section 325E.66, a residential roofer may not interpret your policy, advise you on coverage or adjust the claim for you unless the roofer holds a Minnesota public adjuster license. Questions about what your policy covers go to your insurer or a licensed public adjuster.' },
+      { q: 'How can I check a roofer\'s license in Minnesota?', a: 'Use the Department of Labor and Industry\'s online license lookup and search for the business license. A licensed residential roofer must have a qualifying person who passed the state exam, liability insurance of at least $300,000 per occurrence and a $15,000 surety bond. The license number must appear on the roofer\'s ads, business cards and contracts.' },
+      { q: 'Who needs a roofing license in Minnesota?', a: 'Residential contractors doing roofing must hold a residential roofer, building contractor or remodeler license. Roofing subcontractors must register instead, and contractors with less than $15,000 a year in residential gross receipts are exempt if they get a Certificate of Exemption each year. Gutters, soffit and fascia need a building contractor or remodeler license.' },
+      { q: 'How much does a SaySites website for a Minneapolis roofer cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes the contractor layout, a page for each service, a job request form, RoofingContractor structured data, automatic photo resizing and a lead pipeline with an optional instant reply. You can also ask for a free redesign preview of your current site before deciding.' },
+    ],
+    about: ['Minnesota residential contractor licensing', 'Roofing contractor advertising', 'Roofing contractor websites', 'Minneapolis, Minnesota'],
+    published: '2026-11-10',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
