@@ -10154,6 +10154,307 @@ The Site plan is $15 a month, with hosting, your own domain and the leads pipeli
     published: '2026-11-10',
     status: 'published',
   },
+  {
+    slug: 'birmingham-law-firm-website-design',
+    title: 'Birmingham Law Firm Websites: Alabama’s 2026 Ad Rules',
+    description: 'Plan a Birmingham law firm website under Alabama’s new Rule 7.2: no filing, six-year records, results, testimonials, cost disclosures and search ads.',
+    kind: 'guide',
+    summary: [
+      'Alabama rewrote its lawyer advertising rules effective January 1, 2026. Websites no longer go to the bar for routine filing, but you must keep a copy of each version for six years (Rule 7.2(a)).',
+      'Every page must give the city, town or county of a bona fide office of at least one lawyer named in it, and say clearly if a featured lawyer is not licensed in Alabama (Rule 7.2(b)).',
+      'Results need a description of the type of case and must be objectively verifiable (Rule 7.2(m)). The comment warns that leaving out facts such as a default judgment or an uncollected verdict can make a result misleading.',
+      'If you mention contingency fees, say clearly whether the client pays court costs or expenses when there is no recovery (Rule 7.2(g)).',
+      'You may not buy or manipulate search results so people looking for another lawyer contact you by mistake (Rule 7.2(r)).',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1695783609265-f48fe9a72403?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Birmingham, Alabama in late afternoon light, with its office towers rising above lower government and office buildings' },
+    body: `A Birmingham law firm website is now built under rules that are less than a year old. The Supreme Court of Alabama rewrote Rules 7.1, 7.2 and 7.3 of the Alabama Rules of Professional Conduct by an [order dated May 13, 2025](https://www.alabar.org/assets/2025/05/Order-on-Alabama-Rules-of-Professional-Conduct-and-Rules-of-Disciplinary-Procedure.pdf), effective January 1, 2026. The short version for a website: you no longer file it with the bar, but you keep every version for six years; each page names where at least one responsible lawyer has a real office; results come with context; fee claims say who pays costs if you lose; and nobody acts or endorses on your behalf in a way the rules now forbid.
+
+The Alabama State Bar summarized the changes in [a September 2025 article in The Alabama Lawyer](https://www.alabar.org/news/from-the-alabama-lawyer-alabama-moves-to-modernize-lawyer-advertising-rules-a-look-at-the-changes/), and that piece is worth reading in full if your site was written under the old rules. Much of the older advice about Alabama lawyer websites, including the long-standing general disclaimer, describes rules that are no longer in force. This guide walks through what the new text asks of a website, then covers the local side: the courts your clients will end up in, how people in the Birmingham area look for a lawyer, and which pages to build. It is a planning guide, not legal advice. For a question about your own site, the bar's Office of General Counsel answers ethics questions.
+
+## What changed in Alabama's lawyer advertising rules in 2026?
+
+Four changes matter most to a website.
+
+- **No routine filing.** Under the old rules, advertisements went to the Office of General Counsel within days of going out. The bar's summary says that is gone. In its place, Rule 7.2(a) requires the lawyer to keep a copy of each communication for six years after it is disseminated, which the bar notes matches the six-year limitations period for a violation.
+- **The general disclaimer is gone.** The bar's article puts it plainly: "The General Disclaimer was Eliminated." If your footer still carries the old boilerplate, it is not required, though removing it is a choice you should make deliberately rather than by accident.
+- **New disclosures replace it.** Rule 7.2(b) requires a clear and prominent statement when a lawyer in the communication is not licensed in Alabama or has no bona fide office in Alabama, and every communication must include the city, town, county or location of the bona fide office of at least one lawyer in it.
+- **Specific limits on people and pictures.** Rule 7.2(o) bars using an authority figure, such as a judge or law-enforcement officer, to endorse you. Rule 7.2(p) bars using an actor or model to portray a client unless the portrayal is nonspeaking. Rule 7.2(n) requires a "DRAMATIZATION" label on a dramatization of an actual event.
+
+Rules 7.4, 7.5 and 7.6 did not change, according to the bar's summary. Rule 7.1 still forbids any false or misleading communication, and its subsections still prohibit comparing the quality of your services with other lawyers' and communicating a certification, except as Rule 7.4 provides.
+
+## Do I still have to file my website with the Alabama State Bar?
+
+Not as a routine step. The obligation now is record-keeping, and a website makes that harder than it sounds, because a site changes constantly. A practice area page gets a new paragraph, a result is added, an attorney leaves. Each of those is a new version of a communication.
+
+A practical way to meet Rule 7.2(a):
+
+1. **Save a full copy of the site at launch,** every page, as a PDF or archived HTML, dated.
+2. **Save the changed page each time it changes,** with the date and the name of the lawyer who approved it.
+3. **Keep the records for six years** from the date each version stopped being shown, not from the date it was first posted.
+4. **Include the paid pieces,** such as search ads, social posts and directory profiles, since they are communications too.
+
+A site builder that keeps every change as a dated draft you approve does much of this for you, but check that you can export the history, because the duty sits with the lawyer, not the vendor.
+
+## What must every page of a Birmingham law firm website show?
+
+Rule 7.2(b)(3) asks for the location of a bona fide office of at least one lawyer in the communication, and the comment to the rule says a communication that does not include the name and location of a lawyer who takes responsibility for it violates the rules. On a website, the simplest way to meet that is a footer on every page with the firm name, the responsible lawyer, and the office address in Birmingham, Hoover, Bessemer or wherever the office really is.
+
+Three other points belong in that footer or close to it:
+
+- **Out-of-state lawyers.** A firm with offices in other states may list lawyers who are not admitted in Alabama. Rule 7.2(b)(1) requires the site to say so clearly and prominently. Put it on each such lawyer's profile, not only on a disclaimer page.
+- **No Alabama office.** If an out-of-state firm advertises to Birmingham clients without a bona fide office here, Rule 7.2(b)(2) requires the site to say that.
+- **Readable disclosures.** Rule 7.2(d) says written disclosures must be "legible and easy to see and read." Light gray text in a tiny font at the bottom of a phone screen is the kind of thing that rule is aimed at.
+
+The rule's comment also allows required information to sit behind a link where a format has no room, as long as the link leads to the information. That matters for ads and social posts that point to your site. It is not a reason to hide disclosures on the website itself, where you have all the room you need.
+
+![The columned marble front of the Federal Building and U.S. Courthouse in downtown Birmingham, with a dark office tower rising behind it under a clear blue sky](https://images.unsplash.com/photo-1696306944574-961b6d0039d3?auto=format&fit=crop&w=1200&q=75)
+
+## How can an Alabama firm show case results and testimonials?
+
+Results are the part of a law firm site most likely to cause trouble under the new rules, so it helps to read Rule 7.2(m) closely. A specific result must be accompanied by a description of the type of case or matter, must be objectively verifiable, and must not be presented in a misleading way. The rule says it is misleading if it would likely lead a reasonable person to expect the same or a similar result, or to misunderstand the result's nature or significance. Separately, "a communication promising a specific result is prohibited."
+
+The comment to Rule 7.2 lists facts whose omission can make a past result misleading. Among them: someone other than the advertising lawyer obtained it, the verdict was never collected, it was a default judgment, the matter was uncontested, the verdict was overturned or reduced on appeal, the opposing party had no lawyer, or the result came from outside Alabama. That list is close to a checklist for every result on your site.
+
+A results page that holds up under that standard looks like this:
+
+| For each result | What to write |
+|---|---|
+| Type of matter | "Trucking collision, Jefferson County Circuit Court, 2024" |
+| What happened | Settlement or verdict, and the amount if the client agreed to share it |
+| Who did the work | The lawyer or lawyers at this firm who handled it |
+| The facts that change its meaning | Default judgment, uncontested, reduced on appeal, uncollected, or obtained in another state |
+| What it does not mean | A plain line that every case turns on its own facts |
+
+Testimonials have their own rule. Under Rule 7.2(l), the person giving a testimonial must have "personal, real, and direct legal experience" with the lawyer, and any payment or other compensation must be disclosed plainly and prominently. That rules out composite or written-for-you testimonials, and it means a client who received anything for a review needs a disclosure next to it. Pulling reviews from your Google profile onto your site is fine as long as each is a real client's words and you do not edit them into something they did not say.
+
+Pictures count too. A stock photo of a smiling family on a "client stories" page could read as a portrayal of your clients. Rule 7.2(p) allows an actor or model to portray a client only in a nonspeaking role, and the bar's summary adds that the use must not be misleading. Label stock imagery or use photos of your real office, your real team and the city instead.
+
+> **Tip:** Before you publish a result, ask whether a reader who sees only that line would understand what kind of case it was and why it came out the way it did. If not, add the facts or leave it off.
+
+## What do fee pages and practice area pages need in Alabama?
+
+Many Birmingham firms advertise "no fee unless we win." Rule 7.2(g) says that when a communication makes a contingency-fee claim, it must disclose clearly and prominently whether the client will be responsible for paying or reimbursing court costs or litigation expenses if there is no recovery. Put that sentence right next to the claim on every page where the claim appears, including the home page banner and the practice area pages, not only on a fees page.
+
+Practice areas carry their own rule. Rule 7.2(j) says a lawyer shall not communicate that the lawyer handles matters in practice areas the lawyer does not currently practice or intend to practice. If the site would lead a reader to believe you handle a type of case that you would normally refer to another firm, the page must carry one of two statements set out in the rule, such as "MOST CASES OF THIS TYPE ARE REFERRED TO OTHER ATTORNEYS FOR PRINCIPAL RESPONSIBILITY."
+
+That has a direct effect on how you plan a site. A personal injury firm that wants to rank for every kind of injury case may be tempted to publish pages for medical malpractice, product liability and workers' compensation even if those cases go to co-counsel. Under Rule 7.2(j), either the firm handles them, or the page says they are referred. A smaller set of honest practice pages is safer and usually more convincing. Our guide on [practice area pages that earn calls](/blog/practice-area-page-that-earns-calls) explains how to write each one around the questions a client asks.
+
+Certification is the last fee-and-credentials question. Rule 7.1(d) forbids communicating a certification by a certifying organization except as Rule 7.4 allows. In Alabama, the [Alabama State Bar Board of Legal Specialization](https://www.alabar.org/members/specialization/) regulates the certification of lawyers as specialists by approved certifying agencies, and a lawyer must be certified by an agency the board has approved. If a lawyer holds such a certification, name the certifying organization on the profile. If not, describe the practice in plain words, such as "Our practice is limited to workers' compensation," which is a fact rather than a title.
+
+## Can I bid on another lawyer's name in Google Ads in Alabama?
+
+Not in a way that sends people to you by mistake. Rule 7.2(r) says a lawyer must not manipulate or purchase internet search results so as to cause a reasonable prospective client to contact the lawyer when they meant to contact the lawyer they were searching for. The bar's summary describes the same rule as a ban on deceptively manipulating or buying search results.
+
+In practice, that means three things for a Birmingham firm's search marketing:
+
+- **Keep other lawyers' and firms' names out of your keyword lists,** and add them as negative keywords so broad-match terms do not pull them in.
+- **Never write an ad or page title that could be read as another firm's,** including near-copies of a well-known firm's slogan.
+- **Give your agency the instruction in writing.** Every lawyer who appears in or is identified in an advertisement is personally responsible for it, according to the bar's summary, so the duty does not move to the vendor.
+
+Rule 7.2(q) is worth knowing if you pay for sponsored legal information, such as a paid segment, a sponsored video or a placed article that looks like news. That kind of content must say during the communication that the lawyer paid for it and that it is an advertisement. The bar's order notes that ordinary blog posts and social posts that do not directly solicit employment or are not paid for are generally outside that rule, so a plain blog on your own site answering common questions is not caught by it.
+
+## Which Birmingham courts should your website explain?
+
+Clients want to know where their case will be heard and what the first appearance looks like. In Birmingham, that usually means the Tenth Judicial Circuit, Jefferson County's circuit court. It has two divisions, each with its own clerk's office: the [Birmingham Division](https://jefferson.alacourt.gov/) downtown and the [Bessemer Division](https://bessemer.alacourt.gov/), whose clerk sits in the Bessemer Judicial Building at 1851 Second Avenue North. A client from the western part of the county who hears "Jefferson County" may not know there is a second courthouse, so a short courts page that explains which division their case is in, and why, answers a question before it becomes a phone call.
+
+Federal cases go to the [U.S. District Court for the Northern District of Alabama](https://www.alnd.uscourts.gov/), which sits in Birmingham and also has divisions in places such as Huntsville, Tuscaloosa and Anniston. If your practice reaches into Shelby, St. Clair or Walker counties, name those circuit courts as well. A page per court is more than most firms need; one well-organized courts page with a section for each court you actually use is enough.
+
+> **Note:** Keep courts pages factual. Saying a lawyer "regularly appears" before a court is fine if true. Saying or implying any connection to a judge is not, and Rule 7.2(o) separately bars using a judge to endorse or recommend you.
+
+![A tall steel arch sign reading Rotary Trail in the Magic City over the entrance to a downtown Birmingham walking trail, beside red brick buildings](https://images.unsplash.com/photo-1674889941309-dfaad310afff?auto=format&fit=crop&w=1200&q=75)
+
+## How do people in the Birmingham area look for a lawyer?
+
+Many start with a search on a phone that combines a problem and a place: "car wreck lawyer Birmingham," "divorce attorney Hoover," "DUI lawyer Bessemer." Google says local results are based mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Your website feeds the first and third: pages that clearly describe the cases you handle and where, and a reputation built from real reviews and real mentions.
+
+A few local points shape the content:
+
+- **Neighborhood and suburb names matter, but only where they are true.** Mention Hoover, Vestavia Hills, Homewood, Bessemer or Trussville where you have an office or genuinely take cases. A page per suburb with the same text and a new name is the kind of doorway page Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) warn against.
+- **Spanish where you can serve it.** Census figures for Jefferson County show 6.3% of residents are Hispanic or Latino and 7.6% of people age 5 and older speak a language other than English at home ([U.S. Census QuickFacts, Jefferson County](https://www.census.gov/quickfacts/jeffersoncountyalabama)). That is a smaller share than in many large metros, so a full Spanish site makes sense only if someone at the firm can take the call in Spanish. If someone can, a Spanish page for each core practice area is worth having.
+- **Answer the questions people actually ask.** How long does a case take in Jefferson County? What happens at the first hearing? Do I need a lawyer for small claims? A short, accurate answer on each practice page helps readers and gives AI answers a clear passage to quote.
+
+Your Google Business Profile follows Google's rules rather than the bar's, but the two fit together. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real-world firm name with no added keywords, an address where clients can actually visit, and they allow individual practitioners such as lawyers to have their own profiles in some cases. Keep the profile's name, address and phone identical to the footer on your site, which also helps meet the bona fide office requirement in a consistent way.
+
+## What pages should a Birmingham law firm website have?
+
+1. **Home page** that says what you handle and where, how to start, and, if you take contingency cases, who pays costs if there is no recovery.
+2. **One page per practice area you actually handle,** written for Alabama law and the courts your clients will see, with any referral disclosure Rule 7.2(j) requires.
+3. **Attorney profiles** with every state of admission, a clear note for anyone not licensed in Alabama, and any certification with the name of the certifying organization.
+4. **Office page** for each real office, with parking and directions, so the bona fide office named in your footer is easy to find.
+5. **Courts page** covering the Birmingham and Bessemer divisions, federal court, and any neighboring counties you work in.
+6. **Results page** built to the standard above, or no results page at all.
+7. **Fees and consultation page** that explains how you charge and what the first meeting involves.
+8. **Contact page** with a short form, a phone number, office hours and the languages you speak.
+
+Our [law firm website checklist](/blog/law-firm-website-checklist) covers the details every firm site needs beyond this list.
+
+## Birmingham law firm website checklist
+
+- [ ] Every page shows the firm, a responsible lawyer and the city or county of a bona fide office (Rule 7.2(b)(3)).
+- [ ] Profiles of lawyers not licensed in Alabama say so clearly (Rule 7.2(b)(1)).
+- [ ] A dated copy of each version of the site, and of each ad, is kept for six years (Rule 7.2(a)).
+- [ ] Each result names the type of matter, is verifiable and includes facts such as a default judgment or an appeal (Rule 7.2(m)).
+- [ ] Testimonials come from real clients, with any compensation disclosed (Rule 7.2(l)).
+- [ ] No actors or models portray clients in speaking roles, and no judge or officer endorses the firm (Rules 7.2(o) and (p)).
+- [ ] Every "no fee unless we win" claim says who pays costs if there is no recovery (Rule 7.2(g)).
+- [ ] Practice pages cover only work you handle, or carry the referral statement (Rule 7.2(j)).
+- [ ] No other lawyer's name is bought as a keyword (Rule 7.2(r)).
+- [ ] Disclosures are easy to see and read on a phone (Rule 7.2(d)).
+- [ ] The Google Business Profile uses the firm's real name and the same address as the site.
+
+## How SaySites builds a Birmingham law firm website
+
+SaySites starts a law firm with the pages this guide describes: practice area pages, attorney profiles with room for each admission and any certification you give us, an office page, a courts page and a consultation form whose questions can change by practice area, including the opposing party's name so you can check conflicts before you call back. Search engines read the firm as a LegalService, each lawyer as a Person and each practice area as a Service. No page goes live until it passes a 95+ speed check, and pages can be built in English and Spanish.
+
+Changes are made by saying them, for example "add 'Not admitted in Alabama' to Marcus's profile" or "put the court costs sentence under every contingency fee line." Every change waits as a draft until you approve it, which gives you a natural moment to read it against Rule 7.2 and a dated record of what changed. Results, reviews and credentials come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [pricing](/pricing)). [Start a 7-day free trial](/signup) to build your Alabama site yourself, or [ask for a free redesign](/redesign) and see your current site rebuilt with your own content before you decide. If your firm also takes cases in Tennessee or Georgia, compare the rules in our [Nashville law firm website guide](/blog/nashville-law-firm-website-design) and our [Atlanta law firm website guide](/blog/atlanta-law-firm-website-design).`,
+    faq: [
+      { q: 'Do Alabama lawyers still have to file their websites with the bar?', a: 'Not as a routine step since January 1, 2026. Under amended Rule 7.2(a), the lawyer instead keeps a copy of each communication for six years after it is disseminated. For a website, that means saving a dated copy of the site at launch and of each page whenever it changes, along with any paid ads that point to it.' },
+      { q: 'Does an Alabama law firm website still need the old general disclaimer?', a: 'No. The Alabama State Bar\'s summary of the 2026 changes says the general disclaimer was eliminated. Other disclosures now apply instead: the location of a bona fide office of at least one lawyer named, a clear statement if a featured lawyer is not licensed in Alabama, and cost disclosures next to contingency fee claims.' },
+      { q: 'Can a Birmingham firm post verdicts and settlements on its website?', a: 'Yes, with context. Rule 7.2(m) requires each specific result to describe the type of case, be objectively verifiable and not mislead. The comment says leaving out facts such as a default judgment, an uncollected verdict, a reversal on appeal or an out-of-state result can make it misleading, so include those facts or leave the result off.' },
+      { q: 'What must an Alabama lawyer say next to "no fee unless we win"?', a: 'Rule 7.2(g) requires a clear and prominent statement of whether the client will be responsible for paying or reimbursing court costs or litigation expenses if there is no recovery. Place that sentence beside the claim everywhere it appears, including the home page and practice area pages, so a reader never sees one without the other.' },
+      { q: 'Can I use stock photos or actors on an Alabama law firm website?', a: 'Stock photos of scenery or offices are fine. Rule 7.2(p) bars using an actor or model to portray a client unless the portrayal is nonspeaking, and the bar says it must not be misleading. Rule 7.2(o) bars using an authority figure, such as a judge or law-enforcement officer, to endorse or recommend the lawyer.' },
+      { q: 'Can I list practice areas that I usually refer to other firms?', a: 'Only with a disclosure. Rule 7.2(j) bars advertising practice areas you do not handle or intend to handle. If a page would lead a reader to think you handle cases you normally refer out, it must carry one of the statements set out in the rule, such as "MOST CASES OF THIS TYPE ARE REFERRED TO OTHER ATTORNEYS FOR PRINCIPAL RESPONSIBILITY."' },
+      { q: 'How much does a SaySites website for a Birmingham law firm cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area, attorney, office and courts pages, a consultation form with conflict-check questions, LegalService structured data and a 95+ speed check on every page. You can also ask for a free redesign preview of your current site before deciding.' },
+    ],
+    about: ['Alabama Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Birmingham, Alabama'],
+    published: '2026-11-11',
+    status: 'published',
+  },
+  {
+    slug: 'new-jersey-hvac-website-design',
+    title: 'New Jersey HVAC Websites: HVACR License Display Rules',
+    description: 'Build a New Jersey HVAC website that follows state rules: the master HVACR license wording, bona fide representative, subcontracting notice and permits.',
+    kind: 'guide',
+    summary: [
+      'New Jersey HVACR rules require your advertising to show the master HVACR contractor\'s name and the license wording, and the board\'s FAQ says this covers websites (N.J.A.C. 13:32A-5.1).',
+      'Use the titles the rules allow, "licensed master HVACR contractor" or "master HVACR contractor," and only with a licensed bona fide representative behind the business (N.J.A.C. 13:32A-5.9).',
+      'If you subcontract more than one-third of your HVACR work in a year, every ad must carry a set sentence saying so (N.J.A.C. 13:32A-5.1(e)).',
+      'Replacing a furnace, boiler or air conditioner with one of like capacity is "minor work" in New Jersey: a permit is required, but work may start once the local code office has notice.',
+      'New Jersey is a bilingual market: 33.1% of residents age 5 and older speak a language other than English at home, per the Census Bureau.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1620751874629-7dcf11beaf3e?auto=format&fit=crop&w=1600&q=75', alt: 'The Jersey City waterfront skyline seen across the Hudson River on a clear day, with its tallest tower standing above a row of office buildings at the water’s edge' },
+    body: `A New Jersey HVAC website has a legal starting point most contractors in other states do not: the State Board of Examiners of Heating, Ventilating, Air Conditioning and Refrigeration Contractors requires your advertising to identify the licensed master HVACR contractor behind the business, with specific license wording. The board's [frequently asked questions](https://njconsumeraffairs.gov/hvacr/Pages/FAQ.aspx) say the master HVACR contractor must display the name of the bona fide representative, the New Jersey license number and "HVACR Contractor" on business vehicles, documents and websites and in all advertising. So the license line belongs on every page of your site, in a form a homeowner can check.
+
+After that, the website's job is to win the call. In New Jersey that means explaining honestly what you do, making it easy to confirm you are licensed, setting expectations about permits on replacements, and being reachable in the language your customers speak. This guide covers each of those, with links to the regulation or official page behind every legal point. It is written for business owners, not as legal advice; the board and the Division of Consumer Affairs have the final word.
+
+## What does New Jersey require an HVAC website to show?
+
+The core rule is [N.J.A.C. 13:32A-5.1](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-32A-5-1), titled "Identification of master HVACR contractor; vehicles, stationery; advertising." It has five parts, and three of them shape a website directly.
+
+- **Advertising (subsection (c)).** Advertising must include the master HVACR contractor's name and the license wording, "Master HVACR contractor license number" or "Master HVACR contractor Lic. #," followed by the number.
+- **Correspondence and stationery (subsection (b)).** Letters, invoices and stationery must show the master contractor's name, the license wording and the New Jersey business address with street name and number. Emailed estimates and invoices generated from your website's tools count, so set up their templates the same way.
+- **Responsibility (subsection (d)).** A master contractor whose name, office address or license number appears in an advertisement is presumed to have caused or approved it and is personally responsible for its content. Whatever your marketing company writes, the licensee answers for it.
+
+The simplest way to comply is a footer on every page with the business name, the master HVACR contractor's name, the license line written out in the rule's wording, and your New Jersey business address. Repeat the license line on the contact page and on any landing page you send ad traffic to, because a visitor from an ad may never see your home page.
+
+> **Tip:** Write the license line exactly as the rule does, for example "Master HVACR contractor Lic. #" followed by your number. A homeowner who copies it into the state's lookup should find you on the first try.
+
+## Who counts as the master HVACR contractor on a company website?
+
+Most HVAC companies are a business entity, not a person, so the rules work through a bona fide representative. The board's FAQ explains that the bona fide representative acts as an agent of service and accepts liability to the business for its financial responsibilities, and that the representative must be a licensed master HVACR contractor holding a qualifying ownership or executive role in the entity.
+
+That matters for the website in two ways. First, the name in your footer is the bona fide representative's, not the brand's or the marketing manager's. Second, the titles you use are limited. [N.J.A.C. 13:32A-5.9](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-32A-5-9) says an active licensee may use the title "licensed master HVACR contractor" or "master HVACR contractor," and it bars any person or entity from advertising as a master HVACR contractor unless the person is licensed or the entity has a licensed bona fide representative.
+
+So a few common website habits need checking:
+
+- **"Master technician" on staff bios.** If the person is not a licensed master HVACR contractor, a title that sounds like the licensed one invites confusion. Describe the person's real experience and certifications instead.
+- **A license number from someone who left.** If your bona fide representative changes, the website, vehicles and paperwork all change with it. Put the website on the same checklist as the truck lettering.
+- **Multiple brands under one license.** If you market a second brand, its site needs the same license line, because it is advertising by the same contractor.
+
+## When does an HVAC website need the subcontracting notice?
+
+New Jersey has a disclosure many owners overlook. Under subsection (e) of the same rule, if a master HVACR contractor subcontracts more than one-third of its HVACR work in a calendar year, or did so in the previous year, all of its advertising must include this statement:
+
+> "A substantial part of the HVACR work which we undertake may be subcontracted to independent licensed HVACR contractors."
+
+If that describes your business, put the sentence in the site footer, not on a separate page, since the rule says all advertising. If it does not describe your business this year or last year, leave it off; an unnecessary disclaimer just adds doubt.
+
+![An outdoor heat pump unit with a dark front grille set on a lawn beside a red brick house, partly hidden by green shrubs](https://images.unsplash.com/photo-1776860150305-108ed577d7d4?auto=format&fit=crop&w=1200&q=75)
+
+## Does a New Jersey HVAC company also need a home improvement contractor number?
+
+It depends on the work you do and how you are licensed, so check rather than assume. Under [N.J.A.C. 13:45A-17.3](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-45A-17-3), no one may advertise as a home improvement contractor in New Jersey without registering with the Division of Consumer Affairs unless an exemption applies. The exemptions in [N.J.A.C. 13:45A-17.4](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-45A-17-4) cover people regulated by the state as, among others, an electrical contractor or master plumber, and "any other person in any other related profession requiring registration, certification, or licensure by the State," but only while acting within the scope of that profession. HVACR is not named in that list.
+
+If your company also sells work outside HVACR, such as general remodeling, insulation or finished basements, ask the [Home Improvement Contractors unit](https://www.njconsumeraffairs.gov/hic/Pages/default.aspx) whether you need registration. If you do register, [N.J.A.C. 13:45A-17.11](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-45A-17-11) requires the registration number on all advertisements distributed in the state and "HIC reg. #" with the number on both sides of commercial vehicles. In that case your footer carries both numbers, each clearly labeled, so nobody confuses one for the other.
+
+## How should an HVAC website handle permits and pricing in New Jersey?
+
+Homeowners often ask whether a replacement needs a permit, and a clear answer on your site builds trust before the visit. The Department of Community Affairs' guide to [minor work and ordinary maintenance](https://www.nj.gov/dca/codes/alerts/pdfs/OM_MW_03052018.pdf) under the Uniform Construction Code lists the replacement of existing boilers, warm air furnaces and air conditioning units with new appliances of like capacity as minor work. Minor work requires a construction permit, but work may begin before the permit is issued once notice is given to the local enforcing agency, and the guide says notice may be oral, written or by email. On request, inspection of minor work is allotted up to three business days.
+
+The same guide treats repair, not replacement, of air conditioning equipment as ordinary maintenance, which needs no permit, and allows motors, pumps and fans to be replaced with ones of the same capacity without a permit. A good replacement page turns that into plain language:
+
+1. **Say who handles the permit.** If you file the notice and permit with the town, say so.
+2. **Explain the order of events.** Notice to the code office, installation, then inspection, which the homeowner may need to be home for.
+3. **Separate repair from replacement.** Most repair visits do not involve the town at all, and saying so heads off a common worry.
+4. **Point to the town.** Each municipality runs its own construction office, so tell customers to call the one where the house is if they have questions.
+
+Prices are the other trust question. [N.J.A.C. 13:32A-5.8](https://www.law.cornell.edu/regulations/new-jersey/N-J-A-C-13-32A-5-8) bars a master HVACR contractor from charging an unconscionable price and lists factors used to judge one, including the time and effort required, the difficulty of the job, special conditions the customer imposes and the price customarily charged locally for similar work. Your website does not need to publish a price list, but it should explain how you price: what a diagnostic visit costs, whether it is credited toward the repair, and how you quote replacements. If you advertise a price, honor it, and update the page when it changes.
+
+## How do New Jersey homeowners find an HVAC company?
+
+Often with an urgent search on a phone: "furnace repair near me," "boiler not working Montclair," "AC repair Cherry Hill." Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). A website helps most with relevance: one clear page for each service you offer, written so a reader can tell in seconds whether you handle their equipment.
+
+New Jersey homes run on a wide mix of systems, from steam and hot water boilers with radiators to forced air furnaces, central air and heat pumps, so those pages have plenty to say. If you work on steam and hot water boilers, give them their own page, since a homeowner with a radiator will not assume a "heating repair" page covers it. The same goes for ductless mini-splits, which many owners of older homes consider when they want cooling without ductwork. Write each page about the equipment and the problems you actually fix, not a list of every term you can think of.
+
+A few other points shape the content:
+
+- **Service area, honestly drawn.** Most HVAC companies go to the customer, which makes them service-area businesses. Google's [service area guidance](https://support.google.com/business/answer/9157481) explains how to list the areas you serve and hide an address customers do not visit. On the site, one service area page that names the counties and towns you really cover is better than a separate page per town with the same words, which Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat as doorway pages.
+- **Spanish and other languages.** Census figures show 24.0% of New Jersey residents are Hispanic or Latino and 33.1% of people age 5 and older speak a language other than English at home ([U.S. Census QuickFacts, New Jersey](https://www.census.gov/quickfacts/NJ)). If someone on your team can book and serve in Spanish or another language your customers speak, say so on every page and build a translated page for your core services. If nobody can, do not imply it.
+- **Your real business name.** Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real-world business name with no added keywords, so "Kowalski Heating & Cooling," not "Kowalski Heating & Cooling Best Furnace Repair NJ." Match the name and phone on the profile to your website footer.
+
+> **Watch out:** Reviews on your site must be real customers' words. Google's rules forbid offering incentives for reviews ([Google's review guidance](https://support.google.com/business/answer/3474122)), and under N.J.A.C. 13:32A-5.1(d) the licensee named in an ad is presumed to have approved it and is personally responsible for its content.
+
+![A gray outdoor heat pump unit beside the front door of a modern white house, between a dark garage door and a small evergreen shrub](https://images.unsplash.com/photo-1776860155275-eee24bfb1dee?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a New Jersey HVAC website have?
+
+1. **Home page** with what you fix and install, the area you cover, a tap-to-call button and the full license line in the footer.
+2. **A page for each core service:** furnace repair, boiler repair, air conditioning repair, heat pump installation, ductless mini-splits, replacements and maintenance plans, each describing the equipment you work on.
+3. **Replacement page** explaining the permit and inspection steps and how you quote.
+4. **Service area page** naming the counties and towns you serve, with response times you can keep.
+5. **About page** naming the master HVACR contractor and bona fide representative, how long you have served the area and who will come to the house.
+6. **Emergency or after-hours page** if you offer it, with what it costs and how fast you can usually arrive.
+7. **Pricing and payment page** explaining diagnostic fees, financing if you offer it, and what is included in a maintenance plan.
+8. **Contact page** with a short request form, phone, hours, the languages you speak and the license line again.
+
+Our [home service website checklist](/blog/home-service-website-checklist) covers the details every trade site needs beyond these pages.
+
+## New Jersey HVAC website checklist
+
+- [ ] Every page shows the master HVACR contractor's name and "Master HVACR contractor Lic. #" with the number (N.J.A.C. 13:32A-5.1(c)).
+- [ ] The name shown is the licensed bona fide representative's, updated if that person changes.
+- [ ] Titles are limited to "licensed master HVACR contractor" or "master HVACR contractor" for licensees (N.J.A.C. 13:32A-5.9).
+- [ ] The subcontracting sentence appears in all advertising if more than one-third of HVACR work was subcontracted this year or last (N.J.A.C. 13:32A-5.1(e)).
+- [ ] If you hold a home improvement registration, the number appears on all advertisements (N.J.A.C. 13:45A-17.11).
+- [ ] Emailed estimates and invoices show the license wording and a New Jersey street address (N.J.A.C. 13:32A-5.1(b)).
+- [ ] The replacement page explains permit notice and inspection in plain words.
+- [ ] Prices you publish are current and honored.
+- [ ] Service area page names real towns and counties, with no copy-and-paste town pages.
+- [ ] Translated pages exist only where staff can serve in that language.
+- [ ] A link to the [state license lookup](https://newjersey.mylicense.com/verification/) lets customers check you.
+
+## How SaySites builds a New Jersey HVAC website
+
+SaySites gives a heating and cooling company the structure this guide describes from the first day: a page for each service, a service area page, a tap-to-call button and a request form on every page. The form can ask the questions that help you triage, such as how soon the customer needs you, the job's ZIP code and whether they own or rent, and every request lands in a leads pipeline where you can call, add notes, set a follow-up and mark the job booked. Search engines read the company as an HVACBusiness, no page goes live until it passes a 95+ speed check, and pages can be built in English and Spanish.
+
+You change the site by saying what you want: "put 'Master HVACR contractor Lic. #' and our number next to the phone in the footer" or "add a boiler repair page for steam and hot water systems." Each change waits as a draft until you approve it, so you can read it against the board's rules first. License numbers, reviews and prices come only from you; SaySites never invents them.
+
+The Site plan is $15 a month, with hosting, your own domain and the leads pipeline ([websites for HVAC companies](/websites-for/hvac-companies), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build it yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content first. Working across the river too? Our [Philadelphia roofing website guide](/blog/philadelphia-roofing-website-design) covers Pennsylvania's contractor law, and our [Atlanta HVAC website guide](/blog/atlanta-hvac-website-design) shows how another state handles license numbers.`,
+    faq: [
+      { q: 'Does a New Jersey HVAC company have to put its license number on its website?', a: 'Yes. N.J.A.C. 13:32A-5.1(c) requires advertising to include the master HVACR contractor\'s name and the wording "Master HVACR contractor license number" or "Lic. #" with the number. The state board\'s FAQ says the bona fide representative\'s name, license number and "HVACR Contractor" go on vehicles, documents, websites and all advertising.' },
+      { q: 'What is a bona fide representative for an HVAC company in New Jersey?', a: 'It is the licensed master HVACR contractor who qualifies a business entity to do HVACR contracting. The board\'s FAQ says the representative acts as the agent of service, accepts liability to the business for its financial responsibilities, and must hold a qualifying ownership or executive role. Without one, an entity may not advertise as a master HVACR contractor.' },
+      { q: 'When must a New Jersey HVAC ad say work may be subcontracted?', a: 'When the contractor subcontracts more than one-third of its HVACR work in a calendar year, or did in the previous year. N.J.A.C. 13:32A-5.1(e) then requires all advertising to state: "A substantial part of the HVACR work which we undertake may be subcontracted to independent licensed HVACR contractors." Put it in the website footer.' },
+      { q: 'Do I need a permit to replace my furnace or air conditioner in New Jersey?', a: 'Yes. The Department of Community Affairs treats replacing a boiler, furnace or air conditioning unit with one of like capacity as minor work under the Uniform Construction Code. A permit is required, but work may begin once notice is given to the local code office, and an inspection follows. Repairing air conditioning equipment is ordinary maintenance and needs no permit.' },
+      { q: 'How can I check an HVAC contractor\'s license in New Jersey?', a: 'Use the state\'s online license verification at newjersey.mylicense.com and search for the contractor or company. Compare the result with the master HVACR contractor name and license number on the company\'s website, truck and estimate, which New Jersey rules require them to show. If the names do not match, ask the company who its licensed representative is.' },
+      { q: 'Does an HVAC contractor need a home improvement registration in New Jersey?', a: 'It depends on the work. The registration rules exempt certain state-licensed trades acting within their scope, naming electrical contractors and master plumbers plus a catch-all for related licensed professions. HVACR is not named, and companies that also do remodeling or other home improvements may need registration, so confirm with the Division of Consumer Affairs.' },
+      { q: 'How much does a SaySites website for a New Jersey HVAC company cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting, your own domain, service and service area pages, a request form on every page and a leads pipeline. Pages can be built in English and Spanish. You can also ask for a free redesign to see your current site rebuilt with your own content first.' },
+    ],
+    about: ['New Jersey HVACR contractor licensing', 'HVAC contractor advertising', 'HVAC company websites', 'New Jersey'],
+    published: '2026-11-11',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
