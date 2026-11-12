@@ -10455,6 +10455,332 @@ The Site plan is $15 a month, with hosting, your own domain and the leads pipeli
     published: '2026-11-11',
     status: 'published',
   },
+  {
+    slug: 'milwaukee-law-firm-website-design',
+    title: 'Milwaukee Law Firm Websites: Wisconsin SCR 20:7 Rules',
+    description: 'Plan a Milwaukee law firm website under Wisconsin SCR 20:7: office address on every page, paid testimonials, specialist claims and OLR filing.',
+    kind: 'guide',
+    summary: [
+      'Wisconsin still uses its own version of the lawyer advertising rules, Supreme Court Rules (SCR) 20:7.1 to 20:7.5, with paragraphs the ABA Model Rule does not have.',
+      'Every communication, including each page of a website, must give the name and office address of at least one lawyer or firm responsible for it (SCR 20:7.2(c)).',
+      'A paid testimonial must say it was paid for, and an endorsement from someone who is not a real client must say so (SCR 20:7.1(d)).',
+      'Targeted messages to people known to need help with a matter must say "Advertising Material" at the start and end and be filed with the Office of Lawyer Regulation within five days (SCR 20:7.3(c)).',
+      'Do not reply to a bad online review with anything about the client. State Bar ethics opinion EF-23-01 says confidentiality applies.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1750162725778-77577c8d3988?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Milwaukee towers rising behind the lakefront park and the white winged roof of the art museum on Lake Michigan, seen from above in early morning light' },
+    body: `A Milwaukee law firm website has to satisfy the rules of the Wisconsin Supreme Court, not just the ABA Model Rules that most national marketing advice is written around. Wisconsin's lawyer advertising rules sit in [Chapter 20 of the Supreme Court Rules](https://wicourts.gov/sc/rules/chap20b.pdf), SCR 20:7.1 through 20:7.5, and several of their paragraphs have no counterpart in the Model Rule. The short version: put a responsible lawyer's name and office address on every page, label paid or non-client testimonials, keep specialist claims to recognized certifications, and treat targeted outreach as a filing obligation.
+
+This guide walks through each rule as it applies to a website, then covers the Milwaukee courts your clients will ask about, how people in the metro search for a lawyer, and the pages a firm here actually needs. It is a practical reading of the rules, not legal advice, and the rule text linked above is the version to rely on.
+
+## How are Wisconsin's lawyer advertising rules different?
+
+Wisconsin's chapter keeps a separate rule for fields of practice (SCR 20:7.4) and another for firm names and letterheads (SCR 20:7.5), so a website has five short rules to check rather than one long one. It also keeps three paragraphs of its own in SCR 20:7.1.
+
+The Wisconsin committee comment to SCR 20:7.1 says so directly: paragraphs (b) through (d) "are not contained in the Model Rule." Those three paragraphs are the ones a website designer most often runs into:
+
+- **(b) Unjustified expectations.** A communication is misleading if it is likely to create an unjustified expectation about the results the lawyer can achieve.
+- **(c) Comparisons.** You may not compare your services with other lawyers' services unless the comparison can be factually substantiated.
+- **(d) Paid and non-client testimonials.** A paid testimonial or endorsement must disclose that payment was made, and one that does not come from an actual client must say that too.
+
+Because national website templates are usually written to the Model Rule, they tend to miss exactly these points. A "Milwaukee's best injury lawyers" banner, a slider of results with no context, or a video of an actor describing "my case" can all sit comfortably on a template and still fall foul of SCR 20:7.1.
+
+## What must every page of a Wisconsin law firm website include?
+
+SCR 20:7.2(c) is short: "Any communication made pursuant to this rule shall include the name and office address of at least one lawyer or law firm responsible for its content."
+
+A website is a communication, and each page can be reached on its own from a search result, a shared link or an AI answer. So the safest reading is that each page should carry the name and office address, not just the contact page. The easy way to do that is a footer that appears everywhere:
+
+1. **The firm name,** exactly as it appears on your letterhead and Google Business Profile.
+2. **The office address,** written out in full, for each office if you have more than one.
+3. **The responsible lawyer,** by name, if the firm wants a specific person to own the site's content.
+4. **A phone number** that rings at that office, so the address is a real place a client can reach.
+
+The rule says "office address," which is a good reason not to advertise an address you only use for mail. If your firm works from a shared suite or a satellite space, say what it is on the office page so a client knows what to expect when they arrive.
+
+> **Tip:** Put the footer in place before any page goes live, including landing pages built for ads. A landing page that skips the site's normal footer is the page most likely to be missing the address.
+
+## Can a Milwaukee firm use testimonials and client reviews on its website?
+
+Yes, within SCR 20:7.1. Nothing in Wisconsin's rules bans testimonials outright. What the rule does is require two disclosures and forbid misleading ones.
+
+**Paid testimonials.** If anyone was paid, or given anything of value, for a testimonial or endorsement, SCR 20:7.1(d) requires the communication to identify that payment was made. That covers a spokesperson in a video, a paid influencer post that links to your site, and a gift card handed out for a written review. Put the disclosure right next to the testimonial, not on a separate disclaimer page.
+
+**Non-client endorsements.** If the person speaking was not an actual client, the same paragraph requires that to be identified. A dramatized "client story" performed by an actor needs a clear label. So does an endorsement from a fellow lawyer or a local business owner who has not hired you.
+
+**Expectations.** Under SCR 20:7.1(b), a page of glowing reviews can still mislead if it suggests that every reader will get the same outcome. A short line near the reviews, saying that every matter depends on its own facts, helps the page read as what it is: a record of past clients' experiences.
+
+There is a second reason to be careful with reviews: Google has its own rules. Its [policy on reviews](https://support.google.com/contributionpolicy/answer/7400114) does not allow businesses to offer incentives, such as payment, discounts or free services, in exchange for reviews, and it does not allow selectively soliciting positive reviews. A firm that pays for reviews breaks Google's policy even if it adds the disclosure Wisconsin requires.
+
+![A downtown street corner with a tall white Gothic-style office tower rising above glass and brick buildings under a clear blue sky](https://images.unsplash.com/photo-1566792215009-e1f1a1ded130?auto=format&fit=crop&w=1200&q=75)
+
+## How should a firm respond to a bad online review in Wisconsin?
+
+Carefully, and usually not at all. In [Formal Ethics Opinion EF-23-01](https://www.wisbar.org/formembers/ethics/Ethics%20Opinions/EF-23-01%20Responding%20to%20Online%20Criticism.pdf), the State Bar of Wisconsin's ethics committee concluded that a lawyer may not reveal information relating to a client's representation to answer online criticism without the client's informed consent. The opinion explains that the duty under SCR 20:1.6 covers all information relating to the representation, whether or not it is public, and that the self-defense exception does not reach an informal online dispute.
+
+The committee suggests that no response is often the wisest choice, and that alternatives include asking the platform to remove a post that breaks its rules or contacting the person privately. If a public reply is truly needed, the opinion offers a restrained form along the lines of: "I do not believe the post is fair or accurate. Professional obligations prevent me from commenting further."
+
+For the website, that has two practical effects:
+
+- **Do not paste reviews and replies onto your site** without reading the replies again under SCR 20:1.6. A reply that was fine on a review platform could still reveal something you would not publish on your own page.
+- **Write a review policy for staff.** Whoever manages the firm's profiles should know that the answer to a one-star review is not a summary of the client's file.
+
+## Can a Wisconsin lawyer say "specialist" or "expert" on a website?
+
+Only in narrow cases. SCR 20:7.4(d) says a lawyer shall not state or imply certification as a specialist in a particular field unless two things are true: the lawyer has been certified by an organization approved by an appropriate state authority or accredited by the American Bar Association, and the name of the certifying organization is clearly identified in the communication.
+
+That rule covers implications as well as the word itself. A heading such as "Milwaukee's OWI Specialists" implies a certification most lawyers do not hold. A safer approach:
+
+- **Describe the practice in plain terms.** SCR 20:7.4(a) expressly allows a lawyer to say that they do, or do not, practice in particular fields of law. "Our practice is limited to criminal defense" or "We handle only workers' compensation and Social Security disability claims" is clear and allowed.
+- **Name the certifier when there is one.** If a lawyer is certified by an ABA-accredited organization, put the organization's name on the profile, next to the certification, every time it appears.
+- **Use the two recognized titles only if they apply.** SCR 20:7.4(b) allows "patent attorney" for lawyers admitted to practice before the U.S. Patent and Trademark Office, and SCR 20:7.4(c) allows "admiralty" or "proctor in admiralty" for lawyers in that practice.
+
+"Expert" raises the same problem, plus the comparison rule. A page that calls a lawyer "the top expert in Milwaukee" is a comparison under SCR 20:7.1(c), and it needs factual substantiation that is hard to produce. Replace superlatives with facts a reader can check: years in practice, the courts the lawyer appears in, published decisions, teaching or bar committee work.
+
+## What do firm names and multi-office pages need?
+
+SCR 20:7.5 governs firm names, and it matters more on the web than it used to, because a trade name or domain name is often the first thing a searcher sees.
+
+- **Trade names are allowed,** but under SCR 20:7.5(a) only if they do not imply a connection with a government agency or with a public or charitable legal services organization, and are not otherwise misleading. A name built around "Wisconsin Legal Aid" or "Milwaukee County Injury Center" could imply exactly that connection. The same thinking applies to a domain name and to the business name on your Google Business Profile.
+- **Multi-state firms** may use the same name in each jurisdiction, but SCR 20:7.5(b) requires the identification of the lawyers in an office to show the jurisdictional limits of those not licensed where the office is located. On a website, that belongs on each lawyer's profile: "Admitted in Illinois only" under the name of a Chicago lawyer who appears on your Milwaukee team page.
+- **Lawyers in public office.** SCR 20:7.5(c) bars using the name of a lawyer holding public office in the firm name or in communications during any substantial period when the lawyer is not actively and regularly practicing with the firm.
+- **Partnerships.** Under SCR 20:7.5(d), you may state or imply that you practice in a partnership or other organization only when that is the fact. A page that shows several solo lawyers sharing space as "our firm" needs rewriting.
+
+## Does a website contact form or chat count as solicitation in Wisconsin?
+
+A form that a visitor chooses to fill out is not solicitation; the visitor came to you. The rules start to apply when the firm reaches out.
+
+SCR 20:7.3(a) bars soliciting professional employment by in-person, live telephone or real-time electronic contact when a significant motive is the lawyer's pecuniary gain, unless the person is a lawyer or has a family, close personal or prior professional relationship with the lawyer. A chat window that answers questions a visitor types in is responding, not reaching out. But a chat script or an automated texting tool that contacts a specific person known to need help, for example someone whose accident appeared in the news, is the kind of real-time contact the rule is aimed at. If you add any proactive messaging to your site, review it against SCR 20:7.3 before it goes live.
+
+Written and electronic outreach has its own requirement. Under SCR 20:7.3(c), every written, recorded or electronic communication soliciting employment from someone known to need legal services in a particular matter must include the words "Advertising Material" at the beginning and end, and a copy must be filed with the Office of Lawyer Regulation within five days of dissemination. The committee comment explains that for standard form solicitations, filing one copy of each version and keeping the names and addresses it went to in the lawyer's files satisfies the filing duty.
+
+On a website, that matters in three places:
+
+1. **Follow-up emails** sent to people who were identified from accident reports, court filings or similar sources, rather than people who contacted you first.
+2. **Retargeting and lead-nurture sequences** that address a specific matter the recipient is known to have.
+3. **Landing pages** built only for those messages. Treat the page and the message as one piece, with the label and the filing.
+
+Two more limits in SCR 20:7.3(b) apply even when contact is otherwise allowed: no solicitation of someone whose physical, emotional or mental state makes reasonable judgment unlikely, of someone who has said they do not want to be contacted, or by coercion, duress or harassment. Build an easy way to opt out into every follow-up, and honor it at once.
+
+> **Watch out:** SCR 20:7.2(b) bars giving anything of value for recommending your services, apart from the reasonable cost of advertising, legal service plans and qualified referral services, buying a practice under SCR 20:1.17, and non-exclusive reciprocal referral arrangements with the client's informed consent. Pay-per-lead services that pass along "cases" for a fee per signed client deserve a close look under that paragraph before you sign up.
+
+![An ornate brick clock tower rising at the end of a narrow downtown street, seen past a glass skywalk between two buildings](https://images.unsplash.com/photo-1683812920762-350e582dade3?auto=format&fit=crop&w=1200&q=75)
+
+## Which courts should a Milwaukee firm's website explain?
+
+Clients want to know where they will have to go and what the process looks like. A clear courts page, written for someone who has never been to court, answers questions before the first call and gives search engines and AI answers a factual passage to quote.
+
+For most Milwaukee firms, that page covers:
+
+- **Milwaukee County Circuit Court.** Wisconsin's trial courts are its [circuit courts](https://www.wicourts.gov/courts/circuit/index.htm), organized by county. Milwaukee County makes up District I on its own, while Kenosha, Racine and Walworth counties form District II and Waukesha, Ozaukee, Washington, Dodge and Jefferson counties form District III, according to the court system's [list of administrative districts](https://www.wicourts.gov/contact/CC_Admin_Dists.html). If you regularly handle cases in the suburban counties, say which ones.
+- **Federal court.** The [U.S. District Court for the Eastern District of Wisconsin](https://www.wied.uscourts.gov) has a Milwaukee Division and a Green Bay Division. Its site lists the Milwaukee Division's counties, which include Milwaukee, Waukesha, Racine, Kenosha, Ozaukee and Washington. Firms that handle civil rights, employment, bankruptcy or federal criminal matters should explain the difference between state and federal court in plain language.
+- **Public case records.** Wisconsin's [Circuit Court Access](https://wcca.wicourts.gov/) site lets anyone look up circuit court cases. Many clients will search their own case or the other side's before they call you. A short paragraph explaining what the records show, and what they do not, is useful on a criminal defense, family law or civil litigation site.
+
+Keep the courts page about procedure and logistics: where to go, what to bring, what the first hearing usually involves. Do not suggest any relationship with a judge, and do not describe outcomes in a particular court as typical.
+
+## How do people in the Milwaukee area search for a lawyer?
+
+Most local searches pair a problem with a place: "OWI lawyer Milwaukee," "divorce attorney Waukesha," "workers comp lawyer West Allis." Google says local results are based mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). A website contributes most to relevance, by describing the cases you handle and where, and to prominence, through the reputation and links it earns over time.
+
+A few points shape the content for this market:
+
+- **Use the words your clients hear in court.** Wisconsin statutes, court forms and local news have their own vocabulary for drunk driving charges and for parenting arrangements after a divorce. A page written in those terms, with the general term explained once for newcomers, is more useful to readers and matches the words they search for.
+- **Name suburbs only where they are true.** Mention Wauwatosa, West Allis, Brookfield or Oak Creek where you have an office or genuinely take cases from there. A set of suburb pages with the same text and a new name in each is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages.
+- **Spanish where someone can take the call.** If a lawyer or staff member at the firm speaks Spanish, a Spanish version of the home page and each core practice page lets those clients find you in their own language. If no one can take the call in Spanish, a Spanish page creates an expectation the firm cannot meet.
+- **Answer real questions on each page.** How long does an OWI case take? What happens at a first appearance? Can I change physical placement after the divorce? Short, accurate answers help readers first, and they are the passages most likely to be quoted in [Google's AI features](https://developers.google.com/search/docs/appearance/ai-features).
+
+Your Google Business Profile follows Google's [guidelines](https://support.google.com/business/answer/3038177), which ask for your real-world business name with no added keywords and a real address where clients can visit. Keep the profile's name, address and phone number identical to the footer on your website, which also keeps the SCR 20:7.2(c) address consistent everywhere it appears.
+
+## What pages should a Milwaukee law firm website have?
+
+1. **Home page** that says what you handle, where, and how a new client starts.
+2. **One page per practice area you actually handle,** written for Wisconsin law and Wisconsin terms. Our guide to [practice area pages that earn calls](/blog/practice-area-page-that-earns-calls) shows how to build each one around the questions clients ask.
+3. **Attorney profiles** listing every jurisdiction of admission, any certification with the certifying organization named, and "admitted in" notes for lawyers not licensed in Wisconsin.
+4. **Office page** for each real office, with the full address, parking and transit directions.
+5. **Courts page** covering Milwaukee County Circuit Court, the federal court and any surrounding counties you work in.
+6. **Reviews or client stories,** with paid and non-client disclosures where they apply, and a note that results depend on the facts.
+7. **Fees and first consultation page** that explains how you charge and what the first meeting involves.
+8. **Contact page** with a short form, phone number, hours and languages spoken.
+
+Our [law firm website checklist](/blog/law-firm-website-checklist) covers the technical items every firm site needs beyond this list.
+
+## Milwaukee law firm website checklist
+
+- [ ] Every page shows the name and office address of a responsible lawyer or firm (SCR 20:7.2(c)).
+- [ ] Paid testimonials say they were paid for; non-client endorsements say so (SCR 20:7.1(d)).
+- [ ] No unsubstantiated comparisons such as "best" or "top" (SCR 20:7.1(c)).
+- [ ] Results and reviews do not suggest every client will get the same outcome (SCR 20:7.1(b)).
+- [ ] No "specialist" claim without a recognized certification and the certifier's name (SCR 20:7.4(d)).
+- [ ] The firm name and domain do not imply a government or legal aid connection (SCR 20:7.5(a)).
+- [ ] Lawyers not licensed in Wisconsin carry an "admitted in" note (SCR 20:7.5(b)).
+- [ ] Targeted follow-ups are labeled "Advertising Material" and filed with OLR within five days (SCR 20:7.3(c)).
+- [ ] Review replies reveal nothing about the client (EF-23-01).
+- [ ] The Google Business Profile name and address match the website footer.
+
+## How SaySites builds a Milwaukee law firm website
+
+SaySites builds law firm sites around the pages listed above: practice area pages, attorney profiles with room for each admission and any certification you give us, an office page, a courts page and a consultation form whose questions can change by practice area, including the opposing party's name so you can run a conflict check before you return the call. The site describes the firm to search engines as a LegalService, each lawyer as a Person and each practice area as a Service, and pages can be built in English and Spanish. Nothing goes live until it passes a 95+ speed check.
+
+You edit the site by saying what you want: "add 'Admitted in Illinois only' under Dana's name," or "put our full office address in the footer of every page." Each change waits as a draft until you approve it, so a lawyer reads every word against SCR 20:7 before it is public, and you have a dated trail of what changed and when. Reviews, results and credentials come only from you. SaySites never writes them for you.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [all plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Wisconsin site yourself, or [request a free redesign](/redesign) to see your current site rebuilt with your own content first. If your firm also practices across the state line, our [Chicago law firm website guide](/blog/chicago-law-firm-website-design) covers Illinois's rules and our [Minneapolis guide](/blog/minneapolis-law-firm-website-design) covers Minnesota's.`,
+    faq: [
+      { q: "Does every page of a Wisconsin law firm website need the office address?", a: "SCR 20:7.2(c) says any communication must include the name and office address of at least one lawyer or law firm responsible for its content. Because each page of a site can be reached on its own from search results or shared links, the simplest way to comply is a footer on every page with the firm name, a responsible lawyer and the full office address." },
+      { q: "Can a Milwaukee lawyer post client testimonials on a website?", a: "Yes. Wisconsin does not ban testimonials, but SCR 20:7.1(d) requires a paid testimonial or endorsement to disclose the payment, and one from someone who was not an actual client to say so. SCR 20:7.1(b) also bars creating unjustified expectations, so add context such as a note that every matter depends on its own facts." },
+      { q: "Can a Wisconsin lawyer call themselves a specialist?", a: "Only if certified as a specialist by an organization approved by an appropriate state authority or accredited by the American Bar Association, and only if the certifying organization is clearly named, under SCR 20:7.4(d). Lawyers may always say which fields they do or do not practice in, for example that their practice is limited to family law." },
+      { q: "Do Wisconsin lawyers have to file website content with the Office of Lawyer Regulation?", a: "A general website is not filed. The filing rule in SCR 20:7.3(c) applies to written, recorded or electronic solicitations sent to someone known to need legal services in a particular matter. Those must say \"Advertising Material\" at the beginning and end, and a copy goes to the Office of Lawyer Regulation within five days." },
+      { q: "How should a Wisconsin lawyer reply to a negative online review?", a: "State Bar of Wisconsin opinion EF-23-01 says a lawyer may not reveal information about a client's representation to answer online criticism without the client's informed consent. Often the best choice is not to respond. If a reply is necessary, a short statement that the post is not fair or accurate and that professional obligations prevent further comment is the suggested form." },
+      { q: "Can a Wisconsin firm use a trade name or keyword-rich domain?", a: "Yes, if it is not misleading. SCR 20:7.5(a) allows trade names that do not imply a connection with a government agency or a public or charitable legal services organization. Avoid names or domains that sound like a court, a county office or legal aid, and keep your Google Business Profile name identical to your real firm name." },
+      { q: "How much does a SaySites website for a Milwaukee law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area, attorney, office and courts pages, a consultation form with conflict-check questions, LegalService structured data and a 95+ speed check on every page. You can also request a free redesign preview of your current site before you decide." },
+    ],
+    about: ['Wisconsin Rules of Professional Conduct for Attorneys', 'Lawyer advertising', 'Law firm websites', 'Milwaukee, Wisconsin'],
+    published: '2026-11-12',
+    status: 'published',
+  },
+  {
+    slug: 'oklahoma-city-roofing-website-design',
+    title: 'Oklahoma City Roofing Websites: OK Registration Rules',
+    description: 'Build an Oklahoma City roofing website that follows state law: the OK registration number on ads, the 2027 residential endorsement, deductibles and permits.',
+    kind: 'guide',
+    summary: [
+      'Oklahoma counts websites as advertising. Your roofing contractor registration number, and any commercial endorsement, belong on every page (OAC 158:85-5-4(b)).',
+      'Starting January 1, 2027, roofers doing residential work need a residential roofing endorsement, with a one-year grandfather window for contractors already registered (59 O.S. § 1151.25a).',
+      'Never advertise or promise to pay a homeowner\'s insurance deductible. Oklahoma law forbids it and requires a written notice with your first estimate (59 O.S. § 1151.30).',
+      'Oklahoma City requires a re-roofing permit for most roof replacements on homes and duplexes, so explain permits on your site.',
+      'Give homeowners a direct way to check you: link the state\'s roofing registration search next to your number.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1594480355356-8b9833059231?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Oklahoma City on a bright day, with its tallest glass tower standing above the surrounding office blocks and neighborhoods stretching to the horizon' },
+    body: `An Oklahoma City roofing website is advertising in the eyes of state law, and Oklahoma is specific about what roofing advertising must show. The [Roofing Contractor Registration Act](https://oklahoma.gov/content/dam/ok/en/cib/documents/your-industry/roofing-industry/title_59_roofing_contractor_registration_act.pdf) defines "advertise" to include electronic solicitations, and the Construction Industries Board's [roofing rules](https://oklahoma.gov/content/dam/ok/en/cib/documents/your-industry/roofing-industry/title_158_chapter_85.pdf) require your state registration number, plus any commercial endorsement, on all advertising. Add the new residential endorsement that starts January 1, 2027, the state's ban on deductible promises, and Oklahoma City's re-roofing permit, and a good roofing site here has more to get right than a generic contractor template covers.
+
+This guide goes through each requirement as it applies to a website, then covers what Oklahoma City homeowners look for after a storm, how to show up in local search without doorway pages, and the pages a roofing company here needs. It is a practical reading of the law, not legal advice; the statute and rules linked above are the text to rely on.
+
+## Does an Oklahoma roofing website have to show the registration number?
+
+Yes. Three provisions point the same way.
+
+- **The definition.** Section 1151.2 of the Act defines "advertise" as any written publication, dissemination, solicitation, contract, bid, promotional item or circulation intended to induce someone to contract for roofing services, "including, but not limited to, business cards, telephone directory display advertisements, vehicle signage, radio, television and electronic solicitations." A website is an electronic solicitation.
+- **The rule.** The Board's rule at OAC 158:85-5-4(b) says the roofing contractor state registration number, along with any commercial endorsement, "must be displayed on all advertising, contracts, and bids." The only exclusions it lists are uniforms and small promotional items such as pens and key chains.
+- **The statute.** Section 1151.17(C) requires the registration number on "every business sign, card, correspondence, and contract used to solicit and conduct roofing services in this state," and section 1151.7 requires the name, any endorsement, the registration number and a phone number on all media containing the registrant's name, including advertisements.
+
+On a website, the simplest way to meet all three is a footer on every page that shows the company's registered name, the registration number in the same "OK" format used on your trucks, any commercial endorsement and the phone number. The statute requires the "OK" prefix for vehicle lettering specifically, but using the same format everywhere keeps your site, your trucks and your yard signs consistent, which is what homeowners and inspectors will compare.
+
+> **Watch out:** Section 1151.7(1) says your registration must be valid and in good standing at the time of soliciting a project. If your registration lapses, an old landing page or ad that keeps running is still soliciting. Take paid ads down until the registration is current again.
+
+The penalties are not trivial. Under section 1151.3, a business entity that advertises as a roofing contractor without being registered can face an administrative penalty of up to $5,000, and a person who advertises before getting a valid registration can be charged with a misdemeanor carrying a fine of up to $500 for each violation. Section 1151.14 also lets anyone file a complaint against a roofer for advertising roofing work "without displaying registration number on advertisement."
+
+## What changes for residential roofers in Oklahoma on January 1, 2027?
+
+Oklahoma is adding a residential roofing endorsement. Under [section 1151.25a](https://oklahoma.gov/content/dam/ok/en/cib/documents/your-industry/roofing-industry/title_59_roofing_contractor_registration_act.pdf), beginning January 1, 2027, every roofing contractor offering to engage in or engaging in residential roofing work must hold a residential roofing endorsement, apart from contractors the section excludes. To get it, a contractor passes a residential roofing examination with a score of at least 70% and complies with the rest of the Act and rules.
+
+For contractors who are registered and in good standing on January 1, 2027, the section allows a twelve-month grandfather period, through January 1, 2028, to either pass the exam or complete ten additional hours of continuing education approved in advance by the Committee of Roofing Examiners. A contractor who already holds a current commercial roofer endorsement on January 1, 2027 is exempt from both.
+
+What that means for your website:
+
+1. **Plan the footer now.** OAC 158:85-5-4(b) already requires any commercial endorsement to appear with your number on advertising. Check the Board's guidance once the residential endorsement starts for how it expects that endorsement to be shown, and leave room in the footer for it.
+2. **Do not claim the endorsement before you have it.** Section 1151.14 lists misrepresenting qualifications, and making a false or misleading statement in soliciting a roofing contract, among the grounds for a complaint. Add the endorsement to your site the day it is issued, not before.
+3. **Watch the Board's site.** The Construction Industries Board publishes [requirements for active roofing contractors](https://www.oklahoma.gov/cib/your-industry/roofing/active-roofing-contractor-requirements), and that is where new exam and endorsement details will appear.
+4. **Use it as a trust point.** Once you hold it, a short line on your About page explaining what the endorsement is, and that it required an exam, tells homeowners something real about your company.
+
+![A roofer in a bright safety shirt and harness kneeling on a dark shingle roof with a nail gun, a yellow safety rope trailing behind him](https://images.unsplash.com/photo-1635424825057-7fb6dcd651ef?auto=format&fit=crop&w=1200&q=75)
+
+## Can an Oklahoma roofer offer to cover the insurance deductible?
+
+No. [Section 1151.30](https://oklahoma.gov/content/dam/ok/en/cib/documents/your-industry/roofing-industry/title_59_roofing_contractor_registration_act.pdf) says a residential or commercial roofing contractor providing work to be paid from the proceeds of a property or casualty insurance policy shall not, as an inducement, "advertise or promise to pay, directly or indirectly, all or part of any applicable insurance deductible or offer to compensate an insured for providing any service to the insured."
+
+The section also has a business consequence: if a roofer violates it, the insurer to whom the claim was tendered is not obligated to consider that roofer's estimate. And every roofing contractor must provide a written notification of the section's requirements with its initial estimate.
+
+So on a website, avoid all of these:
+
+- "We'll cover your deductible" or "Deductible? Don't worry about it."
+- "Free roof with your insurance claim," which implies the homeowner pays nothing toward the deductible.
+- A "referral bonus" or "sign-up rebate" for insured jobs that works out to paying part of the deductible.
+- Paying a homeowner to put a yard sign up or to post a review, when the job is an insurance claim, since the section also bars offering to compensate an insured for providing any service.
+
+What you can do instead is explain the insurance process honestly. A page called "Working with your insurance claim" that explains inspections, what an adjuster looks at, how supplements work, and that the deductible is the homeowner's responsibility under Oklahoma law, is more useful than a promise, and it is the kind of page that gets quoted in search answers. Put the written notice you give with each estimate on that page too, so homeowners see it before you arrive.
+
+## Do Oklahoma City homeowners need a roofing permit?
+
+For most replacements, yes. The City of Oklahoma City's [spring 2026 announcement](https://www.okc.gov/News-articles/Spring-is-re-roofing-season-in-OKC-don%E2%80%99t-forget-your-permit) says the City Council adopted the re-roofing permit ordinance on June 17, 2025. A permit is required for significant roof removal, repair or replacement on single-family homes and duplexes within city limits. It is not required for maintenance work covering 500 square feet or less, or for new homes. The City lists the permit at $94.50 and says permits are typically issued the same day, either online or at the Business Center at 420 W. Main St. After the work, photos are uploaded and an inspection is requested.
+
+The Act ties your registration to permits as well. Under section 1151.17(A), a roofing contractor must give the permit official its registration number when applying, and the official enters it on the permit.
+
+A permits section on your site answers a question many homeowners have not thought to ask:
+
+1. **Say who pulls the permit.** If your company applies for it, say so plainly and say it is included in your quote.
+2. **Explain the threshold.** Small repairs under the City's maintenance limit may not need one; a full replacement does.
+3. **Explain the inspection.** Tell homeowners that the City inspects after the work, and how you handle it.
+4. **Confirm the jurisdiction.** The City's permit covers homes within Oklahoma City limits. Tell homeowners in nearby towns that you will check which city's permit rules apply to their address.
+
+![The downtown Oklahoma City skyline at sunset, its two tallest towers lit against an orange and blue sky above a parking area and low brick buildings](https://images.unsplash.com/photo-1594046759646-aa9798e00a34?auto=format&fit=crop&w=1200&q=75)
+
+## What do Oklahoma City homeowners look for after a storm?
+
+Trust, quickly. After severe weather, homeowners hear from roofers they have never heard of. The Construction Industries Board's [home repair tips](https://oklahoma.gov/cib/consumers/home-repair-tips.html) tell homeowners to make sure a roofing contractor is currently registered before signing a contract, to be wary of door-to-door sales especially after a storm or disaster, and to get a written contract that states the start date, scope of work and completion date.
+
+A website that answers those three points before the homeowner asks will feel safer than one that only says "free inspection."
+
+- **Make verification one click.** Next to your registration number, link to the state's [roofing registration search](https://verifyroofing.cib.ok.gov) and say, "Check our registration here." A company that invites checking looks like one with nothing to hide.
+- **Show you are local, honestly.** The Act defines a nonresident contractor as one that has not established and maintained a place of business as a roofing contractor in Oklahoma within the preceding year. If you have been here for years, say since when and show your real office or yard. If you are new to the area, do not hint otherwise.
+- **Explain your contract.** Show a sample of what your written contract covers: start date, scope, materials, completion date, warranty terms and how payments are scheduled. The Board's rule requires your registration number on contracts and bids too, so a sample with the number visible makes the point twice.
+- **Show real photos.** Pictures of your crews on Oklahoma City jobs, with the truck lettering visible, prove more than stock images can. Use photos of people in proper fall protection; a homeowner notices.
+
+> **Tip:** Write one page about hail and wind damage that explains what to look for from the ground, why it is wise not to climb on the roof, and what a proper inspection includes. Keep it factual and leave out scare tactics. That page tends to stay useful for years.
+
+## How should an Oklahoma City roofer show up in local search?
+
+Google says local results depend mainly on relevance, distance and prominence ([how Google ranks local results](https://support.google.com/business/answer/7091)). Your website supports relevance by describing the work you do and where, and prominence through real reviews and the reputation you build.
+
+**Set up your service area correctly.** Most roofers serve homeowners at their homes, which makes them service-area businesses in Google's terms. Google's [service area help page](https://support.google.com/business/answer/9157481) says you can set up to 20 service areas based on cities, postal codes or other areas, and that the overall area should not extend more than about two hours of driving time from where the business is based. If customers do not visit your yard or office, hide the address in your profile and list the areas you serve instead.
+
+**Name suburbs only where you work.** Edmond, Moore, Norman, Yukon, Mustang, Midwest City and Del City are all real places homeowners search from. A page for a suburb is useful if it has something true and specific to say, such as which permit office handles that city or jobs you have done there with photos. A set of pages that each swap in a new town name over the same text is what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages, and it can hurt the whole site.
+
+**Keep the profile and site consistent.** Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) ask for your real-world business name with no added keywords. Use the same name you are registered under with the CIB, so the name in Google, on your site and in the state's registration search all match.
+
+**Ask for reviews the right way.** Google's [review policy](https://support.google.com/contributionpolicy/answer/7400114) does not allow offering incentives, such as payment, discounts or free services, in exchange for a review, and it does not allow selectively asking only happy customers. In Oklahoma, paying an insured homeowner for any service can also run into section 1151.30. Ask every customer the same way, after the job, with a direct link. Our guide to [asking for Google reviews](/blog/ask-for-google-reviews-the-right-way) covers the details.
+
+## What pages should an Oklahoma City roofing website have?
+
+1. **Home page** with your registered name, registration number, any endorsements, phone number and a short request form above the fold.
+2. **One page per service you actually offer:** replacement, repair, storm damage, gutters, commercial work if you hold the commercial endorsement. Our [home service website checklist](/blog/home-service-website-checklist) covers what each service page needs.
+3. **Insurance claims page** that explains the process and states plainly that you do not pay or waive deductibles.
+4. **Permits page** for Oklahoma City and any surrounding cities you work in.
+5. **About page** with how long you have operated here, your real address if customers can visit, your crew and your registration, with the verification link.
+6. **Project gallery** of real local jobs, each with the neighborhood or city and what was done.
+7. **Warranty page** that says exactly what the manufacturer covers and what your company covers, and for how long.
+8. **Contact page** with phone, form, hours and the area you serve.
+
+## Oklahoma City roofing website checklist
+
+- [ ] Registration number and any commercial endorsement on every page (OAC 158:85-5-4(b)).
+- [ ] The same registered name and number format as your trucks, contracts and bids (59 O.S. §§ 1151.7, 1151.17).
+- [ ] A link to the state's registration search next to the number.
+- [ ] Ads and landing pages paused if the registration lapses (§ 1151.7(1)).
+- [ ] A residential endorsement shown only once it is issued, starting in 2027 (§ 1151.25a).
+- [ ] No offer to pay, waive or rebate a deductible, anywhere on the site (§ 1151.30).
+- [ ] The written deductible notice shown on the insurance page.
+- [ ] A permits section that explains Oklahoma City's re-roofing permit.
+- [ ] Suburb pages only where you have something true and specific to say.
+- [ ] Google Business Profile name matches the registered name; service areas set within Google's limits.
+
+## How SaySites builds an Oklahoma City roofing website
+
+SaySites builds roofing sites on its contractor layout: a photo hero with a request bar along its edge, numbered service cards, slanted photo panels, a "need help?" block and a call band, with a page for each service you offer. The request form can ask what the homeowner needs, the address's ZIP code and how soon they need you, and the company is described to search engines as a RoofingContractor. Photos taken on your phone are resized automatically, and no page goes live until it passes a 95+ speed check.
+
+You make changes by saying them, for example "put our OK registration number and commercial endorsement in the footer of every page" or "add a page about our hail inspections with these photos from Edmond." Each change waits as a draft until you approve it, so you read every line against Oklahoma's rules before a homeowner does. Registration numbers, warranties, reviews and photos come only from you; SaySites never makes them up. New requests arrive in a simple pipeline where you can call, text or email each homeowner, with an instant reply if you switch it on.
+
+The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [see pricing](/pricing)). [Start a 7-day free trial](/signup) and put your Oklahoma site together yourself, or [get a free redesign](/redesign) to see your current site rebuilt with your own content before you decide. For roofers working in other hail-prone markets, our [Denver roofing website guide](/blog/denver-roofing-website-design) and [Minneapolis roofing guide](/blog/minneapolis-roofing-website-design) cover Colorado's and Minnesota's rules.`,
+    faq: [
+      { q: "Do Oklahoma roofers have to put their registration number on their website?", a: "Yes. The Roofing Contractor Registration Act defines advertising to include electronic solicitations, and the Construction Industries Board's rule OAC 158:85-5-4(b) requires the state registration number, along with any commercial endorsement, on all advertising, contracts and bids. A footer on every page with the registered name, number, endorsement and phone number covers it." },
+      { q: "What is the Oklahoma residential roofing endorsement?", a: "Under 59 O.S. section 1151.25a, starting January 1, 2027, contractors doing residential roofing work need a residential roofing endorsement, earned by passing an exam with at least 70%. Contractors registered and in good standing on that date have until January 1, 2028 to pass the exam or complete ten approved continuing education hours. Current commercial endorsement holders are exempt." },
+      { q: "Can a roofer in Oklahoma pay or waive my insurance deductible?", a: "No. Section 1151.30 of the Roofing Contractor Registration Act bars roofers from advertising or promising to pay all or part of an insurance deductible, directly or indirectly, as an inducement. If a roofer does, the insurer is not obligated to consider that roofer's estimate. Roofers must also give a written notice of this rule with their initial estimate." },
+      { q: "Do I need a permit to replace my roof in Oklahoma City?", a: "For most replacements, yes. Oklahoma City requires a re-roofing permit for significant roof removal, repair or replacement on single-family homes and duplexes within city limits. The City says maintenance work of 500 square feet or less and new homes do not need one. The permit is $94.50 and is typically issued the same day." },
+      { q: "How can I check whether an Oklahoma roofer is registered?", a: "Use the Construction Industries Board's roofing registration search at verifyroofing.cib.ok.gov, or call the Board. The CIB advises homeowners to confirm a roofer is currently registered before signing a contract and to get a written contract stating the start date, scope of work and completion date." },
+      { q: "Should a roofing company make a page for every Oklahoma City suburb?", a: "Only where you have something true and specific to say, such as the permit office for that city or real jobs you have done there. Pages that repeat the same text with a different town name are what Google calls doorway pages, which its spam policies warn against. Set your Google service areas, up to 20, instead." },
+      { q: "How much does a SaySites website for an Oklahoma City roofer cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes the contractor layout, a page for each service, a job request form, RoofingContractor structured data, automatic photo resizing and a lead pipeline with an optional instant reply. You can also get a free redesign preview of your current site before you decide." },
+    ],
+    about: ['Oklahoma Roofing Contractor Registration Act', 'Roofing contractor advertising', 'Roofing contractor websites', 'Oklahoma City, Oklahoma'],
+    published: '2026-11-12',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
