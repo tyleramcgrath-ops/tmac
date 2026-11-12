@@ -1,0 +1,371 @@
+{
+ "cleanUrls": true,
+ "trailingSlash": true,
+ "redirects": [
+  {
+   "source": "/home",
+   "destination": "/",
+   "permanent": true
+  },
+  {
+   "source": "/category/news",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/author/admin",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/feed",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/feed",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/comments/feed",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/carpet-cleaning-in-florida.aspx",
+   "destination": "/carpet-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/careers.aspx",
+   "destination": "/now-hiring/",
+   "permanent": true
+  },
+  {
+   "source": "/spring-cleaning.aspx",
+   "destination": "/spring-cleaning-tips/",
+   "permanent": true
+  },
+  {
+   "source": "/cleaning-services-testimonials.aspx",
+   "destination": "/#reviews",
+   "permanent": true
+  },
+  {
+   "source": "/admin/pages/leave-a-testimonial-for-suncoast.aspx",
+   "destination": "/contact-us/",
+   "permanent": true
+  },
+  {
+   "source": "/privacy.aspx",
+   "destination": "/privacy/",
+   "permanent": true
+  },
+  {
+   "source": "/vomit.aspx",
+   "destination": "/vomit/",
+   "permanent": true
+  },
+  {
+   "source": "/tar.aspx",
+   "destination": "/tar/",
+   "permanent": true
+  },
+  {
+   "source": "/soda.aspx",
+   "destination": "/soda/",
+   "permanent": true
+  },
+  {
+   "source": "/shoe-polish.aspx",
+   "destination": "/shoe-polish/",
+   "permanent": true
+  },
+  {
+   "source": "/rust.aspx",
+   "destination": "/rust/",
+   "permanent": true
+  },
+  {
+   "source": "/pet-stains.aspx",
+   "destination": "/pet-stains/",
+   "permanent": true
+  },
+  {
+   "source": "/paintvarnish.aspx",
+   "destination": "/paintvarnish/",
+   "permanent": true
+  },
+  {
+   "source": "/oil.aspx",
+   "destination": "/oil/",
+   "permanent": true
+  },
+  {
+   "source": "/nail-polish.aspx",
+   "destination": "/nail-polish/",
+   "permanent": true
+  },
+  {
+   "source": "/mustardketchup.aspx",
+   "destination": "/mustardketchup/",
+   "permanent": true
+  },
+  {
+   "source": "/mud.aspx",
+   "destination": "/mud/",
+   "permanent": true
+  },
+  {
+   "source": "/mildew.aspx",
+   "destination": "/mildew/",
+   "permanent": true
+  },
+  {
+   "source": "/lipstick.aspx",
+   "destination": "/lipstick/",
+   "permanent": true
+  },
+  {
+   "source": "/jamjelly.aspx",
+   "destination": "/jamjelly/",
+   "permanent": true
+  },
+  {
+   "source": "/ink.aspx",
+   "destination": "/ink/",
+   "permanent": true
+  },
+  {
+   "source": "/ice-cream.aspx",
+   "destination": "/ice-cream/",
+   "permanent": true
+  },
+  {
+   "source": "/gum.aspx",
+   "destination": "/gum/",
+   "permanent": true
+  },
+  {
+   "source": "/grass.aspx",
+   "destination": "/grass/",
+   "permanent": true
+  },
+  {
+   "source": "/greasy-food-stains.aspx",
+   "destination": "/greasy-food-stains/",
+   "permanent": true
+  },
+  {
+   "source": "/coffee.aspx",
+   "destination": "/coffee/",
+   "permanent": true
+  },
+  {
+   "source": "/crayon.aspx",
+   "destination": "/crayon/",
+   "permanent": true
+  },
+  {
+   "source": "/cigarette-burns.aspx",
+   "destination": "/cigarette-burns/",
+   "permanent": true
+  },
+  {
+   "source": "/chocolate.aspx",
+   "destination": "/chocolate/",
+   "permanent": true
+  },
+  {
+   "source": "/candy.aspx",
+   "destination": "/candy/",
+   "permanent": true
+  },
+  {
+   "source": "/candle-wax.aspx",
+   "destination": "/candle-wax/",
+   "permanent": true
+  },
+  {
+   "source": "/blood.aspx",
+   "destination": "/blood/",
+   "permanent": true
+  },
+  {
+   "source": "/alcohol.aspx",
+   "destination": "/alcohol/",
+   "permanent": true
+  },
+  {
+   "source": "/acid.aspx",
+   "destination": "/acid/",
+   "permanent": true
+  },
+  {
+   "source": "/get-that-stain-out.aspx",
+   "destination": "/get-that-stain-out/",
+   "permanent": true
+  },
+  {
+   "source": "/royal-palm-beach.aspx",
+   "destination": "/royal-palm-beach/",
+   "permanent": true
+  },
+  {
+   "source": "/west-palm-beach.aspx",
+   "destination": "/west-palm-beach/",
+   "permanent": true
+  },
+  {
+   "source": "/wellington.aspx",
+   "destination": "/wellington/",
+   "permanent": true
+  },
+  {
+   "source": "/boynton-beach.aspx",
+   "destination": "/boynton-beach/",
+   "permanent": true
+  },
+  {
+   "source": "/boca-raton.aspx",
+   "destination": "/boca-raton/",
+   "permanent": true
+  },
+  {
+   "source": "/lake-worth.aspx",
+   "destination": "/lake-worth/",
+   "permanent": true
+  },
+  {
+   "source": "/indiantown.aspx",
+   "destination": "/indiantown/",
+   "permanent": true
+  },
+  {
+   "source": "/stuart.aspx",
+   "destination": "/stuart/",
+   "permanent": true
+  },
+  {
+   "source": "/port-st-lucie.aspx",
+   "destination": "/port-st-lucie/",
+   "permanent": true
+  },
+  {
+   "source": "/palm-beach.aspx",
+   "destination": "/palm-beach/",
+   "permanent": true
+  },
+  {
+   "source": "/jupiter-carpet-cleaning.aspx",
+   "destination": "/jupiter-carpet-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/move-in-cleaning.aspx",
+   "destination": "/move-in-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/full-home-cleaning.aspx",
+   "destination": "/full-home-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/hurricane-clean-up.aspx",
+   "destination": "/hurricane-clean-up/",
+   "permanent": true
+  },
+  {
+   "source": "/green-carpet-cleaning.aspx",
+   "destination": "/green-carpet-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/drapery-and-curtain-cleaning.aspx",
+   "destination": "/drapery-and-curtain-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/air-duct-cleaning.aspx",
+   "destination": "/air-duct-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/shower-stall-cleaning.aspx",
+   "destination": "/shower-stall-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/leather-cleaning-and-conditioning.aspx",
+   "destination": "/leather-cleaning-and-conditioning/",
+   "permanent": true
+  },
+  {
+   "source": "/commercial-cleaning-for-southern-florida-businesses.aspx",
+   "destination": "/commercial-cleaning-for-southern-florida-businesses/",
+   "permanent": true
+  },
+  {
+   "source": "/natural-stone-restoration-and-polishing.aspx",
+   "destination": "/natural-stone-restoration-and-polishing/",
+   "permanent": true
+  },
+  {
+   "source": "/water-damage-cleaning.aspx",
+   "destination": "/water-damage-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/area-rug-cleaning.aspx",
+   "destination": "/area-rug-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/furniture-cleaning-that-gets-out-stains.aspx",
+   "destination": "/furniture-cleaning-that-gets-out-stains/",
+   "permanent": true
+  },
+  {
+   "source": "/tile-and-grout-cleaning.aspx",
+   "destination": "/tile-and-grout-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/carpet-cleaning.aspx",
+   "destination": "/carpet-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/contact-us.aspx",
+   "destination": "/contact-us/",
+   "permanent": true
+  },
+  {
+   "source": "/locations.aspx",
+   "destination": "/locations/",
+   "permanent": true
+  },
+  {
+   "source": "/news.aspx",
+   "destination": "/news/",
+   "permanent": true
+  },
+  {
+   "source": "/best-cleaning-services-in-florida.aspx",
+   "destination": "/best-cleaning-services-in-florida/",
+   "permanent": true
+  },
+  {
+   "source": "/about-suncoast-carpet-cleaning.aspx",
+   "destination": "/about-suncoast-carpet-cleaning/",
+   "permanent": true
+  },
+  {
+   "source": "/:slug.aspx",
+   "destination": "/:slug/",
+   "permanent": true
+  }
+ ]
+}
