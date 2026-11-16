@@ -104,8 +104,8 @@ not a rating from any review platform.
 
 ## Before it goes live
 
-- The estimate form has no backend; it opens an email to brad@. Wire it to a
-  real form handler.
+- In the static site the estimate form opens an email to brad@suncoastclean.com and
+  tyleramcgrath@gmail.com (no backend). The WordPress theme emails both addresses itself.
 - Photos are free-license Unsplash stock (hero living room, tile bathroom, sofa,
   gloved spray bottle, carpet being vacuumed, closing band). The live site has
   no usable photos of its own work (275x76 thumbnails and 2016 banners with text

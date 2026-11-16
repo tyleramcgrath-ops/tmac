@@ -5,7 +5,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/** Contact details, overridable in the Customizer (Appearance → Customize → Sun Coast details). */
+/** Contact details, overridable in the Customizer (Appearance → Customize → Sun Coast details).
+ *  estimate_to takes one address or several separated by commas. */
 function suncoast_option( $key ) {
 	$defaults = array(
 		'phone'         => '(561) 747-8787',
@@ -14,7 +15,7 @@ function suncoast_option( $key ) {
 		'address'       => 'Jupiter, FL 33478',
 		'facebook'      => 'https://www.facebook.com/suncoastcleaningandrestoration/',
 		'twitter'       => 'https://twitter.com/SunCoastClean',
-		'estimate_to'   => get_option( 'admin_email' ),
+		'estimate_to'   => 'brad@suncoastclean.com, tyleramcgrath@gmail.com',
 	);
 	$value = get_theme_mod( 'suncoast_' . $key, '' );
 	return $value !== '' ? $value : ( $defaults[ $key ] ?? '' );

@@ -15,8 +15,9 @@ with the pages and posts already in the site's WordPress; nothing has to be re-e
    Posts page: News. (Both pages already exist.)
 3. Settings -> Permalinks: Post name (/%postname%/). Click Save even if it is already set;
    that registers the theme's redirects.
-4. Appearance -> Customize -> Sun Coast details: check the phone, email and the address
-   that estimate requests are emailed to. Blank fields use the values from the current site.
+4. Appearance -> Customize -> Sun Coast details: check the phone, email and the addresses
+   that estimate requests are emailed to (brad@suncoastclean.com and tyleramcgrath@gmail.com
+   unless changed). Blank fields use the values from the current site.
 5. Optional: Appearance -> Menus. Without a menu the header shows the current site's own
    menu (About Us, Services with its dropdown, News, Locations, Contact Us). To change it,
    create a menu and assign it to "Main menu (header)". A second location, "Footer:
@@ -32,8 +33,8 @@ with the pages and posts already in the site's WordPress; nothing has to be re-e
   sections built from the site itself (service areas, related news, a facts block).
 * Get That Stain Out!: the index lists the 29 stain pages; each stain page shows the list.
 * News: every post on one page grouped by year; posts have older/newer links.
-* Estimate form: emails the request to the address in the Customizer (default: the site's
-  admin email), with a honeypot and a nonce. No plugin needed.
+* Estimate form: emails the request to brad@suncoastclean.com and tyleramcgrath@gmail.com
+  (change the list in the Customizer), with a honeypot and a nonce. No plugin needed.
 * SEO: title, meta description, canonical, robots, Open Graph, Twitter and JSON-LD
   (LocalBusiness, Breadcrumbs, Service, Article, HowTo on stain guides) on every page.
   If All in One SEO, Yoast, Rank Math or SEOPress is active the theme steps aside and

@@ -663,7 +663,7 @@ function sendEstimate(e){
   e.preventDefault();
   var f=e.target,v=function(n){var el=f.elements[n];return el?(el.value||'').trim():''};
   var body='Name: '+v('name')+'\\nPhone: '+v('phone')+'\\nService: '+v('service')+'\\nZIP: '+v('zip')+'\\n\\n'+v('notes');
-  location.href='mailto:'''+EMAIL+'''?subject='+encodeURIComponent('Free estimate request: '+v('service'))+'&body='+encodeURIComponent(body);
+  location.href='mailto:'''+EMAIL+''',tyleramcgrath@gmail.com?subject='+encodeURIComponent('Free estimate request: '+v('service'))+'&body='+encodeURIComponent(body);
   return false;
 }'''
     return f'''<script>

@@ -31,7 +31,10 @@ function suncoast_handle_estimate() {
 		wp_safe_redirect( $fail );
 		exit;
 	}
-	$to      = suncoast_option( 'estimate_to' );
+	$to      = array_values( array_filter( array_map( 'trim', explode( ',', suncoast_option( 'estimate_to' ) ) ), 'is_email' ) );
+	if ( ! $to ) {
+		$to = get_option( 'admin_email' );
+	}
 	$subject = 'Free estimate request: ' . $service . ' (' . $name . ')';
 	$body    = "A visitor asked for a free estimate on " . home_url( '/' ) . "\n\n" .
 		"Name: $name\nPhone: $phone\nService: $service\nZIP: $zip\n\n$notes\n\nSent from the page: $back\n";
