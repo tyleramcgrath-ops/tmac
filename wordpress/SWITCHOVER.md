@@ -272,3 +272,14 @@ v6 installs alongside it as a separate theme; activate v6 and delete "build" aft
 - No WP page is needed: the theme serves the nested URL directly. If you do create one, make it a child
   page of GO Focus Plus Demo 50 with the slug `baltimore`, and the theme template still takes over.
 - /gofocusplus-demo50-baltimore/ and mixed-case links 301 to /gofocusplus-demo50/baltimore/.
+
+## v6.24 — Website updates from Gwen's list
+- **GO Focus Plus logo on the demo pages.** The flyer on /gofocusplus-demo-geotab/ now shows the official
+  GO Focus Plus logo as an image, replacing the typed "GEOTAB / GO Focus Plus" text. It is the logo from the
+  media library, recolored white for the dark flyer (`assets/images/geotab-go-focus-plus-logo-reversed.png`).
+  The same flyer is used on /gofocusplus-demo50/, /gofocusplus-demo50/baltimore/, /gofocusplus-ads50/ and
+  /gofocusplus-email50/, so all of them get the new logo.
+- **Geotab under Partners > Video Safety.** Added to the header menu on desktop and mobile, and as a card in
+  the Video Safety section of /our-partners/. Both link to /geotab-go-focus-plus/.
+- **AI Dash Cams page.** "Geotab GO Focus" is renamed to "Geotab GO Focus Plus" so it matches the photo:
+  the product card (heading and image alt text), the intro paragraph and the FAQ answer.

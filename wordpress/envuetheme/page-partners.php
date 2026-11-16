@@ -56,6 +56,11 @@
     <div class="reveal" style="--d:2"><p>Video telematics partners that detect risky driving, provide in-cab coaching, and deliver HD footage for insurance and legal protection.</p></div>
   </div>
   <div class="partner-directory">
+    <a class="partner-dir-card" href="<?php echo esc_url(home_url("/geotab-go-focus-plus/")); ?>">
+        <div class="partner-dir-name">Geotab</div>
+        <div class="partner-dir-desc">GO Focus Plus, Geotab&rsquo;s dual-facing AI dash cam with driver monitoring, ADAS, and real-time in-cab coaching, native to the MyGeotab platform.</div>
+        <span class="partner-dir-link">Learn more →</span>
+      </a>
     <a class="partner-dir-card" href="<?php echo esc_url(home_url("/lytx/")); ?>">
         <div class="partner-dir-name">Lytx</div>
         <div class="partner-dir-desc">Global leader in video telematics. AI-powered dash cams, driver coaching, and predictive safety analytics for commercial fleets.</div>

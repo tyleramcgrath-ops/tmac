@@ -31,10 +31,7 @@ get_header(); ?>
 .gf-f-head span{display:block;}
 .gf-f-bar{background:var(--gf-cyan);color:#fff;text-align:center;font-weight:700;letter-spacing:.2em;font-size:2.9cqw;padding:1.3cqw 2cqw;text-transform:uppercase;}
 .gf-f-prod{display:grid;grid-template-columns:1.3fr .85fr .75fr;align-items:center;gap:2cqw;padding:2cqw 4cqw 2.6cqw;}
-.gf-f-geo{font-size:3cqw;letter-spacing:.06em;font-weight:500;}
-.gf-f-go{display:flex;align-items:baseline;gap:1.4cqw;line-height:1;margin:.6cqw 0 1.4cqw;}
-.gf-f-go b{font-size:8.6cqw;font-weight:300;color:transparent;-webkit-text-stroke:.45cqw var(--gf-cyan);letter-spacing:.02em;}
-.gf-f-go span{font-size:5.4cqw;font-weight:500;}
+.gf-f-gologo{display:block;width:100%;height:auto;margin:.6cqw 0 1.6cqw;}
 .gf-f-prod p{margin:0;font-size:2.55cqw;line-height:1.3;color:#fff;}
 .gf-f-cam{width:100%;height:auto;}
 .gf-f-ins{font-size:2.5cqw;letter-spacing:.16em;line-height:1.55;text-transform:uppercase;}
@@ -101,8 +98,7 @@ get_header(); ?>
       <div class="gf-f-bar">Real visibility. Real safety. Real results.</div>
       <div class="gf-f-prod">
         <div>
-          <div class="gf-f-geo">GEOTAB</div>
-          <div class="gf-f-go"><b>GO</b><span>Focus Plus</span></div>
+          <img class="gf-f-gologo" src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/geotab-go-focus-plus-logo-reversed.png' ); ?>" alt="Geotab GO Focus Plus" width="1200" height="234">
           <p>Real-time video safety and driver coaching to reduce risk and keep your fleet moving.</p>
         </div>
         <img class="gf-f-cam" src="https://envuetelematics.com/wp-content/uploads/2026/07/geotab-go-focus-plus-product-1536x1181.png" alt="Geotab GO Focus Plus AI dash camera" loading="lazy" onerror="this.style.visibility='hidden'">

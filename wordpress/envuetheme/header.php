@@ -61,6 +61,7 @@
           <div class="dropdown dropdown--mega">
             <div class="dropdown-col">
               <span class="dropdown-cat">Video Safety</span>
+              <a href="<?php echo esc_url(home_url("/geotab-go-focus-plus/")); ?>"><strong>Geotab</strong><small>GO Focus Plus AI dash cam.</small></a>
               <a href="<?php echo esc_url(home_url("/lytx/")); ?>"><strong>Lytx</strong><small>Video telematics &amp; AI dash cams.</small></a>
               <a href="<?php echo esc_url(home_url("/netradyne/")); ?>"><strong>Netradyne</strong><small>Driver.i® vision-based safety.</small></a>
               <a href="<?php echo esc_url(home_url("/mobileye/")); ?>"><strong>Mobileye</strong><small>Advanced collision avoidance.</small></a>
@@ -185,6 +186,7 @@
           <div class="m-sub">
             <span class="m-sub-label">Video Safety</span>
             <div class="m-links">
+              <a href="<?php echo esc_url(home_url("/geotab-go-focus-plus/")); ?>">Geotab</a>
               <a href="<?php echo esc_url(home_url("/lytx/")); ?>">Lytx</a>
               <a href="<?php echo esc_url(home_url("/netradyne/")); ?>">Netradyne</a>
               <a href="<?php echo esc_url(home_url("/mobileye/")); ?>">Mobileye</a>
