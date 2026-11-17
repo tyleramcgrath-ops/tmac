@@ -10781,6 +10781,352 @@ The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [se
     published: '2026-11-12',
     status: 'published',
   },
+  {
+    slug: 'albuquerque-law-firm-website-design',
+    title: 'Albuquerque Law Firm Websites: New Mexico Rule 16-701',
+    description: 'Plan an Albuquerque law firm website under New Mexico Rules 16-701 to 16-703: contact details, contingency fee costs, specialist claims and Spanish pages.',
+    kind: 'guide',
+    summary: [
+      'New Mexico now keeps its lawyer advertising rules in three rules, 16-701 to 16-703, last amended effective December 31, 2021. Rules 16-704 to 16-707 are withdrawn.',
+      'Every communication must carry the name and contact information of a responsible lawyer or firm (Rule 16-702(D)); a website address, phone number, email or office location all count.',
+      'If you advertise a contingency fee and the client may still owe costs, the page must say the client may be responsible for court costs and litigation expenses (Rule 16-701, comment [3]).',
+      'You may say you "specialize" based on experience, but you may not claim to be certified as a specialist unless an approved body certified you and you name it (Rule 16-702(C)).',
+      'Written outreach no longer needs the "Advertising Material" label in New Mexico; live person-to-person solicitation for pay is still barred (Rule 16-703).',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1679969989197-28ccc4f0384c?auto=format&fit=crop&w=1600&q=75', alt: 'The long granite ridge of the Sandia Mountains under a clear blue sky, seen across dry high-desert grass and a wire fence on the edge of Albuquerque' },
+    body: `An Albuquerque law firm website is governed by the New Mexico Rules of Professional Conduct, and since the Supreme Court of New Mexico rewrote Article 7 in 2021, the rules that matter for a website are three short ones: [Rule 16-701](https://supremecourt.nmcourts.gov/wp-content/uploads/sites/2/2024/02/Rule-16-701-NMRA.pdf) (no false or misleading communications), [Rule 16-702](https://supremecourt.nmcourts.gov/wp-content/uploads/sites/2/2024/02/Rule-16-702-NMRA.pdf) (advertising, referrals, specialist claims and required contact details) and [Rule 16-703](https://supremecourt.nmcourts.gov/wp-content/uploads/sites/2/2024/02/Rule-16-703-NMRA.pdf) (solicitation). In practice that means: name a responsible lawyer and a way to reach them, explain costs whenever you mention a contingency fee, keep "certified" for real certifications, and never let a result or review promise more than the facts allow.
+
+This guide reads those rules line by line against the pages a firm actually publishes, then turns to what is particular about practicing in Albuquerque: the Bernalillo County courts your clients will ask about, a city where close to half of residents are Hispanic, and a Google Business Profile that has to match the site. It is practical guidance, not legal advice. The rule PDFs linked above, published by the Supreme Court of New Mexico, are the text to rely on.
+
+## Which New Mexico rules apply to a law firm website?
+
+All of Article 7, but there is less of it than in most states. Rules 16-704 to 16-707, which once covered topics such as fields of practice and firm names, are withdrawn, and Supreme Court Order No. 21-8300-014, effective December 31, 2021, last amended the three rules that remain. Much of what the old rules said now lives in the committee commentary to those three, which is where most of the website guidance sits.
+
+Rule 16-701 is one paragraph. A lawyer "shall not make, elicit, or endorse a false or misleading communication about the lawyer or the lawyer's services," and a communication is false or misleading if it misstates a material fact or law, leaves out a fact needed to keep it from misleading, or contains a misleading testimonial or endorsement. The word "elicit" matters for websites: asking clients for reviews that you then feature puts those reviews inside the rule.
+
+Rule 16-702 permits advertising "through any media," limits what you may pay others for recommending you, sets the specialist rule and requires contact information. Rule 16-703 deals with reaching out to specific people who need a lawyer.
+
+The commentary is not filler. It explains how the rules apply to fees, past results, firm names, multi-state offices, lead generators and social media, and New Mexico added comments of its own to the ABA text. Read it before you sign off on a home page.
+
+## What contact information must every page show?
+
+Rule 16-702(D) says any communication under the rule "must include the name and contact information of at least one lawyer or law firm responsible for its content." Comment [12] defines the term: "Contact information includes a website address, a telephone number, an email address, or a physical office location."
+
+That is looser than the "office address" wording New Mexico used before 2021, and looser than several neighboring states. A firm that works from home or a shared suite can satisfy the rule with a phone number or email address. Even so, the simplest way to comply on every page, including landing pages and blog posts that people reach straight from a search result, is a site-wide footer with:
+
+1. **The firm name** exactly as it appears on your letterhead and court filings.
+2. **A responsible lawyer** by name, if the firm wants one person accountable for the site's content.
+3. **A phone number** that is answered during business hours.
+4. **An office location** if you meet clients there, written the same way everywhere.
+
+The looser rule does not loosen Google. If you want to appear in local map results with an address, Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) expect a real location that you staff during stated hours. A mailbox or a virtual office will not qualify. So the office details in your footer should match your profile, word for word.
+
+> **Tip:** Put the footer in place before you build ad landing pages. Those pages are often built outside the main site template and are the ones most likely to go out without a responsible lawyer named.
+
+## How should an Albuquerque firm describe a contingency fee?
+
+This is the New Mexico rule most marketing templates miss. Comment [3] to Rule 16-701 reads: "If the client may be responsible for costs in the absence of a recovery, a communication shall not indicate that the lawyer's fee is contingent on obtaining a recovery unless the communication also discloses that the client may be responsible for court costs and the expenses of litigation." It points to Rule 16-105(C), which governs contingent fee agreements.
+
+So a banner reading "No fee unless we win" is a problem on its own if your fee agreement can leave the client owing costs. Three ways to handle it:
+
+- **Say it in the same place.** "No attorney fee unless we recover for you. You may still be responsible for court costs and litigation expenses." Put the second sentence right under the first, not in a footer disclaimer.
+- **Match the page to your agreement.** If your firm actually absorbs costs when there is no recovery, the disclosure may not be needed, but the page should then say what your agreement says, and nothing broader.
+- **Carry it through.** The same wording belongs on practice area pages, the fees page, ad landing pages and the text of any video that mentions fees.
+
+Comment [3] also makes a broader point: information about a lawyer's fee is misleading without the client's responsibilities for costs, if any. A fees page that lists hourly rates or flat fees should say what costs sit on top of them, such as filing fees, expert fees or records charges.
+
+## Can you post case results, reviews and testimonials?
+
+Yes, with care. Nothing in Article 7 bans them. The tests come from Rule 16-701 and its comments.
+
+**Results.** Comment [4] warns that truthfully reporting results can still mislead if it would lead "a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters without reference to the specific factual and legal circumstances of each client's case." It also says an appropriate disclaimer or qualifying language may prevent that. A results page works best when each entry gives a sentence of context (the kind of case, what was disputed) and the page states plainly that outcomes depend on the facts and law of each matter.
+
+**Comparisons.** The same comment covers "unsubstantiated" claims and comparisons with other lawyers' services or fees. "Albuquerque's top injury firm" or "lower fees than other firms" invite the question of how you would prove it.
+
+**Testimonials and reviews.** A testimonial that is misleading breaks Rule 16-701 directly. Comment [10], one New Mexico added, says neither a lawyer nor a nonlawyer assistant may "make, endorse, or elicit" a false or misleading statement on social media, and that a lawyer must remove, as far as reasonably possible, information the lawyer knows does not comply. If a review you shared on your firm's page overstates what you did, take it down rather than leave it up.
+
+Google's own [review content policy](https://support.google.com/contributionpolicy/answer/7400114) adds a second layer: businesses may not offer incentives for reviews or ask only happy clients for them. A firm can follow the bar's rules and still lose reviews by breaking Google's.
+
+![An aerial tram cabin hanging from its cables high above steep forested granite cliffs, with layered mountain ridges fading into haze behind it](https://images.unsplash.com/photo-1589420241313-ae19d398fd0f?auto=format&fit=crop&w=1200&q=75)
+
+## Can a New Mexico lawyer call themselves a specialist?
+
+New Mexico draws a line many states do not. Comment [9] to Rule 16-702 says a lawyer "is generally permitted to state that the lawyer 'concentrates in' or is a 'specialist,' practices a 'specialty,' or 'specializes in' particular fields" based on experience, specialized training or education, subject to the false and misleading standard of Rule 16-701.
+
+Certification is different. Rule 16-702(C) bars stating or implying certification as a specialist unless the lawyer has been certified by the State Bar of New Mexico, by an organization approved by another state's authority, or by an ABA-accredited organization, and the communication clearly names the certifying organization. The State Bar runs its own [Legal Specialization program](https://www.sbnm.org/Licensing-Regulatory/Legal-Specialization) and its page restates the same two conditions.
+
+On a website, that comes down to wording:
+
+- "Our practice focuses on workers' compensation" or "we specialize in DWI defense" is allowed if it is true and not misleading.
+- "Board certified" or "certified specialist" needs the certification and the certifier's name right next to the claim, on every page where it appears, including attorney bios and the page title.
+- A badge or logo implying certification counts as implying it. If the badge is from a directory or a paid award, do not present it as a certification.
+
+## What can a firm name, domain or social handle say?
+
+Comment [6] to Rule 16-701 treats firm names, letterhead and "professional designations" as communications. A firm may use a trade name, a distinctive website address or a social media username if it is not misleading. It is misleading if it implies a connection with a government agency, a public or charitable legal services organization, a deceased lawyer who was not a member of the firm, a lawyer not associated with the firm or a nonlawyer.
+
+The comment's own example applies directly to keyword domains: a trade name with a geographical name, such as "Springfield Legal Clinic," may need an express statement that it is not a public legal aid organization. A firm that brands itself "Albuquerque Legal Help" or registers a domain built on "Bernalillo County" and "legal aid" should expect the same question.
+
+Two more points come from the State Bar's ethics committee and the comments:
+
+- **"& Associates."** In [Formal Opinion 2006-1](https://www.sbnm.org/Portals/NMBAR/AboutUs/committees/Ethics/2005-2006/2006-1.pdf?ver=4scesHNgjHi1Pm-MrgygQA%3d%3d), the committee concluded that adding "& Associates" when every lawyer is already named is misleading because it implies more lawyers than the firm has. Paralegals and outside co-counsel do not count as associates.
+- **Implied firms.** Comment [8] says lawyers may not hold themselves out as practicing together in one firm when they are not a firm. Office-sharing solos should not share one website that reads like a single firm.
+
+## Can you pay directories and lead generators?
+
+Yes, within limits set out in the comments to Rule 16-702. Comment [3] confirms a lawyer may pay for online directory listings, domain registrations, internet ads and "website designers." Comment [5] allows paying for client leads, but only if the lead generator does not recommend the lawyer, and it lists what crosses the line: a service that "states, implies, or creates a reasonable impression that it is recommending the lawyer, is making the referral without payment from the lawyer, or has analyzed a person's legal problems when determining which lawyer should receive the referral."
+
+Before you sign up for a lead service, read how it describes you to the public. "Matched by our legal experts" or "the right lawyer for your case" is the kind of language comment [5] warns about. Paying a lawyer referral service is permitted only for the usual charges of a not-for-profit or qualified service (comment [6]).
+
+## What about out-of-state and remote lawyers?
+
+Comment [7] to Rule 16-701 says a firm with offices in more than one jurisdiction may use the same name in each, but the listing of lawyers in an office must show the jurisdictional limits of anyone not licensed where that office is. For an Albuquerque office with a lawyer admitted only in Texas or Arizona, the bio should say so near the name: "Admitted in Texas only."
+
+Remote practice raises the same issue from the other side. The State Bar's [Formal Opinion 2024-001 on virtual practice](https://www.sbnm.org/Portals/NMBAR/FINAL%20Virtual%20Practice%20Opinion_%20January%2017%202024.pdf?ver=m7mJy5mxXAUAmpQAsWvDpg%3d%3d) recommends that websites and letterhead state a lawyer's jurisdictional limits, and warns against advertising or holding out an office in a place where the lawyer is not admitted. A New Mexico lawyer living in another state should not list a local address there as if it were a law office.
+
+## Which courts should an Albuquerque firm website explain?
+
+People searching for a lawyer often search for the court on their paperwork first. A short, accurate courts page answers that search and shows you know the building.
+
+- **Second Judicial District Court.** The [district court for Bernalillo County](https://seconddistrict.nmcourts.gov/about-this-district/second-judicial-district-court-overview/) describes itself as the largest court of original jurisdiction in New Mexico, with 27 judges across civil, criminal, domestic relations and children's court divisions, at Fourth and Lomas downtown. It runs a [Center for Self Help and Dispute Resolution](https://seconddistrict.nmcourts.gov/services-programs/center-for-self-help-and-dispute-resolution) for people without lawyers. The court also notes that its Secured Odyssey Public Access system is being retired on December 4, 2026 in favor of re:SearchNM, so a page that tells clients how to look up a case should be updated.
+- **Bernalillo County Metropolitan Court.** According to the [Metropolitan Court's site](https://metro.nmcourts.gov/), its 19 judges hear civil cases such as tort, contract and landlord-tenant matters up to $10,000, along with misdemeanors, DWI, domestic violence, traffic cases and felony first appearances. For a DWI or misdemeanor defense firm, this is the court most clients start in.
+- **New Mexico Court of Appeals.** It has offices in Santa Fe and Albuquerque.
+- **U.S. District Court for the District of New Mexico.** The [federal court](https://www.nmd.uscourts.gov/) serves the whole state from courthouses in Albuquerque, Las Cruces, Roswell and Santa Fe.
+
+Keep this page factual. Do not imply a relationship with any judge or court office. Comment [5] to Rule 16-701 points to Rule 16-804(E), which prohibits stating or implying an ability to improperly influence a government agency or official.
+
+![A person in a rust-orange shirt leaning over a dark wooden table, pen in hand, signing a printed document beside other loose pages](https://images.unsplash.com/photo-1603796846097-bee99e4a601f?auto=format&fit=crop&w=1200&q=75)
+
+## Should an Albuquerque law firm website be in Spanish?
+
+For many practices, yes. Data USA, drawing on Census Bureau survey data, reports that about [47.7 percent of Albuquerque residents were Hispanic in 2024](https://datausa.io/profile/geo/albuquerque-nm). Not every Hispanic resident prefers Spanish, but a large share of families in family law, immigration-adjacent, criminal defense, employment and injury matters will include someone who would rather read about their options in Spanish. The Second Judicial District itself publishes pages [in Spanish](https://seconddistrict.nmcourts.gov/about-this-district/family-court/child-support-faqs/?lang=es).
+
+Comment [1] to Rule 16-702 lists "a lawyer's foreign language ability" among the information a lawyer may share. A few rules for doing it well:
+
+1. **Translate whole pages, not just a banner.** A Spanish visitor who clicks "Español" and lands on English pages is worse off than if you had said nothing.
+2. **Have a fluent person review the text.** Every rule above applies in Spanish too. A machine-translated fee disclosure that drops the cost sentence is still a Rule 16-701 problem.
+3. **Say who speaks Spanish.** "Our intake staff speak Spanish" and "attorney Ana Ruiz represents clients in Spanish" mean different things to a client. Be specific and accurate.
+4. **Mark the language for search engines.** Separate Spanish pages, linked to their English versions, let Google show the right one.
+
+## How do Albuquerque clients search, and what does Google Business Profile need?
+
+Most people with a legal problem search with a place attached: "DWI lawyer Albuquerque," "abogado de accidentes en Albuquerque," "divorce attorney Rio Rancho." Google's map results for those searches come from Business Profiles, and its [guidelines](https://support.google.com/business/answer/3038177) set the rules:
+
+- **Use your real firm name.** Adding "DWI Lawyer Albuquerque" to the profile name is keyword stuffing under Google's guidelines and can get the profile suspended.
+- **One profile per real office.** Each office needs to be staffed during its listed hours. A rented mailbox or a coworking address you never visit does not count.
+- **Pick accurate categories** for the practice areas you actually handle.
+- **Keep name, address and phone identical** on the profile, the website footer and directory listings.
+
+If the firm meets clients in places other than its office, such as jail visits or hospital consultations, that belongs in the website copy, not in extra Business Profiles.
+
+## What pages should an Albuquerque law firm website include?
+
+1. **Home page** that says, in the first lines, what kinds of cases the firm takes, where, and how to reach a lawyer.
+2. **A page for each practice area,** written for the person with that problem in Bernalillo, Sandoval or Valencia County, with fee and cost language that matches your agreements.
+3. **Attorney bios** with every jurisdiction of admission, any certification named in full, and languages spoken.
+4. **Courts page** covering the Second Judicial District, Metropolitan Court and federal court, kept current.
+5. **Fees page** that explains how you charge and which costs the client may owe.
+6. **Results and reviews,** each with context and a note that outcomes depend on the facts.
+7. **Spanish pages** for the practice areas where clients need them.
+8. **Contact page** with a short form, a phone number, hours and the office location.
+
+Our [law firm website checklist](/blog/law-firm-website-checklist) covers the technical items every firm site needs, and our guide to [practice area pages](/blog/practice-area-page-that-earns-calls) shows how to structure each one.
+
+## Albuquerque law firm website checklist
+
+- [ ] Every page names a responsible lawyer or firm with contact information (Rule 16-702(D)).
+- [ ] Every mention of a contingency fee says the client may owe court costs and litigation expenses, if that is true (Rule 16-701, comment [3]).
+- [ ] Results carry context and a statement that outcomes depend on each case (comment [4]).
+- [ ] No unprovable comparisons such as "best" or "cheapest."
+- [ ] "Certified" appears only with the certifying organization's name (Rule 16-702(C)).
+- [ ] The firm name, domain and handles do not suggest a court, legal aid or government office; no "& Associates" without associates.
+- [ ] Lawyers not admitted in New Mexico carry a jurisdiction note (comment [7]).
+- [ ] Lead services you pay do not present themselves as recommending you (Rule 16-702, comment [5]).
+- [ ] Reviews you shared that overstate your work have been removed (Rule 16-701, comment [10]).
+- [ ] Spanish pages are complete, reviewed by a fluent speaker and carry the same disclosures.
+- [ ] Google Business Profile name, address and phone match the site footer.
+
+## How SaySites builds an Albuquerque law firm website
+
+SaySites builds law firm sites around the pages above: practice area pages, attorney bios with room for each admission, certification and language, an office page, a courts page and a consultation form whose questions can change by practice area, including the opposing party's name so you can run a conflict check before you call back. Pages can be built in English and Spanish. The site describes the firm to search engines as a LegalService, each lawyer as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check.
+
+You edit by saying what you want: "add the cost disclosure under every 'no fee unless we win' line," or "put 'Admitted in Texas only' under Marco's name." Each change waits as a draft until you approve it, so a lawyer reads every word against Rules 16-701 to 16-703 before anyone else does. Results, reviews and credentials come only from you; SaySites never writes them for you.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your New Mexico site yourself, or [request a free redesign](/redesign) to see your current site rebuilt with your own content before you decide. If your firm also handles cases across state lines, our [Phoenix law firm website guide](/blog/phoenix-law-firm-website-design) covers Arizona's rules and our [Denver guide](/blog/denver-law-firm-website-design) covers Colorado's.`,
+    faq: [
+      { q: "Does an Albuquerque law firm website have to list an office address?", a: "Not necessarily. Rule 16-702(D) requires the name and contact information of at least one responsible lawyer or firm, and comment [12] says contact information includes a website address, phone number, email address or physical office location. Many firms still put a full office address in the footer because Google Business Profile needs a real staffed location to show the firm in map results." },
+      { q: "Can a New Mexico lawyer advertise \"no fee unless we win\"?", a: "Only with the right disclosure. Comment [3] to Rule 16-701 says that if the client may be responsible for costs without a recovery, a communication may not say the fee is contingent on recovery unless it also discloses that the client may owe court costs and litigation expenses. Put that sentence directly beside the fee claim on every page where it appears." },
+      { q: "Can an Albuquerque lawyer say they specialize in a practice area?", a: "Yes. Comment [9] to Rule 16-702 allows a lawyer to say they concentrate in, specialize in or are a specialist in a field based on experience, training or education, if the claim is not false or misleading. Claiming certification is different: Rule 16-702(C) requires certification by an approved body and the certifier's name in the communication." },
+      { q: "Do New Mexico lawyers still have to label letters \"Advertising Material\"?", a: "No. The 2021 amendments to Rule 16-703 deleted the old notice requirement. The rule still bars live person-to-person solicitation when a significant motive is the lawyer's pecuniary gain, with exceptions for other lawyers, family, close friends, former clients and experienced users of legal services, and bars any solicitation involving coercion or harassment." },
+      { q: "Can a New Mexico firm call itself \"& Associates\"?", a: "Only if it actually employs associate lawyers beyond those named. In Formal Opinion 2006-1, the State Bar of New Mexico's ethics committee concluded that adding \"& Associates\" when every lawyer is already named is misleading because it implies more lawyers. Paralegals, support staff and outside attorneys who help on individual cases are not associates for this purpose." },
+      { q: "Should my Albuquerque law firm website have Spanish pages?", a: "For many practices it is worth it. Census-based data reported by Data USA shows about 47.7 percent of Albuquerque residents were Hispanic in 2024, and the local district court publishes Spanish pages. Translate whole practice area pages, have a fluent person review them, keep every fee and results disclosure, and say exactly who at the firm speaks Spanish." },
+      { q: "How much does a SaySites website for an Albuquerque law firm cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area, attorney, office and courts pages, English and Spanish pages, a consultation form with conflict-check questions, LegalService structured data and a 95+ speed check on every page. You can also request a free redesign preview of your current site first." },
+    ],
+    about: ['New Mexico Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Albuquerque, New Mexico'],
+    published: '2026-11-17',
+    status: 'published',
+  },
+  {
+    slug: 'jacksonville-electrician-website-design',
+    title: 'Jacksonville Electrician Websites: Florida License Rules',
+    description: 'Build a Jacksonville electrician website that follows Florida law: EC or ER number in every ad, local-only registrations, permits and service areas.',
+    kind: 'guide',
+    summary: [
+      'Florida requires an electrical contractor\'s registration or certification number in every offer of services, business proposal or advertisement, "regardless of medium" (s. 489.521(7)(b)). A website is advertising.',
+      'A certified contractor (EC) can work anywhere in Florida; a registered contractor (ER) can contract only where the local license is held, so the service area page has to match.',
+      'A first failure to include the number is a minor violation under rule 61G6-10.005, but advertising as certified or registered without a valid state credential is a misdemeanor.',
+      'In Jacksonville, electrical permits go to certified contractors and craftsmen, the Beaches run their own building departments, and inspections are booked through the city.',
+      'Name each specialty you hold, such as limited energy or alarm, because alarm work is not within the ER license.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1709606703940-66dc71cd9d9d?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Jacksonville in late-afternoon light, with office towers along the St. Johns River and a steel truss bridge crossing the water in the foreground' },
+    body: `A Jacksonville electrician's website has one legal requirement that shapes everything else: Florida law says the contractor's registration or certification number "shall be stated in each offer of services, business proposal, or advertisement, regardless of medium" ([s. 489.521(7)(b), Florida Statutes](https://m.flsenate.gov/statutes/489.521)). Put your EC or ER number on every page, describe only the work your license and specialties cover, keep your service area inside the places you are licensed, and make it easy for a homeowner in Duval County to see you pull permits. Get those right and the rest of the site can focus on earning the call.
+
+This guide covers the Florida rules from the Electrical Contractors' Licensing Board's own statute and FAQ, how Jacksonville's permits and local certificates fit in, and the pages and Google Business Profile setup that suit a city as spread out as this one. It is practical guidance, not legal advice; the statute and rule pages linked below are the text to rely on.
+
+## What does Florida law require on an electrician's website?
+
+Section 489.521(7)(b) is short. The number of each registered or certified contractor must appear in every offer of services, business proposal or advertisement, in any medium. A website offers your services on every page, so the cleanest way to comply is a footer that appears everywhere with:
+
+1. **The business name** exactly as it appears on your state license.
+2. **The license number** with its prefix, for example "EC" plus the digits, or "ER" plus the digits.
+3. **A phone number** answered by your company.
+4. **Any specialty license numbers** if you advertise that work (see below).
+
+The Electrical Contractors' Licensing Board's [FAQ](https://www2.myfloridalicense.com/electrical-contractors/faqs/) adds practical detail: the number must appear on vehicle signs, offers of services, contracts, business proposals and advertisements in any medium, but not on promotional novelties such as pens, balloons or T-shirts. If your website shows a photo of a wrapped van, the van needs the number too.
+
+Name matters as much as number. Section [489.533(1)(l)](https://m.flsenate.gov/statutes/489.533) makes it a ground for discipline to act as a contractor except in the name of the certificate holder or registrant as it appears on the license. If you trade as "First Coast Sparks" but your license is issued to "Smith Electrical Services LLC," the website should show the licensed name, or the business organization qualified under your license, clearly enough that a customer can match the two.
+
+> **Tip:** Do the footer first, then check every page that lives outside it: ad landing pages, quote request pages, coupon pages and the PDF estimates you link to. Section 489.521(7)(b) says "regardless of medium," and those are the pages that usually miss it.
+
+## What happens if the number is missing?
+
+Two different things, depending on what went wrong.
+
+**A missing number on a real license.** Section 489.533(1)(q) makes failing to affix the number as required by s. 489.521(7) a ground for discipline. The Board's rule [61G6-10.005](https://www.flrules.org/gateway/ruleNo.asp?id=61G6-10.005) lists failing to include the license number in an offer of services, business proposal or advertisement as a minor violation, which means a first offense is handled with a notice of noncompliance rather than a full disciplinary case. The statute itself, in s. 489.521(7)(c), also allows a fine of at least $100 or a citation for a contractor who submits an advertisement for publication, broadcast or printing without the number.
+
+**Advertising a license you do not hold.** The same paragraph makes it a second-degree misdemeanor for any person to claim in an advertisement to be a certified or registered contractor without a valid state credential. A handyman site that says "licensed electrician" without a Florida electrical license is in this category, not the minor one.
+
+The practical lesson: the fix for the first is a footer; there is no fix for the second except getting licensed.
+
+## Certified (EC) or registered (ER): why does it change your website?
+
+Florida has two kinds of electrical contractor license, and they reach different places. [Section 489.505](https://m.flsenate.gov/statutes/489.505) defines a registered electrical contractor as one who has registered with the state after meeting local competency requirements, and says such a contractor "may contract only in the jurisdiction for which his or her registration is issued." The Board's FAQ puts it plainly: certified licensees can work anywhere in Florida, while registered licensees can work only in the counties or municipalities where they hold a local license.
+
+In Jacksonville, local competency comes through the city's [Construction Trades Qualifying Board](https://www.jacksonville.gov/departments/boards-and-commissions/construction-trades-qualifying-board), which administers certificates for electrical contractors and for master, journeyman and other craftsman levels under the city code. A contractor registered on the strength of a Jacksonville certificate can contract in Jacksonville, but not automatically in Clay, St. Johns or Nassau County.
+
+That changes three parts of the website:
+
+- **The service area page.** An ER contractor should list only the places covered by its registration. A page about Orange Park or St. Augustine work implies you can contract there.
+- **The license line.** "Licensed statewide" is accurate only for an EC license. "State-registered electrical contractor, Jacksonville and Duval County" is the honest wording for an ER.
+- **Town pages.** Never build pages for towns you cannot legally work in, even if the search volume is tempting.
+
+## Which specialty licenses should the website name?
+
+Florida licenses specialties separately. The Board's FAQ lists the certified and registered specialty categories (residential electrical, utility line, lighting maintenance, sign and limited energy, plus two-way radio communications enhancement systems for certified holders) and the alarm licenses with their own prefixes, such as EF and EY for alarm system contractor I. Two points from the FAQ are worth building into the site:
+
+- **Low-voltage work** such as structured cabling falls under the Limited Energy Systems Specialty.
+- **Alarm work** is its own license: "Alarm contracting is not within the scope of work for the ER license."
+
+So a page selling security systems, fire alarms or access control should show the alarm license number that covers it. If you subcontract that work, say so rather than implying your own license covers it.
+
+There is one place the statute itself mentions websites. Section 489.521(7)(b) lets an alarm system contractor running ads in newspapers, magazines, flyers, billboards, phone books, the internet or broadcast media skip the number in the ad itself if the contractor keeps a website that shows the number and the ad directs people to it. For alarm businesses, that makes the website the place the number must live.
+
+![A wide view of downtown Jacksonville's riverfront towers across the St. Johns River, with the blue steel Main Street Bridge spanning the water under a soft evening sky](https://images.unsplash.com/photo-1602725159577-73d77e7583b0?auto=format&fit=crop&w=1200&q=75)
+
+## How do Jacksonville permits and inspections work, and why put them on your site?
+
+Homeowners comparing electricians often ask one question: "Will you pull the permit?" The City of Jacksonville's Building Inspection Division answers the rules side on its [residential permits page](https://www.jacksonville.gov/departments/public-works/building-inspection-division/residential-permits):
+
+- Electrical work must be done only by contractors and craftsmen certified in the trade, under its own permit.
+- Owners can permit work on their own primary residence by signing an Owner's Affidavit in person, and any licensed electrician they hire still pulls a separate permit linked to it.
+- Starting work without first applying for a permit is unlawful, and the page lists a $250 fine.
+- The permit has to be posted on the job site where it can be seen from the street.
+- When a Notice of Commencement is required, a copy must be filed before any inspection is requested.
+
+Inspections are scheduled by phone or online, and the city's [inspections page](https://www.jacksonville.gov/departments/public-works/building-inspection-division/inspections) lists the electrical inspection types, including slab, rough, cover-up, temporary final and final.
+
+None of that needs to be copied onto your site, but a short "permits and inspections" section on each service page does real work. It tells the homeowner you handle the permit, that the job will be inspected by the city, and roughly how long that adds. It also separates you from unlicensed competitors who cannot pull permits at all.
+
+One service-area detail is easy to miss. Jacksonville is consolidated with Duval County, but Jacksonville Beach has its own [Building Inspection Division](https://www.jacksonvillebeach.org/190/Building-Inspection-Division) that issues building permits and has its own contractor registration page. If you work at the Beaches, a short line on your service area page explaining that you register and permit there too is worth more than a list of zip codes.
+
+## Which pages does a Jacksonville electrical contractor's website need?
+
+Electrical searches are specific. "Panel upgrade Jacksonville," "EV charger installation Mandarin," "generator transfer switch," "outlet not working" and "electrician near me open now" are different jobs with different customers, and one "Services" page cannot answer them all. Build:
+
+1. **Home page** that says in the first lines what you do (residential, commercial or both), where you work, your license number and how to reach you.
+2. **One page per service you want more of:** panel and service upgrades, EV chargers, generators and transfer switches, rewiring, lighting, troubleshooting, commercial build-outs. Each page should say what the job involves, whether it needs a permit, what affects the price and what the customer should have ready.
+3. **A storm and outage page** if you do storm work, saying what you can and cannot do after damage and how to reach you. Keep it accurate; do not promise response times you cannot keep.
+4. **A service area page** that matches your license, with the neighborhoods and nearby towns you actually serve.
+5. **About page** with real photos of your team and trucks (license number visible), years in business if you can state them accurately, and insurance details you can back up.
+6. **Reviews** collected the way Google allows (more below).
+7. **Contact page** with a short request form, phone number and hours, including after-hours terms if you offer them.
+
+Keep each page written for the reader, not for a keyword list. Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether content was made to help people or mainly to attract search visits, and its [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) name doorway pages, near-identical pages for each town, as a violation. Ten copies of "Electrician in [neighborhood]" with the name swapped are exactly that.
+
+![A worker in a gray work glove and plaid flannel shirt holding the stripped copper ends of an electrical cable](https://images.unsplash.com/photo-1682345262055-8f95f3c513ea?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Jacksonville electrician set up Google Business Profile?
+
+Jacksonville covers a large area, and most electricians work at customers' homes, so most should set up as a service-area business. Google's [service area guidance](https://support.google.com/business/answer/9157481) says you can list up to 20 service areas and that the overall area should not extend beyond about two hours' driving time from where your business is based. If you don't serve customers at your business address, Google tells you to remove the address from your profile and show the service area instead.
+
+Then follow the general [Business Profile guidelines](https://support.google.com/business/answer/3038177):
+
+- **Use your real business name.** "Smith Electrical Services," not "Smith Electrical Services | Electrician Jacksonville FL Panel Upgrades." Extra keywords in the name are against the guidelines and can get the profile suspended.
+- **Choose categories that match the work.** "Electrician" as the primary, with secondary categories only for work you actually do.
+- **Match the website.** The business name and phone on the profile should be the same as in your site footer, and the service areas should match your service area page and your license.
+
+## How do you collect reviews without breaking the rules?
+
+Ask every customer, not just the happy ones, and never pay for reviews. Google's [review policy](https://support.google.com/contributionpolicy/answer/7400114) prohibits offering incentives such as discounts or free service for reviews and prohibits selectively asking only for positive ones. A short text after the final inspection passes, with a direct link to your profile, is enough.
+
+On your website, show reviews as they were written, with the reviewer's first name or initials and the month, and link to the full set on your profile. Do not edit them to add keywords, and do not post reviews you wrote yourself.
+
+![Two line workers in hard hats working high on a utility pole beside a crane-mounted bucket, surrounded by power lines under a cloudy sky](https://images.unsplash.com/photo-1759542877886-39d81e8f2eee?auto=format&fit=crop&w=1200&q=75)
+
+## What should a storm or hurricane page say?
+
+Northeast Florida electricians often get their busiest days after a tropical storm, when people search for help with damaged service masts, flooded outlets and generators. The [National Hurricane Center](https://www.nhc.noaa.gov/) is where your customers will be watching the forecast, and your site should be ready before they need you, not written in the middle of a storm.
+
+A useful storm page:
+
+- **Separates utility work from your work.** Make clear what the power company handles on its side of the meter and that your company repairs customer-owned equipment, without promising how quickly the utility will reconnect.
+- **Covers safety first.** Tell people not to touch downed lines or energize flooded equipment and to call the utility or 911 for emergencies.
+- **Explains the permit side.** Repairs to service equipment may need a permit and inspection before power is restored, so customers should expect that step.
+- **States your terms honestly.** If you prioritize existing customers, charge an after-hours rate or work from a waiting list after a storm, say so.
+
+## Jacksonville electrician website checklist
+
+- [ ] Every page shows the licensed business name and EC or ER number (s. 489.521(7)(b)).
+- [ ] Vans and trucks shown in photos carry the license number.
+- [ ] An ER contractor's service area lists only places covered by its registration.
+- [ ] Specialty and alarm work shows the license number that covers it.
+- [ ] Quote, coupon and ad landing pages include the number too.
+- [ ] Each main service has its own page, written for that job, with a permit section.
+- [ ] No near-identical town pages.
+- [ ] Google Business Profile uses the real name, accurate categories and a service area within about two hours' drive.
+- [ ] Reviews are requested from every customer, never paid for.
+- [ ] A storm page exists before storm season, with safety and permit information.
+
+## How SaySites builds a Jacksonville electrician website
+
+SaySites builds electrician sites on its contractor layout: a photo hero with a request bar along its edge, numbered service cards, slanted photo panels, a "need help?" block and a call band, with a page for each service you offer and one honest service area page rather than a stack of copied town pages. The request form asks what the customer needs, where the job is and how soon, and the business is described to search engines as an Electrician. Photos from your phone are resized automatically, and no page goes live until it passes a 95+ speed check.
+
+You make changes by saying them, for example "put our EC number and our limited energy number in the footer of every page" or "add a page about EV chargers with these photos from a job in Riverside." Each change waits as a draft until you approve it, so you check every line against Florida's rules before a customer sees it. License numbers, reviews, photos and credentials come only from you; SaySites never makes them up. New requests land in a simple pipeline where you can call, text or email each customer back.
+
+The Site plan is $15 a month ([websites for electricians](/websites-for/electricians), [see pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Jacksonville site yourself, or [get a free redesign](/redesign) to see your current site rebuilt with your own content first. For electricians in other markets, our [Austin electrician website guide](/blog/austin-electrician-website-design) and [San Diego guide](/blog/san-diego-electrician-website-design) cover Texas's and California's rules, and our [home service website checklist](/blog/home-service-website-checklist) covers the basics every trade site needs.`,
+    faq: [
+      { q: "Does a Florida electrician have to put the license number on the website?", a: "Yes. Section 489.521(7)(b) of the Florida Statutes requires the registration or certification number in each offer of services, business proposal or advertisement, regardless of medium. A website advertises your services on every page, so the simplest approach is a footer showing the licensed business name and the full EC or ER number on every page, including landing and quote pages." },
+      { q: "What is the difference between an EC and an ER license in Florida?", a: "An EC is a certified electrical contractor who passed the state exam and can work anywhere in Florida. An ER is a registered electrical contractor whose state registration rests on a local license, and under s. 489.505 may contract only in the jurisdiction for which it was issued. Your website's service area should match the license you hold." },
+      { q: "What is the penalty for leaving the license number off an ad in Florida?", a: "For a licensed contractor, a first failure is listed as a minor violation in rule 61G6-10.005, typically handled with a notice of noncompliance, and s. 489.521(7)(c) allows a fine of at least $100 or a citation. Claiming in an ad to be a certified or registered contractor without a valid state license is a second-degree misdemeanor." },
+      { q: "Does my Jacksonville electrician business vehicle need the license number?", a: "Yes. The Electrical Contractors' Licensing Board's FAQ says the license number must appear on vehicle signs as well as offers of services, contracts, business proposals and advertisements in any medium. Promotional novelties such as pens, balloons and T-shirts are exempt. If your website shows photos of your vans or trucks, make sure the number is visible on them." },
+      { q: "Can a Jacksonville electrician advertise alarm or low-voltage work?", a: "Only under the license that covers it. Florida licenses limited energy (low-voltage) work as a specialty, and the Board's FAQ says alarm contracting is not within the ER license's scope. Show the alarm or specialty license number on the pages that sell that work, or say clearly that a licensed partner performs it." },
+      { q: "Should I make a separate page for every Jacksonville neighborhood?", a: "No. Google's spam policies treat near-identical pages built for each town as doorway pages. Write one honest service area page that lists the neighborhoods and nearby places you serve and any local permitting notes, such as Jacksonville Beach running its own building department, and put your effort into one strong page per service." },
+      { q: "How much does a SaySites website for a Jacksonville electrician cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes the contractor layout, a page for each service, a job request form, Electrician structured data, automatic photo resizing and a lead pipeline for calling, texting or emailing customers back. You can also get a free redesign preview of your current site before you decide." },
+    ],
+    about: ['Florida electrical contractor licensing', 'Electrician websites', 'Contractor advertising', 'Jacksonville, Florida'],
+    published: '2026-11-17',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
