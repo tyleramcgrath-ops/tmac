@@ -11127,6 +11127,347 @@ The Site plan is $15 a month ([websites for electricians](/websites-for/electric
     published: '2026-11-17',
     status: 'published',
   },
+  {
+    slug: 'oklahoma-city-law-firm-website-design',
+    title: 'Oklahoma City Law Firm Websites: Oklahoma Bar Rules',
+    description: 'What an Oklahoma City law firm website must show under Oklahoma Rules 7.1 to 7.5, how to post results, and how to list state, federal and tribal courts.',
+    kind: 'guide',
+    summary: [
+      'Oklahoma Rule 7.2 requires the name and office address of at least one lawyer or firm responsible for the content of every advertisement, and a website is advertising.',
+      'Verdicts and settlements may be posted, but OBA Ethics Opinion 320 says the disclaimer must appear in the same manner and with the same emphasis as the figure it qualifies.',
+      'Oklahoma still has separate Rules 7.4 and 7.5, so "specialist" claims and certifications from other states carry extra wording requirements.',
+      'Tribal courts admit lawyers through their own bars, so an Oklahoma City firm should list each court it is actually admitted to, state, federal and tribal.',
+      'About one in five Oklahoma City residents speaks a language other than English at home, most often Spanish, so a real Spanish section is often worth building.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1592276480286-08b843b65726?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Oklahoma City towers reflected in a shallow pool in a city park under a pink and blue evening sky' },
+    body: `An Oklahoma City law firm website is lawyer advertising under the Oklahoma Rules of Professional Conduct, so the rules decide what it may say before design decides how it looks. In short: name at least one lawyer or firm responsible for the content and give an office address, keep every statement true and complete, post verdicts or settlements only with a disclaimer shown as prominently as the number, use "specialist" and certification language only in the forms Rule 7.4 allows, and pick a firm name that doesn't suggest a government or legal aid connection. Beyond the rules, a site that works in Oklahoma City is clear about which courts the firm practices in, including tribal courts if that is part of the work, and speaks to the large share of local clients who are more comfortable in Spanish.
+
+This guide walks through each of those points with links to the rules themselves on the Oklahoma State Courts Network (OSCN), the Oklahoma Bar Association's ethics opinions, and the official court and census pages behind every local fact. It is practical guidance for building a site, not legal advice; your own reading of the rules, or a call to the OBA's ethics counsel, settles any close question.
+
+## Which Oklahoma rules apply to a law firm website?
+
+The advertising rules sit in Chapter 1, Appendix 3-A of Title 5 of the Oklahoma Statutes, and you can browse them from the [OSCN index of the Rules of Professional Conduct](https://www.oscn.net/applications/oscn/Index.asp?ftdb=STOKRUBAPR&level=1). Five rules matter for a website:
+
+| Rule | What it covers | What it means for your site |
+|---|---|---|
+| 7.1 | False or misleading communications | Every page, bio, results list and review you display |
+| 7.2 | Advertising | Responsible lawyer's name and office address; paying for referrals |
+| 7.3 | Solicitation | Live chat, texts and targeted follow-up, not the site itself |
+| 7.4 | Fields of practice and specialization | "Specialist," "certified" and practice area wording |
+| 7.5 | Firm names and letterheads | Trade names, domain names, multistate firms |
+
+Many states reorganized these rules after the American Bar Association's 2018 amendments, folding the old specialization and firm name rules into a shorter set. Oklahoma's index still lists Rules 7.4 and 7.5 as separate rules, and Rule 7.3 still requires the "Advertising Material" label on targeted solicitations. If you have read advertising advice written for another state, check it against the Oklahoma text before you rely on it.
+
+## What must every page of an Oklahoma law firm website show?
+
+[Rule 7.2](https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=481047) allows advertising through written, recorded or electronic communication, including public media, and requires that any communication made under the rule include the name and office address of at least one lawyer or law firm responsible for its content. A website is an electronic communication that advertises your services on every page a visitor can land on, so treat each page as needing that information.
+
+The simplest way to comply is a footer that appears on every page with:
+
+1. **The firm's name** exactly as you use it in practice.
+2. **A real office address**, not only a post office box.
+3. **The name of a responsible lawyer**, for example "Responsible attorney: [name]," if the firm name alone doesn't identify one.
+4. **A phone number and a contact link**, so the footer also works as a way in.
+
+Put the same details on landing pages you use for ads and on any page you send people to from a directory profile. Those pages are often built quickly and forgotten, and they are just as much an advertisement as the home page.
+
+## How should an Oklahoma City firm post verdicts and settlements?
+
+Results are where most website problems start. [Rule 7.1](https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=481045) forbids any communication that contains a material misrepresentation or omits a fact needed to keep the whole from being misleading. Its comment [3] says past results may be misleading if presented so that a reasonable person would form an unjustified expectation of the same result, and that an appropriate disclaimer or qualifying language may prevent that finding.
+
+The OBA's [Ethics Opinion 320](https://www.okbar.org/ethics/ethics-opinion-no-320/) applies this to dollar figures. It says listing jury verdict amounts is permissible if the information is factually accurate, doesn't breach client confidentiality under Rule 1.6, and comes with a disclaimer. Settlement amounts are treated the same way, with a disclaimer explaining that a settlement results from private negotiation. The opinion adds the detail that matters most on a website: the disclaimer must be presented in the same manner and with the same emphasis as the statement it applies to.
+
+On a page, that means:
+
+- **No tiny print under a huge number.** If the verdict is in a large heading, the disclaimer belongs right next to it at a readable size, not in a footer link.
+- **Every place a result appears.** Results mentioned in an attorney bio or a practice area page need the same treatment as the results page.
+- **Client permission first.** Rule 1.6 still governs what you can reveal, so get informed consent before naming a client or describing facts that identify one.
+- **Accurate figures.** Say whether a number is a verdict, a settlement or a gross recovery before fees and costs, and don't round up.
+
+![The gate and long reflecting pool of a memorial in Oklahoma City at sunset, with a tall downtown tower in silhouette behind it](https://images.unsplash.com/photo-1612219124031-ae2eb39e3ab4?auto=format&fit=crop&w=1200&q=75)
+
+## Can an Oklahoma lawyer say "specialist" or "board certified"?
+
+Rule 7.4 sets the limits. The OBA's ethics counsel summarized it in [Advertising: The Basics](https://www.okbar.org/ethics-professional-responsibility-april-2024/), published in the Oklahoma Bar Journal in April 2024: a lawyer may say that the lawyer does or does not practice in particular fields of law, patent and admiralty practitioners have their own permitted designations, and a lawyer certified as a specialist by another state where the lawyer is admitted may say so if that state's rules are followed and the communication states that the certification is not recognized by the Supreme Court of the State of Oklahoma.
+
+[Ethics Opinion 315](https://www.okbar.org/ethics/ethics-opinion-no-315/) gives a worked example. A lawyer admitted in Oklahoma and Texas could advertise Texas board certification in the form "Board Certified, [area], Texas Board of Legal Specialization," together with a disclosure that Oklahoma has no process for approving certifying organizations.
+
+For a website, the practical rules are:
+
+1. **Describe what you do, not what you are.** "Our practice focuses on workers' compensation" is safe. "Workers' comp specialists" invites a question.
+2. **Name the certifying body in full** if a lawyer holds an out-of-state certification, and put the Oklahoma disclosure beside it, including in the attorney's bio and any badge or image.
+3. **Avoid "expert" and "the best"** unless you can back them up. Comment [3] to Rule 7.1 warns that unsubstantiated comparisons with other lawyers' services can mislead.
+
+## Can a website say "no fee unless we win"?
+
+It can, carefully. The same OBA ethics article uses this as its example of a truthful-sounding phrase that can mislead: an ad saying "no fee will be charged" may be misleading unless it also explains that the client may still be responsible for costs and expenses. If your contingency arrangement works that way, put a short, plain sentence about costs directly under every "no fee" line, on the home page, on each personal injury page and in any ad landing page. If your firm advances and absorbs costs in some cases, say exactly when.
+
+## What can an Oklahoma City firm call itself?
+
+[Rule 7.5](https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=449007) allows trade names as long as they don't imply a connection with a government agency or with a public or charitable legal services organization. Its comment [1] says a firm may also be designated by a distinctive website address, and that a trade name built on a place name may need a disclaimer that the firm is not a public legal aid agency. That matters in a city where a name like "Oklahoma County Legal Help" could easily be read as a court program.
+
+Two more parts of Rule 7.5 come up on websites:
+
+- **Multistate firms** must show the jurisdictional limits of lawyers who are not licensed where an office is located. A line under a lawyer's name such as "Licensed in Texas only" handles it.
+- **"And Associates" and partnership language** must be true. Lawyers who only share office space can't present themselves as one firm, and the rule allows a firm to say it is a partnership only when that is the fact.
+
+## Is live chat or a text follow-up a solicitation in Oklahoma?
+
+The website itself is not. Comment [1] to [Rule 7.3](https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=481052) says a communication directed to the general public, such as a website, a billboard or an internet banner ad, or one automatically generated in response to internet searches, is typically not a solicitation. That is why a general firm website doesn't need an "Advertising Material" label.
+
+The rule does restrict in-person, live telephone and real-time electronic contact for pecuniary gain with someone who is not a lawyer and has no family, close personal or prior professional relationship with the lawyer. Oklahoma has not published an opinion on website chat, so take a cautious line: let a visitor start the conversation, keep the chat to answering their questions and booking a consultation, and don't have a lawyer or staff member open real-time conversations with people who haven't asked. Written or electronic messages you send to people known to need help with a particular matter must carry "Advertising Material" at the beginning and the end.
+
+## Can you pay for leads, directories or referral services?
+
+Rule 7.2(b) says a lawyer may not give anything of value for recommending the lawyer's services, with exceptions that include paying the reasonable costs of advertising, the usual charges of a legal service plan or a not-for-profit or qualified lawyer referral service, and certain reciprocal referral arrangements where the client is told about them. In practice:
+
+- **Paying for an ad, a directory listing or a website is fine.** You are paying for the advertising, not for a particular recommendation.
+- **Paying per signed client to a company that "recommends" you** is where problems start. Read the contract against Rule 7.2(b) before you sign.
+- **Gifts for reviews are out.** The OBA Management Assistance Program's guide to [responding to a negative online review](https://www.okbar.org/responding-to-a-negative-online-review/) warns against offering anything of value for positive reviews, and explains that an online post is not a proceeding that lets you reveal client information in your reply.
+
+## Which courts should an Oklahoma City firm's website name?
+
+Clients searching from Oklahoma City want to know you work in the court their case is in. Naming the courts, accurately, also gives Google and AI answers the specific facts that connect your firm to local searches.
+
+**State court.** Each Oklahoma county has its own district court. The [Oklahoma County Court Clerk](https://oklahomacounty.org/Offices/Court-Clerk) is at 320 Robert S. Kerr Avenue downtown, with a satellite office in Edmond, and the public can search state court dockets through [OSCN](https://www.oscn.net/dockets/search.aspx). If you regularly appear in neighboring counties' district courts, list those counties by name rather than writing "statewide."
+
+**Appellate courts.** The Oklahoma Supreme Court and the [Court of Criminal Appeals](https://okcca.net/) sit in the Oklahoma Judicial Center at 2100 North Lincoln Boulevard. A criminal defense or appellate practice page can say plainly that the firm handles appeals there.
+
+**Federal court.** The U.S. District Court for the Western District of Oklahoma sits in Oklahoma City. The [U.S. Attorney's Office for the district](https://www.justice.gov/usao-wdok/district) lists the 40 counties it covers, including Oklahoma, Cleveland, Canadian, Logan and Pottawatomie. Federal admission is separate from state bar membership, so list it only for lawyers who hold it.
+
+![The downtown Oklahoma City skyline on a clear morning, with an American flag flying in the foreground above rail lines and low buildings](https://images.unsplash.com/photo-1594480233816-4cdf2adbe053?auto=format&fit=crop&w=1200&q=75)
+
+## Should an Oklahoma City firm mention tribal courts?
+
+If you handle cases that touch tribal jurisdiction, yes, and precisely. In [McGirt v. Oklahoma](https://www.supremecourt.gov/opinions/19pdf/18-9526_9okb.pdf) (2020), the U.S. Supreme Court held that, for purposes of the Major Crimes Act, land reserved for the Creek Nation since the 19th century remains "Indian country." Two years later, in [Oklahoma v. Castro-Huerta](https://www.supremecourt.gov/opinions/21pdf/21-429_8o6a.pdf), the Court held that the federal government and the state have concurrent jurisdiction to prosecute crimes committed by non-Indians against Indians in Indian country. Together these decisions changed which court hears some criminal and related matters in large parts of the state, and clients often search for help with exactly that question.
+
+Tribal courts admit lawyers through their own bars. The [Muscogee (Creek) Nation's bar association](https://creeksupremecourt.com/bar-association) oversees admission to practice before the Creek Nation courts, the [Cherokee Nation](https://www.cherokeecourts.org/Bar-Association) requires an application with proof of good standing from a state bar, and the [Chickasaw Nation](https://judicial.chickasaw.net/Bar-Association/CNB_Application.aspx) requires admission to its own bar, with an application fee and an oath. So a website should say "Admitted to practice before the Cherokee Nation District Court," or whatever is true for each lawyer, rather than "we handle tribal cases." A list of admissions in each attorney bio is both a Rule 7.1 safeguard and the clearest signal to a client that you can actually appear for them.
+
+## Should an Oklahoma City law firm website be in Spanish?
+
+For many practices, yes. In the Census Bureau's 2020 to 2024 American Community Survey estimates for the city of Oklahoma City, [21.6% of residents age 5 and over speak a language other than English at home](https://data.census.gov/table/ACSDP5Y2024.DP02?g=160XX00US4055000), 16.1% speak Spanish, and 8.6% speak English less than "very well." The same survey puts the city's [Hispanic or Latino population at 22.1%](https://data.census.gov/table/ACSDP5Y2024.DP05?g=160XX00US4055000).
+
+If you add Spanish, do it properly:
+
+- **Translate whole pages**, not just a banner. A Spanish home page that leads to English-only practice pages loses the reader at the moment that matters.
+- **Have a fluent person review legal terms**, and make sure the Spanish pages carry the same disclaimers, cost statements and certification wording as the English pages. Rules 7.1 to 7.5 apply in every language.
+- **Say who speaks Spanish** at the firm, and whether consultations can happen in Spanish, only if it is true.
+- **Link the language versions to each other** so search engines show the right one, using the method in Google's guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+## How should Oklahoma City lawyers set up Google Business Profile?
+
+Google treats lawyers as individual practitioners. Its [guidelines for representing your business](https://support.google.com/business/answer/3038177) say a firm with several lawyers at one location can have a profile for the organization, and a practitioner's own profile title should include only the practitioner's name. Support staff should not create their own profiles, a practitioner shouldn't have several profiles for different specialties, and virtual offices aren't eligible. Business names can't include extra location information, so "Smith Law Firm OKC Injury Lawyers" isn't allowed if the firm's real name is Smith Law Firm.
+
+Google's page on [how local ranking works](https://support.google.com/business/answer/7091) says local results are based mainly on relevance, distance and prominence, that there is no way to request or pay for a better local ranking, and that more reviews and positive ratings can help. For a law firm, that means a complete profile with accurate categories and hours, a website whose practice pages match what the profile says you do, and a steady, honest habit of asking clients for reviews after a matter closes.
+
+![A downtown Oklahoma City street at sunset, with older brick buildings and newer towers lining the road and the sun setting at the far end](https://images.unsplash.com/photo-1612219069673-f5f60ebc658f?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should an Oklahoma City law firm website have?
+
+Build for the questions a client asks before calling, and give each page one job:
+
+- **A home page** that says who you help, where, and how to reach you, with the Rule 7.2 footer.
+- **One page per practice area**, written for that area: what the process looks like in Oklahoma, what to bring to a consultation, how fees work. Our guide to [writing a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) goes deeper.
+- **Attorney bios** listing every admission (state, federal, tribal), any out-of-state certification with its Oklahoma disclosure, and the languages each lawyer speaks.
+- **A results page**, if you use one, with Opinion 320's disclaimers at full size next to each figure.
+- **A courts and locations page** naming the courthouses where you appear and your office address, with parking and directions.
+- **A consultation request form** that asks only what you need to call back and run a conflict check.
+
+Resist building a near-identical page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat pages made to rank for many similar searches that funnel visitors to the same place as doorway pages. One honest page about the area you serve, with real local detail, does the job better.
+
+## Oklahoma City law firm website checklist
+
+- [ ] Every page shows the firm name, an office address and a responsible lawyer (Rule 7.2).
+- [ ] Every verdict or settlement has a disclaimer of the same size and emphasis right beside it (Opinion 320).
+- [ ] Settlement figures say they came from private negotiation.
+- [ ] No "specialist," "expert" or "best" claims you can't support (Rules 7.1 and 7.4).
+- [ ] Out-of-state certifications name the certifying body and say Oklahoma's Supreme Court doesn't recognize them.
+- [ ] "No fee unless we win" lines explain who pays costs and expenses.
+- [ ] The firm name and domain don't suggest a government or legal aid program (Rule 7.5).
+- [ ] Lawyers licensed elsewhere show their jurisdictional limits.
+- [ ] Each lawyer's state, federal and tribal admissions are listed accurately.
+- [ ] Chat waits for the visitor to start; targeted messages carry "Advertising Material."
+- [ ] Spanish pages, if any, carry every disclaimer the English pages do.
+- [ ] A link for clients to check a license, such as the OBA's [member verification page](https://my.okbar.org/member-verification/).
+
+For a checklist that applies in any state, see our [law firm website checklist](/blog/law-firm-website-checklist).
+
+## How SaySites builds an Oklahoma City law firm website
+
+SaySites builds law firm sites around the pages in this guide: a page for each practice area, attorney bios with room for every admission, certification and language, an office and courts page, and a consultation form that can ask different questions for each practice area, including the other party's name so you can check for conflicts before you call back. A site can be set up in Spanish as well as English. Each site describes the firm to search engines as a LegalService, each lawyer as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check.
+
+You change the site by saying what you want, for example "put the settlement disclaimer next to every figure on the results page, same size" or "add 'Admitted to the Chickasaw Nation Bar' to Dana's bio." Each change waits as a draft until you approve it, so a lawyer at your firm reads every word against Rules 7.1 to 7.5 before a client does. Results, reviews, admissions and certifications come only from you; SaySites never invents them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [see plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Oklahoma City site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own words and photos before you decide anything. If your firm also takes cases across the state line, our [Kansas City law firm website guide](/blog/kansas-city-law-firm-website-design) covers the Missouri and Kansas rules, and our [Albuquerque guide](/blog/albuquerque-law-firm-website-design) covers New Mexico's.`,
+    faq: [
+      { q: "Does an Oklahoma law firm website need an office address?", a: "Yes. Rule 7.2 of the Oklahoma Rules of Professional Conduct requires any advertising communication to include the name and office address of at least one lawyer or law firm responsible for its content. Because a visitor can land on any page of a website, the safest approach is a footer on every page with the firm name, a street address and the name of a responsible lawyer." },
+      { q: "Can an Oklahoma City lawyer post settlement amounts online?", a: "Yes, with conditions. OBA Ethics Opinion 320 allows verdict and settlement figures if they are accurate, don't reveal confidential information without consent and carry a disclaimer. For settlements, the disclaimer should explain that the result came from private negotiation. The disclaimer must be shown in the same manner and with the same emphasis as the figure, so it can't hide in small print." },
+      { q: "Can an Oklahoma lawyer call themselves a specialist on a website?", a: "Only within Rule 7.4. A lawyer may say they practice, or don't practice, in particular fields. Certification from another state where the lawyer is admitted may be mentioned if that state's rules are followed and the site says the certification is not recognized by the Oklahoma Supreme Court. Patent and admiralty lawyers have their own permitted designations. Avoid unsupported words like expert or best." },
+      { q: "Does an Oklahoma law firm website need an Advertising Material label?", a: "No. Comment 1 to Rule 7.3 says a communication directed to the general public, such as a website, billboard or internet banner ad, is typically not a solicitation. The label is required on targeted written, recorded or electronic messages sent to people known to need legal help with a particular matter, at the beginning and end of the message, and on any envelope." },
+      { q: "Should a firm list tribal court admissions on its website?", a: "Yes, if the firm practices there, and only the courts each lawyer is actually admitted to. Tribal courts such as those of the Muscogee (Creek), Cherokee and Chickasaw Nations admit lawyers through their own bar processes. Naming each admission in an attorney's bio is accurate under Rule 7.1 and tells clients with tribal jurisdiction questions that the lawyer can appear for them." },
+      { q: "Should an Oklahoma City law firm website have Spanish pages?", a: "Often, yes. Census Bureau estimates for 2020 to 2024 show 21.6% of Oklahoma City residents age 5 and over speak a language other than English at home, and 16.1% speak Spanish. Translate full pages, have a fluent reviewer check legal terms, carry every disclaimer into Spanish, and only say lawyers or staff speak Spanish if they do." },
+      { q: "How much does a SaySites law firm website cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney bios, a consultation form with conflict-check questions, a Spanish-language option, LegalService structured data and a 95+ speed check before any page goes live. You can also request a free redesign preview of your current site before signing up." },
+    ],
+    about: ['Oklahoma Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Oklahoma City, Oklahoma'],
+    published: '2026-11-18',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-roofing-website-design',
+    title: 'Chicago Roofing Websites: Illinois License Rules',
+    description: 'Build a Chicago roofing website that follows Illinois law: license number and name in every ad, no deductible offers, insurance claim limits and city permits.',
+    kind: 'guide',
+    summary: [
+      'Illinois roofers may not advertise without their roofing license number and the licensee\'s name as it appears on the license (225 ILCS 335/5(d)), and each day a noncompliant ad runs is a separate offense.',
+      'A limited license covers homes and residential buildings of 8 units or less, so only unlimited licensees should advertise commercial or industrial roofing.',
+      'Never advertise or promise to pay or rebate an insurance deductible (815 ILCS 513/18(b)), and never offer to represent a homeowner on an insurance claim.',
+      'Most Chicago reroofing goes through the city\'s Express Permit Program, which requires a valid Illinois roofing license, so explain permits on your site.',
+      'More than a third of Chicago residents speak a language other than English at home, and the Attorney General publishes the required consumer rights pamphlet in Spanish and Polish.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1781636062623-1334c999d28f?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of a leafy Chicago residential neighborhood of pitched-roof houses and low apartment buildings, with the downtown skyline on the horizon' },
+    body: `A Chicago roofing website is advertising under Illinois law, and Illinois is unusually specific about what roofing advertising must contain. In short: every ad, including every page of your website, has to show your state roofing contractor license number and your name exactly as it appears on the license; only an unlimited licensee should advertise commercial or industrial roofing; you may never advertise or promise to cover a homeowner's insurance deductible; and you may not offer to represent a homeowner on an insurance claim or file one for them. A site that also explains Chicago's permit process, describes the city's older housing stock honestly and works for Spanish-speaking homeowners will earn more trust than one that just says "free estimates."
+
+This guide covers those rules with links to the statutes on the Illinois General Assembly's site, the state licensing agency, the Attorney General's consumer materials, the City of Chicago's permit pages and the Census and weather data behind each local fact. It is practical guidance for building a website, not legal advice; your attorney or the Illinois Department of Financial and Professional Regulation (IDFPR) has the final word on your situation.
+
+## What does Illinois require on a roofing contractor's website?
+
+The [Roofing Industry Licensing Act](https://www.ilga.gov/Legislation/ILCS/Articles?ActID=1346&ChapterID=24), 225 ILCS 335, sets three rules that shape every roofing website in the state.
+
+**The license number and name go in every advertisement.** Section 5(d) says no licensee may advertise services regulated by the Act unless the advertisement includes the roofing contractor license number and the licensee's name as it appears on the license. Section 5(a) applies the same requirement to all contracts and bids. A website is an advertisement on every page, because a homeowner can land on any of them from a search.
+
+**The penalties are real.** Under section 5(e), knowingly failing to display the number, or using a false or borrowed one, is a Class A misdemeanor with a $1,000 fine, and each day an advertisement runs counts as a separate offense. Separately, section 9.1 lets IDFPR discipline a licensee, with fines of up to $15,000 per violation, for advertising that is false, misleading or deceptive.
+
+**You need the license before you advertise at all.** Section 9(1) makes it unlawful to hold yourself out in any manner as a roofing contractor without a license. A "coming soon" roofing site for a company still waiting on its license is a problem, not a head start.
+
+The cleanest way to comply is a footer on every page with:
+
+1. **The licensee's name exactly as printed on the license**, even if you market under a shorter name.
+2. **The roofing contractor license number**, labeled clearly, for example "Illinois Roofing License No." followed by the number.
+3. **The license type**, limited or unlimited, so homeowners and property managers know what you can do.
+4. **A link to [IDFPR's license lookup](https://online-dfpr.micropact.com/lookup/licenselookup.aspx)** so anyone can check it.
+
+Put the same details on every landing page you use for ads, on quote and coupon pages, and in the text of any email or text message offering your services. Section 5.1 also requires the number and name on all commercial vehicles, so photos of your trucks on the site should show them.
+
+## Limited or unlimited: what can your site advertise?
+
+Illinois issues two roofing licenses. Under section 2 of the Act, a **limited** license covers residential properties of 8 units or less, and an **unlimited** license covers residential, commercial and industrial properties. Section 5(a-3) adds that local governments may not issue a building permit without proof of a current state license, and that limited licensees are restricted to permits for residential properties of 8 units or less.
+
+That should decide your site's structure. A limited licensee can build strong pages for single-family homes, two-flats, three-flats and small courtyard buildings, but shouldn't publish a "commercial roofing" page or show a warehouse job in its gallery. An unlimited licensee can do both, and should say so, because a property manager looking for someone to handle a 24-unit building wants to see the license type before calling.
+
+The Act also requires each licensed company to designate a **qualifying party**, the person who passed the state exam and supervises roofing work. Under section 3, that person must be a W-2 employee of the company. If your About page introduces your team, naming the qualifying party is a simple, honest way to show the license is held by someone who actually works for you.
+
+![Two roofers in bright safety shirts and harnesses with yellow safety lines working on a dark shingle roof under a clear blue sky](https://images.unsplash.com/photo-1635424709845-3a85ad5e1f5e?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Chicago roofer offer to cover the insurance deductible?
+
+No, and your website can't hint at it either. Section 18(b) of the [Home Repair and Remodeling Act](https://www.ilga.gov/Legislation/ILCS/Articles?ActID=2359&ChapterID=67), 815 ILCS 513, says a contractor shall not advertise or promise to pay or rebate all or any portion of any insurance deductible as an inducement to the sale of goods or services. The Roofing Act backs this up: since August 2025, section 5.5(b)(7) requires every roofing contract to state that if the owner plans to use insurance proceeds, the contractor cannot pay, waive, rebate or promise to pay, waive or rebate all or part of any deductible.
+
+Phrases to keep off your site, your ads and your yard signs include "we'll cover your deductible," "no out-of-pocket roof," "deductible assistance" and "free roof with insurance." What you can say is true and still useful: that you work with homeowners whose roofs were damaged by storms, that you document the damage carefully, and that the homeowner pays the deductible their policy sets.
+
+## What can a roofing website say about insurance claims?
+
+Section 18(i) draws a firm line. A contractor shall not represent, or offer or advertise to represent, a homeowner on any insurance claim, and shall not call in or file a claim with an insurance carrier on the insured's behalf. It also says a contractor shall not climb on a roof or inspect for exterior damage without the insured's express permission. Contractors may still give estimates and talk with the insurer's representative about the work.
+
+So an honest "storm damage" page explains:
+
+- **What you do:** inspect the roof with the owner's permission, photograph and document the damage, write a detailed estimate, and meet the insurance adjuster on site if the owner wants you there.
+- **What you don't do:** file the claim, negotiate it for the owner, or act as their adjuster. That is a licensed public adjuster's job under Illinois law.
+- **The owner's cancellation rights.** Sections 18(e) through 18(h) let a homeowner cancel a contract that will be paid from insurance if the insurer denies all or part of the claim, before midnight on the earlier of the fifth business day after written notice of the denial or the thirtieth business day after the insurer receives the proof of loss. The contract must include a boldface notice and a detachable cancellation form, and a refund is due within 10 days.
+
+Explaining these rights on your site doesn't scare customers away. It tells them you know the law, which is exactly what the Illinois Attorney General's [storm repair consumer alert](https://illinoisattorneygeneral.gov/news/story/consumer-alert-attorney-general-raoul-warns-residents-to-be-on-alert-for-storm-related-repair-scams-2024) tells people to look for: it warns about "storm chasers" and says it should raise a red flag if a roofer or adjuster doesn't have a required license.
+
+## What should your site say about contracts and paperwork?
+
+Illinois roofing customers sign more paperwork than most, and a site that explains it ahead of time makes the estimate visit easier. The rules come from two laws.
+
+Under section 5.5 of the Roofing Act, a written contract signed by both parties is required before any roofing work, with a phone number, a street address that isn't a post office box, an email address, the scope of work, dates, cost, the contractor's insurer, and a rescission clause letting the owner cancel and get a full refund of any deposit within 72 hours after signing. The contract must also say in bold that payments are held in trust until materials are delivered or most of the work is done.
+
+Under the Home Repair and Remodeling Act, section 15 requires a written contract before work over $1,000, and section 20 requires you to give the customer the Attorney General's pamphlet, ["Home Repair: Know Your Consumer Rights,"](https://illinoisattorneygeneral.gov/Page-Attachments/Home%20Repair_KnowYourRights.pdf) before the contract is signed; for jobs over $1,000 the customer also signs an acknowledgment form. Section 22 gives homeowners age 65 and older who sign at home after an uninvited sales visit 15 full business days to cancel.
+
+A short "What to expect" page that walks through the estimate, the contract, the 72-hour cancellation window, the pamphlet, the permit and the inspection does two jobs at once. It answers the questions people search before they call, and it sets you apart from anyone who skips the paperwork.
+
+## Do Chicago roof replacements need a permit?
+
+Most do. The City of Chicago's [Express Permit instructions for roofing](https://chicago.gov/city/en/sites/guide-to-building-permits/home/instructions/EPP/ROOF.html) describe the program as a streamlined way to get a permit for many kinds of reroofing: repairs limited to 25% of the roof area, recovering over one existing layer, and replacement without structural work. The city says the contractor doing the roofing work must hold a valid Illinois roofing contractor license, and that having someone without one do the work makes the job ineligible. Reroofing also has to meet the minimum insulation requirements of the Chicago Energy Transformation Code.
+
+The program's [terms and conditions](https://www.chicago.gov/city/en/sites/guide-to-building-permits/home/terms-and-conditions/epp/worktype/ROOF.html) add that new roof coverings must meet the solar reflectance requirements in Section 1515 of the Chicago Building Code, and that a recover isn't allowed over two or more existing layers without an architect's or engineer's report, or over slate, tile or water-soaked roofs.
+
+On your site, a short permit section on each service page helps homeowners and landlords plan: who pulls the permit (you), roughly what it involves, why tear-off is sometimes required instead of a layover, and what reflectance means for a flat roof on a two-flat. Don't promise a permit timeline you don't control.
+
+![A row of colorful two- and three-story frame houses with pitched roofs and front porches on a tree-lined Chicago street, with cars parked along the curb](https://images.unsplash.com/photo-1654043342878-7491a4c4d098?auto=format&fit=crop&w=1200&q=75)
+
+## What do Chicago's homes and weather mean for your website?
+
+Chicago's housing is old and varied, and your site should show you know it. The Census Bureau's 2020 to 2024 American Community Survey estimates for the city [count about 1.28 million housing units](https://data.census.gov/table/ACSDP5Y2024.DP04?g=160XX00US1714000), of which 25.6% are single-family detached homes, 13.1% are in two-unit buildings and 14.4% in buildings of three or four units; 38.8% were built in 1939 or earlier, and the [median year built is 1953](https://data.census.gov/table/ACSDT5Y2024.B25035?g=160XX00US1714000). The same survey shows 46.0% of occupied homes are owner-occupied, so many of your customers will be landlords and condo associations, not only homeowners. The Chicago Bungalow Association says more than [80,000 bungalows](https://chicagobungalow.org/chicago-bungalow) still stand, nearly a third of the city's single-family housing, built from 1910 to the mid-1930s.
+
+That suggests pages a generic roofing template won't have: one for bungalows and older pitched roofs, one for the flat and low-slope roofs common on two-flats and courtyard buildings, and one for landlords and associations that explains scheduling around tenants and who signs the contract.
+
+Weather matters too. The National Weather Service's Chicago office [severe weather climatology](https://weather.gov/lot/SevereWeatherClimatologyNew) says damaging winds are the most common type of severe weather in its area, averaging 24 days a year, and the area typically sees 10 to 15 days a year with at least one report of damaging hail, peaking in May and June. A storm page written before the season, with safety advice and the claim rules above, is far better than one rushed out after a hail day.
+
+## Should a Chicago roofing website be in Spanish?
+
+For many companies, yes. Census estimates for 2020 to 2024 show [35.4% of Chicago residents age 5 and over speak a language other than English at home](https://data.census.gov/table/ACSDP5Y2024.DP02?g=160XX00US1714000), and 23.7% speak Spanish. The Attorney General publishes the required consumer rights pamphlet in [Spanish](https://www.illinoisattorneygeneral.gov/Page-Attachments/HomeRepairKnowYourConsumerRightSpanish.pdf) and [Polish](https://www.illinoisattorneygeneral.gov/Page-Attachments/HomeRepairKnowYourConsumerRightsPolish.pdf) as well as English, which makes it easy to hand customers the version they can read.
+
+If you add Spanish pages, translate the full service pages, not just a greeting; keep the license number and name in the Spanish footer; have a fluent person check the wording about contracts, deductibles and cancellation; and say someone on your team speaks Spanish only if that's true. Google's guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions) explains how to link the two language versions so searchers see the right one.
+
+## How should a Chicago roofer set up Google Business Profile?
+
+Most roofers go to the customer, so Google treats them as service-area businesses. Google's [service area help page](https://support.google.com/business/answer/9157481) says to remove your address from the profile if you don't serve customers there, that you can list up to 20 service areas, and that the overall area shouldn't extend beyond about two hours of driving time. Its [guidelines](https://support.google.com/business/answer/3038177) say unnecessary information isn't permitted in the business name, including location words, so "Kowalski Roofing" can't become "Kowalski Roofing Chicago Roof Repair."
+
+On the website side, write one honest service area page that names the neighborhoods and suburbs you actually serve and any local notes worth knowing, rather than a separate, near-identical page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat that kind of page set as doorway pages. Our guide to [service area businesses on Google](/blog/service-area-business-google) covers the setup in more detail.
+
+## How should a roofing company handle reviews?
+
+Ask every customer, not just the happy ones, and never pay for praise. The FTC's [rule on consumer reviews and testimonials](https://www.federalregister.gov/documents/2024/08/22/2024-18519/trade-regulation-rule-on-the-use-of-consumer-reviews-and-testimonials), effective October 21, 2024, bans fake reviews, buying reviews that must be positive or negative, undisclosed reviews from insiders and suppressing reviews through groundless threats. On your website, show reviews as written, with the reviewer's first name or initials and the month, and link to your profile so readers can see the whole picture.
+
+![Close-up of a roofer's hands using a nut driver to fasten a metal roofing panel, a work boot planted beside the seam](https://images.unsplash.com/photo-1780445392484-5fb7d5610708?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a Chicago roofing website have?
+
+- **Home page** with what you do, where, your license type and a quick request form.
+- **A page per service:** tear-off and replacement, repairs, flat and low-slope roofs, gutters or chimneys if you do them, each with a permit note.
+- **Older homes:** bungalows, frame cottages and multi-unit buildings, with real photos of your own jobs.
+- **Storm damage:** what you do, what you don't do, and the homeowner's cancellation rights.
+- **What to expect:** estimate, contract, 72-hour cancellation, pamphlet, permit, inspection, cleanup.
+- **About:** your qualifying party, insurance, license lookup link and years in business, all true.
+- **Service area:** one page, honestly written.
+
+For a broader list that fits any trade, see our [home service website checklist](/blog/home-service-website-checklist).
+
+## Chicago roofing website checklist
+
+- [ ] Every page shows the licensee's name as printed on the license and the roofing license number (225 ILCS 335/5(d)).
+- [ ] The license type, limited or unlimited, is stated, and commercial pages appear only for unlimited licensees.
+- [ ] Ad landing pages, quote pages and marketing emails carry the number too.
+- [ ] Nothing offers to pay, waive or rebate a deductible (815 ILCS 513/18(b)).
+- [ ] Nothing offers to file, negotiate or handle an insurance claim (815 ILCS 513/18(i)).
+- [ ] The storm page explains inspections happen only with permission.
+- [ ] A "What to expect" page covers the contract, the 72-hour cancellation window and the consumer rights pamphlet.
+- [ ] Service pages mention permits and that the work is done under a valid state license.
+- [ ] Truck photos show the license number and name.
+- [ ] Google Business Profile uses the real name, hides the address if you don't serve customers there and lists real service areas.
+- [ ] Reviews are real, unpaid and shown as written.
+
+## How SaySites builds a Chicago roofing website
+
+SaySites builds roofing sites on its contractor layout: a photo hero with a request bar along its edge, numbered service cards, slanted photo panels, a "need help?" block and a call band, with a page for each service you offer. The request form can ask what the property needs, its ZIP code and how soon, and the business is described to search engines as a RoofingContractor. Photos from your phone are resized automatically, and no page goes live until it passes a 95+ speed check. A site can be set up in Spanish as well as English.
+
+You make changes by saying them, for example "put our license name and number in the footer of every page and say we hold an unlimited license" or "add a page about flat roofs on two-flats with these photos from a job in Logan Square." Each change waits as a draft until you approve it, so you check every line against Illinois law before a homeowner sees it. License numbers, warranties, reviews and photos come only from you; SaySites never makes them up. New requests land in a simple pipeline where you can call, text or email each customer back.
+
+The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [see pricing](/pricing)). [Start a 7-day free trial](/signup) and put your Chicago site together yourself, or [get a free redesign](/redesign) to see your current site rebuilt with your own content first. Roofers working other markets can compare our [Oklahoma City roofing guide](/blog/oklahoma-city-roofing-website-design) and [Minneapolis roofing guide](/blog/minneapolis-roofing-website-design).`,
+    faq: [
+      { q: "Do Illinois roofers have to put their license number on their website?", a: "Yes. Section 5(d) of the Roofing Industry Licensing Act says a licensee may not advertise roofing services unless the advertisement includes the roofing contractor license number and the licensee's name as it appears on the license. A website advertises on every page, so put both in a footer that appears everywhere, along with a link to the state's license lookup." },
+      { q: "What is the penalty for leaving the license number off a roofing ad in Illinois?", a: "Under 225 ILCS 335/5(e), knowingly failing to display the license number, or using a false or borrowed one, is a Class A misdemeanor with a $1,000 fine, and each day an advertisement runs is a separate offense. IDFPR can also discipline a licensee for false, misleading or deceptive advertising, with fines of up to $15,000 per violation." },
+      { q: "Can a Chicago roofer offer to pay the homeowner's insurance deductible?", a: "No. The Home Repair and Remodeling Act, 815 ILCS 513/18(b), says a contractor shall not advertise or promise to pay or rebate any part of an insurance deductible to win the job, and roofing contracts must say so in writing under 225 ILCS 335/5.5. Keep phrases like deductible assistance or free roof with insurance off your site entirely." },
+      { q: "Can a roofing company file an insurance claim for a homeowner in Illinois?", a: "No. Section 18(i) of the Home Repair and Remodeling Act says a contractor may not represent a homeowner on an insurance claim, offer or advertise to do so, or call in or file a claim on the insured's behalf. Roofers may still give estimates, document damage with permission and talk with the insurer's representative about the work." },
+      { q: "What is the difference between a limited and unlimited roofing license?", a: "A limited Illinois roofing license covers residential properties of 8 units or less. An unlimited license covers residential, commercial and industrial properties. Local permits follow the same limits, so a limited licensee should keep commercial and large multi-unit work off its website and state its license type clearly so customers know what it can take on." },
+      { q: "Does a Chicago roof replacement need a permit?", a: "Usually. The City of Chicago's Express Permit Program covers many reroofing jobs, including repairs up to 25% of the roof, a recover over one existing layer and replacement without structural work. The roofing contractor must hold a valid Illinois roofing license, new coverings must meet the Building Code's solar reflectance requirements, and insulation must meet the energy code." },
+      { q: "How much does a SaySites roofing website cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes the contractor layout, a page for each service, a job request form, RoofingContractor structured data, automatic photo resizing, a Spanish-language option and a lead pipeline for calling or texting customers back. You can also get a free redesign preview of your current site first." },
+    ],
+    about: ['Illinois roofing contractor licensing', 'Roofing websites', 'Contractor advertising', 'Chicago, Illinois'],
+    published: '2026-11-18',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
