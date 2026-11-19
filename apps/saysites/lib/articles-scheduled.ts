@@ -11468,6 +11468,354 @@ The Site plan is $15 a month ([websites for roofers](/websites-for/roofers), [se
     published: '2026-11-18',
     status: 'published',
   },
+  {
+    slug: 'south-carolina-law-firm-website-design',
+    title: 'South Carolina Law Firm Website Design: The Rules',
+    description: 'How to build a South Carolina law firm website under Rules 7.1 to 7.5: the informational standard, city disclosure, fee wording, accolades and directories.',
+    kind: 'guide',
+    summary: [
+      'South Carolina Rule 7.2(a) requires every advertisement, including a firm website, to be predominately informational, with only a minimal amount of attention-getting content.',
+      'Every advertisement must name at least one responsible lawyer with an office address, and must disclose the city or town where the lawyers doing the work principally practice.',
+      'Results and testimonials need a clear and conspicuous statement that past results do not necessarily indicate similar results for others, on the same page as the claim.',
+      'Words like specialist, expert, certified and authority are reserved for lawyers certified under the state program or the narrow exceptions in Rule 7.4.',
+      'The South Carolina Bar ethics committee says a lawyer takes responsibility for online directory listings they claim, so check profiles as carefully as your own site.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1533852990198-bdd4082bf8c0?auto=format&fit=crop&w=1600&q=75', alt: 'The cable-stayed Arthur Ravenel Jr. Bridge over the Cooper River in Charleston at sunset, with marshland and the harbor beyond' },
+    body: `A South Carolina law firm website has to meet a standard most states dropped years ago: under Rule 7.2(a) of the South Carolina Rules of Professional Conduct, every advertisement must be predominately informational. That means the facts a person needs to choose a lawyer should outweigh, in quantity and quality, anything designed only to grab attention. Add the other South Carolina requirements and a compliant site comes down to five habits: name a responsible lawyer and an office address, say which city or town your lawyers practice from, put a results disclaimer on the same page as every result or testimonial, keep "specialist" and "expert" for the lawyers the rules allow to use them, and spell out expenses whenever you mention a fee.
+
+This guide goes through each rule with links to the text on the South Carolina Judicial Branch website, then covers the parts of website planning that are particular to South Carolina: the state's court structure, online directories, accolade badges and Google Business Profile. It is planning guidance for the people building and approving a site, not an ethics opinion. The South Carolina Bar's ethics advisory service and your own reading of the rules settle any close call.
+
+## Which South Carolina rules govern a law firm website?
+
+The Rules of Professional Conduct are Rule 407 of the South Carolina Appellate Court Rules. Five of them shape a website:
+
+| Rule | Subject | Where it shows up on a site |
+|---|---|---|
+| [7.1](https://www.sccourts.org/resources/judicial-community/court-rules/appellate/rule-407/rule-71/) | False, misleading or deceptive communications | Results pages, reviews, comparisons, firm nicknames |
+| [7.2](https://www.sccourts.org/resources/judicial-community/court-rules/appellate/rule-407/rule-72/) | Advertising | Tone, footer details, office city, fee pages, record keeping |
+| [7.3](https://www.sccourts.org/resources/judicial-community/court-rules/appellate/rule-407/rule-73/) | Solicitation | Live chat, follow-up emails and texts |
+| [7.4](https://www.sccourts.org/resources/judicial-community/court-rules/appellate/rule-407/rule-74/) | Fields of practice and specialization | Practice area headings and attorney bios |
+| [7.5](https://www.sccourts.org/resources/judicial-community/court-rules/appellate/rule-407/rule-75/) | Firm names and letterheads | Trade names, domain names, multistate offices |
+
+Rule 7.2(a) expressly covers written, recorded and electronic communication, including public media, so treat every page of the site as an advertisement, and the landing pages behind your paid search ads and social posts as well.
+
+## What does "predominately informational" mean for a website?
+
+This is the requirement that makes South Carolina different. Rule 7.2(a) says the communication of factual information "rationally related to the need for and selection of a lawyer" must predominate, and the content designed to attract attention must be minimal. Comment 4 explains the reasoning: an advertisement should present useful facts "in an objective and understandable fashion," and lawyers should avoid techniques intended solely to gain attention that show a clear lack of relevance to choosing counsel. The comment also says public confidence suffers if people believe the personality of their advocate, rather than the legal merit of the claim, decides the outcome.
+
+On a website that translates into a few practical choices:
+
+- **Lead with facts, not slogans.** A home page that opens with "Who we help, what it costs to start, and how to reach us today" fits the rule better than a full-screen video of a lawyer striding toward the camera.
+- **Make photos supporting, not the message.** A clear photo of each attorney and the office helps a client choose. Dramatic stock images of gavels and lightning bolts add little information.
+- **Answer real questions on every practice page.** What the process looks like, what documents to bring, how long a typical step takes in South Carolina courts, and how fees work. That content is exactly what the rule asks to predominate.
+- **Keep animation and pop-ups to a minimum.** A cookie notice is fine. An animated countdown or a flashing chat bubble on every page is hard to call minimal.
+
+The rule doesn't ban good design. Clean typography, a calm palette and a fast page help people find the facts. The test is whether a visitor leaves knowing more about your services than when they arrived. It's also what Google asks of every site: its guide to [creating helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) tells site owners to write for readers first and to show first-hand expertise, so the bar's standard and the search engine's point in the same direction.
+
+![A downtown Charleston street lined with palmettos and historic storefronts, with the white steeple of St. Michael's Church against a blue sky](https://images.unsplash.com/photo-1645749370049-9b6beda9f9bc?auto=format&fit=crop&w=1200&q=75)
+
+## What must appear on every page of a South Carolina firm's site?
+
+Three provisions of Rule 7.2 set out the details that belong on each page:
+
+1. **A responsible lawyer and an office address.** Rule 7.2(d) requires the name and office address of at least one lawyer responsible for the content. A firm name alone doesn't satisfy it unless it names a lawyer, so add a line such as "Lawyer responsible for this site: [name], [street address]."
+2. **The city or town of practice.** Rule 7.2(h) requires every advertisement to disclose the geographic location, by city or town, of the office where the lawyers who will actually do the work principally practice. If the office isn't in a city or town, disclose the county. A Columbia firm whose personal injury lawyers work from a Greenville office should say Greenville on those pages.
+3. **Legible placement.** Rule 7.2(i) says required disclosures must be large enough to read and placed so they are conspicuous, and on a website they must appear on the same page as the statement that requires them.
+
+A footer on every page that carries the firm name, the responsible lawyer, a street address for each office and the city each practice group works from handles the first two. Ad landing pages need the same footer: they are often built quickly and missed in review.
+
+Rule 7.2(b) adds a record-keeping duty. The lawyer must review each advertisement before it goes out and keep a copy for two years after its last dissemination, with a record of when and where it ran. For a website, a dated export or screenshot of each page every time it changes, saved with your firm records, is a simple way to meet it.
+
+## How should a South Carolina firm show results and testimonials?
+
+Rule 7.1(d) allows testimonials and endorsements, but only if the site identifies them as testimonials or endorsements, discloses any payment, identifies any that aren't from an actual client, and clearly and conspicuously states that any result the lawyer or firm achieved for one client in one matter "does not necessarily indicate similar results can be obtained for other clients."
+
+Comment 3 applies the same thinking to verdicts and settlements: a damage award or a record of favorable verdicts can be advertised only with a clear and conspicuous statement that results in other matters don't necessarily indicate similar results for other clients. Because Rule 7.2(i) requires that disclosure on the same page as the claim, a single disclaimer on a separate legal notices page won't do.
+
+A results section that meets the rule usually looks like this:
+
+- Each result describes the type of matter and what happened in plain words, without hiding a contested liability fight behind a single number.
+- The statement that prior results don't guarantee similar outcomes sits directly under the heading or beside each figure, in type as easy to read as the figure.
+- Testimonials are labeled as client testimonials, and a review written by someone who isn't a client, such as a referring professional, is identified as such.
+
+Rule 7.1(c) also bars comparisons with other lawyers unless they can be factually substantiated, and Rule 7.1(e) bars nicknames or trade names that imply an ability to obtain results. Comment 4 gives "Heavy Hitter" and "The Strong Arm" as examples. Phrases like "the toughest lawyers in the Upstate" fail both tests.
+
+> **Watch out:** Rule 7.1(b) prohibits statements likely to create an unjustified expectation about results. "We'll get you the money you deserve" is the kind of headline that invites a complaint. "We'll explain your options and what your claim may be worth" says something useful without promising an outcome.
+
+## Can South Carolina lawyers call themselves specialists or experts?
+
+Only in the ways Rule 7.4 permits. A lawyer certified as a specialist under Rule 408 of the Appellate Court Rules, or by an independent certifying organization approved by the Supreme Court Commission on Continuing Legal Education and Specialization, may say so, and must name the certifying organization. Everyone else may say they concentrate in, limit their practice to or accept cases in a field, but those statements must be strictly factual and may not contain any form of the words "certified," "specialist," "expert" or "authority."
+
+There are narrow exceptions: lawyers admitted to practice before the U.S. Patent and Trademark Office may use "Patent Attorney," trademark lawyers may use "trademark attorney" and similar terms, admiralty lawyers may use "proctor in admiralty," and certified mediators and arbitrators may say so.
+
+Practical consequences for a site:
+
+- Avoid page titles and headings like "Expert Criminal Defense in Columbia." Use "Criminal Defense Lawyers in Columbia" instead.
+- Check the alt text on photos and the meta descriptions too. Search snippets are communications about your services as much as visible headings are.
+- Put certifications in each attorney's bio with the full name of the certifying body, and only for lawyers who actually hold them.
+
+## Can a firm display "Best Lawyers" or "Super Lawyers" badges?
+
+Yes, under conditions. In [Ethics Advisory Opinion 17-02](https://www.scbar.org/for-lawyers/quicklinks/legal-resources/ethics-advisory-opinions/ethics-advisory-opinion-17-02/), the South Carolina Bar's ethics committee said a lawyer may advertise an accolade such as Best Lawyers, Super Lawyers or a newspaper's "Best of" readers poll, and use the badge, when:
+
+1. The publication has strict, objective, verifiable standards for inclusion.
+2. The standards are explained, or the advertisement says where to find them; a link to the publication's own explanation is enough.
+3. The date or year of the designation is included.
+4. Distinctive type or italics makes clear the designation comes from that specific publication.
+5. No payment of any kind is required to receive the designation or be included.
+6. Any advertising fees the organization charges are reasonable.
+
+The opinion adds that Rule 7.2(i) requires the standards, or directions to them, on the same page as the badge. A footer full of logos without years or links doesn't meet that. A short line under each badge, such as "Selected to *[Publication]*, 2026. Selection standards: [link]," does.
+
+## Are you responsible for online directories and profiles?
+
+In South Carolina, very likely yes. [Ethics Advisory Opinion 22-02](https://www.scbar.org/for-lawyers/quicklinks/legal-resources/ethics-advisory-opinions/ethics-advisory-opinion-22-02/) restates the committee's view from an earlier opinion, EAO 09-10: a lawyer who adopts, endorses or claims an online directory listing takes responsibility under the rules for all of its content, regardless of who created it. In 22-02 the committee concluded that a lawyer may not take part in a directory site whose very name uses a word Rule 7.4(b) reserves, even though paying for a featured listing would not by itself break the rule against paying for recommendations.
+
+Before you link to a directory profile from your site, or claim one at all, read what it says about you. Look for "expert," "best," "top-rated" language you couldn't use yourself, star ratings you can't verify, and comparisons with other lawyers. Ask the directory to fix what you can and leave what you can't.
+
+![A horse-drawn carriage passes the pastel row houses of Rainbow Row on East Bay Street in Charleston on a spring day](https://images.unsplash.com/photo-1623608103477-2b90432a3f85?auto=format&fit=crop&w=1200&q=75)
+
+## What do the fee rules require on a website?
+
+Many firms state their fee basis online, and South Carolina has two specific rules about it:
+
+- **Expenses.** Rule 7.2(f) says every advertisement that contains information about the lawyer's fee must disclose whether the client will be liable for expenses in addition to the fee, and, if the fee is a percentage of the recovery, whether the percentage is computed before or after deducting expenses. A personal injury page that says "No fee unless we win" without addressing costs is the classic problem.
+- **Advertised prices.** Under Rule 7.2(g), a lawyer who advertises a specific fee or fee range must honor it for at least 90 days after the advertisement runs, unless the advertisement states a shorter period. A website runs continuously, so when you change a flat fee for an uncontested divorce or a simple will, note the date and honor the old price for anyone who relied on the earlier page within that window.
+
+Comment 2 to Rule 7.2 confirms the content that's welcome: fee basis, prices for specific services, payment and credit arrangements and a lawyer's foreign language ability. A fees page that explains how each practice area is billed is useful information of exactly the kind Rule 7.2(a) wants.
+
+## Do chat widgets and follow-up messages count as solicitation?
+
+The website itself is public advertising, but what happens after someone contacts you can fall under Rule 7.3. It prohibits soliciting professional employment for pecuniary gain by in-person, live telephone or real-time electronic contact with someone who isn't a lawyer and has no family, close personal or prior professional relationship with you.
+
+A chat window that waits for the visitor to type first is a response to their inquiry. A system that pops open and starts pitching, or a staff member who reaches out in real time to people who never asked, is riskier. For written or electronic messages to people known to need help with a particular matter, Rule 7.3(d) requires "ADVERTISING MATERIAL" in the subject line and at the beginning and end, specific statements including the South Carolina Bar Lawyer Referral Service number, and a statement about where complaints may be directed. Rule 7.3(b)(3) also bars solicitation about a personal injury, wrongful death, accident or disaster within 30 days of the event. Automated emails to accident victims within that window are off limits, whatever software sends them.
+
+## How should the site reflect South Carolina's courts?
+
+Clients often search by the court their matter is in, and the state's structure is worth reflecting in your pages. According to the South Carolina Judicial Branch:
+
+- **Circuit Court** is the court of general jurisdiction, with a civil side (the Court of Common Pleas) and a criminal side (the Court of General Sessions). The state is divided into [sixteen judicial circuits](https://www.sccourts.org/courts/trial-courts/circuit-court/), and judges rotate among them.
+- **Family Court** has [exclusive jurisdiction](https://www.sccourts.org/courts/trial-courts/family-court/) over marriage, divorce, custody, support, alimony, adoption, division of marital property and name changes, and generally over juveniles under eighteen.
+- **Magistrate Court** hears civil matters where the amount in controversy doesn't exceed [$7,500](https://www.sccourts.org/courts/trial-courts/magistrate-court/) and minor criminal offenses, and handles bail and warrants.
+- **Master-in-Equity** courts are a [division of the Circuit Court](https://www.sccourts.org/courts/trial-courts/master-in-equity-court/) in 23 counties. They hear matters the circuit court refers to them, sitting without a jury, and may conduct sales.
+
+A family law page that uses the courts' own terms ("Family Court," "equitable distribution of marital property") and a criminal defense page that explains General Sessions in plain language help people who searched for those words. A collections or landlord-tenant practice can explain whether a matter belongs in magistrate court under the dollar limit. Each of those paragraphs is factual, relevant to choosing a lawyer, and exactly what the informational standard rewards.
+
+## Should a South Carolina law firm website have Spanish pages?
+
+If the firm serves Spanish-speaking clients, yes. The Judicial Branch itself keeps an [Ayuda en Español](https://www.sccourts.org/resources/general-public/ayuda-en-espanol/) section for court users. Comment 2 to Rule 7.2 lists a lawyer's foreign language ability as appropriate information to advertise, which makes it accurate and useful to say which lawyers and staff speak Spanish, as long as it's true.
+
+Translate whole pages rather than a single summary, have a fluent reviewer check the legal terms, and carry every required disclosure into the Spanish version, including the results disclaimer and the office city. Google's guidance on [localized versions of a page](https://developers.google.com/search/docs/specialty/international/localized-versions) explains how to link the English and Spanish versions so each audience sees the right one.
+
+## How should Google Business Profile and office pages be set up?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow a profile for a staffed location that serves customers in person during stated hours. A virtual office or a mailbox isn't eligible. For a firm with offices in Charleston, Columbia and Greenville, that means one profile per staffed office, each with its own office page on the website showing the same name, address and phone number, the lawyers who work there, and the city disclosure Rule 7.2(h) requires.
+
+Lawyers count as individual practitioners under those guidelines, so a lawyer who can be contacted directly at a verified location may have a profile, but a single practitioner shouldn't create several profiles to cover different practice areas. Use your real firm name, not a keyword-stuffed version, in the profile; Google's guidelines prohibit adding keywords to the business name, and a name like "Best Columbia Injury Lawyers" would also run into Rule 7.1.
+
+On the website, describe the firm in structured data as a LegalService with each office's address and phone number, following Google's [local business structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/local-business). Markup should describe only what a visitor can see on the page.
+
+## What should a South Carolina firm check before launch?
+
+- [ ] Home page and practice pages lead with facts a client needs to choose a lawyer (Rule 7.2(a)).
+- [ ] Every page names a responsible lawyer and an office address (Rule 7.2(d)).
+- [ ] Every page shows the city or town, or county, where the lawyers doing the work principally practice (Rule 7.2(h)).
+- [ ] Results and testimonials carry the "not necessarily similar results" statement on the same page (Rules 7.1(d) and 7.2(i)).
+- [ ] No "expert," "specialist," "certified" or "authority" outside the Rule 7.4 exceptions, including meta descriptions and alt text.
+- [ ] Accolade badges show the year, the publication's name in italics and a link to its standards (EAO 17-02).
+- [ ] Fee mentions say whether clients pay expenses and whether a percentage is computed before or after them (Rule 7.2(f)).
+- [ ] Advertised flat fees are honored for 90 days after any change (Rule 7.2(g)).
+- [ ] Chat waits for the visitor to start, and follow-up messages to people known to need help follow Rule 7.3(d).
+- [ ] Directory profiles you've claimed contain nothing you couldn't publish yourself (EAO 22-02).
+- [ ] A dated copy of each page version is saved for two years (Rule 7.2(b)).
+
+Lawyers with offices across the state line should also review North Carolina's rules; our [Charlotte law firm website guide](/blog/charlotte-law-firm-website-design) covers them, and the [law firm website checklist](/blog/law-firm-website-checklist) covers the pages every firm needs regardless of state. If Georgia clients make up part of your practice, the [Atlanta guide](/blog/atlanta-law-firm-website-design) covers that state's rules.
+
+![A view over downtown Charleston rooftops and a street of historic brick and white commercial buildings lined with palmetto trees](https://images.unsplash.com/photo-1600450805219-e675d21afd5d?auto=format&fit=crop&w=1200&q=75)
+
+## How SaySites builds a South Carolina law firm website
+
+On SaySites, a South Carolina firm gets a separate page for every practice area, a profile for each attorney with space for admissions, certifications with the certifying body's name, and languages spoken, an office page for each location, and a consultation form whose questions change by practice area and can ask for the other party's name so you can run a conflict check before calling back. The footer can carry the responsible lawyer, every office address and the city each team practices from. Pages are described to search engines as a LegalService, each attorney as a Person and each practice area as a Service, and nothing goes live until it passes a 95+ speed check. Sites can be built in English and Spanish.
+
+You make changes in plain words, for example "add 'Prior results do not necessarily indicate similar results for other clients' under every figure on the results page" or "change 'expert DUI defense' to 'DUI defense lawyers in Rock Hill' everywhere." Every change is saved as a draft until you approve it, which gives the responsible lawyer the review step Rule 7.2(b) expects. SaySites never adds results, reviews, accolades or credentials on its own; they appear only when you provide them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) to build your South Carolina site yourself, or [request a free redesign](/redesign) and see your current site rebuilt with your own words before you decide.`,
+    faq: [
+      { q: 'Is a law firm website advertising under the South Carolina rules?', a: 'Yes. Rule 7.2(a) covers written, recorded and electronic communication, including public media, so a firm website is advertising. That brings in the predominately informational standard, the requirement to name a responsible lawyer with an office address, the city or town disclosure and the duty to keep a copy of each version for two years after it last runs.' },
+      { q: 'What does predominately informational mean in Rule 7.2(a)?', a: 'It means factual information related to the need for and choice of a lawyer must outweigh, in quantity and quality, content meant only to attract attention, which must be minimal. In practice, lead pages with who you help, how the process works, how fees are charged and how to reach you, and keep slogans, animation and dramatic imagery in a supporting role.' },
+      { q: 'Does a South Carolina law firm website need a results disclaimer?', a: 'Yes, wherever results or testimonials appear. Rule 7.1 requires a clear and conspicuous statement that a result achieved for one client does not necessarily indicate similar results can be obtained for other clients. Rule 7.2(i) says a disclaimer on a website must be on the same page as the statement that requires it, so a separate notices page is not enough.' },
+      { q: 'Can a South Carolina lawyer use the word expert on a website?', a: 'Generally no. Rule 7.4(b) says a lawyer who is not certified as a specialist may describe the fields they practice in, but those statements must be strictly factual and may not contain any form of certified, specialist, expert or authority. Certified specialists, patent and trademark lawyers, admiralty lawyers and certified mediators have limited exceptions.' },
+      { q: 'Can a firm show Super Lawyers or Best Lawyers badges in South Carolina?', a: 'Yes, if it follows Ethics Advisory Opinion 17-02. The publication needs objective, verifiable selection standards, the site must explain them or link to them on the same page, include the year, identify the publication in italics or distinctive type, and the lawyer must not have paid anything to be selected. Advertising fees charged by the publication must be reasonable.' },
+      { q: 'Does a South Carolina firm have to list its office city on the website?', a: 'Yes. Rule 7.2(h) requires every advertisement to disclose, by city or town, the location of the office where the lawyers who will actually perform the services principally practice. If the office is outside a city or town, give the county. A firm with several offices should state the right city on each practice or office page.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, an English and Spanish option, LegalService structured data and a 95+ speed check before pages go live. You can also ask for a free redesign preview of your current site first.' },
+    ],
+    about: ['South Carolina Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'South Carolina'],
+    published: '2026-11-19',
+    status: 'published',
+  },
+  {
+    slug: 'scottsdale-med-spa-website-design',
+    title: 'Scottsdale Med Spa Website Design: Arizona Rules',
+    description: 'What a Scottsdale med spa website must say under Arizona law: license titles in ads, laser technician certificates, board certified claims and honest reviews.',
+    kind: 'guide',
+    summary: [
+      'Arizona law (A.R.S. 32-3213) says any ad that names a health professional must state that person’s title and license type, and a website counts as electronic media.',
+      'Laser and IPL treatments in Arizona are done by licensed health professionals or by laser technicians certified by the Department of Health Services, under supervision, so describe who does what accurately.',
+      'A doctor who is described as board certified must hold current certification and the ad must name the certifying organization in full (A.R.S. 32-1401).',
+      'The FTC’s rule on consumer reviews and testimonials, in force since October 2024, bans fake reviews, buying positive ones and hiding negative ones.',
+      'Write one strong page per treatment, not a page per suburb: Google treats near-identical location pages as doorway pages.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1643325644426-afe56732a8ac?auto=format&fit=crop&w=1600&q=75', alt: 'A canal in Scottsdale at golden hour, lined with palm trees and mid-rise buildings reflected in the still water' },
+    body: `A Scottsdale med spa website is advertising for health care services under Arizona law, so the clinical team's licenses decide much of what it can say. The short version: put each provider's title and license type next to their name everywhere it appears, describe laser and IPL treatments in a way that matches who is certified to perform them and under what supervision, only call a physician board certified if the certification is current and the certifying body is named in full, and show reviews and before and after photos exactly as they are. Do those four things and the rest of the site can focus on what Scottsdale clients come for: a clear page for each treatment, real prices or price ranges, and an easy way to book a consultation.
+
+This guide covers each Arizona requirement with links to the statute or rule, then turns to how people choose an aesthetic provider online and how to structure the site and Google Business Profile for a practice in Scottsdale. It is practical guidance for owners, medical directors and marketers, not legal advice. Your medical director and an Arizona health care attorney are the right people to settle questions about scope of practice and supervision.
+
+## Is a med spa website "advertising" under Arizona law?
+
+Yes. [A.R.S. 32-3213](https://www.azleg.gov/ars/32/03213.htm) defines an advertisement for health care services broadly: billboards, brochures, radio and television scripts, "electronic media," directories, telephone and direct mail, and "any other means of promotion intended to directly or indirectly induce any person to enter into an agreement for services with the health professional." A website, a booking page and a social profile that promotes treatments all fit that description.
+
+The same statute sets the rule most likely to affect your pages: an advertisement for health care services that includes a health professional's name "shall identify the title and type of license the health professional holds and under which the health professional is practicing." A violation is unprofessional conduct for the professional, which means it goes to their licensing board.
+
+In practice:
+
+- **Provider profiles** show the full credential with each name, for example "Jordan Lee, MSN, FNP-C, Nurse Practitioner" or "Dr. Sam Patel, MD, Physician."
+- **Treatment pages** that mention who performs the service ("Injections by Jordan Lee") carry the license type there too, not only on the team page.
+- **Captions, booking widgets and blog bylines** follow the same pattern. If a name appears, the license type appears with it.
+- **Staff without a license** who are named, such as a front desk coordinator or an aesthetician, are described by their actual role and credential, never with a title that suggests a medical license they don't hold.
+
+## What does Arizona treat as misleading on a med spa site?
+
+For physicians, [A.R.S. 32-1401](https://www.azleg.gov/ars/32/01401.htm) lists "false, fraudulent, deceptive or misleading advertising by a doctor of medicine or the doctor of medicine's staff, employer or representative" as unprofessional conduct. Note who is covered: staff, employers and representatives. If a medical director's name and license sit on your site, what the site says about treatments reflects on that physician even when the spa's owner or a marketing agency wrote it.
+
+The same statute addresses a phrase med spas use often. It is unprofessional conduct to represent that a physician is "boarded or board certified" if it isn't true, if the standing isn't current, or "without supplying the full name of the specific agency, organization or entity granting this standing." So "Board certified" alone isn't enough. Write "Board certified in dermatology by the American Board of Dermatology" or the equivalent for the physician's actual board, and remove it if the certification lapses.
+
+Other places where med spa sites drift into misleading territory:
+
+- **Outcome language.** "Erase wrinkles for good" or "permanent fat loss" invites trouble. Describe what a treatment does, how many sessions are typical in your practice, how long results usually last and that results vary.
+- **Product names.** If a page says a specific brand of neurotoxin or filler, that should be the product you actually use for that treatment.
+- **Specials.** A promotion should state the price, what it includes, who qualifies and when it ends.
+
+![A clinician in blue gloves uses a handheld skin treatment device on the forehead of a client lying back with a cap over her hair](https://images.unsplash.com/photo-1713085085470-fba013d67e65?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Scottsdale med spa describe laser and IPL treatments?
+
+Arizona regulates cosmetic lasers and intense pulsed light (IPL) devices closely, and the rules shape how a treatment page should be written. Under [A.R.S. 32-3233](https://www.azleg.gov/ars/32/03233.htm), a licensed health professional may use a registered laser or IPL device for cosmetic purposes within their scope of practice and required training. Other people may perform these procedures only as laser technicians certified by the Arizona Department of Health Services, and the statute sets the supervision:
+
+| Procedure | Who may perform it | Supervision |
+|---|---|---|
+| Laser or IPL hair removal | Health professional within scope, or a certified laser technician | Indirect supervision by a health professional whose scope permits it |
+| Other cosmetic laser or IPL procedures | Health professional within scope, or a laser technician certified for those procedures | Direct supervision by a health professional whose scope permits it |
+
+The department issues certificates that cover either hair removal only or hair removal and other cosmetic procedures, and keeps a register showing which. Its rule on [laser technician eligibility and scope](https://www.law.cornell.edu/regulations/arizona/Ariz-Admin-Code-SS-R9-16-702) adds that a technician may perform only the procedures listed on their certificate, after training that includes at least 24 hours and 10 procedures of hands-on work for hair removal and an additional 24 hours and 10 procedures for other cosmetic procedures. Aestheticians and cosmetologists who want to use lasers need the department's certificate as well, under [A.R.S. 32-516](https://www.azleg.gov/ars/32/00516.htm).
+
+The statute also makes the supervising professional, the employer and the registrant who owns or operates the device answerable to the regulators for a technician's errors. That's reason enough for the website to be precise:
+
+- **Say who performs each laser treatment by role and credential**, for example "Laser hair removal is performed by Arizona-certified laser technicians under the supervision of our nurse practitioner."
+- **Don't list a laser service for a provider whose certificate doesn't cover it.** If your technicians are certified for hair removal only, a skin resurfacing page shouldn't suggest they perform it.
+- **Explain the consultation.** A paragraph on skin type assessment, test spots where you use them, and aftercare is useful to the reader and shows the care behind the service.
+
+## Who performs injections, and how should the site say it?
+
+Injectables are where clients most want to know who will treat them. Arizona's scope-of-practice rules for physicians, physician assistants, nurse practitioners and registered nurses come from their own boards, and [A.R.S. 32-1456](https://www.azleg.gov/ars/32/01456.htm) lists administering injections among the procedures a medical assistant may perform under the direct supervision of a doctor of medicine, physician assistant or nurse practitioner. Which of those roles may give which cosmetic injections in your practice, and under what orders, is a question for your medical director and counsel, not your website copy.
+
+What the website should do is describe your actual practice plainly. An injectables page that says "All neurotoxin and filler treatments are performed by our physician assistant and nurse practitioner, after an in-person assessment" answers the question a careful client asks, and it satisfies the license disclosure rule at the same time. If assessments or treatment plans come from a medical director who isn't on site every day, say how that works in plain words.
+
+> **Note:** Keep clinical detail out of the online booking form. Ask for name, contact details, the treatment of interest and preferred times, and save health history for the intake process your clinical team controls. A short line under the form saying "Please don't include medical information here" helps.
+
+## What about reviews, testimonials and before and after photos?
+
+Federal rules apply here alongside Arizona's. The Federal Trade Commission's [Trade Regulation Rule on the Use of Consumer Reviews and Testimonials](https://www.govinfo.gov/content/pkg/FR-2024-08-22/html/2024-18519.htm), 16 CFR Part 465, took effect on October 21, 2024. It prohibits, among other things:
+
+- Fake or false reviews and testimonials, including ones attributed to people who don't exist or who never had the treatment.
+- Offering compensation or incentives conditioned on a review being positive or negative.
+- Reviews by owners, managers, employees or their relatives presented without disclosing that connection, in the situations the rule describes.
+- Review suppression, such as using threats or intimidation to stop negative reviews, or claiming the reviews you show represent all or most reviews when you've hidden negative ones.
+
+The FTC's [Endorsement Guides](https://www.ecfr.gov/current/title-16/chapter-I/subchapter-B/part-255) add that an endorsement must reflect the honest experience of the endorser and that material connections, such as a free treatment given in exchange for a post, must be disclosed.
+
+For before and after galleries, the same honesty standard applies:
+
+1. Use only photos of your own clients, with written consent for marketing use.
+2. Keep lighting, angle and makeup consistent, and don't retouch the result.
+3. Caption each pair with the treatment, the number of sessions and the time between the photos, and note that individual results vary.
+4. Label models as models whenever a photo shows someone who isn't a client.
+
+![A gloved provider gives a cosmetic injection between the eyebrows of a dark-haired client whose eyes are closed](https://images.unsplash.com/photo-1746708810803-722593e53772?auto=format&fit=crop&w=1200&q=75)
+
+## How do Scottsdale clients choose a med spa online?
+
+People researching an aesthetic treatment tend to compare several providers before they book, and they read closely. Google's guidance on [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether content shows first-hand expertise, whether it's clear who created it and whether it leaves readers feeling they've learned enough. Treatments that affect health and appearance are exactly where those questions matter.
+
+A treatment page that holds up under that kind of comparison covers:
+
+- **What it is and what it's for**, in plain words, with the device or product you actually use.
+- **Who it suits and who it doesn't**, including when you'd refer someone to a physician instead.
+- **Who performs it**, with name, title and license type.
+- **What to expect**: consultation, the appointment itself, downtime, aftercare and typical number of sessions.
+- **Price or price range**, or how pricing works if it depends on units or areas treated.
+- **Questions clients ask you most**, answered in your own words.
+
+Scottsdale practices also draw clients from Paradise Valley, Fountain Hills, Cave Creek and the rest of the Valley, and some people book from out of state around a visit. That doesn't call for a page for every suburb. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe doorway pages as similar pages created to rank for specific searches, with examples like pages targeting different cities that funnel people to the same place. Mention the areas you serve on your location page and in your Google Business Profile, and put the effort into treatment pages instead.
+
+## How should a Scottsdale med spa set up Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow a profile for a business that makes in-person contact with customers during stated hours at a staffed location. A few points matter for med spas:
+
+- **Name.** Use your real business name as it appears on your signage and documents. Adding keywords ("Scottsdale Botox and Laser Med Spa") to a name that doesn't include them breaks the guidelines.
+- **Practitioners.** Google allows profiles for individual practitioners who are public-facing at a verified location. A nurse practitioner who sees clients at your Old Town suite can have one; the same person shouldn't have several to cover different treatments.
+- **Categories and services.** Pick the primary category that best describes the business and add each treatment as a service with a short, accurate description.
+- **Photos.** Real photos of your treatment rooms, entrance and team help people recognize the place when they arrive.
+
+On the website, the location page should match the profile's name, address, phone and hours exactly, and the business can be described in structured data with its address, hours and phone number, following Google's [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) documentation. Mark up only what's visible on the page.
+
+![A client lies back with a white facial mask while a provider's gloved hands work at her chin, with skincare bottles on a shelf behind](https://images.unsplash.com/photo-1761718210089-ba3bb5ccb54f?auto=format&fit=crop&w=1200&q=75)
+
+## What pages should a Scottsdale med spa website include?
+
+1. **Home**: what you offer, where you are, who treats clients and a clear way to book.
+2. **One page per treatment**: neurotoxins, fillers, laser hair removal, IPL, chemical peels, microneedling and any others, each with the details listed above.
+3. **Providers**: every clinician with title, license type and, for physicians, any board certification with the full name of the board.
+4. **Laser safety and supervision**: a short page explaining that laser treatments are done by licensed professionals or ADHS-certified laser technicians under supervision, and what that means for the client.
+5. **Pricing**: real prices or ranges, deposit and cancellation policy, and financing if you offer it.
+6. **Results**: consented before and after photos with captions, and a results-vary note.
+7. **Location**: address, parking, hours, a map and the areas you serve.
+8. **Book a consultation**: a short form with no clinical questions, plus online booking if you use it.
+9. **Privacy policy and accessibility statement**: how you handle form submissions and analytics, and a contact for accessibility requests.
+
+## Scottsdale med spa website checklist
+
+- [ ] Every named provider shows title and license type wherever the name appears (A.R.S. 32-3213).
+- [ ] "Board certified" appears only with the full name of the certifying board and only while current (A.R.S. 32-1401).
+- [ ] Each laser treatment page says who performs it and under what supervision, matching the technicians' ADHS certificates (A.R.S. 32-3233).
+- [ ] No outcome promises; each treatment page explains typical sessions, downtime and that results vary.
+- [ ] Reviews are real, unbought and shown without suppressing negative ones (16 CFR Part 465).
+- [ ] Before and after photos are your clients', consented, unretouched and captioned.
+- [ ] The booking form asks for no medical information.
+- [ ] Google Business Profile name, address, phone and hours match the location page exactly.
+- [ ] No near-duplicate suburb pages.
+
+If you run a dental office in the Valley too, our [Phoenix dental practice website guide](/blog/phoenix-dental-practice-website-design) covers the Arizona dental board's rules. For how other states handle the same questions, compare our guides to [Dallas med spa websites](/blog/dallas-med-spa-website-design) and [Los Angeles med spa websites](/blog/los-angeles-med-spa-website-design), and keep the [med spa website checklist](/blog/med-spa-website-checklist) handy for the pages every spa needs.
+
+## How SaySites builds Scottsdale med spa websites
+
+A SaySites med spa site gives each treatment its own page with a booking button, a provider page with room for every title, license and board certification, a results gallery with captions and a results-vary note, a location page and a consultation request form that keeps clinical questions out. The spa is described to search engines as a health and beauty business with its address, hours and phone number, the site can be built in English and Spanish, and every page has to pass a 95+ speed check before it goes live.
+
+You make changes by saying them, for example "add 'Nurse Practitioner' after Jordan's name on every page" or "on the laser hair removal page, say treatments are done by our ADHS-certified laser technicians under our nurse practitioner's supervision." Each change waits as a draft until you approve it, so your medical director can read every word first. Credentials, prices, photos and reviews come only from you; SaySites never invents them.
+
+The Site plan is $15 a month ([websites for med spas](/websites-for/med-spas), [see pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Scottsdale site yourself, or [get a free redesign](/redesign) to see your current site rebuilt with your own treatments, photos and words before you decide anything.`,
+    faq: [
+      { q: 'Does an Arizona med spa website have to list provider license types?', a: 'Yes, wherever a health professional is named. A.R.S. 32-3213 requires an advertisement for health care services that includes a health professional’s name to identify the title and type of license they hold and practice under, and the statute’s definition of advertisement includes electronic media. Put the credential beside the name on profiles, treatment pages, captions and booking pages.' },
+      { q: 'Who can perform laser hair removal at a Scottsdale med spa?', a: 'A licensed health professional acting within their scope of practice, or a laser technician certified by the Arizona Department of Health Services. Under A.R.S. 32-3233, certified technicians perform hair removal under the indirect supervision of a health professional whose scope permits it. Other cosmetic laser and IPL procedures require direct supervision and a certificate that covers them.' },
+      { q: 'Can a med spa website say our doctor is board certified?', a: 'Only if it is true, current and specific. A.R.S. 32-1401 treats it as unprofessional conduct for a physician, or the physician’s staff, employer or representative, to claim board certification that is not current or without naming the certifying agency, organization or entity in full. Write out the board’s full name and update the site if the status changes.' },
+      { q: 'Can a med spa offer a discount in exchange for a five-star review?', a: 'No. The FTC’s rule on consumer reviews and testimonials, 16 CFR Part 465, effective October 21, 2024, prohibits offering compensation or incentives conditioned on a review expressing a particular sentiment. You can ask every client for honest feedback, without conditions, and you should never write reviews yourself or hide negative ones while implying you show them all.' },
+      { q: 'Should a Scottsdale med spa make pages for nearby towns?', a: 'Usually not. Google’s spam policies describe doorway pages as similar pages made to rank for specific searches, such as near-identical pages for different cities. List the areas you serve on your location page and Google Business Profile, and put the work into one detailed page per treatment that answers what clients ask before booking.' },
+      { q: 'What should a med spa consultation form ask?', a: 'Keep it short and non-clinical: name, phone or email, the treatment of interest and preferred appointment times. Leave health history, medications and photos for the intake process your clinical team controls, and add a line asking people not to send medical information through the form. A simple form is also more likely to be completed on a phone.' },
+      { q: 'How much does a SaySites med spa website cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes a page per treatment with a booking button, provider profiles with license details, a captioned results gallery, a location page, a consultation form without clinical questions and a 95+ speed check on every page. You can also request a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['Arizona health care advertising', 'Med spa websites', 'Cosmetic laser regulation', 'Scottsdale, Arizona'],
+    published: '2026-11-19',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
