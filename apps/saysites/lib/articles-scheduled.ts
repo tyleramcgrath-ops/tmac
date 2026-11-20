@@ -11816,6 +11816,318 @@ The Site plan is $15 a month ([websites for med spas](/websites-for/med-spas), [
     published: '2026-11-19',
     status: 'published',
   },
+  {
+    slug: 'connecticut-law-firm-website-design',
+    title: 'Connecticut Law Firm Websites: The Ad Filing Rule',
+    description: 'Plan a Connecticut law firm website: quarterly domain filing under Practice Book 2-28A, the three-year archive, fee and cost wording and specialist claims.',
+    kind: 'guide',
+    summary: [
+      'Connecticut is one of the few states that makes lawyers file their advertising with a regulator. Under Practice Book Section 2-28A, a firm website itself is not filed, but every domain name used mainly to offer legal services is, and the list is updated quarterly.',
+      'Ads that point to the site, such as paid search, social and video ads, must be filed through Judicial Branch E-Services before or when they first run.',
+      'Rule 7.2(b) requires a copy of electronic communications, including the site, every three months, kept for three years after the page stops running.',
+      'Every page needs the name and contact information of at least one Connecticut-admitted lawyer responsible for it, and any fee statement must say who pays court costs and expenses, in the same type.',
+      'Only lawyers certified by an approved or ABA-accredited body may say or imply they are specialists, and the certifying organization must be named.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1694276308868-001f56408ccc?auto=format&fit=crop&w=1600&q=75', alt: 'The downtown Hartford skyline at sunset, reflected in the Connecticut River beside a low arched bridge' },
+    body: `A Connecticut law firm website is regulated by two sets of rules at once: the Rules of Professional Conduct, which govern what the site says, and Practice Book Section 2-28A, which governs what you file with the Statewide Grievance Committee. The site's pages don't have to be filed, but the domain names behind it do, every quarter, and the ads that send people to it must be filed when they first run. On the pages themselves, Connecticut asks for a responsible Connecticut lawyer with contact information, a cost-and-expenses disclosure next to any fee statement, results presented so they don't create unjustified expectations, and no "specialist" claim without a recognized certification.
+
+This guide walks through each requirement with the text of the rules, taken from the [official 2026 Connecticut Practice Book](https://www.jud.ct.gov/Publications/PracticeBook/PB.pdf), and then covers the planning questions particular to Connecticut: the court map, probate, Spanish-language pages and Google Business Profile. It is a planning aid for the people building and approving a site, not an ethics opinion. For a close question, the Statewide Grievance Committee's attorney advertising staff and the Connecticut Bar Association's ethics resources are the right places to ask.
+
+## Do Connecticut lawyers have to file their website with the Statewide Grievance Committee?
+
+Not the pages, but the address. Section 2-28A(a) says any attorney who advertises through any media, electronic or otherwise, must file a copy of each advertisement with the Statewide Grievance Committee before or at the same time as its first dissemination. Subsection (a)(3) then adds a separate item to the filing: "a list of domain names used by the attorney primarily to offer legal services, which shall be updated quarterly." Subsection (b)(7) exempts the contents of a website that appears under one of those listed domains.
+
+The committee's [attorney advertising FAQ](https://jud.ct.gov/SGC/faq_atty_adv.htm) turns that into a schedule. The domain list is filed on the first business day of January, April, July and October. The contents of the website are not filed. Domains that are not used primarily to offer legal services, including personal social media, should not be filed. Filings are made electronically through Judicial Branch E-Services, and a lawyer who can't file electronically can ask for an exemption on form JD-GC-019.
+
+What this means in practice for a firm launching or rebuilding a site:
+
+1. **List every domain that carries your legal marketing.** That includes the main firm domain, a separate domain for a practice area or a Spanish-language site, and any landing-page domains a vendor set up for paid ads.
+2. **Add new domains on the next quarterly date.** If you launch a new domain for a personal injury campaign in May, it belongs on the July filing.
+3. **Keep the list current when domains are retired.** A domain that now only redirects to your main site isn't being used to offer services in its own right, so confirm with the committee whether it still belongs on the list.
+4. **Don't forget the people.** The FAQ says filings include the juris numbers of the attorneys responsible for each advertisement.
+
+> **Note:** The FAQ is explicit that filing doesn't mean approval. You don't need prior approval to run an ad, and the committee reviews a random selection of filings. Under Section 2-28A(d), statewide bar counsel can raise a problem with a randomly reviewed ad and try to resolve it with the responsible lawyer before it goes further.
+
+## Which ads around the website still have to be filed?
+
+Everything that isn't the site itself, unless an exemption applies. The FAQ says all television, radio, print and internet advertisements, other than lawyer or law firm websites, must be submitted before or when they first appear. For a typical firm, that covers:
+
+- Paid search ads and the text in them
+- Social media ads and boosted posts aimed at prospective clients
+- Video ads on streaming or social platforms, with a transcript of the audio
+- Display and banner ads
+- Mailers and brochures, with a sample envelope if mailed
+
+A filing also includes a statement of the media where the ad will appear, how often and for how long. Section 2-28A(a) requires any submission in a foreign language to include an accurate English translation, which matters for firms that advertise in Spanish or Portuguese.
+
+Section 2-28A(b)(1) exempts "tombstone" content: an ad that contains only items such as the lawyer or firm name, addresses, phone numbers, hours, website and email addresses, a designation like "attorney," admission dates, foreign language ability, fields of law practiced and the fee for an initial consultation. A plain business card or a directory-style ad with only those facts doesn't need filing. A search ad that says "Injured in a crash? Get the compensation you deserve" goes beyond tombstone content and does.
+
+Section 2-28A(c) also lets the committee ask for substantiation of any statement in an ad. Before a headline claims "hundreds of cases" or "decades of trial experience," make sure someone at the firm can show the numbers behind it.
+
+![Downtown Hartford seen from above at dusk, a pale stone office tower rising among lit glass buildings and parking decks](https://images.unsplash.com/photo-1611008715987-60499f61074c?auto=format&fit=crop&w=1200&q=75)
+
+## How long do you have to keep copies of the site?
+
+Three years, refreshed every three months. Rule 7.2(b)(1) requires a copy of every communication about the lawyer's services to be kept for three years after its last dissemination, with a record of when and where it was used, and adds a rule written with websites in mind: "An electronic communication regarding the lawyer's services shall be copied once every three months on a compact disc or similar technology and kept for three years after its last dissemination."
+
+A compact disc is no longer how most firms store anything, but the "similar technology" wording leaves room for a modern method. A workable routine:
+
+- On the same quarterly dates you file your domain list, export or capture a full copy of every page on each listed domain.
+- Save each capture with the date and the domain in the file name, in the firm's records system rather than on someone's laptop.
+- Keep the captures for three years after the last date each version was live, then delete according to your retention policy.
+- Capture ad landing pages and any page built for a single campaign, since they tend to disappear when a campaign ends.
+
+Tying the archive to the filing calendar means one person, one reminder and one checklist four times a year.
+
+## What must appear on every page of a Connecticut firm's site?
+
+Rule 7.2(e) says any communication made under the rule "must include the name and contact information of at least one lawyer admitted in Connecticut responsible for its content." The commentary explains that contact information can be a website address, a telephone number, an email address or a physical office location.
+
+A firm with lawyers admitted in New York or Massachusetts as well as Connecticut should name a Connecticut-admitted lawyer on the Connecticut pages, not only the managing partner if that partner is admitted elsewhere. The simplest approach is a footer line on every page: "Attorney responsible for this site: [name], admitted in Connecticut, [phone or office address]."
+
+The Rule 7.1 commentary covers the rest of the identity questions that used to live in a separate firm-names rule (Rule 7.5 was repealed in 2020). A firm may use a trade name if it isn't misleading, and may be designated by "a distinctive website address, social media username or comparable professional designation that is not misleading." A name is misleading if it implies a connection with a government agency or a public legal aid organization, and the commentary gives "Springfield Legal Clinic" as an example of a geographic trade name that may need an express statement that it isn't a public legal aid office. Letterhead, and by extension the attorney list on a site, must show the jurisdictional limits of lawyers who aren't licensed in Connecticut.
+
+## How should results, reviews and comparisons be presented?
+
+Connecticut keeps the core rule short. Rule 7.1 prohibits a false or misleading communication, and a communication is misleading if it contains a material misrepresentation or leaves out a fact needed to keep the whole from being misleading. The commentary does the detailed work:
+
+- A truthful report of a client result "may be misleading if presented without a disclaimer indicating that the communicated result is based upon the particular facts of that case," so that a reasonable person would form an unjustified expectation about their own case.
+- An unsubstantiated claim about your services or fees, or an unsubstantiated comparison with other firms, may be misleading if it is specific enough that a reader would assume it can be proven.
+- A statement is also misleading if it leads someone to believe they must take some further action when no action is required.
+- The commentary adds that an appropriate disclaimer or qualifying language may prevent a finding that a statement is misleading.
+
+For a results page, that suggests putting the disclaimer right where the figure is, not on a separate legal notices page: "Each result depended on the facts and law of that client's case. It does not predict the result in your case." For reviews, show real reviews from real clients, link to where they were posted, and never edit their wording. "Better than the big firms" or "the lowest fees in Fairfield County" are comparisons someone may ask you to substantiate under Section 2-28A(c), so leave them out unless you can.
+
+> **Watch out:** The last bullet above is easy to miss on intake pages. A banner such as "You must contact a lawyer within 30 days of your accident" pushes the reader toward an action the law may not require. Explain the real deadlines that apply to a type of claim, and say plainly that each case is different.
+
+## What does Connecticut require when a website mentions fees?
+
+Two things, and both are specific. Rule 7.2(f) says every communication that contains information about the lawyer's fee, including a statement that the fee is contingent on the outcome, that no fee is charged without a recovery, or that the fee is a percentage of the recovery, must disclose whether and to what extent the client will be responsible for court costs and litigation expenses. That disclosure must be in the same print size and type as the fee information.
+
+So a personal injury page that says "No fee unless we win" needs, in the same type and right beside it, a sentence such as "You may be responsible for court costs and case expenses whether or not we win. We'll explain exactly which ones before you sign." The wording must match your actual fee agreement. If the firm advances costs and waives them when there's no recovery, say that instead.
+
+Rule 7.2(g) adds a time commitment: a lawyer who advertises a specific fee or range of fees for a particular service must honor it for at least ninety days unless the communication states a shorter period. A flat-fee page for an uncontested divorce, a simple will or a DUI first offense should carry a date or a stated period, and someone at the firm should own the job of updating it.
+
+## Can Connecticut lawyers call themselves specialists?
+
+Only with a recognized certification. Rule 7.2(d) and Rule 7.4A(a) prohibit a lawyer from stating or implying that they are certified as, or are, a specialist in a field of law unless they are currently certified by a board or entity approved by the Rules Committee of the Superior Court or by an organization accredited by the American Bar Association. When a certified lawyer does say so, the name of the certifying organization must be clearly identified.
+
+The commentary explains what lawyers without certification can say: that they practice in certain areas, or that they "concentrate in," "focus on," or limit their practice to particular fields, subject to the misleading-communications standard in Rule 7.1. Patent lawyers and admiralty lawyers have long-standing designations the rule doesn't prohibit.
+
+Practical steps for a website:
+
+- Write headings as "Workers' Compensation Lawyers in New Haven," not "New Haven Workers' Comp Specialists."
+- Check page titles, meta descriptions and image alt text for "specialist," "specializing" and "specialized." They are communications about your services too.
+- For a certified lawyer, put the certification in the bio with the full name of the certifying organization, the field and nothing broader.
+
+## Is a website contact form or chat a solicitation in Connecticut?
+
+Generally not. The Rule 7.3 commentary says a lawyer's communication isn't a solicitation if it is directed to the general public, "such as through a billboard, an internet banner advertisement, a website or a television commercial," or if it responds to a request for information. It also says live person-to-person contact doesn't include chat rooms, text messages or other written communications that recipients can easily disregard.
+
+That makes a contact form, a reply to someone who filled it in, and a written chat window on the site generally permissible. Two Connecticut-specific limits still matter:
+
+- **Accident and disaster timing.** Rule 7.3(c)(4) bars a solicitation about personal injury or wrongful death, or relating to an accident or disaster, unless it occurred more than forty days before the mailing. That rule is aimed at lawyer-initiated outreach, not replies to people who contact you, but it does reach targeted email or text campaigns to accident victims.
+- **The "Advertising Material" label.** Rule 7.3(e) requires targeted written and electronic solicitations to people known to need legal services in a particular matter to be clearly labeled "Advertising Material." Communications requested by the recipient don't need the label, so a reply to a web inquiry doesn't.
+
+Keep website follow-up as replies to requests, and let your intake staff, not an automated sequence, decide when a second message is appropriate.
+
+![A small marina at sunset, sailboats moored beside a wooden dock and boathouse under a sky streaked with cloud](https://images.unsplash.com/photo-1695733528425-70cfd3044fac?auto=format&fit=crop&w=1200&q=75)
+
+## How should the site reflect Connecticut's courts?
+
+Connecticut's Superior Court is organized into judicial districts, and the Judicial Branch [lists thirteen of them](https://www.jud.ct.gov/directory/directory/location/Default.htm): Ansonia-Milford, Bridgeport, Danbury, Hartford, Litchfield, Middlesex, New Britain, New Haven-Meriden, New London-Norwich, Stamford-Norwalk, Tolland, Waterbury and Windham. Many criminal and motor vehicle cases are heard in geographical area courts, which the Judicial Branch [maps by town](https://www.jud.ct.gov/directory/Maps/GA/Default.htm). Estates, trusts, conservatorships and name changes go through the separate [Connecticut Probate Courts](https://www.ctprobate.gov/), with their own locations, forms and e-filing.
+
+People rarely search for a judicial district name. They search for their town and their problem. A few ways to make that work on a site:
+
+- **Office pages, not doorway pages.** Build a page for each real office, with its address, parking and transit notes, hours, and the courthouses that office's lawyers actually appear in. Don't build pages for towns where you have no office and no real connection: Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical location pages made to catch searches as doorway abuse.
+- **Explain the process in Connecticut terms.** A family law page that explains which court hears the case, what the first filing looks like and how long the first steps usually take helps a reader more than generic text written for every state.
+- **Treat probate as its own subject.** An estate planning practice that handles probate administration can explain how the probate court system works and link to the court's own forms, rather than paraphrasing them.
+
+## Should a Connecticut law firm website have Spanish pages?
+
+If your lawyers or staff serve clients in Spanish, yes, and the same goes for Portuguese, Polish or any other language your team really works in. Rule 7.2's commentary lists a lawyer's foreign language ability among the facts a firm may publicize, and Section 2-28A(b)(1)(D) treats language ability as tombstone content.
+
+Do it properly:
+
+- Translate whole pages with a fluent reviewer, not just a banner that says "Se habla español."
+- Make sure a Spanish speaker who calls or fills in the form reaches someone who speaks Spanish, and say on the page who that is.
+- Use separate addresses for each language version so search engines can show the right one, and link the versions to each other.
+- Remember that a foreign-language ad filed with the committee needs an accurate English translation. Build that into the ad budget.
+
+## How should Google Business Profile be set up for a Connecticut firm?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow one profile per real office location with permanent signage, and they treat lawyers as individual practitioners who may have their own profiles when they are public-facing. The name on the profile must be the firm's real-world name, without added keywords such as "Best Hartford Injury Lawyer."
+
+Google says local results are based mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091). Keep the address and phone on each profile identical to the office page, link each profile to that office page rather than the home page, and ask satisfied clients for reviews in a way that follows Google's rules and your own confidentiality duties. For more on planning those pages, see our [guide to practice area pages that earn calls](/blog/practice-area-page-that-earns-calls).
+
+## What should a Connecticut firm check before launch?
+
+- [ ] Every domain used mainly to offer legal services is on the list for the next quarterly filing date
+- [ ] A Connecticut-admitted responsible lawyer and contact information appear on every page
+- [ ] Each fee statement has a costs-and-expenses disclosure in the same type size
+- [ ] Advertised flat fees carry a period or date, and someone owns the ninety-day commitment
+- [ ] Results carry a disclaimer on the same page, right beside the figures
+- [ ] No "specialist," "specializing" or "expert" unless a lawyer holds a recognized certification, with the certifying body named
+- [ ] Trade names and domains don't imply a government or legal aid connection
+- [ ] Out-of-state lawyers' bios state where they are and aren't admitted
+- [ ] Paid search, social and video ads that point to the site are filed before or when they run, with transcripts and translations
+- [ ] A full copy of the site is saved every three months and kept three years after each version comes down
+
+For the wider list that applies in every state, use our [law firm website checklist](/blog/law-firm-website-checklist). Firms that also advertise across the border will find the differences in our [New York](/blog/new-york-law-firm-website-rules) and [Boston](/blog/boston-law-firm-website-design) guides.
+
+## How SaySites builds a Connecticut law firm website
+
+A SaySites law firm site has a page for each practice area, a profile for each attorney with room for bar admissions, certifications with the certifying body's name, and languages spoken, an office page for each location, and a consultation form whose questions change by practice area and can ask for the other party's name so you can run a conflict check before calling back. The footer can carry the responsible Connecticut lawyer and every office address. Pages are described to search engines as a LegalService, each attorney as a Person and each practice area as a Service, and nothing goes live until it passes a 95+ speed check. Sites can be built in English and Spanish.
+
+You make changes in plain words, for example "add the costs and expenses sentence under 'No fee unless we win' on every injury page." Every change is saved as a draft until you approve it, which fits the quarterly review rhythm Connecticut's rules create. SaySites never adds results, reviews or credentials on its own; they appear only when you provide them. Filing your domain list and ads with the Statewide Grievance Committee stays with the firm.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Connecticut site yourself, or [request a free redesign](/redesign) and see your current site rebuilt with your own words before you decide.`,
+    faq: [
+      { q: "Does a Connecticut law firm have to file its website with the Statewide Grievance Committee?", a: "Not the pages. Practice Book Section 2-28A requires lawyers to file a list of the domain names they use primarily to offer legal services, updated quarterly, and exempts the contents of websites under those domains. The committee's FAQ says the list is filed on the first business day of January, April, July and October through Judicial Branch E-Services." },
+      { q: "Do Connecticut lawyers have to file Google Ads and social media ads?", a: "Yes, unless an exemption applies. The Statewide Grievance Committee says all television, radio, print and internet advertisements other than lawyer websites must be filed before or at the same time as their first use. Ads containing only basic facts, such as name, address, phone, practice areas and consultation fee, are exempt under Section 2-28A(b)(1)." },
+      { q: "How long must a Connecticut firm keep copies of its website?", a: "Rule 7.2(b) requires an electronic communication about a lawyer's services to be copied once every three months and kept for three years after its last dissemination, with a record of when and where it was used. A dated capture of every page on each filed domain, saved each quarter, is a practical way to meet it." },
+      { q: "What does a Connecticut law firm website need to say about fees?", a: "Any statement about fees, including contingency phrases such as no fee unless we win, must also say whether and to what extent the client pays court costs and litigation expenses, in the same print size and type. A specific advertised fee or fee range must be honored for at least ninety days unless the communication states a shorter period." },
+      { q: "Can a Connecticut lawyer call themselves a specialist on their website?", a: "Only if the lawyer is currently certified as a specialist by a board approved by the Rules Committee of the Superior Court or by an organization accredited by the American Bar Association, and the certifying organization is clearly named. Other lawyers may say they concentrate in, focus on or limit their practice to a field, as long as it is accurate." },
+      { q: "Does a Connecticut law firm website need a results disclaimer?", a: "The rules don't prescribe exact wording, but the Rule 7.1 commentary says a truthful report of a client result may be misleading without a disclaimer that it was based on the particular facts of that case. Placing a short disclaimer directly beside each result, rather than on a separate notices page, is the safest way to present one." },
+      { q: "How much does a SaySites law firm website cost?", a: "The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, office pages, a consultation form with conflict-check questions, English and Spanish pages, LegalService structured data and a 95+ speed check before any page goes live. You can also ask for a free redesign preview of your current site first." },
+    ],
+    about: ['Connecticut Rules of Professional Conduct', 'Connecticut Practice Book Section 2-28A', 'Lawyer advertising', 'Law firm websites', 'Connecticut'],
+    published: '2026-11-20',
+    status: 'published',
+  },
+  {
+    slug: 'pittsburgh-dental-practice-website-design',
+    title: 'Pittsburgh Dentist Websites: What PA Code 33.203 Allows',
+    description: 'Build a Pittsburgh dental website under Pennsylvania rules: the dentist name on every ad, specialist and general dentist wording, fee notices and trade names.',
+    kind: 'guide',
+    summary: [
+      'Pennsylvania dental advertising is governed by 49 Pa. Code § 33.203. Every advertisement "in any medium" must name at least one dentist, using the name on that dentist\'s current biennial renewal certificate, and every named dentist is responsible for it.',
+      'A practice with a trade name must show a dentist\'s name and degree (D.D.S. or D.M.D.) in lettering at least as large as the practice name, under § 33.202.',
+      'Only dentists who completed an accredited specialty program in a Board-recognized specialty may use words like specialist, orthodontist or endodontist. A general dentist who advertises prosthodontics or oral surgery must say services are provided by a general dentist.',
+      'An advertised minimum fee needs an equally prominent note that the actual fee may vary, and advertised fees or free services must be honored for at least 60 days.',
+      'Trade names can\'t use "clinic" or "institute" without meeting the rule, or use plurals that overstate how many dentists or specialists work there.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1555424221-250de2a343ad?auto=format&fit=crop&w=1600&q=75', alt: 'A red incline car on the slope of Mount Washington, with the rivers meeting at Point State Park and the downtown Pittsburgh skyline beyond' },
+    body: `A Pittsburgh dental practice website has to follow Pennsylvania's dental advertising regulation, 49 Pa. Code § 33.203, and, if the practice uses a trade name, § 33.202 on fictitious names. In short: name at least one dentist exactly as on their current renewal certificate, use "specialist" and specialty titles only if you completed an accredited specialty program in a recognized specialty, add a general dentist disclosure when a general practice advertises a specialty area, attach the required notice to any minimum fee, honor advertised fees for 60 days, and keep the practice name from overstating who works there. Everything else on a good dental site, from insurance pages to new patient forms, is built on top of those rules.
+
+This guide quotes the regulations from the official [Pennsylvania Code](https://www.pacodeandbulletin.gov/Display/pacode?file=/secure/pacode/data/049/chapter33/s33.203.html), explains how each one plays out on a website, and then covers the Pittsburgh side: how patients choose a practice across a city of rivers and neighborhoods, team pages, Medical Assistance plans and Google Business Profile. It is planning guidance, not legal advice. The [State Board of Dentistry](https://www.pa.gov/agencies/dos/department-and-offices/bpoa/boards-commissions/dentistry) and your own counsel settle any close call.
+
+## Do Pennsylvania's dental advertising rules apply to a website?
+
+The regulation was adopted in 1995 and its definition is dated: § 33.203(a) says advertising "includes signs, letterheads, business cards, and printed or broadcast announcements of services to the public." It doesn't mention websites. But the operative requirements are written for "a dental advertisement in any medium," and subsection (a) opens with the purpose of advertising: to give the public "a sufficient basis for making an informed selection of a dentist." A practice website does exactly that, and so do paid search ads, social media ads and directory profiles you control.
+
+The practical reading is to treat every page of the site as advertising. That costs very little, because the rules mostly ask for accurate names, honest titles and clear fee terms, all things a patient wants to see anyway. It also lines up with what Google asks of every site in its guide to [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content): accurate, first-hand information written for the person reading it.
+
+§ 33.203(b) sets the general standard. Advertising is false, misleading or deceptive if it misrepresents a material fact or leaves out a fact needed to keep the whole from misleading, if it is likely to create an unjustified expectation about results, or if it compares your services with other dentists' unless the comparison can be factually substantiated. "Pittsburgh's most advanced dental office" and "pain-free dentistry, guaranteed" are the kinds of lines that fail that test.
+
+## Whose name has to appear, and how?
+
+Subsection (c) requires an advertisement in any medium to contain the name of at least one dentist whose services are being advertised. Each dentist named "shall assume responsibility for the advertisement" and must use the name that appears on their current biennial renewal certificate.
+
+Two consequences for a website:
+
+1. **Use the license name, not a nickname.** If the renewal certificate says "Katherine A. Novak, D.M.D.," a bio headed "Dr. Kate" can keep the friendly tone in the text, but the name line should match the certificate. Patients can check it on the state's [license verification system](https://www.pals.pa.gov/).
+2. **Name the responsible dentist sitewide.** A footer that says "Dental services provided by Katherine A. Novak, D.M.D., and Samuel Ortiz, D.D.S." puts a named dentist on every page, including landing pages that are often built in a hurry for an ad campaign.
+
+If the practice uses a trade name such as "Three Rivers Family Dental," § 33.202 adds more. The practice must register the fictitious name with the Board. Advertisements in any medium must include the name, as on the renewal certificate, and the degree, D.D.S. or D.M.D., of at least one licensed dentist associated with the practice, and "the lettering for the name of the dentist shall be at least equal in size to the lettering used for the fictitious name." On a website, a large logo in the header with the dentist's name in small type at the bottom of the page doesn't match that requirement. Put the dentist's name and degree near the logo, in type at least as large.
+
+Other parts of § 33.202 worth knowing before you choose or redesign a name:
+
+- A fictitious name may not use the word "clinic" unless it designates a public or quasi-public facility as defined in the regulations, and may not use "institute" unless it designates an educational or research facility.
+- A name may not, "by the use of plurals or otherwise," misrepresent how many dentists, or how many specialists, practice there. "Allegheny Orthodontists" with one orthodontist is a problem.
+- A departed dentist's name may stay in use for up to one year.
+
+![PPG Place's Gothic glass spires in downtown Pittsburgh rising behind the yellow steel arch of a river bridge](https://images.unsplash.com/photo-1698622080487-4f3c262217eb?auto=format&fit=crop&w=1200&q=75)
+
+## When can a Pittsburgh dentist say "specialist"?
+
+Only when two conditions in § 33.203(d)(1) are both met: the area is recognized by the Board as a dental specialty, and the dentist has completed a specialty training program approved by the Commission on Dental Accreditation. "Holding out" includes the word "specialist," the phrase "limited to specialty of," and titles such as "endodontist" or "pediatric dentist."
+
+The regulation's list of recognized specialties names eight: dental public health, endodontics, oral and maxillofacial surgery, oral pathology, orthodontics, pediatric dentistry, periodontics and prosthodontics. The national picture has moved since 1995. The [National Commission on Recognition of Dental Specialties and Certifying Boards](https://ncrdscb.ada.org/recognized-dental-specialties) now recognizes 12 specialties, including dental anesthesiology and orofacial pain. If you trained in one of the newer specialties, ask the Board how it applies the rule before your site uses a specialist title.
+
+The rest of subsection (d) shapes how a general practice writes its service pages:
+
+- **General dentists naming a specialty area.** If an ad identifies a service "by a term that designates a recognized specialty," it must conspicuously disclose that services are provided by a general dentist. The regulation's own example: an ad announcing "prosthodontics" or "oral surgery" needs the disclosure, while one announcing "crown and bridge work" or "extractions" doesn't. So a general practice can avoid the disclosure on most pages simply by naming services the way patients do: crowns, bridges, dentures, implants, extractions, root canal treatment.
+- **Specialists offering other services.** An orthodontist who also advertises pediatric dentistry, or a periodontist who advertises implants, must conspicuously disclose that specialty status doesn't extend to those services.
+- **Associates.** A specialist may not imply that general dentists in the practice are specialists. On a team page, give each dentist their own accurate title.
+- **Non-specialty areas.** Nobody may imply that a non-specialty area has specialty status. The regulation says a dentist may not say they "specialize in" TMJ disorders or implantology, but may announce services in, or a practice limited to, diagnosing and treating TMJ disorders or placing implants.
+
+Search the whole site for "specialize," "specializing" and "specialists in," including page titles, image alt text and the meta descriptions that show in search results. "We specialize in cosmetic dentistry" is one of the most common lines on dental sites, and under this rule it's one to rewrite as "Cosmetic dentistry: veneers, bonding and whitening."
+
+## What do the fee and free-service rules require?
+
+Pennsylvania allows fees in ads and sets the terms in subsections (e) through (g) and (k).
+
+- **Minimum fees.** If you advertise a minimum fee ("Implants from $X"), the ad must say that it's the minimum fee for the service and that the actual fee may vary depending on the complexity of treatment. The disclosure must be at least as prominent as the fee, and in writing it must be "at least equal to the fee information in size, legibility and length." A small-print footnote under a large price doesn't meet that.
+- **The 60-day rule.** For at least 60 days after an ad with fees or free services last runs, you can't raise the advertised fee or charge for services advertised as free, unless the ad clearly stated a shorter period. A patient who accepts a treatment plan within that window keeps the advertised price even if treatment happens later. For a website, the cleanest approach is to state the period beside every price ("Offer valid for new patients who schedule by March 31") and keep a dated record of when each price went up and came down.
+- **What the words mean.** Subsection (k) defines terms like examination, treatment planning and oral prophylaxis. An advertised "exam" must be at least as inclusive as the definition, which includes charting of caries, noting periodontal disease, occlusal discrepancies and oral lesions, and a written diagnosis. A "new patient special" that bundles an exam, X-rays and a cleaning should use the terms in the way the regulation defines them.
+- **Materials.** For advertised restorative work, crowns, bridges, partials and dentures, the ad must indicate the type of restoration or prosthesis and the materials used.
+
+If the practice also advertises on radio or television, subsection (i) requires keeping a recorded copy for one year after the final broadcast and furnishing it to the Board within 20 days of a request.
+
+> **Tip:** Put prices on one page, "Fees and offers," with each price, its disclosure and its dates together, and link to that page from treatment pages instead of repeating prices in many places. One page is much easier to keep accurate than twenty.
+
+## How do Pittsburgh patients choose a dental practice?
+
+Geography does a lot of the deciding. Pittsburgh is a city of three rivers, steep hills, bridges and tunnels, and patients tend to think in neighborhoods and commutes rather than straight-line distance. A practice in Lawrenceville and one in Mount Lebanon can serve completely different patients even though both are "Pittsburgh dentists."
+
+That suggests a few things for the site:
+
+- **An honest location page for each office.** Give the street address, the neighborhood name people actually use, parking, the nearest bus routes or busway stop if any, and whether the entrance has steps. Describe the area you're in without inventing a list of every suburb you'd like to rank in. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical pages for many towns as doorway pages.
+- **Hours that fit commuters.** If you open early or stay late certain days, say so on the home page. It's one of the first things people check.
+- **Clear routes for specialty care.** Patients with complex needs often look at large academic clinics too; the [University of Pittsburgh School of Dental Medicine](https://www.dental.pitt.edu/) runs patient care clinics. Explain what you treat in-house and when and where you refer, so a patient knows what to expect.
+
+![The yellow suspension bridges and downtown Pittsburgh skyline seen across the river from a grassy riverfront park on a clear evening](https://images.unsplash.com/photo-1719109220244-d94af277ea4a?auto=format&fit=crop&w=1200&q=75)
+
+## What should the team and insurance pages say?
+
+The team page is where many patients decide, especially nervous ones. A photo, a short bio, the dentist's degree and school, and what they enjoy about their work does more than a paragraph of adjectives. Keep titles accurate for everyone: Pennsylvania licenses dental hygienists and certifies expanded function dental assistants (EFDAs), as the Board's [fee rulemaking](https://www.pa.gov/content/dam/copapwp-pagov/en/dos/department-and-offices/bpoa/dental/PA-Bulletin-Doc-No-22-1689.pdf) describes, so call each person what their credential says.
+
+On insurance, list the plans you're actually in network with, by name, and say plainly how out-of-network claims work. If you accept Pennsylvania Medical Assistance through any of its plans, name those plans too; the Department of Human Services explains the program's [dental services](https://www.pa.gov/agencies/dhs/resources/medicaid/dental-services). Add the date you last checked the list. A patient who calls after reading an outdated insurance page loses trust quickly.
+
+The appointment request form should ask only what you need to call back: name, phone or email, preferred times, new or returning patient, insurance plan and the reason for the visit in the patient's own words. Don't ask for medical history on a public form; collect it at the visit.
+
+## How should Google Business Profile be set up for a Pittsburgh practice?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) say dentists are individual practitioners who may have their own profiles if they're public-facing, alongside one profile for each real office with permanent signage. The profile name must match the name on your sign, without added words like "Best Dentist Pittsburgh." If your sign shows a trade name, use it, and keep the dentist names on the website and in the profile description.
+
+Google says local results rely mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091). Choose the most specific primary category (Dentist, Orthodontist, Pediatric dentist) that matches your actual training under the specialist rule above, keep hours and phone identical to the location page, and link each profile to its own location page. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers reviews. When you reply to a review, don't confirm the person is a patient or mention their treatment.
+
+## What should a Pittsburgh practice check before launch?
+
+- [ ] At least one dentist named on every page, exactly as on the current renewal certificate
+- [ ] With a trade name: a dentist's name and D.D.S. or D.M.D. near the logo, in lettering at least as large as the practice name
+- [ ] No "clinic," "institute" or misleading plurals in the practice name
+- [ ] Specialist titles only for dentists who meet § 33.203(d)(1); disclosures on any specialty-area service a general dentist offers
+- [ ] No "specialize in implants" or "TMJ specialists," including in titles and alt text
+- [ ] Every minimum fee has an equally prominent "actual fee may vary" notice
+- [ ] Every advertised fee or free service has a stated period, with dated records kept
+- [ ] Restorative and prosthetic offers say the type and materials
+- [ ] Insurance and Medical Assistance plans listed by name, with the date last checked
+- [ ] A location page for each real office, and one Business Profile per office with matching details
+
+For the full list that applies to any practice, see our [medical practice website checklist](/blog/medical-practice-website-checklist), and compare how another state handles names and specialties in our [Cleveland dental website guide](/blog/cleveland-dental-practice-website-design).
+
+## How SaySites builds a Pittsburgh dental website
+
+A SaySites dental site starts with the pages patients look for: new patients, insurance and payment, a page for each treatment, the team and a page for each office. The practice is described to Google as a Dentist with its address, phone and hours, and every page passes a 95+ speed check before it goes live. The appointment form can ask nothing clinical, and requests land in a Leads pipeline where your front desk tracks each one from first contact to booked. A booking button can link to the scheduler you already use, and pages can be built in English or Spanish.
+
+You make changes in plain words, for example "put Dr. Novak's full name and D.M.D. next to the logo, in the same size" or "change 'We specialize in implants' to 'Dental implants, placed by a general dentist' on every page." Every change is a draft until you approve it. SaySites never invents reviews, results or credentials; they appear only when you provide them.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Pittsburgh practice's site yourself, or [request a free redesign](/redesign) and see your current site rebuilt with your own content before you decide.`,
+    faq: [
+      { q: "Do Pennsylvania dental advertising rules apply to a practice website?", a: "The regulation's definition of advertising dates from 1995 and lists signs, letterheads, business cards and printed or broadcast announcements, but its requirements apply to a dental advertisement in any medium. The practical approach is to treat the whole website, along with search ads, social ads and directory profiles you control, as advertising under 49 Pa. Code § 33.203." },
+      { q: "Does a Pennsylvania dental website have to name a dentist?", a: "Yes. Every advertisement in any medium must name at least one dentist whose services are advertised, using the name on that dentist's current biennial renewal certificate. If the practice uses a trade name, the dentist's name and degree must also appear in lettering at least as large as the practice name under § 33.202." },
+      { q: "Can a general dentist in Pittsburgh advertise implants or orthodontics?", a: "Yes, with care. A general dentist may list services such as implants, crowns or extractions. If a service is named with a recognized specialty term, such as orthodontics, prosthodontics or oral surgery, the ad must conspicuously disclose that services are provided by a general dentist. No dentist may claim to specialize in implants or TMJ, since those aren't specialties." },
+      { q: "Who can call themselves a dental specialist in Pennsylvania?", a: "A dentist who completed a specialty training program approved by the Commission on Dental Accreditation in an area the State Board of Dentistry recognizes as a specialty. The regulation lists eight areas, including orthodontics, endodontics, periodontics, pediatric dentistry and oral and maxillofacial surgery. Dentists trained in newer specialties should ask the Board how it applies the rule." },
+      { q: "What must a Pennsylvania dental ad say when it lists prices?", a: "An advertised minimum fee needs an equally prominent statement that it is the minimum and the actual fee may vary with the complexity of treatment. Advertised fees and free services must be honored for at least 60 days after the ad last runs unless a shorter period was clearly stated, and offers for crowns, bridges or dentures must state the type and materials." },
+      { q: "Can a Pennsylvania dental practice call itself a clinic?", a: "Only if the name designates a public or quasi-public facility as defined in the dental regulations. Section 33.202 also bars the word institute unless the practice is an educational or research facility, and bars plurals or other wording that misrepresents how many dentists, or how many specialists, practice there." },
+      { q: "How much does a SaySites dental website cost?", a: "The Site plan is $15 a month after a 7-day free trial. It includes a page per treatment, insurance, team and office pages, a new patient request form that asks nothing clinical, Dentist structured data, a Leads pipeline and a 95+ speed check on every page. You can also ask for a free redesign preview of your current site first." },
+    ],
+    about: ['Pennsylvania State Board of Dentistry advertising rules', '49 Pa. Code § 33.203', 'Dental practice websites', 'Pittsburgh, Pennsylvania'],
+    published: '2026-11-20',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
