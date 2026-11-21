@@ -12128,6 +12128,358 @@ The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [
     published: '2026-11-20',
     status: 'published',
   },
+  {
+    slug: 'des-moines-law-firm-website-design',
+    title: "Law Firm Website Design in Des Moines: Iowa's 2021 Rules",
+    description: 'Plan a Des Moines law firm website under Iowa Rules 32:7.1 to 32:7.3: what changed in 2021, specialist claims, fee wording, courts, languages and Google.',
+    kind: 'guide',
+    summary: [
+      'Iowa rewrote its lawyer advertising rules effective January 1, 2021. Rule 32:7.1 bans false or misleading communications and Rule 32:7.2 now holds the specific rules; Rules 32:7.4 and 32:7.5 are reserved.',
+      'Every page needs the name and contact information of at least one lawyer or firm responsible for it. Contact information can be a website address, phone number, email or office location.',
+      'A lawyer may say they are a certified specialist only if the certifying body is state-approved or ABA-accredited and is named. The old required sentence that the Supreme Court of Iowa does not certify specialists is gone.',
+      'Iowa bans contingent fees in criminal defense and in divorce matters tied to the result, so "no fee unless we win" belongs only on pages where a contingent fee is allowed.',
+      'Des Moines sits in the Fifth Judicial District, where the courts\' most requested interpreter languages in 2021 were Spanish, Karen, Swahili, Burmese and Nepali.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1636998836881-abcdf2d36711?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of downtown Des Moines at sunset, with office towers and an orange sky over the city grid' },
+    body: `A Des Moines law firm website has to satisfy the Iowa Rules of Professional Conduct, and those rules got shorter on January 1, 2021. Today the core is three rules: Rule 32:7.1 (nothing false or misleading), Rule 32:7.2 (paying for recommendations, specialist claims and a responsible lawyer's contact information) and Rule 32:7.3 (solicitation). The detailed specialist disclaimer and the separate firm name rule that older Iowa sites were built around no longer exist, so the most useful thing many firms can do is take an old site apart and rebuild it around what the rules ask for now.
+
+This guide quotes the current text of [Chapter 32 of the Iowa Court Rules](https://www.legis.iowa.gov/docs/ACO/CR/LINC/10-30-2026.chapter.32.pdf), published by the Iowa Legislature in its October 2026 court rules listing, and compares it with the [September 2012 version](https://www.legis.iowa.gov/docs/ACO/CR/LINC/09-24-2012.Supplement.pdf) many existing sites were written against. Then it covers what is particular to practicing in Des Moines: the Fifth Judicial District, the courthouse complex, the languages your clients speak and how Google treats a law office. It is a planning aid for the people who build and approve a site. Iowa's lawyers are regulated by the Iowa Supreme Court, and complaints go to the [Iowa Supreme Court Attorney Disciplinary Board](https://iowacourts.gov/opr/about-opr/attorney-disciplinary-board); for a close ethics question, ask ethics counsel or the [Iowa State Bar Association](https://www.iowabar.org/).
+
+## What do Iowa's ethics rules require on a law firm website?
+
+Four things, all short.
+
+1. **Nothing false or misleading (Rule 32:7.1).** A communication is misleading if it "contains a material misrepresentation of fact or law, or omits a fact necessary to make the statement considered as a whole not materially misleading." The comments add that a true statement can still mislead if it leads a reasonable person to a conclusion "for which there is no reasonable factual foundation."
+2. **A responsible lawyer with contact information (Rule 32:7.2(d)).** "Any communication made under this rule must include the name and contact information of at least one lawyer or law firm responsible for its content." Comment [12] says contact information "includes a website address, a telephone number, an email address, or a physical official location."
+3. **Specialist claims only with a named certifier (Rule 32:7.2(c)).** More on this below.
+4. **No paying people to recommend you (Rule 32:7.2(b)),** with exceptions for advertising costs, legal service plans, not-for-profit or qualified referral services, buying a practice, non-exclusive reciprocal referral agreements the client is told about, and nominal thank-you gifts.
+
+That's the whole list of website-specific duties. There is no filing requirement, no mandatory disclaimer text and no required wording about advertising. The weight falls on Rule 32:7.1, which means the real work is reading every claim on the site and asking whether a reasonable person would take something from it that isn't true.
+
+> **Tip:** Put the responsible lawyer's name and the firm's phone number in the site footer. Then every page, including blog posts and practice area pages that people land on from Google, carries the information Rule 32:7.2(d) asks for.
+
+## What changed in 2021, and what should come off an older Iowa site?
+
+The Iowa Supreme Court amended these rules by order on August 28, 2020, effective January 1, 2021. Comparing the 2012 text with today's shows what to look for on a site built before 2021.
+
+| Topic | Before 2021 | Now |
+|---|---|---|
+| Rule 32:7.2 heading | "Advertising" | "Communications concerning a lawyer's services: specific rules" |
+| Required identification | "name and office address" of a responsible lawyer or firm | "name and contact information," which can be a website, phone, email or office |
+| Specialist certification | Rule 32:7.4(d), including a required statement that the Supreme Court of Iowa does not certify specialists | Rule 32:7.2(c): an approved or ABA-accredited certifier, named in the communication |
+| Firm names and URLs | Rule 32:7.5 | Rule 32:7.5 is reserved; the guidance moved to comment [5] of Rule 32:7.1 |
+| Thank-you gifts for referrals | Not addressed | Nominal gifts allowed under Rule 32:7.2(b)(5) |
+
+On an older site, that usually means three edits:
+
+- **Remove the outdated certification disclaimer** if the only reason it's there is the old Rule 32:7.4(d)(4). The current rule doesn't require it. Keep the certifying organization's name next to the claim, which is still required.
+- **Check rule citations in your disclaimers and footers.** A footer that says "this advertisement complies with Rule 32:7.2 and 32:7.5" now cites a reserved rule.
+- **Re-read the firm name and trade name.** Comment [5] says a firm may use a trade name, a distinctive website address or a social media username "that is not misleading," and that a geographic trade name may need an express statement that the firm is not a public legal aid organization. A name like "Polk County Legal Clinic" is the kind of name that comment is talking about.
+
+## When can a Des Moines lawyer say "specialist" or "certified"?
+
+Iowa separates two kinds of claims. Saying you focus on or specialize in an area is allowed, subject to Rule 32:7.1. Comment [9] to Rule 32:7.2 says a lawyer is "generally permitted to state that the lawyer 'concentrates in' or is a 'specialist,' practices a 'specialty,' or 'specializes in' particular fields based on the lawyer's experience, specialized training, or education." So "Our practice is limited to workers' compensation" or "We specialize in farm and estate planning" can be fine if it's true.
+
+Saying you are *certified* as a specialist is different. Rule 32:7.2(c) allows it only if the lawyer "has been certified as a specialist by an organization that has been approved by an appropriate authority of the state or the District of Columbia or a United States Territory or that has been accredited by the American Bar Association," and "the name of the certifying organization is clearly identified in the communication." Iowa doesn't run its own certification program, so in practice this means a national certifying body. Two points for the site:
+
+- Put the full name of the certifying organization in the same sentence or line as the claim, not on a separate credentials page.
+- Don't let a badge do the talking. A certification logo with no name next to it doesn't "clearly identify" the certifier for someone who doesn't recognize the logo.
+
+Patent attorneys and admiralty lawyers are covered by comment [10], which says communications about those practice areas are not prohibited.
+
+![The red steel truss of a pedestrian bridge over the Des Moines River, with downtown office buildings behind it under a clear blue sky](https://images.unsplash.com/photo-1605386846019-fc8df8cb09df?auto=format&fit=crop&w=1200&q=75)
+
+## How should results, reviews and fees be written for an Iowa firm?
+
+**Results.** Comment [3] to Rule 32:7.1 says truthful reports of past results "may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters without reference to the specific factual and legal circumstances of each client's case." The same comment says "the inclusion of an appropriate disclaimer or qualifying language may preclude a finding" that a statement creates unjustified expectations. A practical format for a results page: the type of matter, what happened, one sentence of context about what made the case what it was, and a plain line that every case depends on its own facts. Leave out results you can't document.
+
+**Comparisons.** The same comment warns about "an unsubstantiated comparison of the lawyer's or law firm's services or fees with those of other lawyers or law firms." Phrases like "Iowa's top injury firm" or "lower fees than other Des Moines firms" are comparisons. If you can't back one up, cut it.
+
+**Fees.** Comment [1] to Rule 32:7.2 says lawyers may publish "the basis on which the lawyer's fees are determined, including prices for specific services and payment and credit arrangements." Flat fees for a simple will or an uncontested matter can go on the site. Two fee rules elsewhere in Chapter 32 matter for wording:
+
+- Rule 32:1.5(d) bars a fee in a domestic relations matter that is contingent "upon the securing of a divorce or upon the amount of alimony or support, or property settlement in lieu thereof," and bars "a contingent fee for representing a defendant in a criminal case." A sitewide banner that says "No fee unless we win" would appear on your divorce and criminal defense pages too. Put it only on the pages where a contingent fee is allowed.
+- Rule 32:1.5(c) requires a contingent fee agreement to be in writing and to "clearly notify the client of any expenses for which the client will be liable whether or not the client is the prevailing party." If your injury pages talk about contingent fees, say plainly whether clients may owe case costs, so the page doesn't promise more than the agreement does.
+
+**Reviews and paid referrals.** Rule 32:7.2(b) lets you pay "the reasonable costs of advertisements" and comment [5] allows paying for leads "as long as the lead generator does not recommend the lawyer" and doesn't imply it is referring without payment. On your own site, show only real reviews, quoted exactly, and don't offer anything for them. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers the platform rules.
+
+## Does a contact form or chat count as solicitation in Iowa?
+
+No, if it's used the way most sites use it. Comment [1] to Rule 32:7.3 says a communication "is not a solicitation if it is directed to the general public, such as through a billboard, an Internet banner advertisement, a website or a television commercial, or if it is in response to a request for information or is automatically generated in response to electronic searches." Comment [2] also says live person-to-person contact "does not include chats, text messages, email, personal messages within social media platforms, or other written communications that recipients may easily disregard."
+
+The form itself raises a different duty. Rule 32:1.18 says a person who consults with a lawyer about possibly forming a client-lawyer relationship is a prospective client, and information learned from them is protected even if you never take the case. That's a reason to keep the first form short:
+
+- name, phone and email, and how they prefer to be contacted
+- the practice area, chosen from a list
+- the names of other people involved, so you can run a conflict check before you call
+- a short description in their own words, with a note not to send confidential details yet
+- a plain line that sending the form doesn't make them a client
+
+Not sure where your current site stands? [Request a free redesign](/redesign) and we'll rebuild your existing site with your own content, so you can compare the two side by side before you change anything.
+
+## What does the court landscape look like for Des Moines clients?
+
+Des Moines is in Iowa's Fifth Judicial District, which the Judicial Branch lists as 16 counties: Adair, Adams, Clarke, Dallas, Decatur, Guthrie, Jasper, Lucas, Madison, Marion, Polk, Ringgold, Taylor, Union, Warren and Wayne ([Fifth Judicial District](https://iowacourts.gov/iowa-courts/district-court/judicial-district-5)). Many of your clients will live in the suburbs and small towns around the city, and their cases may be heard in their own county's courthouse rather than downtown. A practice area page that says "We handle cases in Polk, Dallas and Warren counties" is more useful than a generic "serving all of Iowa," and it's a fact you can stand behind.
+
+For Polk County itself, the Judicial Branch's [Polk County page](https://iowacourts.gov/iowa-courts/district-court/judicial-district-5/district/5/county/polk) explains that two buildings in the courthouse complex hold jury trials: the Historic Courthouse at 5th and Mulberry Street, with its accessible public entrance on the 6th Avenue side, and the Criminal Courts Building at 110 6th Avenue, directly across the street. A criminal defense or family law firm can turn that into a short "Going to court in Des Moines" page: which building, where to enter, where to park and what to bring. That kind of page answers questions people search for the night before a hearing, and it's specific to your practice.
+
+Two more facts worth reflecting on the site:
+
+- **Electronic filing is the norm.** The Judicial Branch's [eFile page](https://www.iowacourts.gov/efile) says electronic filing is required in Iowa under the Rules of Electronic Procedure, with exceptions on request. Clients who started a case on their own often have documents in the eFile system already, and your intake page can ask for the case number.
+- **Not everyone can afford you, and some people are looking for free help.** The Judicial Branch has a page for [people representing themselves](https://www.iowacourts.gov/for-the-public/representing-yourself), and [Iowa Legal Aid](https://www.iowalegalaid.org/) provides free help to low-income Iowans. If you offer limited-scope help or payment plans, say so clearly; if you don't, a short line pointing to those resources is a kindness that doesn't cost you a client you could have served.
+
+![A modern low building in Des Moines with wide layered rooflines, a green lawn and two large round sculptures in front under a blue sky](https://images.unsplash.com/photo-1710179721017-22a2d0fbc074?auto=format&fit=crop&w=1200&q=75)
+
+## Which languages should a Des Moines firm plan its site around?
+
+The Iowa Judicial Branch's [Language Access Plan](https://www.iowacourts.gov/static/media/cms/Iowa_Courts_Language_Access_Plan_CC2871A1F73E8.pdf), updated in July 2022, lists the top five languages for which each district needed an interpreter in 2021. For the Fifth District they were Spanish, Karen, Swahili, Burmese and Nepali. Spanish led in every district in the state. The same plan, using 2014 to 2018 American Community Survey estimates, puts Iowa's limited English proficient population at about 7.1 percent of the state.
+
+What that means for a website:
+
+1. **Spanish pages first, written properly.** If your firm takes Spanish-speaking clients, a translated practice area page and a Spanish intake form do more than a "Se habla español" badge. Have a fluent speaker review them, since legal terms translate badly by machine.
+2. **Say exactly who speaks what.** Comment [1] to Rule 32:7.2 lists "a lawyer's foreign language ability" as information a lawyer may publish. Put languages on each attorney and staff profile. If you work with interpreters for Karen, Swahili or Nepali speakers, say "we work with qualified interpreters" rather than implying a lawyer is fluent. That's the Rule 32:7.1 line.
+3. **Explain the court's help, too.** The Judicial Branch keeps a page on [finding court interpreters](https://iowacourts.gov/iowa-courts/court-interpreters/find-an-interpreter). Clients worried about understanding a hearing will want to know interpreters exist.
+
+## How do Des Moines clients search, and which pages win the call?
+
+Most people don't search for a firm name. They search for their problem and their place: "OWI lawyer Des Moines," "workers comp attorney Iowa," "custody lawyer Ankeny." Google says local results are based mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), so the site has to make relevance obvious.
+
+The pages that carry most of that weight:
+
+- **One page per practice area,** each answering the questions a client actually has: what happens first, how long it takes, what it costs, what to bring. Iowa-specific terms matter. Iowa calls drunk driving OWI, and someone searching that term should find it on your page. Our guide to [writing a practice area page that earns calls](/blog/practice-area-page-that-earns-calls) walks through the structure.
+- **Attorney profiles** with admissions, education, languages and any certification with the certifier named.
+- **An office page** with the address, parking, hours and a map, matching your Google Business Profile exactly.
+- **A courts or "what to expect" page** built from the facts above.
+
+Avoid the shortcut of a page for every suburb with the same text and a new town name. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call that kind of thing doorway pages. One genuinely useful page that lists the counties you serve beats twenty copies.
+
+## How should an Iowa firm set up Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) set the rules that matter most for law firms:
+
+- **Use your real name.** The business name must match what's on your sign, letterhead and website. Adding "Best Injury Lawyer Des Moines" to the name breaks the guidelines and can get the profile suspended.
+- **One profile per real office.** A virtual office or a conference room you rent by the hour isn't an office for Google's purposes.
+- **Individual lawyers may have their own profiles** if they're public-facing, alongside the firm's profile. If a firm has a single lawyer, Google allows one profile for the lawyer and firm combined.
+- **Pick the most specific category** that fits, such as personal injury attorney or criminal justice attorney, and keep hours and phone number identical to your website.
+
+When you reply to Google reviews, don't confirm that the reviewer was a client or discuss their matter. Your duty of confidentiality doesn't pause for a one-star review.
+
+![Downtown Des Moines at night seen from above, with lit office towers, streets and parking structures](https://images.unsplash.com/photo-1561576722-c6bccfb931c0?auto=format&fit=crop&w=1200&q=75)
+
+## What structured data should a Des Moines law firm use?
+
+Structured data tells search engines what a page is about in a format they can read. Google's documentation on [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) covers name, address, phone, hours and geographic coordinates. For a law firm, that means describing the firm as a legal service, each lawyer as a person and each practice area as a service.
+
+The one rule to remember: Google's [structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) say markup must describe content that's visible on the page. FAQ markup belongs on a page that shows the same questions and answers, and you should never add review stars for reviews visitors can't see. Our guide to [structured data for local businesses](/blog/structured-data-for-local-businesses) explains the details, and our piece on [Google AI Overviews for law firms](/blog/google-ai-overviews-for-law-firms) covers how clear, quotable pages help in AI answers.
+
+## Des Moines law firm website checklist
+
+- [ ] Responsible lawyer's name and firm contact information in the footer of every page
+- [ ] No outdated Rule 32:7.4 or 32:7.5 citations or old certification disclaimers
+- [ ] Certified-specialist claims name the certifying organization in the same line
+- [ ] "No fee unless we win" only on pages where a contingent fee is allowed
+- [ ] Contingent fee pages say whether clients may owe case costs
+- [ ] Results pages give context and say outcomes depend on each case's facts
+- [ ] No unsupported comparisons with other firms
+- [ ] Short intake form with a conflict-check field and a "this doesn't make you a client" line
+- [ ] Counties you actually serve listed on practice area pages
+- [ ] Languages listed per person; interpreters described honestly
+- [ ] Google Business Profile name matches the sign, one profile per real office
+- [ ] Structured data matches what's visible on each page
+
+For the full national version, see our [law firm website checklist](/blog/law-firm-website-checklist). If you also take cases across the river or the state line, our [Minneapolis guide](/blog/minneapolis-law-firm-website-design) covers Minnesota's rules and our [Kansas City guide](/blog/kansas-city-law-firm-website-design) covers Missouri and Kansas.
+
+## How SaySites builds a Des Moines law firm website
+
+A SaySites law firm site starts with the pages this guide describes: a page for each practice area, a profile for each lawyer with room for admissions, certifications with the certifier's name and languages spoken, an office page and a consultation form whose questions change by practice area and can ask for the other party's name, so you can check conflicts before calling back. The responsible lawyer and the firm's phone number can sit in the footer of every page. Search engines read the firm as a LegalService, each lawyer as a Person and each practice area as a Service, and no page goes live until it passes a 95+ speed check. Pages can be built in English and Spanish.
+
+You make changes by describing them: "remove the Supreme Court certification sentence from Maria's bio but keep the certifying board's name," or "take 'No fee unless we win' off the divorce and OWI pages." Every change waits as a draft until you approve it, so a lawyer reads each word before it's public. SaySites never adds results, reviews or credentials on its own; they appear only when you provide them.
+
+The Law Firm Starter plan is $79 a month ([websites for law firms](/websites-for/law-firms), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Des Moines site yourself, or [request a free redesign](/redesign) and see your current site rebuilt with your own words before you decide.`,
+    faq: [
+      { q: 'Do Iowa lawyers have to file their website with a regulator?', a: 'No. Iowa has no filing or pre-approval requirement for lawyer websites or ads. The site must follow Rules 32:7.1 to 32:7.3: nothing false or misleading, the name and contact information of at least one responsible lawyer or firm, specialist certification claims only with a named certifier, and no paying others to recommend the firm except as the rules allow.' },
+      { q: 'Does an Iowa law firm website still need the statement that the Supreme Court of Iowa does not certify specialists?', a: 'Not under the current rules. That sentence was required by the old Rule 32:7.4(d)(4), which was replaced on January 1, 2021. Today Rule 32:7.2(c) requires that a certified specialist claim come from a state-approved or ABA-accredited organization and that the organization be clearly named in the communication.' },
+      { q: 'What contact information must appear on an Iowa lawyer website?', a: 'Rule 32:7.2(d) requires the name and contact information of at least one lawyer or law firm responsible for the content. Comment [12] says contact information includes a website address, a telephone number, an email address or a physical office location. Putting the responsible lawyer and the firm phone number in the footer covers every page.' },
+      { q: 'Can a Des Moines criminal defense or divorce lawyer advertise "no fee unless we win"?', a: 'No, not for those matters. Iowa Rule 32:1.5(d) bars contingent fees for representing a criminal defendant and bars domestic relations fees that depend on securing a divorce or on the amount of alimony, support or a property settlement. Keep contingent fee language on the practice area pages where it is actually offered.' },
+      { q: 'Is a website chat or contact form solicitation under Iowa Rule 32:7.3?', a: 'Generally no. Comment [1] says a website directed to the general public, or a response to a request for information, is not solicitation, and comment [2] says chats, texts and email are not live person-to-person contact. Information people send through the form is still protected under Rule 32:1.18, so keep the first form short.' },
+      { q: 'Which languages should a Des Moines law firm website support?', a: "Spanish first. The Iowa Judicial Branch's Language Access Plan lists Spanish, Karen, Swahili, Burmese and Nepali as the Fifth Judicial District's most requested interpreter languages in 2021. Translate key pages into Spanish with a fluent reviewer, list each lawyer's languages, and describe interpreter help honestly rather than implying fluency." },
+      { q: 'How much does a SaySites law firm website cost?', a: 'The Law Firm Starter plan is $79 a month after a 7-day free trial. It includes practice area pages, attorney profiles, an office page, a consultation form with a conflict-check question, LegalService structured data, English and Spanish pages and a 95+ speed check on every page. You can also request a free redesign preview of your current site first.' },
+    ],
+    about: ['Iowa Rules of Professional Conduct', 'Iowa Court Rule 32:7.2', 'Law firm websites', 'Des Moines, Iowa'],
+    published: '2026-11-21',
+    status: 'published',
+  },
+  {
+    slug: 'seattle-dental-practice-website-design',
+    title: 'Seattle Dental Websites: Specialty and Health Data Rules',
+    description: 'Plan a Seattle dental website under Washington law: specialist titles, naming dentists, banned superiority claims, My Health My Data and Apple Health.',
+    kind: 'guide',
+    summary: [
+      'Washington dental advertising is governed by RCW 18.32.665 and chapter 246-817 WAC, enforced by the Dental Quality Assurance Commission, which the Department of Health calls the Washington Dental Commission.',
+      'Only a dentist who completed a qualifying two-year accredited program may use specialist, expert, board certified or diplomate titles. Since July 1, 2022, every dentist in a group practice must be identified as a general dentist or a specialist.',
+      'The statute bars claiming superiority over neighboring dentists and publishing reports of cases in advertising, so "Seattle\'s best dentist" and case write-ups need a hard look.',
+      'Washington\'s My Health My Data Act can reach website data that HIPAA doesn\'t cover. Covered businesses must link a separate consumer health data privacy policy from the homepage.',
+      'Apple Health covers dental care for children 20 and under and adults 21 and over, and Seattle\'s 2026 language list starts with Spanish, Chinese, Vietnamese, Somali and Amharic.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1739221356072-bc1f6fd55f89?auto=format&fit=crop&w=1600&q=75', alt: 'The Seattle skyline seen low across the gray water of Puget Sound under heavy storm clouds' },
+    body: `A Seattle dental practice website has to follow Washington's dental advertising law, which is stricter than most states' in three places: who may use specialist titles, which dentists must be named, and a flat ban on claiming superiority over other dentists. On top of that, Washington's My Health My Data Act can apply to information the website collects that HIPAA doesn't cover. Get those right, then build the pages Seattle patients actually look for: treatments, insurance including Apple Health, the team, and a location page that deals honestly with bridges, ferries and parking.
+
+This guide quotes the statute and rules directly: [RCW 18.32.665](https://app.leg.wa.gov/rcw/default.aspx?cite=18.32.665) on advertising, and the specialty, provider disclosure and fee rules in chapter 246-817 of the Washington Administrative Code. These are enforced by the Dental Quality Assurance Commission, which the Department of Health's site now calls the [Washington Dental Commission](https://doh.wa.gov/licenses-permits-and-certificates/professions-new-renew-or-update/dental-assistant/washington-dental-commission). It's a planning aid for dentists and office managers, not legal advice; for a close call, ask the commission or your own counsel.
+
+## What does Washington law say about dental advertising?
+
+The core is one statute. RCW 18.32.665 makes it unlawful to publish "any fraudulent, false, or misleading statements within the state of Washington as to the skill or method of practice of any person or operator," or to advertise "in any way that will tend to deceive or defraud the public." It then names specific things a dental ad may not do:
+
+- "claim superiority over neighboring dental practitioners"
+- "publish reports of cases or certificates of same in any public advertising media"
+- advertise "any anesthetic, drug, formula, medicine, which is either falsely advertised or misnamed"
+- employ "cappers" or "steerers" to bring in patients
+
+The same section expressly allows announcing "credit, terms of credit or installment payments." So payment plans and financing can go on the site.
+
+The commission's rules add detail. [WAC 246-817-390](https://app.leg.wa.gov/wac/default.aspx?cite=246-817-390) says dentists "shall not represent the care being rendered to their patients or the fees being charged for providing such care in a false or misleading manner." [WAC 246-817-410](https://app.leg.wa.gov/wac/default.aspx?cite=246-817-410) says it's misleading to claim membership in "any dental association, society, organization, or any component thereof" when the membership doesn't exist. That last one matters for the row of association logos many dental sites carry in the footer: each logo should reflect a current membership.
+
+## Can a Seattle general dentist call themselves a specialist?
+
+Not unless they meet the training standard. [WAC 246-817-420](https://app.leg.wa.gov/wac/default.aspx?cite=246-817-420) says a dentist may advertise as a specialist only after either:
+
+1. completing a Commission on Dental Accreditation postdoctoral program at least two years long, and being recognized by the National Commission on Recognition of Dental Specialties and Certifying Boards in one of twelve areas: dental anesthesiology, dental public health, endodontics, oral and maxillofacial pathology, oral and maxillofacial radiology, oral and maxillofacial surgery, oral medicine, orofacial pain, orthodontics and dentofacial orthopedics, pediatric dentistry, periodontics or prosthodontics; or
+2. completing an accredited advanced program at least two years long in another special interest area of dentistry.
+
+Everyone else is a general dentist, who "is permitted to render specialty services but shall not advertise or represent themselves as a specialist." Subsection (5) also covers the words around the claim: it's misleading to use "any title to the public as a dental specialist, expert, board certified, or diplomate" without meeting the standard.
+
+On a website, that changes wording more than services. A general dentist can have an Invisalign page, an implants page and a root canal page. What changes is the headline:
+
+| Instead of | Write |
+|---|---|
+| "Seattle implant specialist" | "Dental implants, placed by Dr. Lee, a general dentist" |
+| "Our orthodontic expert" | "Clear aligner treatment in our Capitol Hill office" |
+| "Board certified in cosmetic dentistry" | Name the specific course or credential, without "board certified" |
+
+### What changed for group practices in 2022?
+
+Subsection (5)(a) says that effective July 1, 2022, "a licensed dentist in a group practice that includes two or more dentists must be identified as a general dentist or a specialist." Subsection (5)(b) says a group practice dentist who meets the standard "shall include the area of their specialty." For a team page, that means a label under every dentist's name, such as "General dentist" or "Periodontist," not only under the specialists. Subsection (5)(c) adds that each dentist's qualifications must be available to the public on request, which is a good reason to keep education and training on each profile anyway.
+
+![A red brick Romanesque Revival building on a corner in Seattle's Pioneer Square, with street lamps and storefront windows at street level](https://images.unsplash.com/photo-1741951677463-464d43b13622?auto=format&fit=crop&w=1200&q=75)
+
+## Which dentists must a Washington dental website name?
+
+[WAC 246-817-400](https://app.leg.wa.gov/wac/default.aspx?cite=246-817-400) says a dentist who is present, operating or personally overseeing the work in an office "over fifty percent of the time that such office is being operated, shall identify himself/herself in any representation to the public associated with such office." Any representation that leaves out such a dentist "is misleading, deceptive, or improper conduct." Dentists who are there less than half the time must identify themselves to patients before treatment, and the office must keep a list of them.
+
+For a website, the safe reading is simple: name every dentist who works at a location more than half its open hours, on the page for that location and on the team page. This matters most for practices with a brand name and several offices. A site that shows only the brand, or only the founder, can leave out the dentist a patient will actually see in a particular office.
+
+## What can't a Seattle dental website say?
+
+The superiority ban is the one most sites trip over. "Best dentist in Seattle," "Seattle's top-rated cosmetic dentist" and "better results than other offices" all claim superiority over neighboring dentists, and RCW 18.32.665 doesn't carve out an exception for claims you believe are true. Describe what you do instead: your hours, your technology, your languages, how you handle anxious patients. Those are things a patient can check.
+
+The ban on publishing "reports of cases" in advertising deserves care too. It's old statutory language, and the statute doesn't define it for websites, so before-and-after galleries and treatment stories are a question to put to the commission or your counsel before you publish them. If you do show patient photos with permission, add a plain note that results vary and keep every photo genuine and unretouched beyond basic color correction.
+
+Other lines worth checking:
+
+- **Prices.** WAC 246-817-390 bars misleading fee statements. If you advertise a new patient special, say exactly what's included and what isn't, such as X-rays, and whether insurance can be combined with it.
+- **Sedation and anesthesia.** Name the actual method you use. The statute bars advertising an anesthetic or drug that's "falsely advertised or misnamed," so avoid vague trademarks or invented names for ordinary sedation.
+- **Referral payments.** Don't pay anyone per patient sent. The statute's ban on cappers and steerers is the Washington version of that rule.
+
+## Does Washington's My Health My Data Act apply to a dental website?
+
+It can, and it's the part of a Seattle dental site most practices haven't thought about. The [Attorney General's guidance](https://www.atg.wa.gov/protecting-washingtonians-personal-health-data-and-privacy) describes the [My Health My Data Act](https://app.leg.wa.gov/rcw/default.aspx?cite=19.373) as "the first privacy-focused law in the country to protect personal health data that falls outside the ambit of" HIPAA. Its main sections have applied to most regulated entities since March 31, 2024, and to small businesses since June 30, 2024.
+
+The Act doesn't replace HIPAA for patient records. Its exemptions section, [RCW 19.373.100](https://app.leg.wa.gov/rcw/default.aspx?cite=19.373.100), says the chapter doesn't apply to information that is protected health information under HIPAA or health care information handled under chapter 70.02 RCW. The open question for a practice is the information that sits outside those definitions, such as what a website visitor types into a form before they're a patient, or what third-party tracking tools on the site learn about which treatment pages someone visited. Whether that information is covered depends on the facts, so this is a conversation for your privacy counsel. What you can do on the website side:
+
+1. **Collect less.** An appointment request form needs a name, a phone or email, preferred times, new or returning, insurance and a short reason in the patient's own words. It doesn't need medical history, medications or a tooth chart.
+2. **Know what's on your pages.** Make a list of every analytics tag, advertising pixel, chat widget and embedded booking tool. Ad pixels on treatment pages are the riskiest piece.
+3. **Follow the homepage rule if you're covered.** The AG's FAQ says a covered business must "prominently publish a link to its consumer health data privacy policy on its homepage," and that the policy must be "a separate and distinct link" that doesn't contain information the Act doesn't require. A general privacy page doesn't do that job.
+
+> **Note:** The AG's FAQ also says any violation of the Act is a per se violation of Washington's Consumer Protection Act, enforced by the Attorney General and through private lawsuits. That's why this is worth an hour with counsel even for a small practice.
+
+![The Seattle skyline seen from the open deck of a ferry crossing Elliott Bay, with the ferry's white railings and a porthole in the foreground](https://images.unsplash.com/photo-1758654307553-f067f0367f13?auto=format&fit=crop&w=1200&q=75)
+
+## What should the insurance page say about Apple Health?
+
+Washington's Medicaid program is Apple Health, and the Health Care Authority's [dental care page](https://www.hca.wa.gov/free-or-low-cost-health-care/i-need-medical-dental-or-vision-care/how-do-i-get-dental-care) says dental services are covered directly by Apple Health for children 20 and younger and for adults 21 and older, using the ProviderOne services card. Many Seattle families will look for that before anything else.
+
+So the insurance page should answer three questions plainly:
+
+- **Do you accept Apple Health?** Yes or no, for children, adults or both. If you accept it only for children, say so in the first line.
+- **Which commercial plans are you in network with?** List them by name, and add the date you last checked.
+- **What happens if I'm out of network?** Say whether you bill the insurer for the patient and how payment works.
+
+An insurance page that's out of date costs you trust on the first phone call, so put a reminder on the calendar to review it.
+
+## Which languages should a Seattle dental site plan for?
+
+The City of Seattle's [2026 list of commonly spoken languages](https://www.seattle.gov/documents/Departments/OIRA/2026%20Commonly%20Spoken%20Languages%20in%20Seattle-FINAL.pdf), prepared with the City Demographer from eight data sources, ranks them in this order: Spanish, Chinese, Vietnamese, Somali, Amharic, Tagalog, Korean, Tigrinya, Oromo, Japanese, Russian, Persian, Arabic, Portuguese and French. The report recommends Traditional Chinese for written materials and both Mandarin and Cantonese for spoken help.
+
+For a dental practice, that suggests a practical plan:
+
+1. **Translate the pages that get people in the door.** New patients, insurance, the appointment form and your office page. Spanish is the obvious first language for most of the city, but your own neighborhood may differ; the report links to neighborhood snapshots from the city's planning office.
+2. **List languages per person.** "Dr. Tran speaks Vietnamese" on a profile is concrete and checkable. Add front desk languages too, since that's who answers the phone.
+3. **Say how you handle other languages.** If you use a phone interpreter service, say so. Don't imply fluency you don't have.
+
+## What should a Seattle dental office page say about getting there?
+
+Seattle patients plan trips around water and traffic. A patient coming from the Eastside crosses Lake Washington on a bridge, and one from Bainbridge Island or West Seattle may come by ferry or water taxi. An office page that helps them is more useful than one that only shows a map pin:
+
+- the exact entrance, especially in a medical building or a mixed-use building with a shared lobby
+- parking: whether there's a garage, whether you validate, and where the nearest loading zone is for patients who are dropped off after sedation
+- the nearest bus or light rail stop by name
+- accessibility, including elevator access and step-free entry
+- evening and weekend hours, if you have them
+
+Google says local results depend mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), and the office page is where relevance and distance are made clear. Name the neighborhood you're in, and name the nearby neighborhoods you actually draw from, but don't create a separate page for every neighborhood with the same text. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe pages like that as doorway pages.
+
+![The Seattle waterfront from the Overlook Walk, with the Great Wheel, ferry piers, the stadiums and Elliott Bay under a pale sky](https://images.unsplash.com/photo-1741996656851-359fc8692f6b?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Seattle practice set up Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow one profile for each office with permanent signage and staff during its hours, and they treat dentists as individual practitioners who may have their own public-facing profiles. Three things to get right:
+
+- **The name must match your sign.** Adding "Seattle Cosmetic Dentist" to the business name breaks the guidelines. It would also put a specialty-sounding title in front of patients that WAC 246-817-420 may not allow.
+- **Categories must be accurate.** Choose Dentist unless the dentist on that profile meets the specialist standard. A general dentist shouldn't pick Orthodontist or Periodontist as the primary category.
+- **Reviews are not a place to discuss care.** When you reply, don't confirm the reviewer is a patient or mention their treatment. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers how to ask without breaking Google's rules.
+
+On the website itself, describe the practice to search engines as a Dentist with its address, phone and hours, following Google's [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) documentation, and make sure any FAQ markup matches questions visible on the page.
+
+Want to see what this looks like with your own content? [Start a 7-day free trial](/signup) and build the first version of your practice's site in an afternoon.
+
+## Seattle dental website checklist
+
+- [ ] No "best," "top" or "better than" claims about other dentists
+- [ ] Specialist, expert, board certified and diplomate titles only for dentists who meet WAC 246-817-420
+- [ ] Every dentist in a group practice labeled general dentist or by specialty
+- [ ] Every dentist working at a location more than half its hours named for that location
+- [ ] Association logos only for current memberships
+- [ ] Before-and-after photos and case stories checked with the commission or counsel first
+- [ ] Specials and prices say exactly what's included
+- [ ] Appointment form asks nothing clinical
+- [ ] Analytics, pixels and widgets listed and reviewed for My Health My Data
+- [ ] A separate consumer health data privacy policy linked from the homepage, if the Act applies
+- [ ] Insurance page says whether you accept Apple Health, with the date last checked
+- [ ] Languages listed per person, with key pages translated
+- [ ] Office page covers entrance, parking, transit and accessibility
+- [ ] Google Business Profile name matches the sign; categories match training
+
+The national version is our [medical practice website checklist](/blog/medical-practice-website-checklist). For how another state handles dental specialty claims, see our [Atlanta dental website guide](/blog/atlanta-dental-practice-website-design) and our [Pittsburgh dental website guide](/blog/pittsburgh-dental-practice-website-design).
+
+## How SaySites builds a Seattle dental website
+
+A SaySites dental site comes with the pages above from the start: new patients, insurance and payment, a page for each treatment, the team, and an office page for each location. Each dentist's profile has room for their degree, training and the general dentist or specialty label Washington asks for. The appointment form asks only what the front desk needs to call back, and requests go into a Leads pipeline where your team tracks each one until it's booked. A booking button can link to the scheduler you already use. The practice is described to Google as a Dentist, pages can be built in English and Spanish, and nothing goes live until it passes a 95+ speed check.
+
+Every site gets a plain privacy page, and SaySites counts visits itself; the one cookie it sets, to remember which link or ad brought a visitor, isn't shared with anyone. If your counsel writes a consumer health data privacy policy, you can ask for it as its own page with a link on the homepage. You make changes in plain words, for example "add 'General dentist' under Dr. Park's name on the team page" or "change 'Seattle's best family dentist' to 'Family dentistry in Ballard.'" Each change waits as a draft until you approve it. SaySites never invents reviews, results or credentials.
+
+The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [plans and pricing](/pricing)). [Start a 7-day free trial](/signup) and build it yourself, or [request a free redesign](/redesign) to see your current site rebuilt with your own content before you decide.`,
+    faq: [
+      { q: 'Who regulates dental advertising in Washington?', a: 'The Dental Quality Assurance Commission, part of the Department of Health, which its website now calls the Washington Dental Commission. The rules are RCW 18.32.665, which bans false, misleading and superiority claims, and chapter 246-817 WAC, which covers specialty titles, naming the dentists in an office, fee statements and claimed memberships.' },
+      { q: 'Can a general dentist in Seattle advertise implants or Invisalign?', a: 'Yes. Washington lets a general dentist provide specialty services, but WAC 246-817-420 bars advertising as a specialist, expert, board certified or diplomate without completing a qualifying two-year accredited program. Describe the service and who provides it, for example implants placed by a general dentist, rather than claiming a specialty.' },
+      { q: 'Can a Washington dental website say "best dentist in Seattle"?', a: 'It is risky. RCW 18.32.665 says it is unlawful to claim superiority over neighboring dental practitioners, and the statute has no exception for claims the practice believes are true. Describe things patients can check instead, such as hours, languages, technology and how you care for anxious patients.' },
+      { q: 'Does a dental group practice have to label each dentist?', a: 'Yes. Since July 1, 2022, WAC 246-817-420 requires each dentist in a group practice of two or more dentists to be identified as a general dentist or a specialist, and qualifying specialists must include their specialty. A label under every name on the team page and location pages is the simplest way to show it.' },
+      { q: "Does Washington's My Health My Data Act apply to dental practices?", a: "Partly, depending on the data. The Act exempts HIPAA protected health information and health care information handled under chapter 70.02 RCW, but website data outside those definitions, such as form entries or tracking on treatment pages, may be covered. Covered businesses must link a separate consumer health data privacy policy from their homepage. Ask privacy counsel." },
+      { q: 'Should a Seattle dental website mention Apple Health?', a: 'Yes, clearly. The Health Care Authority says Apple Health covers dental care for children 20 and younger and adults 21 and older with the ProviderOne card, so many families look for it first. Say in the first line of your insurance page whether you accept it, for children, adults or both, and add the date you last checked.' },
+      { q: 'How much does a SaySites dental website cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes treatment, insurance, team and office pages, a dentist profile with room for the general or specialty label, an appointment form that asks nothing clinical, a Leads pipeline, Dentist structured data and a 95+ speed check. You can ask for a free redesign preview first.' },
+    ],
+    about: ['Washington dental advertising law', 'WAC 246-817-420', 'My Health My Data Act', 'Dental practice websites', 'Seattle, Washington'],
+    published: '2026-11-21',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
