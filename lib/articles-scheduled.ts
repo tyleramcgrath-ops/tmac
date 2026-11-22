@@ -12480,6 +12480,361 @@ The Site plan is $15 a month ([websites for dentists](/websites-for/dentists), [
     published: '2026-11-21',
     status: 'published',
   },
+  {
+    slug: 'omaha-law-firm-website-design',
+    title: "Omaha Law Firm Website Design: Nebraska's Ad Rules",
+    description: 'Plan an Omaha law firm website under Nebraska Rules 3-507.1 to 3-507.4: office address, "This is an advertisement," chat, fees, courts and Google.',
+    kind: 'guide',
+    summary: [
+      'Nebraska still asks for the "name and office address" of at least one responsible lawyer or firm in every advertisement, so an Omaha site should show a street address, not only a phone number.',
+      'Emails and other electronic messages that solicit a prospective client must say "This is an advertisement" in the email subject line and at the beginning and end. Replies to people who asked are exempt.',
+      'Live, real-time contact a lawyer starts for paid work is banned, which matters for chat widgets that open a conversation on their own.',
+      'Certified specialist claims need a state-approved or ABA-accredited certifier named in the same communication, and contingent fees are off limits in criminal defense and in divorce matters tied to the result.',
+      'Douglas County is the whole Fourth Judicial District. Sarpy and Cass are the Second, and small claims court in Douglas County does not allow attorneys.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1602431179520-53d9e96063c0?auto=format&fit=crop&w=1600&q=75', alt: 'Omaha skyline at dusk, its lit towers reflected in the still water of the Missouri River under a dark blue sky' },
+    body: `An Omaha law firm website has to follow the Nebraska Rules of Professional Conduct, and Nebraska kept a few requirements that many states dropped when they adopted the American Bar Association's 2018 changes. Your advertising must carry the name and office address of a responsible lawyer or firm. Solicitations sent by email must carry the words "This is an advertisement" in the subject line. And Nebraska still lists the old ban on live, real-time solicitation in a way that reaches some chat tools. Get those right, then build the pages Omaha clients look for: the problem they have, the courthouse they're headed to, and the language they speak.
+
+This guide quotes the rules as the Nebraska Judicial Branch publishes them: [§§ 3-507.1 to 3-507.5, Information About Legal Services](https://supremecourt.nebraska.gov/supreme-court-rules/chapter-3-attorneys-and-practice-law/article-5-nebraska-rules-professional-conduct/%C2%A7%C2%A7-3-5071-3-5075-information-about-legal-services), plus the fee and prospective client rules and three of the Nebraska Ethics Advisory Opinions for Lawyers that bear on websites. It's a planning aid for the people who build and approve a firm's site, not ethics advice. Lawyer conduct in Nebraska falls under the Supreme Court's [attorney discipline and ethics](https://supremecourt.nebraska.gov/administration/professional-ethics/attorney-discipline-ethics) system; for a close question, ask ethics counsel or the [Nebraska State Bar Association](https://www.nebar.com/).
+
+## What do Nebraska's rules require on a law firm website?
+
+Nebraska's information rules are short, and four of them shape a website.
+
+1. **Nothing false or misleading (§ 3-507.1).** The rule bans any communication that "contains a material misrepresentation of fact or law, or omits a fact necessary to make the statement considered as a whole not materially misleading." Comment [2] adds that a true statement is misleading if it is likely to lead a reasonable person "to formulate a specific conclusion about the lawyer or the lawyer's services for which there is no reasonable factual foundation."
+2. **A name and an office address (§ 3-507.2(c)).** "Any communication made pursuant to this rule shall include the name and office address of at least one lawyer or law firm responsible for its content."
+3. **No paying for recommendations (§ 3-507.2(b)),** except advertising costs, the usual charges of a legal service plan or a not-for-profit or qualified referral service, buying a practice under Rule 1.17, and non-exclusive reciprocal referral agreements the client is told about.
+4. **Certification claims only with a named certifier (§ 3-507.4(d)).** More on this below.
+
+Nebraska has no filing requirement for lawyer advertising and no mandatory disclaimer on websites. The rules lean on § 3-507.1, which makes the daily work a careful read of every claim.
+
+### Why the office address matters in Nebraska
+
+Many states now accept any "contact information," including a phone number or a website address. Nebraska's text still says "office address." The simplest way to meet it on every page, including blog posts and practice pages that people reach straight from Google, is a footer that names the responsible lawyer or the firm and gives the street address of an office. A firm with offices in Omaha and Lincoln can list both. A virtual office address that no lawyer works from is a poor fit for a rule that asks for an office.
+
+## When does an email or text need "This is an advertisement"?
+
+This is the Nebraska rule most likely to catch a firm that has added marketing automation to its website. Section 3-507.3(c) says every written, recorded or electronic communication "soliciting professional employment from a prospective client shall include the words 'This is an advertisement' on the outside envelope, if any, and at the beginning and ending of any recorded or electronic communication, and in the subject line of an email." The exceptions are other lawyers and people with a family, close personal or prior professional relationship with the lawyer.
+
+The Nebraska Ethics Advisory Committee explained how this works for email in [Opinion 09-04](https://supremecourt.nebraska.gov/sites/default/files/opinions/09-04_0.pdf). It noted that the subject line language "appears to be unique to Nebraska," concluded that the words in the subject line cover the beginning of the message, and said the words must then also appear at the end of the email. It also held that a newsletter sent to current clients, former clients and people who asked for it doesn't need the words at all.
+
+For a website, the question is who the message goes to:
+
+- **Replies to people who filled in your form.** Comment [7] says the requirement "does not apply to communications sent in response to requests of potential clients." An automatic "we received your request" email, or a lawyer's reply to an inquiry, is a response.
+- **Follow-up sequences to people who went quiet.** Here caution pays. Comment [5] warns that after a permitted communication gets no response, "any further effort to communicate with the prospective client may violate the provisions of paragraph (b)." A drip campaign that keeps emailing someone who never replied deserves a lawyer's review before it's switched on.
+- **Lists you bought or built from public records.** Messages to people who never contacted you are solicitations, so they need the words in the subject line and at the end, and they must stop as soon as someone asks.
+
+> **Tip:** If your site's form feeds an email tool, set up the automatic reply as a plain confirmation with your office address and next steps. Keep any later marketing emails on a separate list that people join on purpose.
+
+## Can an Omaha firm use live chat on its website?
+
+Yes, with care about who starts the conversation. Section 3-507.3(a) bars a lawyer from soliciting professional employment "by in-person, live telephone or real-time electronic contact" when a significant motive is the lawyer's pecuniary gain, unless the person is a lawyer or has a family, close personal or prior professional relationship with the lawyer. Comment [3] to § 3-507.2 points to that rule as "the prohibition against the solicitation of a prospective client through a real-time electronic exchange that is not initiated by the prospective client."
+
+That last phrase is the practical test. A chat box that sits quietly in the corner until a visitor types a question is a conversation the visitor started. A widget that pops open and has a live operator press someone to sign up looks more like the contact the rule describes. Nebraska's comments were written before today's chat tools, so treat this as a question for ethics counsel, and set the tool up conservatively:
+
+- let the visitor start the chat
+- have the first reply collect contact details and the type of matter, not argue for hiring the firm
+- make sure whoever answers, a person or software, doesn't give legal advice or promise results
+- end with a clear next step, such as a call from a lawyer
+
+The information people type into a chat or form is protected, too. Section 3-501.18 says a person "who discusses with a lawyer the possibility of forming a client-lawyer relationship" is a prospective client, and that information learned in the consultation can't be used or revealed even if no relationship follows. That's a reason to keep intake short and ask people not to send confidential details until you've checked conflicts.
+
+![Aerial view of Omaha at dusk, with downtown beside the Missouri River and a pedestrian bridge lit in pink and green stretching across the water](https://images.unsplash.com/photo-1654719727371-4032696d3464?auto=format&fit=crop&w=1200&q=75)
+
+## What can a Nebraska lawyer say about specialties and results?
+
+**Fields of practice.** Section 3-507.4(a) lets a lawyer say they do or don't practice in particular fields. Comment [1] adds that a lawyer "is generally permitted to state that the lawyer is a 'specialist,' practices a 'specialty' or 'specializes in' particular fields," subject to the false and misleading standard. "Our practice is limited to workers' compensation" is fine if it's true.
+
+**Certification.** Section 3-507.4(d) is stricter. A lawyer may not state or imply certification as a specialist unless the certifying organization "has been approved by an appropriate state authority or that has been accredited by the American Bar Association," and "the name of the certifying organization is clearly identified in the communication." On a website that means the certifier's full name beside the claim on the profile and on any practice page that mentions it. A badge alone doesn't name anyone to a reader who doesn't know the logo. Patent attorneys and admiralty lawyers have their own permitted designations in paragraphs (b) and (c).
+
+**Results and comparisons.** Comment [3] to § 3-507.1 warns that even accurate reports of past wins can mislead when they suggest a new client can expect the same outcome "without reference to the specific factual and legal circumstances of each client's case," and it treats "an unsubstantiated comparison" with other firms the same way. The same comment says a disclaimer or qualifying language may prevent a finding that a statement misleads. So a verdicts page works best as short case notes: what kind of matter it was, what happened, why the facts were unusual, and a line reminding readers that their own case will turn on its own facts. "Omaha's top trial firm" is a comparison; keep it only if you can prove it.
+
+**Firm names.** Section 3-507.5 is now reserved, and firm name guidance sits in comment [5] to § 3-507.1, which the Judicial Branch shows as amended March 25, 2020. Trade names and distinctive website addresses are allowed if they aren't misleading, and a geographic trade name may need a statement that the firm is not a public legal aid organization. [Opinion 19-02](https://supremecourt.nebraska.gov/sites/default/files/opinions/19-02.pdf) addressed a trade name under the earlier version of § 3-507.5, so read it with that change in mind.
+
+## How should fees be written on an Omaha firm's site?
+
+Nebraska's comments expressly allow a lawyer to publish how fees are set, prices for particular services and payment or credit terms (comment [2] to § 3-507.2). Posting a flat price for a basic estate plan or an uncontested name change is fine. Two parts of the fee rule, [§ 3-501.5](https://supremecourt.nebraska.gov/supreme-court-rules/chapter-3-attorneys-and-practice-law/article-5-nebraska-rules-professional-conduct/%C2%A7%C2%A7-3-5011-3-50118-client-lawyer-relationship/%C2%A7-3-5015-fees), affect wording:
+
+- **Where "no fee unless we win" can go.** Paragraph (d) forbids divorce-related fees that depend on getting the divorce or on the size of alimony, support or a property settlement, and forbids contingent fees for criminal defendants. A header banner with that promise would show up on your divorce and DUI pages, so place it on the injury and other pages where contingent fees are actually offered.
+- **What contingent fee pages should say about costs.** Paragraph (c) requires a written agreement, signed by the client, that explains whether expenses come out before or after the fee and tells the client which costs they owe even if they lose. Match the web page to that agreement: if clients can owe filing fees or expert costs after a loss, the page shouldn't imply the case is free.
+
+Directories and lead services are covered by § 3-507.2(b) and comment [5], which allows paying for advertising such as "on-line directory listings" but not paying anyone for recommending you. [Opinion 07-05](https://supremecourt.nebraska.gov/sites/default/files/opinions/07-05_0.pdf) approved an online lawyer directory on conditions that include no recommendation of a particular lawyer, a reasonable fee fixed for a period of time and a disclaimer that it is a directory, not a referral service.
+
+Want to see your own site rebuilt around these rules before you change anything? [Request a free redesign](/redesign) and we'll rebuild your current site with your own content so you can compare the two side by side.
+
+## Which courts should an Omaha firm's pages describe?
+
+The Judicial Branch's [District 4 page](https://supremecourt.nebraska.gov/courts/districts/4) says the Fourth Judicial District "is comprised of Douglas County." Its district court and county court sit in the Hall of Justice at 1701 Farnam Street, and the Separate Juvenile Court is at 1717 Harney Street. Clients in Bellevue, Papillion or La Vista are in a different district: the [District 2 page](https://supremecourt.nebraska.gov/courts/districts/2) lists Cass and Sarpy counties. A practice page that says which counties you handle cases in is more useful than "serving all of Nebraska."
+
+The [Douglas County Court page](https://supremecourt.nebraska.gov/douglas-county-court) gives details clients search for before a hearing:
+
+| Division | Where | What it handles, per the court |
+|---|---|---|
+| Criminal/Traffic | Hall of Justice, 2nd floor | Misdemeanors including DUI, traffic and ordinance violations, plus preliminary hearings in felony cases |
+| Probate | Hall of Justice, 3rd floor | Estates, guardianships, conservatorships and adoptions |
+| Civil and Small Claims | Douglas County Civic Center, 1819 Farnam Street | Civil cases up to $70,000; small claims up to $7,500 |
+
+One line on that page should change how some firms write their pages: in small claims court "attorneys are not allowed, and the parties involved must represent themselves." A collections or landlord-tenant page shouldn't suggest you can appear for a client there. You can still offer to help someone prepare, or explain when a case belongs in county or district court instead.
+
+Federal cases in Omaha go to the Roman L. Hruska Federal Courthouse at 111 South 18th Plaza, according to the [U.S. District Court for the District of Nebraska](https://www.ned.uscourts.gov/). And across the Missouri River, Council Bluffs is in Iowa, under different rules and courts. If your lawyers are admitted there, see our [Des Moines guide](/blog/des-moines-law-firm-website-design) for Iowa's rules, and say on each profile which states each lawyer is admitted in.
+
+For people who can't afford a lawyer, the Judicial Branch runs a [self-help center](https://supremecourt.nebraska.gov/self-help) and [Legal Aid of Nebraska](https://www.legalaidofnebraska.org/) provides free civil legal help. A short line pointing to them on a fees page helps people you can't serve and costs you nothing.
+
+![Red steel light towers along a landscaped riverfront path in downtown Omaha, with office towers rising behind under a blue sky with white clouds](https://images.unsplash.com/photo-1690902931210-a62ed3239dfe?auto=format&fit=crop&w=1200&q=75)
+
+## Which languages should an Omaha firm plan for?
+
+The Nebraska Judicial Branch's [2019 Language Access Plan](https://supremecourt.nebraska.gov/sites/default/files/2019_Language_Access_Plan_-_FINAL.pdf) says Spanish "is the most frequently requested language," and that courts and probation offices have also requested interpretation in Burmese, Dinka, Farsi, Hebrew, Japanese, Nepali, Romanian, Tagalog and Ukrainian, among others. The courts' [language access page](https://supremecourt.nebraska.gov/programs-services/interpreters) offers language rights videos in Arabic, Somali and Spanish.
+
+For a website:
+
+1. **Spanish first, written by a fluent reviewer.** A Spanish practice page and a Spanish intake form do more than a "Se habla español" badge, and legal terms translate badly by machine.
+2. **Languages per person.** Comment [2] to § 3-507.2 lists "a lawyer's foreign language ability" as information you may publish. Put languages on each lawyer and staff profile, including whoever answers the phone.
+3. **Honest interpreter language.** If you use interpreters for Arabic or Somali speakers, say "we work with qualified interpreters." Implying a lawyer is fluent when they aren't is the kind of statement § 3-507.1 is about.
+
+## How do Omaha clients search, and which pages win the call?
+
+People search for their problem and their place: "DUI lawyer Omaha," "probate attorney Douglas County," "workers comp lawyer Nebraska." Google says local results are based mainly on [relevance, distance and prominence](https://support.google.com/business/answer/7091), and a firm's own pages carry the relevance part.
+
+- **A page for each kind of case** that walks a nervous reader through the first week, the likely timeline, the fee arrangement and the documents to gather. Use the words Nebraskans use; the county court lists drunk driving as DUI. See [how to build a practice area page that earns calls](/blog/practice-area-page-that-earns-calls).
+- **Bios that answer "can this lawyer help me?":** state and federal admissions, schooling, languages spoken and any certification, with its certifier.
+- **A contact page** repeating the footer's street address, with parking near Farnam Street, office hours and a map, worded exactly like your Business Profile.
+- **A "going to court in Omaha" page** built from the courthouse details above.
+
+Don't publish a near-copy page for every suburb with a new town name in it. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) describe that as doorway pages, and Google's guidance on [helpful, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether a page was made for people or for search engines. One useful page that lists the counties you serve does the job.
+
+## How should an Omaha firm set up Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) line up neatly with Nebraska's office address rule, because both care about real places. Three habits keep a firm's profile safe:
+
+- **Keep the profile name identical to the name on the door.** Stuffing in words like "DUI Lawyer Omaha" is against Google's rules and puts the listing at risk.
+- **List only offices that people staff during posted hours.** A Lincoln satellite office with regular hours can have its own profile; a mailbox can't. Lawyers who meet clients may have individual profiles too, and a solo lawyer can use one combined profile.
+- **Match the details.** The category, phone number and hours should be the same on the profile, the website footer and the contact page.
+
+Reply to reviews without confirming the person was a client and without mentioning their case. For asking clients for reviews within Google's policies, see [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way).
+
+On the site, describe the firm to search engines with structured data following Google's [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) documentation, and remember Google's [structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies): markup must describe what visitors can see. Our guide to [Google AI Overviews for law firms](/blog/google-ai-overviews-for-law-firms) explains why clear, quotable pages help in AI answers as well.
+
+## Omaha law firm website checklist
+
+- [ ] Responsible lawyer or firm name and a street office address in the footer of every page
+- [ ] Any "certified" claim carries the certifier's full name
+- [ ] Verdict notes include context and a reminder that every case is different; no unprovable comparisons
+- [ ] "No fee unless we win" only on pages for matters where contingent fees are allowed
+- [ ] Injury pages match the fee agreement on costs owed after a loss
+- [ ] Auto-replies to form submissions kept as plain confirmations
+- [ ] Marketing emails to people who didn't ask carry "This is an advertisement" in the subject line and at the end
+- [ ] Chat waits for the visitor to start and doesn't give advice
+- [ ] Short intake form with a conflict-check question and a note not to send confidential details yet
+- [ ] Counties you serve named, with Douglas and Sarpy courts described correctly
+- [ ] Nothing suggests you can appear in Douglas County small claims court
+- [ ] Each bio lists the languages that person speaks; interpreter help described as interpreter help
+- [ ] Business Profile name copied from the sign; markup only for what's on the page
+
+Our [national law firm website checklist](/blog/law-firm-website-checklist) covers the basics every state shares. If you also take cases to the south, Missouri and Kansas rules are in our [Kansas City guide](/blog/kansas-city-law-firm-website-design).
+
+## How SaySites builds an Omaha law firm website
+
+Most of this checklist is built in. Your footer can carry the responsible lawyer and the Farnam Street (or Dodge Street, or Lincoln) office address on every page. Each practice area gets its own page, each lawyer gets a bio with fields for admissions, languages and a named certifier, and the consultation form changes its questions by case type and asks who the other side is, so conflicts get checked before anyone calls back. Behind the scenes, the firm is marked up as a LegalService with its lawyers and services, pages can go up in English and Spanish, and every page has to clear a 95+ speed check before it's published.
+
+Edits happen by asking for them: "put the Lincoln address under the Omaha one in the footer," "remove 'no fee unless we win' from the divorce page." Nothing changes on the live site until a lawyer approves the draft. And SaySites won't invent verdicts, reviews or credentials; it only shows what you give it.
+
+Law Firm Starter costs $79 a month ([see websites for law firms](/websites-for/law-firms) and [all plans](/pricing)). You can [try it free for 7 days](/signup) and set up the site yourself, or [ask for a free redesign](/redesign) and see your current Omaha site rebuilt from your own content first.`,
+    faq: [
+      { q: 'What contact information does a Nebraska law firm website need?', a: 'Nebraska Rule § 3-507.2(c) requires the name and office address of at least one lawyer or law firm responsible for the content. Unlike states that accept a phone number or website address, Nebraska says office address, so the safest approach is a footer on every page with the responsible lawyer or firm and the street address of a real office.' },
+      { q: 'Do Nebraska lawyers have to put "This is an advertisement" on emails?', a: 'Only on solicitations to prospective clients who did not ask to hear from you. Section 3-507.3(c) requires the words in the email subject line and at the beginning and end, and Ethics Opinion 09-04 says the subject line covers the beginning. Replies to people who contacted you, and newsletters to clients and requesters, are exempt.' },
+      { q: 'Can an Omaha law firm use a chat widget on its website?', a: 'Generally yes, if the visitor starts the conversation. Section 3-507.3(a) bans live, real-time electronic solicitation a lawyer initiates for pecuniary gain, and a comment describes the concern as an exchange not initiated by the prospective client. Let visitors open the chat, collect basic details only, avoid legal advice and ask ethics counsel about your setup.' },
+      { q: 'Can a Nebraska lawyer call themselves a certified specialist online?', a: 'Only if the certifying organization is approved by an appropriate state authority or accredited by the American Bar Association, and the organization is clearly named in the same communication, under § 3-507.4(d). Saying you specialize in or limit your practice to a field is allowed if true, but the word certified needs the named certifier beside it.' },
+      { q: 'Can an Omaha divorce or DUI lawyer advertise "no fee unless we win"?', a: 'No, not for those matters. Nebraska Rule § 3-501.5(d) bars domestic relations fees contingent on securing a divorce or on the amount of alimony, support or a property settlement, and bars contingent fees for criminal defendants. Keep that promise on practice pages for matters where a contingent fee is allowed, such as many injury cases.' },
+      { q: 'Should an Omaha law firm offer help with small claims cases?', a: 'Be careful how you word it. The Douglas County Court says small claims cases are limited to $7,500 and that attorneys are not allowed, so parties represent themselves. A page can offer help preparing a claim or explain when a dispute belongs in regular county court, where civil cases up to $70,000 are heard, but should not promise courtroom representation.' },
+      { q: 'What does a SaySites website for an Omaha firm cost?', a: 'Law Firm Starter is $79 a month, and the first 7 days are free. That covers a page per practice area, lawyer bios with admissions and languages, a footer with your office address, a consultation form that asks about the other party, LegalService markup, Spanish pages if you want them and a 95+ speed check. A free redesign preview is available too.' },
+    ],
+    about: ['Nebraska Rules of Professional Conduct', 'Neb. Ct. R. of Prof. Cond. § 3-507.3', 'Law firm websites', 'Omaha, Nebraska'],
+    published: '2026-11-22',
+    status: 'published',
+  },
+  {
+    slug: 'charlotte-dental-practice-website-design',
+    title: 'Charlotte Dental Website Design: NC Advertising Rules',
+    description: 'Build a Charlotte dental website under North Carolina rules: naming each dentist, specialist claims, fee and discount wording, testimonials and NC Medicaid.',
+    kind: 'guide',
+    summary: [
+      "North Carolina's dental advertising rules are in 21 NCAC 16P, backed by G.S. 90-41(a)(16) to (18), which lets the Board of Dental Examiners discipline dentists for misleading advertising.",
+      'Every advertisement must name the dentist or dentists whose services it promotes and state prominently whether each is a general dentist or a qualified specialist.',
+      'Specialist claims need an accredited postdoctoral program or a qualifying specialty board, and a dentist certified by a board must name it and say where its criteria can be found.',
+      'Advertised fee ranges need the factors behind them, related services with extra fees must be listed, and discounts must state the amount with a standard fee list available on request.',
+      'NC Medicaid covers dental care outside its managed care health plans, through NC Medicaid Direct, so a patient can see any dentist who takes Medicaid.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1660585238415-517de72185d5?auto=format&fit=crop&w=1600&q=75', alt: 'The uptown Charlotte skyline seen from the west, with glass office towers rising above a line of green and autumn trees under a pale sky' },
+    body: `Before a Charlotte dental website can win patients, it has to clear North Carolina's dental advertising rules, and they're more specific than most states' about three things: naming the dentist behind each advertised service, labeling that dentist a general dentist or a specialist, and spelling out what a quoted fee or discount really includes. A site that gets those right, then answers the questions Charlotte patients bring (insurance and NC Medicaid, the team, where to park, which languages you speak) has done most of the work.
+
+The rules are short. North Carolina's Board of Dental Examiners has five advertising rules in [21 NCAC 16P](http://reports.oah.state.nc.us/ncac/title%2021%20-%20occupational%20licensing%20boards%20and%20commissions/chapter%2016%20-%20dental%20examiners/subchapter%20p/subchapter%20p%20rules.pdf), published by the Office of Administrative Hearings, and the board's power to discipline comes from [G.S. 90-41](https://www.ncleg.gov/EnactedLegislation/Statutes/HTML/BySection/Chapter_90/GS_90-41.html). This guide quotes both. Use it to plan and review your pages; it isn't legal advice, and the board or your attorney should settle any borderline wording.
+
+## What does North Carolina law say about dental advertising?
+
+G.S. 90-41(a) lists grounds on which the board may discipline a dentist. Three are about marketing. Subdivision (16) covers a dentist who "has made fraudulent or misleading statements pertaining to his skill, knowledge, or method of treatment or practice." Subdivision (18) covers one who has "directly or indirectly, published or caused to be published or disseminated any advertisement for professional patronage or business which is untruthful, fraudulent, misleading, or in any way inconsistent with rules and regulations issued by the Board of Dental Examiners governing the time, place, or manner of such advertisements."
+
+The words "directly or indirectly" matter for websites. A marketing agency, a dental service organization or a web builder may write your pages, but the advertisement is still yours.
+
+The board's general rule, 21 NCAC 16P .0101, says a dentist "shall not make a false or misleading communication about the dentist or the dentist's services," and then lists five ways a communication becomes false or misleading. It:
+
+1. "Contains a material misrepresentation of fact"
+2. "Is likely to mislead or deceive because it makes only a partial disclosure of relevant facts"
+3. "Is intended or is likely to create false or unjustified expectations of favorable results"
+4. "Contains express or implied claims of superiority which cannot reasonably be substantiated by the advertising practitioner"
+5. "Contains other representations or implications which are intended or likely to cause an ordinary, prudent person to misunderstand or be deceived"
+
+Item 2 is the one most websites trip over without noticing, because a special offer or a price that leaves out a required step is a partial disclosure. More on that in the fees section.
+
+## Which dentists does a North Carolina dental website have to name?
+
+All of them, wherever their services are advertised. Rule .0102 says "all advertisements of dental services shall contain the name or names of the dentist or dentists whose services are being advertised and shall state whether each dentist is a general dentist or, if qualified, a specialist in the named area of specialization." It adds that the name and designation "shall be stated prominently," and that the dentist whose services are advertised "shall be personally responsible for determining that the content of the advertisement is not contrary to North Carolina law or Board rules."
+
+On a website, that has a few practical consequences:
+
+- **Service pages need a byline.** An implants page, an Invisalign page or a whitening page advertises a service, so it should say who provides it: "Implants placed by Dr. Maria Lopez, general dentist." A small line at the very bottom isn't "prominent." Put it near the top, under the headline.
+- **The team page needs a label under every name.** "General dentist" under each general dentist, and the specialty under each qualified specialist.
+- **Brand names don't replace dentist names.** A practice that markets under a brand, or a group with several Charlotte offices, still has to name the dentist on each office page and each service page that promotes that office's care.
+- **Someone has to own the review.** Because the dentist is personally responsible for the content, build a habit of having that dentist approve each page before it's published, and again after any edit.
+
+> **Tip:** When a dentist leaves the practice, update every page that names them the same week, including service pages and location pages, and replace the byline with whoever now provides the care.
+
+## When can a Charlotte dentist use the word "specialist"?
+
+Rule .0105 sets two routes. A dentist may hold out as a specialist in a practice area only after completing "a qualifying postdoctoral educational program," which the rule defines as a postdoctoral advanced dental education program "accredited by an agency recognized by the U.S. Department of Education," or by holding "a current certification by a qualifying specialty board or organization."
+
+For the second route, paragraph (d) lists what the board looks at in deciding whether a certifying organization qualifies, including an educational program similar in scope to a postdoctoral program, a written or oral examination with psychometric validation, recertification rules, bylaws and a code of ethics, staff who answer consumer inquiries, and recognition by an outside body that evaluates specialty boards. It says programs "that require solely experiential training, continuing education classes, on-the-job training, or payment to the specialty board" don't qualify.
+
+Two duties follow for the website:
+
+- **Board-certified specialists must name the board.** Paragraph (e) requires a dentist who qualifies through a specialty board to "disclose in the advertisement or communication the specialty board by which the dentist was certified and provide information about the certification criteria or where the certification criteria may be located." A link from the profile to the board's criteria page does this neatly.
+- **General dentists who focus on one area must say so.** Paragraph (g) lets a dentist who doesn't qualify limit their practice and advertise those services, as long as the advertisements "do not include the term 'specialist,' or any variation of that term, and must state that the services advertised are to be provided by a general dentist."
+
+The words "any variation" reach further than people expect. Here are rewrites that keep the service and drop the claim:
+
+| Instead of | Write |
+|---|---|
+| "Charlotte's implant specialists" | "Dental implants by Dr. Chen, a general dentist" |
+| "Cosmetic specialist" | "Cosmetic dentistry by our general dentists" |
+| "Specializing in clear aligners" | "Clear aligner treatment, provided by a general dentist" |
+
+Paragraph (f) also requires dentists to keep documentation of their program or certification and provide it to the board on request. Keep a copy in the same folder as your website copy, so the person updating the site can check a title before it goes up.
+
+![Uptown Charlotte at night under heavy dark clouds, with the lit crown of a tall office tower at the center and hotels and office buildings glowing around it](https://images.unsplash.com/photo-1588434487755-e211e0aae297?auto=format&fit=crop&w=1200&q=75)
+
+## How should a North Carolina dental site advertise fees and specials?
+
+Rule .0103 has three requirements that apply to every price on the site. Advertisements of dental services shall:
+
+1. "Not quote a range of fees for a given service unless the basic factors upon which the actual fees will be determined are disclosed"
+2. "Specify any related services which usually are required in conjunction with the advertised services and for which additional fees will be charged"
+3. "If discounts are advertised, state the amount of the discounts," with the dentist available to provide "upon request a list of actual standard fees to which the discounts will be applied"
+
+Here is how that plays out with the offers Charlotte practices commonly run:
+
+- **New patient specials.** "New patient exam, cleaning and X-rays, $99" should say which X-rays are included, that a deep cleaning costs extra if the dentist finds it's needed, and whether the price can be combined with insurance. Leaving out the deep cleaning possibility is the "partial disclosure" problem from Rule .0101.
+- **Price ranges.** "Implants from $X to $Y" needs the factors behind the range: the number of implants, whether bone grafting or extractions are needed, the type of crown. Without them, a range is exactly what the rule restricts.
+- **Package prices.** An implant price should say whether it includes the abutment and crown, or only the implant post, because those are the "related services which usually are required."
+- **Discounts and membership plans.** "15% off for members" meets the rule's amount requirement. "Big savings for members" doesn't. Have a current standard fee list ready, since the rule says the dentist must provide it on request.
+
+Financing and payment plans can go on the site too; just describe them accurately, including who the lender is if it's a third party.
+
+## Can a Charlotte dental website use testimonials and patient photos?
+
+Yes, within limits. Rule .0104 says advertisements shall not "include false or misleading testimonials and endorsements" or "reveal a patient's identity or personally identifiable facts, data or other information obtained in a professional capacity without first obtaining the patient's consent."
+
+For a website, that means:
+
+- **Quote real patients exactly,** and only with their permission. Don't edit a review to make it say more than the patient said.
+- **Get written consent before a name, photo or story appears,** and keep the consent with the patient's record. A smile photo is personally identifiable.
+- **Don't let testimonials promise results.** "Pain-free, perfect results every time" in a patient's voice is still your advertisement, and Rule .0101(3) bars creating "false or unjustified expectations of favorable results." A short note that results vary keeps a before-and-after gallery honest.
+- **Never pay or reward patients for reviews** you then publish as unsolicited. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) covers Google's own rules.
+
+Your privacy obligations as a covered health care provider apply to all of this too, so check your consent form with whoever advises you on patient privacy.
+
+Not sure how your current site measures up? [Request a free redesign](/redesign) and we'll rebuild your site with your own content, so you can compare the two before changing anything.
+
+## What should a Charlotte practice's insurance page say about NC Medicaid?
+
+NC Medicaid's managed care health plans don't cover dental care. NC Medicaid's fact sheet on [services carved out of managed care](https://medicaid.ncdhhs.gov/fact-sheet-services-carved-out-nc-medicaid-managed-care/open) lists dental services among the benefits that "are covered by NC Medicaid Direct," and says beneficiaries can get these services "from any provider who takes Medicaid." The program's [dental and orthodontic page](https://medicaid.ncdhhs.gov/providers/programs-and-services/dental-and-orthodontic) describes covered dental services as diagnostic, preventive or corrective procedures provided or supervised by a dentist, and its [dental services clinical coverage policy](https://medicaid.ncdhhs.gov/4a-dental-services/open) sets out what's covered and the added protections for beneficiaries under 21.
+
+That affects how you word the page. A family whose medical coverage comes through a health plan may assume they need a dentist in that plan's network. If you're enrolled with NC Medicaid, say so in plain words: "We accept NC Medicaid for children and adults," or "for children only," whichever is true. Don't list the managed care health plans as your dental networks. Families can also look you up in NC Medicaid's [dental provider directory](https://medicaid.ncdhhs.gov/find-a-doctor/medicaid-dental-providers), so make sure the practice name there matches your website and sign.
+
+Charlotte also draws patients from across the South Carolina line. NC Medicaid and South Carolina's Medicaid program are separate, so if you accept one and not the other, say which. For commercial insurance, list the plans you're in network with by name, add the date you last checked, and explain what happens if a patient is out of network.
+
+## What should a Charlotte dental office page include?
+
+Charlotte patients plan a dental visit around commutes, parking decks and school pickup. A location page that answers those questions keeps your front desk from answering them by phone:
+
+- which door to use, and which floor and suite, when you share a building with other practices
+- how parking works: lot or deck, whether you validate, and where a ride can pull up after sedation
+- transit within walking distance, named the way CATS names its stops
+- whether the route from the car to the chair is step-free, and where the elevator is
+- early morning, evening or Saturday hours, if you have them
+- the dentists who work at that location, with their general dentist or specialty labels, as Rule .0102 asks
+
+Google names three main factors for local results: [relevance, distance and prominence](https://support.google.com/business/answer/7091). A location page speaks to the first two. Name the neighborhood you're in and the nearby areas you actually draw patients from, but don't build a separate page for every suburb with the same text and a new name. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call those doorway pages.
+
+![An empty uptown Charlotte street in daylight, with a planted median, young trees and high-rise office and apartment buildings on both sides](https://images.unsplash.com/photo-1588254949452-4a87bd0a9353?auto=format&fit=crop&w=1200&q=75)
+
+## Which languages should a Charlotte dental site support?
+
+Start with your own patients. Your front desk knows which languages people ask for, and the Census Bureau's [profile of Charlotte](https://data.census.gov/profile/Charlotte_city,_North_Carolina?g=160XX00US3712000) includes the languages spoken at home, which you can narrow to the ZIP codes around your office. Then:
+
+1. **Translate where first visits start:** the new patient page, payment and coverage, the request form and directions. Have a fluent speaker review them, because dental terms translate badly by machine.
+2. **List languages per person,** including front desk staff, since they answer the phone. "Dr. Nguyen speaks Vietnamese" is concrete and checkable.
+3. **Explain how you handle other languages,** such as a phone interpreter service, without implying fluency you don't have. That would be a "material misrepresentation of fact" under Rule .0101.
+
+Keep translated pages to the same rules as the English ones. A Spanish implants page still needs the dentist's name and general dentist or specialist label near the top.
+
+## How should a Charlotte practice set up Google Business Profile?
+
+Your Business Profile is an advertisement too, so the board's rules and Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) both apply. Google wants a profile only for a staffed location with permanent signage, and lets individual dentists who see patients have profiles of their own. Where the two sets of rules meet:
+
+- **The listing name.** Google wants the real-world name only. Tacking on "Best Charlotte Cosmetic Dentist" breaks that, and "best" is the kind of superiority claim Rule .0101 says you must be able to back up.
+- **The primary category.** Pick Dentist for a general dentist. A specialty category would announce a specialty the dentist may not be allowed to claim under Rule .0105.
+- **Review replies.** A reply that confirms someone is your patient, or mentions their crown or root canal, reveals patient information without consent, which Rule .0104 forbids.
+
+On your own pages, mark the practice up with the Dentist type, including address, phone and opening hours, as Google's [local business structured data](https://developers.google.com/search/docs/appearance/structured-data/local-business) documentation shows. Google's [structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) say markup must match what visitors can see, so any FAQ markup belongs on a page that shows the same questions and answers. Our guide to [structured data for local businesses](/blog/structured-data-for-local-businesses) explains the details.
+
+## Charlotte dental website checklist
+
+- [ ] Every page advertising a service names the dentist who provides it, near the top
+- [ ] Every dentist labeled general dentist or by qualifying specialty
+- [ ] "Specialist" and its variations used only by dentists who meet Rule .0105
+- [ ] Board-certified specialists name the board and link to its criteria
+- [ ] General dentists with a focus area say services are provided by a general dentist
+- [ ] Fee ranges explain what drives the price
+- [ ] Specials list related services that cost extra, such as deep cleanings
+- [ ] Discounts state the amount; a standard fee list is ready on request
+- [ ] Testimonials and photos used only with written consent, quoted exactly
+- [ ] No "best," "top" or "better than" claims you can't substantiate
+- [ ] Coverage page answers "Do you take NC Medicaid?" in its first line, with a last-checked date
+- [ ] Each location page explains the door, the parking, the nearest stop, step-free access and who practices there
+- [ ] Profile name copied from the sign; primary category is Dentist unless the dentist qualifies as a specialist
+
+Many of these items apply to any health practice; our [medical practice website checklist](/blog/medical-practice-website-checklist) has the general list. Specialist titles work differently in other states, as our guides for [Seattle dentists](/blog/seattle-dental-practice-website-design) and [Atlanta dentists](/blog/atlanta-dental-practice-website-design) show.
+
+## How SaySites builds a Charlotte dental website
+
+The North Carolina details above are easy to keep straight on SaySites because the site is organized around your dentists. Every treatment page can show who provides it, right under the headline, and every bio has a spot for the "general dentist" label or a qualifying specialty along with education and languages. You also get a new patient page, a coverage page where NC Medicaid can go in the first line, a location page per office, and a short request form. Requests flow into a Leads list so the front desk can see who still needs a call, and a "Book now" button can point at the scheduler you already use. Search engines see the practice as a Dentist, Spanish versions are available, and a page can't be published until it scores 95+ on speed.
+
+To change something, you just say it: "put 'Dr. Patel, general dentist' at the top of the implants page," or "add that deep cleanings cost extra to the new patient offer." The edit sits as a draft until the responsible dentist approves it. Reviews, before-and-after results and credentials only appear if you supply them; SaySites won't make any up.
+
+It's $15 a month on the Site plan ([websites for dentists](/websites-for/dentists), [compare plans](/pricing)). [Try it free for 7 days](/signup), or [ask for a free redesign](/redesign) and see your Charlotte practice's current site rebuilt from its own content before you choose.`,
+    faq: [
+      { q: 'Who regulates dental advertising in North Carolina?', a: 'The North Carolina State Board of Dental Examiners. Its advertising rules are in 21 NCAC 16P, and G.S. 90-41(a)(16) to (18) lets the board discipline a dentist for misleading statements or for any advertisement that is untruthful, misleading or inconsistent with board rules, whether the dentist published it directly or indirectly, for example through an agency.' },
+      { q: 'Does a North Carolina dental website have to name the dentist?', a: 'Yes. Rule 21 NCAC 16P .0102 says every advertisement of dental services must name the dentist or dentists whose services it promotes and state prominently whether each is a general dentist or a qualified specialist. On a website, that means a dentist byline near the top of each treatment page and a label under every name on the team page.' },
+      { q: 'Can a general dentist in Charlotte advertise implants or Invisalign?', a: 'Yes. Rule .0105(g) lets a general dentist limit their practice to certain areas and advertise those services, but the advertisement cannot use the word specialist or any variation of it and must state that the services are provided by a general dentist. Write "implants by Dr. Lee, a general dentist," not "implant specialist."' },
+      { q: 'What must a North Carolina dental ad say about a new patient special?', a: 'Rule .0103 requires an ad to list related services that are usually needed and cost extra, so a special should say, for example, that a deep cleaning is charged separately if needed. Price ranges must explain what drives the fee, and advertised discounts must state the amount, with a list of standard fees available on request.' },
+      { q: 'Can a Charlotte dental website show patient testimonials?', a: 'Yes, if they are genuine and not misleading. Rule .0104 bars false or misleading testimonials and bars revealing a patient\'s identity or personally identifiable information without the patient\'s consent. Get written permission before using a name, photo or story, quote patients exactly, and avoid testimonials that promise results.' },
+      { q: 'Does NC Medicaid dental coverage depend on a patient\'s health plan?', a: 'No. NC Medicaid says dental services are carved out of its managed care health plans and covered by NC Medicaid Direct, so beneficiaries can see any dentist who takes Medicaid. A practice enrolled with NC Medicaid should say so plainly on its insurance page, for children, adults or both, rather than listing health plans as dental networks.' },
+      { q: 'What does a SaySites site for a Charlotte dental practice cost?', a: 'The Site plan is $15 a month, with the first 7 days free. It includes treatment pages that name the providing dentist, bios with a general dentist or specialty label, coverage and location pages, a short request form feeding a Leads list, Dentist markup and a 95+ speed check before anything goes live. You can ask for a free redesign preview first.' },
+    ],
+    about: ['North Carolina dental advertising rules', '21 NCAC 16P', 'NC Medicaid dental coverage', 'Dental practice websites', 'Charlotte, North Carolina'],
+    published: '2026-11-22',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
