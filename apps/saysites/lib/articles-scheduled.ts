@@ -12835,6 +12835,337 @@ It's $15 a month on the Site plan ([websites for dentists](/websites-for/dentist
     published: '2026-11-22',
     status: 'published',
   },
+  {
+    slug: 'boise-law-firm-website-design',
+    title: 'Boise Law Firm Website Design: Idaho Ad Rules',
+    description: 'Plan a Boise law firm website under Idaho Rules 7.1 to 7.5: full name and office address, two-year ad records, lead generators, results and Ada County courts.',
+    kind: 'guide',
+    summary: [
+      'Idaho Rule 7.2(d) asks every advertisement, including your website, to carry the name and office address of at least one lawyer or firm responsible for it, and an old Idaho opinion reads "name" as the lawyer’s full professional name.',
+      'Idaho kept a rule many states dropped: keep a copy of each advertisement for two years after it last ran, with a record of when and where it was used. Dated snapshots of your site cover it.',
+      'The comment to Idaho Rule 7.1 says results and client endorsements would ordinarily be misleading, so verdict pages and testimonials need context and careful wording.',
+      'Paying for leads is allowed only if the lead generator does not recommend you, and a "certified specialist" claim needs an Idaho State Bar approved certifier named beside it.',
+      'Boise sits in the Fourth Judicial District (Ada, Boise, Elmore and Valley counties). Idaho small claims now go up to $15,000, and attorneys cannot appear there.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1730506593358-4d88d41d2c76?auto=format&fit=crop&w=1600&q=75', alt: 'The domed Idaho State Capitol building in downtown Boise, seen from the street on a clear day' },
+    body: `A Boise law firm website has to follow the Idaho Rules of Professional Conduct, and Idaho still runs an older version of the lawyer advertising rules than most states. Your site needs the name and office address of a responsible lawyer or firm. You have to keep copies of your advertising for two years. Targeted electronic solicitations must be labeled "Advertising Material." And the official comment to Rule 7.1 treats case results and client endorsements as things that would ordinarily mislead. Build those into the site from the start, then add what Treasure Valley clients look for: the problem they have, the courthouse they are headed to and someone who speaks their language.
+
+Everything below is taken from the [Idaho Rules of Professional Conduct](https://isb.idaho.gov/bar-counsel/irpc/) as the Idaho State Bar publishes them (the full text, with comments, is in the [IRPC PDF](https://isb.idaho.gov/wp-content/uploads/IRPC-acc.pdf); Rule 7 is near the end), plus the bar's formal ethics opinions and official court pages. The Idaho Supreme Court's most recent amendment order, dated January 29, 2026, changed other rules and left Rule 7 alone ([order](https://isb.idaho.gov/wp-content/uploads/In-Re-Amendments-to-the-IBCR-and-IRPC-Order-1-29-26-acc.pdf)). This is a planning guide for the people who build and approve a firm's site, not ethics advice. For a close question, call ethics counsel or the Idaho State Bar's bar counsel office.
+
+## What do Idaho's rules require on a law firm website?
+
+A law firm website is a communication about the lawyer's services, so the Rule 7 series applies to every page of it. Five requirements shape the build.
+
+1. **Nothing false or misleading (Rule 7.1).** A communication breaks the rule if it misstates fact or law or leaves out a fact needed to keep it from misleading, if it "is likely to create an unjustified expectation about results the lawyer can achieve," or if it compares your services with other lawyers' services "unless the comparison can be factually substantiated."
+2. **A responsible name and office address (Rule 7.2(d)).** Every advertisement "shall include the name and office address of at least one lawyer or law firm responsible for its content."
+3. **Two years of records (Rule 7.2(b)).** "A copy or recording of an advertisement or communication shall be kept for two years after its last dissemination along with a record of when and where it was used."
+4. **No paying for recommendations (Rule 7.2(c)),** with exceptions for reasonable advertising costs, the usual charges of a legal service plan or a not-for-profit or qualified lawyer referral service, buying a practice under Rule 1.17, and non-exclusive reciprocal referral agreements the client is told about.
+5. **Certification only with an approved, named certifier (Rule 7.4(d)).**
+
+Idaho does not make you file ads with the bar before they run. Comment [5] to Rule 7.2 says the rule "does not require that advertising be subject to review prior to dissemination." That puts the weight on your own review, which is why the record-keeping rule matters.
+
+![A downtown Boise street lined with shops and trees, with a large building at the end of the block](https://images.unsplash.com/photo-1722564487800-d16d93fb2d2b?auto=format&fit=crop&w=1200&q=75)
+
+## Whose name and address belong in the footer?
+
+The simplest way to meet Rule 7.2(d) on every page, including blog posts people land on straight from Google, is a site-wide footer that names a responsible lawyer and gives the street address of a real office.
+
+Idaho has an old but specific reading of the word "name." In [Formal Opinion 126](https://isb.idaho.gov/wp-content/uploads/bc_fo_126.pdf), the Idaho State Bar said the advertisement must give the responsible lawyer's full professional name; a trade name or a bare surname such as "Doe Law Offices" is not enough. For a firm with branch offices, the named lawyer can be any active member of the firm who is admitted in Idaho. So a footer reading "Responsible attorney: Jane A. Doe, 123 Main Street, Boise" does the job in a way that "Doe Law, Boise" does not.
+
+The address part matters too. [Formal Opinion 123](https://isb.idaho.gov/wp-content/uploads/bc_fo_123.pdf) found that advertising a local phone number and address in a city where the lawyer had no office violated Rule 7.1 as a material misrepresentation, and said a disclaimer would cure it. If your firm practices from Boise but runs pages aimed at Twin Falls, Idaho Falls or Coeur d'Alene clients, say plainly where your offices are and that you travel or work remotely for those clients. Don't create the impression of an office you don't have.
+
+Google takes a similar line for its own listings. Its [Business Profile guidelines](https://support.google.com/business/answer/3038177) say a rented mailing address where you don't operate, a virtual office, "isn't eligible for a Business Profile," and that an office in a co-working space only counts if it keeps clear signage and is staffed and open to clients during business hours.
+
+## How long do you keep copies of your website?
+
+Rule 7.2(b) is written for all advertising, and a website is advertising. Two years from the last time something ran is a long tail for a page that changes every few months, so set up a habit:
+
+- **Save a dated copy of a page whenever its claims change.** New results, a new practice area, a changed fee statement or a new attorney bio all count. A PDF print of the page, filed by date, is enough to show what it said.
+- **Keep a short log of where things ran.** The rule asks for "a record of when and where it was used." For the website, that means the page address and the dates the version was live. For paid search ads and social ads that point to a landing page, record the campaign dates and the landing page version.
+- **Keep the copies for two years after each version came down,** not two years after it went up.
+
+A website platform that keeps page history makes this easier, but don't assume your old host's backups will still exist when you need them. Export your own copies.
+
+## How should results and client reviews appear on an Idaho firm's site?
+
+This is where Idaho's comment language is stricter than many firms expect. Comment [1] to Rule 7.1 says paragraph (b), the "unjustified expectation" test, "would ordinarily preclude advertisements about results obtained on behalf of a client, such as the amount of a damage award or the lawyer's record in obtaining favorable verdicts, and advertisements containing client endorsements." Comment [3] adds that "an appropriate disclaimer or qualifying language may preclude a finding" that a statement creates an unjustified expectation.
+
+In practice, that suggests a cautious design:
+
+- **Results pages:** if you publish them at all, describe the matter, what was at stake and what made it different, and put clear qualifying language beside each result, not only at the bottom of the page. Say that results depend on the facts of each case and that a past result does not predict another client's outcome.
+- **Testimonials:** treat client quotes as risky. If a lawyer decides to use one, pair it with qualifying language and avoid quotes about outcomes ("they got me $400,000"). Quotes about responsiveness or clear explanations are less likely to suggest a result.
+- **Comparisons:** "the best injury lawyer in Boise" is a comparison you cannot substantiate. "We have handled workers' compensation claims in Idaho since 2009" is a fact you can.
+
+Reviews that clients leave on Google are a different thing: they are the clients' words on Google's site. Copying them onto your own pages turns them into your advertising, so they then fall under the same rule.
+
+> **Watch out:** "No fee unless we win" is a results-flavored promise that also touches fee rules. Idaho Rule 1.5(c) requires contingent fee agreements to be written, signed by the client and to "clearly notify the client of any expenses for which the client will be liable whether or not the client is the prevailing party." If clients can owe costs after a loss, say so wherever you advertise no fee unless you win.
+
+## Can a Boise firm pay for leads, directories or ads?
+
+Yes, within limits. Comment [6] to Rule 7.2 says lawyers may pay for "on-line directory listings," "domain-name registrations," "Internet-based advertisements" and the work of "website designers." It also says a lawyer may pay "for generating client leads, such as Internet-based client leads, as long as the lead generator does not recommend the lawyer," and the payment has to be consistent with Rules 1.5(e) (fee division) and 5.4 (professional independence).
+
+The comment then lists what a lead generator must not do. You may not pay one that states, implies or creates a reasonable impression that it is recommending the lawyer, that it is making the referral without payment from the lawyer, or that it "has analyzed a person's legal problems" when choosing a lawyer. Before you sign with a lead service, read how it describes itself to the public. A site that says "we match you with the right attorney for your case" may be implying all three.
+
+Two safer routes exist. The Idaho State Bar runs its own [Lawyer Referral Service](https://isb.idaho.gov/lawyer-referral-service/) as a public service, and Rule 7.2(c) expressly allows paying the usual charges of a qualified referral service. And your own website, with a page per practice area that answers the questions people actually search, is advertising you control completely.
+
+## When does a message need "Advertising Material"?
+
+Idaho kept the labeling rule that the American Bar Association removed from its model rules in 2018. Rule 7.3(c) says every written, recorded or electronic communication soliciting work from anyone "known to be in need of legal services in a particular matter" must include the words "Advertising Material" on the outside envelope, if any, and "at the beginning and ending of any recorded or electronic communication." Messages to other lawyers and to people with a family, close personal or prior professional relationship with you are outside the rule.
+
+Your website itself is not a solicitation. Comment [1] to Rule 7.3 says a website, a banner ad or content "automatically generated in response to Internet searches" typically is not one, because it isn't directed at a specific person known to need help in a particular matter. The risk sits in the tools around the site:
+
+- **Automatic replies to your contact form** go to someone who asked to hear from you. They are responses, not solicitations.
+- **Email or text campaigns** aimed at people you identified from accident reports, court filings or similar sources are targeted solicitations. They need "Advertising Material" at the start and end.
+- **Chat widgets.** Rule 7.3(a) bans "real-time electronic contact" to solicit work when pecuniary gain is a significant motive, unless the person is a lawyer or has a family, close personal or prior professional relationship with you. Set chat to wait for the visitor to start the conversation, and keep it to intake details rather than advice.
+
+![Two colleagues going over printed documents together at a desk in a bright, modern office](https://images.unsplash.com/photo-1758518729912-bf3a84c400e0?auto=format&fit=crop&w=1200&q=75)
+
+## Can you call yourself a specialist in Idaho?
+
+You can say what you do. Rule 7.4(a) lets a lawyer say they practice, or do not practice, in particular fields, and comment [1] says describing yourself as one who "specializes in" a field is generally fine, subject to Rule 7.1. The rule also expressly allows the "Patent Attorney" and "Admiralty" designations for lawyers who qualify for them.
+
+The word "certified" is different. Rule 7.4(d) bars stating or implying certification as a specialist unless "(1) the lawyer has been certified as a specialist by an organization that has been approved by the Idaho State Bar; and (2) the name of the certifying organization is clearly identified in the communication." Note the first condition: Idaho asks for an organization approved by the Idaho State Bar. Before you put a certification on a bio page, confirm the certifier's status with the bar, then name the organization in the same sentence as the claim.
+
+## What can a Boise firm be called online?
+
+Rule 7.5(a) lets a lawyer in private practice use a trade name "if it does not imply a connection with a government agency or with a public or charitable legal services organization." The comment adds that a firm may be "designated by a distinctive website address," and that a trade name with a place in it can need a disclaimer so nobody assumes it is a public agency.
+
+That gives you room for a memorable domain, but a few names are poor choices: anything that sounds like a county service ("Ada County Legal Help"), a court ("Idaho Courts Divorce Center") or legal aid. Rule 7.5(d) lets lawyers say they practice in a partnership "only when that is the fact," and [Formal Opinion 131](https://isb.idaho.gov/wp-content/uploads/bc_fo_131.pdf) advised against putting a lawyer with no ownership interest in the firm name. Bios should describe each lawyer's actual role.
+
+## How do you describe Boise's courts correctly?
+
+Clients search by courthouse as often as by legal problem, so courts pages pull their weight. They also have to be right.
+
+- **State trial courts.** Boise and the rest of Ada County are in Idaho's Fourth Judicial District, which also covers Boise, Elmore and Valley counties ([Fourth District](https://isc.idaho.gov/district-4)). The Ada County Courthouse is at 200 W. Front Street in Boise ([Ada County Clerk](https://adacounty.id.gov/clerk/?p=27)). Nampa and Caldwell are in Canyon County, which is not one of the Fourth District's counties, so a firm serving the whole Treasure Valley should describe both courthouses rather than lumping them together.
+- **Small claims.** Idaho raised the small claims limit from $5,000 to $15,000 effective July 1, 2026 ([Senate Bill 1330](https://legislature.idaho.gov/wp-content/uploads/sessioninfo/2026/legislation/S1330E1.pdf)). Idaho Code 1-2307 says no attorney "shall appear before the court on behalf of any party" at a small claims trial or hearing ([Title 1, Chapter 23](https://legislature.idaho.gov/wp-content/uploads/statutesrules/idstat/Title1/T1CH23.pdf)). A page can offer help preparing a claim or deciding whether a dispute belongs in small claims at all. It should not suggest you will stand up in small claims court with a client.
+- **Federal court.** The U.S. District Court for the District of Idaho sits in the James A. McClure Federal Building and United States Courthouse at 550 W. Fort Street ([court contact page](https://www.id.uscourts.gov/clerks/contact)).
+- **Appeals.** The Idaho Supreme Court is at 451 W. State Street, and the Court of Appeals hears arguments in the same building ([attending court](https://isc.idaho.gov/Attending)). The Court of Appeals gets its cases by assignment from the Supreme Court ([Court of Appeals overview](https://isc.idaho.gov/about-the-courts/ica-overview)), which is worth one plain sentence on an appeals page.
+- **Records and filing.** Case and hearing information is on the [iCourt portal](https://icourt.idaho.gov/), and the courts' [e-filing FAQ](https://icourt.idaho.gov/efile-faqs) says attorneys must file electronically where e-filing has been mandated. A sentence telling clients they can look up their hearing dates there saves your staff phone calls.
+
+## Do Boise clients need Spanish pages?
+
+For many practices, yes. The Census Bureau's [QuickFacts for Ada County](https://www.census.gov/quickfacts/fact/table/adacountyidaho/PST045225) puts the county's population at 546,141 in its July 1, 2025 estimate, up 10.3% since April 2020, and reports that 10.9% of residents are Hispanic or Latino and 9.3% of people five and older speak a language other than English at home. Immigration, family, criminal defense, employment and injury firms will meet Spanish-speaking clients every week.
+
+Two points keep language pages honest:
+
+- **Say who speaks what.** List languages on each bio. If only your paralegal speaks Spanish, say the office has Spanish-speaking staff, not that the lawyer does.
+- **Separate your help from the court's.** The Idaho courts run their own [language access program](https://isc.idaho.gov/about-the-courts/language-access); interpreters are requested through the court holding the hearing. A Spanish page can explain that, which helps clients and avoids implying your firm provides court interpreting.
+
+If you publish Spanish pages, make them full pages written for Spanish-speaking readers, not a translation widget over the English site. Google's guidance on [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions) explains how to tell it that two pages are the same content in different languages.
+
+## How should a Boise firm set up its Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) treat lawyers as individual practitioners. A lawyer can have a profile of their own if they are public-facing and can be contacted directly at the verified location during stated hours, and support staff should not create profiles. Where several lawyers work from one office, the firm gets its own profile for the location and each lawyer's profile carries only the lawyer's name. A solo lawyer practicing under a firm brand should share one profile with the firm, named in the format "[brand/company]: [practitioner name]."
+
+Make the website and the profile agree. The firm name, street address and phone number on your contact page should match the profile exactly, and the practice areas on the profile should each have a page on the site. Keep the profile's name to the name on your sign: Google's guidelines don't allow keywords or locations stuffed into it.
+
+## A Boise law firm website checklist
+
+- [ ] Footer on every page names a responsible lawyer by full professional name, with a street office address
+- [ ] Pages aimed at other Idaho cities say where your offices actually are
+- [ ] Dated copies of each page version kept for two years after it comes down, with where and when it ran
+- [ ] Results described with context and qualifying language beside each one; no unprovable "best" claims
+- [ ] Client quotes reviewed by a lawyer before they go up, and none about outcomes
+- [ ] "No fee unless we win" pages say whether costs are owed after a loss
+- [ ] Lead services checked: none claim to recommend you or analyze the client's problem
+- [ ] Targeted solicitation emails and texts start and end with "Advertising Material"
+- [ ] Chat waits for the visitor and collects intake details only
+- [ ] "Certified" appears only with an Idaho State Bar approved certifier named beside it
+- [ ] Courts pages correct for Ada and Canyon counties, and nothing promises small claims representation
+- [ ] Bios list the languages each person speaks; court interpreters described as the court's service
+- [ ] Business Profile name, address and phone match the site exactly
+
+For the basics every state shares, see our [law firm website checklist](/blog/law-firm-website-checklist) and how to write [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls). If you also take matters across the Utah line, compare the rules in our [Salt Lake City law firm guide](/blog/salt-lake-city-law-firm-website-design).
+
+## How SaySites builds a Boise law firm website
+
+SaySites builds most of this checklist in. The footer can carry the responsible attorney's full name and your Boise office address on every page. Each practice area gets its own page, each lawyer gets a bio with fields for admissions, languages and a named certifier, and the consultation form changes its questions by case type and asks who the other side is, so a conflict check happens before anyone calls back. The firm is marked up for Google as a LegalService with its lawyers and services, pages can go up in English and Spanish, and every page has to pass a 95+ speed check before it is published.
+
+You make changes by saying what you want: "add our Meridian office to the footer," "put the qualifying language next to each result," "take 'certified' off my bio until the bar confirms." Every change waits as a draft until a lawyer approves it, and SaySites never invents results, reviews or credentials; it only shows what you give it. Pair the page history with your own dated PDFs and you have the start of a two-year record.
+
+Law Firm Starter is $79 a month ([websites for law firms](/websites-for/law-firms), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Boise site yourself, or [request a free redesign](/redesign) and see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'What contact information does an Idaho law firm website need?', a: 'Idaho Rule 7.2(d) requires every advertisement to include the name and office address of at least one lawyer or law firm responsible for its content. Idaho State Bar Formal Opinion 126 read "name" as the responsible lawyer’s full professional name, so a footer naming a responsible attorney and giving a real street office address on every page is the safest way to meet it.' },
+      { q: 'How long must Idaho lawyers keep copies of their website?', a: 'Rule 7.2(b) says a copy or recording of an advertisement must be kept for two years after its last dissemination, with a record of when and where it was used. For a website, save a dated copy whenever a page’s claims change and keep each version for two years after it comes down, along with its address and the dates it was live.' },
+      { q: 'Can a Boise law firm post case results and testimonials?', a: 'Carefully. Comment [1] to Idaho Rule 7.1 says the unjustified expectation test would ordinarily preclude advertising results such as damage awards and client endorsements, while comment [3] says appropriate qualifying language may prevent a finding that a statement misleads. If you publish results, give context and put qualifying language beside each one, and have a lawyer review any client quote.' },
+      { q: 'Can an Idaho lawyer pay a lead generation company?', a: 'Yes, if the lead generator does not recommend the lawyer. Comment [6] to Rule 7.2 allows paying for Internet-based client leads, but not to a service that implies it is recommending you, that it refers clients without being paid, or that it has analyzed the person’s legal problem. Payments must also fit the fee division and independence rules.' },
+      { q: 'Do Idaho lawyers have to label emails "Advertising Material"?', a: 'Only targeted solicitations. Rule 7.3(c) requires "Advertising Material" at the beginning and end of electronic communications soliciting work from someone known to need legal help in a particular matter, unless they are a lawyer or have a family, close personal or prior professional relationship with you. Replies to people who contacted you through your website are responses, not solicitations.' },
+      { q: 'Can a Boise lawyer help with small claims cases?', a: 'Only behind the scenes. Idaho raised the small claims limit to $15,000 effective July 1, 2026, and Idaho Code 1-2307 says no attorney shall appear before the court on behalf of any party at a small claims trial or hearing. A page can offer help preparing a claim or choosing the right court, but should not promise courtroom representation in small claims.' },
+      { q: 'What does a SaySites website for a Boise law firm cost?', a: 'Law Firm Starter is $79 a month, and the first 7 days are free. It includes a page per practice area, lawyer bios with admissions and languages, a footer with your responsible attorney and office address, a consultation form with a conflict-check question, LegalService markup, Spanish pages if you want them and a 95+ speed check. A free redesign preview is available too.' },
+    ],
+    about: ['Idaho Rules of Professional Conduct', 'Idaho Rule 7.2', 'Law firm websites', 'Boise, Idaho'],
+    published: '2026-11-23',
+    status: 'published',
+  },
+  {
+    slug: 'chicago-medical-practice-website-design',
+    title: 'Chicago Medical Practice Websites: Illinois Rules',
+    description: 'Plan a Chicago medical practice website under Illinois law: what 225 ILCS 60/26 lets doctors advertise, fee wording, marketing fees, tracking, BIPA and access.',
+    kind: 'guide',
+    summary: [
+      'Illinois lists what physician advertising may contain (name, title, hours, address, phone, specialty and board certification, customary fees) and requires the title as it appears on the license in every ad.',
+      'Claims of superior quality of care, fee comparisons with other physicians, guarantees of success and anything that plays on the public’s vanity or fears are unlawful in Illinois physician advertising.',
+      'If you post fees for routine services, Illinois requires a note that fees may be adjusted due to complications or unforeseen circumstances.',
+      'Paying a marketing company a percentage of your fees or revenue is banned by the Illinois fee-splitting section, so price website and marketing work as flat fees.',
+      'Plan for tracking tools, BIPA if you scan faces or fingerprints, Section 1557 language notices and HHS’s WCAG 2.1 AA deadline of May 11, 2027 for practices with 15 or more employees that take HHS funds.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1745872262717-69c8951b5c49?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Chicago skyline rising behind a bridge over the Chicago River' },
+    body: `A Chicago medical practice website is physician advertising under Illinois law, and Illinois is unusually specific about it. The Medical Practice Act lists what an advertisement may contain, bans claims of superior care and fee comparisons, and requires every ad to show the physician's title as it appears on the license. Add the state's fee-splitting ban, which reaches how you pay a marketing company, and the federal rules on tracking, language notices and accessibility, and you have the frame for the whole site. Inside that frame, build the pages Chicago patients actually use: services, providers, insurance, locations and an easy way to request a visit.
+
+This guide draws on the Illinois statutes and rules as the General Assembly publishes them, plus federal guidance from HHS and Google's own documentation. It is a planning aid for practice managers and physicians, not legal advice. For questions about your own practice, ask a health care attorney licensed in Illinois.
+
+## What does Illinois law let a physician advertise?
+
+The starting point is [225 ILCS 60/26](https://ilga.gov/legislation/ilcs/documents/022500600K26.htm), the advertising section of the Medical Practice Act of 1987. It says licensees "may advertise the availability of professional services in the public media" or on the premises where services are given, and then lists what the advertising may include:
+
+1. "the person's name, title, office hours, address and telephone number";
+2. "areas of specialization, including appropriate board certification";
+3. "usual and customary fees for routine professional services offered," with "notification that fees may be adjusted due to complications or unforeseen circumstances";
+4. announcements of "the opening of, change of, absence from, or return to business";
+5. "additions to or deletions from professional licensed staff";
+6. "the issuance of business or appointment cards."
+
+A practice website touches every item on that list. Your home page and contact page carry names, hours, addresses and phone numbers. Provider pages carry specialties and board certification. A self-pay page may carry fees. News posts announce new physicians, new locations and leave.
+
+Section 26 also says every advertisement must include the licensee's "title as it appears on the license or the initials authorized under this Act." The rules that carry out the Act add a plain-language test. [68 Ill. Adm. Code 1285.245](https://ilga.gov/ftp/JCAR/AdminCode/068/068012850B02450R.html) says advertising "shall contain all information necessary to make the communication informative and not misleading," and that ads must identify the type of license held in a direct, dignified and easily understood way.
+
+### What that means for provider pages
+
+Give every clinician a page, and put the licensed title right beside the name: "Maria Lopez, MD," "James Chen, DO," "Aisha Patel, PA-C." Don't let a page header read "Dr. Lopez" alone with the title buried further down. When a nurse practitioner or physician assistant sees patients, the page should say so in the same plain way, because the rule is about patients knowing what kind of license the person holds.
+
+![A smiling doctor in a white coat talking with a patient during a clinic consultation](https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=1200&q=75)
+
+## What can't a Chicago practice say on its website?
+
+Section 26 makes several kinds of advertising unlawful. It is unlawful to "use claims of superior quality of care to entice the public," and unlawful "to advertise fee comparisons of available services with those of other persons licensed under this Act." The section also bars advertising services the advertiser isn't licensed to provide, and it rules out "false, fraudulent, deceptive or misleading material," "guarantees of success" and material that will "play upon the vanity or fears of the public."
+
+Here is how that lands on common website copy:
+
+| Copy you might see | The problem under Section 26 | A version that states facts |
+|---|---|---|
+| "Chicago's best primary care" | A claim of superior quality of care | "Primary care for adults in Lincoln Park, accepting new patients" |
+| "Half the price of other Loop clinics" | A fee comparison with other licensees | "Self-pay office visit fees are listed below" |
+| "Results guaranteed or your money back" | A guarantee of success | "What to expect at each visit, and how follow-up works" |
+| "Don't let your skin age you another day" | Plays on vanity or fears | "Treatments we offer for sun damage, and who they suit" |
+
+The disciplinary section reaches further than the advertising section. [225 ILCS 60/22](https://ilga.gov/legislation/ilcs/documents/022500600K22.htm) lists grounds for discipline that include "making a false or misleading statement regarding their skill or the efficacy or value of the medicine, treatment, or remedy" and "dishonorable, unethical, or unprofessional conduct of a character likely to deceive, defraud, or harm the public." Section 22 allows fines of up to $10,000 per violation. So the careful test for every sentence on a treatment page is simple: could you show where the claim comes from?
+
+### Testimonials and patient reviews
+
+Section 26 does not mention testimonials, but a patient story that implies a typical result can still run into the bans on misleading material and guarantees. If you use patient stories, get written permission, keep them about the experience of care rather than outcomes, and have counsel review them. Reviews patients leave on Google are their words on Google's site; copying them onto your own pages makes them your advertising.
+
+## How should a Chicago practice post its fees?
+
+Illinois allows fee advertising for "routine professional services," with a required note: the ad must include "notification that fees may be adjusted due to complications or unforeseen circumstances." If your site lists self-pay prices for an office visit, a physical, a vaccine or a standard procedure, put that notice on the same page, close to the prices, not in the site footer.
+
+Three habits help:
+
+- **List services specifically.** "New patient office visit" is a routine service; "surgery" is not a price you can state honestly.
+- **Date the list.** Patients and staff both need to know which prices are current.
+- **Never compare.** "Lower than urgent care" is a fee comparison, and Section 26 calls fee comparisons with other licensees unlawful.
+
+## Board certification and specialty wording
+
+Section 26 allows advertising "areas of specialization, including appropriate board certification." The word that carries weight is appropriate. On a provider page, name the specialty and the certifying board in full, and keep it current: if a certification lapses, the page has to change the same week. "Board certified in internal medicine by the American Board of Internal Medicine" tells a patient something they can check. "Board certified" with no board named tells them very little.
+
+Help patients verify. The Illinois Department of Financial and Professional Regulation runs a public [License Lookup](https://idfpr.illinois.gov/checklicense.html), which it says The Joint Commission and other accreditors accept as a primary source for verification. A short line on each provider page ("Verify this license with IDFPR") is a quiet signal of trust that costs nothing.
+
+## Can you pay a marketing company a share of revenue?
+
+Not in Illinois. The fee-splitting section, [225 ILCS 60/22.2](https://ilga.gov/legislation/ilcs/documents/022500600K22.2.htm), says a licensee "may not directly or indirectly divide, share or split any professional fee" except as that section allows. Subsection (f) is direct about marketing: a licensee may not pay "a percentage of the licensee's professional service fees, revenues or profits to anyone for: (i) the marketing or management of the licensee's practice." The same subsection also lists preferred provider lists, network participation, fee negotiation and patient incentive programs.
+
+Subsection (g) adds that a violation is also an unlawful practice under the Illinois Consumer Fraud Act, which the Attorney General enforces (hospitals and hospital affiliates are excepted). Section 22(A)(14) makes a fee-splitting violation a ground for discipline as well.
+
+What this means when you hire anyone for your website or marketing:
+
+- **Pay a flat fee or a set monthly price.** "We take 10% of new-patient revenue" is the arrangement the statute names.
+- **Watch "pay per patient" offers.** A fee per booked patient can look like sharing professional fees. Ask counsel before you sign one.
+- **Read the patient-facing side of any referral service.** If it promises patients a doctor "chosen for you," you may also have advertising questions.
+
+## Tracking pixels, booking forms and HIPAA
+
+Ad pixels and analytics tags are where many practice websites take on risk without anyone deciding to. HHS's Office for Civil Rights explains its position in [Use of Online Tracking Technologies by HIPAA Covered Entities and Business Associates](https://www.hhs.gov/hipaa/for-professionals/privacy/guidance/hipaa-online-tracking/index.html). A note on that page says that on June 20, 2024, the U.S. District Court for the Northern District of Texas declared unlawful and vacated part of the guidance: the part treating a connection between a person's IP address and a visit to a public page about health conditions or providers as protected health information. The American Hospital Association, which brought the case, reported the ruling the same day ([AHA news](https://www.aha.org/news/news/2024-06-20-judge-rules-favor-aha-vacating-hhs-online-tracking-bulletin-unlawful-and-beyond-agency-authority)).
+
+Much of the guidance still stands:
+
+- Tracking on pages behind a login, such as a patient portal or telehealth platform, can access protected health information.
+- Appointment forms and symptom checkers on public pages can collect it.
+- A tracking vendor that receives protected health information is generally a business associate and needs a business associate agreement.
+- A cookie banner or a privacy policy disclosure does not by itself permit the disclosure.
+
+For the website, that points to a short plan. Keep ad pixels off the appointment request page and the thank-you page after it. Make the request form ask for contact details and a preferred time, not symptoms. Put a plain note on the form: please don't send medical details here, and call 911 in an emergency.
+
+![A doctor at a laptop holding a video consultation with a patient](https://images.unsplash.com/photo-1758691463620-188ca7c1a04f?auto=format&fit=crop&w=1200&q=75)
+
+## Does BIPA affect a medical practice website?
+
+Only if you add biometric tools. The [Biometric Information Privacy Act](https://ilga.gov/legislation/ilcs/ilcs3.asp?ActID=3004) covers retina or iris scans, fingerprints, voiceprints and scans of hand or face geometry. It requires a published retention and destruction policy (Section 15(a)) and written notice and a "written release" before collection (Section 15(b)), and it lets people sue for $1,000 per negligent violation or $5,000 per intentional or reckless violation, plus attorneys' fees.
+
+The Act also excludes "information captured from a patient in a health care setting" and information collected for treatment, payment or operations under HIPAA. Whether a face-scan check-in kiosk, a fingerprint login for an app, or an online identity check falls inside that exclusion is a legal question, not a design one. If a vendor pitches biometric check-in, ask an Illinois health care attorney before you add it, and if you go ahead, publish the retention policy on your website.
+
+## Language notices and Spanish pages
+
+Chicago practices serve patients in many languages, and federal civil rights rules ask covered practices to say so online. Practices that receive federal financial assistance, such as Medicaid payments, are generally covered by Section 1557 of the Affordable Care Act. HHS's rule at [45 CFR 92.10](https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-A/part-92/subpart-A/section-92.10) requires a nondiscrimination notice in a conspicuous location on the website. The companion section, [45 CFR 92.11](https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-A/part-92/subpart-A/section-92.11), requires a notice that language assistance and auxiliary aids are available free of charge, in English and in at least the 15 languages most commonly spoken by people with limited English proficiency in the state. Ask counsel which notices apply to your practice, then put them in the footer of every page.
+
+Beyond notices, build real pages for the languages your patients speak. A Spanish page about new patient visits, written for Spanish-speaking readers, does more than a translation button. Google's guidance on [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions) explains how to tell it that two pages are the same content in different languages. On provider pages, list the languages each clinician speaks, and say plainly when an interpreter is used instead.
+
+## Web accessibility: the HHS deadline
+
+HHS's Section 504 rule requires practices that receive HHS funding to make websites and mobile apps meet WCAG 2.1 Level AA. On May 7, 2026, HHS [extended the deadlines](https://www.hhs.gov/press-room/hhs-extends-mobile-and-web-accessibility-deadline.html): practices with 15 or more employees now have until May 11, 2027, and practices with fewer than 15 employees until May 10, 2028, under an interim final rule published in the [Federal Register](https://www.federalregister.gov/documents/2026/05/11/2026-09266/extension-of-compliance-dates-for-nondiscrimination-on-the-basis-of-disability-accessibility-of-web).
+
+The extension buys time, not an exemption. If you're rebuilding your site now, build to the standard from the start: real text instead of text baked into images, alt text on photos, forms that work with a keyboard and a screen reader, enough color contrast, and PDFs (new patient packets, financial policies) either made accessible or replaced with web pages.
+
+## Which insurance plans should a Chicago practice list?
+
+Patients search "does this doctor take my insurance" before almost anything else, and the Medicaid lineup in Cook County is changing. The Illinois Department of Healthcare and Family Services lists the [HealthChoice Illinois managed care plans](https://hfs.illinois.gov/medicalclients/managedcare.html), including CountyCare, which serves Cook County only. In June 2026 the state [announced new HealthChoice Illinois contracts](https://www.illinois.gov/content/dam/soi/en/web/illinois/iisnewsattachments/32620-601526.15.26-hci-contract-announcement-release-final.pdf.pdf) awarded to Aetna, Blue Cross and Blue Shield of Illinois, Humana Benefit Plan of Illinois (new to the program), Meridian, Molina and CountyCare.
+
+Put plan names on an insurance page as your contracts actually read, date the list, and update it the week anything changes. A line like "Plans change; please call to confirm before your visit" protects both you and the patient.
+
+## How should a Chicago practice set up Google Business Profile?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) treat doctors as individual practitioners. A physician can have a profile of their own if they are public-facing and can be contacted directly at the verified location during stated hours; support staff should not create profiles. When several physicians practice at one location, the practice creates a profile for the location and each physician's profile carries only the physician's name. A solo physician under a practice brand shares one profile with the practice, named "[brand/company]: [practitioner name]."
+
+Match the site to the profiles. Each location page should show the same name, address, phone and hours as that location's profile, and each physician's profile should link to their own provider page, not the home page. For multi-site groups spread across the city and suburbs, a page per location with transit and parking notes ("two blocks from the Red Line at Fullerton") is useful to patients and gives Google a clear page for each place.
+
+## A Chicago medical practice website checklist
+
+- [ ] Every clinician's licensed title next to their name on every page that names them
+- [ ] Specialty pages name the certifying board in full; lapsed certifications removed
+- [ ] No "best," "top," "leading" or comparisons with other practices
+- [ ] No guarantees, and no copy that plays on vanity or fear
+- [ ] Self-pay prices for routine services only, dated, with the "fees may be adjusted" notice beside them
+- [ ] Website and marketing work priced as flat fees, never a percentage of revenue
+- [ ] No ad pixels on the appointment request page or its thank-you page
+- [ ] Request form asks for contact details only, with a no-medical-details note and an emergency line
+- [ ] No biometric check-in without Illinois counsel's sign-off and a published retention policy
+- [ ] Section 1557 notices in the footer; language pages written for their readers
+- [ ] Built to WCAG 2.1 AA ahead of the HHS deadline
+- [ ] Insurance list dated and matched to current HealthChoice Illinois contracts
+- [ ] IDFPR License Lookup linked from provider pages
+- [ ] One page per location, matching each Google Business Profile
+
+Our national [medical practice website checklist](/blog/medical-practice-website-checklist) covers what every state shares. See how New York handles testimonials and price ads in our [New York medical practice guide](/blog/new-york-medical-practice-website-design), and how Illinois treats dentists in our [Chicago dental website guide](/blog/chicago-dental-practice-website-design).
+
+## How SaySites builds a Chicago medical practice website
+
+A SaySites medical practice site starts with the pages patients use: a home page, a page per service, provider profiles, new patients and insurance, a page per location and an appointment request form. The request form asks patients not to send medical details through it, every page carries a plain emergency note, the practice is described to Google as a MedicalClinic, and every page has to pass a 95+ speed check before it goes live. Sites can be written in English and Spanish, and the new patient question set on request forms asks nothing clinical.
+
+You change the site by saying what you want: "add 'MD' after Dr. Lopez's name on every page," "put the fees-may-be-adjusted note under the self-pay list," "add Humana to the insurance page." Each change waits as a draft until you approve it. SaySites never invents reviews, credentials or results; provider details come only from you. And SaySites charges a flat monthly price, never a share of your revenue.
+
+Plans start at $15 a month ([websites for medical practices](/websites-for/medical-practices), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Chicago site yourself, or [request a free redesign](/redesign) to see your current site rebuilt first.`,
+    faq: [
+      { q: 'What does Illinois allow a physician to advertise on a website?', a: 'Section 26 of the Medical Practice Act lets physicians advertise their name, title, office hours, address and phone number, areas of specialization including appropriate board certification, usual and customary fees for routine services, openings, closings and absences, staff changes, and business or appointment cards. Every advertisement must also show the title as it appears on the license or the authorized initials.' },
+      { q: 'Can a Chicago practice call itself the best in the city?', a: 'No. Section 26 makes it unlawful to use claims of superior quality of care to entice the public, and to advertise fee comparisons with other physicians. It also bars guarantees of success and material that plays on the public’s vanity or fears. Describe what you offer, where and for whom instead, using facts a patient could check.' },
+      { q: 'Can an Illinois medical practice list its prices online?', a: 'Yes, for routine professional services. Section 26 allows advertising usual and customary fees for routine services, but the advertisement must include notice that fees may be adjusted due to complications or unforeseen circumstances. Put that notice beside the price list, date the list, and never compare your fees with other physicians’ fees, which the same section makes unlawful.' },
+      { q: 'Can a medical practice pay its marketing agency a percentage of revenue?', a: 'Not in Illinois. Section 22.2(f) of the Medical Practice Act bars paying a percentage of professional service fees, revenues or profits to anyone for the marketing or management of the practice, and a violation is also an unlawful practice under the Consumer Fraud Act. Pay for website and marketing work with a flat fee and ask counsel about per-patient pricing.' },
+      { q: 'Are tracking pixels allowed on a medical practice website?', a: 'Use them with care. HHS guidance still says tracking on patient portals and on public booking forms can involve protected health information, and that vendors receiving it generally need a business associate agreement. A 2024 federal court ruling vacated only the part about IP addresses on public informational pages. Keep ad pixels off appointment pages and ask counsel about the rest.' },
+      { q: 'When must a medical practice website meet WCAG 2.1 AA?', a: 'For practices that receive HHS funding, HHS extended its Section 504 deadlines on May 7, 2026. Practices with 15 or more employees now have until May 11, 2027, and those with fewer than 15 employees until May 10, 2028. Building a new site to WCAG 2.1 Level AA from the start is simpler than fixing an old one later.' },
+      { q: 'What does a SaySites website for a Chicago medical practice cost?', a: 'Plans start at $15 a month after a 7-day free trial, at a flat monthly price with no share of revenue. Each site includes a page per service, provider profiles with licensed titles, new patients and insurance pages, location pages, MedicalClinic structured data, English and Spanish pages and an appointment request form that asks for no medical details. A free redesign preview is available too.' },
+    ],
+    about: ['Illinois Medical Practice Act', '225 ILCS 60/26', 'Medical practice websites', 'Chicago, Illinois'],
+    published: '2026-11-23',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
