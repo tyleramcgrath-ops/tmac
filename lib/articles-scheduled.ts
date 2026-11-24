@@ -13166,6 +13166,327 @@ Plans start at $15 a month ([websites for medical practices](/websites-for/medic
     published: '2026-11-23',
     status: 'published',
   },
+  {
+    slug: 'jackson-mississippi-law-firm-website-design',
+    title: 'Jackson, MS Law Firm Websites: Mississippi Ad Rules',
+    description: 'Build a Jackson, MS law firm website under Mississippi Rules 7.1 to 7.7: Bar ad filing, the background notice, fee and office rules and Hinds County courts.',
+    kind: 'guide',
+    summary: [
+      'Mississippi treats a law firm website as advertising ("computer-accessed communication"), but Rule 7.5(b)(8) exempts web pages a person finds through their own search from filing with the Bar.',
+      'The ads that send people to your site are different: most paid ads must be filed with the Mississippi Bar’s Office of General Counsel before they first run, with a $25 fee ($150 if late).',
+      'Rule 7.4 asks every advertisement to display the notice "FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST" and to back it with a written background statement you keep for five years.',
+      'Every ad needs a responsible lawyer’s name and the city and state of an office, and any fee you advertise has to be honored for at least 90 days.',
+      'Jackson sits in Hinds County, which has two circuit court districts (Jackson and Raymond), a separate chancery court for divorce and family cases, and a state-run CCID court downtown.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1571559664790-cb2c2fb2b1ed?auto=format&fit=crop&w=1600&q=75', alt: 'Looking up at the ornate carved ceiling and arches inside the Mississippi State Capitol in Jackson' },
+    body: `A Jackson, Mississippi law firm website has to follow the Mississippi Rules of Professional Conduct, and Mississippi's version comes with a filing system run by the Mississippi Bar. Your site counts as an advertisement. It must name a responsible lawyer and give the city and state of an office. It should carry the notice "FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST," with a written background statement ready to send. And while the website itself is exempt from filing, most of the paid ads that point to it have to be submitted to the Mississippi Bar before they run. Get those pieces right first, then build the pages people in the Jackson metro actually look for: their legal problem, the right courthouse and a lawyer they can reach.
+
+The rules quoted here come from the [Mississippi Rules of Professional Conduct](https://courts.ms.gov/research/rules/msrulesofcourt/rules_of_professional_conduct.pdf) as the Mississippi Supreme Court publishes them; the advertising rules are Rules 7.1 through 7.7. The filing details come from the Bar's [policies and procedures for lawyer advertising](https://msbar.org/ethics-discipline/lawyer-advertising-rule-75/policies-procedures-for-lawyer-advertising/), approved by the Supreme Court. This guide is for the people who plan and sign off on a firm's website. It is not ethics advice; for a close call, ask the Bar's Office of General Counsel or your own ethics counsel.
+
+## Does Mississippi treat a law firm website as advertising?
+
+Yes. Rule 7.2(a) defines an advertisement as "an active quest for clients involving a public or non-public communication," and lists "computer-accessed communication" among the forms it can take. The comment to Rule 7.2 spells out what that means: computer-accessed communications "include, but are not limited to, Internet presences such as home pages or World Wide Web sites, unsolicited electronic mail communications, and information concerning a lawyer's or law firm's services that appears on World Wide Web search engine screens and elsewhere."
+
+So every page of the site, every email campaign and every search result snippet you write is held to the same rules as a billboard. Rule 7.1 sets the baseline. A communication is false or misleading if it misstates fact or law or leaves out a fact needed to keep it from misleading, if it "creates an unjustified, false or misleading expectation about results the lawyer can achieve," if it suggests you can influence a court or official improperly, or if it compares your services with other lawyers' services "unless the comparison can be factually substantiated."
+
+![A wet downtown Jackson, Mississippi street after rain, with storefronts and a street clock](https://images.unsplash.com/photo-1497988541379-502efc8fab5e?auto=format&fit=crop&w=1200&q=75)
+
+## Do you have to file your website with the Mississippi Bar?
+
+Usually not the website itself, but almost certainly the ads around it. This is the part of Mississippi's system that catches firms moving in from other states.
+
+Rule 7.5(a) says a copy or recording "of any advertisement to be published shall be submitted to the Office of the General Counsel of the Mississippi Bar (OGCMB)... prior to its first dissemination." Rule 7.5(b) then lists thirteen exemptions. Number eight is the one that matters for websites: "Internet Web pages viewed via a Web browser, in a search initiated by a person without solicitation." A person who searches for a Jackson divorce lawyer and lands on your page found it on their own, so the page does not need to be filed.
+
+The exemption is narrow, though. It covers pages people find themselves. It does not obviously cover the paid search ads, social media ads, sponsored videos, radio spots or email blasts that push people to those pages. Unless one of the other exemptions applies, plan on filing those. The other exemptions most firms use are:
+
+- **Plain-information ads.** An ad "that contains no illustrations and no information other than that set forth in Rules 7.2 and 7.4" is exempt (Rule 7.5(b)(1)). Think name, office, phone, practice areas and the background-information notice, with no photos or slogans.
+- **Announcements** of new offices, new partners or moves that do not solicit clients.
+- **Communications to existing or former clients or to other lawyers,** and written material a prospective client asked for.
+
+### What a filing involves
+
+Each submission includes a copy of the ad in the form it will run, a transcript if it is audio or video, "a statement of when and where the advertisement has been, is, or will be used," and a fee. Rule 7.5(c)(4) sets the fee at $25 per advertisement filed on time and $150 for one not filed before it first ran. You file once per ad, not once per run: "an advertisement does not need to be resubmitted upon each dissemination so long as no changes to form or content are made." A changed headline or a new photo makes it a new ad.
+
+Filing is not approval. If you want the Bar's view before you spend money, Rule 7.5(d) offers an optional advisory opinion: submit at least 45 days before the ad runs, with a separate $50 fee. If the OGCMB sends nothing within 45 days, the ad "will be deemed approved." Even then, the comment to Rule 7.5 says the opinion is advisory only, though it "may be considered as evidence of a good faith effort to comply." The Bar's policies also say the two are separate: an advisory request does not satisfy the mandatory filing, so each needs its own submission and fee.
+
+> **Tip:** Keep a simple ad log next to your website files: the ad, the date filed, the docket number the Bar assigns, and where and when it ran. Rule 7.2(h) asks lawyers to keep their own copy of each advertisement after its last use "along with a record of when and where it was used," and the Bar's policies say the OGCMB keeps submissions for three years.
+
+The retention period in Rule 7.2(h) has been amended (the court's posted text shows the change from one figure to another), so confirm the current number with the Bar. Keeping copies for five years after an ad's last use covers either reading.
+
+## What must appear on every page?
+
+Rule 7.2 has two disclosures that are easiest to handle in a site-wide footer, so they show up on blog posts and practice pages people land on straight from Google.
+
+1. **A responsible lawyer.** Rule 7.2(d): every advertisement "shall include the name of at least one lawyer or the lawyer referral service responsible for their content."
+2. **Where you are.** Rule 7.2(c): every advertisement must "disclose the geographic location by city and state of one or more offices," or instead state that more information about the lawyer or firm is available by contacting the Mississippi Bar at a number the Bar designates. The comment explains why: without the rule, people "have been misled into employing an inaccessible lawyer in a distant city or another state."
+
+A footer reading "Responsible attorney: [full name]. Office: Jackson, Mississippi" meets both. If you have offices in Jackson and Ridgeland, list both. If you are a Memphis or New Orleans firm advertising to Mississippi clients, say where your offices really are.
+
+### The background-information notice
+
+This one is unusual. Rule 7.4(a) says every lawyer or firm that advertises must have available, in writing, "a factual statement detailing the background, training and experience of each lawyer or law firm." If you claim special expertise or limit your practice to certain cases, the statement has to give "the factual details of the lawyer's experience, expertise, background, and training in such matters." Then the rule requires every advertisement to advise potential clients that it exists "by prominently displaying in all such advertisements and communications the following notice: FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST."
+
+For a website, that means three practical steps:
+
+- **Put the notice where people will see it,** such as the footer of every page and the top of your contact page. "Prominently" rules out tiny gray text.
+- **Write the background statement once and keep it current.** A one- to two-page PDF per lawyer, listing education, admissions, years in practice and the kinds of matters handled, is the usual format. Rule 7.4(b) says you must send it "promptly," by mail if asked.
+- **Keep copies.** Rule 7.4(c) says a copy of everything furnished under the rule must be kept "for a period of five years after the last regular use of the information."
+
+Two other parts of Rule 7.4 shape what your bios can say. Under 7.4(d), factual statements must not be false, "potentially false or misleading," "unsubstantiated in fact" or "unfair or deceptive," and under 7.4(e) the Bar can ask you to prove any claim. And 7.4(f) says a statement that you will handle a type of matter is "presumed to be misleading" without qualification if you expect another firm to act as primary counsel. If your firm refers out serious injury cases or co-counsels them, the practice page has to say so.
+
+## Can you list fees, languages and credit cards?
+
+Yes. Rule 7.2(f) lists information that is "presumed not to violate the provisions of Rule 7.1," which makes it the safest content on any Mississippi firm's site:
+
+- the firm name, lawyers, office addresses, phone numbers and office and phone hours;
+- dates of admission to the Mississippi Bar and other bars, and federal courts and other jurisdictions where each lawyer is licensed;
+- foreign language ability;
+- prepaid or group legal plans you take part in;
+- acceptance of credit cards;
+- your fee for an initial consultation and your fee schedule;
+- sponsorship of public service announcements and community events.
+
+Fees come with a time commitment. Rule 7.2(b) says a lawyer who advertises "a specific fee or range of fees for a particular service shall honor the advertised fee or range of fees for at least 90 days unless the advertisement specifies a longer period." If you post "Uncontested divorce: $X" on the site, date the price list and leave it up and honored for at least 90 days. A consultation fee is covered too, so "Free 30-minute consultation" is a promise you need to keep for that long.
+
+Rule 7.2(e) covers co-advertising. A lawyer may not pay any part of the cost of another firm's advertisement unless the ad discloses the other lawyer's name and address, the relationship between the two, and whether cases may be referred to the lawyer who isn't advertising. If two firms share a landing page or split an ad budget, that disclosure belongs on the page.
+
+## How should results, specialties and comparisons be handled?
+
+**Results.** Rule 7.1(b) bars communications that create "an unjustified, false or misleading expectation about results." Before a verdict or settlement goes on the site, ask whether a reader could take it as a prediction for their own case. Describe the matter, give the context that made the result possible, and put qualifying language right beside it. Remember that results pages that run as paid ads are not exempt from filing.
+
+**Comparisons.** "Jackson's top-rated injury firm" compares you with other lawyers, and Rule 7.1(d) allows that only if it "can be factually substantiated." Under Rule 7.4(e) the Bar can ask you to prove it.
+
+**Certification.** Rule 7.6(a) lets you say you are certified in a field only if the certifying organization's program "is accredited by the American Bar Association." If the certifier is not ABA-accredited, you may still mention it, but you must disclose that fact "and further disclose that there is no procedure in Mississippi for approving certifying or designating organizations and authorities." The comment adds that the certifier's name must appear in any communication about it. Patent attorneys and admiralty lawyers have their own designations under Rule 7.6(b).
+
+**Firm names and out-of-state lawyers.** Rule 7.7(a) allows trade names that don't imply a connection with a government agency or legal aid. Rule 7.7(c) says a firm with offices in more than one jurisdiction must show the jurisdictional limits of lawyers in a Mississippi office who aren't licensed in Mississippi. Rule 8.5, most recently amended effective July 1, 2026, says a lawyer not admitted in Mississippi is subject to its disciplinary authority if the lawyer "provides or offers to provide any legal services in this jurisdiction." A regional firm's Mississippi pages should make it clear which lawyers are admitted here.
+
+## When does a message need "Solicitation Material"?
+
+Rule 7.3(c) says every written, recorded or electronic communication soliciting work from a specific person "known to be in need of legal services in a particular matter," with whom you have no family, close personal or prior professional relationship, "shall include the words, 'solicitation material' on the outside envelope or at the beginning and ending of any recorded communication." Note that Mississippi uses "solicitation material," not the "Advertising Material" label some other states use. For targeted emails and texts, the cautious approach is to put the words at the top and bottom of the message.
+
+The comment to Rule 7.3 says the label does not apply to "communications sent in response to requests of potential clients," so the automatic reply to your contact form is fine without it. Three other limits matter for site features:
+
+- **Live chat.** Rule 7.3(a) bars soliciting work by "in-person, live telephone or real-time electronic contact" when pecuniary gain is a significant motive, unless you have a family, close personal or prior professional relationship with the person. Configure chat so the visitor starts the conversation, and use it to collect intake details.
+- **Follow-up.** The comment warns that if you send a permitted letter and get no response, "any further effort to communicate with the prospective client may violate the provisions of Rule 7.3(b)." Drip email sequences to people who never wrote back are a risk.
+- **Paying for referrals.** Rule 7.2(i) says you may not give anything of value to a person for recommending you, beyond the reasonable cost of advertising and "the usual charges of a lawyer referral service or other legal service organization." Read how any lead service describes itself before you sign.
+
+![A large Interstate 55 highway sign displayed on a lawn at the Mississippi Children's Museum in Jackson](https://images.unsplash.com/photo-1550497672-38897bb6f238?auto=format&fit=crop&w=1200&q=75)
+
+## Which Jackson courts should your pages describe?
+
+Mississippi splits its trial courts in a way that confuses clients, which is exactly why a clear courts page earns its keep. The Administrative Office of Courts' [overview of the trial courts](https://courts.ms.gov/trialcourts/tc_aboutthecourts.php) is the source for the court roles below.
+
+- **Circuit court** hears felony prosecutions and civil lawsuits. Hinds County is the Seventh Circuit Court District, with two courthouses: the First Judicial District at 407 E. Pascagoula Street in Jackson and the Second Judicial District at 127 W. Main Street in Raymond ([Seventh Circuit court locations](https://seventh.circuit.mec.ms.gov/cgi-bin/CourtInfo.pl)). A personal injury or criminal defense page should say which one a client's case is likely to be in.
+- **Chancery court** handles divorce, custody, adoptions, guardianships, wills, equity and land records. Hinds County is in the Fifth Chancery District. Family law pages should say "chancery court," because that is what a Mississippi client will see on their papers.
+- **County court** shares some civil jurisdiction with circuit and chancery court up to $200,000 and handles youth court matters. Hinds, Madison and Rankin counties all have one.
+- **Justice court** hears small claims civil cases of $3,500 or less, misdemeanors and traffic offenses outside city limits ([Justice Court](https://courts.ms.gov/trialcourts/justicecourt/justicecourt.php)).
+- **The CCID Court.** The Capitol Complex Improvement District Court at 201 Jefferson Street hears municipal-type criminal matters and traffic cases arising inside the district's boundaries ([CCID Court](https://courts.ms.gov/ccid)). A Jackson criminal defense or traffic page that only mentions municipal court is out of date.
+- **The suburbs are different courts.** Madison and Rankin counties form the Twentieth Circuit Court District, Madison County's chancery court is in the Eleventh Chancery District, and Rankin County's is in the Twentieth Chancery District ([MEC court directory](https://www.courts.ms.gov/mec/MEC%20Chancery%20and%20Circuit%20Court%20Directory.pdf)). A firm serving Ridgeland, Madison, Brandon and Flowood should name those courthouses rather than lumping the metro together.
+- **Federal court.** The U.S. District Court for the Southern District of Mississippi sits in the Thad Cochran United States Courthouse at 501 E. Court Street in Jackson ([court home page](https://www.mssd.uscourts.gov/)).
+
+Trial and appellate courts file through [Mississippi Electronic Courts (MEC)](https://courts.ms.gov/mec/mec.php), and the public can look up dockets through its public access system. One sentence pointing clients there saves your staff phone calls.
+
+## Do you need pages in other languages?
+
+Only if someone at the firm can serve clients in that language. Rule 7.2(f)(3) makes "foreign language ability" presumptively acceptable, so list it on each bio where it is true, and say whether it is a lawyer or staff member who speaks the language. Keep your help separate from the court's: the Administrative Office of Courts runs a [court interpreter program](https://courts.ms.gov/aoc/courtinterpreter/courtinterpreter.php), so a language page can explain that interpreters for hearings come through the court.
+
+If you do publish Spanish or Vietnamese pages, write them as real pages for those readers, and use Google's guidance on [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions) to connect each language version to its English twin.
+
+## How should your Google Business Profile match the site?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) let a lawyer who meets clients directly have an individual practitioner profile, alongside a profile for the firm's office. A solo lawyer practicing under a firm name should share one profile with the firm. The name on the profile should be your real-world name, without keywords like "Best Jackson Injury Lawyer" added on.
+
+Make the two agree. The name, street address and phone number on your contact page should match the profile exactly, and the city in your footer under Rule 7.2(c) should be the same office the profile shows. Each practice area on the profile should have its own page on the site.
+
+## A Jackson law firm website checklist
+
+- [ ] Footer on every page names a responsible lawyer and the city and state of each office
+- [ ] "FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST" shown prominently, with a written background statement ready to mail
+- [ ] Background statements kept for five years after last use
+- [ ] Paid search, social, video and email ads filed with the OGCMB before they first run, with the fee
+- [ ] Ad log kept: copy, filing date, docket number, where and when it ran
+- [ ] Advertised fees dated and honored for at least 90 days
+- [ ] Results described with context; no comparison you can't prove
+- [ ] Certifications show an ABA-accredited certifier, or the required Mississippi disclosure
+- [ ] Practice pages disclose when another firm will be primary counsel
+- [ ] Out-of-state lawyers' admissions shown clearly
+- [ ] Targeted emails and texts marked "solicitation material"; chat waits for the visitor
+- [ ] Courts page separates circuit, chancery, county, justice and CCID courts, and Hinds from Madison and Rankin
+- [ ] Languages listed by person; court interpreters described as the court's service
+- [ ] Business Profile name, address and phone match the site
+
+The basics every state shares are in our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls). If you also take cases across the state line, compare Mississippi with our [New Orleans law firm guide](/blog/new-orleans-law-firm-website-design) for Louisiana's rules.
+
+## How SaySites builds a Jackson law firm website
+
+SaySites covers most of that list as you build. The footer can carry the responsible attorney's name, your office cities and the background-information notice on every page. Each practice area gets its own page, each lawyer gets a bio with fields for admissions, languages and a named certifier, and the consultation form asks different questions for each case type and asks who the other side is, so you can run a conflict check before calling back. Google sees the firm marked up as a LegalService with its lawyers and services, pages can be published in English and Spanish, and no page goes live until it scores 95+ on the speed check.
+
+You change things by saying them: "add 'FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST' under our phone number," "put the Raymond courthouse on the injury page," "change the consultation fee and date the price list." Every change waits as a draft until a lawyer approves it, and SaySites never invents results, reviews or credentials; it shows only what you give it. Because the website itself is exempt from filing, you can keep improving pages without a filing each time, while your ad log handles the ads that point to them.
+
+Law Firm Starter is $79 a month ([websites for law firms](/websites-for/law-firms), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Jackson site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'Does a Mississippi law firm have to file its website with the Bar?', a: 'Usually not. Rule 7.5(b)(8) exempts Internet web pages viewed in a browser in a search a person started without solicitation. The exemption does not obviously reach paid search ads, social ads, videos or email campaigns that point to the site, so plan to file those with the Bar’s Office of General Counsel before they first run unless another exemption applies.' },
+      { q: 'How much does it cost to file a lawyer ad in Mississippi?', a: 'Rule 7.5(c)(4) sets a $25 fee for each advertisement filed before it first runs and $150 for one filed late. An optional advisory opinion costs a separate $50 and must be requested at least 45 days before the ad runs. You file once per ad; a change to its form or content makes it a new ad that needs its own filing.' },
+      { q: 'What is the "free background information" notice?', a: 'Mississippi Rule 7.4(a) requires lawyers who advertise to have a written factual statement of each lawyer’s background, training and experience, and to display the notice FREE BACKGROUND INFORMATION AVAILABLE UPON REQUEST prominently in their advertisements. Send the statement promptly when asked, by mail if requested, and keep copies for five years after you last use it.' },
+      { q: 'What contact details does a Mississippi law firm website need?', a: 'Rule 7.2(d) requires the name of at least one lawyer responsible for the content, and Rule 7.2(c) requires the city and state of one or more offices, or a statement that more information is available from the Mississippi Bar at its designated number. A footer naming a responsible attorney and the office city on every page covers both.' },
+      { q: 'Can a Jackson law firm advertise flat fees on its website?', a: 'Yes. Rule 7.2(f) treats a consultation fee and fee schedule as presumptively acceptable, but Rule 7.2(b) says an advertised fee or range must be honored for at least 90 days unless the ad states a longer period. Date your price list, keep it honored for that time, and treat a free consultation offer the same way.' },
+      { q: 'Which court handles divorce in Hinds County?', a: 'Chancery court. Mississippi chancery courts hear divorce, custody, adoptions, guardianships, wills and land matters, and Hinds County is in the Fifth Chancery District. Circuit court handles felonies and civil lawsuits, and Hinds County’s circuit court sits in two districts, Jackson and Raymond. A family law page should name chancery court so clients recognize it on their papers.' },
+      { q: 'What does a SaySites law firm website cost?', a: 'Law Firm Starter is $79 a month after a 7-day free trial. It includes a page for each practice area, lawyer bios with admissions and languages, a consultation form that asks about the other side for conflict checks, LegalService structured data, English and Spanish pages and a footer that can carry Mississippi’s required notices. A free redesign preview is also available.' },
+    ],
+    about: ['Mississippi Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Jackson, Mississippi'],
+    published: '2026-11-24',
+    status: 'published',
+  },
+  {
+    slug: 'las-vegas-dental-practice-website-design',
+    title: 'Las Vegas Dental Websites: Nevada Advertising Rules',
+    description: 'Plan a Las Vegas dental website under Nevada rules: specialty license numbers, practice-limited wording, superiority claims, marketing fees and health data.',
+    kind: 'guide',
+    summary: [
+      'Nevada licenses dental specialties itself, so a website that says or implies a dentist is an orthodontist, endodontist or other specialist must show that dentist’s Nevada specialty license number (NAC 631.270).',
+      'A general dentist who focuses on one area can say "practice limited to" that area, but must also say they are not licensed as a specialist in it.',
+      'NRS 631.348 treats "claiming or inferring professional superiority over neighboring practitioners" as unprofessional conduct, and NAC 631.270 adds painless guarantees and extravagant self-praise to the list.',
+      'A practice brand name needs the name of every dentist, as registered with the Board, in its advertising.',
+      'Paying a marketing company a percentage of revenue is a problem under NRS 631.215, and a practice that is not a HIPAA covered entity may need a Nevada consumer health data privacy policy.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1780635765462-d8121de41bb2?auto=format&fit=crop&w=1600&q=75', alt: 'The Las Vegas Valley at dusk, with city lights spread across the basin and mountains on the horizon' },
+    body: `A Las Vegas dental website has to follow Nevada's dental practice law (NRS chapter 631) and the Board of Dental Examiners of Nevada's regulations (NAC chapter 631). Four rules shape it more than anything else. Any claim that a dentist is a specialist needs that dentist's Nevada specialty license number beside it. A general dentist who focuses on one area has to use "practice limited to" wording and say they are not a licensed specialist. You cannot claim or imply that you are better than the practices down the street. And a practice brand has to name every dentist behind it. Build those into the site, then give patients across a very large valley a clear reason to pick your office: what you treat, where you are, what it costs and how to book.
+
+The rules below come from [NRS chapter 631](https://www.leg.state.nv.us/NRS/NRS-631.html) and [NAC chapter 631](https://www.leg.state.nv.us/NAC/NAC-631.html) as published by the Nevada Legislature (the Board also links them from its [laws and regulations page](https://www.dental.nv.gov/laws--regulations/)). This is a planning guide for owners and office managers, not legal advice. For a close question, ask the Board or a health care lawyer.
+
+## What does Nevada consider false or misleading dental advertising?
+
+The statute sets the frame. [NRS 631.348](https://www.leg.state.nv.us/NRS/NRS-631.html) lists acts that are unprofessional conduct, including publishing "any fraudulent, false or misleading statement concerning the skill or method of practice of any dentist," "using advertising which is false or misleading," "claiming or inferring professional superiority over neighboring practitioners," and "practicing under a name, other than a lawfully assumed or fictitious name, that is false or misleading."
+
+The Board's regulation, [NAC 631.270](https://www.leg.state.nv.us/NAC/NAC-631.html), then spells out what makes advertising false or misleading. An ad crosses the line if it:
+
+1. claims that "a manifestly incurable disease can be permanently cured";
+2. includes "any false claim of a dentist's skill, or the efficacy or value of his or her dental treatment";
+3. "guarantees that any professional service, dental treatment or dental procedure will be painless";
+4. includes a statement known to be false, or that should be known to be false with reasonable care, to get someone to buy services;
+5. includes "any extravagant claim, aggrandizement of abilities or self-laudatory statement calculated to attract patients" that tends to mislead or "produce unrealistic expectations in particular cases";
+6. is false, deceptive or misleading about "the price or terms of credit";
+7. promotes dentists under a fictitious name without naming each dentist as registered with the Board; or
+8. suggests a dentist is a specialist without a specialty license and license number.
+
+Most website copy problems fall under numbers 3, 5 and 6. "Pain-free dentistry" on a sedation page is a painless guarantee. "The best cosmetic dentist in Las Vegas" is self-laudatory and, under the statute, a superiority claim over your neighbors. "Implants from $X" with financing terms that don't match what patients are actually offered is a price and credit problem.
+
+![A modern dental treatment room with a blue patient chair, overhead light and equipment arm](https://images.unsplash.com/photo-1643660527071-52e37cf7c7ea?auto=format&fit=crop&w=1200&q=75)
+
+## Can a general dentist say they specialize in implants or orthodontics?
+
+Not in those words, unless they hold the Nevada specialty license. Nevada is unusual here: the Board itself issues specialty licenses. [NAC 631.190](https://www.leg.state.nv.us/NAC/NAC-631.html) lists the only twelve specialties it licenses: oral and maxillofacial pathology, oral and maxillofacial surgery, orthodontia, periodontia, prosthodontia, pediatric dentistry, endodontia, public health, oral and maxillofacial radiology, dental anesthesiology, oral medicine and orofacial pain.
+
+NAC 631.270(1)(h) says an ad is misleading if it "states, suggests or implies that a dentist specializes" in one of those areas "unless the dentist is licensed for that area of specialty and the number of his or her license for that specialty is included in the advertisement." Two things follow for a website:
+
+- **Specialists show the number.** An orthodontist's bio, the braces page and any page that calls the practice an orthodontic office should carry the orthodontist's Nevada specialty license number. Put it in the bio header and in the footer of specialty pages, so it travels with the claim.
+- **Implications count.** "Implies" is broad. A page title like "Las Vegas Pediatric Dentist" on a general practice that sees children, or a logo built around "Endo," can suggest a specialty without ever saying "specialist."
+
+General dentists still have a path. NAC 631.270(2) lets a dentist limit their practice to one area and advertise that fact if the ad "uses the words practice limited to (area of limitation)" and "states that the dentist is not licensed as a specialist in that area of practice unless he or she is so licensed." So a general dentist who only does children's dentistry might write: "Practice limited to children's dentistry. Dr. Rivera is a general dentist and is not licensed as a specialist in pediatric dentistry." It is longer than a slogan, and it is what the rule asks for.
+
+Implants are not on Nevada's specialty list, but the same caution applies to a page that suggests a general dentist is an oral surgeon or a periodontist. Describe the procedure and the dentist's training, and leave specialty titles to licensed specialists.
+
+> **Tip:** Patients and competitors can check any license on the Board's [licensee lookup](https://www.dental.nv.gov/licensee-look-up--certification/). Before a bio goes live, look up each dentist there and make sure the name, license type and specialty on your site match what the Board shows.
+
+## What has to appear when a practice uses a brand name?
+
+Plenty of Las Vegas practices go by a brand rather than a dentist's name: "Desert Smile Dental," "Summerlin Family Dentistry" and so on. NAC 631.270(1)(g) says advertising that promotes "the services of a dentist or group of dentists using a fictitious name" is misleading "unless the name of each dentist, as registered with the Board, is included in the advertisement."
+
+On a website, the easy way to meet that is a footer on every page listing every treating dentist by the name on their license, plus a "Meet our dentists" page with a bio for each one. Update it the week a dentist joins or leaves. A brand site that shows only the owner while three associates treat patients falls short of the rule, and so does a nickname ("Dr. Mike") without the registered name nearby.
+
+The name itself has limits too. NRS 631.348(5) bars practicing under a name, other than a lawfully assumed or fictitious name, that is false or misleading. A brand that suggests a specialty ("Vegas Orthodontic Center" for a general practice) or a size or status you don't have invites the same questions as the copy on the page.
+
+## How should prices, financing and offers read?
+
+NAC 631.270(1)(f) makes price and credit claims part of the advertising rules, so the pages that sell treatment need the most care.
+
+- **State what the price covers.** "New patient exam, X-rays and cleaning: $X" should say which X-rays, and that a deep cleaning, if needed, costs more. A low teaser price that almost nobody qualifies for is the kind of thing the rule targets.
+- **Match financing copy to the real offer.** If a third-party lender sets the terms, say so, keep "0% financing" claims tied to the conditions the lender actually applies, and update the page when the lender changes its terms.
+- **Date offers.** Put a start and end date on specials so the page doesn't keep advertising an expired price.
+- **Insurance claims should be checkable.** List the plans you are actually in network with. "We accept all insurance" usually means "we will file out-of-network claims," which is not the same thing for the patient.
+
+Insurance billing has its own line in NRS 631.348: repeatedly failing to tell an insurer that you have forgiven a patient's share of the bill is unprofessional conduct. If your site advertises "we waive your copay," talk to your billing team and counsel before it goes up.
+
+## Who is responsible when an agency or DSO writes the ads?
+
+The dentist, and in Nevada the vendor can be on the hook too. [NRS 631.215](https://www.leg.state.nv.us/NRS/NRS-631.html) says a person who provides "goods or services for the support of the business of a dental practice" (a marketing company, for example) is not treated as practicing dentistry only if they do not take payment "based on a percentage or share of revenues or profits" and do not "exercise any authority or control over the clinical practice of dentistry."
+
+The Board's regulation, NAC 631.275, lists what counts as that control, and one item is "a decision regarding the advertising of the practice of a licensed dentist if the decision would result in a violation of the provisions of NRS 631.348 by the dentist." Under NRS 631.3457, the Board can ask the Secretary of State to revoke the state business license of a vendor that crosses those lines.
+
+For a practice choosing a website or marketing partner, that points to three rules of thumb:
+
+1. **Pay a flat fee, not a percentage of collections or production.** Per-lead and per-patient pricing raises its own questions; ask counsel before you sign one.
+2. **Keep final approval of ad copy with a licensed dentist.** If a management company or agency can publish claims without the dentist's sign-off, fix the contract.
+3. **Keep the records.** Save who approved each page and when. If a complaint ever comes in, you can show the dentist made the call.
+
+## Can you offer virtual consultations on the website?
+
+Yes, with a Nevada license. [NRS 631.3458](https://www.leg.state.nv.us/NRS/NRS-631.html) says a person may not provide dental services through teledentistry to a patient located in Nevada unless the person is licensed in Nevada to practice dentistry, dental hygiene or dental therapy. The same chapter's standards of care, ethics and confidentiality apply "to the same extent as if such services were provided in person." A "Free virtual smile consult" button is fine if a Nevada-licensed dentist does the consult. If your group shares a booking tool with offices in other states, make sure Nevada patients are routed only to Nevada-licensed dentists.
+
+## Does Nevada's health data law apply to a dental website?
+
+It depends on whether your practice is a HIPAA covered entity. Nevada's consumer health data law ([NRS 603A.400 to 603A.550](https://www.leg.state.nv.us/nrs/nrs-603A.html)) does not apply to "any person or entity that is subject to" HIPAA (NRS 603A.490). Most dental practices that bill insurance electronically are covered entities; CMS explains the test on its [covered entities page](https://www.cms.gov/priorities/key-initiatives/burden-reduction/administrative-simplification/hipaa/covered-entities).
+
+A cash-only cosmetic or membership practice that never conducts those electronic transactions may not be covered by HIPAA, and then the Nevada law can reach the health information it collects through its website and forms. Under NRS 603A.495, a regulated entity must keep a consumer health data privacy policy covering what it collects, why, who it shares with, how people can make requests and its effective date, and must "post conspicuously on the main Internet website" a link to that policy. NRS 603A.500 adds consent rules for collecting and sharing the data.
+
+Either way, the safe website habits are the same:
+
+- **Keep appointment forms short.** Name, phone, email, preferred office and time, and new or existing patient. Leave symptoms and medical history for your secure patient intake system.
+- **Keep advertising pixels off booking and form pages,** where they could pass along that someone is seeking treatment.
+- **Link a privacy policy from every page footer** that says plainly what the site collects and who sees it.
+
+![A quiet residential street lined with single-story houses, with desert mountains rising behind them](https://images.unsplash.com/photo-1677126369481-81b4ddcf0e72?auto=format&fit=crop&w=1200&q=75)
+
+## How do Las Vegas patients find a dentist, and what should location pages say?
+
+"Las Vegas" covers far more ground than the City of Las Vegas. Clark County's [2025 population estimates](https://www.clarkcountynv.gov/adobe/assets/urn:aaid:aem:be74aee3-46fa-48dd-bb5a-55f5ff3553ad/original/as/2025_CommDist_TotPop_Place_2025.pdf) put the county at 2,465,431 people. The City of Las Vegas had 691,886 of them, Henderson 366,087 and North Las Vegas 294,128, while unincorporated areas inside the Las Vegas Valley held 1,044,309. Enterprise (261,744), Spring Valley (229,399), Sunrise Manor (213,466) and Paradise (192,528) are each larger than many cities, and none of them is a city.
+
+Patients search by the part of town they know, so build your location content around that reality:
+
+- **One page per office, written for its neighborhood.** Give the street address, cross streets, parking, nearby landmarks and hours. A Henderson office should say Henderson; an office in Spring Valley can say both "Spring Valley" and "southwest Las Vegas," because people use both.
+- **Don't build pages for places you don't serve.** Twenty near-identical pages that swap in "Summerlin," "Centennial Hills" and "Green Valley" for an office in one place are what Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call doorway pages. Write a page only where you have an office or a real reason a patient there would choose you.
+- **Answer the practical questions.** Weekend and evening hours, emergency visits, Spanish-speaking staff and in-network plans are the things patients compare. Put them near the top of each office page.
+
+Your Google Business Profile should match. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow a profile for each staffed office location, and individual practitioner profiles for dentists who see patients there. Use the real business name, with no "Best Las Vegas Dentist" keywords added, and make the name, address and phone on each location page match its profile exactly. If you add a new office in Enterprise, create its page and its profile at the same time.
+
+## A Las Vegas dental website checklist
+
+- [ ] Every specialty claim carries the dentist's Nevada specialty license number
+- [ ] General dentists who focus on one area use "practice limited to" plus the not-a-specialist statement
+- [ ] No "best," "top" or "#1" claims over other practices; no painless guarantees
+- [ ] Brand-name practice lists every treating dentist by registered name on every page
+- [ ] Prices say what is included; financing copy matches the lender's real terms; offers are dated
+- [ ] Insurance list shows only plans you are actually in network with
+- [ ] Marketing paid by flat fee, not a share of revenue, with a dentist approving all copy
+- [ ] Virtual consults routed only to Nevada-licensed dentists
+- [ ] HIPAA status checked; Nevada consumer health data policy posted if the practice is not a covered entity
+- [ ] Short appointment form, no pixels on booking pages, privacy policy linked in the footer
+- [ ] One page per real office, with neighborhood details, and no doorway pages
+- [ ] Business Profile name, address and phone match each location page
+- [ ] Each bio checked against the Board's licensee lookup
+
+For the basics every practice needs, see our [medical practice website checklist](/blog/medical-practice-website-checklist). For how another Southwest state handles dental advertising, compare our [Phoenix dental practice guide](/blog/phoenix-dental-practice-website-design), and for a Las Vegas trade that faces its own licensing board, see our [Las Vegas HVAC guide](/blog/las-vegas-hvac-website-design).
+
+## How SaySites builds a Las Vegas dental website
+
+On SaySites, the website is built around your dentists, which makes Nevada's naming rules easier to keep. You can name on each treatment page the dentist who provides it, and each bio is written from the details you give, so a license type, a specialty license number, education and languages go exactly where you want them. The footer can list every dentist by registered name. You also get a new patient page, an insurance page, a page per office and a short appointment request form that doesn't ask for medical details. Requests go into a Leads list so the front desk can see who still needs a call, and a "Book now" button can point to the scheduler you already use. Search engines see the practice as a Dentist, pages can go up in English and Spanish, and nothing is published until it passes the 95+ speed check.
+
+You change the site by saying what you want: "add Dr. Chen's orthodontic license number under her name," "change 'pain-free' to 'we offer sedation options' on the sedation page," "add our Henderson office hours." Each change waits as a draft until the dentist approves it, and SaySites never invents reviews, before-and-after results or credentials. You pay SaySites a flat monthly price, never a share of your revenue.
+
+Plans start at $15 a month ([websites for dentists](/websites-for/dentists), [pricing](/pricing)). [Start a 7-day free trial](/signup) and build your Las Vegas site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from its own content first.`,
+    faq: [
+      { q: 'Does a Nevada dentist need to show a license number on the website?', a: 'A specialist does. NAC 631.270 says advertising that states or implies a dentist specializes in one of the twelve specialties Nevada licenses is misleading unless the dentist holds that specialty license and the license number is included. Put the specialty license number in the specialist’s bio and on pages that describe the practice as a specialty office.' },
+      { q: 'Can a general dentist in Las Vegas advertise braces or children’s dentistry?', a: 'Yes, carefully. Describe the treatment and the dentist’s training without specialty titles. If the dentist limits the practice to one area, NAC 631.270 allows the words "practice limited to" that area, along with a statement that the dentist is not licensed as a specialist in it. Avoid page titles like "pediatric dentist" that imply a specialty license.' },
+      { q: 'Can a Las Vegas dental office call itself the best in town?', a: 'It shouldn’t. NRS 631.348 makes claiming or inferring professional superiority over neighboring practitioners unprofessional conduct, and NAC 631.270 treats extravagant claims and self-laudatory statements that could mislead patients as false advertising. Describe your hours, services, dentists and insurance plans instead, which patients can check for themselves.' },
+      { q: 'What must a dental practice with a brand name show online?', a: 'Under NAC 631.270, advertising that promotes dentists under a fictitious name must include the name of each dentist as registered with the Board of Dental Examiners of Nevada. A footer listing every treating dentist by the name on their license, plus a bio page for each one, keeps every page of a branded site in line with the rule.' },
+      { q: 'Can a Nevada dental practice pay its marketing company a percentage of revenue?', a: 'That is risky. NRS 631.215 protects business support vendors only if they are not paid a percentage or share of the practice’s revenues or profits and do not control clinical practice, and the Board’s rules count advertising decisions that break NRS 631.348 as control. Pay a flat fee, keep a dentist approving all copy, and ask counsel about per-lead pricing.' },
+      { q: 'Does Nevada’s consumer health data law apply to dental websites?', a: 'Not to practices subject to HIPAA, which most insurance-billing dental offices are. A practice that is not a HIPAA covered entity, such as some cash-only practices, may be a regulated entity under NRS 603A. It would then need a consumer health data privacy policy linked conspicuously from its main website and consent before collecting or sharing that data beyond the stated purposes.' },
+      { q: 'What does a SaySites dental website cost?', a: 'Plans start at $15 a month after a 7-day free trial, at a flat price with no share of revenue. Each dental site includes treatment pages that can name the providing dentist, bios built from the license and specialty details you give, new patient, insurance and office pages, Dentist structured data, English and Spanish pages and a short appointment form. A free redesign preview is also available.' },
+    ],
+    about: ['Nevada dental advertising rules', 'NAC 631.270', 'Dental practice websites', 'Las Vegas, Nevada'],
+    published: '2026-11-24',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
