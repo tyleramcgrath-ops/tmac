@@ -13487,6 +13487,346 @@ Plans start at $15 a month ([websites for dentists](/websites-for/dentists), [pr
     published: '2026-11-24',
     status: 'published',
   },
+  {
+    slug: 'little-rock-law-firm-website-design',
+    title: 'Little Rock Law Firm Websites: Arkansas Ad Rules',
+    description: 'Plan a Little Rock law firm website under Arkansas Rules 7.1 to 7.5: no testimonials, no client or actor photos without labels, and Pulaski County courts.',
+    kind: 'guide',
+    summary: [
+      'Arkansas is stricter than most states: Rule 7.1(d) says a lawyer communication is false or misleading if it "contains a testimonial or endorsement," so client reviews and quotes do not belong on an Arkansas firm’s website.',
+      'Rule 7.2(e) bars using clients or former clients "in any manner whatsoever" in ads, bans dramatization, and requires any actor or other person shown to be identified by name and relationship to the firm.',
+      'Every page needs the name of at least one Arkansas-licensed lawyer responsible for it and the location of the office where the lawyers doing the work principally practice.',
+      'There is no pre-filing in Arkansas, but you must keep a copy of each version of an ad, including web pages, for five years after it was last shown, with a record of when and where it ran.',
+      'Pulaski County’s circuit court has five divisions (criminal, civil, probate, domestic relations and juvenile), and traffic and small cases go to separate district courts in Little Rock, North Little Rock and the suburbs.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1605212297995-dd77a9f4d509?auto=format&fit=crop&w=1600&q=75', alt: 'Downtown Little Rock towers lit up at night, reflected in the Arkansas River below the riverfront park' },
+    body: `A Little Rock law firm website has to follow the Arkansas Rules of Professional Conduct, and Arkansas has some of the tightest advertising rules in the country. The short version: no testimonials or endorsements, no clients or former clients in your marketing, no dramatized scenes, and any person in a photo or video who isn't one of your lawyers must be named and their connection to the firm explained. Every page needs a responsible Arkansas-licensed lawyer and the location of the office where the work is done, and you keep a copy of each version for five years. Nothing has to be filed in advance. Get those rules built into the site first, then make it genuinely useful to someone in Pulaski County who needs a lawyer this week.
+
+The rules quoted here come from the [current Arkansas Rules of Professional Conduct](https://opinions.arcourts.gov/ark/cr/en/1868/1/document.do) as the Arkansas Judiciary publishes them; the advertising rules are Rules 7.1 through 7.5, last amended by per curiam order on June 26, 2014. Complaints and enforcement run through the Supreme Court Committee on Professional Conduct and its [Office of Professional Conduct](https://arcourts.gov/professional-conduct). This guide is written for the people who plan, write and approve a firm's website. It is not ethics advice; for a close call, ask your own ethics counsel.
+
+## How is Arkansas different from other states?
+
+Most states follow the American Bar Association's model rules, which let a lawyer publish truthful client reviews if they are not misleading. Arkansas does not. Its Rule 7.1 lists four things that make a lawyer communication "false or misleading," and the fourth is that it "contains a testimonial or endorsement." That one clause changes how an Arkansas firm builds its website more than anything else in the rules.
+
+It sits next to three more familiar tests. A communication is also false or misleading if it:
+
+- contains "a material misrepresentation of fact or law," or leaves out a fact needed to keep the whole from misleading;
+- is "likely to create an unjustified expectation about the results the lawyer can achieve," or suggests results through means that break the rules or the law;
+- compares your services with other lawyers' services "unless the comparison can be factually substantiated."
+
+Rule 7.1 covers all communications about a lawyer's services, not just paid ads, so it reaches your home page, bios, blog posts, the text in your search result snippets and anything you post on social media.
+
+![The lit steel trusses of a pedestrian bridge in Little Rock at night, with the downtown skyline beyond the railings](https://images.unsplash.com/photo-1605212299121-2e62c9546ff6?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Little Rock law firm show client reviews on its website?
+
+Under a plain reading of Rule 7.1(d), no. A client quote on the home page, a "What our clients say" slider, a widget that pulls in your star ratings or a video of a former client telling their story are all testimonials. Endorsements are wider than client praise: a quote from a judge, another lawyer or a local personality saying you're the right choice is an endorsement too.
+
+Rule 7.2(e) closes the remaining gaps. It says "Clients or former clients shall not be used in any manner whatsoever in advertisements." So a case study naming a client, a photo of you with a smiling client after a closing, or a thank-you note on your wall that appears in a video all raise the same problem, even when the client agreed.
+
+What this means in practice:
+
+1. **Remove review widgets and quote boxes** from every page, including the footer and the contact page.
+2. **Don't paste in reviews from your Google Business Profile.** Clients can still leave reviews on Google; that is their speech on Google's site. Republishing them on your own site turns them into your advertising.
+3. **Rewrite "client stories" as explanations.** Describe the type of matter, the legal issue and how your process works, without the client and without praise.
+4. **Check older blog posts and press pages** for quotes from people praising the firm.
+
+If you're unsure whether a specific item counts, such as a ranking or an award from a third party, ask ethics counsel before it goes up. Rule 7.1 still requires any award you mention to be accurate and not misleading.
+
+## Who can appear in photos and videos on the site?
+
+Rule 7.2(e) says advertisements "may include photographs, voices or images of the lawyers who are members of the firm who will actually perform the services." Beyond that, it adds two firm limits:
+
+- **Actors and other people must be labeled.** "If advertisements utilize actors or other individuals, those persons shall be clearly and conspicuously identified by name and relationship to the advertising lawyer or law firm." Read literally, that includes the smiling models in stock photos, a paralegal in a team shot, or a spokesperson in a video.
+- **No dramatization.** "Dramatization in any advertisement is prohibited." A reenacted car crash, a staged phone call with a worried parent, or a courtroom scene with actors is out, however tasteful.
+
+The comment to Rule 7.2 explains the point: ads should provide "only useful, factual information presented in a nonsensational manner," and a lawyer may appear personally "to explain a legal right, the services the lawyer is available to perform, and the lawyer's background and experience."
+
+The safest picture plan for a Little Rock firm is the one that's also most convincing: real photos of your own lawyers, your office, and places in the city your clients know. If a paralegal or intake specialist appears, caption them with their name and role. Avoid stock photos of people altogether. Pictures of the Arkansas River, the Main Street bridge or the State Capitol carry no label problem.
+
+## How should results and comparisons be handled?
+
+Carefully, and less often than in other states. The comment to Rule 7.1 says the ban on unjustified expectations "would ordinarily preclude advertisements about the results obtained on behalf of a client, such as the amount of a damage award or the lawyer's record in obtaining favorable verdicts." A second comment, added in 2014, softens that slightly: "The inclusion of an appropriate disclaimer or qualifying language may preclude a finding that a statement is likely to create unjustified expectations."
+
+So a verdicts page is not automatically banned, but in Arkansas it starts from a presumption against it. If you publish results at all:
+
+- describe the facts that made the result possible, not just the dollar figure;
+- put qualifying language beside each result, not in a footer;
+- never tie a result to a client who could be identified, because of Rule 7.2(e);
+- leave out "record" claims such as win rates, which the comment names directly.
+
+Comparisons follow the same logic. "Little Rock's best injury lawyer" compares you with every other lawyer in town and needs factual substantiation. Plain, checkable facts (years licensed, courts admitted to, the kinds of cases you take) do more for a reader anyway.
+
+## What must every page include?
+
+Rule 7.2(d) requires two disclosures on any communication made under the rule:
+
+1. **A responsible Arkansas lawyer.** It must "include the name of at least one lawyer who is licensed in Arkansas and who is responsible for its content."
+2. **Where the work is done.** It must "disclose the geographic location of the office or offices of the attorney or the firm in which the lawyer or lawyers who actually perform the services advertised principally practice law."
+
+A site-wide footer handles both: "Responsible attorney: [full name], licensed in Arkansas. Office: [street address], Little Rock, Arkansas." The second requirement matters if your marketing reaches Arkansas from elsewhere. A firm based in Memphis or Dallas that advertises for Arkansas cases needs to say where its lawyers actually practice, and Rule 7.5(b) adds that a multi-state firm must show the jurisdictional limits of lawyers who aren't licensed where an office is located.
+
+### Keeping records
+
+Rule 7.2(b) says "a copy or recording of an advertisement or communication shall be kept for five years after its last dissemination along with a record of when and where it was used." Websites change constantly, so build a habit: save a dated copy of each page whenever you publish a meaningful change, and keep it for five years after that version comes down. The comment to Rule 7.2 says this record is for enforcement and "does not require that advertising be subject to review prior to dissemination," so unlike some neighboring states, Arkansas has no filing step or fee.
+
+> **Tip:** A simple shared folder works. Each time a practice page changes, save a PDF named with the page and date, and note where it ran (website, a paid search ad, a social post). That covers the five-year requirement and helps you answer any question from the Office of Professional Conduct.
+
+If you're weighing a website company, this is the moment to see what a compliant site looks like. You can [request a free redesign](/redesign) of your current site and check it against the list in this guide.
+
+## What can you say about fields of practice and certification?
+
+Rule 7.4(a) lets you say you do or don't practice in particular fields, and the comment allows a lawyer to state that they "specialize in" a field, subject to the Rule 7.1 standard. Formal certification is narrower. Under Rule 7.4(d), you may not state or imply that you are "certified as a specialist" unless the certifying organization is approved by an appropriate state authority or accredited by the American Bar Association, and "the name of the certifying organization is clearly identified in the communication." Arkansas ended its own state specialization plan, and the rules say no new specialists are recognized under it. Patent attorneys and admiralty lawyers may use those titles under Rules 7.4(b) and (c).
+
+On a practice page, that means:
+
+- "Our practice is limited to workers' compensation" is fine if true.
+- "Board certified in civil trial law" needs the certifier's full name next to it, and that certifier must be ABA-accredited or state-approved.
+- A bio should list admissions and years licensed in plain words, because the comment to Rule 7.2 counts that kind of background as useful information.
+
+## Can a solo lawyer call the firm "and Associates"?
+
+No. The comment to Rule 7.5 is unusually specific: "and associates" after a lawyer's name "implies to the public that three or more lawyers are practicing law together in a firm," and "a solo practitioner shall not use a title such as 'Smith and Associates' as a firm name." With exactly two lawyers, the singular "associate" may be used; with three or more, the plural is fine. The same comment says "associates" can't count secretaries, investigators or paralegals.
+
+Rule 7.5 also allows trade names that don't imply a connection with a government agency or legal aid, bars implying a partnership that doesn't exist, and keeps a lawyer holding public office out of the firm name while not actively practicing with it. Because your domain name and the name on your Business Profile are designations too, keep all three consistent.
+
+## When is a message to a prospective client a solicitation?
+
+Your website itself isn't one. The comment to Rule 7.3 says a communication "directed to the general public, such as through a billboard, an Internet banner advertisement, a website or a television commercial," or one "automatically generated in response to internet searches," is not a solicitation. Replies to people who contact you aren't either; the comment says the "Advertisement" marking doesn't apply to communications "sent in response to requests of potential clients."
+
+The rules bite on what you build around the site:
+
+- **Live chat and texting.** Rule 7.3(a) bars soliciting work by "in-person, live telephone or real-time electronic contact" when money is a significant motive, unless the person is a lawyer or has a family, close personal or prior professional relationship with you. Set chat so the visitor starts it.
+- **Targeted letters.** A written solicitation to someone known to need help in a particular matter may only be sent by regular mail under Rule 7.3(b)(2). It must say "Advertisement" in red on the envelope and on each page, open with "If you have already retained a lawyer, please disregard this letter," and carry the complaint notice with the Supreme Court's address. Because the rule text says regular mail only, don't send targeted emails or texts to accident victims or people named in court filings without advice.
+- **Death claims.** Under Rule 7.3(c), no written solicitation in a death claim until 30 days after the accident.
+- **Follow-ups.** The comment warns that if a letter gets no response, "any further effort to communicate with the recipient" may violate Rule 7.3(e). Email drip sequences to people who never replied are a risk.
+- **Paying for leads.** Rule 7.2(c) lets you pay the reasonable cost of advertising and the usual charges of a "not-for-profit lawyer referral service," but nothing else for recommending you. Read how a lead service is paid before you sign.
+
+![A quiet downtown Little Rock street in autumn, with older brick houses on one side and glass high-rises behind](https://images.unsplash.com/photo-1517694381106-c9ca8944559a?auto=format&fit=crop&w=1200&q=75)
+
+## Which Little Rock courts should your pages explain?
+
+Clients search for the court on their papers, so naming it correctly helps them and shows you know the system.
+
+- **Circuit court has divisions, not separate courts.** Amendment 80 to the Arkansas Constitution merged law and equity courts, and since January 1, 2002 circuit courts have had five subject-matter divisions: "criminal, civil, probate, domestic relations, and juvenile" ([Arkansas Judiciary: circuit courts](https://arcourts.gov/courts/circuit-courts)). A divorce page should say "domestic relations division of circuit court," because that's what clients will see. Pulaski and Perry counties share the Sixth Judicial Circuit.
+- **Where cases are filed.** The Pulaski County Circuit Clerk is at 401 West Markham Street. Its [Central Receiving department](https://pulaskiclerkar.gov/departments/central-receiving/) files new civil, domestic and probate cases and handles orders of protection, and the juvenile division sits at a separate location on West Roosevelt Road. Attorneys file electronically through [eFiling](https://efile.arcourts.gov/).
+- **District courts.** Arkansas district courts hear traffic violations, misdemeanors, preliminary felony matters and civil cases up to $25,000, plus small claims ([Arkansas Judiciary: district courts](https://arcourts.gov/courts/district-courts)). Inside Pulaski County there are several: Little Rock, North Little Rock, Pulaski County, Sherwood and Jacksonville/Maumelle district courts ([case plans for Pulaski County district courts](https://www.arcourts.gov/sites/default/files/Pulaski-County-District-Courts_0.pdf)). Little Rock's traffic division sits at 600 W. Markham ([Little Rock District Court, 2nd Division](https://littlerock.gov/government/city-departments/district-courts/traffic-court-2/)). A DWI or traffic page should say which district court a ticket from Little Rock, North Little Rock or Sherwood goes to.
+- **Federal court.** The U.S. District Court for the Eastern District of Arkansas sits in the Richard Sheppard Arnold United States Courthouse at 500 West Capitol Avenue ([court home page](https://www.are.uscourts.gov/)).
+
+One sentence pointing clients to [Search ARCourts](https://caseinfo.arcourts.gov/), the state's public case lookup, saves your staff calls about hearing dates.
+
+## Should your site be in Spanish?
+
+Only if someone at the firm can work with clients in Spanish. The comment to Rule 7.2 lists "a lawyer's foreign language ability" among the information you may publish, so put it on the bio of each person who speaks the language and say whether they are a lawyer or staff. Explain that hearing interpreters come from the courts: the Arkansas Judiciary runs an [Office of Court Interpreter Services](https://arcourts.gov/administration/interpreters).
+
+If you publish Spanish pages, write them for Spanish-speaking readers rather than running English through a translator, and connect each to its English version as Google describes in its guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+## How should your Google Business Profile line up?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) let an individual lawyer who meets clients have a practitioner profile alongside the firm's office profile, and they require a real address with permanent signage. Use the firm's real-world name, with no added keywords. Keep the name, address and phone number on the profile identical to your website footer, and make sure the office in your Rule 7.2(d) disclosure is that same office.
+
+Clients may leave reviews on that profile; you can reply to them there. Just don't carry them onto your own site, for the reasons in Rule 7.1(d).
+
+![A yellow Little Rock streetcar crossing a bridge under overhead wires on the Rock Region Metro blue line](https://images.unsplash.com/photo-1782443332160-390025d5d71f?auto=format&fit=crop&w=1200&q=75)
+
+## A Little Rock law firm website checklist
+
+- [ ] No testimonials, endorsements, review widgets or client quotes anywhere on the site
+- [ ] No clients or former clients in photos, videos or case stories
+- [ ] Anyone pictured who isn't a firm lawyer named, with their role, in a visible caption
+- [ ] No dramatized scenes or reenactments in video
+- [ ] Footer names a responsible Arkansas-licensed lawyer and the office where the work is done
+- [ ] A dated copy of every page version kept for five years after it comes down
+- [ ] Results, if any, shown with context and qualifying language beside them
+- [ ] Certifications name an ABA-accredited or state-approved certifier
+- [ ] Firm name follows the "associate" and "associates" rule
+- [ ] Chat waits for the visitor; targeted solicitations go by regular mail with every required notice
+- [ ] Courts page separates circuit court divisions, the district courts and federal court
+- [ ] Languages listed per person; court interpreters described as the court's service
+- [ ] Business Profile name, address and phone match the footer exactly
+
+For the parts every state shares, see our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls). If you also take cases across the line in Oklahoma, compare our [Oklahoma City law firm guide](/blog/oklahoma-city-law-firm-website-design).
+
+## How SaySites builds a Little Rock law firm website
+
+SaySites suits Arkansas's rules because nothing goes on your site unless you put it there. You decide which sections appear, so a site can simply have no reviews section, and SaySites never invents reviews, results or credentials. The footer can carry the responsible attorney's name and your office address on every page. Each practice area gets its own page, each lawyer a bio with admissions, languages and a named certifier, and the consultation form asks who the other side is so you can run a conflict check before you call back. Search engines see the firm as a LegalService with its lawyers and services, pages can be published in English and Spanish, and nothing goes live until it scores 95+ on the speed check.
+
+You change the site by saying what you want: "take the quote box off the home page," "caption the team photo with Maria's name and title," "add the Sherwood district court to the DWI page." Each change waits as a draft until a lawyer approves it, which also gives you a natural moment to save the dated copy Rule 7.2(b) asks for.
+
+Law Firm Starter is $79 a month ([websites for law firms](/websites-for/law-firms), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Little Rock site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'Can an Arkansas lawyer put client testimonials on a website?', a: 'Arkansas Rule 7.1(d) says a communication about a lawyer’s services is false or misleading if it contains a testimonial or endorsement, and Rule 7.2(e) says clients or former clients may not be used in advertisements in any manner. Most Arkansas firms therefore leave reviews, client quotes and rating widgets off their sites entirely. Ask ethics counsel about any borderline item.' },
+      { q: 'Can a Little Rock law firm use stock photos of people?', a: 'It is risky. Rule 7.2(e) allows photos of the firm’s own lawyers who will do the work, but anyone else shown, including actors, must be clearly identified by name and relationship to the firm. Models in stock photos rarely can be. Photos of your own team with captions, your office and Little Rock landmarks avoid the problem.' },
+      { q: 'Does Arkansas require law firm websites to be filed with the bar?', a: 'No. Arkansas has no pre-filing or review of lawyer advertising; the comment to Rule 7.2 says the record requirement does not mean advance review. Rule 7.2(b) does require keeping a copy of each advertisement or communication for five years after its last use, with a record of when and where it was used, so save dated copies of your pages.' },
+      { q: 'What must appear on every page of an Arkansas law firm website?', a: 'Rule 7.2(d) requires the name of at least one Arkansas-licensed lawyer responsible for the content and the geographic location of the office where the lawyers who perform the services principally practice. A footer with the responsible attorney’s name and the Little Rock office address, shown on every page, is the simplest way to meet both.' },
+      { q: 'Can a solo Arkansas lawyer use "and Associates" in the firm name?', a: 'No. The comment to Arkansas Rule 7.5 says a solo practitioner may not use a name like "Smith and Associates." With two lawyers practicing together the singular "associate" may be used, and the plural needs three or more lawyers. Paralegals, secretaries and investigators do not count, and the domain and Business Profile name should match.' },
+      { q: 'Which court handles a divorce in Little Rock?', a: 'The domestic relations division of the Pulaski County Circuit Court. Arkansas circuit courts have five divisions: criminal, civil, probate, domestic relations and juvenile. New divorce cases are filed with the Pulaski County Circuit Clerk at 401 West Markham Street, so a family law page should name that division rather than a separate family court.' },
+      { q: 'How much is a SaySites law firm website?', a: 'Law Firm Starter costs $79 a month and begins with a 7-day free trial. You get a page per practice area, lawyer bios with admissions and languages, a consultation form with a conflict-check question, LegalService structured data and a footer for the responsible attorney and office. There is no reviews section unless you add one, and a free redesign preview is available.' },
+    ],
+    about: ['Arkansas Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Little Rock, Arkansas'],
+    published: '2026-11-25',
+    status: 'published',
+  },
+  {
+    slug: 'boston-dental-practice-website-design',
+    title: 'Boston Dental Websites: Massachusetts Ad Rules',
+    description: 'Build a Boston dental website under Massachusetts rules: owner names, fee and discount wording, no superiority claims, specialty limits and Botox pages.',
+    kind: 'guide',
+    summary: [
+      'Massachusetts regulates dental advertising in two places: 234 CMR 5.18 from the Board of Registration in Dentistry and M.G.L. c. 112, § 52A, a state statute with a long list of banned claims.',
+      'Every advertisement must name at least one owner of the practice who holds a Massachusetts dental license, so put that name in the site footer.',
+      'Advertised fees need the period they are good for, "free" offers must name the service and its value, discounts must show the full fee, and any fee needs a note when extra fees can be foreseen.',
+      'The statute bars claims of superiority, "painless" treatment, guarantees of satisfaction, opinions about quality and statistics patients can’t verify, and it requires a source and author for anything published under a dentist’s byline.',
+      'Under the Board’s policy amended January 7, 2026, a Massachusetts dentist may offer Botox or dermal fillers only as part of comprehensive dental treatment, so a stand-alone cosmetic injectables page is a problem.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1784753390062-fe6867680f9d?auto=format&fit=crop&w=1600&q=75', alt: 'Boston’s Back Bay skyline seen across the Charles River, with sailboats tied up at a boathouse dock' },
+    body: `A Boston dental practice website has to follow two sets of Massachusetts rules: the Board of Registration in Dentistry's regulation at 234 CMR 5.18 and the advertising statute at M.G.L. c. 112, § 52A. Together they mean your site must name at least one licensed owner, state how long any advertised price is good for, explain the value of anything offered free, show the full fee behind any discount, and avoid claims that your dentistry is superior, painless or guaranteed. Specialty titles are limited to dentists whose practice is confined to that specialty. Build those rules into the footer and the treatment pages first, then make the site easy to use for patients across Boston's neighborhoods, many of whom read in a language other than English.
+
+The rules quoted here come from the [text of M.G.L. c. 112, § 52A](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXVI/Chapter112/Section52A) on the Legislature's site and from [234 CMR 5.00](https://www.mass.gov/regulations/234-CMR-500-requirements-for-the-practice-of-dentistry-dental-hygiene-and-dental-assisting), whose posted version is dated May 7, 2015. The Board has published draft revisions of 234 CMR 5.00 on its [statute and regulations page](https://www.mass.gov/law-library/234-cmr), so check there for changes before you sign off. This guide is for the people who plan and approve a practice's website. It is not legal advice; for a close call, ask the Board or a health care lawyer.
+
+## What do the Massachusetts dental advertising rules require?
+
+The regulation sets the floor. 234 CMR 5.18(1) says a dentist "may advertise truthful and accurate information pertaining to dental services," and that "unfair, misleading, deceptive and fraudulent advertising is prohibited." It then adds three concrete requirements:
+
+1. **A licensed owner's name.** Under 5.18(3)(a), any advertisement for dental services, "regardless of medium," must include "the name of at least one owner of the practice who is currently licensed to practice dentistry in the Commonwealth." If the practice is a professional corporation, it must name at least one of its licensed owners.
+2. **"Free" needs detail.** Under 5.18(2)(b), services advertised as free or no charge "must describe the specific services offered and the comparative monetary value."
+3. **Fees need a time frame.** Under 5.18(2)(c), "the period of time during which the advertised fees will be in effect must be included in the advertisement," and the fees must stay in effect for a reasonable period.
+
+"Regardless of medium" is the important phrase. A website, a Google ad, an Instagram post and a mailer all count. For a site, the cleanest approach is a footer on every page that reads something like "Owner: Dr. [full name], DMD, licensed in Massachusetts," so a patient who lands on a blog post from search sees it too.
+
+![A narrow Boston street between red brick buildings in late afternoon light, with fire escapes and a person walking at the far end](https://images.unsplash.com/photo-1648154684502-faf53c2eb6aa?auto=format&fit=crop&w=1200&q=75)
+
+## Which claims does Massachusetts law ban?
+
+M.G.L. c. 112, § 52A is the stricter of the two. It applies to dentists and dental hygienists and covers newspaper, radio and TV ads, display signs, personal solicitation "or other manner of advertising." Its first paragraph bars statements "of a character tending to deceive or mislead the public," and specifically:
+
+- "claiming professional superiority or the performance of professional services in a superior manner";
+- claiming "the performance of painless operations";
+- "promises, guarantees, representations, or statements that satisfaction or a cure will result."
+
+Its second paragraph adds seven more. Advertising may not contain anything that:
+
+1. "contains a statement of opinion as to the quality of dental services";
+2. describes benefits of procedures or products "that involve significant risks" without "realistic assessments of the safety and efficacy";
+3. "contains statistical data, representations, or other information that is not susceptible to reasonable verification by the public";
+4. mentions a fee without disclosing "that additional fees may be involved in individual cases," when such fees can reasonably be foreseen;
+5. "offers a discount for dental services without disclosing the total fee from which the discount will apply";
+6. "fails to make a disclosure of the source and authorship of any message published under a dentist's byline";
+7. suggests specialty care is provided "by a qualified specialist when such is not the case."
+
+### What that means for your pages
+
+Read your current site with that list beside it. Common phrases that need rewriting:
+
+- "Boston's best dentist," "top-rated," "the gentlest care in Back Bay": opinions about quality or superiority. Replace them with facts a patient can check, such as degrees, years in practice, hours and the languages your team speaks.
+- "Pain-free implants," "you won't feel a thing": painless claims. Describe what you actually offer instead: local anesthesia, nitrous oxide or the sedation options your dentists are permitted to provide.
+- "Smile guaranteed" or "you'll love your results": promises of satisfaction.
+- "98% success rate": a statistic the public can't verify. Leave it out unless you can point readers to where they can check it.
+- "Whitening $299" with no note: add that the fee can change in individual cases when that's foreseeable, and state the dates the price is good for under 5.18(2)(c).
+- "20% off Invisalign": show the full fee the discount comes off.
+- "Free consultation": say exactly what the consultation includes and what it would normally cost, per 5.18(2)(b).
+
+For any treatment with real risks, such as implants, extractions, sedation or veneers, the treatment page needs an honest section on risks and limits, not just benefits.
+
+> **Note:** Blog posts count. If a post appears under a dentist's name but was drafted by staff or an agency, § 52A(6) calls for disclosing the source and authorship. A line such as "Written by our team and reviewed by Dr. [name]" is simple and honest.
+
+## Can a Massachusetts dental website show smiles and before-and-after photos?
+
+This is the least settled part. The first paragraph of § 52A says no dentist shall "advertise with signs or printed advertisements, or by means of show cases, containing the representation of a tooth, teeth, dental restoration of any kind ... or any portion of the human head or neck or photograph of any person." The wording dates from an era of signs, print and show cases, and the statute does not say how it applies to a website. Many practices show photos of their own dentists and team, and the regulation's own requirement to name an owner suggests the Board expects ads to identify people.
+
+Treat before-and-after galleries and close-up smile photos with care. Before you publish one, ask the Board or a health care lawyer how they read the image clause for online pages. Whatever the answer, before-and-after images still have to clear the other tests: no implied guarantee, no misleading editing, and realistic information about risks. Photos of your office, your equipment and your neighborhood raise none of these questions.
+
+## How can a Boston dentist describe a specialty?
+
+234 CMR 5.03(1) lets a dentist hold out as an ADA specialist only if the dentist completed a specialty program approved by the ADA and the Commission on Dental Accreditation, and is either eligible for examination by an ADA-recognized national specialty board or is a diplomate of one. Then 5.03(2) adds the rule that trips up general practices: a dentist may not hold out "in directories, listings or other written or electronic publications" as a practitioner in an ADA specialty "unless his or her practice is limited only to the specialty area(s)."
+
+For a general dentistry site, that means:
+
+- Don't title a page "Orthodontics" or "Periodontics" in a way that implies a specialist practice. Name the treatment instead: "Clear aligners," "Gum disease treatment," "Root canal treatment."
+- If a visiting specialist treats patients in your office, say so on that page and name them, so § 52A(7) isn't a concern.
+- Keep the credentials on each bio factual, and link patients to the state's [Check a Health Care License](https://checkahealthlicense.mass.gov/) search so they can confirm a license themselves.
+
+The Board's posted drafts would change some of this wording, including how board certification is recognized, which is another reason to check the regulations page before you publish.
+
+![Dental handpieces lined up in their holders on a treatment unit, softly lit](https://images.unsplash.com/photo-1642844744022-d76a9af3711a?auto=format&fit=crop&w=1200&q=75)
+
+## Can a Boston dental office advertise Botox or fillers?
+
+Only within limits the Board set out in its [policy advisory on botulinum toxins and dermal fillers](https://www.mass.gov/doc/botulinum-toxin-and-dermafillers-by-licensed-dentists/download), most recently amended January 7, 2026. Dentists with ADA board certification in oral and maxillofacial surgery may use them in treating oral or maxillofacial disease, disfigurement or dysfunction. Other licensed dentists may use them only when it is "part of the delivery of the patient's comprehensive dental treatment plan," is "limited to the practice of dentistry," and the dentist has completed at least eight hours of training for each, through an accredited program. And dentists "may not administer Botox and/or dermal fillers in any location that does not provide comprehensive dental treatment."
+
+So a Boston dental site shouldn't run a stand-alone "lip filler specials" page that reads like a med spa menu. If your dentists use these treatments, describe them in the context of dental care they support, such as jaw pain or a broader treatment plan, and name the dentist who has the training. The Board's [policies and guidelines list](https://www.mass.gov/lists/board-of-registration-in-dentistry-policies-and-guidelines) also includes policies on tooth whitening, which it treats as the practice of dentistry, and on lasers.
+
+If you'd like to see your current site rewritten under these rules before you commit to anything, you can [request a free redesign](/redesign) and compare the two side by side.
+
+## Who controls the wording on the site?
+
+Massachusetts puts that decision with the dentist. 234 CMR 5.20(3) bars a licensee from any arrangement giving someone who isn't a Massachusetts-licensed dentist "final decision-making authority" over, among other things, "policies and decisions relating to pricing, credit, refunds, warranties and advertising." A management company, a dental support organization or a marketing agency can draft and suggest, but a licensed dentist has to make the final call on what the site says. Build that into your process: no page goes live without a dentist's approval.
+
+Two other rules affect marketing deals. 5.20(2) bars paying or accepting fees for referring patients, and § 52A requires a dental referral service that charges dentists to join its network to disclose the fee arrangement in its advertising and to state that only dentists who pay are included. Read how a directory or lead service is paid before you sign up.
+
+## Which languages do Boston patients read?
+
+Boston's city government publishes its own language data. Its [2023 language demographic report](https://search.boston.gov/sites/default/files/file/2023/04/%28ENG%29%20LCA%20Language%20Demographic%20Data%20Report%20-%202023%20%28FINAL%29.pdf), based on 2017 to 2021 American Community Survey data, found that 36.7% of residents age 5 and up speak a language other than English at home. Among residents who need language help, the most common languages were Spanish, Haitian Creole, Mandarin, Vietnamese, Cantonese, Brazilian Portuguese and Cabo Verdean Creole.
+
+The neighborhood figures in the same report are more useful for a practice, because patients usually pick a dentist close to home or work:
+
+- **East Boston:** Spanish meets the city's threshold, with about 14,300 residents counted.
+- **Dorchester:** Spanish, Cabo Verdean Creole, Vietnamese and Haitian Creole all meet it.
+- **Mattapan and Hyde Park:** Haitian Creole and Spanish.
+- **Allston, Brighton, Chinatown and the South End:** Chinese, with Portuguese and Russian also listed in Brighton.
+
+Match your site to your staff, not the map. If a dentist or front desk team member speaks Haitian Creole or Vietnamese, say so on their bio and on the contact page, and consider a short page in that language covering how to book, what to bring and which insurance you accept. Write it for those readers rather than machine translating it, and link it to the English version as Google describes in its guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+## What should the appointment form collect?
+
+As little as you need to call the patient back: name, phone, email, preferred times, whether they're new, and their insurance carrier. Don't ask for Social Security numbers, driver's license numbers or card numbers. In Massachusetts, a resident's name combined with any of those is "personal information" under [201 CMR 17.00](https://www.mass.gov/regulations/201-CMR-1700-standards-for-the-protection-of-personal-information-of-residents-of-the-commonwealth), which requires a written security program and encryption of those records when sent across public networks. Keeping them off the website form, and collecting them at the visit, keeps the site out of that scope. Leave medical history and symptoms for the patient portal or the chair, too.
+
+## How should your Google Business Profile match the site?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) allow a profile for the practice and separate profiles for individual practitioners such as dentists, as long as the address is a real location with permanent signage. Use the practice's real name with no added keywords like "Best Boston Dentist," which would also clash with § 52A.
+
+Make the profile and the site agree. The practice name, address and phone on your contact page should match the profile, each office should have its own location page, and the owner named in your footer should be the same licensed owner your practice uses everywhere. On the site, describe the practice as a [Dentist](https://schema.org/Dentist) in structured data, using only details that appear on the page, as Google's [structured data guidelines](https://developers.google.com/search/docs/appearance/structured-data/sd-policies) require.
+
+![A dental mirror held up in front of a blurred dental chair and overhead light in a treatment room](https://images.unsplash.com/photo-1698749778813-ad5f2814e50f?auto=format&fit=crop&w=1200&q=75)
+
+## A Boston dental website checklist
+
+- [ ] Footer on every page names at least one licensed owner of the practice
+- [ ] Every advertised fee shows the dates it's good for and notes when extra fees can be foreseen
+- [ ] "Free" offers name the service and its usual value; discounts show the full fee
+- [ ] No "best," "top," "gentlest," "painless," "guaranteed" or unverifiable statistics
+- [ ] Treatments with real risks explain risks and limits, not just benefits
+- [ ] Blog posts show who wrote them and which dentist reviewed them
+- [ ] Before-and-after or smile photos checked with the Board or counsel first
+- [ ] No specialty titles unless the practice is limited to that specialty
+- [ ] Botox or filler pages framed within comprehensive dental care and name the trained dentist
+- [ ] A licensed dentist approves every page before it goes live
+- [ ] Languages listed by person; pages in other languages written, not machine translated
+- [ ] Appointment form collects no Social Security, license or card numbers and no medical history
+- [ ] Business Profile name, address and phone match the site
+
+The basics every practice shares are in our [medical practice website checklist](/blog/medical-practice-website-checklist) and our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way). To see how another state handles the same questions, compare our [Las Vegas dental website guide](/blog/las-vegas-dental-practice-website-design).
+
+## How SaySites builds a Boston dental website
+
+On SaySites the footer can carry your licensed owner's name on every page, and each treatment gets its own page where you can say which dentist provides it and spell out fees with their dates. Bios hold degrees, license details and the languages each person speaks, written only from what you give, since SaySites never invents reviews, results or credentials. You get pages for new patients, insurance and each office, an appointment request form that skips medical questions and identity numbers, and requests that land in a Leads list so your front desk can see who still needs a call. Search engines see the practice as a Dentist, pages can be published in English and Spanish, and nothing goes live until it scores 95+ on the speed check.
+
+You make changes by describing them: "change 'pain-free' to 'we offer nitrous oxide and local anesthesia' on the implants page," "add the dates our whitening price is good for," "put Dr. Pierre's Haitian Creole on her bio." Every change waits as a draft until a dentist approves it, which is exactly the control 234 CMR 5.20 expects a licensed dentist to keep.
+
+Plans start at $15 a month ([websites for dentists](/websites-for/dentists), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Boston site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'What must a Massachusetts dental advertisement include?', a: 'Under 234 CMR 5.18(3), any advertisement for dental services, in any medium, must include the name of at least one owner of the practice who is currently licensed to practice dentistry in Massachusetts. For a professional corporation, that means at least one licensed owner. A website footer with that owner’s name on every page is the simplest way to meet it.' },
+      { q: 'Can a Boston dentist say "painless" or "best dentist" online?', a: 'No. M.G.L. c. 112, § 52A bars dental advertising that claims painless operations, professional superiority or services performed in a superior manner, and it also bars opinions about the quality of dental services. Phrases like "pain-free," "Boston’s best" and "top-rated" should be replaced with facts a patient can check, such as degrees, hours and sedation options.' },
+      { q: 'How should a Massachusetts dental practice advertise prices and discounts?', a: 'State the period the fee is in effect, as 234 CMR 5.18(2)(c) requires, and keep it good for a reasonable time. Under § 52A, disclose when extra fees may be involved in individual cases and show the total fee any discount comes off. Anything offered free must name the specific service and its comparative monetary value.' },
+      { q: 'Can a general dentist in Massachusetts list orthodontics as a specialty?', a: 'Not as a specialty. Under 234 CMR 5.03, a dentist may not hold out in written or electronic publications as practicing an ADA-recognized specialty unless the practice is limited to that specialty and the dentist meets the training rules. A general practice can describe the treatment itself, such as clear aligners, and name any visiting specialist who provides it.' },
+      { q: 'Can a Massachusetts dentist offer Botox and dermal fillers?', a: 'Only within the Board’s policy, amended January 7, 2026. Dentists who are not board certified in oral and maxillofacial surgery may use them only as part of a comprehensive dental treatment plan, limited to dentistry, after at least eight hours of accredited training for each, and only where comprehensive dental care is provided. A stand-alone cosmetic injectables page doesn’t fit those limits.' },
+      { q: 'Who has to approve a dental website in Massachusetts?', a: 'A licensed dentist. 234 CMR 5.20(3) bars arrangements that give anyone who is not a Massachusetts-licensed dentist final decision-making authority over advertising, pricing, credit, refunds or warranties. An agency or management company can draft pages, but a licensed dentist must make the final call on what the practice’s site says before it is published.' },
+      { q: 'How much is a SaySites dental website?', a: 'Plans start at $15 a month, and every plan begins with a 7-day free trial. A dental site gets treatment pages that can name the providing dentist and list fees with dates, bios with licenses and languages, new patient, insurance and office pages, Dentist structured data and a short request form. Changes wait for a dentist’s approval, and a free redesign preview is available.' },
+    ],
+    about: ['M.G.L. c. 112, § 52A', '234 CMR 5.18', 'Dental practice websites', 'Boston, Massachusetts'],
+    published: '2026-11-25',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
