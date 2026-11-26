@@ -13827,6 +13827,375 @@ Plans start at $15 a month ([websites for dentists](/websites-for/dentists), [al
     published: '2026-11-25',
     status: 'published',
   },
+  {
+    slug: 'honolulu-law-firm-website-design',
+    title: 'Honolulu Law Firm Websites: Hawaii Ad Rules Guide',
+    description: 'Plan a Honolulu law firm website under Hawaii Rules 7.1 to 7.5: results and certification wording, former officials, Oʻahu courts and language access.',
+    kind: 'guide',
+    summary: [
+      'Hawaii follows the ABA model rules closely: there is no ban on client reviews, no filing with the Office of Disciplinary Counsel, and no duty to keep copies of ads since the 2014 rules took effect.',
+      'Rule 7.2(c) requires every communication to include the name of at least one lawyer responsible for its content, so a site-wide footer line covers every page.',
+      'Stating that you are certified as a specialist needs the certifier’s name and a statement that begins "The Supreme Court of Hawai’i grants Hawai’i certification only to lawyers in good standing."',
+      'Since July 1, 2022, a comment to Rule 7.1 says a lawyer who mentions a former or retired government role should make clear they no longer hold it, which matters in a capital city full of former prosecutors, judges and officials.',
+      'Oʻahu cases are split between the Circuit Court at Kaʻahumanu Hale, the District Court at Kauikeaouli Hale, the Family Court in Kapolei and four rural district courts, and the Judiciary provides court interpreters free of charge.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1650469932351-cdca32211844?auto=format&fit=crop&w=1600&q=75', alt: 'Waikīkī hotel towers rising behind a row of palm trees, part of the Honolulu skyline along the shore' },
+    body: `A Honolulu law firm website is governed by the Hawaii Rules of Professional Conduct, and on advertising those rules sit close to the American Bar Association's model. That makes Hawaii easier than many states: there's no ban on client reviews, no pre-filing, and no record-keeping rule for ads. What it does require is precise. Every page needs a named responsible lawyer, results must not create unjustified expectations, certification claims need exact wording, and references to a former government post need a clear "former." Get those right, explain Oʻahu's courts accurately, and say honestly which languages your team speaks, and you have a site that's both compliant and genuinely useful to someone choosing a lawyer.
+
+This guide works from the [Hawaii Rules of Professional Conduct](https://www.courts.state.hi.us/docs/court_rules/rules/hrpc.pdf) as published by the Hawai‘i State Judiciary, which took effect January 1, 2014, and the Supreme Court's [January 2022 order adding a comment to Rule 7.1](https://www.courts.state.hi.us/wp-content/uploads/2022/01/2022_hrpc7.1am_ada.pdf), effective July 1, 2022. It isn't legal advice. If a page raises a question you can't answer from the rule text, ask ethics counsel before it goes live.
+
+## What do Hawaii's rules require of a law firm website?
+
+Five rules matter, numbered 7.1 to 7.5. Here's what each one asks of a website in plain terms:
+
+| Rule | What it covers | What it means for your site |
+|---|---|---|
+| 7.1 | False or misleading communications | Every statement, including true ones, must not mislead or create unjustified expectations |
+| 7.2 | Advertising and paying for referrals | Name a responsible lawyer; pay for ads and vendors, not for referrals |
+| 7.3 | Solicitation | No live or real-time pitches to strangers; labels and a 30-day wait for targeted injury contacts |
+| 7.4 | Fields of practice and certification | Say what you do freely; "certified" needs a named certifier and a required statement |
+| 7.5 | Firm names and letterheads | Trade names can't suggest a government link; don't imply a partnership that doesn't exist |
+
+Rule 7.1 reaches beyond paid ads. Comment [1] says it "governs all communications about a lawyer's services," so it covers your home page, bios, blog posts, social profiles and the text that shows in search results.
+
+## How strict is Hawaii compared with other states?
+
+Hawaii is on the lighter end, and the reason is the 2014 rewrite. When the Supreme Court adopted the current rules, it published a [summary of the noteworthy amendments](https://www.courts.state.hi.us/?p=25977921). Two changes matter for websites:
+
+- **No more copies.** The new rules remove "the requirement in current Rule 7.2(b) that an attorney keep copies of all written and recorded advertisements."
+- **No more sample filing.** Rule 7.3 "abandons" the old requirement to supply the Office of Disciplinary Counsel with a sample copy of targeted solicitations, along with the detailed advertising-material rules in the former Rule 7.3(f).
+
+Nothing in Rules 7.1 to 7.5 bans testimonials or client reviews either. Comment [2] to Rule 7.2 lists information that is permitted in advertising, and it includes "names of references and, with their consent, names of clients regularly represented."
+
+Lighter doesn't mean anything goes. The core test in Rule 7.1 still applies to every word, and Comment [2] says plainly: "Truthful statements that are misleading are also prohibited by this Rule." A review that suggests a specific outcome, or a headline that compares you with every other firm in town, can still fail that test.
+
+> **Tip:** Even without a record-keeping rule, keep a simple log of what each practice page said and when you changed it. If a question about a page ever comes up, you'll be able to show exactly what a reader saw.
+
+## What must appear on every page?
+
+Rule 7.2(c) is short: "Any communication made pursuant to this Rule shall include the name of at least one lawyer responsible for its content." Hawaii's rule doesn't add an office-address requirement, but Comment [2] lists a firm's "address and telephone number" as permitted information, and readers and Google both expect it.
+
+A footer that appears on every page solves it:
+
+1. **Responsible attorney:** the full name of a Hawaii-licensed lawyer at the firm.
+2. **Office:** your street address in Honolulu, written exactly as it appears on your Google Business Profile.
+3. **Phone:** the number that rings at that office.
+
+If the firm has lawyers licensed elsewhere, Rule 7.5(c) adds a point for multi-jurisdiction firms: when listing lawyers in an office, identify the jurisdictional limits of those not licensed to practice where the office is. A mainland lawyer in your Bishop Street office should be shown with the state where they're admitted.
+
+## Can a Honolulu firm show client reviews and past results?
+
+Reviews, yes, with care. Results, with more care.
+
+On reviews, the rules don't prohibit them, but Rule 7.1 still applies to what a review says. A client writing "they got me a huge settlement" carries the same risk as you writing it yourself. Practical guardrails:
+
+- **Show reviews word for word,** with permission, and don't edit them to sound better.
+- **Skip reviews that promise outcomes** or describe a result without any context.
+- **Don't buy or trade for reviews.** Rule 7.2(b) says a lawyer "shall not give anything of value to a person for recommending the lawyer's services," and that reaches gifts or discounts given in exchange for a recommendation.
+
+On past results, Comment [3] to Rule 7.1 is the guide. "An advertisement that truthfully reports a lawyer's achievements on behalf of clients or former clients may be misleading" if it suggests others can expect the same without reference to the facts of each case. The same comment adds that "the inclusion of any appropriate disclaimer or qualifying language may preclude a finding" that a statement creates unjustified expectations.
+
+So a results page should:
+
+1. describe the type of case and what made the result possible, not just a dollar figure;
+2. put qualifying language next to each result, not hidden in a footer;
+3. avoid "record" framing, like counting wins, that implies a reader's case will go the same way.
+
+Comparisons follow the same logic. Rule 7.1(c) treats a comparison with other lawyers' services as misleading "unless the comparison can be factually substantiated." "Hawaii's top trial firm" is a comparison. "Admitted in Hawaii since 2009, practicing in the First Circuit" is a fact.
+
+![Iolani Palace in downtown Honolulu behind its iron fence, framed by tall palm trees](https://images.unsplash.com/photo-1665287586189-f3e984344df4?auto=format&fit=crop&w=1200&q=75)
+
+## How should former prosecutors, judges and officials describe their past roles?
+
+Honolulu is the state capital, and many lawyers here have served as deputy prosecutors, deputy attorneys general, judges, legislators or agency staff. That experience is genuinely useful to a client, and Hawaii now has specific guidance on how to present it.
+
+The comment the Supreme Court added to Rule 7.1, effective July 1, 2022, addresses lawyers who refer to themselves as a former or retired government official. Its purpose is to avoid "any unjustified expectation about the results the lawyer can achieve." In practice:
+
+- **Say "former," every time.** A bio that calls you "Judge" or uses an old title in a headline without "former" or "retired" can suggest you still hold the role.
+- **Give historical context.** If you use old photos, news footage or documents from your time in office, the comment says they should clearly state that historical context.
+- **Disclose removal for misconduct.** If a lawyer left an office because of misconduct, a reference to that office should clearly say so.
+
+Rule 8.4(e) also prohibits stating or implying an ability to influence a government agency or official improperly, and Comment [4] to Rule 7.1 points to it. "I know how the prosecutor's office thinks" is fine as an explanation of experience; "I can get charges dropped because I know the people there" is not.
+
+## What do the solicitation rules mean for chat, texts and email?
+
+Your website itself isn't a solicitation, but the tools around it can be. Rule 7.3(a) says a lawyer "shall not by in-person, live telephone or real-time electronic contact solicit professional employment" when money is a significant motive, unless the person is a lawyer or has a family, close personal or prior professional relationship with you. Comment [3] to Rule 7.2 applies the same idea to "a real-time electronic exchange that is not initiated by the prospective client."
+
+For a website, that means:
+
+- **Let the visitor start any chat.** A pop-up that greets someone is fine; an operator pitching services to a visitor who didn't ask is the risk.
+- **Label targeted messages.** Under Rule 7.3(c), a written, recorded or electronic message to someone known to need help in a particular matter must include "Advertising Material" on the outside envelope, and at the beginning and end of a recorded or electronic message. That covers a targeted email to someone you learned was in a crash.
+- **Wait 30 days for injury and death cases.** Rule 7.3(e) bars soliciting a prospective client about a personal injury or wrongful death action involving that person or a relative unless it happened more than 30 days before the message was sent.
+- **Stop when asked.** Rule 7.3(b) forbids soliciting someone who has said they don't want to be solicited, and Comment [5] warns that if a letter gets no response, further efforts to communicate may violate the rule.
+
+Comment [7] to Rule 7.3 makes clear that replies to people who asked for information aren't covered by the labeling rule, so your normal reply to a consultation request needs no "Advertising Material" heading.
+
+## Can you pay for marketing and leads?
+
+You can pay for advertising and for the people who build it. Comment [5] to Rule 7.2 says lawyers may pay for directory listings, online ads, domain names, sponsorships and "group advertising," and may compensate vendors engaged in marketing, explicitly including website designers, subject to Rule 5.3 on supervising non-lawyers. What lawyers may not do, in the comment's words, is "pay others for channeling professional work."
+
+Before you sign with a lead service, check how it's paid:
+
+- **A flat fee for advertising** looks like paying for an ad.
+- **A fee per signed client or a share of your fee** looks like paying for a recommendation, which Rule 7.2(b) allows only for a not-for-profit lawyer referral service or a qualified legal assistance organization.
+- **Reciprocal referral deals** with another lawyer are possible under Comment [8], but they must not be exclusive or indefinite, and clients must be told about them.
+
+If you're comparing website options, this is a good point to see what a compliant Honolulu site could look like. You can [request a free redesign](/redesign) of your current site and check it against the list later in this guide.
+
+## How can you describe your practice areas and certifications?
+
+Rule 7.4(a) lets you say you do or don't practice in particular fields. Comment [1] gives examples: "concentrates in," "practices primarily in," "emphasizes," or "limits practice to." It also says "specialist," "practices a specialty" and "specializes in" are generally permitted, subject to Rule 7.1.
+
+Certification is different. Under Rule 7.4(d), you may say you're certified as a specialist only if:
+
+1. the statement isn't false or misleading;
+2. it "clearly states the name of the certifying organization"; and
+3. it carries a statement that begins "The Supreme Court of Hawai'i grants Hawai'i certification only to lawyers in good standing," followed by the rest of the required text about the lawyer having completed a specialty program accredited by the American Bar Association.
+
+Copy the required statement in full from Rule 7.4(d) and put it right beside the certification on the bio, not on a separate disclaimers page. Comment [3] explains why: "the limitations of the certification process must be clearly stated" in advertising that communicates certification. Rule 7.4 also allows the "Patent Attorney" designation for lawyers admitted before the U.S. Patent and Trademark Office and a similar designation for admiralty practice.
+
+## What firm names and domain names are allowed?
+
+Rule 7.5(a) allows a trade name "if it does not imply a connection with a government agency" or otherwise mislead. Comment [1] adds that "a lawyer or law firm may also be designated by a distinctive website address," and that a firm using a geographic name may need "an express disclaimer that it is not a public legal aid agency." A name like "Oʻahu Legal Defense" could suggest a public defender's office, so add a clear line saying the firm is private.
+
+Three other points from Rule 7.5:
+
+- **Partnership only when it's true.** Rule 7.5(e) says lawyers "may state or imply that they practice in a partnership or other organization only when that is the fact." Comment [2] says lawyers who share office space but aren't a firm can't use a name like "Smith and Jones."
+- **Lawyers in public office.** Under Rule 7.5(d), a lawyer holding public office can't stay in the firm name during any substantial period when they aren't actively and regularly practicing with the firm.
+- **Successor names.** Rule 7.5(b) lets a firm keep the names of deceased or retired partners in a continuing line of succession, as long as at least one supervising lawyer is on the Hawai‘i State Bar's active list when no named partner is.
+
+Keep the firm name the same on the site, the domain and your Business Profile, so readers never wonder whether they've found the right firm.
+
+![Honolulu seen from the air, with high-rise buildings running along the edge of the blue ocean](https://images.unsplash.com/photo-1684727906248-b36353278801?auto=format&fit=crop&w=1200&q=75)
+
+## Which Oʻahu courts should your practice pages explain?
+
+Clients search for the court on their papers. Naming the right one shows you know the system and saves your staff calls.
+
+- **Circuits, not counties.** Hawaii has four judicial circuits under HRS § 603-1. The First Circuit is Oʻahu "and all other islands of the State not in any other circuit," the Second is Maui County's islands, the Third is Hawaiʻi Island, and the Fifth is Kauaʻi and Niʻihau. There is no Fourth Circuit, as the Legislative Reference Bureau's [guide to the Judiciary](https://lrb.hawaii.gov/wp-content/uploads/Judiciary_guide.pdf) notes.
+- **Circuit Court.** The First Circuit Court sits at Kaʻahumanu Hale, 777 Punchbowl Street, per the Judiciary's [Oʻahu contact page](https://www.courts.state.hi.us/general_information/contact/oahu). It's the general trial court for felonies, larger civil cases, probate and trusts. The Land Court and Tax Appeal Court are listed with it.
+- **District Court.** The Honolulu District Court is at Kauikeaouli Hale, 1111 Alakea Street. The LRB guide says its civil jurisdiction is "generally limited to claims that do not exceed $40,000," and its criminal jurisdiction covers offenses punishable by up to a year in jail. The Judiciary also lists rural district courts for ʻEwa/Pearl City, Kāneʻohe, Wahiawā/Waialua and Waiʻanae (held at Kapolei).
+- **Family Court.** The Family Court for Oʻahu is at the Kapolei Judiciary Complex, not downtown. It handles divorce, paternity, adoption, child protective cases and domestic abuse protective orders, so a divorce page that tells a client to go to Punchbowl Street sends them to the wrong side of the island.
+
+A Honolulu firm that takes cases on the neighbor islands should say which circuits it appears in, and explain to a client on Maui or Kauaʻi whether hearings are in person or remote, if your practice allows it.
+
+## Should your site serve clients in other languages?
+
+Hawaii is one of the most linguistically varied states, so it's worth thinking about. The state's economic research office found that about one in four residents aged 5 and older spoke a language other than English at home in 2010 to 2014, with Ilocano and Tagalog the most common at about 58,000 speakers each, followed by Japanese, Chinese, Spanish, Hawaiian and Korean ([DBEDT, Non-English Speaking Population in Hawaii](https://files.hawaii.gov/dbedt/economic/archive/reports/Non_English_Speaking_Population_in_Hawaii_April_2016.pdf)). In court, demand looks different: the Judiciary's [language access plan](https://www.courts.state.hi.us/wp-content/uploads/2022/07/language_access_policy.pdf) lists Chuukese, Ilokano, Marshallese, Korean and Spanish as the most interpreted languages in fiscal 2019.
+
+What that means for your website:
+
+1. **List languages per person.** Put each language on the bio of the lawyer or staff member who speaks it, and say whether they're a lawyer.
+2. **Only promise what you can deliver.** A Tagalog page is helpful only if someone can take the call in Tagalog.
+3. **Explain court interpreters correctly.** The Judiciary's [language assistance page](https://www.courts.state.hi.us/services/language_assistance_services) says "You have the right to an interpreter at no cost to you," and its Office on Equality and Access to the Courts arranges them. That's the court's service, not your firm's, so describe it that way.
+4. **Write translated pages properly.** Write for native readers rather than running English through a translator, and connect each version to its English page as Google describes in its guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+
+Use correct Hawaiian spelling throughout, with the ʻokina and kahakō in place names such as Oʻahu, Kapolei and Kāneʻohe, and keep it consistent across the site and your profile.
+
+## How should your Google Business Profile line up?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) say lawyers are "individual practitioners," so a lawyer who meets clients can have a practitioner profile alongside the firm's profile. The guidelines also say not to add keywords to the business name or address lines, and that a business without a staffed office can't list a "virtual" office. For a Honolulu firm that serves the neighbor islands from one downtown office, that means one profile at the real office rather than placeholder addresses on Maui or Hawaiʻi Island.
+
+Keep the name, address and phone number on the profile identical to your website footer. Reviews clients leave there are permitted under Hawaii's rules, and you can reply to them, keeping client confidences in mind.
+
+![Honolulu’s city lights glowing at night in a long exposure taken from a hillside above the city](https://images.unsplash.com/photo-1720043717196-1f055b3e7374?auto=format&fit=crop&w=1200&q=75)
+
+## A Honolulu law firm website checklist
+
+- [ ] A Hawaii-licensed responsible lawyer named in the footer of every page
+- [ ] Office address and phone in the footer, matching the Business Profile exactly
+- [ ] Lawyers not licensed in Hawaii shown with the jurisdictions where they're admitted
+- [ ] Reviews shown word for word, with permission, and none that promise outcomes
+- [ ] Results described with context and qualifying language beside each one
+- [ ] No comparisons with other firms that can't be factually backed up
+- [ ] Former government roles always marked "former" or "retired," with context on old photos or footage
+- [ ] Certification claims naming the certifier and carrying the full Rule 7.4(d) statement
+- [ ] A firm name and domain that don't suggest a government or legal aid office
+- [ ] Chat that waits for the visitor; targeted messages labeled "Advertising Material"; a 30-day wait for injury and death contacts
+- [ ] Practice pages that name the right court: Kaʻahumanu Hale, Kauikeaouli Hale, the Kapolei Family Court or a rural district court
+- [ ] Languages listed per person, with court interpreters described as the Judiciary's free service
+- [ ] Lead services paid for advertising, not per referral
+
+For what every state shares, see our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls). If clients find you through AI answers as well as search, read [how Google's AI Overviews pick law firms](/blog/google-ai-overviews-for-law-firms).
+
+## How SaySites builds a Honolulu law firm website
+
+SaySites gives each practice area its own page, each lawyer a bio with admissions, languages and background, and a consultation form that can ask for the other party's name so you can check for conflicts before you call back. The firm is described to search engines as a LegalService with its name, address, phone and hours, and every page has to pass a 95+ speed check before it goes live. The footer can carry the responsible attorney's name and the office address on every page.
+
+You change the site by saying what you want, in plain words: "add 'former deputy prosecuting attorney' to Keoni's bio," "put the Rule 7.4(d) statement next to Leilani's certification," or "change the divorce page to say hearings are at the Kapolei Family Court." Sofie, the built-in assistant, makes the edit, and nothing goes live until you approve it. Reviews, results and credentials come only from you; SaySites never invents them.
+
+Law Firm Starter is $79 a month ([websites for law firms](/websites-for/law-firms), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Honolulu site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'Can a Hawaii lawyer show client reviews on a firm website?', a: 'Yes. Hawaii’s Rules 7.1 to 7.5 don’t ban testimonials or reviews. Rule 7.1 still applies to what each review says, so avoid reviews that promise outcomes or report results without context, show them word for word with permission, and never give clients anything of value in exchange for a recommendation, which Rule 7.2(b) prohibits.' },
+      { q: 'Does Hawaii require law firm ads or websites to be filed or saved?', a: 'No. The 2014 rules removed the old Rule 7.2(b) duty to keep copies of advertisements and the old Rule 7.3(c) duty to send the Office of Disciplinary Counsel a sample of targeted solicitations. Keeping your own dated log of page changes is still a sensible habit if a question ever comes up.' },
+      { q: 'What does every page of a Hawaii law firm website need?', a: 'Rule 7.2(c) requires each communication to include the name of at least one lawyer responsible for its content. A footer naming a Hawaii-licensed responsible attorney, with the office address and phone, covers every page at once. Multi-jurisdiction firms should also show where lawyers who aren’t licensed in Hawaii are admitted, under Rule 7.5(c).' },
+      { q: 'How can a Hawaii lawyer say they are a certified specialist?', a: 'Under Rule 7.4(d), the claim must not be misleading, must clearly name the certifying organization, and must carry a statement beginning "The Supreme Court of Hawai’i grants Hawai’i certification only to lawyers in good standing." Copy the full statement from the rule and put it beside the certification on the bio itself.' },
+      { q: 'Can a former prosecutor or judge mention that role on a Honolulu firm website?', a: 'Yes, clearly marked as past. A comment added to Rule 7.1, effective July 1, 2022, says a lawyer who refers to a former or retired government role should make clear they no longer serve in it, label old photos or footage with their historical context, and disclose any removal from office for misconduct.' },
+      { q: 'Where is the Family Court for Oʻahu?', a: 'At the Kapolei Judiciary Complex in Kapolei, not in downtown Honolulu. It handles divorce, paternity, adoption, child protective cases and domestic abuse protective orders. The First Circuit Court is at Kaʻahumanu Hale on Punchbowl Street, and the Honolulu District Court is at Kauikeaouli Hale on Alakea Street.' },
+      { q: 'How much is a SaySites law firm website?', a: 'Law Firm Starter is $79 a month after a 7-day free trial. It includes a page per practice area, lawyer bios with admissions and languages, a consultation form that can ask for the other party’s name for conflict checks, LegalService structured data and a footer for the responsible attorney. You can also request a free redesign first.' },
+    ],
+    about: ['Hawaii Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Honolulu, Hawaii'],
+    published: '2026-11-26',
+    status: 'published',
+  },
+  {
+    slug: 'atlanta-med-spa-website-design',
+    title: 'Atlanta Med Spa Websites: Georgia Laser Rules Guide',
+    description: 'Build an Atlanta med spa website that fits Georgia’s Cosmetic Laser Services Act: license levels, exams before treatment, consulting physicians and reviews.',
+    kind: 'guide',
+    summary: [
+      'Georgia licenses non-physicians who perform cosmetic laser services at two levels, assistant laser practitioner and senior laser practitioner, through the Georgia Composite Medical Board in Atlanta.',
+      'Except for laser hair removal and pulsed light treatments, patients must be examined by a consulting physician, or a qualifying physician assistant or advanced practice nurse, before treatment, so your booking pages should say an exam comes first.',
+      'A med spa that is not a physician office must post a sign naming its consulting physician, their board certification and specialty and an emergency number; publishing the same facts online builds trust.',
+      'The FTC’s rule on consumer reviews and testimonials, in effect since October 21, 2024, bans fake reviews, reviews bought for a particular sentiment, undisclosed staff reviews and review suppression.',
+      'The best treatment pages say what the treatment is, who performs it and at what license level, who it suits, what to expect and that results vary.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1572978122938-4b7b95c292c4?auto=format&fit=crop&w=1600&q=75', alt: 'Tall buildings beside Piedmont Park in Atlanta glowing pink and gold in the evening light' },
+    body: `An Atlanta med spa website has one job that matters more than the photography: telling a nervous first-time client, accurately, who will treat them and what happens before they do. Georgia makes that easier to get right than most states, because its Cosmetic Laser Services Act spells it out. Non-physicians who perform cosmetic laser services need a license from the Georgia Composite Medical Board at one of two levels. Most laser treatments other than hair removal and pulsed light require an exam by a consulting physician or a qualifying physician assistant or advanced practice nurse first. And a med spa that isn't a physician's office has to post who its consulting physician is. Put those facts on your treatment and provider pages, keep your reviews honest under the FTC's rule, and your site will answer the questions that decide a booking.
+
+This guide draws on the Board's [cosmetic laser practitioner licensure page](https://medicalboard.georgia.gov/cosmetic-laser-practitioner-licensure), its rules in [Chapter 360-35 of the Georgia Rules and Regulations](https://rules.sos.ga.gov/gac/360-35), and the Board's [cosmetic laser practitioner FAQ](https://medicalboard.georgia.gov/document/frequently-asked-questions/download). It explains how those rules shape a website; it isn't legal or medical advice, so check specific questions with the Board or your counsel.
+
+## Who can perform laser treatments at a Georgia med spa?
+
+The Board's licensure page says it plainly: "There are two levels of licensure for this profession: assistant laser practitioner and senior laser practitioner." The Act was first passed in 2007, and the Board began licensing on February 26, 2014.
+
+Here's how the levels compare, from the definitions and practice rules in Rules 360-35-.01 and 360-35-.05:
+
+| Who | What they can do | Supervision |
+|---|---|---|
+| Georgia-licensed physician | Performs cosmetic laser services; the FAQ says no laser license is needed | Not applicable |
+| Senior laser practitioner | A physician assistant or nurse who may perform cosmetic laser services and supervise assistants | Practices under a consulting physician's protocols |
+| Assistant laser practitioner | Performs cosmetic laser services | Under the supervision of a physician or a senior laser practitioner |
+
+A few details from the FAQ are worth knowing when you write staff bios. A senior license requires an underlying license as a registered nurse, advanced practice nurse or physician assistant, so an assistant can't move up without one. A laser license from another state doesn't carry over; the FAQ says "You will still need to apply for a Georgia license." And "You do not require a laser license if you are not personally operating a laser," so a front-desk coordinator or patient educator doesn't need one.
+
+### What counts as "cosmetic laser services"?
+
+Rule 360-35-.01 defines them as "nonablative elective cosmetic light-based skin care, photo rejuvenation, or hair removal," with further language covering certain FDA-approved devices. That word "nonablative" matters. If your menu includes ablative resurfacing, don't describe it on the site as if a laser practitioner license covers it; ask your medical director and counsel who may perform it, and write the page to match.
+
+## Which treatments need an exam first?
+
+This is the rule that most changes how a Georgia med spa website should present booking. Rule 360-35-.05 says assistant laser practitioners "Shall have patients examined by a consulting physician, or a physician assistant who is a licensed cosmetic laser practitioner," or a qualifying advanced practice nurse, before service. It then carves out an exception: "On-site supervision and an examination prior to treatment as described herein are not required for the performance of laser hair removal and pulsed light treatments."
+
+The FAQ puts the split simply. "Patients receiving laser hair removal or intense pulsed light services do not need to be examined prior to treatment." For other services, patients must be examined by a Georgia-licensed physician, or a physician assistant or advanced practice nurse with delegated authority, and "a RN does not qualify to do this exam." It also says "Performance of any other light based cosmetic laser procedure requires direct on site supervision."
+
+What that means on your website:
+
+1. **Laser hair removal and IPL pages** can invite a client to book a first treatment after a consultation, as your own protocols allow.
+2. **Other laser pages**, such as photo rejuvenation or skin tightening, should say clearly that the first visit includes an exam by a physician, physician assistant or nurse practitioner before any treatment.
+3. **Don't advertise same-day treatment for a first visit** on those pages unless your exam and supervision setup actually makes it possible.
+4. **Say who supervises.** "Treatments are performed by our licensed senior laser practitioner, a registered nurse, under the protocols of our consulting physician" tells a client exactly what to expect.
+
+Clear wording here also cuts no-shows and awkward calls. A client who knows an exam comes first arrives with the right expectations and the right amount of time.
+
+![An esthetician in gloves performing a facial on a client lying back on a treatment bed](https://images.unsplash.com/photo-1785852790570-0d2858068c70?auto=format&fit=crop&w=1200&q=75)
+
+## What does the consulting physician need, and should it be on your site?
+
+Rule 360-35-.06 sets the consulting physician's duties. The physician "Must be currently licensed to practice medicine in Georgia," must have a principal place of business in Georgia or practice within 50 miles of the facility they supervise, and "Must be available for emergency consultations." The physician also "shall establish proper protocols for the cosmetic laser services provided at a facility and shall file such protocols with the Board."
+
+For a med spa that isn't a physician's office, Rule 360-35-.07 adds facility duties. The facility must have an agreement with a consulting physician who examines each patient before any service other than hair removal, must have a senior laser practitioner or consulting physician present or immediately available, and must post a sign. That sign lists "the consulting physician's name, emergency contact number, his or her board certification and specialty, and the address," and, when the physician isn't on site, who is acting as supervisor and the type of laser license they hold. The same rule warns that failing to meet the chapter's requirements "may subject the owner to misdemeanor criminal charges."
+
+The rules require the sign in your facility, not on your website. But the facts on that sign are exactly what a careful client wants to know before booking, so it makes sense to publish them on a "Who treats you" or "Our medical team" page:
+
+- **Consulting physician:** full name, specialty and board certification, written exactly as it appears on the sign.
+- **Senior laser practitioners:** name, underlying license (RN, APRN or PA) and laser license level.
+- **Assistant laser practitioners:** name, underlying license (for example, esthetician or nurse) and laser license level.
+- **A verification link:** the Board's [Search for a Licensee](https://medicalboard.georgia.gov/verify-licensee) tool, so anyone can check a license themselves.
+
+Keep the page in sync with the sign. If your consulting physician changes, update both the same week.
+
+> **Watch out:** Don't call staff "laser specialists" or "laser technicians" if their Georgia license says assistant laser practitioner. Use the license title, and let the bio describe their training and experience.
+
+If you're shopping for a new site, this is a good moment to see yours done properly. You can [request a free redesign](/redesign) and get your current site rebuilt from your own content, with provider pages laid out this way.
+
+## How should you handle reviews and before-and-after photos?
+
+The FTC's [Trade Regulation Rule on the Use of Consumer Reviews and Testimonials](https://www.federalregister.gov/documents/2024/08/22/2024-18519/trade-regulation-rule-on-the-use-of-consumer-reviews-and-testimonials), 16 CFR Part 465, took effect October 21, 2024. The FTC's [announcement of the final rule](https://www.ftc.gov/news-events/news/press-releases/2024/08/federal-trade-commission-announces-final-rule-banning-fake-reviews-testimonials) lists what it bans:
+
+- **Fake reviews and testimonials,** including ones from people who don't exist, AI-generated ones, and ones from people with no real experience of the business.
+- **Paying for a particular sentiment.** Incentives "conditioned on the writing of consumer reviews expressing a particular sentiment, either positive or negative" are banned.
+- **Insider reviews without disclosure.** Reviews by owners, managers, staff or their relatives need a clear disclosure of that connection.
+- **Company-controlled review sites** presented as independent.
+- **Review suppression,** such as threats to get negative reviews taken down, or presenting the reviews you show as all or most of them when negative ones were suppressed.
+- **Fake social media indicators,** such as bought followers or views used to misrepresent influence.
+
+For a med spa, the practical rules follow:
+
+1. **Ask every client the same way.** It's fine to ask happy and unhappy clients alike for an honest review. A free add-on only for a five-star review is not.
+2. **Don't post staff reviews** as client reviews. If an employee or a friend of the owner leaves one, the connection has to be clear.
+3. **Show reviews word for word,** with the client's permission, and don't cherry-pick in a way that misrepresents the overall picture.
+4. **Use only your own before-and-after photos,** taken of real clients with their written consent, without retouching, and captioned with the treatment, the number of sessions and a note that results vary.
+
+Before-and-after photos and reviews are health information about a person, so get consent in writing and store it, and never post a photo that identifies a client who didn't agree to it. Our guide to [asking for Google reviews the right way](/blog/ask-for-google-reviews-the-right-way) has a script that stays within these limits.
+
+![A provider in gloves giving a cosmetic injection to a woman’s forehead in a treatment room](https://images.unsplash.com/photo-1785861485926-93a13556d656?auto=format&fit=crop&w=1200&q=75)
+
+## What should each treatment page say?
+
+Atlanta clients search treatment by treatment, often with a neighborhood attached, and they compare a few spas before booking. A strong treatment page answers their questions in order:
+
+1. **What it is,** in one or two plain sentences, without brand hype.
+2. **Who performs it,** by role and license level, and whether an exam comes first.
+3. **Who it suits and who it doesn't,** including common reasons to wait or choose something else.
+4. **What a visit looks like,** from consultation to aftercare, with a realistic time estimate.
+5. **Downtime and side effects,** stated honestly.
+6. **How many sessions** people typically need, if your providers can say so from experience.
+7. **Price,** or a clear range, if you're willing to publish it.
+8. **A results-vary note** and a link to the provider page.
+
+Injectables need extra care. Neurotoxins and fillers are prescription products, and who may inject them in Georgia depends on the medical and nursing rules, not the laser act. Have your medical director confirm the wording on those pages, describe the injector's actual license, and avoid comparisons like "Atlanta's best Botox" that you can't back up. Use the product's correct name and avoid implying results the label doesn't support.
+
+Google's guidance on [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether content shows first-hand expertise and whether it's clear who created it. A treatment page written with your own providers' experience, signed with their names and licenses, is exactly that. A page rewritten from a device maker's brochure isn't.
+
+## How should an Atlanta med spa set up local search?
+
+Your website and your Google Business Profile should describe the same business in the same words. Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) say not to add keywords to your business name or address, and they treat doctors and similar professionals as "individual practitioners" who may have their own profiles alongside the business's. A consulting physician who sees clients at your location could have one; a laser practitioner generally belongs on the spa's profile and your provider page.
+
+A few Atlanta-specific choices help clients find and reach you:
+
+- **Name your neighborhood honestly.** Say Buckhead, Midtown, Inman Park or Alpharetta if that's where you are. Don't create pages claiming locations you don't have; one honest location page beats a stack of thin ones, and Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) treat near-identical doorway pages as spam.
+- **Explain parking and transit.** Say whether there's a garage, validated parking or a nearby MARTA station. A client who can't find parking for a 9 a.m. appointment may not come back.
+- **List languages per person.** If an injector consults in Spanish or Korean, put it on their bio. Promise a language only when someone can actually consult in it.
+- **Match the details everywhere.** Use the same name, address, phone and hours on the site footer, the profile and the sign in your lobby.
+
+## An Atlanta med spa website checklist
+
+- [ ] Every provider shown with their underlying license and Georgia laser license level, using the Board's titles
+- [ ] Consulting physician named with specialty and board certification, matching the posted sign
+- [ ] A link to the Board's licensee search so clients can verify licenses
+- [ ] Laser pages other than hair removal and IPL say an exam comes before the first treatment
+- [ ] Supervision described accurately for each treatment
+- [ ] No ablative treatments described as if a cosmetic laser license covers them
+- [ ] Injectable pages reviewed by the medical director and naming the injector's license
+- [ ] Reviews real, word for word and never bought for a particular sentiment
+- [ ] Staff and friends' reviews either absent or clearly disclosed
+- [ ] Before-and-after photos your own, with written consent, captioned and marked "results vary"
+- [ ] One honest location page, with parking and transit directions
+- [ ] Name, address, phone and hours identical on the site, Business Profile and lobby sign
+
+For the parts every med spa shares, see our [med spa website checklist](/blog/med-spa-website-checklist). To compare how another state handles laser rules, read our [Scottsdale med spa guide](/blog/scottsdale-med-spa-website-design).
+
+## How SaySites builds an Atlanta med spa website
+
+A SaySites med spa site gives every treatment its own page, every provider a profile with photo, training and credentials, a captioned before-and-after gallery with a results-vary note, and a consultation request form that asks clients not to send medical details through it. Your spa is described to search engines with its name, address, phone and hours, and every page has to score 95+ on speed before it goes live, so photos look sharp on a phone without making clients wait. There's no built-in online booking; clients call or send a consultation request that lands in your inbox.
+
+You make changes by saying them. Ask Sofie, the built-in assistant, to "add 'Senior Laser Practitioner, RN' under Danielle's name," "add a line to the IPL page saying no exam is needed before the first session," or "put Dr. Patel's board certification on the medical team page." Each change waits as a draft until you approve it, so your medical director can read every word first. Credentials, photos, prices and reviews come only from you; SaySites never invents them.
+
+The Site plan is $15 a month ([websites for med spas](/websites-for/med-spas), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Atlanta site yourself, or [request a free redesign](/redesign) to see your current site rebuilt first.`,
+    faq: [
+      { q: 'Do you need a license to do laser treatments at a Georgia med spa?', a: 'Yes, unless you are a Georgia-licensed physician. The Georgia Composite Medical Board licenses cosmetic laser practitioners at two levels: assistant laser practitioner and senior laser practitioner. Seniors must be nurses or physician assistants and practice under a consulting physician’s protocols. Assistants work under the supervision of a physician or a senior. Staff who never operate a laser don’t need a license.' },
+      { q: 'Does a client need an exam before laser treatment in Georgia?', a: 'For most cosmetic laser services, yes. Board rules require an exam by a consulting physician, or a qualifying physician assistant or advanced practice nurse, before treatment. Laser hair removal and intense pulsed light are the exceptions: no prior exam or on-site supervision is required for them. A registered nurse can’t do the exam, according to the Board’s FAQ.' },
+      { q: 'What must a Georgia med spa post about its consulting physician?', a: 'A facility that isn’t a physician office must post a sign listing the consulting physician’s name, emergency contact number, board certification and specialty, and address. If the physician isn’t on site, the sign must also show who is supervising and their laser license type. Publishing the same facts on a medical team page helps clients, though the rule covers the sign.' },
+      { q: 'Can an Atlanta med spa offer discounts for reviews?', a: 'Not for a particular kind of review. The FTC’s rule on consumer reviews, in effect since October 21, 2024, bans incentives conditioned on reviews expressing a particular sentiment, positive or negative. Asking every client for an honest review is fine. Staff or owner reviews need a clear disclosure, and threatening people to remove negative reviews is banned too.' },
+      { q: 'What should a med spa provider page say in Georgia?', a: 'Each provider’s name, photo, underlying license such as RN, PA or esthetician, and Georgia laser license level using the Board’s exact title, plus real training and experience. Name the consulting physician with specialty and board certification. Link to the Board’s Search for a Licensee tool so clients can check any license themselves, and keep it in sync with your lobby sign.' },
+      { q: 'Can I post before-and-after photos on my med spa website?', a: 'Yes, if they are real photos of your own clients, taken with written consent and not retouched. Caption each one with the treatment and number of sessions, add a note that results vary, and never post a photo that identifies someone who didn’t agree to it. Stock or manufacturer photos presented as your own results would mislead clients.' },
+      { q: 'How much does a SaySites med spa website cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes a page per treatment, provider profiles with credentials, a captioned before-and-after gallery with a results-vary note, a consultation form that keeps medical details out, and a 95+ speed check on every page. You can request a free redesign to see your current site rebuilt first.' },
+    ],
+    about: ['Georgia Cosmetic Laser Services Act', 'Ga. Comp. R. & Regs. 360-35', 'Med spa websites', 'Atlanta, Georgia'],
+    published: '2026-11-26',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
