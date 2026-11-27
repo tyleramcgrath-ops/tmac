@@ -14196,6 +14196,390 @@ The Site plan is $15 a month ([websites for med spas](/websites-for/med-spas), [
     published: '2026-11-26',
     status: 'published',
   },
+  {
+    slug: 'wilmington-delaware-law-firm-website-design',
+    title: 'Wilmington Law Firm Website Design: Delaware Rules',
+    description: 'Plan a Wilmington, Delaware law firm website under DLRPC 7.1 to 7.5: office address, lead generators, Delaware counsel pages and the right court names.',
+    kind: 'guide',
+    summary: [
+      'Delaware Rule 7.2(c) asks for more than a name: every communication must include the name and office address of at least one lawyer or law firm responsible for its content.',
+      'Delaware adopted the newer ABA comment on lead generators, so you may pay for leads only if the service does not recommend you, imply it is unpaid or claim to have analyzed the person’s legal problem.',
+      'Firms that act as Delaware counsel should explain what that role is: under Superior Court Civil Rule 90.1, out-of-state lawyers are admitted pro hac vice only on motion by a Delaware Bar member who maintains an office in the state.',
+      'Practice pages should send clients to the right court: Chancery for equity, Superior Court and its Complex Commercial Litigation Division for law claims, Family Court for domestic cases, and the Court of Common Pleas or Justice of the Peace Court for smaller civil claims.',
+      'Spanish was 86% of spoken-language interpreter requests in Delaware’s courts in fiscal 2025, so list each person’s languages honestly and say whether a lawyer or staff member speaks them.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=1600&q=75', alt: 'A bronze statue of Lady Justice, blindfolded and holding up a set of scales, against a pale wall' },
+    body: `A Wilmington law firm website answers to the Delaware Lawyers' Rules of Professional Conduct, and the advertising rules in that set are short, modern and specific in two places that trip firms up. Every page must carry the name and office address of a responsible lawyer or firm, not just a name. And if you buy leads, the service selling them must not look like it is recommending you. Beyond the rules, a Wilmington site has a job most firm sites don't: explaining Delaware's unusual court system to clients, and explaining your role to out-of-state lawyers who need Delaware counsel. Get those right and your site is compliant, findable and genuinely useful.
+
+This guide works from the [Delaware Lawyers' Rules of Professional Conduct](https://courts.delaware.gov/forms/download.aspx?id=160568) as published by the Delaware Courts, in the version amended through November 18, 2025, and from the Judiciary's [fiscal 2025 annual report](https://courts.delaware.gov/AOC/annualreports/fy25/doc/2025AnnualReport.pdf). It isn't legal advice. When a page raises a question the rule text doesn't answer, ask the Office of Disciplinary Counsel or ethics counsel before it goes live.
+
+## Which Delaware rules apply to a law firm website?
+
+Rules 7.1 through 7.5 cover lawyer communications, and Comment [1] to Rule 7.1 says the first of them "governs all communications about a lawyer's services." That includes your home page, attorney bios, blog posts, social profiles and the title and description that show in search results. Here's what each rule asks of a website:
+
+| Rule | Subject | What it means for your site |
+|---|---|---|
+| 7.1 | False or misleading communications | No material misstatements, and no true statements that mislead |
+| 7.2 | Advertising | Name and office address on every communication; rules on paying for leads and referrals |
+| 7.3 | Solicitation | No live or real-time pitches to strangers; "Advertising Material" on targeted messages |
+| 7.4 | Fields of practice and specialization | Say what you do; "certified" only with a named, approved certifier |
+| 7.5 | Firm names and letterheads | No names that imply a government link or a partnership that doesn't exist |
+
+Delaware also keeps the black-letter rules lean. There's no filing requirement in Rules 7.1 to 7.5, no mandatory disclaimer text and no ban on client reviews. The work is in reading the comments, which carry most of the practical guidance.
+
+## What does Delaware Rule 7.2(c) require on every page?
+
+The rule reads: "Any communication made pursuant to this rule shall include the name and office address of at least one lawyer or law firm responsible for its content." Many states ask only for a name. Delaware asks for an address too, which is why a footer is the cleanest place to meet it.
+
+A footer that appears on every page should carry:
+
+1. **The responsible lawyer or firm:** the firm name, or the full name of a Delaware-licensed lawyer, exactly as you use it elsewhere.
+2. **The office address:** your Wilmington street address, written the same way it appears on your Google Business Profile and bar records.
+3. **A phone number and email:** Comment [2] to Rule 7.2 lists a lawyer's "address, email address, website, and telephone number" as information the rule permits, and a visitor expects to find them in one place.
+
+If you run landing pages for paid ads, don't build them on a stripped-down template without the footer. A landing page is a communication under Rule 7.2 like any other, and it's the page most likely to be missing the address.
+
+![A wooden judge’s gavel resting on its round sound block on a pale surface, casting a long shadow](https://images.unsplash.com/photo-1593115057322-e94b77572f20?auto=format&fit=crop&w=1200&q=75)
+
+## How should a Wilmington firm describe corporate and Chancery work?
+
+Corporate law is the reason many lawyers come to Wilmington, and your site should describe that work with precision. The Division of Corporations' [2025 annual report](https://corp.delaware.gov/stats/2025-annual-report/) says more than 2.28 million entities and "over two-thirds of the Fortune 500" call Delaware their corporate home, and that 334,461 new entities were formed in 2025. Those entities generate disputes, and most of them have a Delaware court as the natural forum.
+
+The Court of Chancery's jurisdiction comes from statute. Under [10 Del. C. § 341](https://delcode.delaware.gov/title10/c003/sc03/index.html) it hears "all matters and causes in equity," and § 342 says it has no jurisdiction where "sufficient remedy may be had by common law, or statute" in another court. The Judiciary's annual report describes Chancery's docket as "typically corporate, trust, fiduciary matters, land sale, real estate, and commercial/contractual matters," plus certain guardianship cases.
+
+Damages claims on contracts are a different story. The same report notes that the Superior Court's Complex Commercial Litigation Division (CCLD) saw filings rise from 223 in fiscal 2024 to 273 in fiscal 2025, driven in part by a February 2023 order letting CCLD take breach of contract cases from the Court of Chancery "where damages are sought."
+
+What that means for your practice pages:
+
+- **Separate equity work from damages work.** A page on stockholder litigation, fiduciary duty claims or advancement and indemnification belongs with Chancery. A page on commercial contract disputes seeking money damages should mention the Superior Court and CCLD.
+- **Write for two audiences.** A general counsel scanning your page wants to know which court, which kinds of claims and who on your team handles them. A small business owner with a dispute over a partnership agreement needs the same facts in plainer words.
+- **Don't overstate.** Under Rule 7.1, a phrase like "Delaware's leading Chancery litigators" is a comparison you would need to substantiate. "Our lawyers have appeared in the Court of Chancery since 2011" is a fact anyone can check.
+
+## Can you show results, reviews and comparisons in Delaware?
+
+Yes to all three, inside Rule 7.1. Comment [2] says plainly that "Truthful statements that are misleading are also prohibited," and gives the test: a truthful statement is misleading if there's "a substantial likelihood that it will lead a reasonable person to formulate a specific conclusion about the lawyer or the lawyer's services for which there is no reasonable factual foundation."
+
+For results, Comment [3] warns that a truthful report of achievements "may be misleading if presented so as to lead a reasonable person to form an unjustified expectation that the same results could be obtained for other clients in similar matters without reference to the specific factual and legal circumstances of each client's case." It also says "the inclusion of an appropriate disclaimer or qualifying language may preclude a finding" of unjustified expectations.
+
+On a results or matters page, that translates to:
+
+1. **Describe the matter, not just the number.** Say what kind of case it was and what drove the outcome.
+2. **Put qualifying language beside each result.** A line in the footer that nobody reads won't carry the weight a nearby sentence does.
+3. **Respect confidentiality.** Corporate clients often don't want their disputes on your site. Get consent before naming a client, and remember Comment [2] to Rule 7.2 allows "names of clients regularly represented" only "with their consent."
+
+For reviews, nothing in Rules 7.1 to 7.5 bans them, but a review that promises outcomes carries the same risk as your own words. Show reviews word for word, with permission, and never give anything of value for one: Rule 7.2(b) says a lawyer "shall not give anything of value to a person for recommending the lawyer's services," with narrow exceptions.
+
+## Can a Delaware firm pay for leads and online marketing?
+
+You can pay for advertising and for the people who build it. Comment [5] to Rule 7.2 names "on-line directory listings," "domain-name registrations," "Internet-based advertisements" and "group advertising" as costs a lawyer may pay, and says a lawyer may compensate vendors such as "publicists, public-relations personnel, business development staff and website designers."
+
+Leads are where Delaware's text is more detailed than many states'. Comment [5] says "a lawyer may pay others for generating client leads, such as Internet-based client leads, as long as the lead generator does not recommend the lawyer," the payment fits Rules 1.5(e) and 5.4, and the generator's own communications comply with Rule 7.1. It then lists what disqualifies a lead service. A lawyer must not pay one that "states, implies, or creates a reasonable impression that it is recommending the lawyer, is making the referral without payment from the lawyer, or has analyzed a person's legal problems when determining which lawyer should receive the referral."
+
+Before you sign with any lead service, check three things on its consumer-facing pages:
+
+- **Does it say or suggest it picked you?** Phrases like "matched with the right lawyer for your case" or "our top-rated attorney" point toward a recommendation.
+- **Does it look free and neutral?** If a consumer would think the referral is unpaid, the comment's test isn't met.
+- **Does it pretend to evaluate cases?** A quiz that ends with "based on your answers, this lawyer can help" implies analysis of the person's legal problem.
+
+Paying a share of fees or a per-case referral fee raises separate problems under Rules 7.2(b), 1.5(e) and 5.4. Your own website avoids all of this: the leads it brings in come to you directly, with no intermediary making claims on your behalf.
+
+> **Tip:** Keep a copy of each lead vendor's consumer pages, dated, in your files. If a question ever comes up about what a service said about you, you'll be able to show exactly what a consumer saw when you hired it.
+
+## How should you present Delaware counsel and pro hac vice work?
+
+Many Wilmington firms work with out-of-state lawyers whose clients have cases in Delaware courts. Those lawyers find you through search too, so a clear page about that work helps both sides.
+
+The rules give you the facts to explain. Under [Superior Court Civil Rule 90.1](https://www.courtrules.net/delaware/de-superior-civil/rule-90-1), lawyers who are not members of the Delaware Bar "may be admitted pro hac vice in the discretion of the Court," and only "upon written motion by a member of the Delaware Bar who maintains an office in this State for the practice of law ('Delaware Counsel')." The rule also says admission "must be made separately before each Court in which admission is sought," and that the out-of-state lawyer certifies they will be bound by the Delaware Lawyers' Rules of Professional Conduct. At the Supreme Court, [Rule 12(a)](https://www.courtrules.net/delaware/de-supreme/rule-12) requires papers to be signed by an active member of the Delaware Bar "who maintains an office in Delaware for the practice of law."
+
+A good Delaware counsel page:
+
+1. **Explains the role in plain terms,** including that admission is court by court, so a referring lawyer knows what to expect.
+2. **Says which courts you appear in,** and only the ones you actually do.
+3. **Names the lawyers who handle it,** with their bar admissions.
+4. **Gives a direct contact** for referring counsel, separate from the general consultation form if your intake differs.
+
+Rule 7.5(b) adds a point for firms with offices in more than one state: when you list the lawyers in an office, you must "indicate the jurisdictional limitations on those not licensed to practice in the jurisdiction where the office is located." A Philadelphia-admitted associate in your Wilmington office should be shown with where they're admitted.
+
+If you're weighing a new site, this is a good moment to see how these pages would look for your own firm. You can [request a free redesign](/redesign) and get your current site rebuilt from your own content.
+
+## Which Delaware courts should your practice pages name?
+
+Delaware's courts are organized differently from most states, and clients often don't know which one their case belongs in. The Judiciary's annual report lays out the structure, and two statutes set the civil limits for the smaller courts.
+
+| Court | What it handles | Why it matters on your site |
+|---|---|---|
+| Court of Chancery | All matters in equity: corporate, trust, fiduciary, real estate and certain guardianships | Corporate, trust and estate pages |
+| Superior Court | Law claims and nearly all felonies; CCLD for complex commercial cases | Injury, contract, criminal defense pages |
+| Family Court | All domestic relations cases, including divorce, custody, support and property division | Family law pages |
+| Court of Common Pleas | Misdemeanors and civil actions up to $75,000 | Smaller civil disputes, traffic and misdemeanor pages |
+| Justice of the Peace Court | Civil cases up to $25,000 and landlord/tenant possession cases | Landlord, tenant and small claims pages |
+
+The civil limits come from [10 Del. C. § 1322](https://delcode.delaware.gov/title10/c013/sc02/index.html), which gives the Court of Common Pleas jurisdiction where the amount in controversy "does not exceed $75,000," and [10 Del. C. § 9301](https://delcode.delaware.gov/title10/c093/index.html), which limits most Justice of the Peace Court civil actions to claims that do "not exceed $25,000."
+
+Several of them share one building in downtown Wilmington, the Leonard L. Williams Justice Center, home to the Court of Chancery in New Castle County. It screened 428,017 visitors at its main entrance in calendar 2024, according to the annual report. Two cautions before you print an address on a page:
+
+- **Check the courtroom, not just the building.** The report says Justice of the Peace Court 20 is moving out of the Justice Center to 824 North Market Street to make room for Chancery's expansion. A landlord-tenant page that sends tenants to the wrong building costs them time on a hearing day.
+- **Name the county.** Chancery, Superior and Family Court sit in all three counties. A client in Georgetown or Dover needs to know whether you appear there too.
+
+## What do the solicitation rules mean for chat, texts and email?
+
+Comment [1] to Rule 7.3 is good news for a website: a lawyer's communication typically isn't a solicitation if it's "directed to the general public, such as through a billboard, an Internet banner advertisement, a website or a television commercial," or "automatically generated in response to Internet searches." The tools around your site are where care is needed.
+
+- **Let the visitor start the conversation.** Rule 7.3(a) bars soliciting professional employment by "in-person, live telephone or real-time electronic contact" when pecuniary gain is a significant motive, unless the person is a lawyer or has a family, close personal or prior professional relationship with you. A chat window that waits for a question is fine; an operator pitching a visitor who didn't ask is the risk.
+- **Label targeted messages.** Rule 7.3(c) requires "Advertising Material" on the outside envelope and "at the beginning and ending of any recorded or electronic communication" sent to someone known to need help in a particular matter.
+- **Stop when asked.** Rule 7.3(b) forbids soliciting someone who has said they don't want to be solicited, and Comment [6] warns that if a letter gets no response, "any further effort to communicate" may violate the rule.
+
+Comment [8] adds that the labeling requirement "does not apply to communications sent in response to requests of potential clients." Your normal reply to a consultation request needs no label.
+
+## What can you say about specialties, certifications and firm names?
+
+Rule 7.4(a) lets you say you do or don't practice in particular fields, and Comment [1] says a lawyer is "generally permitted to state that the lawyer is a 'specialist,' practices a 'specialty,' or 'specializes in' particular fields," subject to Rule 7.1. Certification is narrower. Under Rule 7.4(d), you may not state or imply certification as a specialist unless the certifying organization "has been approved by an appropriate state authority or that has been accredited by the American Bar Association," and "the name of the certifying organization is clearly identified in the communication." Put the certifier's full name right next to the claim on each bio.
+
+On names, Rule 7.5(a) allows a trade name "if it does not imply a connection with a government agency or with a public or charitable legal services organization." Comment [1] says a firm "may also be designated by a distinctive website address," and warns that a geographic name like "Springfield Legal Clinic" may need "an express disclaimer that it is a public legal aid agency" to avoid a misleading implication, which in practice means making clear it is not one. A domain built on "First State" or "New Castle County" plus "legal" deserves that line. Rule 7.5(c) keeps a lawyer holding public office out of the firm name during any substantial period they aren't actively practicing with the firm, and Rule 7.5(d) allows implying a partnership "only when that is the fact."
+
+## Should your site serve clients in Spanish or other languages?
+
+The courts' own numbers suggest it's worth planning for. The annual report counts 17,411 spoken-language interpreter requests statewide in fiscal 2025, up from 10,408 in fiscal 2022, with Spanish at 86% of requests and Haitian Creole at 10%.
+
+Comment [2] to Rule 7.2 lists "a lawyer's foreign language ability" as information the rule permits, so say it, accurately:
+
+1. **List languages per person.** Put each language on the bio of the lawyer or staff member who speaks it, and make clear whether that person is a lawyer.
+2. **Offer only what you can deliver.** A Spanish page helps only if someone can take the call in Spanish.
+3. **Write translated pages, don't machine-translate them.** Connect each version to its English page as Google describes in its guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+4. **Describe court interpreters as the court's service.** The Judiciary runs its Court Interpreter Program through the Administrative Office of the Courts; it isn't something your firm provides.
+
+## How should your Google Business Profile match the site?
+
+Google's [Business Profile guidelines](https://support.google.com/business/answer/3038177) treat lawyers as "individual practitioners," so a lawyer who meets clients can have a profile alongside the firm's. The same guidelines say not to put keywords in the business name, and that a rented mailing address you don't operate from, "also known as a virtual office," isn't eligible for a profile. For a Wilmington firm, that means the profile's address should match the office address in your Rule 7.2(c) footer exactly.
+
+Three Wilmington-specific habits help:
+
+- **One profile per real office.** If you also see clients in Dover or Georgetown at a staffed office, each can have its own profile. Don't list a mail drop.
+- **Consistent names everywhere.** Use the same firm name on the site, the profile, your bar records and the footer.
+- **Reply to reviews carefully.** You can thank a client or respond to criticism, but your reply can't reveal confidential information about the matter.
+
+Google's spam policies also warn against [doorway pages](https://developers.google.com/search/docs/essentials/spam-policies), including near-identical pages targeting different towns. A page for each Delaware county that only swaps the county name is a doorway; a page explaining which Family Court location handles a Kent County divorce is useful.
+
+![The columned marble front of the U.S. Supreme Court building in Washington, D.C., under a blue sky with white clouds](https://images.unsplash.com/photo-1453945619913-79ec89a82c51?auto=format&fit=crop&w=1200&q=75)
+
+## A Wilmington law firm website checklist
+
+- [ ] Responsible lawyer or firm name and Wilmington office address in the footer of every page, including ad landing pages
+- [ ] Address identical on the site, the Business Profile and bar records
+- [ ] Lawyers not admitted in Delaware shown with where they are admitted
+- [ ] Results described with context and qualifying language beside each one
+- [ ] Clients named only with their consent; reviews shown word for word, never paid for
+- [ ] No comparisons with other firms you can't substantiate
+- [ ] Lead vendors checked: no recommendation, no "free" impression, no claimed case analysis
+- [ ] Equity work tied to Chancery; damages claims to Superior Court or CCLD
+- [ ] Small-claim and landlord pages naming the right court and its current address
+- [ ] A Delaware counsel page that explains pro hac vice and names who handles it
+- [ ] Certification claims naming an approved or ABA-accredited certifier
+- [ ] Chat that waits for the visitor; targeted messages labeled "Advertising Material"
+- [ ] Languages listed per person, with translated pages written properly
+
+For what every state shares, see our [law firm website checklist](/blog/law-firm-website-checklist) and our guide to [a practice area page that earns calls](/blog/practice-area-page-that-earns-calls). Many Wilmington firms also serve clients across the river, and our [New Jersey law firm website guide](/blog/new-jersey-law-firm-website-design) and [Philadelphia guide](/blog/philadelphia-law-firm-website-design) cover those states' rules.
+
+## How SaySites builds a Wilmington law firm website
+
+SaySites builds each practice area as its own page and each lawyer a bio with bar admissions, languages and background, so a Chancery litigator and a family lawyer each get a page that speaks to their clients. The footer can carry the responsible attorney's name and the office address on every page, which is exactly what Rule 7.2(c) asks for. The consultation form can ask for the other party's name so you can run a conflict check before you call back, and the firm is described to search engines as a LegalService with its name, address, phone and hours. No page goes live until it passes a 95+ speed check.
+
+You edit by describing the change. Tell Sofie, the built-in assistant, "add a Delaware counsel page with Maria and James as the contacts," "put 'admitted in Pennsylvania and New Jersey only' under Priya's name," or "change the landlord page to say JP Court 20 is on North Market Street." Every change waits as a draft until you approve it, so a lawyer reads each word first. Results, reviews and credentials come only from you; SaySites never invents them.
+
+Law Firm Starter is $79 a month ([websites for law firms](/websites-for/law-firms), [compare plans](/pricing)). [Start a 7-day free trial](/signup) and build your Wilmington site yourself, or [request a free redesign](/redesign) to see your current site rebuilt from your own content first.`,
+    faq: [
+      { q: 'What must every Delaware law firm web page include?', a: 'Delaware Rule 7.2(c) requires every communication to include the name and office address of at least one lawyer or law firm responsible for its content. Many states require only a name, so Delaware’s address requirement is easy to miss. A footer on every page, including paid ad landing pages, with the firm name and Wilmington office address meets it.' },
+      { q: 'Can a Delaware lawyer pay for online leads?', a: 'Yes, within limits. Comment [5] to Rule 7.2 allows paying for leads if the lead generator does not recommend the lawyer, the payment fits Rules 1.5(e) and 5.4, and the service’s communications are not misleading. You may not pay one that implies it recommends you, that the referral is unpaid, or that it analyzed the person’s legal problem.' },
+      { q: 'How does pro hac vice admission work in Delaware Superior Court?', a: 'Under Superior Court Civil Rule 90.1, a lawyer who is not a Delaware Bar member may be admitted pro hac vice at the court’s discretion, only on written motion by a Delaware Bar member who maintains an office in Delaware, called Delaware Counsel. Admission is sought separately in each court, and the out-of-state lawyer agrees to follow Delaware’s professional conduct rules.' },
+      { q: 'Which Delaware court handles a breach of contract claim for money damages?', a: 'Usually the Superior Court, which handles claims at law. Its Complex Commercial Litigation Division takes larger commercial cases, and a February 2023 order lets it take breach of contract cases from the Court of Chancery where damages are sought. Smaller claims can go to the Court of Common Pleas, up to $75,000, or the Justice of the Peace Court, up to $25,000.' },
+      { q: 'Can a Delaware lawyer say they are a certified specialist?', a: 'Only if the certifying organization has been approved by an appropriate state authority or accredited by the American Bar Association, and the communication clearly names that organization, under Rule 7.4(d). Saying you specialize in or concentrate on a field is generally allowed under Comment [1], as long as the statement is not misleading under Rule 7.1.' },
+      { q: 'Does a Wilmington firm website need Spanish pages?', a: 'Not by rule, but many firms will benefit. Spanish made up 86% of spoken-language interpreter requests in Delaware’s courts in fiscal 2025. If someone at your firm speaks Spanish, list it on that person’s bio and say whether they are a lawyer. Publish Spanish pages only if your team can answer calls and emails in Spanish.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'Law Firm Starter is $79 a month after a 7-day free trial. It includes a page for each practice area, lawyer bios with admissions and languages, a consultation form that can ask for the other party’s name for conflict checks, LegalService structured data and a footer for the responsible attorney and office address. A free redesign preview is also available.' },
+    ],
+    about: ['Delaware Lawyers’ Rules of Professional Conduct', 'Lawyer advertising', 'Law firm websites', 'Wilmington, Delaware'],
+    published: '2026-11-27',
+    status: 'published',
+  },
+  {
+    slug: 'boston-electrician-website-design',
+    title: 'Boston Electrician Websites: License Number Rules',
+    description: 'Build a Boston electrician website that meets 237 CMR 18.01: license type and number in every ad, the business license name, permits and honest service pages.',
+    kind: 'guide',
+    summary: [
+      'Massachusetts rule 237 CMR 18.01(2) says any sign, advertisement or other business communication of a master electrician, journeyman electrician or systems contractor must show the license type and license number, so the website needs both on every page.',
+      'A licensee may do business only in the name printed on the license, and a business entity doing electrical work must hold a license in its own name, so the site, the truck and the Business Profile should all use that exact name.',
+      'Only a master electrician can hold a business license; the Board says a journeyman working alone cannot use a DBA, an LLC or a corporation.',
+      'State law requires notice to the local inspector of wires, by permit application, before or within five days after starting work for hire, so service pages should say permits and inspection are part of the job.',
+      'Boston’s language access office publishes city materials in 12 languages, a useful guide to which languages your customers may speak, but only promise service in a language someone on your team actually speaks.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1660330589693-99889d60181e?auto=format&fit=crop&w=1600&q=75', alt: 'An installer in a bright yellow work shirt and cap adjusting wiring inside an open outdoor electrical cabinet on a stucco wall' },
+    body: `A Boston electrician website has a legal requirement most trade sites in other states don't: it has to show your license type and license number. Massachusetts treats a website as a business communication, and 237 CMR 18.01 says every sign, advertisement or other business communication of a licensed master electrician, journeyman or systems contractor must indicate both. The same rule says you may only do business in the name on your license. Put the license line in your footer, use the licensed name everywhere, explain permits and inspections plainly, and give each service its own useful page. That's the foundation of a site that's compliant and that earns calls from homeowners comparing three electricians on their phone.
+
+This guide draws on the Board of State Examiners of Electricians' regulations, [237 CMR 18.00](https://www.mass.gov/doc/237-cmr-18-rules-governing-practice/download) and [237 CMR 16.00](https://www.mass.gov/doc/237-cmr-16-business-and-other-licensure-procedures/download), on Chapter 141 of the General Laws and on the Board's own guidance pages, all checked in November 2026. It explains how those rules shape a website; it isn't legal advice, so take specific questions to the Board or your attorney.
+
+## Does a Massachusetts electrician have to show a license number online?
+
+Yes. The rule is 237 CMR 18.01(2), and its key sentence is direct: "Any sign, advertisement or other business communication of a Master Electrician Journeyman Electrician or Systems Contractor shall indicate the type of license and the license number."
+
+A website is a business communication, and so are the pages built for paid ads, your social profiles and the emails you send customers. The regulation has one narrow exception: licensees listed in telephone directories "need not include their license number so long as said listing is limited to the name and phone number of the licensee/business." A website is never limited to a name and phone number, so the exception doesn't help.
+
+The simplest way to comply is a footer that appears on every page:
+
+1. **The licensed name,** exactly as printed on the license.
+2. **The license type,** written out: Master Electrician, Journeyman Electrician or Systems Contractor.
+3. **The license number,** in full.
+4. **Your phone and business address,** so the footer doubles as your contact block.
+
+If you also hold a systems contractor license for fire alarm and security work, show that type and number too. A homeowner who sees both understands at a glance what you're licensed to do.
+
+> **Note:** 237 CMR 18.00 is dated November 21, 2016 on the state's regulation page. If the Board amends its rules, check the new text before relying on this summary.
+
+## Which Massachusetts electrical licenses can you advertise?
+
+The Board licenses four kinds of electrical and systems professionals. Its [consumer fact sheet](https://www.mass.gov/info-details/electricians-consumer-fact-sheet) lists them as "Master Electricians (A), Journeyman Electricians (B), Fire Warning and Security System Contractors (C) and Fire Warning and Security System Technicians (D)," and [M.G.L. c. 141, § 3](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter141/Section3) sets out the certificates.
+
+| License | Who holds it | What it means for your website |
+|---|---|---|
+| A, Master Electrician | A person, firm or corporation in the electrical business | Can advertise electrical services and employ journeymen and apprentices |
+| B, Journeyman Electrician | An individual | Works in their own name; can't advertise as a company |
+| C, Systems Contractor | A person, firm or corporation in fire warning and security work | Can advertise systems work, not general electrical work |
+| D, Systems Technician | An individual | Works for a master or systems contractor |
+
+Under § 3, a master's certificate A is issued only where the person, or a member of the firm or an officer of the corporation, has passed the Board's exam and has held a journeyman's certificate B for at least twelve months. The fact sheet adds that "A master electrician must maintain a regular place of business where the current license is displayed." Your site's address line should be that regular place of business.
+
+The license requirement itself is in [M.G.L. c. 141, § 1A](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter141/Section1A), which bars anyone from engaging in the business of installing wires, devices and fixtures "for light, heat, power, fire warning or security system purposes" without a Board license. The Board's [general FAQ](https://www.mass.gov/service-details/frequently-asked-questions-about-board-of-state-examiners-of-electricians) adds a point worth knowing if you advertise low-voltage work: "There is no generic exception for 'low voltage' wiring, as depending on its use it may be subject to licensing requirements."
+
+![A technician in an orange safety vest and white helmet on a lift, working on cable trays under the ceiling of a commercial building](https://images.unsplash.com/photo-1785682118449-21da8825754d?auto=format&fit=crop&w=1200&q=75)
+
+## What business name can your website use?
+
+Massachusetts ties your public name to your license, and this is where many electrician websites quietly go wrong.
+
+- **Use the name on the license.** 237 CMR 18.01(2) says a licensee "shall only engage in the electrical or systems trade or otherwise conduct business in the name printed on his or her license." A catchy brand that doesn't match your license is a problem, not a marketing choice.
+- **Companies need their own license.** Under 237 CMR 16.03(1)(b), "All business entities engaged in electrical or systems work for which a license is required shall maintain a license in the name of the business entity." If you operate as an LLC or corporation, the site should use the entity's licensed name.
+- **A named person stands behind the company.** The Board's [business license FAQ](https://www.mass.gov/info-details/electricians-faqs-for-business-license-applications) explains that each licensed company has a Licensee of Record, who must be listed as a manager of an LLC or an officer of a corporation in Secretary of the Commonwealth filings.
+- **Journeymen can't brand a company.** The general FAQ says only a master can get a business license, and "a Journeyman practicing by themselves can only practice via the name on their license and CANNOT use a DBA or a business entity (like a corporation, LLC, or LLP.)"
+
+For a website, the practical rule is that the name in your logo, footer, page titles and Google Business Profile should match your license exactly. If you trade under a business certificate, check with the Board that the name complies with 237 CMR 18.00 before you print it on vans and pages.
+
+## What should Boston customers learn about permits and inspections?
+
+Permits are a real differentiator, because many homeowners don't know electrical work needs one. Under [M.G.L. c. 143, § 3L](https://malegislature.gov/Laws/GeneralLaws/PartI/TitleXX/Chapter143/Section3L), "No person shall install for hire any electrical wiring or fixtures subject to this section without first or within five days after commencing the work giving notice to the inspector of wires." That notice is given by filing a permit application. The same section says the installer must notify the inspector in writing when the work is complete, and the inspector must give written approval or disapproval within five days of that notice.
+
+In Boston, permits go through the city's [Inspectional Services Department](https://www.boston.gov/departments/inspectional-services), which offers an online portal for some applications. Elsewhere, each city or town's inspector of wires is the authority. The Board's FAQ advises "consulting with the local IOW in the city or town the work is to be done."
+
+On your website, turn that into reassurance:
+
+1. **Say permits are included** on every service page where they apply, such as panel upgrades, new circuits, EV charger installs and renovations.
+2. **Explain the inspection** in a sentence: the inspector of wires checks the work and approves it in writing.
+3. **Name the towns where you pull permits** if you work outside Boston, such as Cambridge, Somerville, Quincy or Newton, and only the ones you actually serve.
+4. **Don't promise to skip steps.** "No permit needed" or "we'll handle it without the inspector" invites the wrong customers and contradicts the law.
+
+One more line from the Board's fact sheet belongs in your thinking about what you offer: "It is a violation of board regulations for a licensed electrician or systems technician to connect wiring from components that have been wired by an unlicensed person." If your site invites people to call you to "finish" their own wiring, rewrite it to say you'll inspect and redo work as needed.
+
+## Which service pages should a Boston electrician website have?
+
+Customers search for a specific job, not for "electrical services." Give each job you want more of its own page, written from your own experience. A solid set for a residential Boston electrician might include:
+
+- **Panel upgrades and service changes,** a common job in older housing stock.
+- **EV charger installation,** with what the customer needs to know about panel capacity and permits.
+- **Circuits for heat pumps and other electric equipment,** if you do that work, and whether you coordinate with the HVAC installer.
+- **Lighting, outlets and rewiring,** including what an older home might reveal behind the walls.
+- **Generator hookups,** if you install transfer equipment.
+- **Fire alarm and security systems,** only if you hold the systems contractor license for that work.
+- **Commercial work,** such as fit-outs and tenant improvements, as a separate page if it's a meaningful part of your business.
+
+![Gloved hands holding a voltage tester against breakers inside an open electrical panel full of colored wires](https://images.unsplash.com/photo-1758101755915-462eddc23f57?auto=format&fit=crop&w=1200&q=75)
+
+### What makes a service page earn the call?
+
+A homeowner reading an EV charger page wants answers in the order they think of them. A strong page covers:
+
+1. **What the job involves,** in two or three plain sentences.
+2. **What you check first,** such as panel capacity, the distance from the panel and whether a load calculation is needed.
+3. **Permits and inspection,** stated as part of the job.
+4. **What affects the price,** even if you don't publish one. Honest factors, like whether the panel needs upgrading, help customers understand a quote.
+5. **Photos of your own work,** with a short caption describing the job.
+6. **Your license line and a short request form,** so the next step is obvious.
+
+Google's guidance on [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) asks whether content shows first-hand experience and whether it's clear who wrote it. A page that describes what your crew actually found in a 1920s triple-decker beats a generic paragraph copied from a manufacturer.
+
+Thinking about what your own pages could look like? You can [request a free redesign](/redesign) and see your current site rebuilt from your own content, with the license line in place.
+
+## How should you show reviews, photos and claims?
+
+Massachusetts electricians compete on trust, and the fastest way to lose it is a claim that can't be checked.
+
+- **Reviews must be real.** The FTC's [rule on consumer reviews and testimonials](https://www.federalregister.gov/documents/2024/08/22/2024-18519/trade-regulation-rule-on-the-use-of-consumer-reviews-and-testimonials), in effect since October 21, 2024, bans fake reviews, reviews bought on condition of a particular sentiment, undisclosed reviews from staff or relatives, and suppressing negative reviews. Ask every customer the same way, and show reviews word for word with permission.
+- **Photos must be yours.** A stock photo of a pristine panel presented as your work misleads customers. Caption your own photos with the job and the town.
+- **"Licensed and insured" needs specifics.** Your license type and number are already in the footer. If you mention insurance, say what kind, and keep it current.
+- **Avoid unverifiable superlatives.** "Boston's best electrician" says nothing a customer can check. "Licensed master electrician since 2012, serving Dorchester and Quincy" does.
+
+Customers can check your license themselves through the Division of Occupational Licensure's [license search](https://www.mass.gov/how-to/check-an-occupational-board-license). Linking to it from your about page signals you have nothing to hide.
+
+## How should a Boston electrician set up Google Business Profile?
+
+Most electricians travel to the customer, which makes them service-area businesses in Google's terms. Google's [service area guidance](https://support.google.com/business/answer/9157481) explains how to set the areas you serve, and its [Business Profile guidelines](https://support.google.com/business/answer/3038177) say that a business serving customers at their address and setting a service area should have a location "staffed by your team and able to receive customers during its stated hours" if it shows that address. If customers don't come to your shop, hide the address and list your service area instead.
+
+The same guidelines say a rented mailing address you don't operate from, "also known as a virtual office," isn't eligible, and they bar extra keywords in the business name. For a Massachusetts electrician, that lines up neatly with 237 CMR 18.01: the profile name should be your licensed name, nothing added.
+
+A few Boston-specific choices help:
+
+- **List neighborhoods and towns you really serve,** such as Dorchester, Jamaica Plain, Brighton or nearby cities, and leave out the ones you'd rather not drive to.
+- **Write one honest service area page** on your site rather than a copy of the same page for every town. Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) call near-identical city pages doorway pages.
+- **Keep hours real,** including emergency availability only if someone actually answers at 2 a.m.
+
+## Should a Boston electrician website offer other languages?
+
+Boston is a city of many languages. The City's [Office of Language and Communications Access](https://www.boston.gov/departments/language-and-communications-access) publishes its materials in 12 languages: English, Spanish, Haitian Creole, Traditional and Simplified Chinese, Vietnamese, Cabo Verdean Creole, Russian, Arabic, Brazilian Portuguese, French and Somali. That list is a reasonable guide to which languages your customers may speak at home.
+
+What matters on your site is what your team can actually do:
+
+1. **Name the languages per person.** "Carlos speaks Spanish and Portuguese" is more useful than a row of flags.
+2. **Translate whole pages, not just a banner.** A customer who taps "Español" and lands on English text is worse off than before.
+3. **Write translated pages properly,** and connect each to its English version as Google describes in its guide to [localized versions of pages](https://developers.google.com/search/docs/specialty/international/localized-versions).
+4. **Keep the license line on every version.** 237 CMR 18.01 applies to a Spanish page as much as an English one.
+
+![Rows of circuit breakers and colored wires neatly arranged on DIN rails inside an open electrical cabinet](https://images.unsplash.com/photo-1635335874521-7987db781153?auto=format&fit=crop&w=1200&q=75)
+
+## A Boston electrician website checklist
+
+- [ ] License type and number in the footer of every page, including ad landing pages
+- [ ] Systems contractor license shown too, if you advertise fire alarm or security work
+- [ ] Logo, footer, page titles and Business Profile all use the exact licensed name
+- [ ] Business entity name matches the entity's own license; no DBA for journeymen
+- [ ] Address is the regular place of business where the license is displayed
+- [ ] Permits and inspection described as part of each job that needs them
+- [ ] Towns listed are ones where you actually pull permits and work
+- [ ] No offers to finish unlicensed wiring or skip permits
+- [ ] One page per main service, with your own photos and captions
+- [ ] Reviews real, word for word and never bought for a particular sentiment
+- [ ] A link to the state's license search on the about page
+- [ ] Service area set in Business Profile; address hidden if customers don't visit
+- [ ] Languages listed per person, with full translated pages and the license line on each
+
+For the basics every trade site shares, read our [home service website checklist](/blog/home-service-website-checklist) and our guide to [service-area businesses on Google](/blog/service-area-business-google). To see how other states handle electrician advertising, compare our [Austin electrician guide](/blog/austin-electrician-website-design).
+
+## How SaySites builds a Boston electrician website
+
+A SaySites electrician site gives each job its own page, so your panel upgrade, EV charger and generator work each get a page you can point customers to. The footer appears on every page and can carry your licensed name, license type and number, phone and business address, which covers 237 CMR 18.01 everywhere at once. The request form asks what the job is, where it is and how soon it's needed, and new requests land in a simple pipeline where you can call, text or email back. The business is described to search engines as an Electrician, phone photos are resized for you, and every page must score 95+ on the speed check before it goes live.
+
+To make a change, say it in plain words. Ask Sofie, the built-in assistant, to "add our systems contractor license number under the master license in the footer," "write an EV charger page that says permits and inspection are included," or "put Carlos's Portuguese on the team page." Every change waits as a draft until you approve it. License numbers, reviews, photos and credentials come only from you; SaySites never makes them up.
+
+The Site plan is $15 a month ([websites for electricians](/websites-for/electricians), [see every plan](/pricing)). [Start a 7-day free trial](/signup) and build your Boston site yourself, or [get a free redesign](/redesign) to see your current site rebuilt with your own content first.`,
+    faq: [
+      { q: 'Does a Massachusetts electrician website need a license number?', a: 'Yes. Under 237 CMR 18.01(2), any sign, advertisement or other business communication of a master electrician, journeyman electrician or systems contractor must indicate the type of license and the license number. The only exception covers directory listings limited to a name and phone number. A footer with the license type and number on every page meets the rule.' },
+      { q: 'Can a Massachusetts electrician use a brand name that differs from the license?', a: 'Generally not. The same rule says a licensee may conduct business only in the name printed on the license, and business entities doing electrical work must hold a license in the entity’s own name. Use that exact name on your site, vans and Business Profile, and check any business certificate name with the Board first.' },
+      { q: 'Can a journeyman electrician in Massachusetts run an LLC?', a: 'No. The Board’s FAQ says only a master electrician can get a business license, and a journeyman practicing alone may work only under the name on their license, without a DBA, corporation, LLC or LLP. A journeyman’s website should use their own licensed name and describe them as a journeyman electrician with the license number.' },
+      { q: 'Does electrical work in Boston need a permit?', a: 'Work done for hire generally does. M.G.L. c. 143, § 3L requires notice to the local inspector of wires, by permit application, before or within five days after starting, and written notice when the work is complete. In Boston, permits go through Inspectional Services. Saying on your site that permits and inspection are included reassures customers.' },
+      { q: 'Is low-voltage work exempt from licensing in Massachusetts?', a: 'Not automatically. The Board’s FAQ says there is no generic exception for low-voltage wiring, because depending on its use it may require a license. Fire warning and security systems need a systems contractor or technician license. If your website advertises low-voltage, alarm or security work, show the license that covers it and its number.' },
+      { q: 'How can Boston customers check an electrician’s license?', a: 'Through the Division of Occupational Licensure’s online license search on mass.gov, which looks up licenses issued by the occupational boards, including the Board of State Examiners of Electricians. Linking to that search from your about page, next to your license type and number, lets customers confirm your license in a minute before they call.' },
+      { q: 'How much does a SaySites electrician website cost?', a: 'The Site plan is $15 a month after a 7-day free trial. It includes a page for each service, a footer that can carry your licensed name, license type and number on every page, a short job request form, Electrician structured data and a 95+ speed check on every page. You can request a free redesign of your current site first.' },
+    ],
+    about: ['237 CMR 18.00', 'Massachusetts electrician licensing', 'Electrician websites', 'Boston, Massachusetts'],
+    published: '2026-11-27',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
