@@ -14580,6 +14580,373 @@ The Site plan is $15 a month ([websites for electricians](/websites-for/electric
     published: '2026-11-27',
     status: 'published',
   },
+  {
+    slug: 'law-firm-website-cost',
+    title: 'Law Firm Website Cost: What to Budget and What You Get',
+    description: 'What a law firm website should cost and include: the parts you pay for, the three pricing models, a 3-year cost formula and questions to ask before you sign.',
+    kind: 'guide',
+    summary: [
+      'A law firm website costs whatever its parts cost over the years you keep it: the build, the writing, hosting and security, changes, intake tools and any search work. Compare quotes as a three-year total, not a launch price.',
+      'The three common models are a one-time build plus upkeep, an agency retainer and a monthly platform you run yourself. Each suits a different firm; none is right for everyone.',
+      'Some costs are non-negotiable for a law firm: your state’s advertising rules, disclaimers next to past results, a contact form that doesn’t invite confidential details, accessibility and a fast mobile site.',
+      'Google says no one can guarantee a #1 ranking. A quote that promises one, or ties your price to rankings, is a reason to walk away.',
+      'Whatever you pay, own your domain and your words, and get it in writing.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1758873268394-443e1ac80032?auto=format&fit=crop&w=1600&q=75', alt: 'Two people talking through a plan over an open laptop at an office table' },
+    body: `A law firm website should cost what its parts are worth to your practice over the time you keep it, and nothing for promises nobody can keep. In practice that means adding up six things for three years: building it, writing it, hosting and securing it, changing it, handling the inquiries it brings in, and any search work you buy on top. Get every quote in that shape, check that the site meets your state's advertising rules and basic accessibility, own your domain, and walk away from anyone who guarantees a ranking. Do that and you'll know what you're really paying, whichever model you choose.
+
+This guide doesn't quote "average" industry prices, because there's no reliable public source for them and they vary enormously by firm size and market. It gives you the method instead, with sources linked, and uses SaySites' own published prices as one worked example. It isn't legal advice: your state bar's rules decide what your site may say.
+
+## What are you actually paying for in a law firm website?
+
+Every quote, however it's packaged, is some mix of these six parts. Ask for each to be named and priced.
+
+| Part | What it covers | Questions that reveal the real cost |
+|---|---|---|
+| Design and build | Layout, pages, forms, mobile version, structured data | How many pages are included? What does a new page cost later? |
+| Writing | Home, attorney bios, a page per practice area, FAQs | Who writes it? Who checks it against bar rules? |
+| Hosting, security and domain | Servers, SSL certificate, backups, updates | Who owns the domain? What happens if you leave? |
+| Changes | New attorneys, new practice areas, phone or address changes | Is there a monthly limit? How fast? What's the hourly rate after? |
+| Intake | Forms, call tracking, lead alerts, CRM connections | Does it send leads to the system you use? Can staff log in? |
+| Search work (optional) | Audits, content plans, local profile help, reporting | What exactly is done each month, and how is it measured? |
+
+Two parts get skipped most often in early quotes: writing and changes. A beautiful site with placeholder text isn't finished, and a site that costs an invoice every time a lawyer joins goes stale fast. Stale sites cost more than they look, because the bar rules that govern your site apply to old pages as much as new ones.
+
+## What are the three ways law firms pay for a website?
+
+Most offers fall into one of three models. None is universally better; each suits a different firm.
+
+1. **A one-time build, then upkeep.** You pay a project fee for design, build and often writing, then a smaller monthly or yearly fee for hosting and maintenance. It suits a firm that knows exactly what it wants and rarely changes. The risk is the "after": changes billed hourly, and a site that falls behind because every edit is a purchase order.
+2. **An agency retainer.** One monthly fee covers the site, changes and usually search or ad work. It suits a firm that wants to hand marketing off entirely. The risk is opacity: you need to see what's done each month, and you need to know what you keep if you cancel.
+3. **A monthly platform you run yourself.** You pay a subscription that includes hosting, design templates and tools, and you make changes yourself. It suits a firm that wants control and a predictable bill. The risk is time: if no one at the firm will actually update the site, the low price doesn't help.
+
+Many firms end up in a hybrid: a platform they own and update, with help on the initial build or a done-for-you option when they're busy. Whatever you choose, the contract questions later in this guide apply to all three.
+
+![A calculator resting on a pile of banknotes and receipts on a table](https://images.unsplash.com/photo-1725258080098-727051947997?auto=format&fit=crop&w=1200&q=75)
+
+## How do you compare law firm website quotes fairly?
+
+Put every quote into a three-year total. Launch prices hide the real cost, because the expensive part of most websites is the years after launch.
+
+Use this formula for each offer:
+
+> **Note:** Three-year cost = one-time fees + (monthly fees × 36) + (expected changes per year × cost per change × 3) + any add-ons you'll actually need, such as extra pages, intake integrations or extra logins.
+
+Then fill it in honestly:
+
+- **One-time fees:** design, build, writing, migration from your old site, setup.
+- **Monthly fees:** hosting, maintenance, platform subscription or retainer.
+- **Changes:** count what really happens at your firm in a year. A new associate, a retired partner, a new office, two new practice areas, a phone system change and a handful of bio edits is a normal year for a small firm. If each change is billed, that line can be larger than the build.
+- **Add-ons:** anything sold separately that you know you need.
+
+As a worked example, here is SaySites' own pricing, which is public. Law Firm Starter is $79 a month, so 36 months comes to $2,844, or $2,370 if you pay yearly at $790 a year (yearly billing is two months free). There's no setup fee and no contract, and changes are made by you, so the change line is zero. The plan where the SaySites team builds the site from your current one and makes changes when you ask is $599 a month or $5,990 a year, so $17,970 over three years paid yearly. Run the same arithmetic on every quote you receive and you'll be comparing like with like.
+
+## What should a law firm website include, whatever it costs?
+
+A low price is no bargain if the site is missing what clients and bar rules expect. Treat these as the minimum every quote must include:
+
+1. **A page for each practice area,** written for the people who need it, with their real questions answered. Our guide to [practice area pages that earn calls](/blog/practice-area-page-that-earns-calls) shows how.
+2. **Attorney bios** with admissions, education and the work each lawyer actually does.
+3. **A consultation request on every page,** short, and worded so visitors don't send confidential details before you've checked for conflicts.
+4. **Your state's required notices** in the right places: firm name and responsible lawyer, office location where your rules require it, and disclaimers next to any past results.
+5. **Office pages** with the exact name, address and phone your Google Business Profile uses.
+6. **Structured data** that describes the firm as a legal business, its attorneys and its services.
+7. **A fast, mobile-first build.** In our own [test of 105 top-ranking law firm websites](/blog/we-tested-top-ranking-law-firm-websites), 9 of the 10 sites we ran through Lighthouse took longer than Google's 2.5 second target to show their main content on a phone. Speed is a fair thing to ask any vendor to prove.
+8. **Accessibility,** covered below.
+
+Our [law firm website checklist](/blog/law-firm-website-checklist) has the full list to hand to any vendor.
+
+> **Tip:** Want to see what your own site would look like rebuilt before you spend anything? SaySites will make a [free redesign preview](/redesign) of your current site, using your real content, so you can judge it side by side.
+
+## Which costs are really ethics and compliance costs?
+
+Lawyer advertising rules apply to your website, and getting them wrong costs more than any design fee. Your state's rules decide the details, so read your own version of the advertising rules (in most states, numbered 7.1 to 7.5 after the ABA Model Rules of Professional Conduct). A few points apply almost everywhere, and an ABA Law Practice Today article on [avoiding ethical violations in internet marketing](https://www.americanbar.org/groups/law_practice/resources/law-practice-today/2024/september-2024/how-to-avoid-ethical-violations-while-managing-internet-marketing/) sums them up well:
+
+- **You're responsible for your vendor's work.** The article warns that delegating marketing "does not relieve attorneys of their obligations to adhere to applicable ethics rules." Budget time to review every page before it goes live, whoever writes it.
+- **Past results need context.** "Without a disclaimer, simply listing case results could potentially be misleading," the article says. A vendor should know where disclaimers go without being told.
+- **No paying for recommendations.** Lawyers "cannot pay someone for recommending their services," and communications must name the firm or attorney responsible. Check what any lead service tells consumers before you buy from it.
+- **Reviews have rules too.** The article notes that attorneys "cannot pay for a review or offer a fee discount for providing a review." Be wary of vendors whose review tools pull in or reword testimonials automatically.
+- **Watch automated ad copy.** It warns firms to make sure settings for AI-generated ad content are turned off, so nothing runs that you haven't approved.
+
+When you compare quotes, ask each vendor who checks pages against your state's rules, and what happens when a rule changes. "You approve everything" is a fine answer, as long as the vendor also builds the notices and disclaimers into the site so you're not starting from scratch.
+
+![Two people shaking hands across a desk after a meeting in an office](https://images.unsplash.com/photo-1758520144427-ddb02ac74e9d?auto=format&fit=crop&w=1200&q=75)
+
+## Does a law firm website need to be accessible, and what does that cost?
+
+Plan for it. The Department of Justice's [guidance on web accessibility and the ADA](https://www.ada.gov/resources/web-guidance/), dated March 18, 2022, says the ADA's requirements apply to all the goods, services, privileges or activities offered by businesses open to the public, "including those offered on the web." It also says businesses "have flexibility in how they comply," and that existing technical standards such as the Web Content Accessibility Guidelines (WCAG) and the Section 508 Standards provide helpful guidance.
+
+Accessibility is far cheaper built in than bolted on. Ask every vendor:
+
+- Do photos get real descriptions, and do form fields have labels?
+- Can the whole site be used with a keyboard, including menus and the contact form?
+- Is text contrast checked, and does the site work when someone enlarges text?
+- Are PDFs and videos accessible, or avoided where a page would do?
+
+If a quote treats accessibility as an optional add-on, count it as a cost you'll pay later.
+
+## Do you need to pay for SEO with a law firm website?
+
+Not necessarily, and Google's own advice is the best guide here. Its page [Do you need an SEO?](https://developers.google.com/search/docs/fundamentals/do-i-need-seo) says plainly: "No one can guarantee a #1 ranking on Google." It also says "a great time to hire is when you're considering a site redesign (the earlier, the better)," and that "Google never accepts money to include or rank sites in our search results."
+
+A good website already does much of the work that used to be sold as SEO: clear page titles, one page per practice area, fast loading, structured data, accurate office details and helpful answers. Google's guide to [creating helpful, reliable, people-first content](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) explains what it rewards, and none of it requires a monthly retainer if your site and your writing are solid.
+
+If you do hire help, Google suggests interview questions worth asking word for word:
+
+1. "Can you show me examples of your previous work and share some success stories?"
+2. "Do you follow the Google Search Essentials (previously known as Webmaster Guidelines)?"
+3. "What kind of results do you expect to see, and in what timeframe? How do you measure your success?"
+4. "What's your experience in my industry?"
+5. "What's your experience in my country/city?"
+6. "How long have you been in business?"
+7. "How can I expect to communicate with you?"
+
+Google adds three warnings worth repeating. At the audit stage, "only grant read access to Search Console." "You should never have to link to an SEO." And if someone guarantees first place in search results, "find someone else."
+
+## What should you ask before you sign a website contract?
+
+These questions protect you whichever model you pick. Get the answers in writing.
+
+- [ ] Is the domain registered in the firm's name, with the firm as the account owner?
+- [ ] Do we own the words, photos and bios we supply, and can we take them if we leave?
+- [ ] What happens to the site, and to our page addresses, if we cancel? Will old addresses redirect?
+- [ ] Is there a minimum term, a setup fee or a cancellation fee?
+- [ ] How many changes are included, and how fast are they made?
+- [ ] Can our own staff make changes, and can intake staff log in to see leads?
+- [ ] Do leads go to the practice management or CRM system we already use?
+- [ ] Who checks pages against our state's advertising rules?
+- [ ] How do you prove the site is fast on a phone?
+- [ ] What is included for accessibility?
+- [ ] What exactly is done each month for the monthly fee?
+- [ ] Do you promise rankings or a number of leads? (The right answer is no.)
+
+A vendor who answers all twelve clearly is one you can compare fairly with the others. A vendor who won't put the answers in writing has told you something too.
+
+![A person typing on a laptop at a desk with the screen open to an online dashboard](https://images.unsplash.com/photo-1678227547330-7b17f29fd1ff?auto=format&fit=crop&w=1200&q=75)
+
+## What are the hidden costs of a cheap law firm website?
+
+A low price can be a good deal, but these are the costs that tend to appear later:
+
+- **Paying again to leave.** If the vendor owns your domain or won't hand over your content, switching means starting over and losing what your pages had built up in search.
+- **Every edit is an invoice.** A low monthly fee with paid changes can cost more within a year than a higher fee that includes them.
+- **A slow site.** Heavy themes and stacks of plugins can make a site slow on phones, which is where many people searching for a lawyer start. Google explains why speed matters in [Core Web Vitals](https://web.dev/articles/vitals).
+- **Missing disclaimers.** Templates built for any business rarely include attorney advertising notices. Adding them later is your time, and missing them is your risk.
+- **No intake.** A form that emails one inbox, with no record of who replied, loses inquiries quietly. Ask how leads are tracked from first message to signed client.
+
+## How much does a SaySites law firm website cost?
+
+SaySites publishes every price on its [pricing page](/pricing), and nothing is hidden behind a sales call:
+
+| Plan | Monthly | Yearly | Who it's for |
+|---|---|---|---|
+| Law Firm Starter | $79 | $790 | Firms that build and change their own site |
+| Law Firm | $299 | $2,990 | Firms competing hard for searches: everything in Starter, with three times the Sofie allowance for bigger changes |
+| Law Firm, built for you | $599 | $5,990 | Firms that want the SaySites team to build it and make changes on request |
+
+Law Firm Starter is a complete firm website from day one: three law firm designs, a page for every practice area, attorney profiles and office pages, a consultation request on every page with intake questions per practice area and a conflict-check field, attorney advertising notices and disclaimers in the footer, a leads pipeline with instant replies, alerts and follow-ups, logins for intake staff, connections to Clio Grow, HubSpot, Salesforce or Pipedrive, a full SEO audit with side-by-side comparison against three competitors, a monthly results email, and hosting, your domain and security. Every page has to score 95 or more on the speed check before it goes live. There's no setup fee and no contract; you can cancel at any time from your account.
+
+You make changes by saying what you want. Tell Sofie, the built-in assistant, "add our new associate to the team page," "write a practice area page for workers' compensation" or "put our past results disclaimer under the results section," and each change waits as a draft until you approve it. Sofie never invents results, reviews or credentials; those come from you. And SaySites never promises rankings or a number of leads, for the same reason Google gives.
+
+See everything a firm site includes on our [websites for law firms](/websites-for/law-firms) page. Then [start a 7-day free trial](/signup) and build your firm's site yourself, or [request a free redesign](/redesign) to see your current site rebuilt with your own content before you spend anything.`,
+    faq: [
+      { q: 'How much should a law firm website cost?', a: 'There is no reliable public average, because prices vary with firm size, market and how much is done for you. The fair way to judge a price is a three-year total: one-time fees, monthly fees times 36, the cost of the changes you expect each year, and any add-ons you need. Compare every quote in that form.' },
+      { q: 'Is it better to pay a one-time fee or monthly for a law firm website?', a: 'It depends on how often your site changes and who will update it. A one-time build suits firms that rarely change and accept paying for edits later. A monthly platform suits firms that want a predictable bill and to make changes themselves. A retainer suits firms handing marketing off entirely. Compare the three-year totals.' },
+      { q: 'Should a law firm website include SEO?', a: 'The site itself should be built well for search: clear titles, a page per practice area, fast mobile pages, structured data and accurate office details. Ongoing SEO services are optional. Google’s own guidance says no one can guarantee a number one ranking, so judge any SEO offer by what it does each month and how results are measured.' },
+      { q: 'Who should own a law firm’s website domain?', a: 'The firm. Register the domain in the firm’s name, with the firm as the account owner, even if a vendor manages it. Also confirm in writing that you own the words, bios and photos you supply and that old page addresses will redirect if you move, so leaving a vendor never means starting over.' },
+      { q: 'Does a law firm website have to meet ADA accessibility rules?', a: 'The Department of Justice’s 2022 guidance says the ADA applies to the goods and services of businesses open to the public, including those offered on the web, and points to WCAG and the Section 508 Standards as helpful technical guidance. Build accessibility in from the start: labeled forms, image descriptions, keyboard navigation and readable contrast.' },
+      { q: 'What questions should I ask a law firm web designer?', a: 'Ask who owns the domain and content, what happens if you cancel, whether there is a minimum term or setup fee, how many changes are included, whether staff can log in, whether leads reach your CRM, who checks pages against bar rules, how speed and accessibility are proven, and whether they promise rankings. The right answer to the last is no.' },
+      { q: 'How much does a SaySites law firm website cost?', a: 'Law Firm Starter is $79 a month or $790 a year, with a 7-day free trial, no setup fee and no contract. It includes practice area and attorney pages, consultation requests with conflict-check fields, advertising notices, a leads pipeline, staff logins, an SEO audit and hosting. The Law Firm plan is $299 a month, and built for you is $599 a month.' },
+    ],
+    about: ['Law firm website cost', 'Law firm website design', 'Attorney advertising rules', 'Web accessibility'],
+    published: '2026-11-28',
+    status: 'published',
+  },
+  {
+    slug: 'miami-roofing-website-design',
+    title: 'Miami Roofing Websites: Florida Insurance Ad Rules',
+    description: 'Build a Miami roofing website that fits Florida law: s. 489.147 storm-claim ad rules, license numbers, HVHZ permits and what you can say about the 25% rule.',
+    kind: 'guide',
+    summary: [
+      'Florida s. 489.147 bars roofers from offering gifts, cash, coupons or deductible waivers for a roof inspection or claim, and any ad that urges a homeowner to contact you about a roof insurance claim must carry three notices in at least 12-point type.',
+      'Unless you hold a public adjuster license, your site may not interpret policy language, advise on coverage or offer to adjust the claim. Explain the roofing work instead.',
+      'Section 489.119(5)(b) puts your registration or certification number in every advertisement, regardless of medium, so it belongs in the footer of every page.',
+      'Miami-Dade sits in the High Velocity Hurricane Zone: re-roof permits come with product approval paperwork, an owner notification and, on site-built houses, a secondary water barrier and deck attachment affidavit.',
+      'The 25% rule cuts both ways since 2022: a roof built to the 2007 code or later needs only the repaired part brought to current code, so never promise a free full replacement.',
+    ],
+    hero: { src: 'https://images.unsplash.com/photo-1595111571848-fdf33cfb6cff?auto=format&fit=crop&w=1600&q=75', alt: 'Aerial view of homes, high-rises and boats along the marina in Coconut Grove, Miami' },
+    body: `A Miami roofing website has to sell to homeowners who are often thinking about two things at once: their roof and their insurance claim. Florida law draws a hard line between those two subjects. Under section 489.147 of the Florida Statutes, a roofing contractor can't offer gifts, cash, coupons or a deductible waiver in exchange for a roof inspection or claim, can't give coverage advice without a public adjuster license, and any ad that encourages a homeowner to contact you about a roof damage claim must carry three specific notices. Add your license number on every page, explain how High Velocity Hurricane Zone permits work, describe the 25% rule honestly, and your site is both lawful and the most useful roofing page a Miami homeowner will read that week.
+
+This guide is built on the 2026 Florida Statutes as published by the Florida Senate, Miami-Dade County's own permit documents and the Department of Business and Professional Regulation's construction pages, all checked on November 28, 2026. It isn't legal advice. Florida has amended its roofing and insurance rules several times since 2021, so have a Florida construction lawyer read your storm and insurance pages before they go live.
+
+## Which Florida laws decide what a Miami roofer's website can say?
+
+Three statutes do most of the work, and a fourth shapes how you describe re-roof jobs.
+
+| Law | What it covers | Where it shows up on your site |
+|---|---|---|
+| [s. 489.147, F.S.](https://m.flsenate.gov/statutes/489.147) | Prohibited property insurance practices | Storm damage pages, insurance claim pages, offers, landing pages for ads |
+| [s. 489.119, F.S.](https://m.flsenate.gov/statutes/489.119) | Business organizations and license numbers | The footer of every page, photos of branded trucks |
+| [Fla. Admin. Code r. 61G4-12.011](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-61G4-12-011) | The licensing board's definitions, including what counts as advertising | Confirms that internet sites are advertising |
+| [s. 553.844, F.S.](https://m.flsenate.gov/statutes/553.844) | Roof mitigation and the 25% rule | Re-roof pages, repair pages, FAQs about replacement |
+
+The first one is the reason roofing websites in South Florida need more care than roofing websites almost anywhere else in the country. It was written in 2021 and amended in 2022, 2024 and 2025, and it reaches the exact pages roofers most like to build after a storm.
+
+## What does Florida's s. 489.147 ban on a roofing website?
+
+Subsection (2) lists what a contractor may not do, "directly or indirectly." Read against a website, the list looks like this:
+
+1. **No soliciting with a prohibited advertisement.** You can't solicit a residential property owner using an ad that falls under the statute's definition (more on that below).
+2. **No rewards for inspections or claims.** You can't offer a residential property owner "a rebate, gift, gift card, cash, coupon, waiver of any insurance deductible," or anything else of value in exchange for allowing a roof inspection or making a roof insurance claim.
+3. **No referral payments on insurance jobs.** You can't offer, give, receive or accept compensation for referring someone to services paid from a property insurance claim. Payments for the roofing work itself, from the owner or the insurer, don't count.
+4. **No coverage advice.** Unless you are licensed as a public adjuster under part VI of chapter 626, you can't interpret policy provisions, advise a homeowner about coverage or duties under the policy, or adjust the claim.
+5. **No authorization without an estimate.** You can't hand an insured an agreement that authorizes repairs without a good-faith, itemized estimate. A later difference caused by the insurer's adjustment of the claim isn't a violation.
+
+Now picture a typical storm page. "Free roof inspection plus a $500 gift card." "We'll cover your deductible." "We'll tell you exactly what your policy pays for." "We work directly with your adjuster to get you a new roof." Every one of those lines runs into items 2 or 4. The fine is real: subsection (3) says a contractor "may receive up to a $10,000 fine for each violation."
+
+> **Watch out:** Subsection (4)(a) says the acts of anyone acting for the contractor, including a compensated employee or a compensated nonemployee who solicits, are treated as the contractor's own acts. If a marketing company writes your storm ads or runs your landing pages, what it publishes is your responsibility.
+
+## Does a storm damage page count as a "prohibited advertisement"?
+
+The statute defines a prohibited advertisement as a written or electronic communication by a contractor that encourages a consumer to contact a contractor or public adjuster about making a property insurance claim for roof damage. It names door hangers, business cards, magnets, flyers, pamphlets and emails as examples. A web page that says "Hurricane damage? Call us to start your insurance claim" is an electronic communication doing exactly that, so the cautious reading is that it's covered.
+
+The definition also gives you the way out. A communication isn't a prohibited advertisement if it states, in a font of at least 12 points and at least half the size of the largest font used, three notices:
+
+1. That "the consumer is responsible for payment of any insurance deductible."
+2. That it is a felony of the third degree to knowingly waive or rebate the deductible.
+3. That it is a felony of the third degree to knowingly make a false insurance claim.
+
+Use the statute's own wording for these notices rather than a paraphrase, and copy it from the current statute page each time you update the site. Then lay the page out so they're easy to find:
+
+- Put the three notices directly under the main heading of any page that mentions insurance claims, not in a collapsed section or the footer alone.
+- Size them in CSS so they're never smaller than 12 points on any screen, and at least half the size of the page's biggest heading. A huge hero headline means bigger notices, so many roofers simply use a calmer headline.
+- Repeat them on every ad landing page, every storm page and any email you send from your site's contact system.
+
+If you'd rather not deal with this at all, there's a cleaner route: don't invite people to call you about insurance claims. Describe the roofing work, the inspection, the estimate and the permit, and let the homeowner deal with their insurer. Many Miami roofers find that pages built this way read as more trustworthy anyway.
+
+![A roofer kneeling on a pitched roof, fitting new roofing material along the slope](https://images.unsplash.com/photo-1726589004565-bedfba94d3a2?auto=format&fit=crop&w=1200&q=75)
+
+## What can a Miami roofer say about insurance claims, then?
+
+Plenty, as long as it's about your work and the homeowner's own steps. Safe, useful topics include:
+
+- **What you inspect and what you write down.** Describe your inspection: what you look at, the photos you take and the written report you hand over.
+- **What an itemized estimate from you contains,** since s. 489.147(2)(e) requires a good-faith itemized estimate before anything authorizes repairs.
+- **What the homeowner should do first.** Subsection (7) requires every roof repair or replacement contract to tell the owner, in 14-point bold type, that if the work relates to an insurance claim, they should contact their insurance company to verify coverage for the proposed roofing work before signing. Saying the same thing on your site is honest and matches the contract they'll see.
+- **What's in your contract.** Subsection (5) requires roof contracts to include a notice that you may not engage in the practices in paragraph (2)(b), and an owner can void a contract that leaves it out within 10 days of signing. Telling readers your contract includes it shows you know the rules.
+- **Cancellation after a declared emergency.** Under subsection (6), when the Governor declares a state of emergency, an owner who signs a roof contract within 180 days after the event can cancel within 10 days of signing or by the official start date, whichever comes first, if the property is in the declared area. Your contract must say so in bold type of at least 14 points. Mentioning it on your hurricane page helps homeowners who are wary after storms.
+
+What you shouldn't write: anything that tells the reader what their policy covers, how much the insurer will pay, how to word the claim or that you'll negotiate with the adjuster. If you hold a public adjuster license, that's a separate business with its own rules; keep it on separate pages and say clearly which license each service runs under.
+
+## Does a Miami roofing website need the license number?
+
+Yes, on every page. Section 489.119(5)(b) says "the registration or certification number of each contractor shall appear in each offer of services," business proposal, bid, contract or advertisement, regardless of medium, as defined by board rule. The board's definitions rule lists electronic media including internet sites as advertising ([r. 61G4-12.011](https://www.law.cornell.edu/regulations/florida/Fla-Admin-Code-Ann-R-61G4-12-011)).
+
+The practical answer is a footer line that reads something like "Licensed roofing contractor, Florida license [your number]," on every page, including landing pages built for ads. Two details matter in Miami:
+
+- **Certified or registered.** DBPR's [construction industry page](https://www2.myfloridalicense.com/dbpr/construction-industry/) explains that certified contractors carry an occupation code beginning with "C" and registered contractors a code beginning with "R," and that "registered contractors may contract only in such jurisdictions" where they hold local competency. If you're registered, your service area page should list only the places where you can actually work.
+- **Your trucks.** Under s. 489.119(5)(c), a vehicle bearing your company name or anything suggesting contracting must show the number "conspicuously and legibly." The statute adds that this doesn't create a mandatory vehicle signage requirement, but if you put photos of lettered trucks on your site, make sure the number is on them.
+
+Linking your about page to the state's license lookup next to your number lets a cautious homeowner check you in a minute, and after a hurricane, homeowners are cautious.
+
+## How do High Velocity Hurricane Zone permits change your service pages?
+
+Miami-Dade is in the High Velocity Hurricane Zone, and the county's permit paperwork shows what that means for a re-roof. The [HVHZ Uniform Roofing Application Form for Miami-Dade County](https://www.miamidade.gov/permits/library/roofing-permit.pdf), written for the Florida Building Code 8th Edition (2023), asks for the roof system's product approval (front page, system description, limitations and details), other component approvals, the product approval or Notice of Acceptance numbers behind tile calculations, and an Owner's Notification for Roofing Considerations on re-roofing jobs. It also says all calculations must be submitted to the Building Official at the time of permit application.
+
+The county's [hurricane mitigation page](https://miamidade.gov/permits/hurricane-mitigation.asp) adds what s. 553.844 requires during a re-roof:
+
+- Only site-built single-family residences are included in the mitigation retrofit and secondary waterproofing requirement. Townhouses, duplexes, apartments, condominiums and commercial buildings are exempt.
+- A secondary water barrier is required under asphalt shingles, wood shingles or shakes and architectural metal panels; approved tile underlayment systems are deemed to meet it.
+- The roof decking and secondary water barrier affidavit is completed by the roofing permit holder, and roof-to-wall connection retrofits may be installed only by a licensed general, building or residential contractor.
+- In the HVHZ, a Section 1524 Owner's Notification form is filed with the roof permit application.
+
+This is gold for a service page. Homeowners don't know any of it, and a roofer who explains it plainly looks like the one who'll pass inspection. A re-roof page can walk through the job in order: inspection, estimate, product approval for the system you'll install, permit application, tear-off, deck attachment and secondary water barrier where required, inspections, final. Name the roof systems you install (tile, shingle, metal, flat) and say that each comes with its product approval paperwork.
+
+> **Tip:** Don't promise a timeline you don't control. Permit review and inspections run on the building department's schedule, so describe the steps and say you'll handle the paperwork, without a fixed number of days.
+
+![Close-up of overlapping red clay roof tiles in neat curved rows](https://images.unsplash.com/photo-1623062284286-febaf4f87d0c?auto=format&fit=crop&w=1200&q=75)
+
+## Should your service area page list each Miami-Dade city separately?
+
+Often, yes, because Miami-Dade isn't one building department. Unincorporated areas are permitted by the county, while many municipalities run their own building departments and publish their own roofing packages, such as [Miami Lakes' roofing package](https://www.miamilakes-fl.gov/wp-content/uploads/2024/01/Roofing-Package-Florida-Building-Code-8th-Edition.pdf) and [Miami Gardens' HVHZ roofing package](https://miamigardens-fl.gov/DocumentCenter/View/7747/HVHZ-Roofing-Package-2023).
+
+That gives you a genuine reason for separate pages, as long as each one says something true and specific: which building department handles the permit, any local form you file, the roof types common on the homes you've worked on there and your own project photos from that city. A page per city with the name swapped and nothing else is the kind of doorway page Google's [spam policies](https://developers.google.com/search/docs/essentials/spam-policies) warn against. If you can't say something real about a city, list it on one service area page instead.
+
+On your Google Business Profile, set a service area rather than showing an address customers don't visit. Google's [service area guidance](https://support.google.com/business/answer/9157481) explains how, and its [guidelines for representing your business](https://support.google.com/business/answer/3038177) say to use your real business name, without keywords stuffed in.
+
+## How should a Miami roofer explain the 25% rule?
+
+Carefully, because it's the subject most often oversold. Section 553.844(5) says that if an existing roofing system or section was built, repaired or replaced to the 2007 Florida Building Code or any later edition, and 25 percent or more of it is repaired, replaced or recovered, "only the repaired, replaced, or recovered portion is required" to meet the code in effect. Local governments can't amend this by ordinance.
+
+For a website, that means:
+
+- Don't tell homeowners that damage to a quarter of their roof gets them a new roof. For roofs built to the 2007 code or later, the statute says the opposite.
+- Do explain that older roofs may be treated differently and that you'll check when the roof was permitted and what code it was built to before giving advice on repair versus replacement.
+- Leave anything about what the insurer will pay out of it entirely. That's coverage advice.
+
+A short, accurate 25% rule section is one of the most useful things on a Florida roofing site, and it's exactly the kind of answer people look for and AI answers quote.
+
+## Can you mention My Safe Florida Home on your website?
+
+If you do the work, you can describe it accurately. The program in [s. 215.5586, F.S.](https://www.flsenate.gov/Laws/Statutes/2025/215.5586) funds improvements such as "reinforcing roof-to-wall connections," improving the strength of roof-deck attachments and secondary water resistance for the roof. In the 2025 statute text, a grant application must include the name and state license number of the contractor the homeowner plans to use, the department verifies it, and the work "must be performed by properly licensed contractors" with the required permits and inspections.
+
+Funding rounds and eligibility change, so link homeowners to the program itself rather than promising they'll qualify. And keep any program page clear of the gift and rebate offers s. 489.147 bans; a grant is the homeowner's business with the state, not a perk you hand out.
+
+## What should a Miami roofing website include?
+
+Here's the structure that serves Miami homeowners and stays inside the rules:
+
+1. **A home page** that says what you do, where you work and how to reach you, with the license line in the footer.
+2. **One page per service:** re-roofing, repairs, tile, shingle, metal, flat roofs, inspections. Each with its own title, your own photos and the permit steps that apply.
+3. **A hurricane and storm page** that explains inspections, temporary repairs, estimates and permits, and either avoids insurance claim prompts or carries the three statutory notices in the right size.
+4. **A permits and product approval page** explaining HVHZ paperwork in plain words.
+5. **A service area page,** plus city pages only where you have something real to say.
+6. **An about page** with your license type and number, a link to the state lookup and your insurance information.
+7. **Reviews** that are real and word for word. Google's [policy on fake engagement](https://support.google.com/contributionpolicy/answer/7400114) prohibits incentivized reviews, and in Florida a gift card for a review sits uncomfortably close to the rewards s. 489.147 bans.
+8. **A short request form** asking what the job is, where it is and how soon. Don't ask for policy numbers or claim details; you don't need them to quote a roof.
+
+If many of your customers speak Spanish, translate whole pages rather than a few buttons, connect each to its English version as Google describes in its guide to [localized versions](https://developers.google.com/search/docs/specialty/international/localized-versions), and put the license line and the three notices on the Spanish pages too. A notice in English on a Spanish page doesn't do its job.
+
+![Two palm trees bent sideways by strong wind under a dark, stormy sky](https://images.unsplash.com/photo-1639279387104-9f0367bea7f0?auto=format&fit=crop&w=1200&q=75)
+
+## A Miami roofing website checklist
+
+- [ ] Florida license number in the footer of every page, including ad landing pages
+- [ ] Certified or registered status stated; registered roofers list only jurisdictions where they can work
+- [ ] No gifts, gift cards, cash, coupons or deductible waivers tied to inspections or claims
+- [ ] No coverage advice, policy interpretation or claim adjusting unless you're a licensed public adjuster
+- [ ] Any page urging contact about a roof claim carries the three s. 489.147 notices in 12-point or larger type, at least half the largest font
+- [ ] Marketing vendors briefed on s. 489.147, since their solicitations count as yours
+- [ ] Contract page mentions the (2)(b) notice, the coverage statement and emergency cancellation rights
+- [ ] Re-roof pages explain HVHZ permits, product approvals and the owner notification
+- [ ] 25% rule described accurately, with no promise of a full replacement
+- [ ] City pages only where each has real, specific content
+- [ ] Reviews real and never rewarded
+- [ ] Spanish pages complete, with the license line and notices included
+- [ ] Request form asks about the job, not the policy
+
+For the basics every trade site shares, read our [home service website checklist](/blog/home-service-website-checklist) and our guide to [service-area businesses on Google](/blog/service-area-business-google). For how the same license-number statute applies to another Florida trade, see our [Tampa HVAC website guide](/blog/tampa-hvac-website-design), and to compare a very different state, our [Boston roofing website guide](/blog/boston-roofing-website-design).
+
+## How SaySites builds a Miami roofing website
+
+A SaySites roofing site starts with the contractor layout: a big photo at the top with a request bar on its edge, your services as numbered cards, a "need help?" block and a band with your phone number, which homeowners can tap to call from any page. Re-roofing, repairs, tile, metal and storm work each get their own page and title. The footer is shared by every page, so one line with your Florida license number covers s. 489.119 across the whole site at once. Search engines see your business described as a [RoofingContractor](https://schema.org/RoofingContractor), photos you upload are resized for phones, and a page can't publish until it scores 95 or more on the speed check.
+
+You build and change it by saying what you want. Tell Sofie, the assistant inside the editor, "add our certification number to the footer," "write a re-roof page that walks through the HVHZ permit steps," or "take the gift card offer off the storm page." Each change waits as a draft for your approval. Sofie never makes up licenses, reviews, warranties or project photos; those come from you.
+
+Requests from the form land in your leads pipeline with what the job is, the ZIP code and how soon they need you, so you can call, text or email back from your phone. The Site plan is $15 a month, hosting included ([websites for roofers](/websites-for/roofers), [all plans](/pricing)). [Start a 7-day free trial](/signup) and build your Miami roofing site yourself, or [ask for a free redesign](/redesign) to see your current site rebuilt with your own content before you decide.`,
+    faq: [
+      { q: 'Can a Florida roofer offer a free roof inspection?', a: 'Offering an inspection is fine, but s. 489.147(2)(b) bars offering a residential property owner a rebate, gift, gift card, cash, coupon, deductible waiver or anything else of value in exchange for allowing a roof inspection or making a roof insurance claim. Describe the inspection itself and what the written report includes, and leave out any reward tied to it.' },
+      { q: 'Can a Miami roofer help a homeowner with an insurance claim?', a: 'Only within limits. Unless licensed as a public adjuster, a contractor may not interpret policy provisions, advise on coverage or duties under the policy, or adjust the claim. A roofer can inspect, document damage, give a good-faith itemized estimate and do the work. Your website should explain those steps and tell homeowners to verify coverage with their insurer.' },
+      { q: 'What notices does a Florida roofing ad about insurance claims need?', a: 'An ad encouraging a homeowner to contact you about a roof damage claim must state that the consumer is responsible for any insurance deductible, that knowingly waiving or rebating a deductible is a third-degree felony, and that knowingly making a false claim is a third-degree felony. They must be in at least 12-point type and at least half the size of the largest font.' },
+      { q: 'Does a Florida roofer have to show a license number online?', a: 'Yes. Section 489.119(5)(b) requires the registration or certification number in every offer of services and advertisement regardless of medium, and the licensing board treats internet sites as advertising. Put the number in the footer so it appears on every page, including landing pages made for ads, and on any photos of lettered company trucks.' },
+      { q: 'Does the 25% rule mean a homeowner gets a new roof?', a: 'Not for newer roofs. Under s. 553.844(5), if a roof was built, repaired or replaced to the 2007 Florida Building Code or later, repairing 25 percent or more requires only the repaired portion to meet current code. Older roofs may be treated differently, so a website should explain that you check the roof’s history before advising on repair or replacement.' },
+      { q: 'What is a Miami-Dade product approval for roofing?', a: 'In the High Velocity Hurricane Zone, the county’s uniform roofing permit form asks for the roof system’s product approval documents, other component approvals and the product approval or Notice of Acceptance numbers used in tile calculations. A roofing website can explain that each system you install comes with this paperwork and that you submit it with the permit.' },
+      { q: 'How much does a SaySites roofing website cost?', a: 'The Site plan is $15 a month after a 7-day free trial, with hosting included. It comes with a page per service, a footer that carries your Florida license number on every page, a tap-to-call number, a short job request form, RoofingContractor structured data and a 95+ speed check on each page. A free redesign preview of your current site is also available.' },
+    ],
+    about: ['Florida Statutes 489.147', 'High Velocity Hurricane Zone', 'Roofing contractor websites', 'Miami, Florida'],
+    published: '2026-11-28',
+    status: 'published',
+  },
   // The pillar guides, one a day after these (lib/articles-pillars).
   ...PILLAR_ARTICLES,
 ]
